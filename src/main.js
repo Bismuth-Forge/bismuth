@@ -24,19 +24,21 @@ function KWinDriver() {
 
     self._onClientAdded = function(client) {
         print("clientAdded " + client);
+
         // TODO: check resourceClasses for some windows
-        if(engine.manage(client)) {
-            client.desktopChanged.connect(engine.arrange);
-        }
+        if(!engine.manage(client))
+            return;
+
+        client.desktopChanged.connect(engine.arrange);
         client.geometryChanged.connect(function() {
             if(client.move || client.resize) return;
-            print("geometryChanged " + client);
             engine.arrangeClient(client);
         });
         client.moveResizedChanged.connect(function() {
             if(client.move || client.resize) return;
             engine.arrange();
         });
+
         print(" -> numTiles=" + engine.tiles.length);
     };
 
