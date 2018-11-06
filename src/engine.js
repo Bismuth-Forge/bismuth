@@ -83,16 +83,12 @@ function TilingEngine() {
     self.tiles = Array();
     self.screens = Array();
 
-    self.manage = function(client, delayed) {
-        var delayed = delayed? true: false;
-
+    self.manage = function(client) {
         if(client.specialWindow)
             return false;
 
         self.tiles.push(new Tile(client));
-
-        if(!delayed)
-            self.arrange();
+        self.arrange();
 
         return true;
     }
