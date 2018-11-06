@@ -21,7 +21,7 @@
 function Screen(id) {
     this.id = id;
     this.layout = layout_tile; //null;
-    this.opts = {}
+    this.layoutOpts = {}
 }
 
 function Tile(client) {
@@ -77,7 +77,7 @@ function layout_tile(tiles, areaWidth, areaHeight, opts) {
     }
 }
 
-function TilingEngine() {
+function TilingEngine(driver) {
     var self = this;
 
     self.tiles = Array();
@@ -106,58 +106,40 @@ function TilingEngine() {
             if(screen.layout === null)
                 return;
 
-            var desktop = workspace.currentDesktop;
-
-            // TODO: move direct calls to KWin to driver.
-            var area = workspace.clientArea(KWin.PlacementArea, screen.id, desktop);
+            var area = driver.getWorkingArea(screen.id);
             var visibles = self.tiles
                 .filter(function(t) {
-                    var c = t.client
                     try {
-                        // TODO: test KWin::Toplevel properties...?
-                        return (
-                            (!c.minimized) &&
-                            (c.desktop == desktop || c.desktop == -1) &&
-                            (c.screen == screen.id)
-                        );
+                        return driver.isClientVisible(t.client, screen.id);
                     } catch(e) {
                         t.isError = true;
-                        return false;
                     }
+                    return false;
                 });
+
             // TODO: fullscreen handling
+            screen.layout(visibles, area.width, area.height, screen.layoutOpts);
 
-            screen.layout(visibles, area.width, area.height, {});
-
-            // TODO: move direct calls to KWin to driver.
             visibles.forEach(function(tile) {
-                tile.client.geometry = {
-                    x: tile.x,
-                    y: tile.y,
-                    width: tile.width,
-                    height: tile.height,
-                }
+                driver.setClientGeometry(
+                    tile.client, tile.x, tile.y, tile.width, tile.height);
             });
         });
     }
 
     self.arrangeClient = function(client) {
-        // TODO: move direct calls to KWin to driver.
         self.tiles.forEach(function(tile) {
             if(tile.client != client) return;
 
-            if(client.geometry.x == tile.x)
-            if(client.geometry.y == tile.y)
-            if(client.geometry.width == tile.width)
-            if(client.geometry.height == tile.height)
+            var geometry = driver.getClientGeometry(tile.client);
+            if(geometry.x == tile.x)
+            if(geometry.y == tile.y)
+            if(geometry.width == tile.width)
+            if(geometry.height == tile.height)
                 return;
 
-            tile.client.geometry = {
-                x: tile.x,
-                y: tile.y,
-                width: tile.width,
-                height: tile.height,
-            }
+            driver.setClientGeometry(
+                tile.client, tile.x, tile.y, tile.width, tile.height);
         });
     }
 

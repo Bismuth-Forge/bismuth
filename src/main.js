@@ -22,8 +22,12 @@ function KWinDriver() {
     var self = this;
     var engine = null;
 
+    /*
+     * Signal handlers
+     */
+
     self._onClientAdded = function(client) {
-        print("clientAdded " + client);
+        print("clientAdded " + client + " " + client.resourceClass);
 
         // TODO: check resourceClasses for some windows
         if(!engine.manage(client))
@@ -59,6 +63,43 @@ function KWinDriver() {
         while(engine.screens.length > count)
             engine.removeScreen(engine.screens.length - 1);
     };
+
+    /*
+     * Utils
+     */
+
+    self.getWorkingArea = function(screenId) {
+        // TODO: verify: can each desktops have a different placement area?
+        return workspace.clientArea(
+            KWin.PlacementArea, screenId, workspace.currentDesktop);
+    }
+
+    self.getClientGeometry = function(client) {
+        return {
+            x: client.geometry.x,
+            y: client.geometry.y,
+            width: client.geometry.width,
+            height: client.geometry.height
+        };
+    }
+
+    self.setClientGeometry = function(client, x, y, width, height) {
+        client.geometry = { x:x, y:y, width:width, height:height };
+    }
+
+    self.isClientVisible = function(client, screenId) {
+        // TODO: test KWin::Toplevel properties...?
+        return (
+            (!client.minimized) &&
+            (client.desktop == workspace.currentDesktop
+                || client.desktop == -1 /* on all desktop */) &&
+            (client.screen == screenId)
+        );
+    }
+
+    /*
+     * Main
+     */
 
     self.main = function() {
         engine = new TilingEngine(self);
