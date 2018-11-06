@@ -27,7 +27,7 @@ function KWinDriver() {
      */
 
     self._onClientAdded = function(client) {
-        print("clientAdded " + client + " " + client.resourceClass);
+        // DEBUG: print("clientAdded " + client + " " + client.resourceClass);
 
         // TODO: check resourceClasses for some windows
         if(!engine.manage(client))
@@ -43,21 +43,21 @@ function KWinDriver() {
             engine.arrange();
         });
 
-        print(" -> numTiles=" + engine.tiles.length);
+        // DEBUG: print(" -> numTiles=" + engine.tiles.length);
     };
 
     self._onClientRemoved = function(client) {
+        // DEBUG: print("clientRemoved " + client);
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`.
          */
-        print("clientRemoved " + client);
         engine.unmanage(client);
-        print(" -> numTiles=" + engine.tiles.length);
+        // DEBUG: print(" -> numTiles=" + engine.tiles.length);
     };
 
     self._onNumberScreensChanged = function(count) {
-        print("numberScreenChanged " + count);
+        // DEBUG: print("numberScreenChanged " + count);
         while(engine.screens.length < count)
             engine.addScreen(engine.screens.length);
         while(engine.screens.length > count)
@@ -122,10 +122,6 @@ function KWinDriver() {
         // TODO: handle workspace.activityAdded signal
         // TODO: handle workspace.activityRemoved signal
         // TODO: handle workspace.numberDesktopsChanged signal(???)
-
-        workspace.clientManaging.connect(function(client) {
-            print("clientManaging " + client);
-        });
 
         self._onNumberScreensChanged(workspace.numScreens);
         workspace.clientList().map(self._onClientAdded);
