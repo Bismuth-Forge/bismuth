@@ -83,24 +83,6 @@ function TilingEngine(driver) {
     self.tiles = Array();
     self.screens = Array();
 
-    self.manage = function(client) {
-        if(client.specialWindow)
-            return false;
-
-        self.tiles.push(new Tile(client));
-        self.arrange();
-
-        return true;
-    }
-
-    self.unmanage = function(client) {
-        self.tiles = self.tiles
-            .filter(function(t) {
-                return t.client != client && !t.isError;
-            });
-        self.arrange();
-    }
-
     self.arrange = function() {
         self.screens.forEach(function(screen) {
             if(screen.layout === null)
@@ -127,7 +109,7 @@ function TilingEngine(driver) {
         });
     }
 
-    self.arrangeClient = function(client) {
+    self.clientArrange = function(client) {
         self.tiles.forEach(function(tile) {
             if(tile.client != client) return;
 
@@ -143,11 +125,29 @@ function TilingEngine(driver) {
         });
     }
 
-    self.addScreen = function(screenId) {
+    self.clientManage = function(client) {
+        if(client.specialWindow)
+            return false;
+
+        self.tiles.push(new Tile(client));
+        self.arrange();
+
+        return true;
+    }
+
+    self.clientUnmanage = function(client) {
+        self.tiles = self.tiles
+            .filter(function(t) {
+                return t.client != client && !t.isError;
+            });
+        self.arrange();
+    }
+
+    self.screenAdd = function(screenId) {
         self.screens.push(new Screen(screenId));
     }
 
-    self.removeScreen = function(screenId) {
+    self.screenRemove = function(screenId) {
         self.screens = self.screens
             .filter(function(screen) {
                 return screen.id !== screenId;

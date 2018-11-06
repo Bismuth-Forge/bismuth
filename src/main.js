@@ -30,13 +30,13 @@ function KWinDriver() {
         // DEBUG: print("clientAdded " + client + " " + client.resourceClass);
 
         // TODO: check resourceClasses for some windows
-        if(!engine.manage(client))
+        if(!engine.clientManage(client))
             return;
 
         client.desktopChanged.connect(engine.arrange);
         client.geometryChanged.connect(function() {
             if(client.move || client.resize) return;
-            engine.arrangeClient(client);
+            engine.clientArrange(client);
         });
         client.moveResizedChanged.connect(function() {
             if(client.move || client.resize) return;
@@ -52,16 +52,16 @@ function KWinDriver() {
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`.
          */
-        engine.unmanage(client);
+        engine.clientUnmanage(client);
         // DEBUG: print(" -> numTiles=" + engine.tiles.length);
     };
 
     self._onNumberScreensChanged = function(count) {
         // DEBUG: print("numberScreenChanged " + count);
         while(engine.screens.length < count)
-            engine.addScreen(engine.screens.length);
+            engine.screenAdd(engine.screens.length);
         while(engine.screens.length > count)
-            engine.removeScreen(engine.screens.length - 1);
+            engine.screenRemove(engine.screens.length - 1);
     };
 
     /*
