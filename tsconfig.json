@@ -1,0 +1,10 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "outFile": "script.js",
+        "removeComments": true,
+        "lib": ["es5"],
+        "alwaysStrict": true
+    }
+}
