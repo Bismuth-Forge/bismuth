@@ -149,13 +149,8 @@ class TilingEngine
     }
 
     public manageClient = (client: KWin.Client) => {
-        // TODO: move this to KWinDriver
-        if(client.specialWindow)
-            return false;
-
         this.tiles.push(new Tile(client));
         this.arrange();
-        return true;
     }
 
     public unmanageClient = (client: KWin.Client) => {
