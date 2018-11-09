@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Krohnkite
+Comment=A dynamic tiling script for KWin
+#Icon=
+
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
+
+X-KDE-PluginInfo-Author=Eon S. Jeon
+X-KDE-PluginInfo-Email=esjeon@hyunmu.am
+X-KDE-PluginInfo-Name=krohnkite
+X-KDE-PluginInfo-Version=0.0
+
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=MIT
+X-KDE-ServiceTypes=KWin/Script
+Type=Service
