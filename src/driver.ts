@@ -79,6 +79,9 @@ class KWinDriver
 
     private onClientAdded = (client: KWin.Client) =>
     {
+        if(client.resourceClass == 'plasmashell')
+            return;
+
         // TODO: check resourceClasses for some windows
         this.engine.manageClient(client);
 
@@ -133,12 +136,10 @@ class KWinDriver
 
     public setClientGeometry(client: KWin.Client, geometry: QRect)
     {
-        client.geometry = {
-            x: geometry.x,
-            y: geometry.y,
-            width: geometry.width,
-            height: geometry.height
-        };
+        client.geometry.x = geometry.x;
+        client.geometry.y = geometry.y;
+        client.geometry.width = geometry.width;
+        client.geometry.height = geometry.height;
     }
 
     public isClientVisible(client: KWin.Client, screenId: number)
@@ -164,8 +165,9 @@ class KWinDriver
         this.bindShortcut();
 
         this.onNumberScreensChanged(workspace.numScreens);
-        workspace.clientList().map(this.onClientAdded);
+
+        var i, clients = workspace.clientList();
+        for(i = 0; i < clients.length; i++)
+            this.onClientAdded(clients[i]);
     }
 }
-
-(new KWinDriver()).main();
