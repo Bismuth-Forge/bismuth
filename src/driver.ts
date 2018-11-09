@@ -61,14 +61,14 @@ class KWinDriver
             KWin.registerShortcut(title, "", seq, cb);
         }
 
-        bind("J", "Down/Next", () => { this.engine.handleUserInput(UserInput.Up); });
-        bind("K", "Up/Prev"  , () => { this.engine.handleUserInput(UserInput.Down); });
-        bind("H", "Left"     , () => { this.engine.handleUserInput(UserInput.Left); });
+        bind("J", "Down/Next", () => { this.engine.handleUserInput(UserInput.Down ); });
+        bind("K", "Up/Prev"  , () => { this.engine.handleUserInput(UserInput.Up   ); });
+        bind("H", "Left"     , () => { this.engine.handleUserInput(UserInput.Left ); });
         bind("L", "Right"    , () => { this.engine.handleUserInput(UserInput.Right); });
 
-        bind("Shift+J", "Move Down/Next", () => { this.engine.handleUserInput(UserInput.ShiftUp); });
-        bind("Shift+K", "Move Up/Prev"  , () => { this.engine.handleUserInput(UserInput.ShiftDown); });
-        bind("Shift+H", "Move Left"     , () => { this.engine.handleUserInput(UserInput.ShiftLeft); });
+        bind("Shift+J", "Move Down/Next", () => { this.engine.handleUserInput(UserInput.ShiftDown ); });
+        bind("Shift+K", "Move Up/Prev"  , () => { this.engine.handleUserInput(UserInput.ShiftUp   ); });
+        bind("Shift+H", "Move Left"     , () => { this.engine.handleUserInput(UserInput.ShiftLeft ); });
         bind("Shift+L", "Move Right"    , () => { this.engine.handleUserInput(UserInput.ShiftRight); });
 
         bind("I", "Increase", () => { this.engine.handleUserInput(UserInput.Increase); });
