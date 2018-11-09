@@ -4,7 +4,7 @@ enum UserInput {
     Right,
     Up,
     Down,
-    
+
     ShiftLeft,
     ShiftRight,
     ShiftUp,
@@ -13,5 +13,5 @@ enum UserInput {
     Increase,
     Decrease,
 
-    Float
+    Float,
 }

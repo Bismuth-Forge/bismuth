@@ -18,37 +18,34 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Screen
-{
-    id: number;
-    layout: any;
-    layoutOpts: any;
+class Screen {
+    public id: number;
+    public layout: any;
+    public layoutOpts: any;
 
-    constructor(id: number)
-    {
+    constructor(id: number) {
         this.id = id;
         this.layout = layout_tile;
         this.layoutOpts = {};
     }
 }
 
-class Tile
-{
-    client: KWin.Client;
-    isNew: boolean;
-    isError: boolean;
+class Tile {
+    public client: KWin.Client;
+    public isNew: boolean;
+    public isError: boolean;
+    public geometry: QRect;
 
-    geometry: QRect;
-
-    constructor(client: KWin.Client)
-    {
+    constructor(client: KWin.Client) {
         this.client = client;
         this.isNew = true;
         this.isError = false;
 
         this.geometry = {
-            x: 0, y: 0,
-            width: 0, height: 0
+            height: 0,
+            width: 0,
+            x: 0,
+            y: 0,
         };
     }
 }
@@ -56,13 +53,18 @@ class Tile
 // TODO: declare Layout class (`layout.js`?)
 // TODO: layouts in separate file(s)
 function layout_tile(tiles: Tile[], areaWidth: number, areaHeight: number, opts: any) {
-    if(!opts.tile_ratio) opts.tile_ratio = 0.45;
-    if(!opts.tile_nmaster) opts.tile_nmaster = 1;
+    if (!opts.tile_ratio) opts.tile_ratio = 0.45;
+    if (!opts.tile_nmaster) opts.tile_nmaster = 1;
 
-    var masterCount, masterWidth, masterHeight;
-    var stackCount , stackWidth, stackHeight, stackX;
+    let masterCount;
+    let masterWidth;
+    let masterHeight;
+    let stackCount;
+    let stackWidth;
+    let stackHeight;
+    let stackX;
 
-    if(tiles.length <= opts.tile_nmaster) {
+    if (tiles.length <= opts.tile_nmaster) {
         masterCount = tiles.length;
         masterWidth = areaWidth;
         masterHeight = Math.floor(areaHeight / masterCount);
@@ -79,15 +81,15 @@ function layout_tile(tiles: Tile[], areaWidth: number, areaHeight: number, opts:
         stackX = masterWidth + 1;
     }
 
-    for(var i = 0; i < masterCount; i++) {
+    for (let i = 0; i < masterCount; i++) {
         tiles[i].geometry.x = 0;
         tiles[i].geometry.y = masterHeight * i;
         tiles[i].geometry.width = masterWidth;
         tiles[i].geometry.height = masterHeight;
     }
 
-    for(var i = 0; i < stackCount; i++) {
-        var j = masterCount + i;
+    for (let i = 0; i < stackCount; i++) {
+        const j = masterCount + i;
         tiles[j].geometry.x = stackX;
         tiles[j].geometry.y = stackHeight * i;
         tiles[j].geometry.width = stackWidth;
@@ -95,30 +97,26 @@ function layout_tile(tiles: Tile[], areaWidth: number, areaHeight: number, opts:
     }
 }
 
-class TilingEngine
-{
-    driver: KWinDriver;
-    tiles: Tile[];
-    screens: Screen[];
+class TilingEngine {
+    public screens: Screen[];
+    private driver: KWinDriver;
+    private tiles: Tile[];
 
-    constructor(driver: KWinDriver)
-    {
+    constructor(driver: KWinDriver) {
         this.driver = driver;
         this.tiles = Array();
         this.screens = Array();
     }
 
-    public arrange = () =>
-    {
+    public arrange = () => {
         this.screens.forEach((screen) => {
-            if(screen.layout === null)
-                return;
+            if (screen.layout === null) return;
 
-            var area = this.driver.getWorkingArea(screen.id);
-            var visibles = this.tiles.filter((t) => {
+            const area = this.driver.getWorkingArea(screen.id);
+            const visibles = this.tiles.filter((t) => {
                 try {
                     return this.driver.isClientVisible(t.client, screen.id);
-                } catch(e) {
+                } catch (e) {
                     t.isError = true;
                 }
                 return false;
@@ -135,13 +133,13 @@ class TilingEngine
 
     public arrangeClient = (client: KWin.Client) => {
         this.tiles.forEach((tile) => {
-            if(tile.client != client) return;
+            if (tile.client !== client) return;
 
-            var geometry = this.driver.getClientGeometry(tile.client);
-            if(geometry.x == tile.geometry.x)
-            if(geometry.y == tile.geometry.y)
-            if(geometry.width == tile.geometry.width)
-            if(geometry.height == tile.geometry.height)
+            const geometry = this.driver.getClientGeometry(tile.client);
+            if (geometry.x === tile.geometry.x)
+            if (geometry.y === tile.geometry.y)
+            if (geometry.width === tile.geometry.width)
+            if (geometry.height === tile.geometry.height)
                 return;
 
             this.driver.setClientGeometry(tile.client, tile.geometry);
@@ -154,8 +152,8 @@ class TilingEngine
     }
 
     public unmanageClient = (client: KWin.Client) => {
-        this.tiles = this.tiles.filter(function(t) {
-            return t.client != client && !t.isError;
+        this.tiles = this.tiles.filter((t) => {
+            return t.client !== client && !t.isError;
         });
         this.arrange();
     }
@@ -164,70 +162,74 @@ class TilingEngine
         this.screens.push(new Screen(screenId));
     }
 
-    public screenRemove = (screenId: number) => {
-        this.screens = this.screens.filter(function(screen) {
+    public removeScreen = (screenId: number) => {
+        this.screens = this.screens.filter((screen) => {
             return screen.id !== screenId;
         });
     }
 
+    public handleUserInput = (input: UserInput) => {
+        // TODO: per-layout handlers
+        switch (input) {
+            case UserInput.Up: this.moveFocus(-1); this.arrange(); break;
+            case UserInput.Down: this.moveFocus(+1); this.arrange(); break;
+            case UserInput.ShiftUp: this.moveTile(-1); this.arrange(); break;
+            case UserInput.ShiftDown: this.moveTile(+1); this.arrange(); break;
+        }
+    }
+
+    /*
+     * Privates
+     */
+
     private getCurrentTileIndex = (): number => {
         // TODO: move this to driver
-        var currentClient = workspace.activeClient;
+        const currentClient = workspace.activeClient;
 
-        for(var i = 0; i < this.tiles.length; i++)
-            if(this.tiles[i].client === currentClient)
+        for (let i = 0; i < this.tiles.length; i++)
+            if (this.tiles[i].client === currentClient)
                 return i;
         return null;
     }
 
-    public moveFocus = (step: number) => {
-        if(step == 0) return;
+    private buildInputHandlermap = () => {
+        const map = {};
+        map[UserInput.Down] = () => { this.moveFocus(+1); };
+        map[UserInput.Up] = () => { this.moveFocus(-1); };
+        map[UserInput.ShiftDown] = () => { this.moveTile(+1); };
+        map[UserInput.ShiftUp] = () => { this.moveTile(-1); };
+    }
 
-        var index = this.getCurrentTileIndex();
-        var new_index = index + step;
-        if(new_index < 0)
-            new_index = 0;
-        if(new_index >= this.tiles.length)
-            new_index = this.tiles.length - 1;
+    private moveFocus = (step: number) => {
+        if (step === 0) return;
+
+        const index = this.getCurrentTileIndex();
+        let newIndex = index + step;
+        if (newIndex < 0)
+            newIndex = 0;
+        if (newIndex >= this.tiles.length)
+            newIndex = this.tiles.length - 1;
 
         // TODO: move this to driver
-        workspace.activeClient = this.tiles[new_index].client;
+        workspace.activeClient = this.tiles[newIndex].client;
     }
 
-    public moveTile = (step: number) => {
-        if(step == 0) return;
+    private moveTile = (step: number) => {
+        if (step === 0) return;
 
-        var i = this.getCurrentTileIndex();
-        var tmp: Tile;
-        while(step > 0 && i+1 < this.tiles.length) {
+        let i = this.getCurrentTileIndex();
+        let tmp: Tile;
+        while (step > 0 && i + 1 < this.tiles.length) {
             tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[i+1];
-            this.tiles[i+1] = tmp;
-            step--;
+            this.tiles[i] = this.tiles[i + 1];
+            this.tiles[i + 1] = tmp;
+            i++; step--;
         }
-        while(step < 0 && i-1 >= 0) {
-            tmp =  this.tiles[i];
-            this.tiles[i] = this.tiles[i-1];
-            this.tiles[i-1] = tmp;
-            step++;
-        }
-    }
-
-    private buildInputHandlermap = () => {
-        var map = {};
-        map[UserInput.Down] = () => { this.moveFocus(+1); };
-        map[UserInput.Up  ] = () => { this.moveFocus(-1); };
-        map[UserInput.ShiftDown] = () => { this.moveTile(+1); };
-        map[UserInput.ShiftUp  ] = () => { this.moveTile(-1); };
-    }
-
-    public handleUserInput = (input: UserInput) => {
-        // TODO: per-layout handlers
-        switch(input) {
-            case UserInput.Up       : this.moveFocus(-1); this.arrange(); break;
-            case UserInput.Down     : this.moveFocus(+1); this.arrange(); break;
-            case UserInput.ShiftUp  : this.moveTile(-1) ; this.arrange(); break;
-            case UserInput.ShiftDown: this.moveTile(+1) ; this.arrange(); break;
+        while (step < 0 && i - 1 >= 0) {
+            tmp = this.tiles[i];
+            this.tiles[i] = this.tiles[i - 1];
+            this.tiles[i - 1] = tmp;
+            i--; step++;
         }
     }
 }

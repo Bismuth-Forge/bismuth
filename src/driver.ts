@@ -18,27 +18,76 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinDriver
-{
-    engine: TilingEngine;
+class KWinDriver {
+    private engine: TilingEngine;
+    /*
+     * Utils
+     */
+
+    public getWorkingArea(screenId: number): QRect {
+        // TODO: verify: can each desktops have a different placement area?
+        return workspace.clientArea(
+            KWin.PlacementArea, screenId, workspace.currentDesktop);
+    }
+
+    public getClientGeometry(client: KWin.Client): QRect {
+        return {
+            height: client.geometry.height,
+            width: client.geometry.width,
+            x: client.geometry.x,
+            y: client.geometry.y,
+        };
+    }
+
+    public setClientGeometry(client: KWin.Client, geometry: QRect) {
+        client.geometry.height = geometry.height;
+        client.geometry.width = geometry.width;
+        client.geometry.x = geometry.x;
+        client.geometry.y = geometry.y;
+    }
+
+    public isClientVisible(client: KWin.Client, screenId: number) {
+        // TODO: test KWin::Toplevel properties...?
+        return (
+            (!client.minimized) &&
+            (client.desktop === workspace.currentDesktop
+                || client.desktop === -1 /* on all desktop */) &&
+            (client.screen === screenId)
+        );
+    }
+
+    /*
+     * Main
+     */
+
+    public main() {
+        this.engine = new TilingEngine(this);
+
+        this.bindEvents();
+        this.bindShortcut();
+
+        this.onNumberScreensChanged(workspace.numScreens);
+
+        const clients = workspace.clientList();
+        for (let i = 0; i < clients.length; i++)
+            this.onClientAdded(clients[i]);
+    }
 
     /*
      * Signal handlers
      */
 
-    private bindEvents()
-    {
+    private bindEvents() {
         workspace.clientAdded.connect(this.onClientAdded);
         workspace.clientRemoved.connect(this.onClientRemoved);
         workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
 
-        var engine_arrange = () => { this.engine.arrange(); }
-        workspace.clientMinimized.connect(engine_arrange);
-        workspace.clientUnminimized.connect(engine_arrange);
-        workspace.currentDesktopChanged.connect(engine_arrange);
+        workspace.clientMinimized.connect(this.engine.arrange);
+        workspace.clientUnminimized.connect(this.engine.arrange);
+        workspace.currentDesktopChanged.connect(this.engine.arrange);
 
         // TODO: store screen size in engine?
-        workspace.screenResized.connect(engine_arrange);
+        workspace.screenResized.connect(this.engine.arrange);
 
         // TODO: handle workspace.clientMaximizeSet signal
         // TODO: handle workspace.clientFullScreenSet signal
@@ -49,17 +98,14 @@ class KWinDriver
         // TODO: handle workspace.numberDesktopsChanged signal(???)
     }
 
-    private bindShortcut()
-    {
-        if(!KWin.registerShortcut) return;
+    private bindShortcut() {
+        if (!KWin.registerShortcut) return;
 
-        var S = function(key: string) { return "Shift+" + key; };
-
-        var bind = (seq: string, title: string, cb: any) => {
+        const bind = (seq: string, title: string, cb: any) => {
             title = "Krohnkite: " + title;
             seq = "Meta+" + seq;
             KWin.registerShortcut(title, "", seq, cb);
-        }
+        };
 
         bind("J", "Down/Next", () => { this.engine.handleUserInput(UserInput.Down ); });
         bind("K", "Up/Prev"  , () => { this.engine.handleUserInput(UserInput.Up   ); });
@@ -77,97 +123,36 @@ class KWinDriver
         bind("F", "Float", () => { this.engine.handleUserInput(UserInput.Float); });
     }
 
-    private onClientAdded = (client: KWin.Client) =>
-    {
-        if(client.resourceClass == 'plasmashell') return;
-        if(client.specialWindow) return;
+    private onClientAdded = (client: KWin.Client) => {
+        if (client.resourceClass === "plasmashell") return;
+        if (client.specialWindow) return;
 
         // TODO: check resourceClasses for some windows
         this.engine.manageClient(client);
 
         client.desktopChanged.connect(this.engine.arrange);
         client.geometryChanged.connect(() => {
-            if(client.move || client.resize) return;
+            if (client.move || client.resize) return;
             this.engine.arrangeClient(client);
         });
         client.moveResizedChanged.connect(() => {
-            if(client.move || client.resize) return;
+            if (client.move || client.resize) return;
             this.engine.arrange();
         });
-    };
+    }
 
-    private onClientRemoved = (client: KWin.Client) =>
-    {
+    private onClientRemoved = (client: KWin.Client) => {
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`.
          */
         this.engine.unmanageClient(client);
-    };
+    }
 
-    private onNumberScreensChanged = (count: number) =>
-    {
-        while(this.engine.screens.length < count)
+    private onNumberScreensChanged = (count: number) => {
+        while (this.engine.screens.length < count)
             this.engine.addScreen(this.engine.screens.length);
-        while(this.engine.screens.length > count)
-            this.engine.screenRemove(this.engine.screens.length - 1);
-    };
-
-    /*
-     * Utils
-     */
-
-    public getWorkingArea(screenId: number): QRect
-    {
-        // TODO: verify: can each desktops have a different placement area?
-        return workspace.clientArea(
-            KWin.PlacementArea, screenId, workspace.currentDesktop);
-    }
-
-    public getClientGeometry(client: KWin.Client): QRect
-    {
-        return {
-            x: client.geometry.x,
-            y: client.geometry.y,
-            width: client.geometry.width,
-            height: client.geometry.height
-        };
-    }
-
-    public setClientGeometry(client: KWin.Client, geometry: QRect)
-    {
-        client.geometry.x = geometry.x;
-        client.geometry.y = geometry.y;
-        client.geometry.width = geometry.width;
-        client.geometry.height = geometry.height;
-    }
-
-    public isClientVisible(client: KWin.Client, screenId: number)
-    {
-        // TODO: test KWin::Toplevel properties...?
-        return (
-            (!client.minimized) &&
-            (client.desktop == workspace.currentDesktop
-                || client.desktop == -1 /* on all desktop */) &&
-            (client.screen == screenId)
-        );
-    }
-
-    /*
-     * Main
-     */
-
-    public main()
-    {
-        this.engine = new TilingEngine(this);
-
-        this.bindEvents();
-        this.bindShortcut();
-
-        this.onNumberScreensChanged(workspace.numScreens);
-
-        var i, clients = workspace.clientList();
-        for(i = 0; i < clients.length; i++)
-            this.onClientAdded(clients[i]);
+        while (this.engine.screens.length > count)
+            this.engine.removeScreen(this.engine.screens.length - 1);
     }
 }
