@@ -49,6 +49,7 @@ declare namespace KWin {
 
         /* read-write */
         currentDesktop: number;
+        activeClient: KWin.Client;
 
         /* signals */
         clientAdded: QSignal;

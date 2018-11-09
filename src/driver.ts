@@ -49,6 +49,34 @@ class KWinDriver
         // TODO: handle workspace.numberDesktopsChanged signal(???)
     }
 
+    private bindShortcut()
+    {
+        if(!KWin.registerShortcut) return;
+
+        var S = function(key: string) { return "Shift+" + key; };
+
+        var bind = (seq: string, title: string, cb: any) => {
+            title = "Krohnkite: " + title;
+            seq = "Meta+" + seq;
+            KWin.registerShortcut(title, "", seq, cb);
+        }
+
+        bind("J", "Down/Next", () => { this.engine.handleUserInput(UserInput.Up); });
+        bind("K", "Up/Prev"  , () => { this.engine.handleUserInput(UserInput.Down); });
+        bind("H", "Left"     , () => { this.engine.handleUserInput(UserInput.Left); });
+        bind("L", "Right"    , () => { this.engine.handleUserInput(UserInput.Right); });
+
+        bind("Shift+J", "Move Down/Next", () => { this.engine.handleUserInput(UserInput.ShiftUp); });
+        bind("Shift+K", "Move Up/Prev"  , () => { this.engine.handleUserInput(UserInput.ShiftDown); });
+        bind("Shift+H", "Move Left"     , () => { this.engine.handleUserInput(UserInput.ShiftLeft); });
+        bind("Shift+L", "Move Right"    , () => { this.engine.handleUserInput(UserInput.ShiftRight); });
+
+        bind("I", "Increase", () => { this.engine.handleUserInput(UserInput.Increase); });
+        bind("D", "Decrease", () => { this.engine.handleUserInput(UserInput.Decrease); });
+
+        bind("F", "Float", () => { this.engine.handleUserInput(UserInput.Float); });
+    }
+
     private onClientAdded = (client: KWin.Client) =>
     {
         // TODO: check resourceClasses for some windows
@@ -133,6 +161,8 @@ class KWinDriver
         this.engine = new TilingEngine(this);
 
         this.bindEvents();
+        this.bindShortcut();
+
         this.onNumberScreensChanged(workspace.numScreens);
         workspace.clientList().map(this.onClientAdded);
     }

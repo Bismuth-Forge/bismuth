@@ -174,4 +174,65 @@ class TilingEngine
             return screen.id !== screenId;
         });
     }
+
+    private getCurrentTileIndex = (): number => {
+        // TODO: move this to driver
+        var currentClient = workspace.activeClient;
+
+        for(var i = 0; i < this.tiles.length; i++)
+            if(this.tiles[i].client === currentClient)
+                return i;
+        return null;
+    }
+
+    public moveFocus = (step: number) => {
+        if(step == 0) return;
+
+        var index = this.getCurrentTileIndex();
+        var new_index = index + step;
+        if(new_index < 0)
+            new_index = 0;
+        if(new_index >= this.tiles.length)
+            new_index = this.tiles.length - 1;
+
+        // TODO: move this to driver
+        workspace.activeClient = this.tiles[new_index].client;
+    }
+
+    public moveTile = (step: number) => {
+        if(step == 0) return;
+
+        var i = this.getCurrentTileIndex();
+        var tmp: Tile;
+        while(step > 0 && i+1 < this.tiles.length) {
+            tmp = this.tiles[i];
+            this.tiles[i] = this.tiles[i+1];
+            this.tiles[i+1] = tmp;
+            step--;
+        }
+        while(step < 0 && i-1 >= 0) {
+            tmp =  this.tiles[i];
+            this.tiles[i] = this.tiles[i-1];
+            this.tiles[i-1] = tmp;
+            step++;
+        }
+    }
+
+    private buildInputHandlermap = () => {
+        var map = {};
+        map[UserInput.Down] = () => { this.moveFocus(+1); };
+        map[UserInput.Up  ] = () => { this.moveFocus(-1); };
+        map[UserInput.ShiftDown] = () => { this.moveTile(+1); };
+        map[UserInput.ShiftUp  ] = () => { this.moveTile(-1); };
+    }
+
+    public handleUserInput = (input: UserInput) => {
+        // TODO: per-layout handlers
+        switch(input) {
+            case UserInput.Up       : this.moveFocus(-1); this.arrange(); break;
+            case UserInput.Down     : this.moveFocus(+1); this.arrange(); break;
+            case UserInput.ShiftUp  : this.moveTile(-1) ; this.arrange(); break;
+            case UserInput.ShiftDown: this.moveTile(+1) ; this.arrange(); break;
+        }
+    }
 }
