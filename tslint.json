@@ -5,8 +5,9 @@
     ],
     "jsRules": {},
     "rules": {
-        "max-classes-per-file": false,
         "curly": false,
+        "max-classes-per-file": false,
+        "one-variable-per-declaration": false,
         "prefer-for-of": false
     },
     "rulesDirectory": []

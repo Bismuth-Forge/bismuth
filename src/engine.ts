@@ -20,13 +20,11 @@
 
 class Screen {
     public id: number;
-    public layout: any;
-    public layoutOpts: any;
+    public layout: ILayout;
 
     constructor(id: number) {
         this.id = id;
-        this.layout = layout_tile;
-        this.layoutOpts = {};
+        this.layout = new TileLayout();
     }
 }
 
@@ -50,53 +48,6 @@ class Tile {
         this.isError = false;
         this.isNew = true;
         this.maximized = false;
-    }
-}
-
-// TODO: declare Layout class (`layout.js`?)
-// TODO: layouts in separate file(s)
-function layout_tile(tiles: Tile[], areaWidth: number, areaHeight: number, opts: any) {
-    if (!opts.tile_ratio) opts.tile_ratio = 0.45;
-    if (!opts.tile_nmaster) opts.tile_nmaster = 1;
-
-    let masterCount;
-    let masterWidth;
-    let masterHeight;
-    let stackCount;
-    let stackWidth;
-    let stackHeight;
-    let stackX;
-
-    if (tiles.length <= opts.tile_nmaster) {
-        masterCount = tiles.length;
-        masterWidth = areaWidth;
-        masterHeight = Math.floor(areaHeight / masterCount);
-
-        stackCount = stackWidth = stackHeight = stackX = 0;
-    } else {
-        masterCount = opts.tile_nmaster;
-        masterWidth = Math.floor(areaWidth * (1 - opts.tile_ratio));
-        masterHeight = Math.floor(areaHeight / masterCount);
-
-        stackCount = tiles.length - masterCount;
-        stackWidth = areaWidth - masterWidth;
-        stackHeight = Math.floor(areaHeight / stackCount);
-        stackX = masterWidth + 1;
-    }
-
-    for (let i = 0; i < masterCount; i++) {
-        tiles[i].geometry.x = 0;
-        tiles[i].geometry.y = masterHeight * i;
-        tiles[i].geometry.width = masterWidth;
-        tiles[i].geometry.height = masterHeight;
-    }
-
-    for (let i = 0; i < stackCount; i++) {
-        const j = masterCount + i;
-        tiles[j].geometry.x = stackX;
-        tiles[j].geometry.y = stackHeight * i;
-        tiles[j].geometry.width = stackWidth;
-        tiles[j].geometry.height = stackHeight;
     }
 }
 
@@ -126,7 +77,7 @@ class TilingEngine {
             });
 
             // TODO: fullscreen handling
-            screen.layout(visibles, area.width, area.height, screen.layoutOpts);
+            screen.layout.apply(visibles, area.width, area.height);
 
             visibles.forEach((tile) => {
                 tile.arrangeCount = 0;

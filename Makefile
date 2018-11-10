@@ -22,6 +22,7 @@ $(FILE_SCRIPT): src/common.ts
 $(FILE_SCRIPT): src/driver.ts
 $(FILE_SCRIPT): src/engine.ts
 $(FILE_SCRIPT): src/kwin.d.ts
+$(FILE_SCRIPT): src/layout.ts
 	@mkdir -vp `dirname $(FILE_SCRIPT)`
 	tsc --outFile $(FILE_SCRIPT)
 
