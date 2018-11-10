@@ -48,16 +48,15 @@ class KWinDriver {
             KWin.PlacementArea, screenId, workspace.currentDesktop);
     }
 
-    public getClientGeometry(client: KWin.Client): QRect {
-        return {
-            height: client.geometry.height,
-            width: client.geometry.width,
-            x: client.geometry.x,
-            y: client.geometry.y,
-        };
+    public getClientGeometry(client: KWin.Client): Rect {
+        return new Rect(
+            client.geometry.x,
+            client.geometry.y,
+            client.geometry.width,
+            client.geometry.height);
     }
 
-    public setClientGeometry(client: KWin.Client, geometry: QRect) {
+    public setClientGeometry(client: KWin.Client, geometry: Rect) {
         client.geometry.height = geometry.height;
         client.geometry.width = geometry.width;
         client.geometry.x = geometry.x;

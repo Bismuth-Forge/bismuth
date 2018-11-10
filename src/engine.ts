@@ -31,21 +31,20 @@ class Screen {
 class Tile {
     public arrangeCount: number;
     public client: KWin.Client;
-    public geometry: QRect;
+    public floating: boolean;
+    public geometry: Rect;
     public isError: boolean;
     public isNew: boolean;
+    public oldGeometry: Rect;
 
-    constructor(client: KWin.Client) {
+    constructor(client: KWin.Client, geometry: Rect) {
         this.arrangeCount = 0;
         this.client = client;
-        this.geometry = {
-            height: 0,
-            width: 0,
-            x: 0,
-            y: 0,
-        };
+        this.floating = false;
+        this.geometry = geometry;
         this.isError = false;
         this.isNew = true;
+        this.oldGeometry = geometry;
     }
 }
 
@@ -74,19 +73,23 @@ class TilingEngine {
                 return false;
             });
 
-            // TODO: fullscreen handling
-            screen.layout.apply(visibles, area.width, area.height);
-
-            visibles.forEach((tile) => {
+            const tileables = visibles.filter((t) => !t.floating);
+            screen.layout.apply(tileables, area.width, area.height);
+            tileables.forEach((tile) => {
                 tile.arrangeCount = 0;
                 this.driver.setClientGeometry(tile.client, tile.geometry);
+                tile.client.keepBelow = true;
             });
+
+            visibles.filter((t) => t.floating)
+                    .map((t) => (t.client.keepAbove = true));
         });
     }
 
     public arrangeClient = (client: KWin.Client) => {
         this.tiles.forEach((tile) => {
             if (tile.client !== client) return;
+            if (tile.floating) return;
 
             const geometry = this.driver.getClientGeometry(tile.client);
             if (geometry.x === tile.geometry.x)
@@ -107,7 +110,8 @@ class TilingEngine {
     }
 
     public manageClient = (client: KWin.Client) => {
-        this.tiles.push(new Tile(client));
+        this.tiles.push(
+            new Tile(client, this.driver.getClientGeometry(client)));
         this.arrange();
     }
 
@@ -158,6 +162,9 @@ class TilingEngine {
             case UserInput.SetMaster:
                 this.setMaster();
                 break;
+            case UserInput.Float:
+                this.setFloat(this.getCurrentTile(), "toggle");
+                break;
         }
         this.arrange();
     }
@@ -202,6 +209,19 @@ class TilingEngine {
         for (let i = index - 1; i >= 0; i--)
             this.tiles[i + 1] = this.tiles[i];
         this.tiles[0] = client;
+    }
+
+    public setFloat = (tile: Tile, value: boolean | string) => {
+        if (typeof value === "string")
+            tile.floating = !tile.floating;
+        else {
+            if (tile.floating === value)
+                return;
+            tile.floating = value;
+        }
+
+        if (tile.floating)
+            tile.oldGeometry.copyTo(tile.geometry);
     }
 
     /*
