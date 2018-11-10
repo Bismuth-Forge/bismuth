@@ -1,22 +1,27 @@
 PACKAGE_NAME = krohnkite
 PACKAGE_VER  = 0.1
-PACKAGE_FILE = $(PACKAGE_NAME).kwinscript
+PACKAGE_FILE = $(PACKAGE_NAME)-$(PACKAGE_VER).kwinscript
 
-FILE_SCRIPT = pkg/contents/code/script.js
-FILE_META   = pkg/metadata.desktop
-FILE_QML    = pkg/contents/ui/main.qml
+PACKAGE_DIR = pkg
 
-all: $(PACKAGE_FILE)
+FILE_SCRIPT = $(PACKAGE_DIR)/contents/code/script.js
+FILE_META   = $(PACKAGE_DIR)/metadata.desktop
+FILE_QML    = $(PACKAGE_DIR)/contents/ui/main.qml
+
+all: $(PACKAGE_DIR)
 
 clean:
 	@rm -vf script.json
-	@rm -rvf pkg/
+	@rm -rvf $(PACKAGE_DIR)
 
-$(PACKAGE_FILE): $(FILE_SCRIPT)
-$(PACKAGE_FILE): $(FILE_META)
-$(PACKAGE_FILE): $(FILE_QML)
+package: $(PACKAGE_FILE)
+
+$(PACKAGE_FILE): $(PACKAGE_DIR)
 	@rm -f "$(PACKAGE_FILE)"
-	@7z a -tzip $(PACKAGE_FILE) ./pkg/*
+	@7z a -tzip $(PACKAGE_FILE) ./$(PACKAGE_DIR)/*
+
+$(PACKAGE_DIR): $(FILE_SCRIPT) $(FILE_META) $(FILE_QML)
+	@touch $@
 
 $(FILE_SCRIPT): src/common.ts
 $(FILE_SCRIPT): src/driver.ts
@@ -34,4 +39,4 @@ $(FILE_QML): res/main.qml
 	@mkdir -vp `dirname $(FILE_QML)`
 	@cp -v $< $@
 
-.PHONY: all clean
+.PHONY: all clean package
