@@ -81,27 +81,28 @@ class KWinDriver {
     private bindShortcut() {
         if (!KWin.registerShortcut) return;
 
-        const bind = (seq: string, title: string, cb: any) => {
+        const bind = (seq: string, title: string, input: UserInput) => {
             title = "Krohnkite: " + title;
             seq = "Meta+" + seq;
+            const cb = () => { this.engine.handleUserInput(input); };
             KWin.registerShortcut(title, "", seq, cb);
         };
 
-        bind("J", "Down/Next", () => { this.engine.handleUserInput(UserInput.Down ); });
-        bind("K", "Up/Prev"  , () => { this.engine.handleUserInput(UserInput.Up   ); });
-        bind("H", "Left"     , () => { this.engine.handleUserInput(UserInput.Left ); });
-        bind("L", "Right"    , () => { this.engine.handleUserInput(UserInput.Right); });
+        bind("J", "Down/Next", UserInput.Down);
+        bind("K", "Up/Prev"  , UserInput.Up);
+        bind("H", "Left"     , UserInput.Left);
+        bind("L", "Right"    , UserInput.Right);
 
-        bind("Shift+J", "Move Down/Next", () => { this.engine.handleUserInput(UserInput.ShiftDown ); });
-        bind("Shift+K", "Move Up/Prev"  , () => { this.engine.handleUserInput(UserInput.ShiftUp   ); });
-        bind("Shift+H", "Move Left"     , () => { this.engine.handleUserInput(UserInput.ShiftLeft ); });
-        bind("Shift+L", "Move Right"    , () => { this.engine.handleUserInput(UserInput.ShiftRight); });
+        bind("Shift+J", "Move Down/Next", UserInput.ShiftDown);
+        bind("Shift+K", "Move Up/Prev"  , UserInput.ShiftUp);
+        bind("Shift+H", "Move Left"     , UserInput.ShiftLeft);
+        bind("Shift+L", "Move Right"    , UserInput.ShiftRight);
 
-        bind("I", "Increase", () => { this.engine.handleUserInput(UserInput.Increase); });
-        bind("D", "Decrease", () => { this.engine.handleUserInput(UserInput.Decrease); });
+        bind("I", "Increase", UserInput.Increase);
+        bind("D", "Decrease", UserInput.Decrease);
+        bind("F", "Float", UserInput.Float);
 
-        bind("F", "Float", () => { this.engine.handleUserInput(UserInput.Float); });
-        bind("Return", "Set master", () => { this.engine.handleUserInput(UserInput.SetMaster); });
+        bind("Return", "Set master", UserInput.SetMaster);
     }
 
     /*
