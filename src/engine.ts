@@ -142,11 +142,25 @@ class TilingEngine {
     public handleUserInput = (input: UserInput) => {
         // TODO: per-layout handlers
         switch (input) {
-            case UserInput.Up: this.moveFocus(-1); this.arrange(); break;
-            case UserInput.Down: this.moveFocus(+1); this.arrange(); break;
-            case UserInput.ShiftUp: this.moveTile(-1); this.arrange(); break;
-            case UserInput.ShiftDown: this.moveTile(+1); this.arrange(); break;
-            case UserInput.SetMaster: this.setMaster(); break;
+            case UserInput.Up:
+                this.moveFocus(-1);
+                this.arrange();
+                break;
+            case UserInput.Down:
+                this.moveFocus(+1);
+                this.arrange();
+                break;
+            case UserInput.ShiftUp:
+                this.moveTile(-1);
+                this.arrange();
+                break;
+            case UserInput.ShiftDown:
+                this.moveTile(+1);
+                this.arrange();
+                break;
+            case UserInput.SetMaster:
+                this.setMaster();
+                break;
         }
     }
 
