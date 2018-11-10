@@ -118,15 +118,6 @@ class TilingEngine {
         this.arrange();
     }
 
-    public setMaster = () => {
-        const index = this.getCurrentTileIndex();
-        const client = this.tiles[index];
-
-        for (let i = index - 1; i >= 0; i--)
-            this.tiles[i + 1] = this.tiles[i];
-        this.tiles[0] = client;
-    }
-
     public addScreen = (screenId: number) => {
         this.screens.push(new Screen(screenId));
     }
@@ -136,6 +127,10 @@ class TilingEngine {
             return screen.id !== screenId;
         });
     }
+
+    /*
+     * User Input Handling
+     */
 
     public handleUserInput = (input: UserInput) => {
         // TODO: move this to driver
@@ -167,6 +162,48 @@ class TilingEngine {
         this.arrange();
     }
 
+    public moveFocus = (step: number) => {
+        if (step === 0) return;
+
+        const index = this.getCurrentTileIndex();
+        let newIndex = index + step;
+        if (newIndex < 0)
+            newIndex = 0;
+        if (newIndex >= this.tiles.length)
+            newIndex = this.tiles.length - 1;
+
+        // TODO: move this to driver
+        workspace.activeClient = this.tiles[newIndex].client;
+    }
+
+    public moveTile = (step: number) => {
+        if (step === 0) return;
+
+        let i = this.getCurrentTileIndex();
+        let tmp: Tile;
+        while (step > 0 && i + 1 < this.tiles.length) {
+            tmp = this.tiles[i];
+            this.tiles[i] = this.tiles[i + 1];
+            this.tiles[i + 1] = tmp;
+            i++; step--;
+        }
+        while (step < 0 && i - 1 >= 0) {
+            tmp = this.tiles[i];
+            this.tiles[i] = this.tiles[i - 1];
+            this.tiles[i - 1] = tmp;
+            i--; step++;
+        }
+    }
+
+    public setMaster = () => {
+        const index = this.getCurrentTileIndex();
+        const client = this.tiles[index];
+
+        for (let i = index - 1; i >= 0; i--)
+            this.tiles[i + 1] = this.tiles[i];
+        this.tiles[0] = client;
+    }
+
     /*
      * Privates
      */
@@ -192,38 +229,5 @@ class TilingEngine {
     private getCurrentTileIndex = (): number => {
         // TODO: don't access `workspace` directly
         return this.getTileIndexByClient(workspace.activeClient);
-    }
-
-    private moveFocus = (step: number) => {
-        if (step === 0) return;
-
-        const index = this.getCurrentTileIndex();
-        let newIndex = index + step;
-        if (newIndex < 0)
-            newIndex = 0;
-        if (newIndex >= this.tiles.length)
-            newIndex = this.tiles.length - 1;
-
-        // TODO: move this to driver
-        workspace.activeClient = this.tiles[newIndex].client;
-    }
-
-    private moveTile = (step: number) => {
-        if (step === 0) return;
-
-        let i = this.getCurrentTileIndex();
-        let tmp: Tile;
-        while (step > 0 && i + 1 < this.tiles.length) {
-            tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[i + 1];
-            this.tiles[i + 1] = tmp;
-            i++; step--;
-        }
-        while (step < 0 && i - 1 >= 0) {
-            tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[i - 1];
-            this.tiles[i - 1] = tmp;
-            i--; step++;
-        }
     }
 }
