@@ -20,6 +20,24 @@
 
 class KWinDriver {
     private engine: TilingEngine;
+
+    /*
+     * Main
+     */
+
+    public main() {
+        this.engine = new TilingEngine(this);
+
+        this.bindEvents();
+        this.bindShortcut();
+
+        this.onNumberScreensChanged(workspace.numScreens);
+
+        const clients = workspace.clientList();
+        for (let i = 0; i < clients.length; i++)
+            this.onClientAdded(clients[i]);
+    }
+
     /*
      * Utils
      */
@@ -57,50 +75,8 @@ class KWinDriver {
     }
 
     /*
-     * Main
+     * Shortcut
      */
-
-    public main() {
-        this.engine = new TilingEngine(this);
-
-        this.bindEvents();
-        this.bindShortcut();
-
-        this.onNumberScreensChanged(workspace.numScreens);
-
-        const clients = workspace.clientList();
-        for (let i = 0; i < clients.length; i++)
-            this.onClientAdded(clients[i]);
-    }
-
-    /*
-     * Signal handlers
-     */
-
-    private bindEvents() {
-        workspace.clientAdded.connect(this.onClientAdded);
-        workspace.clientRemoved.connect(this.onClientRemoved);
-        workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
-
-        workspace.clientMinimized.connect(this.engine.arrange);
-        workspace.clientUnminimized.connect(this.engine.arrange);
-        workspace.currentDesktopChanged.connect(this.engine.arrange);
-
-        // TODO: store screen size in engine?
-        workspace.screenResized.connect(this.engine.arrange);
-
-        workspace.clientMaximizeSet.connect((client: KWin.Client, h: boolean, v: boolean) => {
-            /* XXX : This signal currently fires only on *FULL* maximization. */
-            this.engine.handleMaximization(client, h || v);
-        });
-
-        // TODO: handle workspace.clientFullScreenSet signal
-        // TODO: handle workspace.currentActivityChanged signal
-        // TODO: handle workspace.activitiesChanged signal
-        // TODO: handle workspace.activityAdded signal
-        // TODO: handle workspace.activityRemoved signal
-        // TODO: handle workspace.numberDesktopsChanged signal(???)
-    }
 
     private bindShortcut() {
         if (!KWin.registerShortcut) return;
@@ -127,13 +103,39 @@ class KWinDriver {
         bind("F", "Float", () => { this.engine.handleUserInput(UserInput.Float); });
     }
 
-    private onClientAdded = (client: KWin.Client) => {
-        if (client.resourceClass === "plasmashell") return;
-        if (client.specialWindow) return;
+    /*
+     * Signal handlers
+     */
 
-        // TODO: check resourceClasses for some windows
+    private bindEvents() {
+        workspace.clientAdded.connect(this.onClientAdded);
+        workspace.clientMinimized.connect(this.engine.arrange);
+        workspace.clientRemoved.connect(this.onClientRemoved);
+        workspace.clientUnminimized.connect(this.engine.arrange);
+        workspace.currentDesktopChanged.connect(this.engine.arrange);
+        workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
+        workspace.screenResized.connect(this.engine.arrange);
+
+        workspace.clientMaximizeSet.connect((client: KWin.Client, h: boolean, v: boolean) => {
+            /* XXX : This signal currently fires only on *FULL* maximization. */
+            this.engine.handleMaximization(client, h || v);
+        });
+
+        // TODO: handle workspace.activitiesChanged signal
+        // TODO: handle workspace.activityAdded signal
+        // TODO: handle workspace.activityRemoved signal
+        // TODO: handle workspace.clientFullScreenSet signal
+        // TODO: handle workspace.currentActivityChanged signal
+        // TODO: handle workspace.numberDesktopsChanged signal(???)
+    }
+
+    private onClientAdded = (client: KWin.Client) => {
+        if (client.specialWindow) return;
+        if (client.resourceClass === "plasmashell") return;
+
         this.engine.manageClient(client);
 
+        // TODO: don't bind these signals if client is rejected by engine
         client.desktopChanged.connect(this.engine.arrange);
         client.geometryChanged.connect(() => {
             if (client.move || client.resize) return;
@@ -148,8 +150,7 @@ class KWinDriver {
     private onClientRemoved = (client: KWin.Client) => {
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
-         * exception in `engine.arrange`.
-         */
+         * exception in `engine.arrange`. */
         this.engine.unmanageClient(client);
     }
 

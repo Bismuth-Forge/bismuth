@@ -31,26 +31,24 @@ class Screen {
 }
 
 class Tile {
-    public client: KWin.Client;
-    public isNew: boolean;
-    public isError: boolean;
-    public geometry: QRect;
-    public maximized: boolean;
     public arrangeCount: number;
+    public client: KWin.Client;
+    public geometry: QRect;
+    public isError: boolean;
+    public isNew: boolean;
+    public maximized: boolean;
 
     constructor(client: KWin.Client) {
+        this.arrangeCount = 0;
         this.client = client;
-        this.isNew = true;
-        this.isError = false;
-
         this.geometry = {
             height: 0,
             width: 0,
             x: 0,
             y: 0,
         };
-
-        this.arrangeCount = 0;
+        this.isError = false;
+        this.isNew = true;
         this.maximized = false;
     }
 }
@@ -150,9 +148,9 @@ class TilingEngine {
                 return;
             }
 
-            // HACK: prevent infinite `geometryChanged`.
+            /* HACK: prevent infinite `geometryChanged`. */
             tile.arrangeCount += 1;
-            if (tile.arrangeCount > 5) /* TODO: define arbitrary constant */
+            if (tile.arrangeCount > 5) // TODO: define arbitrary constant
                 return;
 
             this.driver.setClientGeometry(tile.client, tile.geometry);
