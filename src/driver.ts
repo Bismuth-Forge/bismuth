@@ -127,7 +127,7 @@ class KWinDriver {
 
     private onClientAdded = (client: KWin.Client) => {
         if (client.specialWindow) return;
-        if (client.resourceClass === "plasmashell") return;
+        if (String(client.resourceClass) === "plasmashell") return;
 
         this.engine.manageClient(client);
 
