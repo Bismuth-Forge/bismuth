@@ -34,7 +34,6 @@ class Tile {
     public geometry: QRect;
     public isError: boolean;
     public isNew: boolean;
-    public maximized: boolean;
 
     constructor(client: KWin.Client) {
         this.arrangeCount = 0;
@@ -47,7 +46,6 @@ class Tile {
         };
         this.isError = false;
         this.isNew = true;
-        this.maximized = false;
     }
 }
 
@@ -128,14 +126,6 @@ class TilingEngine {
         this.screens = this.screens.filter((screen) => {
             return screen.id !== screenId;
         });
-    }
-
-    public handleMaximization = (client: KWin.Client, maximized: boolean) => {
-        const tile = this.getTileFromClient(client);
-        if (tile === null) return;
-
-        tile.maximized = maximized;
-        this.arrange();
     }
 
     public handleUserInput = (input: UserInput) => {

@@ -116,11 +116,6 @@ class KWinDriver {
         workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
         workspace.screenResized.connect(this.engine.arrange);
 
-        workspace.clientMaximizeSet.connect((client: KWin.Client, h: boolean, v: boolean) => {
-            /* XXX : This signal currently fires only on *FULL* maximization. */
-            this.engine.handleMaximization(client, h || v);
-        });
-
         // TODO: handle workspace.activitiesChanged signal
         // TODO: handle workspace.activityAdded signal
         // TODO: handle workspace.activityRemoved signal
