@@ -159,14 +159,6 @@ class TilingEngine {
         return null;
     }
 
-    private buildInputHandlermap = () => {
-        const map = {};
-        map[UserInput.Down] = () => { this.moveFocus(+1); };
-        map[UserInput.Up] = () => { this.moveFocus(-1); };
-        map[UserInput.ShiftDown] = () => { this.moveTile(+1); };
-        map[UserInput.ShiftUp] = () => { this.moveTile(-1); };
-    }
-
     private moveFocus = (step: number) => {
         if (step === 0) return;
 
