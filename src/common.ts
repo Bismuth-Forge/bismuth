@@ -14,4 +14,5 @@ enum UserInput {
     Decrease,
 
     Float,
+    SetMaster,
 }

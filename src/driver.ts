@@ -101,6 +101,7 @@ class KWinDriver {
         bind("D", "Decrease", () => { this.engine.handleUserInput(UserInput.Decrease); });
 
         bind("F", "Float", () => { this.engine.handleUserInput(UserInput.Float); });
+        bind("Return", "Set master", () => { this.engine.handleUserInput(UserInput.SetMaster); });
     }
 
     /*

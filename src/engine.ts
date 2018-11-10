@@ -118,6 +118,17 @@ class TilingEngine {
         this.arrange();
     }
 
+    public setMaster = () => {
+        const index = this.getCurrentTileIndex();
+        const client = this.tiles[index];
+
+        for (let i = index - 1; i >= 0; i--)
+            this.tiles[i + 1] = this.tiles[i];
+        this.tiles[0] = client;
+
+        this.arrange();
+    }
+
     public addScreen = (screenId: number) => {
         this.screens.push(new Screen(screenId));
     }
@@ -135,6 +146,7 @@ class TilingEngine {
             case UserInput.Down: this.moveFocus(+1); this.arrange(); break;
             case UserInput.ShiftUp: this.moveTile(-1); this.arrange(); break;
             case UserInput.ShiftDown: this.moveTile(+1); this.arrange(); break;
+            case UserInput.SetMaster: this.setMaster(); break;
         }
     }
 
