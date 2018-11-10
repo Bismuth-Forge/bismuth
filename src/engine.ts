@@ -66,7 +66,10 @@ class TilingEngine {
             const area = this.driver.getWorkingArea(screen.id);
             const visibles = this.tiles.filter((t) => {
                 try {
-                    return this.driver.isClientVisible(t.client, screen.id);
+                    return (
+                        this.driver.isClientVisible(t.client, screen.id) &&
+                        !this.driver.isClientFullScreen(t.client)
+                    );
                 } catch (e) {
                     t.isError = true;
                 }
@@ -90,6 +93,7 @@ class TilingEngine {
         this.tiles.forEach((tile) => {
             if (tile.client !== client) return;
             if (tile.floating) return;
+            if (this.driver.isClientFullScreen(tile.client)) return;
 
             const geometry = this.driver.getClientGeometry(tile.client);
             if (geometry.x === tile.geometry.x)
@@ -237,6 +241,11 @@ class TilingEngine {
 
     private getCurrentTile = (): Tile => {
         return this.tiles[this.getCurrentTileIndex()];
+    }
+
+    private getTileByClient = (client: KWin.Client): Tile => {
+        const index = this.getTileIndexByClient(client);
+        return (index === null) ? null : this.tiles[index];
     }
 
     private getTileIndexByClient = (client: KWin.Client): number => {

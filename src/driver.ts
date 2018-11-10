@@ -73,6 +73,10 @@ class KWinDriver {
         );
     }
 
+    public isClientFullScreen(client: KWin.Client): boolean {
+        return client.fullScreen;
+    }
+
     /*
      * Shortcut
      */
@@ -110,6 +114,7 @@ class KWinDriver {
 
     private bindEvents() {
         workspace.clientAdded.connect(this.onClientAdded);
+        workspace.clientFullScreenSet.connect(this.engine.arrange);
         workspace.clientMinimized.connect(this.engine.arrange);
         workspace.clientRemoved.connect(this.onClientRemoved);
         workspace.clientUnminimized.connect(this.engine.arrange);
