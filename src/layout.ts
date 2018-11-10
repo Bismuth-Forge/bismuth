@@ -20,6 +20,9 @@
 
 interface ILayout {
     apply(tiles: Tile[], areaWidth: number, areaHeight: number);
+
+    handleUserInput(input: UserInput): boolean;
+    /* if true, layout completely overrides the default behavior */
 }
 
 class TileLayout implements ILayout {
@@ -69,6 +72,33 @@ class TileLayout implements ILayout {
             tiles[j].geometry.width = stackWidth;
             tiles[j].geometry.height = stackHeight;
         }
+    }
+
+    public handleUserInput(input: UserInput) {
+        switch (input) {
+            case UserInput.Left:
+                // TODO: define arbitrary constants
+                if (this.masterRatio > 0.2)
+                    this.masterRatio -= 0.05;
+                break;
+            case UserInput.Right:
+                // TODO: define arbitrary constants
+                if (this.masterRatio < 0.8)
+                    this.masterRatio += 0.05;
+                break;
+            case UserInput.Increase:
+                // TODO: define arbitrary constant
+                if (this.numMaster < 10)
+                    this.numMaster += 1;
+                break;
+            case UserInput.Decrease:
+                if (this.numMaster > 0)
+                    this.numMaster -= 1;
+                break;
+            default:
+                return false;
+        }
+        return true;
     }
 }
 

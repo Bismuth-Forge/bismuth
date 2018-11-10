@@ -125,8 +125,6 @@ class TilingEngine {
         for (let i = index - 1; i >= 0; i--)
             this.tiles[i + 1] = this.tiles[i];
         this.tiles[0] = client;
-
-        this.arrange();
     }
 
     public addScreen = (screenId: number) => {
@@ -140,49 +138,60 @@ class TilingEngine {
     }
 
     public handleUserInput = (input: UserInput) => {
-        // TODO: per-layout handlers
+        // TODO: move this to driver
+        const screen = this.getCurrentScreen();
+
+        const overriden = screen.layout.handleUserInput(input);
+        if (overriden) {
+            this.arrange();
+            return;
+        }
+
         switch (input) {
             case UserInput.Up:
                 this.moveFocus(-1);
-                this.arrange();
                 break;
             case UserInput.Down:
                 this.moveFocus(+1);
-                this.arrange();
                 break;
             case UserInput.ShiftUp:
                 this.moveTile(-1);
-                this.arrange();
                 break;
             case UserInput.ShiftDown:
                 this.moveTile(+1);
-                this.arrange();
                 break;
             case UserInput.SetMaster:
                 this.setMaster();
                 break;
         }
+        this.arrange();
     }
 
     /*
      * Privates
      */
 
-    private getCurrentTileIndex = (): number => {
-        // TODO: move this to driver
-        const currentClient = workspace.activeClient;
+    private getCurrentScreen = (): Screen => {
+        const screenId = workspace.activeClient.screen;
+        for (let i = 0; i < this.screens.length; i++)
+            if (this.screens[i].id === screenId)
+                return this.screens[i];
+    }
 
+    private getCurrentTile = (): Tile => {
+        return this.tiles[this.getCurrentTileIndex()];
+    }
+
+    private getTileIndexByClient = (client: KWin.Client): number => {
         for (let i = 0; i < this.tiles.length; i++)
-            if (this.tiles[i].client === currentClient)
+            if (this.tiles[i].client === client)
                 return i;
         return null;
     }
 
-    private getTileFromClient = (client: KWin.Client): Tile => {
-        for (let i = 0; i < this.tiles.length; i++)
-            if (this.tiles[i].client === client)
-                return this.tiles[i];
-        return null;
+    private getCurrentTileIndex = (): number => {
+        // TODO: don't access `workspace` directly
+        return this.getTileIndexByClient(workspace.activeClient);
     }
 
     private moveFocus = (step: number) => {
