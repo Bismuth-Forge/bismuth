@@ -89,7 +89,11 @@ class KWinDriver {
         // TODO: store screen size in engine?
         workspace.screenResized.connect(this.engine.arrange);
 
-        // TODO: handle workspace.clientMaximizeSet signal
+        workspace.clientMaximizeSet.connect((client: KWin.Client, h: boolean, v: boolean) => {
+            /* XXX : This signal currently fires only on *FULL* maximization. */
+            this.engine.handleMaximization(client, h || v);
+        });
+
         // TODO: handle workspace.clientFullScreenSet signal
         // TODO: handle workspace.currentActivityChanged signal
         // TODO: handle workspace.activitiesChanged signal

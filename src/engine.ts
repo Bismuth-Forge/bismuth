@@ -35,6 +35,8 @@ class Tile {
     public isNew: boolean;
     public isError: boolean;
     public geometry: QRect;
+    public maximized: boolean;
+    public arrangeCount: number;
 
     constructor(client: KWin.Client) {
         this.client = client;
@@ -47,6 +49,9 @@ class Tile {
             x: 0,
             y: 0,
         };
+
+        this.arrangeCount = 0;
+        this.maximized = false;
     }
 }
 
@@ -126,6 +131,7 @@ class TilingEngine {
             screen.layout(visibles, area.width, area.height, screen.layoutOpts);
 
             visibles.forEach((tile) => {
+                tile.arrangeCount = 0;
                 this.driver.setClientGeometry(tile.client, tile.geometry);
             });
         });
@@ -139,7 +145,14 @@ class TilingEngine {
             if (geometry.x === tile.geometry.x)
             if (geometry.y === tile.geometry.y)
             if (geometry.width === tile.geometry.width)
-            if (geometry.height === tile.geometry.height)
+            if (geometry.height === tile.geometry.height) {
+                tile.arrangeCount = 0;
+                return;
+            }
+
+            // HACK: prevent infinite `geometryChanged`.
+            tile.arrangeCount += 1;
+            if (tile.arrangeCount > 5) /* TODO: define arbitrary constant */
                 return;
 
             this.driver.setClientGeometry(tile.client, tile.geometry);
@@ -168,6 +181,14 @@ class TilingEngine {
         });
     }
 
+    public handleMaximization = (client: KWin.Client, maximized: boolean) => {
+        const tile = this.getTileFromClient(client);
+        if (tile === null) return;
+
+        tile.maximized = maximized;
+        this.arrange();
+    }
+
     public handleUserInput = (input: UserInput) => {
         // TODO: per-layout handlers
         switch (input) {
@@ -189,6 +210,13 @@ class TilingEngine {
         for (let i = 0; i < this.tiles.length; i++)
             if (this.tiles[i].client === currentClient)
                 return i;
+        return null;
+    }
+
+    private getTileFromClient = (client: KWin.Client): Tile => {
+        for (let i = 0; i < this.tiles.length; i++)
+            if (this.tiles[i].client === client)
+                return this.tiles[i];
         return null;
     }
 
