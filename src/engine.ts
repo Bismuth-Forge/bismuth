@@ -141,7 +141,6 @@ class TilingEngine {
      */
 
     public handleUserInput = (input: UserInput) => {
-        // TODO: move this to driver
         const screen = this.getCurrentScreen();
 
         const overriden = screen.layout.handleUserInput(input);
@@ -183,8 +182,7 @@ class TilingEngine {
         while (newIndex >= this.tiles.length)
             newIndex -= this.tiles.length;
 
-        // TODO: move this to driver
-        workspace.activeClient = this.tiles[newIndex].client;
+        this.driver.setActiveClient(this.tiles[newIndex].client);
     }
 
     public moveTile = (step: number) => {
@@ -256,7 +254,6 @@ class TilingEngine {
     }
 
     private getCurrentTileIndex = (): number => {
-        // TODO: don't access `workspace` directly
-        return this.getTileIndexByClient(workspace.activeClient);
+        return this.getTileIndexByClient(this.driver.getActiveClient());
     }
 }

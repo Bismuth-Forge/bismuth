@@ -77,6 +77,14 @@ class KWinDriver {
         return client.fullScreen;
     }
 
+    public getActiveClient(): KWin.Client {
+        return workspace.activeClient;
+    }
+
+    public setActiveClient(client: KWin.Client) {
+        workspace.activeClient = client;
+    }
+
     /*
      * Shortcut
      */
