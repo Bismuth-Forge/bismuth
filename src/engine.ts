@@ -210,15 +210,10 @@ class TilingEngine {
         if (!tile) return;
         if (this.tiles[0] === tile) return;
 
-        let prev = this.tiles[0];
+        const index = this.tiles.indexOf(tile);
+        for (let i = index - 1; i >= 0; i--)
+            this.tiles[i + 1] = this.tiles[i];
         this.tiles[0] = tile;
-        for (let i = 1; i < this.tiles.length; i++) {
-            const tmp = this.tiles[i];
-            this.tiles[i] = prev;
-            if (this.tiles[i] === tile)
-                break;
-            prev = tmp;
-        }
     }
 
     public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: QRect | Rect) => {
