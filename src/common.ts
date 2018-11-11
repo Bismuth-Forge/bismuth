@@ -34,10 +34,21 @@ class Rect {
         this.y = y;
     }
 
+    public clone(): Rect {
+        return new Rect(this.x, this.y, this.width, this.height);
+    }
+
     public copyTo(other: Rect) {
         other.height = this.height;
         other.width = this.width;
         other.x = this.x;
         other.y = this.y;
+    }
+
+    public copyFrom(other: Rect | QRect) {
+        this.height = other.height;
+        this.width = other.width;
+        this.x = other.x;
+        this.y = other.y;
     }
 }

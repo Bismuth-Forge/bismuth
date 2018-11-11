@@ -152,6 +152,7 @@ class KWinDriver {
         });
         client.moveResizedChanged.connect(() => {
             if (client.move || client.resize) return;
+            this.engine.setClientFloat(client, true, client.geometry);
             this.engine.arrange();
         });
     }

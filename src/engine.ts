@@ -35,16 +35,16 @@ class Tile {
     public geometry: Rect;
     public isError: boolean;
     public isNew: boolean;
-    public oldGeometry: Rect;
+    public floatGeometry: Rect;
 
     constructor(client: KWin.Client, geometry: Rect) {
         this.arrangeCount = 0;
         this.client = client;
         this.floating = false;
-        this.geometry = geometry;
+        this.geometry = geometry.clone();
         this.isError = false;
         this.isNew = true;
-        this.oldGeometry = geometry;
+        this.floatGeometry = geometry.clone();
     }
 }
 
@@ -166,7 +166,7 @@ class TilingEngine {
                 this.setMaster();
                 break;
             case UserInput.Float:
-                this.setFloat(this.getCurrentTile(), "toggle");
+                this.setFloat(this.getCurrentTile(), "toggle", undefined);
                 break;
         }
         this.arrange();
@@ -213,7 +213,13 @@ class TilingEngine {
         this.tiles[0] = client;
     }
 
-    public setFloat = (tile: Tile, value: boolean | string) => {
+    public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: QRect | Rect) => {
+        const tile = this.getTileByClient(client);
+        const rect = new Rect(geometry.x, geometry.y, geometry.width, geometry.height);
+        this.setFloat(tile, value, rect);
+    }
+
+    public setFloat = (tile: Tile, value: boolean | string, geometry: Rect) => {
         if (typeof value === "string")
             tile.floating = !tile.floating;
         else {
@@ -222,8 +228,11 @@ class TilingEngine {
             tile.floating = value;
         }
 
-        if (tile.floating)
-            tile.oldGeometry.copyTo(tile.geometry);
+        if (tile.floating) {
+            this.driver.setClientGeometry(
+                tile.client, (geometry) ? geometry : tile.floatGeometry);
+        } else
+            tile.floatGeometry.copyFrom((geometry) ? geometry : tile.client.geometry);
     }
 
     /*
