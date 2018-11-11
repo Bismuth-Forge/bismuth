@@ -71,3 +71,18 @@ class Rect {
         this.y = other.y;
     }
 }
+
+/*
+ * Debuging facility
+ */
+
+declare var console: any;
+
+const DEBUG = false;
+function debug(f: () => any) {
+    if (!DEBUG) return;
+    const ret = f();
+
+    // tslint:disable-next-line
+    console.log(ret);
+}

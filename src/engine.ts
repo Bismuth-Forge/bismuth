@@ -58,6 +58,7 @@ class TilingEngine {
     }
 
     public arrange = () => {
+        debug(() => "arrange: tiles=" + this.tiles.length);
         this.screens.forEach((screen) => {
             if (screen.layout === null) return;
 
@@ -134,6 +135,8 @@ class TilingEngine {
     public handleUserInput = (input: UserInput) => {
         const screen = this.getActiveScreen();
         if (!screen) return;
+
+        debug(() => "handleUserInput: input=" + UserInput[input]);
 
         const overriden = screen.layout.handleUserInput(input);
         if (overriden) {

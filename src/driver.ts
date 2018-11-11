@@ -142,6 +142,8 @@ class KWinDriver {
         if (client.specialWindow) return;
         if (String(client.resourceClass) === "plasmashell") return;
 
+        debug(() => "onClientAdded: '" + client.caption + "' class=" + client.resourceClass);
+
         if (this.engine.manageClient(client)) {
             client.desktopChanged.connect(this.engine.arrange);
             client.geometryChanged.connect(() => {
@@ -157,6 +159,7 @@ class KWinDriver {
     }
 
     private onClientRemoved = (client: KWin.Client) => {
+        debug(() => "onClientRemoved: '" + client.caption + "'");
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
