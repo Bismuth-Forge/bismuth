@@ -133,9 +133,7 @@ class KWinDriver {
         // TODO: handle workspace.activitiesChanged signal
         // TODO: handle workspace.activityAdded signal
         // TODO: handle workspace.activityRemoved signal
-        // TODO: handle workspace.clientFullScreenSet signal
         // TODO: handle workspace.currentActivityChanged signal
-        // TODO: handle workspace.numberDesktopsChanged signal(???)
     }
 
     private onClientAdded = (client: KWin.Client) => {

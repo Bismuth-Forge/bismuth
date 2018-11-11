@@ -35,24 +35,22 @@ class TileLayout implements ILayout {
     }
 
     public apply = (tiles: Tile[], areaWidth: number, areaHeight: number) => {
-        let masterCount, masterWidth, masterHeight;
-        let stackCount, stackWidth, stackHeight, stackX;
+        const masterCount = Math.min(tiles.length, this.numMaster);
+        const stackCount = tiles.length - masterCount;
 
-        masterCount = Math.min(tiles.length, this.numMaster);
-        stackCount = tiles.length - masterCount;
-
+        let masterWidth;
         if (stackCount === 0)
             masterWidth = areaWidth;
         else if (masterCount === 0)
             masterWidth = 0;
         else
             masterWidth = Math.floor(areaWidth * this.masterRatio);
-        stackWidth = areaWidth - masterWidth;
+        const stackWidth = areaWidth - masterWidth;
 
-        masterHeight = (masterCount > 0) ? Math.floor(areaHeight / masterCount) : 0;
-        stackHeight = (stackCount > 0) ? Math.floor(areaHeight / stackCount) : 0;
+        const masterHeight = (masterCount > 0) ? Math.floor(areaHeight / masterCount) : 0;
+        const stackHeight = (stackCount > 0) ? Math.floor(areaHeight / stackCount) : 0;
 
-        stackX = (masterWidth > 0) ? masterWidth + 1 : 0;
+        const stackX = (masterWidth > 0) ? masterWidth + 1 : 0;
 
         for (let i = 0; i < masterCount; i++) {
             tiles[i].geometry.x = 0;
