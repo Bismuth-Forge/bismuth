@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 interface ILayout {
-    apply(tiles: Tile[], areaWidth: number, areaHeight: number);
+    apply(tiles: Tile[], areaWidth: number, areaHeight: number): void;
 
     handleUserInput(input: UserInput): boolean;
     /* if true, layout completely overrides the default behavior */
@@ -34,7 +34,7 @@ class TileLayout implements ILayout {
         this.masterRatio = 0.55;
     }
 
-    public apply = (tiles: Tile[], areaWidth: number, areaHeight: number) => {
+    public apply = (tiles: Tile[], areaWidth: number, areaHeight: number): void => {
         const masterCount = Math.min(tiles.length, this.numMaster);
         const stackCount = tiles.length - masterCount;
 

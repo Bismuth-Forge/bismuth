@@ -139,7 +139,8 @@ class TilingEngine {
      */
 
     public handleUserInput = (input: UserInput) => {
-        const screen = this.getCurrentScreen();
+        const screen = this.getActiveScreen();
+        if (!screen) return;
 
         const overriden = screen.layout.handleUserInput(input);
         if (overriden) {
@@ -147,6 +148,7 @@ class TilingEngine {
             return;
         }
 
+        let tile;
         switch (input) {
             case UserInput.Up:
                 this.moveFocus(-1);
@@ -164,7 +166,8 @@ class TilingEngine {
                 this.setMaster();
                 break;
             case UserInput.Float:
-                this.setFloat(this.getCurrentTile(), "toggle", undefined);
+                if ((tile = this.getActiveTile()))
+                    this.setFloat(tile, "toggle", null);
                 break;
         }
         this.arrange();
@@ -173,51 +176,67 @@ class TilingEngine {
     public moveFocus = (step: number) => {
         if (step === 0) return;
 
-        const index = this.getCurrentTileIndex();
+        const tile = this.getActiveTile();
+        if (!tile) return;
+
+        const visibles = this.getVisibleTiles(this.getActiveScreen());
+        const index = visibles.indexOf(tile);
+
         let newIndex = index + step;
         while (newIndex < 0)
-            newIndex += this.tiles.length;
-        while (newIndex >= this.tiles.length)
-            newIndex -= this.tiles.length;
+            newIndex += visibles.length;
+        newIndex = newIndex % visibles.length;
 
-        this.driver.setActiveClient(this.tiles[newIndex].client);
+        this.driver.setActiveClient(visibles[newIndex].client);
     }
 
     public moveTile = (step: number) => {
         if (step === 0) return;
 
-        let i = this.getCurrentTileIndex();
-        let tmp: Tile;
-        while (step > 0 && i + 1 < this.tiles.length) {
-            tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[i + 1];
-            this.tiles[i + 1] = tmp;
-            i++; step--;
-        }
-        while (step < 0 && i - 1 >= 0) {
-            tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[i - 1];
-            this.tiles[i - 1] = tmp;
-            i--; step++;
+        const tile = this.getActiveTile();
+        if (!tile) return;
+
+        const screen = this.getActiveScreen();
+        let tileIdx = this.tiles.indexOf(tile);
+        const dir = (step > 0) ? 1 : -1;
+        for (let i = tileIdx + dir; 0 <= i && i < this.tiles.length; i += dir) {
+            if (this.isTileVisible(this.tiles[i], screen)) {
+                this.tiles[tileIdx] = this.tiles[i];
+                this.tiles[i] = tile;
+                tileIdx = i;
+
+                step -= dir;
+                if (step === 0)
+                    break;
+            }
         }
     }
 
     public setMaster = () => {
-        const index = this.getCurrentTileIndex();
-        const client = this.tiles[index];
+        const tile = this.getActiveTile();
+        if (!tile) return;
+        if (this.tiles[0] === tile) return;
 
-        for (let i = index - 1; i >= 0; i--)
-            this.tiles[i + 1] = this.tiles[i];
-        this.tiles[0] = client;
+        let prev = this.tiles[0];
+        this.tiles[0] = tile;
+        for (let i = 1; i < this.tiles.length; i++) {
+            const tmp = this.tiles[i];
+            this.tiles[i] = prev;
+            if (this.tiles[i] === tile)
+                break;
+            prev = tmp;
+        }
     }
 
     public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: QRect | Rect) => {
         const tile = this.getTileByClient(client);
+        if (!tile) return;
+
         const rect = new Rect(geometry.x, geometry.y, geometry.width, geometry.height);
         this.setFloat(tile, value, rect);
     }
 
-    public setFloat = (tile: Tile, value: boolean | string, geometry: Rect) => {
+    public setFloat = (tile: Tile, value: boolean | string, geometry: Rect | null) => {
         if (typeof value === "string")
             tile.floating = !tile.floating;
         else {
@@ -237,30 +256,47 @@ class TilingEngine {
      * Privates
      */
 
-    private getCurrentScreen = (): Screen => {
+    private getActiveScreen = (): Screen => {
         const screenId = workspace.activeClient.screen;
         for (let i = 0; i < this.screens.length; i++)
             if (this.screens[i].id === screenId)
                 return this.screens[i];
+
+        /* XXX: suppressing strict type-checker */
+        return this.screens[0];
     }
 
-    private getCurrentTile = (): Tile => {
-        return this.tiles[this.getCurrentTileIndex()];
+    private getActiveTile = (): Tile | null => {
+        /* XXX: may return `null` if the active client is not being managed.
+         * I'm just on a defensive manuever, and nothing has been broke actually. */
+        return this.getTileByClient(this.driver.getActiveClient());
     }
 
-    private getTileByClient = (client: KWin.Client): Tile => {
-        const index = this.getTileIndexByClient(client);
-        return (index === null) ? null : this.tiles[index];
-    }
-
-    private getTileIndexByClient = (client: KWin.Client): number => {
+    private getTileByClient = (client: KWin.Client): Tile | null => {
         for (let i = 0; i < this.tiles.length; i++)
             if (this.tiles[i].client === client)
-                return i;
+                return this.tiles[i];
         return null;
     }
 
-    private getCurrentTileIndex = (): number => {
-        return this.getTileIndexByClient(this.driver.getActiveClient());
+    private isTileVisible = (tile: Tile, screen: Screen): boolean => {
+        try {
+            return this.driver.isClientVisible(tile.client, screen.id);
+        } catch (e) {
+            tile.isError = true;
+            return false;
+        }
+    }
+
+    private getVisibleTiles = (screen: Screen): Tile[] => {
+        // TODO: `engine` should define what "visible" means, not `driver`.
+        return this.tiles.filter((tile): boolean => {
+            try {
+                return this.driver.isClientVisible(tile.client, screen.id);
+            } catch (e) {
+                tile.isError = true;
+                return false;
+            }
+        });
     }
 }

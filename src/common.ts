@@ -27,7 +27,7 @@ class Rect {
     public x: number;
     public y: number;
 
-    constructor(x, y, w, h) {
+    constructor(x: number, y: number, w: number, h: number) {
         this.height = h;
         this.width = w;
         this.x = x;

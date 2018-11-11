@@ -50,6 +50,7 @@ declare namespace KWin {
         /* read-write */
         currentDesktop: number;
         activeClient: KWin.Client;
+            /* NOTE: if no window is present, this points to desktop. */
 
         /* signals */
         clientAdded: QSignal;
@@ -69,7 +70,7 @@ declare namespace KWin {
 
         /* functions */
         clientList(): Client[];
-        clientArea(option: number, screen: number, desktop: number);
+        clientArea(option: number, screen: number, desktop: number): QRect;
     }
 
     interface Toplevel {

@@ -21,13 +21,15 @@
 class KWinDriver {
     private engine: TilingEngine;
 
+    constructor() {
+        this.engine =  new TilingEngine(this);
+    }
+
     /*
      * Main
      */
 
     public main() {
-        this.engine = new TilingEngine(this);
-
         this.bindEvents();
         this.bindShortcut();
 

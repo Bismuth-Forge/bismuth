@@ -5,6 +5,7 @@
         "outFile": "script.js",
         "removeComments": true,
         "lib": ["es5"],
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "strict": true
     }
 }
