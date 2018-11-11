@@ -62,17 +62,9 @@ class TilingEngine {
             if (screen.layout === null) return;
 
             const area = this.driver.getWorkingArea(screen.id);
-            const visibles = this.tiles.filter((t) => {
-                try {
-                    return (
-                        this.driver.isClientVisible(t.client, screen.id) &&
-                        !this.driver.isClientFullScreen(t.client)
-                    );
-                } catch (e) {
-                    t.isError = true;
-                }
-                return false;
-            });
+            const visibles = this.getVisibleTiles(screen)
+                .filter((tile: Tile): boolean =>
+                    !this.driver.isClientFullScreen(tile.client));
 
             const tileables = visibles.filter((t) => !t.floating);
             screen.layout.apply(tileables, area.width, area.height);
@@ -83,32 +75,32 @@ class TilingEngine {
             });
 
             visibles.filter((t) => t.floating)
-                    .map((t) => (t.client.keepAbove = true));
+                    .forEach((t) => (t.client.keepAbove = true));
         });
     }
 
     public arrangeClient = (client: KWin.Client) => {
-        this.tiles.forEach((tile) => {
-            if (tile.client !== client) return;
-            if (tile.floating) return;
-            if (this.driver.isClientFullScreen(tile.client)) return;
+        const tile = this.getTileByClient(client);
+        if (!tile) return;
 
-            const geometry = this.driver.getClientGeometry(tile.client);
-            if (geometry.x === tile.geometry.x)
-            if (geometry.y === tile.geometry.y)
-            if (geometry.width === tile.geometry.width)
-            if (geometry.height === tile.geometry.height) {
-                tile.arrangeCount = 0;
-                return;
-            }
+        if (tile.floating) return;
+        if (this.driver.isClientFullScreen(tile.client)) return;
 
-            /* HACK: prevent infinite `geometryChanged`. */
-            tile.arrangeCount += 1;
-            if (tile.arrangeCount > 5) // TODO: define arbitrary constant
-                return;
+        const geometry = this.driver.getClientGeometry(tile.client);
+        if (geometry.x === tile.geometry.x)
+        if (geometry.y === tile.geometry.y)
+        if (geometry.width === tile.geometry.width)
+        if (geometry.height === tile.geometry.height) {
+            tile.arrangeCount = 0;
+            return;
+        }
 
-            this.driver.setClientGeometry(tile.client, tile.geometry);
-        });
+        /* HACK: prevent infinite `geometryChanged`. */
+        tile.arrangeCount += 1;
+        if (tile.arrangeCount > 5) // TODO: define arbitrary constant
+            return;
+
+        this.driver.setClientGeometry(tile.client, tile.geometry);
     }
 
     public manageClient = (client: KWin.Client): boolean => {
@@ -120,9 +112,8 @@ class TilingEngine {
     }
 
     public unmanageClient = (client: KWin.Client) => {
-        this.tiles = this.tiles.filter((t) => {
-            return t.client !== client && !t.isError;
-        });
+        this.tiles = this.tiles.filter((t) =>
+            t.client !== client && !t.isError);
         this.arrange();
     }
 
@@ -281,24 +272,17 @@ class TilingEngine {
         return null;
     }
 
+    private getVisibleTiles = (screen: Screen): Tile[] => {
+        return this.tiles.filter((tile) => this.isTileVisible(tile, screen));
+    }
+
     private isTileVisible = (tile: Tile, screen: Screen): boolean => {
+        // TODO: `engine` should define what "visible" means, not `driver`.
         try {
             return this.driver.isClientVisible(tile.client, screen.id);
         } catch (e) {
             tile.isError = true;
             return false;
         }
-    }
-
-    private getVisibleTiles = (screen: Screen): Tile[] => {
-        // TODO: `engine` should define what "visible" means, not `driver`.
-        return this.tiles.filter((tile): boolean => {
-            try {
-                return this.driver.isClientVisible(tile.client, screen.id);
-            } catch (e) {
-                tile.isError = true;
-                return false;
-            }
-        });
     }
 }
