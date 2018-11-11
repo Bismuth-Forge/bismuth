@@ -14,6 +14,11 @@ clean:
 	@rm -vf script.json
 	@rm -rvf $(PACKAGE_DIR)
 
+install: package
+	plasmapkg2 -t kwinscript -s $(PACKAGE_NAME) \
+		&& plasmapkg2 -u $(PACKAGE_FILE) \
+		|| plasmapkg2 -i $(PACKAGE_FILE)
+
 package: $(PACKAGE_FILE)
 
 $(PACKAGE_FILE): $(PACKAGE_DIR)
@@ -39,4 +44,4 @@ $(FILE_QML): res/main.qml
 	@mkdir -vp `dirname $(FILE_QML)`
 	@cp -v $< $@
 
-.PHONY: all clean package
+.PHONY: all clean install package
