@@ -142,19 +142,18 @@ class KWinDriver {
         if (client.specialWindow) return;
         if (String(client.resourceClass) === "plasmashell") return;
 
-        this.engine.manageClient(client);
-
-        // TODO: don't bind these signals if client is rejected by engine
-        client.desktopChanged.connect(this.engine.arrange);
-        client.geometryChanged.connect(() => {
-            if (client.move || client.resize) return;
-            this.engine.arrangeClient(client);
-        });
-        client.moveResizedChanged.connect(() => {
-            if (client.move || client.resize) return;
-            this.engine.setClientFloat(client, true, client.geometry);
-            this.engine.arrange();
-        });
+        if (this.engine.manageClient(client)) {
+            client.desktopChanged.connect(this.engine.arrange);
+            client.geometryChanged.connect(() => {
+                if (client.move || client.resize) return;
+                this.engine.arrangeClient(client);
+            });
+            client.moveResizedChanged.connect(() => {
+                if (client.move || client.resize) return;
+                this.engine.setClientFloat(client, true, client.geometry);
+                this.engine.arrange();
+            });
+        }
     }
 
     private onClientRemoved = (client: KWin.Client) => {

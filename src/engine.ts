@@ -111,10 +111,12 @@ class TilingEngine {
         });
     }
 
-    public manageClient = (client: KWin.Client) => {
+    public manageClient = (client: KWin.Client): boolean => {
+        // TODO: rule-based client filtering
         this.tiles.push(
             new Tile(client, this.driver.getClientGeometry(client)));
         this.arrange();
+        return true;
     }
 
     public unmanageClient = (client: KWin.Client) => {
