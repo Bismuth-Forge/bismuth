@@ -21,6 +21,12 @@ install: package
 
 package: $(PACKAGE_FILE)
 
+run: $(PACKAGE_DIR)
+	bin/load-script.sh "$(FILE_QML)" "$(PACKAGE_NAME)-test"
+
+stop:
+	bin/load-script.sh "unload" "$(PACKAGE_NAME)-test"
+
 $(PACKAGE_FILE): $(PACKAGE_DIR)
 	@rm -f "$(PACKAGE_FILE)"
 	@7z a -tzip $(PACKAGE_FILE) ./$(PACKAGE_DIR)/*
