@@ -34,7 +34,6 @@ class Tile {
     public floating: boolean;
     public geometry: Rect;
     public isError: boolean;
-    public isNew: boolean;
     public floatGeometry: Rect;
 
     constructor(client: KWin.Client, geometry: Rect) {
@@ -43,7 +42,6 @@ class Tile {
         this.floating = false;
         this.geometry = geometry.clone();
         this.isError = false;
-        this.isNew = true;
         this.floatGeometry = geometry.clone();
     }
 }
