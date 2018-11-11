@@ -178,10 +178,10 @@ class TilingEngine {
 
         const index = this.getCurrentTileIndex();
         let newIndex = index + step;
-        if (newIndex < 0)
-            newIndex = 0;
-        if (newIndex >= this.tiles.length)
-            newIndex = this.tiles.length - 1;
+        while (newIndex < 0)
+            newIndex += this.tiles.length;
+        while (newIndex >= this.tiles.length)
+            newIndex -= this.tiles.length;
 
         // TODO: move this to driver
         workspace.activeClient = this.tiles[newIndex].client;
