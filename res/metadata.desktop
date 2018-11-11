@@ -3,8 +3,8 @@ Name=Krohnkite
 Comment=A dynamic tiling script for KWin
 #Icon=
 
-X-Plasma-API=javascript
-X-Plasma-MainScript=code/main.js
+X-Plasma-API=declarativescript
+X-Plasma-MainScript=ui/main.qml
 
 X-KDE-PluginInfo-Author=Eon S. Jeon
 X-KDE-PluginInfo-Email=esjeon@hyunmu.am
