@@ -96,5 +96,14 @@ class TileLayout implements ILayout {
     }
 }
 
-// TODO: MonocleLayout
+class MonocleLayout implements ILayout {
+    public apply = (tiles: Tile[], areaWidth: number, areaHeight: number): void => {
+        const geometry = new Rect(0, 0, areaWidth, areaHeight);
+        tiles.forEach((tile) => geometry.copyTo(tile.geometry));
+    }
+
+    public handleUserInput(input: UserInput) {
+        return false;
+    }
+}
 // TODO: ColumnLayout
