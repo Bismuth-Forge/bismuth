@@ -114,6 +114,7 @@ class KWinDriver {
         bind("I", "Increase", UserInput.Increase);
         bind("D", "Decrease", UserInput.Decrease);
         bind("F", "Float", UserInput.Float);
+        bind("\\", "Cycle Layout", UserInput.CycleLayout);
 
         bind("Return", "Set master", UserInput.SetMaster);
     }

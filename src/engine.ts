@@ -21,10 +21,16 @@
 class Screen {
     public id: number;
     public layout: ILayout;
+    public layouts: ILayout[];
 
-    constructor(id: number) {
+    constructor(id: number, layouts?: ILayout[]) {
         this.id = id;
-        this.layout = new TileLayout();
+        this.layouts = (layouts) ? layouts : [
+            new TileLayout(),
+            new MonocleLayout(),
+            new SpreadLayout(),
+        ];
+        this.layout = this.layouts[0];
     }
 }
 
@@ -165,6 +171,9 @@ class TilingEngine {
                 if ((tile = this.getActiveTile()))
                     this.setFloat(tile, "toggle", null);
                 break;
+            case UserInput.CycleLayout:
+                this.cycleLayout(+1);
+                break;
         }
         this.arrange();
     }
@@ -241,6 +250,13 @@ class TilingEngine {
                 tile.client, (geometry) ? geometry : tile.floatGeometry);
         } else
             tile.floatGeometry.copyFrom((geometry) ? geometry : tile.client.geometry);
+    }
+
+    public cycleLayout(target: number) {
+        const screen = this.getActiveScreen();
+        let index = screen.layouts.indexOf(screen.layout);
+        index = (index + target) % screen.layouts.length;
+        screen.layout = screen.layouts[index];
     }
 
     /*

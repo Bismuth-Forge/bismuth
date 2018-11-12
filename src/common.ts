@@ -34,6 +34,7 @@ enum UserInput {
 
     Float,
     SetMaster,
+    CycleLayout,
 }
 
 class Rect {
