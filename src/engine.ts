@@ -74,7 +74,7 @@ class TilingEngine {
                     !this.driver.isClientFullScreen(tile.client));
 
             const tileables = visibles.filter((t) => !t.floating);
-            screen.layout.apply(tileables, area.width, area.height);
+            screen.layout.apply(tileables, area);
             tileables.forEach((tile) => {
                 tile.arrangeCount = 0;
                 this.driver.setClientGeometry(tile.client, tile.geometry);

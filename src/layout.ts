@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 interface ILayout {
-    apply(tiles: Tile[], areaWidth: number, areaHeight: number): void;
+    apply(tiles: Tile[], area: Rect): void;
 
     handleUserInput(input: UserInput): boolean;
     /* if true, layout completely overrides the default behavior */
@@ -34,35 +34,35 @@ class TileLayout implements ILayout {
         this.masterRatio = 0.55;
     }
 
-    public apply = (tiles: Tile[], areaWidth: number, areaHeight: number): void => {
+    public apply = (tiles: Tile[], area: Rect): void => {
         const masterCount = Math.min(tiles.length, this.numMaster);
         const stackCount = tiles.length - masterCount;
 
         let masterWidth;
         if (stackCount === 0)
-            masterWidth = areaWidth;
+            masterWidth = area.width;
         else if (masterCount === 0)
             masterWidth = 0;
         else
-            masterWidth = Math.floor(areaWidth * this.masterRatio);
-        const stackWidth = areaWidth - masterWidth;
+            masterWidth = Math.floor(area.width * this.masterRatio);
+        const stackWidth = area.width - masterWidth;
 
-        const masterHeight = (masterCount > 0) ? Math.floor(areaHeight / masterCount) : 0;
-        const stackHeight = (stackCount > 0) ? Math.floor(areaHeight / stackCount) : 0;
+        const masterHeight = (masterCount > 0) ? Math.floor(area.height / masterCount) : 0;
+        const stackHeight = (stackCount > 0) ? Math.floor(area.height / stackCount) : 0;
 
         const stackX = (masterWidth > 0) ? masterWidth + 1 : 0;
 
         for (let i = 0; i < masterCount; i++) {
-            tiles[i].geometry.x = 0;
-            tiles[i].geometry.y = masterHeight * i;
+            tiles[i].geometry.x = area.x;
+            tiles[i].geometry.y = area.y + masterHeight * i;
             tiles[i].geometry.width = masterWidth;
             tiles[i].geometry.height = masterHeight;
         }
 
         for (let i = 0; i < stackCount; i++) {
             const j = masterCount + i;
-            tiles[j].geometry.x = stackX;
-            tiles[j].geometry.y = stackHeight * i;
+            tiles[j].geometry.x = area.x + stackX;
+            tiles[j].geometry.y = area.y + stackHeight * i;
             tiles[j].geometry.width = stackWidth;
             tiles[j].geometry.height = stackHeight;
         }
@@ -97,8 +97,8 @@ class TileLayout implements ILayout {
 }
 
 class MonocleLayout implements ILayout {
-    public apply = (tiles: Tile[], areaWidth: number, areaHeight: number): void => {
-        const geometry = new Rect(0, 0, areaWidth, areaHeight);
+    public apply = (tiles: Tile[], area: Rect): void => {
+        const geometry = new Rect(area.x, area.y, area.width, area.height);
         tiles.forEach((tile) => geometry.copyTo(tile.geometry));
     }
 

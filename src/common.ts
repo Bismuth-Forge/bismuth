@@ -42,6 +42,10 @@ class Rect {
         return new Rect(0, 0, 0, 0);
     }
 
+    public static from(rect: Rect | QRect) {
+        return new Rect(rect.x, rect.y, rect.width, rect.height);
+    }
+
     public height: number;
     public width: number;
     public x: number;

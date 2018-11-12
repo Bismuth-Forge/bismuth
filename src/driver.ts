@@ -44,10 +44,11 @@ class KWinDriver {
      * Utils
      */
 
-    public getWorkingArea(screenId: number): QRect {
+    public getWorkingArea(screenId: number): Rect {
         // TODO: verify: can each desktops have a different placement area?
-        return workspace.clientArea(
-            KWin.PlacementArea, screenId, workspace.currentDesktop);
+        return Rect.from(
+            workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
+        );
     }
 
     public getClientGeometry(client: KWin.Client): Rect {
