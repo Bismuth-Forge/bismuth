@@ -57,7 +57,7 @@ trap "{ rm -vf ${file_path_random}; }" EXIT
 cp -v "${file_path}" "${file_path_random}"
 
 # load script and run
-_invoke "loadDeclarativeScript" string:"${file_path}" string:"${plugin_name}"
+_invoke "loadDeclarativeScript" string:"${file_path_random}" string:"${plugin_name}"
 _invoke "start"
 
 if [ "$(check_loaded)" = "false" ]; then
