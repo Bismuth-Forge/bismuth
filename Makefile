@@ -23,6 +23,7 @@ package: $(PACKAGE_FILE)
 
 run: $(PACKAGE_DIR)
 	bin/load-script.sh "$(FILE_QML)" "$(PACKAGE_NAME)-test"
+	@find "$(PACKAGE_DIR)" '(' -name "*.qmlc" -o -name "*.jsc" ')' -delete
 
 stop:
 	bin/load-script.sh "unload" "$(PACKAGE_NAME)-test"
