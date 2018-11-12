@@ -107,3 +107,49 @@ class MonocleLayout implements ILayout {
     }
 }
 // TODO: ColumnLayout
+
+class SpreadLayout implements ILayout {
+    private space: number; /* in ratio */
+
+    constructor() {
+        this.space = 0.07;
+    }
+
+    public apply = (tiles: Tile[], area: Rect): void => {
+        let numTiles = tiles.length;
+        const spaceWidth = Math.floor(area.width * this.space);
+        let cardWidth = area.width - (spaceWidth * (numTiles - 1));
+
+        // TODO: define arbitrary constants
+        const miniumCardWidth = area.width * 0.40;
+        while (cardWidth < miniumCardWidth) {
+            cardWidth += spaceWidth;
+            numTiles -= 1;
+        }
+
+        for (let i = 0; i < tiles.length; i++)
+            tiles[i].geometry.copyFrom({
+                height: area.height,
+                width: cardWidth,
+                x: area.x + ((i < numTiles) ? spaceWidth * (numTiles - i - 1)
+                                            : 0),
+                y: area.y,
+            });
+    }
+
+    public handleUserInput(input: UserInput) {
+        switch (input) {
+            case UserInput.Left:
+                // TODO: define arbitrary constants
+                this.space = Math.max(0.04, this.space - 0.01);
+                break;
+            case UserInput.Right:
+                // TODO: define arbitrary constants
+                this.space = Math.min(0.10, this.space + 0.01);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+}
