@@ -66,12 +66,14 @@ class KWinDriver {
         client.geometry.y = geometry.y;
     }
 
-    public isClientVisible(client: KWin.Client, screenId: number) {
+    public isClientVisible(client: KWin.Client, screenId: number): boolean {
         // TODO: test KWin::Toplevel properties...?
         return (
             (!client.minimized) &&
             (client.desktop === workspace.currentDesktop
                 || client.desktop === -1 /* on all desktop */) &&
+            (client.activities.length === 0 /* on all activities */
+                || client.activities.indexOf(workspace.currentActivity) !== -1) &&
             (client.screen === screenId)
         );
     }
@@ -133,11 +135,7 @@ class KWinDriver {
         workspace.currentDesktopChanged.connect(this.engine.arrange);
         workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
         workspace.screenResized.connect(this.engine.arrange);
-
-        // TODO: handle workspace.activitiesChanged signal
-        // TODO: handle workspace.activityAdded signal
-        // TODO: handle workspace.activityRemoved signal
-        // TODO: handle workspace.currentActivityChanged signal
+        workspace.currentActivityChanged.connect(this.engine.arrange);
     }
 
     private onClientAdded = (client: KWin.Client) => {

@@ -46,6 +46,7 @@ declare namespace KWin {
     interface WorkspaceWrapper {
         /* read-only */
         readonly numScreens: number;
+        readonly currentActivity: string;
 
         /* read-write */
         currentDesktop: number;
@@ -79,6 +80,8 @@ declare namespace KWin {
         readonly resourceName: string;
         readonly resourceClass: string;
         readonly windowRole: string;
+        readonly activities: string[];
+            /* Not exactly an `Array`, but still quite compatible. */
 
         /* signal */
         geometryChanged: QSignal;
