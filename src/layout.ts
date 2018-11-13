@@ -139,11 +139,11 @@ class SpreadLayout implements ILayout {
 
     public handleUserInput(input: UserInput) {
         switch (input) {
-            case UserInput.Left:
+            case UserInput.Decrease:
                 // TODO: define arbitrary constants
                 this.space = Math.max(0.04, this.space - 0.01);
                 break;
-            case UserInput.Right:
+            case UserInput.Increase:
                 // TODO: define arbitrary constants
                 this.space = Math.min(0.10, this.space + 0.01);
                 break;
