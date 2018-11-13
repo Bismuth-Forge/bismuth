@@ -70,8 +70,12 @@ class TilingEngine {
 
             const area = this.driver.getWorkingArea(screen.id);
             const visibles = this.getVisibleTiles(screen)
-                .filter((tile: Tile): boolean =>
-                    !this.driver.isClientFullScreen(tile.client));
+                .filter((tile: Tile): boolean => {
+                    const isFullScreen = this.driver.isClientFullScreen(tile.client);
+                    if (!isFullScreen) return true;
+                    tile.client.keepAbove = tile.client.keepBelow = false;
+                    return false;
+                });
 
             const tileables = visibles.filter((t) => !t.floating);
             screen.layout.apply(tileables, area);
