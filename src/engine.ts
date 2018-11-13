@@ -80,8 +80,7 @@ class TilingEngine {
             const tileables = visibles.filter((t) => !t.floating);
             screen.layout.apply(tileables, area);
             tileables.forEach((tile) => {
-                tile.arrangeCount = 0;
-                this.driver.setClientGeometry(tile.client, tile.geometry);
+                this.applyTileGeometry(tile, true);
                 tile.client.keepBelow = true;
             });
 
@@ -97,21 +96,7 @@ class TilingEngine {
         if (tile.floating) return;
         if (this.driver.isClientFullScreen(tile.client)) return;
 
-        const geometry = this.driver.getClientGeometry(tile.client);
-        if (geometry.x === tile.geometry.x)
-        if (geometry.y === tile.geometry.y)
-        if (geometry.width === tile.geometry.width)
-        if (geometry.height === tile.geometry.height) {
-            tile.arrangeCount = 0;
-            return;
-        }
-
-        /* HACK: prevent infinite `geometryChanged`. */
-        tile.arrangeCount += 1;
-        if (tile.arrangeCount > 5) // TODO: define arbitrary constant
-            return;
-
-        this.driver.setClientGeometry(tile.client, tile.geometry);
+        this.applyTileGeometry(tile, false);
     }
 
     public manageClient = (client: KWin.Client): boolean => {
@@ -302,5 +287,23 @@ class TilingEngine {
             tile.isError = true;
             return false;
         }
+    }
+
+    private applyTileGeometry = (tile: Tile, isUpdated: boolean) => {
+        const geometry = this.driver.getClientGeometry(tile.client);
+        if (geometry.x === tile.geometry.x)
+        if (geometry.y === tile.geometry.y)
+        if (geometry.width === tile.geometry.width)
+        if (geometry.height === tile.geometry.height) {
+            tile.arrangeCount = 0;
+            return;
+        }
+
+        /* HACK: prevent infinite `geometryChanged`. */
+        tile.arrangeCount = (isUpdated) ? 0 : tile.arrangeCount + 1;
+        if (tile.arrangeCount > 5) // TODO: define arbitrary constant
+            return;
+
+        this.driver.setClientGeometry(tile.client, tile.geometry);
     }
 }
