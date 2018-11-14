@@ -12,6 +12,14 @@ Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to be
 ![screenshot](screenshot.png)
 
 
+Prerequisite
+------------
+
+ * Typescript (tested w/ 3.1.x)
+ * GNU Make
+ * p7zip (7z)
+
+
 Build & Install
 ---------------
 
