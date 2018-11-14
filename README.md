@@ -60,6 +60,39 @@ Default Key Bindings
 | Meta + \          | Cycle Layout                   |
 
 
+Tips
+----
+
+### Removing Title Bars ###
+
+1. `System Setting` > `Application Style` > `Window Decorations`
+2. Click `Configure Breeze` inside the preview.
+3. `Window-Specific Overrides` tab > `Add` button
+4. Enter the following:
+   - `Regular expression to match`: `.*`
+   - Check `Hide window titel bar`
+
+(Note: not all decorations support this feature.)
+
+### Changing Border Colors ###
+
+Changing the color of borders makes it easier to identify the currently focused
+window.  This is quite an essential if title bars are removed.
+
+1. Open `~/.config/kdeglobals` with your favoir editors. (i.e. Kate, Vim, Nano)
+2. Scroll down and find `[WM]` section
+3. Below the section, append the followings:
+   - `frame=61,174,233`: set the border color of active window to *RGB(61,174,233)*
+   - `inactiveFrame=239,240,241`: set the border color of inactive window to *RGB(239,240,241)*
+4. You must **restart** your session to see changes. (i.e. re-login, reboot)
+
+(Note: the RGB values presented here is for the default Breeze theme. Feel free
+to change these values. You can use [KColorChooser][] to pick colors from the
+screen.)
+
+[KColorChooser]: https://www.kde.org/applications/graphics/kcolorchooser/
+
+
 Useful Development Resources
 ----------------------------
 
