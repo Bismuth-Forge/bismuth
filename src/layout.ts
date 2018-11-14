@@ -153,3 +153,45 @@ class SpreadLayout implements ILayout {
         return true;
     }
 }
+
+class StairLayout implements ILayout {
+    private space: number; /* in PIXELS */
+
+    constructor() {
+        this.space = 24;
+    }
+
+    public apply = (tiles: Tile[], area: Rect): void => {
+        const len = tiles.length;
+        const space = this.space;
+
+        // TODO: limit the maximum number of staired windows.
+
+        for (let i = 0; i < len; i++) {
+            const dx = space * (len - i - 1);
+            const dy = space * i;
+            tiles[i].geometry.set(
+                area.x + dx,
+                area.y + dy,
+                area.width - dx,
+                area.height - dy,
+            );
+        }
+    }
+
+    public handleUserInput(input: UserInput) {
+        switch (input) {
+            case UserInput.Decrease:
+                // TODO: define arbitrary constants
+                this.space = Math.max(16, this.space - 8);
+                break;
+            case UserInput.Increase:
+                // TODO: define arbitrary constants
+                this.space = Math.min(160, this.space + 8);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+}

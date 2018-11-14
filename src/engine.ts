@@ -29,6 +29,7 @@ class Screen {
             new TileLayout(),
             new MonocleLayout(),
             new SpreadLayout(),
+            new StairLayout(),
         ];
         this.layout = this.layouts[0];
     }
