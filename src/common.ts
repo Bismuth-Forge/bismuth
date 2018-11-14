@@ -58,6 +58,13 @@ class Rect {
         this.y = y;
     }
 
+    public set(x: number, y: number, w: number, h: number) {
+        this.height = h;
+        this.width = w;
+        this.x = x;
+        this.y = y;
+    }
+
     public clone(): Rect {
         return new Rect(this.x, this.y, this.width, this.height);
     }
