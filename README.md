@@ -100,6 +100,26 @@ screen.)
 
 [KColorChooser]: https://www.kde.org/applications/graphics/kcolorchooser/
 
+### Setting Up for Multi-Screen ###
+
+Krohnkite supports tiling on multi-screen environment, but users must configure
+KWin to unlock the full potential of tiling management.
+
+1. Switching between Screens
+    - `Separate Screen Focus` option is required to enable 
+      `Switch to Next/Previous Screen` shortcuts, which allow switching b/w
+      screens only with keys.
+    - The option can be found under `Window Management` > `Window Behavior` >
+      `Multiscreen Behaviour`. Note that this option appears only when more
+      than one monitor is present.
+    - `Active Screen follows Mouse` is **NOT** recommended.
+2. Switching with Shortcuts
+    - In `Global Shortcut`, you can find `Switch to Next Screen` and 
+      `Switch to Previous Screen`. They have no default key bindings.
+    - It's recommended to bind them to `Meta + ,` and `Meta + .`.
+    - Switching b/w screens also sets the active window to the last
+      active window on the current screen.
+
 
 Useful Development Resources
 ----------------------------
