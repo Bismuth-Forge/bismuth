@@ -159,7 +159,7 @@ class TilingEngine {
                 break;
             case UserInput.Float:
                 if ((tile = this.getActiveTile()))
-                    this.setFloat(tile, "toggle", null);
+                    this.setFloat(tile, "toggle");
                 break;
             case UserInput.CycleLayout:
                 this.cycleLayout(+1);
@@ -226,7 +226,7 @@ class TilingEngine {
         this.setFloat(tile, value, rect);
     }
 
-    public setFloat = (tile: Tile, value: boolean | string, geometry: Rect | null) => {
+    public setFloat = (tile: Tile, value: boolean | string, geometry?: Rect) => {
         if (typeof value === "string")
             tile.floating = !tile.floating;
         else {
