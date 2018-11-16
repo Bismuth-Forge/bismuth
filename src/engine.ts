@@ -53,15 +53,29 @@ class Tile {
     }
 }
 
+class Rule {
+    public className: string | null;
+    public ignore: boolean;
+    public floating: boolean;
+
+    constructor(className: string, ignore: boolean, floating: boolean) {
+        this.className = (className.length > 0) ? className : null;
+        this.ignore = ignore;
+        this.floating = floating;
+    }
+}
+
 class TilingEngine {
     public screens: Screen[];
     private driver: KWinDriver;
     private tiles: Tile[];
+    private rules: Rule[];
 
     constructor(driver: KWinDriver) {
         this.driver = driver;
         this.tiles = Array();
         this.screens = Array();
+        this.rules = Array();
     }
 
     public arrange = () => {
@@ -101,9 +115,21 @@ class TilingEngine {
     }
 
     public manageClient = (client: KWin.Client): boolean => {
-        // TODO: rule-based client filtering
-        this.tiles.push(
-            new Tile(client, this.driver.getClientGeometry(client)));
+        const className = this.driver.getClientClassName(client);
+
+        const ignore = this.rules.some((rule): boolean =>
+            (className === rule.className && rule.ignore));
+        if (ignore)
+            return false;
+
+        const tile = new Tile(client, this.driver.getClientGeometry(client));
+
+        const floating = this.rules.some((rule): boolean =>
+            (className === rule.className && rule.floating));
+        if (floating)
+            this.setFloat(tile, true);
+
+        this.tiles.push(tile);
         this.arrange();
         return true;
     }
@@ -122,6 +148,10 @@ class TilingEngine {
         this.screens = this.screens.filter((screen) => {
             return screen.id !== screenId;
         });
+    }
+
+    public updateRules = (rules: Rule[]) => {
+        this.rules = rules;
     }
 
     /*

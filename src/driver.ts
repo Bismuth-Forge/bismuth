@@ -30,6 +30,7 @@ class KWinDriver {
      */
 
     public main() {
+        this.loadRules();
         this.bindEvents();
         this.bindShortcut();
 
@@ -49,6 +50,10 @@ class KWinDriver {
         return Rect.from(
             workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
         );
+    }
+
+    public getClientClassName(client: KWin.Client): string {
+        return String(client.resourceClass);
     }
 
     public getClientGeometry(client: KWin.Client): Rect {
@@ -88,6 +93,17 @@ class KWinDriver {
 
     public setActiveClient(client: KWin.Client) {
         workspace.activeClient = client;
+    }
+
+    /*
+     * Config
+     */
+
+    private loadRules() {
+        // TODO: configurable rules
+        this.engine.updateRules([
+            new Rule("krunner", true, false),
+        ]);
     }
 
     /*
