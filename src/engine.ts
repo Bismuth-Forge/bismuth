@@ -23,9 +23,9 @@ class Screen {
     public layout: ILayout;
     public layouts: ILayout[];
 
-    constructor(id: number, layouts?: ILayout[]) {
+    constructor(id: number) {
         this.id = id;
-        this.layouts = (layouts) ? layouts : [
+        this.layouts = [
             new TileLayout(),
             new MonocleLayout(),
             new SpreadLayout(),
@@ -53,29 +53,15 @@ class Tile {
     }
 }
 
-class Rule {
-    public className: string | null;
-    public ignore: boolean;
-    public floating: boolean;
-
-    constructor(className: string, ignore: boolean, floating: boolean) {
-        this.className = (className.length > 0) ? className : null;
-        this.ignore = ignore;
-        this.floating = floating;
-    }
-}
-
 class TilingEngine {
     public screens: Screen[];
     private driver: KWinDriver;
     private tiles: Tile[];
-    private rules: Rule[];
 
     constructor(driver: KWinDriver) {
         this.driver = driver;
         this.tiles = Array();
         this.screens = Array();
-        this.rules = Array();
     }
 
     public arrange = () => {
@@ -117,15 +103,13 @@ class TilingEngine {
     public manageClient = (client: KWin.Client): boolean => {
         const className = this.driver.getClientClassName(client);
 
-        const ignore = this.rules.some((rule): boolean =>
-            (className === rule.className && rule.ignore));
+        const ignore = (Config.ignoreClass.indexOf(className) >= 0);
         if (ignore)
             return false;
 
         const tile = new Tile(client, this.driver.getClientGeometry(client));
 
-        const floating = this.rules.some((rule): boolean =>
-            (className === rule.className && rule.floating));
+        const floating = (Config.floatingClass.indexOf(className) >= 0);
         if (floating)
             this.setFloat(tile, true);
 
@@ -148,10 +132,6 @@ class TilingEngine {
         this.screens = this.screens.filter((screen) => {
             return screen.id !== screenId;
         });
-    }
-
-    public updateRules = (rules: Rule[]) => {
-        this.rules = rules;
     }
 
     /*
@@ -192,7 +172,7 @@ class TilingEngine {
                     this.setFloat(tile, "toggle");
                 break;
             case UserInput.CycleLayout:
-                this.cycleLayout(+1);
+                this.nextLayout();
                 break;
         }
         this.arrange();
@@ -272,11 +252,19 @@ class TilingEngine {
             tile.floatGeometry.copyFrom((geometry) ? geometry : tile.client.geometry);
     }
 
-    public cycleLayout(target: number) {
+    public nextLayout() {
         const screen = this.getActiveScreen();
+        const lastLayout = screen.layout;
         let index = screen.layouts.indexOf(screen.layout);
-        index = (index + target) % screen.layouts.length;
+
+        for (;;) {
+            index = (index + 1) % screen.layouts.length;
+            debug(() => index);
+            if (screen.layouts[index] === lastLayout) break;
+            if (screen.layouts[index].isEnabled()) break;
+        }
         screen.layout = screen.layouts[index];
+        debug(() => screen.layout);
     }
 
     /*

@@ -23,6 +23,8 @@ interface ILayout {
 
     handleUserInput(input: UserInput): boolean;
     /* if true, layout completely overrides the default behavior */
+
+    isEnabled(): boolean;
 }
 
 class TileLayout implements ILayout {
@@ -94,6 +96,10 @@ class TileLayout implements ILayout {
         }
         return true;
     }
+
+    public isEnabled(): boolean {
+        return Config.enableTileLayout;
+    }
 }
 
 class MonocleLayout implements ILayout {
@@ -104,6 +110,10 @@ class MonocleLayout implements ILayout {
 
     public handleUserInput(input: UserInput) {
         return false;
+    }
+
+    public isEnabled(): boolean {
+        return Config.enableMonocleLayout;
     }
 }
 // TODO: ColumnLayout
@@ -152,6 +162,10 @@ class SpreadLayout implements ILayout {
         }
         return true;
     }
+
+    public isEnabled(): boolean {
+        return Config.enableSpreadLayout;
+    }
 }
 
 class StairLayout implements ILayout {
@@ -193,5 +207,9 @@ class StairLayout implements ILayout {
                 return false;
         }
         return true;
+    }
+
+    public isEnabled(): boolean {
+        return Config.enableStairLayout;
     }
 }

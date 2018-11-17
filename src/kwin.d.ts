@@ -36,6 +36,8 @@ declare namespace KWin {
     /* enum ClientAreaOption */
     var PlacementArea: number;
 
+    function readConfig(key: string, defaultValue?: any): any;
+
     function registerShortcut(
         title: string,
         text: string,
@@ -72,6 +74,11 @@ declare namespace KWin {
         /* functions */
         clientList(): Client[];
         clientArea(option: number, screen: number, desktop: number): QRect;
+    }
+
+    interface Options {
+        /* signal */
+        configChanged: QSignal;
     }
 
     interface Toplevel {
@@ -111,3 +118,4 @@ declare namespace KWin {
 }
 
 declare var workspace: KWin.WorkspaceWrapper;
+declare var options: KWin.Options;

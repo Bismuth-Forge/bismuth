@@ -18,6 +18,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+class Config {
+    public static enableMonocleLayout: boolean;
+    public static enableSpreadLayout: boolean;
+    public static enableStairLayout: boolean;
+    public static enableTileLayout: boolean;
+    public static floatingClass: string[];
+    public static ignoreClass: string[];
+}
+
 class KWinDriver {
     private engine: TilingEngine;
 
@@ -30,7 +39,7 @@ class KWinDriver {
      */
 
     public main() {
-        this.loadRules();
+        this.loadConfig();
         this.bindEvents();
         this.bindShortcut();
 
@@ -99,11 +108,26 @@ class KWinDriver {
      * Config
      */
 
-    private loadRules() {
-        // TODO: configurable rules
-        this.engine.updateRules([
-            new Rule("krunner", true, false),
-        ]);
+    private loadConfig() {
+        debug(() => "loadConfig");
+        function commanSeparate(str: string): string[] {
+            if (!str) return [];
+            if (typeof str !== "string") return [];
+            return str.split(",").map((part) => part.trim());
+        }
+
+        Config.enableMonocleLayout = !!KWin.readConfig("enableMonocleLayout", true);
+        debug(() => "enableMonocleLayout: " + Config.enableMonocleLayout);
+        Config.enableSpreadLayout = !!KWin.readConfig("enableSpreadLayout", true);
+        debug(() => "enableSpreadLayout: " + Config.enableSpreadLayout);
+        Config.enableStairLayout = !!KWin.readConfig("enableStairLayout", true);
+        debug(() => "enableStairLayout: " + Config.enableStairLayout);
+        Config.enableTileLayout = !!KWin.readConfig("enableTileLayout", true);
+        debug(() => "enableTileLayout: " + Config.enableTileLayout);
+        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", "krunner"));
+        debug(() => "floatingClass: " + Config.floatingClass);
+        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass", ""));
+        debug(() => "ignoreClass: " + Config.ignoreClass);
     }
 
     /*
@@ -152,6 +176,10 @@ class KWinDriver {
         workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
         workspace.screenResized.connect(this.engine.arrange);
         workspace.currentActivityChanged.connect(this.engine.arrange);
+
+        // TODO: options.configChanged.connect(this.onConfigChanged);
+        /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
+         *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
     }
 
     private onClientAdded = (client: KWin.Client) => {
@@ -188,4 +216,10 @@ class KWinDriver {
         while (this.engine.screens.length > count)
             this.engine.removeScreen(this.engine.screens.length - 1);
     }
+
+    // TODO: private onConfigChanged = () => {
+    //     this.loadConfig();
+    //     this.engine.arrange();
+    // }
+    /* NOTE: check `bindEvents` for details */
 }
