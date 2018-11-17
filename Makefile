@@ -20,6 +20,9 @@ install: package
 	plasmapkg2 -t kwinscript -s $(PACKAGE_NAME) \
 		&& plasmapkg2 -u $(PACKAGE_FILE) \
 		|| plasmapkg2 -i $(PACKAGE_FILE)
+		
+uninstall:
+	plasmapkg2 -t kwinscript -r $(PACKAGE_NAME)
 
 package: $(PACKAGE_FILE)
 
