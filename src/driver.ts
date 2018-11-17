@@ -57,18 +57,11 @@ class KWinDriver {
     }
 
     public getClientGeometry(client: KWin.Client): Rect {
-        return new Rect(
-            client.geometry.x,
-            client.geometry.y,
-            client.geometry.width,
-            client.geometry.height);
+        return Rect.from(client.geometry);
     }
 
     public setClientGeometry(client: KWin.Client, geometry: Rect) {
-        client.geometry.height = geometry.height;
-        client.geometry.width = geometry.width;
-        client.geometry.x = geometry.x;
-        client.geometry.y = geometry.y;
+        geometry.copyTo(client.geometry);
     }
 
     public isClientVisible(client: KWin.Client, screenId: number): boolean {

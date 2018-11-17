@@ -47,9 +47,9 @@ class Tile {
         this.arrangeCount = 0;
         this.client = client;
         this.floating = false;
-        this.geometry = geometry.clone();
+        this.geometry = Rect.from(geometry);
         this.isError = false;
-        this.floatGeometry = geometry.clone();
+        this.floatGeometry = Rect.from(geometry);
     }
 }
 
@@ -232,12 +232,11 @@ class TilingEngine {
         this.tiles[0] = tile;
     }
 
-    public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: QRect | Rect) => {
+    public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: IRect) => {
         const tile = this.getTileByClient(client);
         if (!tile) return;
 
-        const rect = new Rect(geometry.x, geometry.y, geometry.width, geometry.height);
-        this.setFloat(tile, value, rect);
+        this.setFloat(tile, value, Rect.from(geometry));
     }
 
     public setFloat = (tile: Tile, value: boolean | string, geometry?: Rect) => {

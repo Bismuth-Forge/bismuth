@@ -46,12 +46,15 @@ enum UserInput {
     CycleLayout,
 }
 
-class Rect {
-    public static zero(): Rect {
-        return new Rect(0, 0, 0, 0);
-    }
+interface IRect {
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+}
 
-    public static from(rect: Rect | QRect) {
+class Rect implements IRect {
+    public static from(rect: IRect) {
         return new Rect(rect.x, rect.y, rect.width, rect.height);
     }
 
@@ -74,18 +77,14 @@ class Rect {
         this.y = y;
     }
 
-    public clone(): Rect {
-        return new Rect(this.x, this.y, this.width, this.height);
-    }
-
-    public copyTo(other: Rect) {
+    public copyTo(other: IRect) {
         other.height = this.height;
         other.width = this.width;
         other.x = this.x;
         other.y = this.y;
     }
 
-    public copyFrom(other: Rect | QRect) {
+    public copyFrom(other: IRect) {
         this.height = other.height;
         this.width = other.width;
         this.x = other.x;

@@ -21,11 +21,7 @@
 // API Reference:
 //     https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9
 
-interface QRect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+interface QRect extends IRect {
 }
 
 interface QSignal {

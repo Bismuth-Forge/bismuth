@@ -104,8 +104,7 @@ class TileLayout implements ILayout {
 
 class MonocleLayout implements ILayout {
     public apply = (tiles: Tile[], area: Rect): void => {
-        const geometry = new Rect(area.x, area.y, area.width, area.height);
-        tiles.forEach((tile) => geometry.copyTo(tile.geometry));
+        tiles.forEach((tile) => tile.geometry.copyFrom(area));
     }
 
     public handleUserInput(input: UserInput) {
@@ -138,13 +137,12 @@ class SpreadLayout implements ILayout {
         }
 
         for (let i = 0; i < tiles.length; i++)
-            tiles[i].geometry.copyFrom({
-                height: area.height,
-                width: cardWidth,
-                x: area.x + ((i < numTiles) ? spaceWidth * (numTiles - i - 1)
-                                            : 0),
-                y: area.y,
-            });
+            tiles[i].geometry.set(
+                area.x + ((i < numTiles) ? spaceWidth * (numTiles - i - 1) : 0),
+                area.y,
+                cardWidth,
+                area.height,
+            );
     }
 
     public handleUserInput(input: UserInput) {
