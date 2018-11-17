@@ -18,6 +18,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+class Config {
+    public static enableMonocleLayout: boolean;
+    public static enableSpreadLayout: boolean;
+    public static enableStairLayout: boolean;
+    public static enableTileLayout: boolean;
+    public static floatingClass: string[];
+    public static ignoreClass: string[];
+}
+
 enum UserInput {
     Left,
     Right,
