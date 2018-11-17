@@ -32,6 +32,8 @@ interface QSignal {
     connect(callback: any): void;
 }
 
+declare var console: any;
+
 declare namespace KWin {
     /* enum ClientAreaOption */
     var PlacementArea: number;
