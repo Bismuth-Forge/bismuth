@@ -90,6 +90,7 @@ declare namespace KWin {
 
         /* signal */
         geometryChanged: QSignal;
+        activitiesChanged: QSignal;
     }
 
     interface Client extends Toplevel {

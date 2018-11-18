@@ -183,6 +183,9 @@ class KWinDriver {
                 this.engine.setClientFloat(client, true, client.geometry);
                 this.engine.arrange();
             });
+            client.activitiesChanged.connect(() => {
+                this.engine.arrange();
+            });
         }
     }
 
