@@ -46,6 +46,7 @@ $(FILE_SCRIPT): src/driver.ts
 $(FILE_SCRIPT): src/engine.ts
 $(FILE_SCRIPT): src/kwin.d.ts
 $(FILE_SCRIPT): src/layout.ts
+$(FILE_SCRIPT): src/debug.ts
 	@mkdir -vp `dirname $(FILE_SCRIPT)`
 	tsc --outFile $(FILE_SCRIPT)
 
