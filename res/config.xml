@@ -28,7 +28,7 @@
 
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
-        <default>krunner</default>
+        <default>krunner,yakuake</default>
     </entry>
 
     <entry name="floatingClass" type="String">
