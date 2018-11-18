@@ -117,6 +117,10 @@ class TilingEngine {
         if (floating)
             this.setFloat(tile, true);
 
+        /* TODO: apply logical layer separation */
+        if (client.modal)
+            this.setFloat(tile, true);
+
         this.tiles.push(tile);
         this.arrange();
         return true;
