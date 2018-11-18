@@ -108,9 +108,9 @@ class KWinDriver {
         debug(() => "enableStairLayout: " + Config.enableStairLayout);
         Config.enableTileLayout = !!KWin.readConfig("enableTileLayout", true);
         debug(() => "enableTileLayout: " + Config.enableTileLayout);
-        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", "krunner"));
+        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
         debug(() => "floatingClass: " + Config.floatingClass);
-        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass", ""));
+        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass", "krunner"));
         debug(() => "ignoreClass: " + Config.ignoreClass);
     }
 
