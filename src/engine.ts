@@ -82,7 +82,7 @@ class TilingEngine {
                     tile.client.keepAbove = false;
                     tile.client.keepBelow = false;
                 } else if (tile.floating) {
-                    tile.client.keepAbove = true;
+                    tile.client.keepAbove = false;
                     tile.client.keepBelow = false;
                 } else /* tileable */ {
                     tile.client.keepAbove = false;
