@@ -25,6 +25,16 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
+        <widget class="QLabel" name="screenGapLabel">
+         <property name="text">
+          <string>Screen Gaps</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="kcfg_screenGap"/>
+       </item>
+       <item>
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Enable/disable Layout</string>
