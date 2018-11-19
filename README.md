@@ -9,7 +9,7 @@ Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to be
 [dwm]: https://dwm.suckless.org/
 [Typescript]: https://www.typescriptlang.org/
 
-![screenshot](screenshot.png)
+![screenshot](img/screenshot.png)
 
 
 Prerequisite
