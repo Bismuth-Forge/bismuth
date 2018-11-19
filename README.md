@@ -33,6 +33,8 @@ This will automatically build and install kwinscript package. Note that you can
 manually build package file using `make package`. The generated package file
 can be imported from "KWin Script" dialog in "System Settings".
 
+### Simply Trying Out ###
+
 If you don't want to install the script, but still want to try, you can:
 
 	make run
@@ -45,6 +47,22 @@ restart KWin w/:
 
 New instance will replace the current one, and print debugging message(i.e.
 `console.log`) to terminal. This is useful for testing and debugging.
+
+### Enabling User-Configuration ###
+
+[It is reported][kwinconf] that a manual step is required to enable configuration of KWin
+scripts. This is a current limitation of KWin scripting envrionment.
+
+To enable configuration, you must perform the following in command-line:
+
+    mkdir -p ~/.local/share/kservices5/
+	cp ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
+
+A configuration button will appear in `KWin Scripts` in `System Settings`.
+
+![config button shown](img/conf.png)
+
+[kwinconf]: https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357
 
 
 Default Key Bindings
