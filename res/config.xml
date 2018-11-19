@@ -36,5 +36,10 @@
         <default></default>
     </entry>
 
+    <entry name="tileLayoutGap" type="Int">
+        <label>Gap between tiles in Tile layout</label>
+        <default>0</default>
+    </entry>
+
   </group>
 </kcfg>

@@ -25,6 +25,7 @@ class Config {
     public static enableTileLayout: boolean;
     public static floatingClass: string[];
     public static ignoreClass: string[];
+    public static tileLayoutGap: number;
 }
 
 enum UserInput {

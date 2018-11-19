@@ -40,23 +40,28 @@ class TileLayout implements ILayout {
         const masterCount = Math.min(tiles.length, this.numMaster);
         const stackCount = tiles.length - masterCount;
 
+        const gap = Config.tileLayoutGap;
+        const halfgap = Math.ceil(gap / 2);
+
         let masterWidth;
         if (stackCount === 0)
             masterWidth = area.width;
         else if (masterCount === 0)
             masterWidth = 0;
         else
-            masterWidth = Math.floor(area.width * this.masterRatio);
-        const stackWidth = area.width - masterWidth;
+            masterWidth = Math.floor(area.width * this.masterRatio) - halfgap;
+        const stackWidth = area.width - masterWidth - halfgap;
 
-        const masterHeight = (masterCount > 0) ? Math.floor(area.height / masterCount) : 0;
-        const stackHeight = (stackCount > 0) ? Math.floor(area.height / stackCount) : 0;
+        const masterHeight = (masterCount === 0) ? 0 :
+            Math.floor((area.height - (masterCount - 1) * gap) / masterCount);
+        const stackHeight = (stackCount === 0) ? 0 :
+            Math.floor((area.height - (stackCount - 1) * gap) / stackCount);
 
-        const stackX = (masterWidth > 0) ? masterWidth + 1 : 0;
+        const stackX = (masterWidth > 0) ? masterWidth + 1 + halfgap : 0;
 
         for (let i = 0; i < masterCount; i++) {
             tiles[i].geometry.x = area.x;
-            tiles[i].geometry.y = area.y + masterHeight * i;
+            tiles[i].geometry.y = area.y + (masterHeight + gap) * i;
             tiles[i].geometry.width = masterWidth;
             tiles[i].geometry.height = masterHeight;
         }
@@ -64,7 +69,7 @@ class TileLayout implements ILayout {
         for (let i = 0; i < stackCount; i++) {
             const j = masterCount + i;
             tiles[j].geometry.x = area.x + stackX;
-            tiles[j].geometry.y = area.y + stackHeight * i;
+            tiles[j].geometry.y = area.y + (stackHeight + gap) * i;
             tiles[j].geometry.width = stackWidth;
             tiles[j].geometry.height = stackHeight;
         }

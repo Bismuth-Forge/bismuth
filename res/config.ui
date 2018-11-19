@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="configTabs">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="layoutTab">
       <attribute name="title">
@@ -48,6 +48,23 @@
             <bool>false</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="tileLayoutConfigLayout">
+           <property name="leftMargin">
+            <number>40</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="tileLayoutGapLabel">
+             <property name="text">
+              <string>Gaps between tiles (pixels)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="kcfg_tileLayoutGap"/>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableMonocleLayout">
