@@ -100,6 +100,7 @@ declare namespace KWin {
         readonly resize: boolean;
         readonly specialWindow: boolean;
         readonly modal: boolean;
+        readonly resizeable: boolean;
 
         /* read-write */
         desktop: number;

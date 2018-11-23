@@ -324,6 +324,11 @@ class TilingEngine {
     }
 
     private applyTileGeometry = (tile: Tile, isUpdated: boolean) => {
+        if (!tile.client.resizeable) {
+            tile.geometry.width = tile.client.geometry.width;
+            tile.geometry.height = tile.client.geometry.height;
+        }
+
         const geometry = this.driver.getClientGeometry(tile.client);
         if (geometry.x === tile.geometry.x)
         if (geometry.y === tile.geometry.y)
