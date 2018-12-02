@@ -27,7 +27,7 @@ You can install Kröhnkite in multiple ways.
 
 The simplest method would be:
 
-	make install
+    make install
 
 This will automatically build and install kwinscript package. Note that you can
 manually build package file using `make package`. The generated package file
@@ -37,13 +37,13 @@ can be imported from "KWin Script" dialog in "System Settings".
 
 If you don't want to install the script, but still want to try, you can:
 
-	make run
-	make stop
+    make run
+    make stop
 
 to temporarily load (and unload) the script to KWin. You may also want to
 restart KWin w/:
 
-	kwin_x11 --replace
+    kwin_x11 --replace
 
 New instance will replace the current one, and print debugging message(i.e.
 `console.log`) to terminal. This is useful for testing and debugging.
@@ -56,7 +56,7 @@ scripts. This is a current limitation of KWin scripting envrionment.
 To enable configuration, you must perform the following in command-line:
 
     mkdir -p ~/.local/share/kservices5/
-	cp ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
+    cp ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
 
 A configuration button will appear in `KWin Scripts` in `System Settings`.
 
@@ -108,8 +108,8 @@ window.  This is quite an essential if title bars are removed.
 1. Open `~/.config/kdeglobals` with your favoir editors. (i.e. Kate, Vim, Nano)
 2. Scroll down and find `[WM]` section
 3. Below the section, append the followings:
-   - `frame=61,174,233`: set the border color of active window to *RGB(61,174,233)*
-   - `inactiveFrame=239,240,241`: set the border color of inactive window to *RGB(239,240,241)*
+    - `frame=61,174,233`: set the border color of active window to *RGB(61,174,233)*
+    - `inactiveFrame=239,240,241`: set the border color of inactive window to *RGB(239,240,241)*
 4. You must **restart** your session to see changes. (i.e. re-login, reboot)
 
 (Note: the RGB values presented here is for the default Breeze theme. Feel free
