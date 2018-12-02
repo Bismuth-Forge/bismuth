@@ -24,6 +24,11 @@
 interface QRect extends IRect {
 }
 
+interface QSize {
+    width: number;
+    height: number;
+}
+
 interface QSignal {
     connect(callback: any): void;
 }
@@ -101,6 +106,8 @@ declare namespace KWin {
         readonly specialWindow: boolean;
         readonly modal: boolean;
         readonly resizeable: boolean;
+        readonly minSize: QSize;
+        readonly maxSize: QSize;
 
         /* read-write */
         desktop: number;

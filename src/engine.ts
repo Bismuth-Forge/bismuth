@@ -329,6 +329,11 @@ class TilingEngine {
             tile.geometry.height = tile.client.geometry.height;
         }
 
+        tile.geometry.width = Math.min(
+            Math.max(tile.geometry.width, tile.client.minSize.width), tile.client.maxSize.width);
+        tile.geometry.height = Math.min(
+            Math.max(tile.geometry.height, tile.client.minSize.height), tile.client.maxSize.height);
+
         const geometry = this.driver.getClientGeometry(tile.client);
         if (geometry.x === tile.geometry.x)
         if (geometry.y === tile.geometry.y)
