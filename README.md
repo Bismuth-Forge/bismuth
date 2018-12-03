@@ -12,8 +12,25 @@ Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to be
 ![screenshot](img/screenshot.png)
 
 
-Prerequisite
-------------
+Features
+---------
+ * DWM-like window tiling
+    - Dynamically tile windows, rather than manually placing each.
+    - Floating windows
+ * Multiple Layout Support
+    - Tiling layout
+    - Monocle layout
+    - Desktop-friendly layouts (Spread, Stair)
+ * Integrates well into KWin features, including:
+    - Activities
+    - Virtual desktops
+    - Window switcher
+    - Fullscreen (KWin can fullscreen any window)
+    - Minimization
+
+
+Development Requirement
+-----------------------
 
  * Typescript (tested w/ 3.1.x)
  * GNU Make
