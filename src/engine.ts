@@ -87,6 +87,7 @@ class TilingEngine {
 
             visibles.forEach((tile) => {
                 if (this.driver.isClientFullScreen(tile.client)) {
+                    /* NOTE: kwin keeps fullscreen windows on the top anyway. */
                     tile.client.keepAbove = false;
                     tile.client.keepBelow = false;
                 } else if (tile.floating) {
