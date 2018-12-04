@@ -32,7 +32,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="kcfg_screenGap"/>
+        <widget class="QSpinBox" name="kcfg_screenGap">
+         <property name="maximum">
+          <number>9999</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label">
@@ -72,7 +76,11 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="kcfg_tileLayoutGap"/>
+            <widget class="QSpinBox" name="kcfg_tileLayoutGap">
+             <property name="maximum">
+              <number>9999</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
