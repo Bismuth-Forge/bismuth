@@ -70,13 +70,10 @@ class TilingEngine {
             if (screen.layout === null) return;
 
             const area = this.driver.getWorkingArea(screen.id);
-            if (Config.screenGap > 0) {
-                const halfgap = Math.round(Config.screenGap / 2);
-                area.x += halfgap;
-                area.y += halfgap;
-                area.width -= Config.screenGap;
-                area.height -= Config.screenGap;
-            }
+            area.x += Config.screenGapLeft;
+            area.y += Config.screenGapTop;
+            area.width -= Config.screenGapLeft + Config.screenGapRight;
+            area.height -= Config.screenGapTop + Config.screenGapBottom;
 
             const visibles = this.getVisibleTiles(screen);
 

@@ -25,7 +25,10 @@ class Config {
     public static enableTileLayout: boolean;
     public static floatingClass: string[];
     public static ignoreClass: string[];
-    public static screenGap: number;
+    public static screenGapLeft: number;
+    public static screenGapRight: number;
+    public static screenGapTop: number;
+    public static screenGapBottom: number;
     public static tileLayoutGap: number;
 }
 

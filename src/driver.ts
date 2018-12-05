@@ -113,8 +113,16 @@ class KWinDriver {
         Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
             "krunner,yakuake,spectacle,kded5"));
         debug(() => "ignoreClass: " + Config.ignoreClass);
-        Config.screenGap = KWin.readConfig("screenGap", 0);
-        debug(() => "screenGap: " + Config.screenGap);
+
+        Config.screenGapLeft   = KWin.readConfig("screenGapLeft", 0);
+        Config.screenGapRight  = KWin.readConfig("screenGapRight", 0);
+        Config.screenGapTop    = KWin.readConfig("screenGapTop", 0);
+        Config.screenGapBottom = KWin.readConfig("screenGapBottom", 0);
+        debug(() => "screenGapLeft  : " + Config.screenGapLeft);
+        debug(() => "screenGapRight : " + Config.screenGapRight);
+        debug(() => "screenGapTop   : " + Config.screenGapTop);
+        debug(() => "screenGapBottom: " + Config.screenGapBottom);
+
         Config.tileLayoutGap = KWin.readConfig("tileLayoutGap", 0);
         debug(() => "tileLayoutGap: " + Config.tileLayoutGap);
     }

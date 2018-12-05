@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,11 +32,67 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="kcfg_screenGap">
-         <property name="maximum">
-          <number>9999</number>
+        <layout class="QGridLayout" name="screenGapLayout">
+         <property name="leftMargin">
+          <number>40</number>
          </property>
-        </widget>
+         <item row="3" column="0">
+          <widget class="QLabel" name="screenGapLeft">
+           <property name="text">
+            <string>Left</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QSpinBox" name="kcfg_screenGapLeft">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QLabel" name="screenGapRight">
+           <property name="text">
+            <string>Right</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QSpinBox" name="kcfg_screenGapRight">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="screenGapTop">
+           <property name="text">
+            <string>Top</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QSpinBox" name="kcfg_screenGapTop">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QLabel" name="screenGapBottom">
+           <property name="text">
+            <string>Bottom</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QSpinBox" name="kcfg_screenGapBottom">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="label">
