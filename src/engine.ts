@@ -119,7 +119,11 @@ class TilingEngine {
 
         const tile = new Tile(client, this.driver.getClientGeometry(client));
 
-        const floating = (Config.floatingClass.indexOf(className) >= 0);
+        const floating = (
+            (Config.floatingClass.indexOf(className) >= 0)
+            || (Config.floatUtility && (
+                    tile.client.dialog || tile.client.splash || tile.client.utility))
+        );
         if (floating)
             this.setFloat(tile, true);
 

@@ -110,6 +110,8 @@ class KWinDriver {
         debug(() => "enableTileLayout: " + Config.enableTileLayout);
         Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
         debug(() => "floatingClass: " + Config.floatingClass);
+        Config.floatUtility = KWin.readConfig("floatUtility", true);
+        debug(() => "floatUtility: " + Config.floatUtility);
         Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
             "krunner,yakuake,spectacle,kded5"));
         debug(() => "ignoreClass: " + Config.ignoreClass);

@@ -92,6 +92,9 @@ declare namespace KWin {
         readonly windowRole: string;
         readonly activities: string[];
             /* Not exactly an `Array`, but still quite compatible. */
+        readonly dialog: boolean;
+        readonly splash: boolean;
+        readonly utility: boolean;
 
         /* signal */
         geometryChanged: QSignal;

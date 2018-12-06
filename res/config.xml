@@ -36,6 +36,11 @@
         <default></default>
     </entry>
 
+    <entry name="floatUtility" type="Bool">
+	    <label>Automatically float utility windows (Dialog, Splash, Utility)</label>
+        <default>true</default>
+    </entry>
+
     <entry name="screenGapLeft" type="Int">
         <label>Gap between tiles and screen borders (Left)</label>
         <default>0</default>

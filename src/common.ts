@@ -24,6 +24,7 @@ class Config {
     public static enableStairLayout: boolean;
     public static enableTileLayout: boolean;
     public static floatingClass: string[];
+    public static floatUtility: boolean;
     public static ignoreClass: string[];
     public static screenGapLeft: number;
     public static screenGapRight: number;
