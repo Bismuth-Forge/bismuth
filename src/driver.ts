@@ -115,6 +115,8 @@ class KWinDriver {
         Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
             "krunner,yakuake,spectacle,kded5"));
         debug(() => "ignoreClass: " + Config.ignoreClass);
+        Config.noTileBorder = !!KWin.readConfig("noTileBorder", false);
+        debug(() => "noTileBorder: " + Config.noTileBorder);
 
         Config.screenGapLeft   = KWin.readConfig("screenGapLeft", 0);
         Config.screenGapRight  = KWin.readConfig("screenGapRight", 0);

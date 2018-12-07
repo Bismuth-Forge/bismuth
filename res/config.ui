@@ -248,6 +248,27 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="optionsTab">
+      <attribute name="title">
+       <string>Options</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="kcfg_noTileBorder">
+         <property name="text">
+          <string>Remove borders of tiled windows</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="optionsTabSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

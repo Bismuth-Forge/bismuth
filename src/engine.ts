@@ -96,6 +96,18 @@ class TilingEngine {
                 }
             });
 
+            if (Config.noTileBorder) {
+                visibles.forEach((tile) => {
+                    if (this.driver.isClientFullScreen(tile.client)) {
+                        tile.client.noBorder = false;
+                    } else if (tile.floating) {
+                        tile.client.noBorder = false;
+                    } else /* tileable */ {
+                        tile.client.noBorder = true;
+                    }
+                });
+            }
+
             tileables.forEach((tile) => this.applyTileGeometry(tile, true));
         });
     }

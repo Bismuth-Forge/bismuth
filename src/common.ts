@@ -26,6 +26,7 @@ class Config {
     public static floatingClass: string[];
     public static floatUtility: boolean;
     public static ignoreClass: string[];
+    public static noTileBorder: boolean;
     public static screenGapLeft: number;
     public static screenGapRight: number;
     public static screenGapTop: number;
