@@ -51,6 +51,7 @@ enum UserInput {
     Float,
     SetMaster,
     CycleLayout,
+    SetLayout,
 }
 
 interface IRect {

@@ -161,6 +161,18 @@ class KWinDriver {
         bind("\\", "Cycle Layout", UserInput.CycleLayout);
 
         bind("Return", "Set master", UserInput.SetMaster);
+
+        KWin.registerShortcut("Krohnkite: Tile Layout", "", "Meta+T", () => {
+            this.engine.handleUserInput(UserInput.SetLayout, TileLayout); });
+
+        KWin.registerShortcut("Krohnkite: Monocle Layout", "", "Meta+M", () => {
+            this.engine.handleUserInput(UserInput.SetLayout, MonocleLayout); });
+
+        KWin.registerShortcut("Krohnkite: Spread Layout", "", "", () => {
+            this.engine.handleUserInput(UserInput.SetLayout, SpreadLayout); });
+
+        KWin.registerShortcut("Krohnkite: Stair Layout", "", "", () => {
+            this.engine.handleUserInput(UserInput.SetLayout, StairLayout); });
     }
 
     /*

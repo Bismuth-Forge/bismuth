@@ -103,6 +103,11 @@ Default Key Bindings
 | Meta + D          | Decrease                       |
 | Meta + F          | Toggle Floating                |
 | Meta + \          | Cycle Layout                   |
+|                   |                                |
+| Meta + T          | Use Tile Layout                |
+| Meta + M          | Use Monocle Layout             |
+| *unbound*         | Use Spread Layout              |
+| *unbound*         | Use Stair Layout               |
 
 
 Tips
