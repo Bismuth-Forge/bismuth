@@ -59,20 +59,21 @@ class TileLayout implements ILayout {
 
         const stackX = (masterWidth > 0) ? masterWidth + 1 + halfgap : 0;
 
-        for (let i = 0; i < masterCount; i++) {
-            tiles[i].geometry.x = area.x;
-            tiles[i].geometry.y = area.y + (masterHeight + gap) * i;
-            tiles[i].geometry.width = masterWidth;
-            tiles[i].geometry.height = masterHeight;
-        }
+        for (let i = 0; i < masterCount; i++)
+            tiles[i].geometry.set(
+                area.x,
+                area.y + (masterHeight + gap) * i,
+                masterWidth,
+                masterHeight,
+            );
 
-        for (let i = 0; i < stackCount; i++) {
-            const j = masterCount + i;
-            tiles[j].geometry.x = area.x + stackX;
-            tiles[j].geometry.y = area.y + (stackHeight + gap) * i;
-            tiles[j].geometry.width = stackWidth;
-            tiles[j].geometry.height = stackHeight;
-        }
+        for (let i = 0; i < stackCount; i++)
+            tiles[masterCount + i].geometry.set(
+                area.x + stackX,
+                area.y + (stackHeight + gap) * i,
+                stackWidth,
+                stackHeight,
+            );
     }
 
     public handleUserInput(input: UserInput) {
@@ -120,7 +121,6 @@ class MonocleLayout implements ILayout {
         return Config.enableMonocleLayout;
     }
 }
-// TODO: ColumnLayout
 
 class SpreadLayout implements ILayout {
     private space: number; /* in ratio */

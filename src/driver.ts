@@ -46,7 +46,6 @@ class KWinDriver {
      */
 
     public getWorkingArea(screenId: number): Rect {
-        // TODO: verify: can each desktops have a different placement area?
         return Rect.from(
             workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
         );
@@ -65,7 +64,6 @@ class KWinDriver {
     }
 
     public isClientVisible(client: KWin.Client, screenId: number): boolean {
-        // TODO: test KWin::Toplevel properties...?
         return (
             (!client.minimized) &&
             (client.desktop === workspace.currentDesktop
@@ -100,24 +98,6 @@ class KWinDriver {
             return str.split(",").map((part) => part.trim());
         }
 
-        Config.enableMonocleLayout = !!KWin.readConfig("enableMonocleLayout", true);
-        debug(() => "enableMonocleLayout: " + Config.enableMonocleLayout);
-        Config.enableSpreadLayout = !!KWin.readConfig("enableSpreadLayout", true);
-        debug(() => "enableSpreadLayout: " + Config.enableSpreadLayout);
-        Config.enableStairLayout = !!KWin.readConfig("enableStairLayout", true);
-        debug(() => "enableStairLayout: " + Config.enableStairLayout);
-        Config.enableTileLayout = !!KWin.readConfig("enableTileLayout", true);
-        debug(() => "enableTileLayout: " + Config.enableTileLayout);
-        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
-        debug(() => "floatingClass: " + Config.floatingClass);
-        Config.floatUtility = KWin.readConfig("floatUtility", true);
-        debug(() => "floatUtility: " + Config.floatUtility);
-        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
-            "krunner,yakuake,spectacle,kded5"));
-        debug(() => "ignoreClass: " + Config.ignoreClass);
-        Config.noTileBorder = !!KWin.readConfig("noTileBorder", false);
-        debug(() => "noTileBorder: " + Config.noTileBorder);
-
         Config.screenGapLeft   = KWin.readConfig("screenGapLeft", 0);
         Config.screenGapRight  = KWin.readConfig("screenGapRight", 0);
         Config.screenGapTop    = KWin.readConfig("screenGapTop", 0);
@@ -127,8 +107,28 @@ class KWinDriver {
         debug(() => "screenGapTop   : " + Config.screenGapTop);
         debug(() => "screenGapBottom: " + Config.screenGapBottom);
 
+        Config.enableMonocleLayout = !!KWin.readConfig("enableMonocleLayout", true);
+        Config.enableSpreadLayout = !!KWin.readConfig("enableSpreadLayout", true);
+        Config.enableStairLayout = !!KWin.readConfig("enableStairLayout", true);
+        Config.enableTileLayout = !!KWin.readConfig("enableTileLayout", true);
+        debug(() => "enableMonocleLayout: " + Config.enableMonocleLayout);
+        debug(() => "enableSpreadLayout: " + Config.enableSpreadLayout);
+        debug(() => "enableStairLayout: " + Config.enableStairLayout);
+        debug(() => "enableTileLayout: " + Config.enableTileLayout);
+
         Config.tileLayoutGap = KWin.readConfig("tileLayoutGap", 0);
         debug(() => "tileLayoutGap: " + Config.tileLayoutGap);
+
+        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
+        Config.floatUtility = !!KWin.readConfig("floatUtility", true);
+        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
+            "krunner,yakuake,spectacle,kded5"));
+        debug(() => "floatingClass: " + Config.floatingClass);
+        debug(() => "floatUtility: " + Config.floatUtility);
+        debug(() => "ignoreClass: " + Config.ignoreClass);
+
+        Config.noTileBorder = !!KWin.readConfig("noTileBorder", false);
+        debug(() => "noTileBorder: " + Config.noTileBorder);
     }
 
     /*
@@ -181,18 +181,38 @@ class KWinDriver {
 
     private bindEvents() {
         workspace.clientAdded.connect(this.onClientAdded);
+        workspace.clientRemoved.connect(this.onClientRemoved);
+        workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
+
         workspace.clientFullScreenSet.connect(this.engine.arrange);
         workspace.clientMinimized.connect(this.engine.arrange);
-        workspace.clientRemoved.connect(this.onClientRemoved);
         workspace.clientUnminimized.connect(this.engine.arrange);
-        workspace.currentDesktopChanged.connect(this.engine.arrange);
-        workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
-        workspace.screenResized.connect(this.engine.arrange);
         workspace.currentActivityChanged.connect(this.engine.arrange);
+        workspace.currentDesktopChanged.connect(this.engine.arrange);
+        workspace.screenResized.connect(this.engine.arrange);
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
          *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
+    }
+
+    private bindClientEvents(client: KWin.Client) {
+        client.activitiesChanged.connect(() => {
+            this.engine.arrange();
+        });
+
+        client.desktopChanged.connect(this.engine.arrange);
+
+        client.geometryChanged.connect(() => {
+            if (client.move || client.resize) return;
+            this.engine.arrangeClient(client);
+        });
+
+        client.moveResizedChanged.connect(() => {
+            if (client.move || client.resize) return;
+            this.engine.setClientFloat(client, true, client.geometry);
+            this.engine.arrange();
+        });
     }
 
     private onClientAdded = (client: KWin.Client) => {
@@ -201,21 +221,8 @@ class KWinDriver {
 
         debug(() => "onClientAdded: '" + client.caption + "' class=" + client.resourceClass);
 
-        if (this.engine.manageClient(client)) {
-            client.desktopChanged.connect(this.engine.arrange);
-            client.geometryChanged.connect(() => {
-                if (client.move || client.resize) return;
-                this.engine.arrangeClient(client);
-            });
-            client.moveResizedChanged.connect(() => {
-                if (client.move || client.resize) return;
-                this.engine.setClientFloat(client, true, client.geometry);
-                this.engine.arrange();
-            });
-            client.activitiesChanged.connect(() => {
-                this.engine.arrange();
-            });
-        }
+        if (this.engine.manageClient(client))
+            this.bindClientEvents(client);
     }
 
     private onClientRemoved = (client: KWin.Client) => {

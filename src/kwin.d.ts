@@ -50,29 +50,29 @@ declare namespace KWin {
 
     interface WorkspaceWrapper {
         /* read-only */
-        readonly numScreens: number;
         readonly currentActivity: string;
+        readonly numScreens: number;
 
         /* read-write */
-        currentDesktop: number;
         activeClient: KWin.Client;
+        currentDesktop: number;
             /* NOTE: if no window is present, this points to desktop. */
 
         /* signals */
-        clientAdded: QSignal;
-        clientRemoved: QSignal;
-        numberScreensChanged: QSignal;
-        clientMinimized: QSignal;
-        clientUnminimized: QSignal;
-        currentDesktopChanged: QSignal;
-        screenResized: QSignal;
-        clientMaximizeSet: QSignal;
-        clientFullScreenSet: QSignal;
-        currentActivityChanged: QSignal;
         activitiesChanged: QSignal;
         activityAdded: QSignal;
         activityRemoved: QSignal;
+        clientAdded: QSignal;
+        clientFullScreenSet: QSignal;
+        clientMaximizeSet: QSignal;
+        clientMinimized: QSignal;
+        clientRemoved: QSignal;
+        clientUnminimized: QSignal;
+        currentActivityChanged: QSignal;
+        currentDesktopChanged: QSignal;
         numberDesktopsChanged: QSignal;
+        numberScreensChanged: QSignal;
+        screenResized: QSignal;
 
         /* functions */
         clientList(): Client[];
@@ -86,41 +86,40 @@ declare namespace KWin {
 
     interface Toplevel {
         /* read-only */
-        readonly screen: number;
-        readonly resourceName: string;
-        readonly resourceClass: string;
-        readonly windowRole: string;
-        readonly activities: string[];
-            /* Not exactly an `Array`, but still quite compatible. */
+        readonly activities: string[]; /* Not exactly `Array` */
         readonly dialog: boolean;
+        readonly resourceClass: string;
+        readonly resourceName: string;
+        readonly screen: number;
         readonly splash: boolean;
         readonly utility: boolean;
+        readonly windowRole: string;
 
         /* signal */
-        geometryChanged: QSignal;
         activitiesChanged: QSignal;
+        geometryChanged: QSignal;
     }
 
     interface Client extends Toplevel {
         /* read-only */
         readonly caption: string;
+        readonly maxSize: QSize;
+        readonly minSize: QSize;
+        readonly modal: boolean;
         readonly move: boolean;
         readonly resize: boolean;
-        readonly specialWindow: boolean;
-        readonly modal: boolean;
         readonly resizeable: boolean;
-        readonly minSize: QSize;
-        readonly maxSize: QSize;
+        readonly specialWindow: boolean;
 
         /* read-write */
         desktop: number;
-        onAllDesktops: boolean;
         fullScreen: boolean;
         geometry: QRect;
         keepAbove: boolean;
         keepBelow: boolean;
         minimized: boolean;
         noBorder: boolean;
+        onAllDesktops: boolean;
 
         /* signals */
         desktopChanged: QSignal;

@@ -38,30 +38,32 @@ class Screen {
 class Tile {
     public arrangeCount: number;
     public client: KWin.Client;
+    public floatGeometry: Rect;
     public floating: boolean;
     public geometry: Rect;
     public isError: boolean;
-    public floatGeometry: Rect;
 
     constructor(client: KWin.Client, geometry: Rect) {
         this.arrangeCount = 0;
         this.client = client;
+        this.floatGeometry = Rect.from(geometry);
         this.floating = false;
         this.geometry = Rect.from(geometry);
         this.isError = false;
-        this.floatGeometry = Rect.from(geometry);
     }
 }
 
 class TilingEngine {
     public screens: Screen[];
+
     private driver: KWinDriver;
     private tiles: Tile[];
 
     constructor(driver: KWinDriver) {
+        this.screens = Array();
+
         this.driver = driver;
         this.tiles = Array();
-        this.screens = Array();
     }
 
     public arrange = () => {
@@ -98,13 +100,12 @@ class TilingEngine {
 
             if (Config.noTileBorder) {
                 visibles.forEach((tile) => {
-                    if (this.driver.isClientFullScreen(tile.client)) {
+                    if (this.driver.isClientFullScreen(tile.client))
                         tile.client.noBorder = false;
-                    } else if (tile.floating) {
+                    else if (tile.floating)
                         tile.client.noBorder = false;
-                    } else /* tileable */ {
+                    else /* tileable */
                         tile.client.noBorder = true;
-                    }
                 });
             }
 
@@ -139,7 +140,6 @@ class TilingEngine {
         if (floating)
             this.setFloat(tile, true);
 
-        /* TODO: apply logical layer separation */
         if (client.modal)
             this.setFloat(tile, true);
 
@@ -346,7 +346,6 @@ class TilingEngine {
     }
 
     private isTileVisible = (tile: Tile, screen: Screen): boolean => {
-        // TODO: `engine` should define what "visible" means, not `driver`.
         try {
             return this.driver.isClientVisible(tile.client, screen.id);
         } catch (e) {
