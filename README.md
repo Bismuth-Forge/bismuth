@@ -1,6 +1,8 @@
 Kröhnkite
 =========
 
+[![AUR-git](https://img.shields.io/aur/version/kwin-scripts-krohnkite-git.svg?label=AUR-git)](https://aur.archlinux.org/packages/kwin-scripts-krohnkite-git/)
+
 A dynamic tiling extension for KWin.
 
 Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to be
