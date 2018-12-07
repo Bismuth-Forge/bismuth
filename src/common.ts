@@ -18,22 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Config {
-    public static enableMonocleLayout: boolean;
-    public static enableSpreadLayout: boolean;
-    public static enableStairLayout: boolean;
-    public static enableTileLayout: boolean;
-    public static floatingClass: string[];
-    public static floatUtility: boolean;
-    public static ignoreClass: string[];
-    public static noTileBorder: boolean;
-    public static screenGapLeft: number;
-    public static screenGapRight: number;
-    public static screenGapTop: number;
-    public static screenGapBottom: number;
-    public static tileLayoutGap: number;
-}
-
 enum UserInput {
     Left,
     Right,

@@ -30,7 +30,8 @@ class KWinDriver {
      */
 
     public main() {
-        this.loadConfig();
+        Config.load();
+
         this.bindEvents();
         this.bindShortcut();
 
@@ -84,51 +85,6 @@ class KWinDriver {
 
     public setActiveClient(client: KWin.Client) {
         workspace.activeClient = client;
-    }
-
-    /*
-     * Config
-     */
-
-    private loadConfig() {
-        debug(() => "loadConfig");
-        function commanSeparate(str: string): string[] {
-            if (!str) return [];
-            if (typeof str !== "string") return [];
-            return str.split(",").map((part) => part.trim());
-        }
-
-        Config.screenGapLeft   = KWin.readConfig("screenGapLeft", 0);
-        Config.screenGapRight  = KWin.readConfig("screenGapRight", 0);
-        Config.screenGapTop    = KWin.readConfig("screenGapTop", 0);
-        Config.screenGapBottom = KWin.readConfig("screenGapBottom", 0);
-        debug(() => "screenGapLeft  : " + Config.screenGapLeft);
-        debug(() => "screenGapRight : " + Config.screenGapRight);
-        debug(() => "screenGapTop   : " + Config.screenGapTop);
-        debug(() => "screenGapBottom: " + Config.screenGapBottom);
-
-        Config.enableMonocleLayout = !!KWin.readConfig("enableMonocleLayout", true);
-        Config.enableSpreadLayout = !!KWin.readConfig("enableSpreadLayout", true);
-        Config.enableStairLayout = !!KWin.readConfig("enableStairLayout", true);
-        Config.enableTileLayout = !!KWin.readConfig("enableTileLayout", true);
-        debug(() => "enableMonocleLayout: " + Config.enableMonocleLayout);
-        debug(() => "enableSpreadLayout: " + Config.enableSpreadLayout);
-        debug(() => "enableStairLayout: " + Config.enableStairLayout);
-        debug(() => "enableTileLayout: " + Config.enableTileLayout);
-
-        Config.tileLayoutGap = KWin.readConfig("tileLayoutGap", 0);
-        debug(() => "tileLayoutGap: " + Config.tileLayoutGap);
-
-        Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
-        Config.floatUtility = !!KWin.readConfig("floatUtility", true);
-        Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
-            "krunner,yakuake,spectacle,kded5"));
-        debug(() => "floatingClass: " + Config.floatingClass);
-        debug(() => "floatUtility: " + Config.floatUtility);
-        debug(() => "ignoreClass: " + Config.ignoreClass);
-
-        Config.noTileBorder = !!KWin.readConfig("noTileBorder", false);
-        debug(() => "noTileBorder: " + Config.noTileBorder);
     }
 
     /*
