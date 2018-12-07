@@ -41,12 +41,7 @@ $(PACKAGE_DIR): $(FILE_SCRIPT) $(FILE_META) $(FILE_QML)
 $(PACKAGE_DIR): $(FILE_CONFIG_XML) $(FILE_CONFIG_UI)
 	@touch $@
 
-$(FILE_SCRIPT): src/common.ts
-$(FILE_SCRIPT): src/driver.ts
-$(FILE_SCRIPT): src/engine.ts
-$(FILE_SCRIPT): src/kwin.d.ts
-$(FILE_SCRIPT): src/layout.ts
-$(FILE_SCRIPT): src/debug.ts
+$(FILE_SCRIPT): $(wildcard src/*.ts) $(wildcard */*.ts)
 	@mkdir -vp `dirname $(FILE_SCRIPT)`
 	tsc --outFile $(FILE_SCRIPT)
 
