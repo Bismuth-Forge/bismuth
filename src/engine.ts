@@ -195,7 +195,8 @@ class TilingEngine {
                 this.moveTile(+1);
                 break;
             case UserInput.SetMaster:
-                this.setMaster();
+                if ((tile = this.getActiveTile()))
+                    this.setMaster(tile);
                 break;
             case UserInput.Float:
                 if ((tile = this.getActiveTile()))
@@ -250,9 +251,7 @@ class TilingEngine {
         }
     }
 
-    public setMaster = () => {
-        const tile = this.getActiveTile();
-        if (!tile) return;
+    public setMaster = (tile: Tile) => {
         if (this.tiles[0] === tile) return;
 
         const index = this.tiles.indexOf(tile);
