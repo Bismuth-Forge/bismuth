@@ -104,6 +104,8 @@ Default Key Bindings
 | Meta + F          | Toggle Floating                |
 | Meta + \          | Cycle Layout                   |
 |                   |                                |
+| Meta + Return     | Set as Master                  |
+|                   |                                |
 | Meta + T          | Use Tile Layout                |
 | Meta + M          | Use Monocle Layout             |
 | *unbound*         | Use Spread Layout              |
@@ -150,17 +152,20 @@ KWin to unlock the full potential of tiling management.
 1. Switching between Screens
     - `Separate Screen Focus` option is required to enable 
       `Switch to Next/Previous Screen` shortcuts, which allow switching b/w
-      screens only with keys.
+      screens only with keyboard.
     - The option can be found under `Window Management` > `Window Behavior` >
-      `Multiscreen Behaviour`. Note that this option appears only when more
-      than one monitor is present.
+      `Multiscreen Behaviour`. Note that this option appears only when
+      multiple monitors are present.
     - `Active Screen follows Mouse` is **NOT** recommended.
-2. Switching with Shortcuts
+2. Switching screen with Shortcuts
     - In `Global Shortcut`, you can find `Switch to Next Screen` and 
       `Switch to Previous Screen`. They have no default key bindings.
     - It's recommended to bind them to `Meta + ,` and `Meta + .`.
     - Switching b/w screens also sets the active window to the last
       active window on the current screen.
+3. Moving Window b/w Screens
+    - KWin provides `Window to Next/Previous Screen` feature
+    - Recommended bindings are `Meta + <` and `Meta + >`
 
 
 Useful Development Resources
