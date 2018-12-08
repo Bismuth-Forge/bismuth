@@ -169,6 +169,8 @@ class KWinDriver {
             this.engine.setClientFloat(client, true, client.geometry);
             this.engine.arrange();
         });
+
+        client.screenChanged.connect(this.engine.arrange);
     }
 
     private onClientAdded = (client: KWin.Client) => {
