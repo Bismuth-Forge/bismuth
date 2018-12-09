@@ -117,8 +117,12 @@ class KWinDriver {
         workspace.clientMinimized.connect(this.engine.arrange);
         workspace.clientUnminimized.connect(this.engine.arrange);
         workspace.currentActivityChanged.connect(this.engine.arrange);
-        workspace.currentDesktopChanged.connect(this.engine.arrange);
         workspace.screenResized.connect(this.engine.arrange);
+
+        workspace.currentDesktopChanged.connect((desktop: number, client: KWin.Client) => {
+            debug(() => "currentDesktopChanged: desktop=" + desktop);
+            this.engine.arrange();
+        });
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
@@ -134,11 +138,13 @@ class KWinDriver {
 
         client.geometryChanged.connect(() => {
             if (client.move || client.resize) return;
+            debug(() => "geometryChanged: caption='" + client.caption + "'");
             this.engine.arrangeClient(client);
         });
 
         client.moveResizedChanged.connect(() => {
             if (client.move || client.resize) return;
+            debug(() => "moveResizeChanged: caption='" + client.caption + "'");
             this.engine.setClientFloat(client);
             this.engine.arrange();
         });
@@ -165,6 +171,7 @@ class KWinDriver {
     }
 
     private onNumberScreensChanged = (count: number) => {
+        debug(() => "onNumberScreensChanged: count=" + count);
         while (this.engine.screens.length < count)
             this.engine.addScreen(this.engine.screens.length);
         while (this.engine.screens.length > count)

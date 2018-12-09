@@ -125,10 +125,9 @@ class TilingEngine {
      */
 
     public handleUserInput = (input: UserInput, data?: any) => {
-        const screen = this.getActiveScreen();
-        if (!screen) return;
+        debug(() => "handleUserInput: input=" + UserInput[input] + " data=" + data);
 
-        debug(() => "handleUserInput: input=" + UserInput[input]);
+        const screen = this.getActiveScreen();
 
         const overriden = screen.layout.handleUserInput(input, data);
         if (overriden) {
@@ -234,12 +233,10 @@ class TilingEngine {
 
         for (;;) {
             index = (index + 1) % screen.layouts.length;
-            debug(() => index);
             if (screen.layouts[index] === lastLayout) break;
             if (screen.layouts[index].isEnabled()) break;
         }
         screen.layout = screen.layouts[index];
-        debug(() => screen.layout);
     }
 
     public setLayout(cls: any) {
@@ -253,7 +250,7 @@ class TilingEngine {
             }
         } catch (e) {
             /* Do nothing on error */
-            debug(() => e);
+            debug(() => "setLayout" + e);
         }
     }
 
