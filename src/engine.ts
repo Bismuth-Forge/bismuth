@@ -83,7 +83,7 @@ class TilingEngine {
     }
 
     public manageClient = (client: KWin.Client): boolean => {
-        const className = client.resourceClass;
+        const className = String(client.resourceClass);
 
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
         if (ignore)
