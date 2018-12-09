@@ -41,6 +41,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="jiggleTiles" type="Bool">
+        <label>Jiggle tiles to forcefully unfreeze them (experimental)</label>
+        <default>false</default>
+    </entry>
+
     <entry name="noTileBorder" type="Bool">
         <label>Remove borders of tiled windows</label>
         <default>false</default>

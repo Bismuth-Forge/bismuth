@@ -40,6 +40,9 @@ class KWinDriver {
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++)
             this.onClientAdded(clients[i]);
+
+        if (Config.jiggleTiles)
+            jiggleTimer.triggered.connect(this.onJiggleTimerTriggered);
     }
 
     /*
@@ -121,7 +124,10 @@ class KWinDriver {
 
         workspace.currentDesktopChanged.connect((desktop: number, client: KWin.Client) => {
             debug(() => "currentDesktopChanged: desktop=" + desktop);
+            this.engine.jiggle = true;
             this.engine.arrange();
+            if (Config.jiggleTiles)
+                jiggleTimer.restart();
         });
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
@@ -176,6 +182,11 @@ class KWinDriver {
             this.engine.addScreen(this.engine.screens.length);
         while (this.engine.screens.length > count)
             this.engine.removeScreen(this.engine.screens.length - 1);
+    }
+
+    private onJiggleTimerTriggered = () => {
+        this.engine.jiggle = false;
+        this.engine.arrange();
     }
 
     // TODO: private onConfigChanged = () => {

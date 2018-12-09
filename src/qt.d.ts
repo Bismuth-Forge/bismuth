@@ -29,3 +29,19 @@ interface QSize {
 interface QSignal {
     connect(callback: any): void;
 }
+
+/* Reference: http://doc.qt.io/qt-5/qml-qtqml-timer.html */
+interface QQmlTimer {
+    interval: number;
+    repeat: boolean;
+    running: boolean;
+    triggeredOnStart: boolean;
+
+    triggered: QSignal;
+
+    restart(): void;
+    start(): void;
+    stop(): void;
+}
+
+declare var jiggleTimer: QQmlTimer;

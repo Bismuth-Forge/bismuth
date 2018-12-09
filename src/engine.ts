@@ -36,12 +36,14 @@ class Screen {
 }
 
 class TilingEngine {
+    public jiggle: boolean;
     public screens: Screen[];
 
     private driver: KWinDriver;
     private tiles: Tile[];
 
     constructor(driver: KWinDriver) {
+        this.jiggle = Config.jiggleTiles;
         this.screens = Array();
 
         this.driver = driver;
@@ -69,6 +71,9 @@ class TilingEngine {
                 if (Config.noTileBorder)
                     tile.noBorder = tile.isTileable;
             });
+
+            if (this.jiggle)
+                tileables.forEach((tile) => tile.jiggle());
 
             tileables.forEach((tile) => tile.commitGeometry(true));
         });

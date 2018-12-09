@@ -24,6 +24,7 @@ class Config {
     public static enableStairLayout: boolean;
     public static enableTileLayout: boolean;
     public static floatUtility: boolean;
+    public static jiggleTiles: boolean;
     public static noTileBorder: boolean;
     public static screenGapBottom: number;
     public static screenGapLeft: number;
@@ -51,6 +52,7 @@ class Config {
         load("enableStairLayout", true);
         load("enableTileLayout", true);
         load("floatUtility", true);
+        load("jiggleTiles", false);
         load("noTileBorder", false);
         load("screenGapBottom", 0);
         load("screenGapLeft", 0);

@@ -261,6 +261,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="kcfg_jiggleTiles">
+         <property name="text">
+          <string>Jiggle tiles to forcefully unfreeze them (experimental)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="optionsTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -118,6 +118,11 @@ class Tile {
         );
     }
 
+    public jiggle() {
+        this.geometry.width -= 1;
+        this.geometry.height -= 1;
+    }
+
     public toggleFloat() {
         this.floating = !this.floating;
         if (this.floating === false)
