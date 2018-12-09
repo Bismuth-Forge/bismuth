@@ -21,18 +21,6 @@
 // API Reference:
 //     https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9
 
-interface QRect extends IRect {
-}
-
-interface QSize {
-    width: number;
-    height: number;
-}
-
-interface QSignal {
-    connect(callback: any): void;
-}
-
 declare var console: any;
 
 declare namespace KWin {
