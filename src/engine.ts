@@ -35,24 +35,6 @@ class Screen {
     }
 }
 
-class Tile {
-    public arrangeCount: number;
-    public client: KWin.Client;
-    public floatGeometry: Rect;
-    public floating: boolean;
-    public geometry: Rect;
-    public isError: boolean;
-
-    constructor(client: KWin.Client, geometry: Rect) {
-        this.arrangeCount = 0;
-        this.client = client;
-        this.floatGeometry = Rect.from(geometry);
-        this.floating = false;
-        this.geometry = Rect.from(geometry);
-        this.isError = false;
-    }
-}
-
 class TilingEngine {
     public screens: Screen[];
 
@@ -79,69 +61,43 @@ class TilingEngine {
 
             const visibles = this.getVisibleTiles(screen);
 
-            const tileables = visibles.filter((tile) =>
-                !this.driver.isClientFullScreen(tile.client) &&
-                !tile.floating);
+            const tileables = visibles.filter((tile) => (tile.isTileable === true));
             screen.layout.apply(tileables, area);
 
             visibles.forEach((tile) => {
-                if (this.driver.isClientFullScreen(tile.client)) {
-                    /* NOTE: kwin keeps fullscreen windows on the top anyway. */
-                    tile.client.keepAbove = false;
-                    tile.client.keepBelow = false;
-                } else if (tile.floating) {
-                    tile.client.keepAbove = false;
-                    tile.client.keepBelow = false;
-                } else /* tileable */ {
-                    tile.client.keepAbove = false;
-                    tile.client.keepBelow = true;
-                }
+                tile.keepBelow = tile.isTileable;
+                if (Config.noTileBorder)
+                    tile.noBorder = tile.isTileable;
             });
 
-            if (Config.noTileBorder) {
-                visibles.forEach((tile) => {
-                    if (this.driver.isClientFullScreen(tile.client))
-                        tile.client.noBorder = false;
-                    else if (tile.floating)
-                        tile.client.noBorder = false;
-                    else /* tileable */
-                        tile.client.noBorder = true;
-                });
-            }
-
-            tileables.forEach((tile) => this.applyTileGeometry(tile, true));
+            tileables.forEach((tile) => tile.commitGeometry(true));
         });
     }
 
     public arrangeClient = (client: KWin.Client) => {
         const tile = this.getTileByClient(client);
         if (!tile) return;
+        if (!tile.isTileable) return;
 
-        if (tile.floating) return;
-        if (this.driver.isClientFullScreen(tile.client)) return;
-
-        this.applyTileGeometry(tile, false);
+        tile.commitGeometry();
     }
 
     public manageClient = (client: KWin.Client): boolean => {
-        const className = this.driver.getClientClassName(client);
+        const className = client.resourceClass;
 
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
         if (ignore)
             return false;
 
-        const tile = new Tile(client, this.driver.getClientGeometry(client));
+        const tile = new Tile(client);
 
         const floating = (
             (Config.floatingClass.indexOf(className) >= 0)
-            || (Config.floatUtility && (
-                    tile.client.dialog || tile.client.splash || tile.client.utility))
+            || (Config.floatUtility && tile.isUtility)
+            || client.modal
         );
         if (floating)
-            this.setFloat(tile, true);
-
-        if (client.modal)
-            this.setFloat(tile, true);
+            tile.floating = true;
 
         this.tiles.push(tile);
         this.arrange();
@@ -199,8 +155,10 @@ class TilingEngine {
                     this.setMaster(tile);
                 break;
             case UserInput.Float:
-                if ((tile = this.getActiveTile()))
-                    this.setFloat(tile, "toggle");
+                if ((tile = this.getActiveTile())) {
+                    tile.toggleFloat();
+                    tile.commitGeometry();
+                }
                 break;
             case UserInput.CycleLayout:
                 this.nextLayout();
@@ -260,27 +218,13 @@ class TilingEngine {
         this.tiles[0] = tile;
     }
 
-    public setClientFloat = (client: KWin.Client, value: boolean | string, geometry: IRect) => {
+    public setClientFloat = (client: KWin.Client) => {
         const tile = this.getTileByClient(client);
         if (!tile) return;
+        if (tile.floating) return;
 
-        this.setFloat(tile, value, Rect.from(geometry));
-    }
-
-    public setFloat = (tile: Tile, value: boolean | string, geometry?: Rect) => {
-        if (typeof value === "string")
-            tile.floating = !tile.floating;
-        else {
-            if (tile.floating === value)
-                return;
-            tile.floating = value;
-        }
-
-        if (tile.floating) {
-            this.driver.setClientGeometry(
-                tile.client, (geometry) ? geometry : tile.floatGeometry);
-        } else
-            tile.floatGeometry.copyFrom((geometry) ? geometry : tile.client.geometry);
+        tile.floating = true;
+        tile.commitGeometry();
     }
 
     public nextLayout() {
@@ -318,7 +262,7 @@ class TilingEngine {
      */
 
     private getActiveScreen = (): Screen => {
-        const screenId = workspace.activeClient.screen;
+        const screenId = this.driver.getActiveClient().screen;
         for (let i = 0; i < this.screens.length; i++)
             if (this.screens[i].id === screenId)
                 return this.screens[i];
@@ -346,38 +290,10 @@ class TilingEngine {
 
     private isTileVisible = (tile: Tile, screen: Screen): boolean => {
         try {
-            return this.driver.isClientVisible(tile.client, screen.id);
+            return tile.isVisible(screen.id);
         } catch (e) {
             tile.isError = true;
             return false;
         }
-    }
-
-    private applyTileGeometry = (tile: Tile, isUpdated: boolean) => {
-        if (!tile.client.resizeable) {
-            tile.geometry.width = tile.client.geometry.width;
-            tile.geometry.height = tile.client.geometry.height;
-        }
-
-        tile.geometry.width = Math.min(
-            Math.max(tile.geometry.width, tile.client.minSize.width), tile.client.maxSize.width);
-        tile.geometry.height = Math.min(
-            Math.max(tile.geometry.height, tile.client.minSize.height), tile.client.maxSize.height);
-
-        const geometry = this.driver.getClientGeometry(tile.client);
-        if (geometry.x === tile.geometry.x)
-        if (geometry.y === tile.geometry.y)
-        if (geometry.width === tile.geometry.width)
-        if (geometry.height === tile.geometry.height) {
-            tile.arrangeCount = 0;
-            return;
-        }
-
-        /* HACK: prevent infinite `geometryChanged`. */
-        tile.arrangeCount = (isUpdated) ? 0 : tile.arrangeCount + 1;
-        if (tile.arrangeCount > 5) // TODO: define arbitrary constant
-            return;
-
-        this.driver.setClientGeometry(tile.client, tile.geometry);
     }
 }

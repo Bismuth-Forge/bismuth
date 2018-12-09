@@ -52,33 +52,6 @@ class KWinDriver {
         );
     }
 
-    public getClientClassName(client: KWin.Client): string {
-        return String(client.resourceClass);
-    }
-
-    public getClientGeometry(client: KWin.Client): Rect {
-        return Rect.from(client.geometry);
-    }
-
-    public setClientGeometry(client: KWin.Client, geometry: Rect) {
-        geometry.copyTo(client.geometry);
-    }
-
-    public isClientVisible(client: KWin.Client, screenId: number): boolean {
-        return (
-            (!client.minimized) &&
-            (client.desktop === workspace.currentDesktop
-                || client.desktop === -1 /* on all desktop */) &&
-            (client.activities.length === 0 /* on all activities */
-                || client.activities.indexOf(workspace.currentActivity) !== -1) &&
-            (client.screen === screenId)
-        );
-    }
-
-    public isClientFullScreen(client: KWin.Client): boolean {
-        return client.fullScreen;
-    }
-
     public getActiveClient(): KWin.Client {
         return workspace.activeClient;
     }
@@ -166,7 +139,7 @@ class KWinDriver {
 
         client.moveResizedChanged.connect(() => {
             if (client.move || client.resize) return;
-            this.engine.setClientFloat(client, true, client.geometry);
+            this.engine.setClientFloat(client);
             this.engine.arrange();
         });
 
