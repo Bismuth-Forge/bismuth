@@ -44,4 +44,8 @@ interface QQmlTimer {
     stop(): void;
 }
 
+declare namespace Qt {
+    function rect(x: number, y: number, width: number, height: number): QRect;
+}
+
 declare var jiggleTimer: QQmlTimer;

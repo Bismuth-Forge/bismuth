@@ -104,7 +104,7 @@ class Tile {
         this.geometry.width  = clip(this.client.minSize.width , this.geometry.width , this.client.maxSize.width );
         this.geometry.height = clip(this.client.minSize.height, this.geometry.height, this.client.maxSize.height);
 
-        this.geometry.copyTo(this.client.geometry);
+        this.client.geometry = this.geometry.toQRect();
     }
 
     public isVisible(screenId: number): boolean {

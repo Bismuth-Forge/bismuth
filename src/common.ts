@@ -82,6 +82,10 @@ class Rect implements IRect {
         this.x = other.x;
         this.y = other.y;
     }
+
+    public toQRect(): QRect {
+        return Qt.rect(this.x, this.y, this.width, this.height);
+    }
 }
 
 function clip(min: number, value: number, max: number): number {
