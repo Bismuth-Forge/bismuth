@@ -151,8 +151,8 @@ class KWinDriver {
         client.moveResizedChanged.connect(() => {
             if (client.move || client.resize) return;
             debug(() => "moveResizeChanged: caption='" + client.caption + "'");
-            this.engine.setClientFloat(client);
-            this.engine.arrange();
+            if (this.engine.setClientFloat(client) === true)
+                this.engine.arrange();
         });
 
         client.screenChanged.connect(this.engine.arrange);

@@ -125,6 +125,16 @@ class TilingEngine {
         });
     }
 
+    public setClientFloat = (client: KWin.Client): boolean => {
+        const tile = this.getTileByClient(client);
+        if (!tile) return false;
+        if (tile.floating) return false;
+
+        tile.floating = true;
+        tile.floatGeometry = Rect.from(tile.clientGeometry);
+        return true;
+    }
+
     /*
      * User Input Handling
      */
@@ -220,15 +230,6 @@ class TilingEngine {
         for (let i = index - 1; i >= 0; i--)
             this.tiles[i + 1] = this.tiles[i];
         this.tiles[0] = tile;
-    }
-
-    public setClientFloat = (client: KWin.Client) => {
-        const tile = this.getTileByClient(client);
-        if (!tile) return;
-        if (tile.floating) return;
-
-        tile.floating = true;
-        tile.commitGeometry();
     }
 
     public nextLayout() {
