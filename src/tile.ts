@@ -76,7 +76,7 @@ class Tile {
 
     public commitGeometry(reset?: boolean) {
         if (this.floating) {
-            this.floatGeometry.copyTo(this.client.geometry);
+            this.client.geometry = this.floatGeometry.toQRect();
             return;
         }
 
