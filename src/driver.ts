@@ -120,14 +120,18 @@ class KWinDriver {
         workspace.clientMinimized.connect(this.engine.arrange);
         workspace.clientUnminimized.connect(this.engine.arrange);
         workspace.currentActivityChanged.connect(this.engine.arrange);
-        workspace.screenResized.connect(this.engine.arrange);
 
         workspace.currentDesktopChanged.connect((desktop: number, client: KWin.Client) => {
-            debug(() => "currentDesktopChanged: desktop=" + desktop);
+            debugObj(() => ["currentDesktopChanged", {desktop, client}]);
             this.engine.jiggle = true;
             this.engine.arrange();
             if (Config.jiggleTiles)
                 jiggleTimer.restart();
+        });
+
+        workspace.screenResized.connect((screen: number) => {
+            debugObj(() => ["screenResized", {screen}]);
+            this.engine.arrange();
         });
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
@@ -137,39 +141,47 @@ class KWinDriver {
 
     private bindClientEvents(client: KWin.Client) {
         client.activitiesChanged.connect(() => {
+            debugObj(() => ["activitiesChanged", {client}]);
             this.engine.arrange();
         });
 
-        client.desktopChanged.connect(this.engine.arrange);
+        client.desktopChanged.connect(() => {
+            debugObj(() => ["desktopChanged", {client}]);
+            this.engine.arrange();
+        });
 
         client.geometryChanged.connect(() => {
             if (client.move || client.resize) return;
-            debug(() => "geometryChanged: caption='" + client.caption + "'");
+
+            debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
             this.engine.arrangeClient(client);
         });
 
         client.moveResizedChanged.connect(() => {
             if (client.move || client.resize) return;
-            debug(() => "moveResizeChanged: caption='" + client.caption + "'");
+
+            debugObj(() => ["moveResizedChanged", {client}]);
             if (this.engine.setClientFloat(client) === true)
                 this.engine.arrange();
         });
 
-        client.screenChanged.connect(this.engine.arrange);
+        client.screenChanged.connect(() => {
+            debugObj(() => ["screenChanged", {client}]);
+            this.engine.arrange();
+        });
     }
 
     private onClientAdded = (client: KWin.Client) => {
         if (client.specialWindow) return;
         if (String(client.resourceClass) === "plasmashell") return;
 
-        debug(() => "onClientAdded: '" + client.caption + "' class=" + client.resourceClass);
-
+        debugObj(() => ["onClientAdded", {client, class: client.resourceClass}]);
         if (this.engine.manageClient(client))
             this.bindClientEvents(client);
     }
 
     private onClientRemoved = (client: KWin.Client) => {
-        debug(() => "onClientRemoved: '" + client.caption + "'");
+        debugObj(() => ["onClientRemoved ", {client}]);
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
@@ -177,7 +189,7 @@ class KWinDriver {
     }
 
     private onNumberScreensChanged = (count: number) => {
-        debug(() => "onNumberScreensChanged: count=" + count);
+        debugObj(() => ["onNumberScreensChanged", {count}]);
         while (this.engine.screens.length < count)
             this.engine.addScreen(this.engine.screens.length);
         while (this.engine.screens.length > count)

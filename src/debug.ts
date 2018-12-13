@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 const DEBUG = {
-    enabled: false,
+    enabled: true,
 };
 
 function debug(f: () => any) {
@@ -27,4 +27,16 @@ function debug(f: () => any) {
 
     // tslint:disable-next-line
     console.log(f());
+}
+
+function debugObj(f: () => [string, any]) {
+    if (!DEBUG.enabled) return;
+
+    const [name, obj] = f();
+    const buf = [];
+    for (const i in obj)
+        buf.push(i + "=" + obj[i]);
+
+    // tslint:disable-next-line
+    console.log(name + ": " + buf.join(' '));
 }
