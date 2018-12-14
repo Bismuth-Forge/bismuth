@@ -107,15 +107,20 @@ class Tile {
         this.client.geometry = this.geometry.toQRect();
     }
 
-    public isVisible(screenId: number): boolean {
-        return (
-            (!this.client.minimized) &&
-            (this.client.desktop === workspace.currentDesktop
-                || this.client.desktop === -1 /* on all desktop */) &&
-            (this.client.activities.length === 0 /* on all activities */
-                || this.client.activities.indexOf(workspace.currentActivity) !== -1) &&
-            (this.client.screen === screenId)
-        );
+    public isVisible(screen: number): boolean {
+        try {
+            return (
+                (!this.client.minimized) &&
+                (this.client.desktop === workspace.currentDesktop
+                    || this.client.desktop === -1 /* on all desktop */) &&
+                (this.client.activities.length === 0 /* on all activities */
+                    || this.client.activities.indexOf(workspace.currentActivity) !== -1) &&
+                (this.client.screen === screen)
+            );
+        } catch (e) {
+            this.isError = true;
+            return false;
+        }
     }
 
     public jiggle() {

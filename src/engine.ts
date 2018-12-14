@@ -18,53 +18,96 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Screen {
-    public id: number;
-    public layout: ILayout;
-    public layouts: ILayout[];
+class LayoutStorage {
+    private store: { [key: string]: ILayout[] };
 
-    constructor(id: number) {
-        this.id = id;
-        this.layouts = [
-            new TileLayout(),
-            new MonocleLayout(),
-            new SpreadLayout(),
-            new StairLayout(),
-        ];
-        this.layout = this.layouts[0];
+    constructor() {
+        this.store = {};
+    }
+
+    public getCurrentLayout(screen: number, activity: string, desktop: number): ILayout {
+        const key = this.keygen(screen, activity, desktop);
+
+        if (!this.store[key])
+            this.initEntry(key);
+
+        // TODO: if no layout, return floating layout, which is a static object.
+        return this.store[key][0];
+    }
+
+    public cycleLayout(screen: number, activity: string, desktop: number) {
+        const key = this.keygen(screen, activity, desktop);
+
+        const entry = this.store[key];
+        if (!entry) {
+            this.initEntry(key);
+            return;
+        }
+
+        for (;;) {
+            const layout = entry.shift();
+            if (!layout)
+                return;
+
+            entry.push(layout);
+
+            if (entry[0].isEnabled())
+                break;
+        }
+    }
+
+    private keygen(screen: number, activity: string, desktop: number): string {
+        // TODO: user config
+        return String(screen);
+    }
+
+    private initEntry(key: string) {
+        const entry = [];
+        // TODO: user config
+        entry.push(new TileLayout());
+        entry.push(new MonocleLayout());
+        entry.push(new SpreadLayout());
+        entry.push(new StairLayout());
+
+        this.store[key] = entry;
     }
 }
 
 class TilingEngine {
     public jiggle: boolean;
-    public screens: Screen[];
 
     private driver: KWinDriver;
+    private layouts: LayoutStorage;
+    private numScreen: number;
     private tiles: Tile[];
 
     constructor(driver: KWinDriver) {
         this.jiggle = Config.jiggleTiles;
-        this.screens = Array();
 
         this.driver = driver;
+        this.layouts = new LayoutStorage();
+        this.numScreen = 1;
         this.tiles = Array();
     }
 
     public arrange = () => {
         debug(() => "arrange: tiles=" + this.tiles.length);
-        this.screens.forEach((screen) => {
-            if (screen.layout === null) return;
 
-            const area = this.driver.getWorkingArea(screen.id);
+        const activity = String(workspace.currentActivity);
+        const desktop = workspace.currentDesktop;
+
+        for (let screen = 0; screen < this.numScreen; screen++) {
+            const area = this.driver.getWorkingArea(screen);
             area.x += Config.screenGapLeft;
             area.y += Config.screenGapTop;
             area.width -= Config.screenGapLeft + Config.screenGapRight;
             area.height -= Config.screenGapTop + Config.screenGapBottom;
 
             const visibles = this.getVisibleTiles(screen);
-
             const tileables = visibles.filter((tile) => (tile.isTileable === true));
-            screen.layout.apply(tileables, area);
+
+            const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+            layout.apply(tileables, area);
 
             visibles.forEach((tile) => {
                 tile.keepBelow = tile.isTileable;
@@ -76,7 +119,7 @@ class TilingEngine {
                 tileables.forEach((tile) => tile.jiggle());
 
             tileables.forEach((tile) => tile.commitGeometry(true));
-        });
+        }
     }
 
     public arrangeClient = (client: KWin.Client) => {
@@ -115,14 +158,8 @@ class TilingEngine {
         this.arrange();
     }
 
-    public addScreen = (screenId: number) => {
-        this.screens.push(new Screen(screenId));
-    }
-
-    public removeScreen = (screenId: number) => {
-        this.screens = this.screens.filter((screen) => {
-            return screen.id !== screenId;
-        });
+    public setNumberScreen = (count: number) => {
+        this.numScreen = count;
     }
 
     public setClientFloat = (client: KWin.Client): boolean => {
@@ -143,8 +180,11 @@ class TilingEngine {
         debug(() => "handleUserInput: input=" + UserInput[input] + " data=" + data);
 
         const screen = this.getActiveScreen();
+        const activity = String(workspace.currentActivity);
+        const desktop = workspace.currentDesktop;
 
-        const overriden = screen.layout.handleUserInput(input, data);
+        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        const overriden = layout.handleUserInput(input, data);
         if (overriden) {
             this.arrange();
             return;
@@ -211,7 +251,7 @@ class TilingEngine {
         let tileIdx = this.tiles.indexOf(tile);
         const dir = (step > 0) ? 1 : -1;
         for (let i = tileIdx + dir; 0 <= i && i < this.tiles.length; i += dir) {
-            if (this.isTileVisible(this.tiles[i], screen)) {
+            if (this.tiles[i].isVisible(screen)) {
                 this.tiles[tileIdx] = this.tiles[i];
                 this.tiles[i] = tile;
                 tileIdx = i;
@@ -234,29 +274,26 @@ class TilingEngine {
 
     public nextLayout() {
         const screen = this.getActiveScreen();
-        const lastLayout = screen.layout;
-        let index = screen.layouts.indexOf(screen.layout);
+        const activity = String(workspace.currentActivity);
+        const desktop = workspace.currentDesktop;
 
-        for (;;) {
-            index = (index + 1) % screen.layouts.length;
-            if (screen.layouts[index] === lastLayout) break;
-            if (screen.layouts[index].isEnabled()) break;
-        }
-        screen.layout = screen.layouts[index];
+        this.layouts.cycleLayout(screen, activity, desktop);
     }
 
     public setLayout(cls: any) {
-        try {
-            const screen = this.getActiveScreen();
-            for (let i = 0; i < screen.layouts.length; i++) {
-                if (screen.layouts[i] instanceof cls) {
-                    screen.layout = screen.layouts[i];
-                    break;
-                }
-            }
-        } catch (e) {
-            /* Do nothing on error */
-            debug(() => "setLayout" + e);
+        const screen = this.getActiveScreen();
+        const activity = String(workspace.currentActivity);
+        const desktop = workspace.currentDesktop;
+
+        const lastLayout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        for (;;) {
+            this.layouts.cycleLayout(screen, activity, desktop);
+
+            const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+            if (layout instanceof cls)
+                break;
+            if (layout === lastLayout)
+                break;
         }
     }
 
@@ -264,14 +301,11 @@ class TilingEngine {
      * Privates
      */
 
-    private getActiveScreen = (): Screen => {
-        const screenId = this.driver.getActiveClient().screen;
-        for (let i = 0; i < this.screens.length; i++)
-            if (this.screens[i].id === screenId)
-                return this.screens[i];
-
-        /* XXX: suppressing strict type-checker */
-        return this.screens[0];
+    private getActiveScreen = (): number => {
+        const client = this.driver.getActiveClient();
+        if (!client)
+            return 0;
+        return client.screen;
     }
 
     private getActiveTile = (): Tile | null => {
@@ -287,16 +321,7 @@ class TilingEngine {
         return null;
     }
 
-    private getVisibleTiles = (screen: Screen): Tile[] => {
-        return this.tiles.filter((tile) => this.isTileVisible(tile, screen));
-    }
-
-    private isTileVisible = (tile: Tile, screen: Screen): boolean => {
-        try {
-            return tile.isVisible(screen.id);
-        } catch (e) {
-            tile.isError = true;
-            return false;
-        }
+    private getVisibleTiles = (screen: number): Tile[] => {
+        return this.tiles.filter((tile) => tile.isVisible(screen));
     }
 }

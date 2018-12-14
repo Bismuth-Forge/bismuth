@@ -190,10 +190,7 @@ class KWinDriver {
 
     private onNumberScreensChanged = (count: number) => {
         debugObj(() => ["onNumberScreensChanged", {count}]);
-        while (this.engine.screens.length < count)
-            this.engine.addScreen(this.engine.screens.length);
-        while (this.engine.screens.length > count)
-            this.engine.removeScreen(this.engine.screens.length - 1);
+        this.engine.setNumberScreen(count);
     }
 
     private onJiggleTimerTriggered = () => {
