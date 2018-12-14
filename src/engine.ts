@@ -57,8 +57,14 @@ class LayoutStorage {
     }
 
     private keygen(screen: number, activity: string, desktop: number): string {
-        // TODO: user config
-        return String(screen);
+        let key = String(screen);
+
+        if (Config.layoutPerActivity)
+            key += "@" + activity;
+        if (Config.layoutPerDesktop)
+            key += "#" + desktop;
+
+        return key;
     }
 
     private initEntry(key: string) {

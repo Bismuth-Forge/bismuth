@@ -25,6 +25,8 @@ class Config {
     public static enableTileLayout: boolean;
     public static floatUtility: boolean;
     public static jiggleTiles: boolean;
+    public static layoutPerActivity: boolean;
+    public static layoutPerDesktop: boolean;
     public static noTileBorder: boolean;
     public static screenGapBottom: number;
     public static screenGapLeft: number;
@@ -53,6 +55,8 @@ class Config {
         load("enableTileLayout", true);
         load("floatUtility", true);
         load("jiggleTiles", false);
+        load("layoutPerActivity", false);
+        load("layoutPerDesktop", false);
         load("noTileBorder", false);
         load("screenGapBottom", 0);
         load("screenGapLeft", 0);

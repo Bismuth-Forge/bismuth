@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>460</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,20 @@
        <string>Layout</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QCheckBox" name="kcfg_layoutPerActivity">
+         <property name="text">
+          <string>Use Separate Layouts per Activity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_layoutPerDesktop">
+         <property name="text">
+          <string>Use Separate Layouts per Desktop</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QLabel" name="screenGapLabel">
          <property name="text">
