@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 const DEBUG = {
-    enabled: true,
+    enabled: false,
 };
 
 function debug(f: () => any) {
