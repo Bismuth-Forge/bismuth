@@ -112,7 +112,17 @@ class KWinDriver {
      */
 
     private bindEvents() {
-        workspace.clientAdded.connect(this.onClientAdded);
+        workspace.clientAdded.connect((client: KWin.Client) => {
+            let shown = false;
+            client.windowShown.connect(() => {
+                if (shown) return;
+                shown = true;
+
+                debugObj(() => ["windowShown", {client}]);
+                this.onClientAdded(client);
+            });
+        });
+
         workspace.clientRemoved.connect(this.onClientRemoved);
         workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
 
