@@ -128,7 +128,7 @@ class TilingEngine {
         }
     }
 
-    public arrangeClient = (client: KWin.Client) => {
+    public arrangeClient(client: KWin.Client) {
         const tile = this.getTileByClient(client);
         if (!tile) return;
         if (!tile.isTileable) return;
@@ -136,7 +136,7 @@ class TilingEngine {
         tile.commitGeometry();
     }
 
-    public manageClient = (client: KWin.Client): boolean => {
+    public manageClient(client: KWin.Client): boolean {
         const className = String(client.resourceClass);
 
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
@@ -158,17 +158,17 @@ class TilingEngine {
         return true;
     }
 
-    public unmanageClient = (client: KWin.Client) => {
+    public unmanageClient(client: KWin.Client) {
         this.tiles = this.tiles.filter((t) =>
             t.client !== client && !t.isError);
         this.arrange();
     }
 
-    public setNumberScreen = (count: number) => {
+    public setNumberScreen(count: number) {
         this.numScreen = count;
     }
 
-    public setClientFloat = (client: KWin.Client): boolean => {
+    public setClientFloat(client: KWin.Client): boolean {
         const tile = this.getTileByClient(client);
         if (!tile) return false;
         if (tile.floating) return false;
@@ -182,7 +182,7 @@ class TilingEngine {
      * User Input Handling
      */
 
-    public handleUserInput = (input: UserInput, data?: any) => {
+    public handleUserInput(input: UserInput, data?: any) {
         debug(() => "handleUserInput: input=" + UserInput[input] + " data=" + data);
 
         const screen = this.getActiveScreen();
@@ -230,7 +230,7 @@ class TilingEngine {
         this.arrange();
     }
 
-    public moveFocus = (step: number) => {
+    public moveFocus(step: number) {
         if (step === 0) return;
 
         const tile = this.getActiveTile();
@@ -247,7 +247,7 @@ class TilingEngine {
         this.driver.setActiveClient(visibles[newIndex].client);
     }
 
-    public moveTile = (step: number) => {
+    public moveTile(step: number) {
         if (step === 0) return;
 
         const tile = this.getActiveTile();
@@ -269,7 +269,7 @@ class TilingEngine {
         }
     }
 
-    public setMaster = (tile: Tile) => {
+    public setMaster(tile: Tile) {
         if (this.tiles[0] === tile) return;
 
         const index = this.tiles.indexOf(tile);
@@ -307,27 +307,27 @@ class TilingEngine {
      * Privates
      */
 
-    private getActiveScreen = (): number => {
+    private getActiveScreen(): number {
         const client = this.driver.getActiveClient();
         if (!client)
             return 0;
         return client.screen;
     }
 
-    private getActiveTile = (): Tile | null => {
+    private getActiveTile(): Tile | null {
         /* XXX: may return `null` if the active client is not being managed.
          * I'm just on a defensive manuever, and nothing has been broke actually. */
         return this.getTileByClient(this.driver.getActiveClient());
     }
 
-    private getTileByClient = (client: KWin.Client): Tile | null => {
+    private getTileByClient(client: KWin.Client): Tile | null {
         for (let i = 0; i < this.tiles.length; i++)
             if (this.tiles[i].client === client)
                 return this.tiles[i];
         return null;
     }
 
-    private getVisibleTiles = (screen: number): Tile[] => {
+    private getVisibleTiles(screen: number): Tile[] {
         return this.tiles.filter((tile) => tile.isVisible(screen));
     }
 }
