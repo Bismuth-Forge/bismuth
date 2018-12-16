@@ -21,6 +21,11 @@
 interface QRect extends IRect {
 }
 
+interface QPoint {
+    x: number;
+    y: number;
+}
+
 interface QSize {
     width: number;
     height: number;

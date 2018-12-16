@@ -83,6 +83,9 @@ declare namespace KWin {
         readonly utility: boolean;
         readonly windowRole: string;
 
+        readonly clientPos: QPoint;
+        readonly clientSize: QSize;
+
         /* signal */
         activitiesChanged: QSignal;
         geometryChanged: QSignal;
@@ -110,6 +113,7 @@ declare namespace KWin {
         minimized: boolean;
         noBorder: boolean;
         onAllDesktops: boolean;
+        basicUnit: QSize;
 
         /* signals */
         desktopChanged: QSignal;

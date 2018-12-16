@@ -133,6 +133,7 @@ class TilingEngine {
         if (!tile) return;
         if (!tile.isTileable) return;
 
+        tile.adjustPadding();
         tile.commitGeometry();
     }
 

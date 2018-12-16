@@ -26,6 +26,9 @@ class Tile {
     public geometry: Rect;
     public isError: boolean;
 
+    private padWidth: number;
+    private padHeight: number;
+
     constructor(client: KWin.Client) {
         this.arrangeCount = 0;
         this.client = client;
@@ -33,6 +36,9 @@ class Tile {
         this.floating = false;
         this.geometry = Rect.from(client.geometry);
         this.isError = false;
+
+        this.padWidth = 0;
+        this.padHeight = 0;
     }
 
     /*
@@ -74,6 +80,13 @@ class Tile {
      * Methods
      */
 
+    public adjustPadding() {
+        const size = this.client.clientSize;
+        this.padWidth = this.client.geometry.width - size.width;
+        this.padHeight = this.client.geometry.height - size.height;
+        debugObj(() => ["adjustPadding", {size, w: this.padWidth, h: this.padHeight}]);
+    }
+
     public commitGeometry(reset?: boolean) {
         if (this.floating) {
             this.client.geometry = this.floatGeometry.toQRect();
@@ -84,6 +97,22 @@ class Tile {
         this.arrangeCount = (!!reset) ? 0 : this.arrangeCount + 1;
         if (this.arrangeCount > 5) // TODO: define arbitrary constant
             return;
+
+        /* respect resize increment */
+        const unit = this.client.basicUnit;
+        if (reset && !(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
+            const geom = this.geometry;
+            const base = this.client.minSize;
+
+            const nw = Math.floor((geom.width  - base.width ) / unit.width);
+            const nh = Math.floor((geom.height - base.height) / unit.height);
+            this.geometry.width  = base.width  + unit.width  * nw + this.padWidth;
+            this.geometry.height = base.height + unit.height * nh + this.padHeight;
+
+            const pw = this.padWidth;
+            const ph = this.padHeight;
+            debugObj(() => ["commitGometry", {geom, base, unit, pw, ph}]);
+        }
 
         /* do not commit if not changed */
         if (this.clientGeometry.x === this.geometry.x)
@@ -104,6 +133,7 @@ class Tile {
         this.geometry.width  = clip(this.client.minSize.width , this.geometry.width , this.client.maxSize.width );
         this.geometry.height = clip(this.client.minSize.height, this.geometry.height, this.client.maxSize.height);
 
+        debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this.geometry}]);
         this.client.geometry = this.geometry.toQRect();
     }
 
