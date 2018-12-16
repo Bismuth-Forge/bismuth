@@ -28,6 +28,7 @@ interface QSize {
 
 interface QSignal {
     connect(callback: any): void;
+    disconnect(callback: any): void;
 }
 
 /* Reference: http://doc.qt.io/qt-5/qml-qtqml-timer.html */

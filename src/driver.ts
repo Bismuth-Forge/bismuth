@@ -111,8 +111,23 @@ class KWinDriver {
      * Signal handlers
      */
 
+    private connect = (signal: QSignal, handler: (..._: any[]) => void) => {
+        const wrapper = (...args: any[]) => {
+            /* test if script is enabled.
+             * XXX: `workspace` become undefined when the script is disabled. */
+            let enabled = false;
+            try { enabled = !!workspace; } catch (e) { /* ignore */ }
+
+            if (enabled)
+                handler.apply(this, args);
+            else
+                signal.disconnect(wrapper);
+        };
+        signal.connect(wrapper);
+    }
+
     private bindEvents() {
-        workspace.clientAdded.connect((client: KWin.Client) => {
+        this.connect(workspace.clientAdded, (client: KWin.Client) => {
             let shown = false;
             client.windowShown.connect(() => {
                 if (shown) return;
@@ -123,15 +138,15 @@ class KWinDriver {
             });
         });
 
-        workspace.clientRemoved.connect(this.onClientRemoved);
-        workspace.numberScreensChanged.connect(this.onNumberScreensChanged);
+        this.connect(workspace.clientRemoved, this.onClientRemoved);
+        this.connect(workspace.numberScreensChanged, this.onNumberScreensChanged);
 
-        workspace.clientFullScreenSet.connect(this.engine.arrange);
-        workspace.clientMinimized.connect(this.engine.arrange);
-        workspace.clientUnminimized.connect(this.engine.arrange);
-        workspace.currentActivityChanged.connect(this.engine.arrange);
+        this.connect(workspace.clientFullScreenSet, this.engine.arrange);
+        this.connect(workspace.clientMinimized, this.engine.arrange);
+        this.connect(workspace.clientUnminimized, this.engine.arrange);
+        this.connect(workspace.currentActivityChanged, this.engine.arrange);
 
-        workspace.currentDesktopChanged.connect((desktop: number, client: KWin.Client) => {
+        this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) => {
             debugObj(() => ["currentDesktopChanged", {desktop, client}]);
             this.engine.jiggle = true;
             this.engine.arrange();
@@ -139,7 +154,7 @@ class KWinDriver {
                 jiggleTimer.restart();
         });
 
-        workspace.screenResized.connect((screen: number) => {
+        this.connect(workspace.screenResized, (screen: number) => {
             debugObj(() => ["screenResized", {screen}]);
             this.engine.arrange();
         });
@@ -150,24 +165,24 @@ class KWinDriver {
     }
 
     private bindClientEvents(client: KWin.Client) {
-        client.activitiesChanged.connect(() => {
+        this.connect(client.activitiesChanged, () => {
             debugObj(() => ["activitiesChanged", {client}]);
             this.engine.arrange();
         });
 
-        client.desktopChanged.connect(() => {
+        this.connect(client.desktopChanged, () => {
             debugObj(() => ["desktopChanged", {client}]);
             this.engine.arrange();
         });
 
-        client.geometryChanged.connect(() => {
+        this.connect(client.geometryChanged, () => {
             if (client.move || client.resize) return;
 
             debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
             this.engine.arrangeClient(client);
         });
 
-        client.moveResizedChanged.connect(() => {
+        this.connect(client.moveResizedChanged, () => {
             if (client.move || client.resize) return;
 
             debugObj(() => ["moveResizedChanged", {client}]);
@@ -175,7 +190,7 @@ class KWinDriver {
                 this.engine.arrange();
         });
 
-        client.screenChanged.connect(() => {
+        this.connect(client.screenChanged, () => {
             debugObj(() => ["screenChanged", {client}]);
             this.engine.arrange();
         });
