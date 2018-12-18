@@ -183,11 +183,11 @@ class KWinDriver {
         });
 
         this.connect(client.moveResizedChanged, () => {
-            if (client.move || client.resize) return;
-
-            debugObj(() => ["moveResizedChanged", {client}]);
-            if (this.engine.setClientFloat(client) === true)
-                this.engine.arrange();
+            if (client.move || client.resize) {
+                debugObj(() => ["moveResizedChanged", {client}]);
+                if (this.engine.setClientFloat(client) === true)
+                    this.engine.arrange();
+            }
         });
 
         this.connect(client.screenChanged, () => {
