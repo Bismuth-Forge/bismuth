@@ -148,8 +148,8 @@ class Tile {
             const geom = this.geometry;
             const base = this.client.minSize;
 
-            const nw = Math.floor((geom.width  - base.width ) / unit.width);
-            const nh = Math.floor((geom.height - base.height) / unit.height);
+            const nw = Math.floor((geom.width  - base.width  - this.padWidth ) / unit.width);
+            const nh = Math.floor((geom.height - base.height - this.padHeight) / unit.height);
             this.geometry.width  = base.width  + unit.width  * nw + this.padWidth;
             this.geometry.height = base.height + unit.height * nh + this.padHeight;
 
