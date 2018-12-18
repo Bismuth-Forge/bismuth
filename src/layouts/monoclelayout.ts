@@ -20,7 +20,7 @@
 
 class MonocleLayout implements ILayout {
     public apply = (tiles: Tile[], area: Rect): void => {
-        tiles.forEach((tile) => tile.geometry.copyFrom(area));
+        tiles.forEach((tile) => tile.setGeometryRect(area));
     }
 
     public handleUserInput(input: UserInput) {

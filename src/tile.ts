@@ -23,9 +23,9 @@ class Tile {
     public client: KWin.Client;
     public floatGeometry: Rect;
     public floating: boolean;
-    public geometry: Rect;
     public isError: boolean;
 
+    private geometry: Rect;
     private padWidth: number;
     private padHeight: number;
 
@@ -80,13 +80,6 @@ class Tile {
      * Methods
      */
 
-    public adjustPadding() {
-        const size = this.client.clientSize;
-        this.padWidth = this.client.geometry.width - size.width;
-        this.padHeight = this.client.geometry.height - size.height;
-        debugObj(() => ["adjustPadding", {size, w: this.padWidth, h: this.padHeight}]);
-    }
-
     public commitGeometry(reset?: boolean) {
         if (this.floating) {
             this.client.geometry = this.floatGeometry.toQRect();
@@ -98,40 +91,11 @@ class Tile {
         if (this.arrangeCount > 5) // TODO: define arbitrary constant
             return;
 
-        /* respect resize increment */
-        const unit = this.client.basicUnit;
-        if (reset && !(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
-            const geom = this.geometry;
-            const base = this.client.minSize;
-
-            const nw = Math.floor((geom.width  - base.width ) / unit.width);
-            const nh = Math.floor((geom.height - base.height) / unit.height);
-            this.geometry.width  = base.width  + unit.width  * nw + this.padWidth;
-            this.geometry.height = base.height + unit.height * nh + this.padHeight;
-
-            const pw = this.padWidth;
-            const ph = this.padHeight;
-            debugObj(() => ["commitGometry", {geom, base, unit, pw, ph}]);
-        }
-
-        /* do not commit if not changed */
-        if (this.clientGeometry.x === this.geometry.x)
-        if (this.clientGeometry.y === this.geometry.y)
-        if (this.clientGeometry.width === this.geometry.width)
-        if (this.clientGeometry.height === this.geometry.height) {
+        /* do not commit if not actually changed */
+        if (this.geometry.equals(this.clientGeometry)) {
             this.arrangeCount = 0;
             return;
         }
-
-        /* do not resize fixed-size windows */
-        if (!this.client.resizeable) {
-            this.geometry.width = this.clientGeometry.width;
-            this.geometry.height = this.clientGeometry.height;
-        }
-
-        /* respect min/max size limit */
-        this.geometry.width  = clip(this.client.minSize.width , this.geometry.width , this.client.maxSize.width );
-        this.geometry.height = clip(this.client.minSize.height, this.geometry.height, this.client.maxSize.height);
 
         debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this.geometry}]);
         this.client.geometry = this.geometry.toQRect();
@@ -158,9 +122,58 @@ class Tile {
         this.geometry.height -= 1;
     }
 
+    public setGeometry(x: number, y: number, width: number, height: number) {
+        this.geometry.set(x, y, width, height);
+        this.adjustGeometry();
+    }
+
+    public setGeometryRect(geometry: IRect) {
+        this.geometry.copyFrom(geometry);
+        this.adjustGeometry();
+    }
+
     public toggleFloat() {
         this.floating = !this.floating;
         if (this.floating === false)
             this.floatGeometry.copyFrom(this.client.geometry);
     }
+
+    /* private methods */
+    private adjustGeometry() {
+        /* respect resize increment */
+        const unit = this.client.basicUnit;
+        if (!(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
+            this.adjustPadding();
+
+            const geom = this.geometry;
+            const base = this.client.minSize;
+
+            const nw = Math.floor((geom.width  - base.width ) / unit.width);
+            const nh = Math.floor((geom.height - base.height) / unit.height);
+            this.geometry.width  = base.width  + unit.width  * nw + this.padWidth;
+            this.geometry.height = base.height + unit.height * nh + this.padHeight;
+
+            const pw = this.padWidth;
+            const ph = this.padHeight;
+            debugObj(() => ["commitGometry", {geom, base, unit, pw, ph}]);
+        }
+
+        /* do not resize fixed-size windows */
+        if (!this.client.resizeable) {
+            this.geometry.width = this.clientGeometry.width;
+            this.geometry.height = this.clientGeometry.height;
+        }
+
+        /* respect min/max size limit */
+        this.geometry.width  = clip(this.client.minSize.width , this.geometry.width , this.client.maxSize.width );
+        this.geometry.height = clip(this.client.minSize.height, this.geometry.height, this.client.maxSize.height);
+    }
+
+    private adjustPadding() {
+        const size = this.client.clientSize;
+        this.padWidth = this.client.geometry.width - size.width;
+        this.padHeight = this.client.geometry.height - size.height;
+        debugObj(() => ["adjustPadding", {size, w: this.padWidth, h: this.padHeight}]);
+    }
+
 }

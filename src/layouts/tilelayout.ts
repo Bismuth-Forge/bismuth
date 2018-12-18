@@ -51,7 +51,7 @@ class TileLayout implements ILayout {
         const stackX = (masterWidth > 0) ? masterWidth + 1 + halfgap : 0;
 
         for (let i = 0; i < masterCount; i++)
-            tiles[i].geometry.set(
+            tiles[i].setGeometry(
                 area.x,
                 area.y + (masterHeight + gap) * i,
                 masterWidth,
@@ -59,7 +59,7 @@ class TileLayout implements ILayout {
             );
 
         for (let i = 0; i < stackCount; i++)
-            tiles[masterCount + i].geometry.set(
+            tiles[masterCount + i].setGeometry(
                 area.x + stackX,
                 area.y + (stackHeight + gap) * i,
                 stackWidth,

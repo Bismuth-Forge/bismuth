@@ -77,10 +77,16 @@ class Rect implements IRect {
     }
 
     public copyFrom(other: IRect) {
-        this.height = other.height;
-        this.width = other.width;
-        this.x = other.x;
-        this.y = other.y;
+        this.set(other.x, other.y, other.width, other.height);
+    }
+
+    public equals(other: IRect) {
+        return (
+            this.x === other.x &&
+            this.y === other.y &&
+            this.width === other.width &&
+            this.height === other.height
+        );
     }
 
     public toQRect(): QRect {
