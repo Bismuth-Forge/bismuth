@@ -6,6 +6,11 @@
     <kcfgfile name=""/>
     <group name="">
 
+    <entry name="debug" type="Bool">
+	    <label>Print debug messages</label>
+        <default>false</default>
+    </entry>
+
     <entry name="enableTileLayout" type="Bool">
 	    <label>Enable/disable Tile layout</label>
         <default>true</default>

@@ -49,6 +49,8 @@ class Config {
             debug(() => name + " : " + (Config as any)[name]);
         }
 
+        DEBUG.enabled = DEBUG.enabled || KWin.readConfig("debug", false);
+
         load("enableMonocleLayout", true);
         load("enableSpreadLayout", true);
         load("enableStairLayout", true);
