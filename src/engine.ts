@@ -82,6 +82,7 @@ class LayoutStorage {
 class TilingEngine {
     public jiggle: boolean;
 
+    private arranging: boolean;
     private driver: KWinDriver;
     private layouts: LayoutStorage;
     private numScreen: number;
@@ -90,6 +91,7 @@ class TilingEngine {
     constructor(driver: KWinDriver) {
         this.jiggle = Config.jiggleTiles;
 
+        this.arranging = false;
         this.driver = driver;
         this.layouts = new LayoutStorage();
         this.numScreen = 1;
@@ -97,6 +99,12 @@ class TilingEngine {
     }
 
     public arrange = () => {
+        if (this.arranging) {
+            debug(() => "arrange: ignored");
+            return;
+        }
+
+        this.arranging = true;
         debug(() => "arrange: tiles=" + this.tiles.length);
 
         const activity = String(workspace.currentActivity);
@@ -126,6 +134,8 @@ class TilingEngine {
 
             tileables.forEach((tile) => tile.commitGeometry(true));
         }
+
+        this.arranging = false;
     }
 
     public arrangeClient(client: KWin.Client) {
