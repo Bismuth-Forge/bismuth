@@ -102,7 +102,7 @@ class Tile {
     }
 
     public doesGeometryDiffer(): boolean {
-        return this.geometry.equals(this.clientGeometry);
+        return !this.geometry.equals(this.clientGeometry);
     }
 
     public isVisible(screen: number): boolean {
