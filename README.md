@@ -44,6 +44,27 @@ Build & Install
 
 You can install Kröhnkite in multiple ways.
 
+### Using .kwinscript package file ###
+
+You can download `krohnkite-x.x.kwinscript` file, and install it through
+*System Settings*.
+
+ 1. Download the kwinscript file
+ 2. Open `System Settings`, navigate to `Window Management` > `KWin Scripts`
+ 3. On the top-right corner, press `Import KWin script...`
+ 4. Select the downloaded file
+
+Alternatively, through shell:
+
+    plasmapkg2 -t kwinscript -i krohnkite.kwinscript
+    plasmapkg2 -t kwinscript -u krohnkite.kwinscript # if already installed
+
+To uninstall the package:
+
+    plasmapkg2 -t kwinscript -r krohnkite
+
+### Installing from Git repository ###
+
 The simplest method would be:
 
     make install
