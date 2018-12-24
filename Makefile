@@ -41,7 +41,7 @@ $(PACKAGE_DIR): $(FILE_SCRIPT) $(FILE_META) $(FILE_QML)
 $(PACKAGE_DIR): $(FILE_CONFIG_XML) $(FILE_CONFIG_UI)
 	@touch $@
 
-$(FILE_SCRIPT): $(wildcard src/*.ts) $(wildcard */*.ts)
+$(FILE_SCRIPT): $(wildcard src/*.ts) $(wildcard src/*/*.ts)
 	@mkdir -vp `dirname $(FILE_SCRIPT)`
 	tsc --outFile $(FILE_SCRIPT)
 
