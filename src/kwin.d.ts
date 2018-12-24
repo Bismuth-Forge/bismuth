@@ -76,12 +76,12 @@ declare namespace KWin {
         /* read-only */
         readonly activities: string[]; /* Not exactly `Array` */
         readonly dialog: boolean;
-        readonly resourceClass: string;
-        readonly resourceName: string;
+        readonly resourceClass: QByteArray;
+        readonly resourceName: QByteArray;
         readonly screen: number;
         readonly splash: boolean;
         readonly utility: boolean;
-        readonly windowRole: string;
+        readonly windowRole: QByteArray;
 
         readonly clientPos: QPoint;
         readonly clientSize: QSize;
