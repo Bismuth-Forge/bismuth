@@ -25,6 +25,8 @@ import org.kde.kwin 2.0;
 import "../code/script.js" as K
 
 Item {
+    id: scriptRoot
+
     Timer {
         id: jiggleTimer
         interval: 80

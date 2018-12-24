@@ -20,9 +20,11 @@
 
 class KWinDriver {
     private engine: TilingEngine;
+    private timerPool: QQmlTimer[];
 
     constructor() {
         this.engine =  new TilingEngine(this);
+        this.timerPool = Array();
     }
 
     /*
@@ -61,6 +63,26 @@ class KWinDriver {
 
     public setActiveClient(client: KWin.Client) {
         workspace.activeClient = client;
+    }
+
+    /*
+     * Timer API
+     */
+
+    public setTimeout(func: () => void, delay: number) {
+        const timer: QQmlTimer = this.timerPool.pop() ||
+            Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
+        timer.interval = delay;
+        timer.repeat = false;
+
+        const callback = () => {
+            try { timer.triggered.disconnect(callback); } catch (e) { /* ignore */ }
+            try { func(); } catch (e) { /* ignore */ }
+            this.timerPool.push(timer);
+            debugObj(() => ["setTimeout/callback", { poolSize: this.timerPool.length}]);
+        };
+        timer.triggered.connect(callback);
+        timer.start();
     }
 
     /*
@@ -179,7 +201,7 @@ class KWinDriver {
             if (client.move || client.resize) return;
 
             debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
-            this.engine.arrangeClient(client);
+            this.engine.enforceClientSize(client);
         });
 
         this.connect(client.moveResizedChanged, () => {

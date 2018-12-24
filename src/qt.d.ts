@@ -51,7 +51,10 @@ interface QQmlTimer {
 }
 
 declare namespace Qt {
+    function createQmlObject(qml: string, parent: object, filepath?: string): any;
+
     function rect(x: number, y: number, width: number, height: number): QRect;
 }
 
 declare var jiggleTimer: QQmlTimer;
+declare var scriptRoot: object;

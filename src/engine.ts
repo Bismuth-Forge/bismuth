@@ -145,12 +145,15 @@ class TilingEngine {
         this.arranging = false;
     }
 
-    public arrangeClient(client: KWin.Client) {
+    public enforceClientSize(client: KWin.Client) {
         const tile = this.getTileByClient(client);
         if (!tile) return;
         if (!tile.isTileable) return;
 
-        tile.commitGeometry();
+        if (tile.doesGeometryDiffer())
+            this.driver.setTimeout(() => {
+                tile.commitGeometry();
+            }, 10);
     }
 
     public manageClient(client: KWin.Client): boolean {

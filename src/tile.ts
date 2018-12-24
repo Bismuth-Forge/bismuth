@@ -101,6 +101,10 @@ class Tile {
         this.client.geometry = this.geometry.toQRect();
     }
 
+    public doesGeometryDiffer(): boolean {
+        return this.geometry.equals(this.clientGeometry);
+    }
+
     public isVisible(screen: number): boolean {
         try {
             return (
