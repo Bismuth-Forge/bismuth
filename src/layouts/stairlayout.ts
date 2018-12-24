@@ -62,4 +62,8 @@ class StairLayout implements ILayout {
     public isEnabled(): boolean {
         return Config.enableStairLayout;
     }
+
+    public toString(): string {
+        return "StairLayout(" + this.space + ")";
+    }
 }

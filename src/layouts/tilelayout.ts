@@ -97,4 +97,8 @@ class TileLayout implements ILayout {
     public isEnabled(): boolean {
         return Config.enableTileLayout;
     }
+
+    public toString(): string {
+        return "StairLayout(nmaster=" + this.numMaster + ", ratio=" + this.masterRatio + ")";
+    }
 }

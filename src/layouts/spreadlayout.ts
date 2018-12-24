@@ -65,4 +65,8 @@ class SpreadLayout implements ILayout {
     public isEnabled(): boolean {
         return Config.enableSpreadLayout;
     }
+
+    public toString(): string {
+        return "SpreadLayout(" + this.space + ")";
+    }
 }

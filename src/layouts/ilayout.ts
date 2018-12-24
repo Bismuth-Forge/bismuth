@@ -25,4 +25,6 @@ interface ILayout {
     /* if true, layout completely overrides the default behavior */
 
     isEnabled(): boolean;
+
+    toString(): string;
 }

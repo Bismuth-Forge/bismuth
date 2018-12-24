@@ -30,4 +30,8 @@ class MonocleLayout implements ILayout {
     public isEnabled(): boolean {
         return Config.enableMonocleLayout;
     }
+
+    public toString(): string {
+        return "MonocleLayout()";
+    }
 }

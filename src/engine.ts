@@ -119,8 +119,14 @@ class TilingEngine {
 
             const visibles = this.getVisibleTiles(screen);
             const tileables = visibles.filter((tile) => (tile.isTileable === true));
-
             const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+            debugObj(() => ["arrangeScreen", {
+                layout,
+                screen,
+                tileables: tileables.length,
+                visibles: visibles.length,
+            }]);
+
             layout.apply(tileables, area);
 
             visibles.forEach((tile) => {
@@ -135,6 +141,7 @@ class TilingEngine {
             tileables.forEach((tile) => tile.commitGeometry(true));
         }
 
+        debug(() => "arrange: finished");
         this.arranging = false;
     }
 
