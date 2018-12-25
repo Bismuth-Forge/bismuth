@@ -140,6 +140,8 @@ class Tile {
         this.floating = !this.floating;
         if (this.floating === false)
             this.floatGeometry.copyFrom(this.client.geometry);
+        else
+            this.commitGeometry();
     }
 
     /* private methods */

@@ -235,10 +235,8 @@ class TilingEngine {
                     this.setMaster(tile);
                 break;
             case UserInput.Float:
-                if ((tile = this.getActiveTile())) {
+                if ((tile = this.getActiveTile()))
                     tile.toggleFloat();
-                    tile.commitGeometry();
-                }
                 break;
             case UserInput.CycleLayout:
                 this.nextLayout();
