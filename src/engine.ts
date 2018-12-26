@@ -152,6 +152,7 @@ class TilingEngine {
 
         if (tile.doesGeometryDiffer())
             this.driver.setTimeout(() => {
+                if (!tile.isTileable) return;
                 tile.commitGeometry();
             }, 10);
     }
