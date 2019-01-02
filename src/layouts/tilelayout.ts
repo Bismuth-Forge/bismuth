@@ -18,6 +18,24 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: number, gap = 0) {
+    if (tiles.length === 1) {
+        tiles[0].setGeometry(x, y, width, height);
+        return;
+    }
+
+    const count = tiles.length;
+    const tileHeight = Math.floor((height - (count - 1) * gap) / count);
+    tiles.forEach((tile: Tile, i: number) => {
+        tile.setGeometry(
+            x,
+            y + (tileHeight + gap) * i,
+            width,
+            tileHeight,
+        );
+    });
+}
+
 class TileLayout implements ILayout {
     private numMaster: number;
     private masterRatio: number; /* in ratio */
@@ -42,29 +60,19 @@ class TileLayout implements ILayout {
         else
             masterWidth = Math.floor(area.width * this.masterRatio) - halfgap;
         const stackWidth = area.width - masterWidth - halfgap;
-
-        const masterHeight = (masterCount === 0) ? 0 :
-            Math.floor((area.height - (masterCount - 1) * gap) / masterCount);
-        const stackHeight = (stackCount === 0) ? 0 :
-            Math.floor((area.height - (stackCount - 1) * gap) / stackCount);
-
         const stackX = (masterWidth > 0) ? masterWidth + 1 + halfgap : 0;
 
-        for (let i = 0; i < masterCount; i++)
-            tiles[i].setGeometry(
-                area.x,
-                area.y + (masterHeight + gap) * i,
-                masterWidth,
-                masterHeight,
-            );
+        stackTiles(
+            tiles.slice(0, masterCount),
+            area.x, area.y, masterWidth, area.height,
+            gap,
+        );
 
-        for (let i = 0; i < stackCount; i++)
-            tiles[masterCount + i].setGeometry(
-                area.x + stackX,
-                area.y + (stackHeight + gap) * i,
-                stackWidth,
-                stackHeight,
-            );
+        stackTiles(
+            tiles.slice(masterCount),
+            area.x + stackX, area.y, stackWidth, area.height,
+            gap,
+        );
     }
 
     public handleUserInput(input: UserInput) {
