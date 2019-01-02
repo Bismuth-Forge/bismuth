@@ -252,11 +252,12 @@ class TilingEngine {
     public moveFocus(step: number) {
         if (step === 0) return;
 
-        const tile = this.getActiveTile();
-        if (!tile) return;
-
         const visibles = this.getVisibleTiles(this.getActiveScreen());
-        const index = visibles.indexOf(tile);
+        if (visibles.length === 0)
+            return;
+
+        const tile = this.getActiveTile();
+        const index = (tile) ? visibles.indexOf(tile) : 0;
 
         let newIndex = index + step;
         while (newIndex < 0)
