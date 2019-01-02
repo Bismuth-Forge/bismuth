@@ -127,18 +127,18 @@ class TilingEngine {
                 visibles: visibles.length,
             }]);
 
-            layout.apply(tileables, area);
+            if (tileables.length > 0) {
+                layout.apply(tileables, area);
+                if (this.jiggle)
+                    tileables.forEach((tile) => tile.jiggle());
+                tileables.forEach((tile) => tile.commitGeometry(true));
+            }
 
             visibles.forEach((tile) => {
                 tile.keepBelow = tile.isTileable;
                 if (Config.noTileBorder)
                     tile.noBorder = tile.isTileable;
             });
-
-            if (this.jiggle)
-                tileables.forEach((tile) => tile.jiggle());
-
-            tileables.forEach((tile) => tile.commitGeometry(true));
         }
 
         debug(() => "arrange: finished");
