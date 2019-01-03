@@ -60,7 +60,7 @@ class TileLayout implements ILayout {
         else
             masterWidth = Math.floor(area.width * this.masterRatio) - halfgap;
         const stackWidth = area.width - masterWidth - halfgap;
-        const stackX = (masterWidth > 0) ? masterWidth + 1 + halfgap : 0;
+        const stackX = (masterWidth > 0) ? masterWidth + halfgap : 0;
 
         stackTiles(
             tiles.slice(0, masterCount),
