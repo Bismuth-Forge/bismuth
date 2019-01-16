@@ -149,25 +149,13 @@ class KWinDriver {
     }
 
     private bindEvents() {
-        this.connect(workspace.clientAdded, (client: KWin.Client) => {
-            let shown = false;
-            client.windowShown.connect(() => {
-                if (shown) return;
-                shown = true;
-
-                debugObj(() => ["windowShown", {client}]);
-                this.onClientAdded(client);
-            });
+        this.connect(workspace.numberScreensChanged, this.onNumberScreensChanged);
+        this.connect(workspace.screenResized, (screen: number) => {
+            debugObj(() => ["screenResized", {screen}]);
+            this.engine.arrange();
         });
 
-        this.connect(workspace.clientRemoved, this.onClientRemoved);
-        this.connect(workspace.numberScreensChanged, this.onNumberScreensChanged);
-
-        this.connect(workspace.clientFullScreenSet, this.engine.arrange);
-        this.connect(workspace.clientMinimized, this.engine.arrange);
-        this.connect(workspace.clientUnminimized, this.engine.arrange);
         this.connect(workspace.currentActivityChanged, this.engine.arrange);
-
         this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) => {
             debugObj(() => ["currentDesktopChanged", {desktop, client}]);
             this.engine.jiggle = true;
@@ -176,10 +164,21 @@ class KWinDriver {
                 jiggleTimer.restart();
         });
 
-        this.connect(workspace.screenResized, (screen: number) => {
-            debugObj(() => ["screenResized", {screen}]);
-            this.engine.arrange();
+        this.connect(workspace.clientAdded, (client: KWin.Client) => {
+            const handler = () => {
+                client.windowShown.disconnect(handler);
+                this.onClientAdded(client);
+            };
+            client.windowShown.connect(handler);
         });
+        this.connect(workspace.clientRemoved, this.onClientRemoved);
+
+        this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
+            this.onClientChanged(client, "fullscreen=" + fullScreen + " user=" + user));
+        this.connect(workspace.clientMinimized, (client: KWin.Client) =>
+            this.onClientChanged(client, "minimized"));
+        this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
+            this.onClientChanged(client, "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
@@ -187,16 +186,6 @@ class KWinDriver {
     }
 
     private bindClientEvents(client: KWin.Client) {
-        this.connect(client.activitiesChanged, () => {
-            debugObj(() => ["activitiesChanged", {client}]);
-            this.engine.arrange();
-        });
-
-        this.connect(client.desktopChanged, () => {
-            debugObj(() => ["desktopChanged", {client}]);
-            this.engine.arrange();
-        });
-
         this.connect(client.geometryChanged, () => {
             if (client.move || client.resize) return;
 
@@ -212,10 +201,11 @@ class KWinDriver {
             }
         });
 
-        this.connect(client.screenChanged, () => {
-            debugObj(() => ["screenChanged", {client}]);
-            this.engine.arrange();
-        });
+        this.connect(client.screenChanged, () => this.onClientChanged(client, "screen=" + client.screen));
+        this.connect(client.activitiesChanged, () =>
+            this.onClientChanged(client, "activity=" + client.activities.join(",")));
+        this.connect(client.desktopChanged, () => this.onClientChanged(client, "desktop=" + client.desktop));
+
     }
 
     private onClientAdded = (client: KWin.Client) => {
@@ -233,6 +223,11 @@ class KWinDriver {
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
         this.engine.unmanageClient(client);
+    }
+
+    private onClientChanged = (client: KWin.Client, comment?: string) => {
+        debugObj(() => ["onClientChanged", {client, comment}]);
+        this.engine.arrange();
     }
 
     private onNumberScreensChanged = (count: number) => {
