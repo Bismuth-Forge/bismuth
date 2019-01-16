@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Eon S. Jeon <esjeon@hyunmu.am>
+// Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
