@@ -18,67 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class LayoutStorage {
-    private store: { [key: string]: ILayout[] };
-
-    constructor() {
-        this.store = {};
-    }
-
-    public getCurrentLayout(screen: number, activity: string, desktop: number): ILayout {
-        const key = this.keygen(screen, activity, desktop);
-
-        if (!this.store[key])
-            this.initEntry(key);
-
-        // TODO: if no layout, return floating layout, which is a static object.
-        return this.store[key][0];
-    }
-
-    public cycleLayout(screen: number, activity: string, desktop: number) {
-        const key = this.keygen(screen, activity, desktop);
-
-        const entry = this.store[key];
-        if (!entry) {
-            this.initEntry(key);
-            return;
-        }
-
-        for (;;) {
-            const layout = entry.shift();
-            if (!layout)
-                return;
-
-            entry.push(layout);
-
-            if (entry[0].isEnabled())
-                break;
-        }
-    }
-
-    private keygen(screen: number, activity: string, desktop: number): string {
-        let key = String(screen);
-
-        if (Config.layoutPerActivity)
-            key += "@" + activity;
-        if (Config.layoutPerDesktop)
-            key += "#" + desktop;
-
-        return key;
-    }
-
-    private initEntry(key: string) {
-        const entry = [];
-        // TODO: user config
-        entry.push(new TileLayout());
-        entry.push(new MonocleLayout());
-        entry.push(new SpreadLayout());
-        entry.push(new StairLayout());
-
-        this.store[key] = entry;
-    }
-}
-
 class TilingEngine {
     public jiggle: boolean;
 
