@@ -186,18 +186,37 @@ class KWinDriver {
     }
 
     private bindClientEvents(client: KWin.Client) {
-        this.connect(client.geometryChanged, () => {
-            if (client.move || client.resize) return;
-
-            debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
-            this.engine.enforceClientSize(client);
-        });
+        let moving = false;
+        let resizing = false;
 
         this.connect(client.moveResizedChanged, () => {
-            if (client.move || client.resize) {
-                debugObj(() => ["moveResizedChanged", {client}]);
-                if (this.engine.setClientFloat(client) === true)
-                    this.engine.arrange();
+            debugObj(() => ["moveResizedChanged", {client, move: client.move, resize: client.resize}]);
+            if (moving !== client.move) {
+                moving = client.move;
+                if (moving)
+                    this.onClientMoveStart(client);
+                else
+                    this.onClientMoveOver(client);
+            }
+
+            if (resizing !== client.resize) {
+                resizing = client.resize;
+                if (resizing)
+                    this.onClientResizeStart(client);
+                else
+                    this.onClientResizeOver(client);
+            }
+        });
+
+        this.connect(client.geometryChanged, () => {
+            if (moving) {
+                this.onClientMove(client);
+            } else if (resizing) {
+                this.onClientResize(client);
+            } else {
+                /* client geometry changed without user intervention */
+                debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
+                this.engine.enforceClientSize(client);
             }
         });
 
@@ -223,6 +242,28 @@ class KWinDriver {
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
         this.engine.unmanageClient(client);
+    }
+
+    private onClientMoveStart = (client: KWin.Client) => {
+        if (this.engine.setClientFloat(client) === true)
+            this.engine.arrange();
+    }
+
+    private onClientMove = (client: KWin.Client) => {
+    }
+
+    private onClientMoveOver = (client: KWin.Client) => {
+    }
+
+    private onClientResizeStart = (client: KWin.Client) => {
+        if (this.engine.setClientFloat(client) === true)
+            this.engine.arrange();
+    }
+
+    private onClientResize = (client: KWin.Client) => {
+    }
+
+    private onClientResizeOver = (client: KWin.Client) => {
     }
 
     private onClientChanged = (client: KWin.Client, comment?: string) => {
