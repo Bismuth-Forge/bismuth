@@ -20,10 +20,12 @@
 
 class KWinDriver {
     private engine: TilingEngine;
+    private tileMap: {[key: string]: Tile};
     private timerPool: QQmlTimer[];
 
     constructor() {
         this.engine =  new TilingEngine(this);
+        this.tileMap = {};
         this.timerPool = Array();
     }
 
@@ -57,8 +59,11 @@ class KWinDriver {
         );
     }
 
-    public getActiveClient(): KWin.Client {
-        return workspace.activeClient;
+    public getActiveTile(): Tile | null {
+        const client = workspace.activeClient;
+        if (!client)
+            return null;
+        return this.loadTile(client);
     }
 
     public setActiveClient(client: KWin.Client) {
@@ -148,6 +153,16 @@ class KWinDriver {
         signal.connect(wrapper);
     }
 
+    private loadTile(client: KWin.Client): Tile {
+        const key = String(client);
+        let tile;
+        if (!(tile = this.tileMap[key])) {
+            tile = new Tile(client);
+            this.tileMap[key] = tile;
+        }
+        return tile;
+    }
+
     private bindEvents() {
         this.connect(workspace.numberScreensChanged, this.onNumberScreensChanged);
         this.connect(workspace.screenResized, (screen: number) => {
@@ -174,11 +189,11 @@ class KWinDriver {
         this.connect(workspace.clientRemoved, this.onClientRemoved);
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-            this.onClientChanged(client, "fullscreen=" + fullScreen + " user=" + user));
+            this.onClientChanged(this.loadTile(client), "fullscreen=" + fullScreen + " user=" + user));
         this.connect(workspace.clientMinimized, (client: KWin.Client) =>
-            this.onClientChanged(client, "minimized"));
+            this.onClientChanged(this.loadTile(client), "minimized"));
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
-            this.onClientChanged(client, "unminimized"));
+            this.onClientChanged(this.loadTile(client), "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
@@ -186,44 +201,45 @@ class KWinDriver {
     }
 
     private bindClientEvents(client: KWin.Client) {
+        const tile = this.loadTile(client);
         let moving = false;
         let resizing = false;
 
         this.connect(client.moveResizedChanged, () => {
-            debugObj(() => ["moveResizedChanged", {client, move: client.move, resize: client.resize}]);
+            debugObj(() => ["moveResizedChanged", {tile, move: client.move, resize: client.resize}]);
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving)
-                    this.onClientMoveStart(client);
+                    this.onClientMoveStart(tile);
                 else
-                    this.onClientMoveOver(client);
+                    this.onClientMoveOver(tile);
             }
 
             if (resizing !== client.resize) {
                 resizing = client.resize;
                 if (resizing)
-                    this.onClientResizeStart(client);
+                    this.onClientResizeStart(tile);
                 else
-                    this.onClientResizeOver(client);
+                    this.onClientResizeOver(tile);
             }
         });
 
         this.connect(client.geometryChanged, () => {
             if (moving) {
-                this.onClientMove(client);
+                this.onClientMove(tile);
             } else if (resizing) {
-                this.onClientResize(client);
+                this.onClientResize(tile);
             } else {
                 /* client geometry changed without user intervention */
-                debugObj(() => ["geometryChanged", {client, geometry: client.geometry}]);
-                this.engine.enforceClientSize(client);
+                debugObj(() => ["geometryChanged", {tile, geometry: client.geometry}]);
+                this.engine.enforceClientSize(tile);
             }
         });
 
-        this.connect(client.screenChanged, () => this.onClientChanged(client, "screen=" + client.screen));
+        this.connect(client.screenChanged, () => this.onClientChanged(tile, "screen=" + client.screen));
         this.connect(client.activitiesChanged, () =>
-            this.onClientChanged(client, "activity=" + client.activities.join(",")));
-        this.connect(client.desktopChanged, () => this.onClientChanged(client, "desktop=" + client.desktop));
+            this.onClientChanged(tile, "activity=" + client.activities.join(",")));
+        this.connect(client.desktopChanged, () => this.onClientChanged(tile, "desktop=" + client.desktop));
 
     }
 
@@ -232,42 +248,48 @@ class KWinDriver {
         if (String(client.resourceClass) === "plasmashell") return;
 
         debugObj(() => ["onClientAdded", {client, class: client.resourceClass}]);
-        if (this.engine.manageClient(client))
+        const tile = this.loadTile(client);
+        this.engine.manageClient(tile);
+        if (tile.managed)
             this.bindClientEvents(client);
     }
 
-    private onClientRemoved = (client: KWin.Client) => {
-        debugObj(() => ["onClientRemoved ", {client}]);
+    private onClientRemoved = (tile: Tile) => {
+        debugObj(() => ["onClientRemoved ", {tile}]);
         /* XXX: This is merely an attempt to remove the exited client.
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
-        this.engine.unmanageClient(client);
+        this.engine.unmanageClient(tile);
     }
 
-    private onClientMoveStart = (client: KWin.Client) => {
-        if (this.engine.setClientFloat(client) === true)
+    private onClientMoveStart = (tile: Tile) => {
+        if (this.engine.setClientFloat(tile) === true)
             this.engine.arrange();
     }
 
-    private onClientMove = (client: KWin.Client) => {
+    private onClientMove = (tile: Tile) => {
+        return;
     }
 
-    private onClientMoveOver = (client: KWin.Client) => {
+    private onClientMoveOver = (tile: Tile) => {
+        return;
     }
 
-    private onClientResizeStart = (client: KWin.Client) => {
-        if (this.engine.setClientFloat(client) === true)
+    private onClientResizeStart = (tile: Tile) => {
+        if (this.engine.setClientFloat(tile) === true)
             this.engine.arrange();
     }
 
-    private onClientResize = (client: KWin.Client) => {
+    private onClientResize = (tile: Tile) => {
+        return;
     }
 
-    private onClientResizeOver = (client: KWin.Client) => {
+    private onClientResizeOver = (tile: Tile) => {
+        return;
     }
 
-    private onClientChanged = (client: KWin.Client, comment?: string) => {
-        debugObj(() => ["onClientChanged", {client, comment}]);
+    private onClientChanged = (tile: Tile, comment?: string) => {
+        debugObj(() => ["onClientChanged", {tile, comment}]);
         this.engine.arrange();
     }
 

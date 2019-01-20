@@ -84,9 +84,7 @@ class TilingEngine {
         this.arranging = false;
     }
 
-    public enforceClientSize(client: KWin.Client) {
-        const tile = this.getTileByClient(client);
-        if (!tile) return;
+    public enforceClientSize(tile: Tile) {
         if (!tile.isTileable) return;
 
         if (tile.doesGeometryDiffer())
@@ -96,31 +94,29 @@ class TilingEngine {
             }, 10);
     }
 
-    public manageClient(client: KWin.Client): boolean {
-        const className = String(client.resourceClass);
+    public manageClient(tile: Tile) {
+        const className = tile.resourceClass;
 
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
-        if (ignore)
-            return false;
+        if (ignore) return;
 
-        const tile = new Tile(client);
+        tile.managed = true;
 
         const floating = (
             (Config.floatingClass.indexOf(className) >= 0)
             || (Config.floatUtility && tile.isUtility)
-            || client.modal
+            || tile.isModal
         );
         if (floating)
             tile.floating = true;
 
         this.tiles.push(tile);
         this.arrange();
-        return true;
     }
 
-    public unmanageClient(client: KWin.Client) {
+    public unmanageClient(tile: Tile) {
         this.tiles = this.tiles.filter((t) =>
-            t.client !== client && !t.isError);
+            t !== tile && !t.isError);
         this.arrange();
     }
 
@@ -128,10 +124,9 @@ class TilingEngine {
         this.numScreen = count;
     }
 
-    public setClientFloat(client: KWin.Client): boolean {
-        const tile = this.getTileByClient(client);
-        if (!tile) return false;
-        if (tile.floating) return false;
+    public setClientFloat(tile: Tile): boolean {
+        if (tile.floating)
+            return false;
 
         tile.floating = true;
         tile.floatGeometry = Rect.from(tile.clientGeometry);
@@ -267,7 +262,7 @@ class TilingEngine {
      */
 
     private getActiveScreen(): number {
-        const client = this.driver.getActiveClient();
+        const client = workspace.activeClient;
         if (!client)
             return 0;
         return client.screen;
@@ -276,14 +271,7 @@ class TilingEngine {
     private getActiveTile(): Tile | null {
         /* XXX: may return `null` if the active client is not being managed.
          * I'm just on a defensive manuever, and nothing has been broke actually. */
-        return this.getTileByClient(this.driver.getActiveClient());
-    }
-
-    private getTileByClient(client: KWin.Client): Tile | null {
-        for (let i = 0; i < this.tiles.length; i++)
-            if (this.tiles[i].client === client)
-                return this.tiles[i];
-        return null;
+        return this.driver.getActiveTile();
     }
 
     private getVisibleTiles(screen: number): Tile[] {

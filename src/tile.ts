@@ -24,6 +24,7 @@ class Tile {
     public floatGeometry: Rect;
     public floating: boolean;
     public isError: boolean;
+    public managed: boolean;
 
     private geometry: Rect;
     private padWidth: number;
@@ -36,6 +37,7 @@ class Tile {
         this.floating = false;
         this.geometry = Rect.from(client.geometry);
         this.isError = false;
+        this.managed = false;
 
         this.padWidth = 0;
         this.padHeight = 0;
@@ -47,6 +49,10 @@ class Tile {
 
     public get isFullScreen(): boolean {
         return this.client.fullScreen;
+    }
+
+    public get isModal(): boolean {
+        return this.client.modal;
     }
 
     public get isTileable(): boolean {
@@ -74,6 +80,10 @@ class Tile {
 
     public set noBorder(value: boolean) {
         this.client.noBorder = value;
+    }
+
+    public get resourceClass(): string {
+        return String(this.client.resourceClass);
     }
 
     /*
