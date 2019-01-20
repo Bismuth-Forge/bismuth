@@ -23,7 +23,7 @@ class TilingEngine {
 
     private arranging: boolean;
     private driver: KWinDriver;
-    private layouts: LayoutStorage;
+    private layouts: LayoutStore;
     private numScreen: number;
     private tiles: Tile[];
 
@@ -32,7 +32,7 @@ class TilingEngine {
 
         this.arranging = false;
         this.driver = driver;
-        this.layouts = new LayoutStorage();
+        this.layouts = new LayoutStore();
         this.numScreen = 1;
         this.tiles = Array();
     }

@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class LayoutStorage {
+class LayoutStore {
     private store: { [key: string]: ILayout[] };
 
     constructor() {
