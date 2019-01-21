@@ -66,8 +66,8 @@ class Tile {
         return (this.client.dialog || this.client.splash || this.client.utility);
     }
 
-    public get clientGeometry(): IRect {
-        return this.client.geometry;
+    public get actualGeometry(): Rect {
+        return Rect.from(this.client.geometry);
     }
 
     public set keepAbove(value: boolean) {
@@ -109,7 +109,7 @@ class Tile {
             return;
 
         /* do not commit if not actually changed */
-        if (this.geometry.equals(this.clientGeometry)) {
+        if (!this.isGeometryChanged()) {
             this.arrangeCount = 0;
             return;
         }
@@ -118,8 +118,8 @@ class Tile {
         this.client.geometry = this.geometry.toQRect();
     }
 
-    public doesGeometryDiffer(): boolean {
-        return !this.geometry.equals(this.clientGeometry);
+    public isGeometryChanged(): boolean {
+        return !this.geometry.equals(this.client.geometry);
     }
 
     public isVisible(screen: number): boolean {
@@ -185,8 +185,8 @@ class Tile {
 
         /* do not resize fixed-size windows */
         if (!this.client.resizeable) {
-            this.geometry.width = this.clientGeometry.width;
-            this.geometry.height = this.clientGeometry.height;
+            this.geometry.width = this.client.geometry.width;
+            this.geometry.height = this.client.geometry.height;
         }
 
         /* respect min/max size limit */

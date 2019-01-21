@@ -75,7 +75,7 @@ class TilingEngine {
     public enforceClientSize(tile: Tile) {
         if (!tile.isTileable) return;
 
-        if (tile.doesGeometryDiffer())
+        if (tile.isGeometryChanged())
             this.driver.setTimeout(() => {
                 if (!tile.isTileable) return;
                 tile.commitGeometry();
@@ -117,7 +117,7 @@ class TilingEngine {
             return false;
 
         tile.floating = true;
-        tile.floatGeometry = Rect.from(tile.clientGeometry);
+        tile.floatGeometry = tile.actualGeometry;
         return true;
     }
 

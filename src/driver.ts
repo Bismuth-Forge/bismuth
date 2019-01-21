@@ -252,8 +252,10 @@ class KWinDriver {
                 this.control.onTileMove(tile);
             else if (resizing)
                 this.control.onTileResize(tile);
-            else
-                this.control.onTileGeometryChanged(tile);
+            else {
+                if (tile.isGeometryChanged())
+                    this.control.onTileGeometryChanged(tile);
+            }
         });
 
         this.connect(client.screenChanged, () =>
