@@ -20,27 +20,24 @@
 
 interface ITile {
     /* read-only */
-    readonly error: boolean;
+    readonly class: string;
     readonly fullScreen: boolean;
-    readonly managed: boolean;
     readonly modal: boolean;
     readonly special: boolean;
     readonly tileable: boolean;
     readonly utility: boolean;
-    readonly windowClass: boolean;
 
     /* read-write */
+    error: boolean;
     float: boolean;
-    floatGeometry: boolean;
+    floatGeometry: Rect;
     geometry: Rect;
-    keepAbove: boolean;
+    hideBorder: boolean;
     keepBelow: boolean;
-    drawBorder: boolean;
+    managed: boolean;
 
     /* methods */
     commit(): void;
-    setError(): void;
-    setManaged(): void;
 }
 
 interface ITileEventHandler {

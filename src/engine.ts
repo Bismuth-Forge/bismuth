@@ -51,7 +51,7 @@ class TilingEngine {
         area.height -= Config.screenGapTop + Config.screenGapBottom;
 
         const visibles = this.getVisibleTiles(screen);
-        const tileables = visibles.filter((tile) => (tile.isTileable === true));
+        const tileables = visibles.filter((tile) => (tile.tileable === true));
         const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
         debugObj(() => ["arrangeScreen", {
             layout,
@@ -60,25 +60,25 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
+        visibles.forEach((tile) => {
+            tile.keepBelow = tile.tileable;
+            if (Config.noTileBorder)
+                tile.hideBorder = tile.tileable;
+        });
+
         if (tileables.length > 0) {
             layout.apply(tileables, area);
-            tileables.forEach((tile) => tile.commitGeometry(true));
+            tileables.forEach((tile) => tile.commit(true));
         }
-
-        visibles.forEach((tile) => {
-            tile.keepBelow = tile.isTileable;
-            if (Config.noTileBorder)
-                tile.noBorder = tile.isTileable;
-        });
     }
 
     public enforceClientSize(tile: Tile) {
-        if (!tile.isTileable) return;
+        if (!tile.tileable) return;
 
         if (tile.isGeometryChanged())
             this.driver.setTimeout(() => {
-                if (!tile.isTileable) return;
-                tile.commitGeometry();
+                if (!tile.tileable) return;
+                tile.commit();
             }, 10);
     }
 
@@ -86,7 +86,7 @@ class TilingEngine {
         if (tile.special)
             return;
 
-        const className = tile.resourceClass;
+        const className = tile.class;
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
         if (ignore) return;
 
@@ -94,18 +94,18 @@ class TilingEngine {
 
         const floating = (
             (Config.floatingClass.indexOf(className) >= 0)
-            || (Config.floatUtility && tile.isUtility)
-            || tile.isModal
+            || (Config.floatUtility && tile.utility)
+            || tile.modal
         );
         if (floating)
-            tile.floating = true;
+            tile.float = true;
 
         this.tiles.push(tile);
     }
 
     public unmanageClient(tile: Tile) {
         this.tiles = this.tiles.filter((t) =>
-            t !== tile && !t.isError);
+            t !== tile && !t.error);
     }
 
     public updateScreenCount(count: number) {
@@ -113,10 +113,10 @@ class TilingEngine {
     }
 
     public setTileFloat(tile: Tile): boolean {
-        if (tile.floating)
+        if (tile.float)
             return false;
 
-        tile.floating = true;
+        tile.float = true;
         tile.floatGeometry = tile.actualGeometry;
         return true;
     }

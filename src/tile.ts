@@ -18,73 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Tile {
-    public arrangeCount: number;
-    public client: KWin.Client;
-    public floatGeometry: Rect;
-    public floating: boolean;
-    public isError: boolean;
-    public managed: boolean;
-
-    private geometry: Rect;
-    private padWidth: number;
-    private padHeight: number;
-
-    constructor(client: KWin.Client) {
-        this.arrangeCount = 0;
-        this.client = client;
-        this.floatGeometry = Rect.from(client.geometry);
-        this.floating = false;
-        this.geometry = Rect.from(client.geometry);
-        this.isError = false;
-        this.managed = false;
-
-        this.padWidth = 0;
-        this.padHeight = 0;
-    }
-
-    /*
-     * Attributes
-     */
-
-    public get isFullScreen(): boolean {
-        return this.client.fullScreen;
-    }
-
-    public get isModal(): boolean {
-        return this.client.modal;
-    }
-
-    public get isTileable(): boolean {
-        return (
-            (!this.client.fullScreen) &&
-            (!this.floating)
-        );
-    }
-
-    public get isUtility(): boolean {
-        return (this.client.dialog || this.client.splash || this.client.utility);
-    }
-
-    public get actualGeometry(): Rect {
-        return Rect.from(this.client.geometry);
-    }
-
-    public set keepAbove(value: boolean) {
-        this.client.keepAbove = value;
-    }
-
-    public set keepBelow(value: boolean) {
-        this.client.keepBelow = value;
-    }
-
-    public set noBorder(value: boolean) {
-        this.client.noBorder = value;
-    }
-
-    public get resourceClass(): string {
-        return String(this.client.resourceClass);
-    }
+class Tile implements ITile {
+    /* read-only */
+    public get actualGeometry(): Rect { return Rect.from(this.client.geometry); }
+    public get class(): string { return String(this.client.resourceClass); }
+    public get fullScreen(): boolean { return this.client.fullScreen; }
+    public get modal(): boolean { return this.client.modal; }
 
     public get special(): boolean {
         return (
@@ -93,12 +32,61 @@ class Tile {
         );
     }
 
+    public get tileable(): boolean {
+        return (
+            (!this.client.fullScreen) &&
+            (!this.float)
+        );
+    }
+
+    public get utility(): boolean {
+        return (this.client.dialog || this.client.splash || this.client.utility);
+    }
+
+    /* read-write */
+    public error: boolean;
+    public float: boolean;
+    public floatGeometry: Rect;
+    public geometry: Rect;
+    public hideBorder: boolean;
+    public keepBelow: boolean;
+    public managed: boolean;
+
+    public client: KWin.Client;
+
+    private arrangeCount: number;
+    private padWidth: number;
+    private padHeight: number;
+
+    constructor(client: KWin.Client) {
+        this.error = false;
+        this.float = false;
+        this.floatGeometry = Rect.from(client.geometry);
+        this.geometry = Rect.from(client.geometry);
+        this.hideBorder = false;
+        this.keepBelow = false;
+        this.managed = false;
+
+        this.client = client;
+
+        this.arrangeCount = 0;
+        this.padWidth = 0;
+        this.padHeight = 0;
+    }
+
+    /*
+     * Attributes
+     */
+
     /*
      * Methods
      */
 
-    public commitGeometry(reset?: boolean) {
-        if (this.floating) {
+    public commit(reset?: boolean) {
+        this.client.keepBelow = this.keepBelow;
+        this.client.noBorder = this.hideBorder;
+
+        if (this.float) {
             this.client.geometry = this.floatGeometry.toQRect();
             return;
         }
@@ -133,7 +121,7 @@ class Tile {
                 (this.client.screen === screen)
             );
         } catch (e) {
-            this.isError = true;
+            this.error = true;
             return false;
         }
     }
@@ -149,15 +137,15 @@ class Tile {
     }
 
     public toggleFloat() {
-        this.floating = !this.floating;
-        if (this.floating === false)
+        this.float = !this.float;
+        if (this.float === false)
             this.floatGeometry.copyFrom(this.client.geometry);
         else
-            this.commitGeometry();
+            this.commit();
     }
 
     public toString(): string {
-        return "Tile(id=" + this.client.windowId + ", class=" + this.resourceClass + ")";
+        return "Tile(id=" + this.client.windowId + ", class=" + this.class + ")";
     }
 
     /*
