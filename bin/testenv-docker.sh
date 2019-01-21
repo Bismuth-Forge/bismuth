@@ -12,6 +12,7 @@ case "$edition" in
 		;;
 esac
 
+projdir=$(realpath "$(dirname "$0")/..")
 ctname="krohnkite-$edition"
 
 Xephyr \
@@ -24,7 +25,7 @@ if [[ -z "$ctid" ]]; then
 	docker run \
 		--name "$ctname" \
 		-e DISPLAY=":$display" \
-		-v "$projdir":"/mnt"
+		-v "$projdir":"/mnt" \
 		-v "/tmp/.X11-unix":"/tmp/.X11-unix" \
 		"kdeneon/plasma":"$edition" &
 
