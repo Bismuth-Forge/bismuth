@@ -27,14 +27,6 @@ import "../code/script.js" as K
 Item {
     id: scriptRoot
 
-    Timer {
-        id: jiggleTimer
-        interval: 80
-        repeat: false
-        running: false 
-        triggeredOnStart: false
-    }
-
     Component.onCompleted: {
         console.log("KROHNKITE: starting the script");
         (new K.KWinDriver()).main();

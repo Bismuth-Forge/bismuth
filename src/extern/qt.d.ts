@@ -61,5 +61,4 @@ declare namespace Qt {
     function rect(x: number, y: number, width: number, height: number): QRect;
 }
 
-declare var jiggleTimer: QQmlTimer;
 declare var scriptRoot: object;

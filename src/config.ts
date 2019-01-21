@@ -24,7 +24,6 @@ class Config {
     public static enableStairLayout: boolean;
     public static enableTileLayout: boolean;
     public static floatUtility: boolean;
-    public static jiggleTiles: boolean;
     public static layoutPerActivity: boolean;
     public static layoutPerDesktop: boolean;
     public static noTileBorder: boolean;
@@ -56,7 +55,6 @@ class Config {
         load("enableStairLayout", true);
         load("enableTileLayout", true);
         load("floatUtility", true);
-        load("jiggleTiles", false);
         load("layoutPerActivity", false);
         load("layoutPerDesktop", false);
         load("noTileBorder", false);
