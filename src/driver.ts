@@ -54,7 +54,8 @@ class KWinDriver {
         for (let i = 0; i < clients.length; i++) {
             const tile = this.loadTile(clients[i]);
             this.engine.manageClient(tile);
-            this.bindTileEvents(tile);
+            if (tile.managed)
+                this.bindTileEvents(tile);
         }
         this.engine.arrange();
     }
@@ -197,7 +198,8 @@ class KWinDriver {
             const handler = () => {
                 const tile = this.loadTile(client);
                 this.control.onTileAdded(tile);
-                this.bindTileEvents(tile);
+                if (tile.managed)
+                    this.bindTileEvents(tile);
 
                 client.windowShown.disconnect(handler);
             };
