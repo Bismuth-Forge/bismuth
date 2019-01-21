@@ -18,13 +18,22 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * Abstracts KDE implementation specific details.
+ *
+ * Driver is responsible for initializing the tiling logic, connecting
+ * signals(Qt/KDE term for binding events), and providing specific utility
+ * functions.
+ */
 class KWinDriver {
     private engine: TilingEngine;
+    private control: TilingController;
     private tileMap: {[key: string]: Tile};
     private timerPool: QQmlTimer[];
 
     constructor() {
-        this.engine =  new TilingEngine(this);
+        this.engine = new TilingEngine(this);
+        this.control = new TilingController(this.engine);
         this.tileMap = {};
         this.timerPool = Array();
     }
@@ -39,14 +48,15 @@ class KWinDriver {
         this.bindEvents();
         this.bindShortcut();
 
-        this.onNumberScreensChanged(workspace.numScreens);
+        this.engine.updateScreenCount(workspace.numScreens);
 
         const clients = workspace.clientList();
-        for (let i = 0; i < clients.length; i++)
-            this.onClientAdded(clients[i]);
-
-        if (Config.jiggleTiles)
-            jiggleTimer.triggered.connect(this.onJiggleTimerTriggered);
+        for (let i = 0; i < clients.length; i++) {
+            const tile = this.loadTile(clients[i]);
+            this.engine.manageClient(tile);
+            this.bindTileEvents(tile);
+        }
+        this.engine.arrange();
     }
 
     /*
@@ -171,45 +181,51 @@ class KWinDriver {
     }
 
     private bindEvents() {
-        this.connect(workspace.numberScreensChanged, this.onNumberScreensChanged);
-        this.connect(workspace.screenResized, (screen: number) => {
-            debugObj(() => ["screenResized", {screen}]);
-            this.engine.arrange();
-        });
+        this.connect(workspace.numberScreensChanged, (count: number) =>
+            this.control.onScreenCountChanged(count));
 
-        this.connect(workspace.currentActivityChanged, this.engine.arrange);
-        this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) => {
-            debugObj(() => ["currentDesktopChanged", {desktop, client}]);
-            this.engine.jiggle = true;
-            this.engine.arrange();
-            if (Config.jiggleTiles)
-                jiggleTimer.restart();
-        });
+        this.connect(workspace.screenResized, (screen: number) =>
+            this.control.onScreenResized(screen));
+
+        this.connect(workspace.currentActivityChanged, (activity: string) =>
+            this.control.onCurrentActivityChanged(activity));
+
+        this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) =>
+            this.control.onCurrentDesktopChanged(desktop));
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             const handler = () => {
+                const tile = this.loadTile(client);
+                this.control.onTileAdded(tile);
+                this.bindTileEvents(tile);
+
                 client.windowShown.disconnect(handler);
-                this.onClientAdded(client);
             };
             client.windowShown.connect(handler);
         });
-        this.connect(workspace.clientRemoved, (client: KWin.Client) =>
-            this.onClientRemoved(this.loadTile(client)));
+
+        this.connect(workspace.clientRemoved, (client: KWin.Client) => {
+            const tile = this.loadTile(client);
+            this.control.onTileRemoved(tile);
+            this.removeTile(tile);
+        });
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-            this.onClientChanged(this.loadTile(client), "fullscreen=" + fullScreen + " user=" + user));
+            this.control.onTileChanged(this.loadTile(client), "fullscreen=" + fullScreen + " user=" + user));
+
         this.connect(workspace.clientMinimized, (client: KWin.Client) =>
-            this.onClientChanged(this.loadTile(client), "minimized"));
+            this.control.onTileChanged(this.loadTile(client), "minimized"));
+
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
-            this.onClientChanged(this.loadTile(client), "unminimized"));
+            this.control.onTileChanged(this.loadTile(client), "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
          *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
     }
 
-    private bindClientEvents(client: KWin.Client) {
-        const tile = this.loadTile(client);
+    private bindTileEvents(tile: Tile) {
+        const client = tile.client;
         let moving = false;
         let resizing = false;
 
@@ -218,98 +234,36 @@ class KWinDriver {
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving)
-                    this.onClientMoveStart(tile);
+                    this.control.onTileMoveStart(tile);
                 else
-                    this.onClientMoveOver(tile);
+                    this.control.onTileMoveOver(tile);
             }
-
             if (resizing !== client.resize) {
                 resizing = client.resize;
                 if (resizing)
-                    this.onClientResizeStart(tile);
+                    this.control.onTileResizeStart(tile);
                 else
-                    this.onClientResizeOver(tile);
+                    this.control.onTileResizeOver(tile);
             }
         });
 
         this.connect(client.geometryChanged, () => {
-            if (moving) {
-                this.onClientMove(tile);
-            } else if (resizing) {
-                this.onClientResize(tile);
-            } else {
-                /* client geometry changed without user intervention */
-                debugObj(() => ["geometryChanged", {tile, geometry: client.geometry}]);
-                this.engine.enforceClientSize(tile);
-            }
+            if (moving)
+                this.control.onTileMove(tile);
+            else if (resizing)
+                this.control.onTileResize(tile);
+            else
+                this.control.onTileGeometryChanged(tile);
         });
 
-        this.connect(client.screenChanged, () => this.onClientChanged(tile, "screen=" + client.screen));
+        this.connect(client.screenChanged, () =>
+            this.control.onTileChanged(tile, "screen=" + client.screen));
+
         this.connect(client.activitiesChanged, () =>
-            this.onClientChanged(tile, "activity=" + client.activities.join(",")));
-        this.connect(client.desktopChanged, () => this.onClientChanged(tile, "desktop=" + client.desktop));
+            this.control.onTileChanged(tile, "activity=" + client.activities.join(",")));
 
-    }
-
-    private onClientAdded = (client: KWin.Client) => {
-        if (client.specialWindow) return;
-        if (String(client.resourceClass) === "plasmashell") return;
-
-        debugObj(() => ["onClientAdded", {client, class: client.resourceClass}]);
-        const tile = this.loadTile(client);
-        this.engine.manageClient(tile);
-        if (tile.managed)
-            this.bindClientEvents(client);
-    }
-
-    private onClientRemoved = (tile: Tile) => {
-        debugObj(() => ["onClientRemoved ", {tile}]);
-        /* XXX: This is merely an attempt to remove the exited client.
-         * Sometimes, the client is not found in the tile list, and causes an
-         * exception in `engine.arrange`. */
-        this.engine.unmanageClient(tile);
-        this.removeTile(tile);
-    }
-
-    private onClientMoveStart = (tile: Tile) => {
-        if (this.engine.setClientFloat(tile) === true)
-            this.engine.arrange();
-    }
-
-    private onClientMove = (tile: Tile) => {
-        return;
-    }
-
-    private onClientMoveOver = (tile: Tile) => {
-        return;
-    }
-
-    private onClientResizeStart = (tile: Tile) => {
-        if (this.engine.setClientFloat(tile) === true)
-            this.engine.arrange();
-    }
-
-    private onClientResize = (tile: Tile) => {
-        return;
-    }
-
-    private onClientResizeOver = (tile: Tile) => {
-        return;
-    }
-
-    private onClientChanged = (tile: Tile, comment?: string) => {
-        debugObj(() => ["onClientChanged", {tile, comment}]);
-        this.engine.arrange();
-    }
-
-    private onNumberScreensChanged = (count: number) => {
-        debugObj(() => ["onNumberScreensChanged", {count}]);
-        this.engine.setNumberScreen(count);
-    }
-
-    private onJiggleTimerTriggered = () => {
-        this.engine.jiggle = false;
-        this.engine.arrange();
+        this.connect(client.desktopChanged, () =>
+            this.control.onTileChanged(tile, "desktop=" + client.desktop));
     }
 
     // TODO: private onConfigChanged = () => {

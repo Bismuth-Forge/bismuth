@@ -20,9 +20,11 @@
 
 interface ITile {
     /* read-only */
+    readonly error: boolean;
     readonly fullScreen: boolean;
     readonly managed: boolean;
     readonly modal: boolean;
+    readonly special: boolean;
     readonly tileable: boolean;
     readonly utility: boolean;
     readonly windowClass: boolean;
@@ -37,6 +39,7 @@ interface ITile {
 
     /* methods */
     commit(): void;
+    setError(): void;
     setManaged(): void;
 }
 
@@ -45,7 +48,7 @@ interface ITileEventHandler {
     onScreenResized(screen: number): void;
 
     onCurrentActivityChanged(activity: string): void;
-    onCurrentDesktopChanged(desktop: number, tile: Tile): void;
+    onCurrentDesktopChanged(desktop: number): void;
 
     onTileAdded(tile: Tile): void;
     onTileRemoved(tile: Tile): void;

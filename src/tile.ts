@@ -86,6 +86,13 @@ class Tile {
         return String(this.client.resourceClass);
     }
 
+    public get special(): boolean {
+        return (
+            this.client.specialWindow ||
+            String(this.client.resourceClass) === "plasmashell"
+        );
+    }
+
     /*
      * Methods
      */
@@ -131,11 +138,6 @@ class Tile {
         }
     }
 
-    public jiggle() {
-        this.geometry.width -= 1;
-        this.geometry.height -= 1;
-    }
-
     public setGeometry(x: number, y: number, width: number, height: number) {
         this.geometry.set(x, y, width, height);
         this.adjustGeometry();
@@ -154,7 +156,10 @@ class Tile {
             this.commitGeometry();
     }
 
-    /* private methods */
+    /*
+     * Private Methods
+     */
+
     private adjustGeometry() {
         /* respect resize increment */
         const unit = this.client.basicUnit;

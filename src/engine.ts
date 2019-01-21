@@ -18,70 +18,58 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * Maintains tiling context and performs various tiling actions.
+ */
 class TilingEngine {
-    public jiggle: boolean;
-
-    private arranging: boolean;
     private driver: KWinDriver;
     private layouts: LayoutStore;
-    private numScreen: number;
+    private screenCount: number;
     private tiles: Tile[];
 
     constructor(driver: KWinDriver) {
-        this.jiggle = Config.jiggleTiles;
-
-        this.arranging = false;
         this.driver = driver;
         this.layouts = new LayoutStore();
-        this.numScreen = 1;
+        this.screenCount = 1;
         this.tiles = Array();
     }
 
-    public arrange = () => {
-        if (this.arranging) {
-            debug(() => "arrange: ignored");
-            return;
-        }
+    public arrange() {
+        debugObj(() => ["arrange", {screenCount: this.screenCount}]);
+        for (let screen = 0; screen < this.screenCount; screen++)
+            this.arrangeScreen(screen);
+    }
 
-        this.arranging = true;
-        debug(() => "arrange: tiles=" + this.tiles.length);
-
+    public arrangeScreen(screen: number) {
         const activity = String(workspace.currentActivity);
         const desktop = workspace.currentDesktop;
 
-        for (let screen = 0; screen < this.numScreen; screen++) {
-            const area = this.driver.getWorkingArea(screen);
-            area.x += Config.screenGapLeft;
-            area.y += Config.screenGapTop;
-            area.width -= Config.screenGapLeft + Config.screenGapRight;
-            area.height -= Config.screenGapTop + Config.screenGapBottom;
+        const area = this.driver.getWorkingArea(screen);
+        area.x += Config.screenGapLeft;
+        area.y += Config.screenGapTop;
+        area.width -= Config.screenGapLeft + Config.screenGapRight;
+        area.height -= Config.screenGapTop + Config.screenGapBottom;
 
-            const visibles = this.getVisibleTiles(screen);
-            const tileables = visibles.filter((tile) => (tile.isTileable === true));
-            const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
-            debugObj(() => ["arrangeScreen", {
-                layout,
-                screen,
-                tileables: tileables.length,
-                visibles: visibles.length,
-            }]);
+        const visibles = this.getVisibleTiles(screen);
+        const tileables = visibles.filter((tile) => (tile.isTileable === true));
+        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        debugObj(() => ["arrangeScreen", {
+            layout,
+            screen,
+            tileables: tileables.length,
+            visibles: visibles.length,
+        }]);
 
-            if (tileables.length > 0) {
-                layout.apply(tileables, area);
-                if (this.jiggle)
-                    tileables.forEach((tile) => tile.jiggle());
-                tileables.forEach((tile) => tile.commitGeometry(true));
-            }
-
-            visibles.forEach((tile) => {
-                tile.keepBelow = tile.isTileable;
-                if (Config.noTileBorder)
-                    tile.noBorder = tile.isTileable;
-            });
+        if (tileables.length > 0) {
+            layout.apply(tileables, area);
+            tileables.forEach((tile) => tile.commitGeometry(true));
         }
 
-        debug(() => "arrange: finished");
-        this.arranging = false;
+        visibles.forEach((tile) => {
+            tile.keepBelow = tile.isTileable;
+            if (Config.noTileBorder)
+                tile.noBorder = tile.isTileable;
+        });
     }
 
     public enforceClientSize(tile: Tile) {
@@ -95,8 +83,10 @@ class TilingEngine {
     }
 
     public manageClient(tile: Tile) {
-        const className = tile.resourceClass;
+        if (tile.special)
+            return;
 
+        const className = tile.resourceClass;
         const ignore = (Config.ignoreClass.indexOf(className) >= 0);
         if (ignore) return;
 
@@ -111,20 +101,18 @@ class TilingEngine {
             tile.floating = true;
 
         this.tiles.push(tile);
-        this.arrange();
     }
 
     public unmanageClient(tile: Tile) {
         this.tiles = this.tiles.filter((t) =>
             t !== tile && !t.isError);
-        this.arrange();
     }
 
-    public setNumberScreen(count: number) {
-        this.numScreen = count;
+    public updateScreenCount(count: number) {
+        this.screenCount = count;
     }
 
-    public setClientFloat(tile: Tile): boolean {
+    public setTileFloat(tile: Tile): boolean {
         if (tile.floating)
             return false;
 
