@@ -81,6 +81,7 @@ declare namespace KWin {
         readonly screen: number;
         readonly splash: boolean;
         readonly utility: boolean;
+        readonly windowId: QByteArray;
         readonly windowRole: QByteArray;
 
         readonly clientPos: QPoint;

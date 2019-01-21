@@ -156,6 +156,10 @@ class Tile {
             this.commitGeometry();
     }
 
+    public toString(): string {
+        return "Tile(id=" + this.client.windowId + ", class=" + this.resourceClass + ")";
+    }
+
     /*
      * Private Methods
      */
