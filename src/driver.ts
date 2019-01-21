@@ -157,10 +157,17 @@ class KWinDriver {
         const key = String(client);
         let tile;
         if (!(tile = this.tileMap[key])) {
+            debugObj(() => ["loadTile/created", {key, client}]);
             tile = new Tile(client);
             this.tileMap[key] = tile;
         }
         return tile;
+    }
+
+    private removeTile(tile: Tile) {
+        const key = String(tile.client);
+        debugObj(() => ["removeTile", {key}]);
+        delete this.tileMap[key];
     }
 
     private bindEvents() {
@@ -186,7 +193,8 @@ class KWinDriver {
             };
             client.windowShown.connect(handler);
         });
-        this.connect(workspace.clientRemoved, this.onClientRemoved);
+        this.connect(workspace.clientRemoved, (client: KWin.Client) =>
+            this.onClientRemoved(this.loadTile(client)));
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
             this.onClientChanged(this.loadTile(client), "fullscreen=" + fullScreen + " user=" + user));
@@ -260,6 +268,7 @@ class KWinDriver {
          * Sometimes, the client is not found in the tile list, and causes an
          * exception in `engine.arrange`. */
         this.engine.unmanageClient(tile);
+        this.removeTile(tile);
     }
 
     private onClientMoveStart = (tile: Tile) => {
