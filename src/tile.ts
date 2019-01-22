@@ -83,13 +83,10 @@ class Tile implements ITile {
      */
 
     public commit(reset?: boolean) {
+        if (!this.tileable) return;
+
         this.client.keepBelow = this.keepBelow;
         this.client.noBorder = this.hideBorder;
-
-        if (this.float) {
-            this.client.geometry = this.floatGeometry.toQRect();
-            return;
-        }
 
         /* HACK: prevent infinite `geometryChanged`. */
         this.arrangeCount = (!!reset) ? 0 : this.arrangeCount + 1;
@@ -140,8 +137,11 @@ class Tile implements ITile {
         this.float = !this.float;
         if (this.float === false)
             this.floatGeometry.copyFrom(this.client.geometry);
-        else
-            this.commit();
+        else {
+            this.client.noBorder = false;
+            this.client.keepBelow = false;
+            this.client.geometry = this.floatGeometry.toQRect();
+        }
     }
 
     public toString(): string {
