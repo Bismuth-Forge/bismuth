@@ -75,12 +75,15 @@ class Tile implements ITile {
     }
 
     /*
-     * Attributes
-     */
-
-    /*
      * Methods
      */
+
+    public applyGap(left: number, right: number, top: number, bottom: number) {
+        this.geometry.x += left;
+        this.geometry.y += top;
+        this.geometry.width -= (left + right);
+        this.geometry.height -= (top + bottom);
+    }
 
     public commit(reset?: boolean) {
         if (!this.tileable) return;
