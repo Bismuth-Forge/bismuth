@@ -115,9 +115,7 @@ class TilingEngine {
     public setTileFloat(tile: Tile): boolean {
         if (tile.float)
             return false;
-
-        tile.float = true;
-        tile.floatGeometry = tile.actualGeometry;
+        tile.toggleFloat();
         return true;
     }
 

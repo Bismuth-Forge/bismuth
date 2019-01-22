@@ -64,6 +64,7 @@ class TilingController implements ITileEventHandler {
     public onTileMoveStart(tile: Tile): void {
         debugObj(() => ["onTileMoveStart", {tile}]);
         this.engine.setTileFloat(tile);
+        this.engine.arrange();
     }
 
     public onTileMove(tile: Tile): void {
@@ -77,6 +78,7 @@ class TilingController implements ITileEventHandler {
     public onTileResizeStart(tile: Tile): void {
         debugObj(() => ["onTileResizeStart", {tile}]);
         this.engine.setTileFloat(tile);
+        this.engine.arrange();
     }
 
     public onTileResize(tile: Tile): void {
