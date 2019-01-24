@@ -64,6 +64,8 @@ class TilingEngine {
             tile.keepBelow = tile.tileable;
             if (Config.noTileBorder)
                 tile.hideBorder = tile.tileable;
+            else
+                tile.hideBorder = false;
         });
 
         if (Config.maximizeSoleTile && tileables.length === 1) {

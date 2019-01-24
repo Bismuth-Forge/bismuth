@@ -55,8 +55,9 @@ class Tile implements ITile {
     public client: KWin.Client;
 
     private arrangeCount: number;
-    private padWidth: number;
+    private noBorder: boolean;
     private padHeight: number;
+    private padWidth: number;
 
     constructor(client: KWin.Client) {
         this.error = false;
@@ -70,6 +71,7 @@ class Tile implements ITile {
         this.client = client;
 
         this.arrangeCount = 0;
+        this.noBorder = this.client.noBorder;
         this.padWidth = 0;
         this.padHeight = 0;
     }
@@ -87,7 +89,7 @@ class Tile implements ITile {
 
     public commit(reset?: boolean) {
         this.client.keepBelow = this.keepBelow;
-        this.client.noBorder = this.hideBorder;
+        this.client.noBorder = (this.hideBorder) ? true : this.noBorder;
 
         /* do not commit geometry of non-tileable */
         if (!this.tileable)
