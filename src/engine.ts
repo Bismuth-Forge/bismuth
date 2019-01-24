@@ -66,10 +66,10 @@ class TilingEngine {
                 tile.hideBorder = tile.tileable;
         });
 
-        if (tileables.length > 0) {
+        if (tileables.length > 0)
             layout.apply(tileables, area);
-            tileables.forEach((tile) => tile.commit(true));
-        }
+
+        visibles.forEach((tile) => tile.commit(true));
     }
 
     public enforceClientSize(tile: Tile) {

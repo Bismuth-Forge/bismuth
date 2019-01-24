@@ -86,10 +86,12 @@ class Tile implements ITile {
     }
 
     public commit(reset?: boolean) {
-        if (!this.tileable) return;
-
         this.client.keepBelow = this.keepBelow;
         this.client.noBorder = this.hideBorder;
+
+        /* do not commit geometry of non-tileable */
+        if (!this.tileable)
+            return;
 
         /* HACK: prevent infinite `geometryChanged`. */
         this.arrangeCount = (!!reset) ? 0 : this.arrangeCount + 1;
