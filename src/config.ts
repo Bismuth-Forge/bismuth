@@ -26,6 +26,7 @@ class Config {
     public static floatUtility: boolean;
     public static layoutPerActivity: boolean;
     public static layoutPerDesktop: boolean;
+    public static maximizeSoleTile: boolean;
     public static noTileBorder: boolean;
     public static screenGapBottom: number;
     public static screenGapLeft: number;
@@ -57,6 +58,7 @@ class Config {
         load("floatUtility", true);
         load("layoutPerActivity", false);
         load("layoutPerDesktop", false);
+        load("maximizeSoleTile", false);
         load("noTileBorder", false);
         load("screenGapBottom", 0);
         load("screenGapLeft", 0);

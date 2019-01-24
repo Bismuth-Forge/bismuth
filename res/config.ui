@@ -268,6 +268,13 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QCheckBox" name="kcfg_maximizeSoleTile">
+         <property name="text">
+          <string>Maximize the sole window</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_noTileBorder">
          <property name="text">
           <string>Remove borders of tiled windows</string>

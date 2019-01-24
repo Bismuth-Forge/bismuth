@@ -66,7 +66,10 @@ class TilingEngine {
                 tile.hideBorder = tile.tileable;
         });
 
-        if (tileables.length > 0)
+        if (Config.maximizeSoleTile && tileables.length === 1) {
+            tileables[0].hideBorder = true;
+            tileables[0].geometry = this.driver.getWorkingArea(screen);
+        } else if (tileables.length > 0)
             layout.apply(tileables, area);
 
         visibles.forEach((tile) => tile.commit(true));
