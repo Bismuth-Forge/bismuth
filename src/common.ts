@@ -89,6 +89,15 @@ class Rect implements IRect {
         );
     }
 
+    public subtract(other: IRect) {
+        return new Rect(
+            this.x - other.x,
+            this.y - other.y,
+            this.width - other.width,
+            this.height - other.height,
+        );
+    }
+
     public toQRect(): QRect {
         return Qt.rect(this.x, this.y, this.width, this.height);
     }
