@@ -94,7 +94,10 @@ class TilingController implements ITileEventHandler {
         this.engine.enforceClientSize(tile);
     }
 
-    public onTileChanged(tile: Tile, comment?: string): void {
+    // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
+    // by itself anyway.
+    public onTileChanged(tile: Tile | null, comment?: string): void {
+        if (!tile) return;
         debugObj(() => ["onTileChanged", {tile, comment}]);
         /* TODO: maybe a less brutal solution? */
         this.engine.arrange();

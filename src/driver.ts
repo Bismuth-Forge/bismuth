@@ -52,10 +52,12 @@ class KWinDriver {
 
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++) {
-            const tile = this.loadTile(clients[i]);
+            const tile = this.createTile(clients[i]);
             this.engine.manageClient(tile);
             if (tile.managed)
                 this.bindTileEvents(tile);
+            else
+                this.removeTile(tile);
         }
         this.engine.arrange();
     }
@@ -164,15 +166,15 @@ class KWinDriver {
         signal.connect(wrapper);
     }
 
-    private loadTile(client: KWin.Client): Tile {
+    private createTile(client: KWin.Client): Tile {
         const key = String(client);
-        let tile;
-        if (!(tile = this.tileMap[key])) {
-            debugObj(() => ["loadTile/created", {key, client}]);
-            tile = new Tile(client);
-            this.tileMap[key] = tile;
-        }
-        return tile;
+        debugObj(() => ["loadTile/create", {key, client}]);
+        return (this.tileMap[key] = new Tile(client));
+    }
+
+    private loadTile(client: KWin.Client): Tile | null {
+        const key = String(client);
+        return this.tileMap[key] || null;
     }
 
     private removeTile(tile: Tile) {
@@ -196,10 +198,12 @@ class KWinDriver {
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             const handler = () => {
-                const tile = this.loadTile(client);
+                const tile = this.createTile(client);
                 this.control.onTileAdded(tile);
                 if (tile.managed)
                     this.bindTileEvents(tile);
+                else
+                    this.removeTile(tile);
 
                 client.windowShown.disconnect(handler);
             };
@@ -208,8 +212,10 @@ class KWinDriver {
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
             const tile = this.loadTile(client);
-            this.control.onTileRemoved(tile);
-            this.removeTile(tile);
+            if (tile) {
+                this.control.onTileRemoved(tile);
+                this.removeTile(tile);
+            }
         });
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
