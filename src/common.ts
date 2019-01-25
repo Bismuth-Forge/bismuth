@@ -114,3 +114,9 @@ function clip(value: number, min: number, max: number): number {
         return max;
     return value;
 }
+
+function slide(value: number, step: number): number {
+    if (step === 0)
+        return value;
+    return Math.floor(value / step + 1) * step;
+}
