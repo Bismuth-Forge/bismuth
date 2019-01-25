@@ -45,6 +45,24 @@ class TileLayout implements ILayout {
         this.masterRatio = 0.55;
     }
 
+    public adjust(area: Rect, tiles: Tile[], basis: Tile) {
+        const idx = tiles.indexOf(basis);
+        if (idx < 0) return;
+
+        const diff = basis.actualGeometry.subtract(basis.geometry);
+        if (idx < this.numMaster) { /* master tiles */
+            if (diff.x === 0) { /* east-side resizing */
+                const newMasterWidth = Math.floor(area.width * this.masterRatio) + diff.width;
+                this.masterRatio = newMasterWidth / area.width;
+            }
+        } else { /* stack tiles */
+            if (diff.x !== 0) { /* west-size resizing */
+                const newStackWidth = (area.width - Math.floor(area.width * this.masterRatio)) + diff.width;
+                this.masterRatio = (area.width - newStackWidth) / area.width;
+            }
+        }
+    }
+
     public apply = (tiles: Tile[], area: Rect): void => {
         const masterCount = Math.min(tiles.length, this.numMaster);
         const stackCount = tiles.length - masterCount;

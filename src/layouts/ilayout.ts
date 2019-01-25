@@ -19,6 +19,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 interface ILayout {
+    adjust?(area: Rect, tiles: Tile[], basis: Tile): void;
+
     apply(tiles: Tile[], area: Rect): void;
 
     handleUserInput(input: UserInput, data?: any): boolean;

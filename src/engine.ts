@@ -34,6 +34,18 @@ class TilingEngine {
         this.tiles = Array();
     }
 
+    public adjustLayout(basis: Tile) {
+        const activity = String(workspace.currentActivity);
+        const desktop = workspace.currentDesktop;
+        const screen = basis.client.screen;
+        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        if (layout.adjust) {
+            const area = this.driver.getWorkingArea(basis.client.screen);
+            const tileables = this.tiles.filter((t) => t.isVisible(screen) && t.tileable);
+            layout.adjust(area, tileables, basis);
+        }
+    }
+
     public arrange() {
         debugObj(() => ["arrange", {screenCount: this.screenCount}]);
         for (let screen = 0; screen < this.screenCount; screen++)
