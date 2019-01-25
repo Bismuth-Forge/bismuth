@@ -37,6 +37,9 @@ function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: 
 }
 
 class TileLayout implements ILayout {
+    public static readonly MinMasterRatio = 0.2;
+    public static readonly MaxMasterRatio = 0.8;
+
     private numMaster: number;
     private masterRatio: number; /* in ratio */
 
@@ -61,6 +64,7 @@ class TileLayout implements ILayout {
                 this.masterRatio = (area.width - newStackWidth) / area.width;
             }
         }
+        this.masterRatio = clip(TileLayout.MinMasterRatio, this.masterRatio, TileLayout.MaxMasterRatio);
     }
 
     public apply = (tiles: Tile[], area: Rect): void => {
