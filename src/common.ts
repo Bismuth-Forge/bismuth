@@ -107,7 +107,7 @@ class Rect implements IRect {
     }
 }
 
-function clip(min: number, value: number, max: number): number {
+function clip(value: number, min: number, max: number): number {
     if (value < min)
         return min;
     if (value > max)

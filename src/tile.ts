@@ -185,8 +185,8 @@ class Tile implements ITile {
         }
 
         /* respect min/max size limit */
-        this.geometry.width  = clip(this.client.minSize.width , this.geometry.width , this.client.maxSize.width );
-        this.geometry.height = clip(this.client.minSize.height, this.geometry.height, this.client.maxSize.height);
+        this.geometry.width  = clip(this.geometry.width , this.client.minSize.width , this.client.maxSize.width );
+        this.geometry.height = clip(this.geometry.height, this.client.minSize.height, this.client.maxSize.height);
     }
 
     private adjustPadding() {

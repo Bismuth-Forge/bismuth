@@ -64,7 +64,7 @@ class TileLayout implements ILayout {
                 this.masterRatio = (area.width - newStackWidth) / area.width;
             }
         }
-        this.masterRatio = clip(TileLayout.MinMasterRatio, this.masterRatio, TileLayout.MaxMasterRatio);
+        this.masterRatio = clip(this.masterRatio, TileLayout.MinMasterRatio, TileLayout.MaxMasterRatio);
     }
 
     public apply = (tiles: Tile[], area: Rect): void => {
@@ -100,14 +100,16 @@ class TileLayout implements ILayout {
     public handleUserInput(input: UserInput) {
         switch (input) {
             case UserInput.Left:
-                // TODO: define arbitrary constants
-                if (this.masterRatio > 0.2)
-                    this.masterRatio -= 0.05;
+                this.masterRatio = clip(
+                    slide(this.masterRatio, -0.05),
+                    TileLayout.MinMasterRatio,
+                    TileLayout.MaxMasterRatio);
                 break;
             case UserInput.Right:
-                // TODO: define arbitrary constants
-                if (this.masterRatio < 0.8)
-                    this.masterRatio += 0.05;
+                this.masterRatio = clip(
+                    slide(this.masterRatio, +0.05),
+                    TileLayout.MinMasterRatio,
+                    TileLayout.MaxMasterRatio);
                 break;
             case UserInput.Increase:
                 // TODO: define arbitrary constant
