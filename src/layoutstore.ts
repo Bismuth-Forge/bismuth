@@ -74,6 +74,7 @@ class LayoutStore {
         entry.push(new MonocleLayout());
         entry.push(new SpreadLayout());
         entry.push(new StairLayout());
+        entry.push(new QuarterLayout());
 
         this.store[key] = entry;
     }
