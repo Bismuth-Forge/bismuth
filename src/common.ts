@@ -118,5 +118,5 @@ function clip(value: number, min: number, max: number): number {
 function slide(value: number, step: number): number {
     if (step === 0)
         return value;
-    return Math.floor(value / step + 1) * step;
+    return Math.floor(value / step + 1.000001) * step;
 }
