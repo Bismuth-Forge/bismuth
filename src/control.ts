@@ -76,11 +76,7 @@ class TilingController implements ITileEventHandler {
     }
 
     public onTileResizeStart(tile: Tile): void {
-        debugObj(() => ["onTileResizeStart", {tile}]);
-        if (!Config.mouseAdjustLayout) {
-            this.engine.setTileFloat(tile);
-            this.engine.arrange();
-        }
+        /* do nothing */
     }
 
     public onTileResize(tile: Tile): void {
@@ -92,7 +88,8 @@ class TilingController implements ITileEventHandler {
         if (Config.mouseAdjustLayout && tile.tileable) {
             this.engine.adjustLayout(tile);
             this.engine.arrangeScreen(tile.client.screen);
-        }
+        } else if (!Config.mouseAdjustLayout)
+            this.engine.enforceClientSize(tile);
     }
 
     public onTileGeometryChanged(tile: Tile): void {
