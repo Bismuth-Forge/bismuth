@@ -27,7 +27,7 @@ class Config {
     public static layoutPerActivity: boolean;
     public static layoutPerDesktop: boolean;
     public static maximizeSoleTile: boolean;
-    public static mouseResize: boolean;
+    public static mouseAdjustLayout: boolean;
     public static noTileBorder: boolean;
     public static screenGapBottom: number;
     public static screenGapLeft: number;
@@ -60,7 +60,7 @@ class Config {
         load("layoutPerActivity", false);
         load("layoutPerDesktop", false);
         load("maximizeSoleTile", false);
-        this.mouseResize = true; // TODO: load config
+        load("mouseAdjustLayout", true);
         load("noTileBorder", false);
         load("screenGapBottom", 0);
         load("screenGapLeft", 0);

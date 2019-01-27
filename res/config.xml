@@ -61,6 +61,11 @@
         <default>false</default>
     </entry>
 
+    <entry name="mouseAdjustLayout" type="Bool">
+	    <label>Adjust layout with mouse</label>
+        <default>true</default>
+    </entry>
+
     <entry name="noTileBorder" type="Bool">
         <label>Remove borders of tiled windows</label>
         <default>false</default>
