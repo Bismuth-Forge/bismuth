@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Tile implements ITile {
+class Tile {
     /* read-only */
     public get actualGeometry(): Rect { return Rect.from(this.client.geometry); }
     public get class(): string { return String(this.client.resourceClass); }

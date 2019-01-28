@@ -21,7 +21,7 @@
 /**
  * A thin layer which translates window(`Tile`) events to tiling actions.
  */
-class TilingController implements ITileEventHandler {
+class TilingController {
     private engine: TilingEngine;
 
     public constructor(engine: TilingEngine) {
