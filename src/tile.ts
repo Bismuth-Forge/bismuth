@@ -54,7 +54,6 @@ class Tile implements ITile {
 
     public client: KWin.Client;
 
-    private arrangeCount: number;
     private noBorder: boolean;
     private padHeight: number;
     private padWidth: number;
@@ -70,7 +69,6 @@ class Tile implements ITile {
 
         this.client = client;
 
-        this.arrangeCount = 0;
         this.noBorder = this.client.noBorder;
         this.padWidth = 0;
         this.padHeight = 0;
@@ -95,17 +93,8 @@ class Tile implements ITile {
         if (!this.tileable)
             return;
 
-        /* HACK: prevent infinite `geometryChanged`. */
-        this.arrangeCount = (!!reset) ? 0 : this.arrangeCount + 1;
-        if (this.arrangeCount > 5) // TODO: define arbitrary constant
-            return;
-
         /* do not commit if not actually changed */
-        if (!this.isGeometryChanged()) {
-            this.arrangeCount = 0;
-            return;
-        }
-
+        if (!this.isGeometryChanged()) return;
         debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this.geometry}]);
         this.client.geometry = this.geometry.toQRect();
     }

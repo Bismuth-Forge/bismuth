@@ -62,9 +62,7 @@ class TilingController implements ITileEventHandler {
     }
 
     public onTileMoveStart(tile: Tile): void {
-        debugObj(() => ["onTileMoveStart", {tile}]);
-        this.engine.setTileFloat(tile);
-        this.engine.arrange();
+        /* do nothing */
     }
 
     public onTileMove(tile: Tile): void {
@@ -72,7 +70,17 @@ class TilingController implements ITileEventHandler {
     }
 
     public onTileMoveOver(tile: Tile): void {
-        /* do nothing */
+        if (tile.tileable) {
+            const diff = tile.actualGeometry.subtract(tile.geometry);
+            const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
+            /* TODO: arbitrary constant */
+            if (distance > 30) {
+                tile.floatGeometry.copyFrom(tile.actualGeometry);
+                this.engine.setTileFloat(tile);
+                this.engine.arrange();
+            } else
+                tile.commit();
+        }
     }
 
     public onTileResizeStart(tile: Tile): void {
