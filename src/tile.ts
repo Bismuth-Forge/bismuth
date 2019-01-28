@@ -47,13 +47,21 @@ class Tile {
     public error: boolean;
     public float: boolean;
     public floatGeometry: Rect;
-    public geometry: Rect;
     public hideBorder: boolean;
     public keepBelow: boolean;
     public managed: boolean;
 
     public client: KWin.Client;
+    public get geometry(): Rect {
+        return this._geometry;
+    }
 
+    public set geometry(value: Rect) {
+        this._geometry = value;
+    }
+
+    /* private */
+    private _geometry: Rect; // tslint:disable-line:variable-name
     private noBorder: boolean;
     private padHeight: number;
     private padWidth: number;
@@ -62,13 +70,13 @@ class Tile {
         this.error = false;
         this.float = false;
         this.floatGeometry = Rect.from(client.geometry);
-        this.geometry = Rect.from(client.geometry);
         this.hideBorder = false;
         this.keepBelow = false;
         this.managed = false;
 
         this.client = client;
 
+        this._geometry = Rect.from(client.geometry);
         this.noBorder = this.client.noBorder;
         this.padWidth = 0;
         this.padHeight = 0;
@@ -79,10 +87,12 @@ class Tile {
      */
 
     public applyGap(left: number, right: number, top: number, bottom: number) {
-        this.geometry.x += left;
-        this.geometry.y += top;
-        this.geometry.width -= (left + right);
-        this.geometry.height -= (top + bottom);
+        this._geometry = new Rect(
+            this._geometry.x + left,
+            this._geometry.y + top,
+            this._geometry.width - (left + right),
+            this._geometry.height - (top + bottom),
+        );
     }
 
     public commit(reset?: boolean) {
@@ -95,12 +105,12 @@ class Tile {
 
         /* do not commit if not actually changed */
         if (!this.isGeometryChanged()) return;
-        debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this.geometry}]);
-        this.client.geometry = this.geometry.toQRect();
+        debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this._geometry}]);
+        this.client.geometry = this._geometry.toQRect();
     }
 
     public isGeometryChanged(): boolean {
-        return !this.geometry.equals(this.client.geometry);
+        return !this._geometry.equals(this.client.geometry);
     }
 
     public isVisible(screen: number): boolean {
@@ -119,20 +129,10 @@ class Tile {
         }
     }
 
-    public setGeometry(x: number, y: number, width: number, height: number) {
-        this.geometry.set(x, y, width, height);
-        this.adjustGeometry();
-    }
-
-    public setGeometryRect(geometry: IRect) {
-        this.geometry.copyFrom(geometry);
-        this.adjustGeometry();
-    }
-
     public toggleFloat() {
         this.float = !this.float;
         if (this.float === false)
-            this.floatGeometry.copyFrom(this.client.geometry);
+            this.floatGeometry = Rect.from(this.client.geometry);
         else {
             this.client.noBorder = false;
             this.client.keepBelow = false;
@@ -149,18 +149,21 @@ class Tile {
      */
 
     private adjustGeometry() {
+        let width = this._geometry.width;
+        let height = this._geometry.height;
+
         /* respect resize increment */
         const unit = this.client.basicUnit;
         if (!(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
             this.adjustPadding();
 
-            const geom = this.geometry;
+            const geom = this._geometry;
             const base = this.client.minSize;
 
             const nw = Math.floor((geom.width  - base.width  - this.padWidth ) / unit.width);
             const nh = Math.floor((geom.height - base.height - this.padHeight) / unit.height);
-            this.geometry.width  = base.width  + unit.width  * nw + this.padWidth;
-            this.geometry.height = base.height + unit.height * nh + this.padHeight;
+            width  = base.width  + unit.width  * nw + this.padWidth;
+            height = base.height + unit.height * nh + this.padHeight;
 
             const pw = this.padWidth;
             const ph = this.padHeight;
@@ -169,13 +172,20 @@ class Tile {
 
         /* do not resize fixed-size windows */
         if (!this.client.resizeable) {
-            this.geometry.width = this.client.geometry.width;
-            this.geometry.height = this.client.geometry.height;
+            width = this.client.geometry.width;
+            height = this.client.geometry.height;
         }
 
         /* respect min/max size limit */
-        this.geometry.width  = clip(this.geometry.width , this.client.minSize.width , this.client.maxSize.width );
-        this.geometry.height = clip(this.geometry.height, this.client.minSize.height, this.client.maxSize.height);
+        width  = clip(width , this.client.minSize.width , this.client.maxSize.width );
+        height = clip(height, this.client.minSize.height, this.client.maxSize.height);
+
+        this._geometry = new Rect(
+            this._geometry.x,
+            this._geometry.y,
+            width,
+            height,
+        );
     }
 
     private adjustPadding() {

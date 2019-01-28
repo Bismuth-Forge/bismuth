@@ -75,7 +75,7 @@ class TilingController {
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
             /* TODO: arbitrary constant */
             if (distance > 30) {
-                tile.floatGeometry.copyFrom(tile.actualGeometry);
+                tile.floatGeometry = tile.actualGeometry;
                 this.engine.setTileFloat(tile);
                 this.engine.arrange();
             } else

@@ -38,7 +38,7 @@ class SpreadLayout implements ILayout {
         }
 
         for (let i = 0; i < tiles.length; i++)
-            tiles[i].setGeometry(
+            tiles[i].geometry = new Rect(
                 area.x + ((i < numTiles) ? spaceWidth * (numTiles - i - 1) : 0),
                 area.y,
                 cardWidth,

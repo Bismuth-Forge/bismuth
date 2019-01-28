@@ -34,7 +34,7 @@ class StairLayout implements ILayout {
         for (let i = 0; i < len; i++) {
             const dx = space * (len - i - 1);
             const dy = space * i;
-            tiles[i].setGeometry(
+            tiles[i].geometry = new Rect(
                 area.x + dx,
                 area.y + dy,
                 area.width - dx,

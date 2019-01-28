@@ -56,11 +56,13 @@ class TilingEngine {
         const activity = String(workspace.currentActivity);
         const desktop = workspace.currentDesktop;
 
-        const area = this.driver.getWorkingArea(screen);
-        area.x += Config.screenGapLeft;
-        area.y += Config.screenGapTop;
-        area.width -= Config.screenGapLeft + Config.screenGapRight;
-        area.height -= Config.screenGapTop + Config.screenGapBottom;
+        const workingArea = this.driver.getWorkingArea(screen);
+        const area = new Rect(
+            workingArea.x + Config.screenGapLeft,
+            workingArea.y + Config.screenGapTop,
+            workingArea.width - Config.screenGapLeft + Config.screenGapRight,
+            workingArea.height - Config.screenGapTop + Config.screenGapBottom,
+        );
 
         const visibles = this.getVisibleTiles(screen);
         const tileables = visibles.filter((tile) => (tile.tileable === true));

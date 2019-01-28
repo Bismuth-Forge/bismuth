@@ -20,14 +20,14 @@
 
 function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: number, gap = 0) {
     if (tiles.length === 1) {
-        tiles[0].setGeometry(x, y, width, height);
+        tiles[0].geometry = new Rect(x, y, width, height);
         return;
     }
 
     const count = tiles.length;
     const tileHeight = Math.floor((height - (count - 1) * gap) / count);
     tiles.forEach((tile: Tile, i: number) => {
-        tile.setGeometry(
+        tile.geometry = new Rect(
             x,
             y + (tileHeight + gap) * i,
             width,

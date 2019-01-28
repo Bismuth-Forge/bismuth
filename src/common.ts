@@ -50,34 +50,16 @@ class Rect implements IRect {
         return new Rect(rect.x, rect.y, rect.width, rect.height);
     }
 
-    public height: number;
-    public width: number;
-    public x: number;
-    public y: number;
+    public readonly height: number;
+    public readonly width: number;
+    public readonly x: number;
+    public readonly y: number;
 
     constructor(x: number, y: number, w: number, h: number) {
         this.height = h;
         this.width = w;
         this.x = x;
         this.y = y;
-    }
-
-    public set(x: number, y: number, w: number, h: number) {
-        this.height = h;
-        this.width = w;
-        this.x = x;
-        this.y = y;
-    }
-
-    public copyTo(other: IRect) {
-        other.height = this.height;
-        other.width = this.width;
-        other.x = this.x;
-        other.y = this.y;
-    }
-
-    public copyFrom(other: IRect) {
-        this.set(other.x, other.y, other.width, other.height);
     }
 
     public equals(other: IRect) {
