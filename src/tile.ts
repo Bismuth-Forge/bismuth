@@ -20,6 +20,8 @@
 
 class Tile {
     /* read-only */
+    public readonly  client: KWin.Client;
+
     public get actualGeometry(): Rect { return Rect.from(this.client.geometry); }
     public get class(): string { return String(this.client.resourceClass); }
     public get fullScreen(): boolean { return this.client.fullScreen; }
@@ -51,7 +53,6 @@ class Tile {
     public keepBelow: boolean;
     public managed: boolean;
 
-    public client: KWin.Client;
     public get geometry(): Rect {
         return this._geometry;
     }
@@ -67,14 +68,14 @@ class Tile {
     private padWidth: number;
 
     constructor(client: KWin.Client) {
+        this.client = client;
+
         this.error = false;
         this.float = false;
         this.floatGeometry = Rect.from(client.geometry);
         this.hideBorder = false;
         this.keepBelow = false;
         this.managed = false;
-
-        this.client = client;
 
         this._geometry = Rect.from(client.geometry);
         this.noBorder = this.client.noBorder;
