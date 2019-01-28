@@ -143,7 +143,7 @@ Tips
 3. `Window-Specific Overrides` tab > `Add` button
 4. Enter the following:
    - `Regular expression to match`: `.*`
-   - Check `Hide window titel bar`
+   - Check `Hide window title bar`
 
 (Note: not all decorations support this feature.)
 
