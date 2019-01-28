@@ -5,31 +5,31 @@ Kröhnkite
 
 A dynamic tiling extension for KWin.
 
-Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to be
-"simple" in both development and usage.
+Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to
+provide rock solid stability while fully integrating into KWin.
+
+The name of the script is from mineral [Kröhnkite][wikipedia]; it starts with
+K and looks cool.
 
 [dwm]: https://dwm.suckless.org/
-[Typescript]: https://www.typescriptlang.org/
+[wikipedia]: https://en.wikipedia.org/wiki/Kr%C3%B6hnkite
 
 ![screenshot](img/screenshot.png)
 
 
 Features
----------
+--------
  * DWM-like window tiling
     - Dynamically tile windows, rather than manually placing each.
     - Floating windows
+ * Fully integrates into KWin features, including:
+    - **Multi-screen**
+    - **Activities & Virtual desktop**
+    - Basic window management (minimize, fullscreen, switching, etc)
  * Multiple Layout Support
     - Tiling layout
     - Monocle layout
     - Desktop-friendly layouts (Spread, Stair)
- * Integrates well into KWin features, including:
-    - Activities
-    - Virtual desktops
-    - Window switcher
-    - Fullscreen (KWin can fullscreen any window)
-    - Minimization
-
 
 Development Requirement
 -----------------------
@@ -39,8 +39,8 @@ Development Requirement
  * p7zip (7z)
 
 
-Build & Install
----------------
+Installation
+------------
 
 You can install Kröhnkite in multiple ways.
 
@@ -50,14 +50,14 @@ You can download `krohnkite-x.x.kwinscript` file, and install it through
 *System Settings*.
 
  1. Download the kwinscript file
- 2. Open `System Settings`, navigate to `Window Management` > `KWin Scripts`
- 3. On the top-right corner, press `Import KWin script...`
+ 2. Open `System Settings` > `Window Management` > `KWin Scripts`
+ 3. Press `Import KWin script...` on the top-right corner
  4. Select the downloaded file
 
-Alternatively, through shell:
+Alternatively, through command-line:
 
-    plasmapkg2 -t kwinscript -i krohnkite.kwinscript
-    plasmapkg2 -t kwinscript -u krohnkite.kwinscript # if already installed
+    plasmapkg2 -t kwinscript -i krohnkite.kwinscript # installing new script
+    plasmapkg2 -t kwinscript -u krohnkite.kwinscript # upgrading existing script
 
 To uninstall the package:
 
@@ -68,30 +68,30 @@ To uninstall the package:
 The simplest method would be:
 
     make install
+    make uninstall # to uninstall the script
 
-This will automatically build and install kwinscript package. Note that you can
-manually build package file using `make package`. The generated package file
-can be imported from "KWin Script" dialog in "System Settings".
+This will automatically build and install kwinscript package.
+
+You can also manually build package file using:
+
+    make package
+
+The generated package file can be imported from "KWin Script" dialog.
 
 ### Simply Trying Out ###
 
-If you don't want to install the script, but still want to try, you can:
+Krohnkite can be temporarily loaded without installing the script:
 
     make run
     make stop
 
-to temporarily load (and unload) the script to KWin. You may also want to
-restart KWin w/:
-
-    kwin_x11 --replace
-
-New instance will replace the current one, and print debugging message(i.e.
-`console.log`) to terminal. This is useful for testing and debugging.
+Note that Krohnkite can destroy itself completely once it is disabled, so no
+restart is required to deactivated it.
 
 ### Enabling User-Configuration ###
 
-[It is reported][kwinconf] that a manual step is required to enable configuration of KWin
-scripts. This is a current limitation of KWin scripting envrionment.
+[It is reported][kwinconf] that a manual step is required to enable user
+configuration of KWin scripts. This is a limitation of KWin scripting.
 
 To enable configuration, you must perform the following in command-line:
 
@@ -101,6 +101,12 @@ To enable configuration, you must perform the following in command-line:
 A configuration button will appear in `KWin Scripts` in `System Settings`.
 
 ![config button shown](img/conf.png)
+
+To make changes effective, **the script must be reactivate**:
+  1) On `KWin Scripts` dialog, untick Krohnkite
+  2) `Apply`
+  3) tick Krohnkite
+  4) `Apply`
 
 [kwinconf]: https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357
 
@@ -136,57 +142,45 @@ Default Key Bindings
 Tips
 ----
 
+### Setting Up for Multi-Screen ###
+
+Krohnkite supports multi-screen setup, but KWin has to be configured to unlock
+the full potential of the script.
+
+1. Enable `Separate Screen Focus` under `Window Management` > 
+   `Window Behavior` > `Multiscreen Behaviour`
+2. Bind keys for global shortcut `Switch to Next/Previous Screen`
+   (Recommend: `Meta + ,` / `Meta + .`)
+3. Bind keys for global shortcut `Window to Next/Previous Screen`
+   (Recommend: `Meta + <` / `Meta + >`)
+
+Note: `Separate Screen Focus` appears only when multiple monitors are present.
+
 ### Removing Title Bars ###
 
-1. `System Setting` > `Application Style` > `Window Decorations`
-2. Click `Configure Breeze` inside the preview.
-3. `Window-Specific Overrides` tab > `Add` button
-4. Enter the following:
-   - `Regular expression to match`: `.*`
-   - Check `Hide window title bar`
+Breeze window decoration can be configured to completely remove title bars from
+all windows:
 
-(Note: not all decorations support this feature.)
+1. `System Setting` > `Application Style` > `Window Decorations`
+2. Click `Configure Breeze` inside the decoration preview.
+3. `Window-Specific Overrides` tab > `Add` button
+4. Enter the followings, and press `Ok`:
+   - `Regular expression to match`: `.*`
+   - Tick `Hide window title bar`
 
 ### Changing Border Colors ###
 
-Changing the color of borders makes it easier to identify the currently focused
-window.  This is quite an essential if title bars are removed.
+Changing the border color makes it easier to identify current window. This is
+convinient if title bars are removed.
 
-1. Open `~/.config/kdeglobals` with your favoir editors. (i.e. Kate, Vim, Nano)
+1. Open `~/.config/kdeglobals` with your favorite editor
 2. Scroll down and find `[WM]` section
-3. Below the section, append the followings:
+3. Append the followings to the section:
     - `frame=61,174,233`: set the border color of active window to *RGB(61,174,233)*
     - `inactiveFrame=239,240,241`: set the border color of inactive window to *RGB(239,240,241)*
 4. You must **restart** your session to see changes. (i.e. re-login, reboot)
 
-(Note: the RGB values presented here is for the default Breeze theme. Feel free
-to change these values. You can use [KColorChooser][] to pick colors from the
-screen.)
-
-[KColorChooser]: https://www.kde.org/applications/graphics/kcolorchooser/
-
-### Setting Up for Multi-Screen ###
-
-Krohnkite supports tiling on multi-screen environment, but users must configure
-KWin to unlock the full potential of tiling management.
-
-1. Switching between Screens
-    - `Separate Screen Focus` option is required to enable 
-      `Switch to Next/Previous Screen` shortcuts, which allow switching b/w
-      screens only with keyboard.
-    - The option can be found under `Window Management` > `Window Behavior` >
-      `Multiscreen Behaviour`. Note that this option appears only when
-      multiple monitors are present.
-    - `Active Screen follows Mouse` is **NOT** recommended.
-2. Switching screen with Shortcuts
-    - In `Global Shortcut`, you can find `Switch to Next Screen` and 
-      `Switch to Previous Screen`. They have no default key bindings.
-    - It's recommended to bind them to `Meta + ,` and `Meta + .`.
-    - Switching b/w screens also sets the active window to the last
-      active window on the current screen.
-3. Moving Window b/w Screens
-    - KWin provides `Window to Next/Previous Screen` feature
-    - Recommended bindings are `Meta + <` and `Meta + >`
+(Note: the RGB values presented here are for the default Breeze theme)
 
 
 Useful Development Resources
