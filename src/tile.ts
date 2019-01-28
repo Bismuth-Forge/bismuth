@@ -18,6 +18,32 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+class TileResizeDelta {
+    public readonly diff: Rect;
+    public readonly east: number;
+    public readonly west: number;
+    public readonly south: number;
+    public readonly north: number;
+
+    public constructor(tile: Tile) {
+        this.diff = tile.actualGeometry.subtract(tile.geometry);
+        this.east = this.diff.width + this.diff.x;
+        this.west = -this.diff.x;
+        this.south = this.diff.height + this.diff.y;
+        this.north = -this.diff.y;
+    }
+
+    public toString(): string {
+        return "TileResizeDelta(" + [
+            "diff=" + this.diff,
+            "east=" + this.east,
+            "west=" + this.west,
+            "north=" + this.north,
+            "south=" + this.south,
+        ].join(" ") + ")";
+    }
+}
+
 class Tile {
     /* read-only */
     public readonly  client: KWin.Client;

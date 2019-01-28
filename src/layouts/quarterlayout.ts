@@ -19,6 +19,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 class QuarterLayout implements ILayout {
+    public static readonly MaxProportion = 0.8;
+
     private lhsplit: number;
     private rhsplit: number;
     private vsplit: number;
@@ -27,6 +29,43 @@ class QuarterLayout implements ILayout {
         this.lhsplit = 0.5;
         this.rhsplit = 0.5;
         this.vsplit = 0.5;
+    }
+
+    public adjust(area: Rect, tiles: Tile[], basis: Tile) {
+        if (tiles.length <= 1 || tiles.length > 4)
+            return;
+
+        const idx = tiles.indexOf(basis);
+        if (idx < 0) return;
+
+        const delta = new TileResizeDelta(basis);
+
+        /* vertical split */
+        if ((idx === 0 || idx === 3) && delta.east !== 0)
+            this.vsplit = (Math.floor(area.width * this.vsplit) + delta.east) / area.width;
+        else if ((idx === 1 || idx === 2) && delta.west !== 0)
+            this.vsplit = (Math.floor(area.width * this.vsplit) - delta.west) / area.width;
+
+        /* left-side horizontal split */
+        if (tiles.length === 4) {
+            if (idx === 0 && delta.south !== 0)
+                this.lhsplit = (Math.floor(area.height * this.lhsplit) + delta.south) / area.height;
+            if (idx === 3 && delta.north !== 0)
+                this.lhsplit = (Math.floor(area.height * this.lhsplit) - delta.north) / area.height;
+        }
+
+        /* right-side horizontal split */
+        if (tiles.length >= 3) {
+            if (idx === 1 && delta.south !== 0)
+                this.rhsplit = (Math.floor(area.height * this.rhsplit) + delta.south) / area.height;
+            if (idx === 2 && delta.north !== 0)
+                this.rhsplit = (Math.floor(area.height * this.rhsplit) - delta.north) / area.height;
+        }
+
+        /* clipping */
+        this.vsplit = clip(this.vsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
+        this.lhsplit = clip(this.lhsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
+        this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
     }
 
     public apply(tiles: Tile[], area: Rect): void {
