@@ -97,13 +97,15 @@ class QuarterLayout implements ILayout {
         const leftTopHeight = Math.floor(area.height * this.lhsplit);
         const leftBottomHeight = area.height - leftTopHeight;
         const leftBottomY = leftTopHeight;
-        if (tiles.length === 4) {
+        if (tiles.length >= 4) {
             tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    );
             tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   );
             tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight);
             tiles[3].geometry = new Rect(area.x, leftBottomY , leftWidth , leftBottomHeight );
-            return;
         }
+
+        if (tiles.length > 4)
+            tiles.slice(4).forEach((t) => t.toggleFloat());
     }
 
     /* if true, layout completely overrides the default behavior */
