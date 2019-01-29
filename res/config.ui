@@ -331,6 +331,27 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>configTabs</tabstop>
+  <tabstop>kcfg_layoutPerActivity</tabstop>
+  <tabstop>kcfg_layoutPerDesktop</tabstop>
+  <tabstop>kcfg_screenGapTop</tabstop>
+  <tabstop>kcfg_screenGapLeft</tabstop>
+  <tabstop>kcfg_screenGapRight</tabstop>
+  <tabstop>kcfg_screenGapBottom</tabstop>
+  <tabstop>kcfg_enableTileLayout</tabstop>
+  <tabstop>kcfg_tileLayoutGap</tabstop>
+  <tabstop>kcfg_enableMonocleLayout</tabstop>
+  <tabstop>kcfg_enableSpreadLayout</tabstop>
+  <tabstop>kcfg_enableStairLayout</tabstop>
+  <tabstop>kcfg_ignoreClass</tabstop>
+  <tabstop>kcfg_floatingClass</tabstop>
+  <tabstop>kcfg_floatUtility</tabstop>
+  <tabstop>kcfg_maximizeSoleTile</tabstop>
+  <tabstop>kcfg_noTileBorder</tabstop>
+  <tabstop>kcfg_mouseAdjustLayout</tabstop>
+  <tabstop>kcfg_debug</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
