@@ -60,8 +60,8 @@ class TilingEngine {
         const area = new Rect(
             workingArea.x + Config.screenGapLeft,
             workingArea.y + Config.screenGapTop,
-            workingArea.width - Config.screenGapLeft + Config.screenGapRight,
-            workingArea.height - Config.screenGapTop + Config.screenGapBottom,
+            workingArea.width - (Config.screenGapLeft + Config.screenGapRight),
+            workingArea.height - (Config.screenGapTop + Config.screenGapBottom),
         );
 
         const visibles = this.getVisibleTiles(screen);
