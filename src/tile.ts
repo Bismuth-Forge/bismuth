@@ -110,15 +110,6 @@ class Tile {
      * Methods
      */
 
-    public applyGap(left: number, right: number, top: number, bottom: number) {
-        this._geometry = new Rect(
-            this._geometry.x + left,
-            this._geometry.y + top,
-            this._geometry.width - (left + right),
-            this._geometry.height - (top + bottom),
-        );
-    }
-
     public commit(reset?: boolean) {
         this.client.keepBelow = this.keepBelow;
         this.client.noBorder = (this.hideBorder) ? true : this.noBorder;

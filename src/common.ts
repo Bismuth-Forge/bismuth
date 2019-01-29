@@ -71,6 +71,15 @@ class Rect implements IRect {
         );
     }
 
+    public gap(left: number, right: number, top: number, bottom: number): Rect {
+        return new Rect(
+            this.x + left,
+            this.y + top,
+            this.width - (left + right),
+            this.height - (top + bottom),
+        );
+    }
+
     public subtract(other: IRect) {
         return new Rect(
             this.x - other.x,

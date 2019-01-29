@@ -74,13 +74,16 @@ class QuarterLayout implements ILayout {
             return;
         }
 
-        /* TODO: gap */
+        /* TODO: gap config */
+        const gap1 = Math.floor(Config.tileLayoutGap / 2);
+        const gap2 = Config.tileLayoutGap - gap1;
+
         const leftWidth = Math.floor(area.width * this.vsplit);
         const rightWidth = area.width - leftWidth;
         const rightX = leftWidth;
         if (tiles.length === 2) {
-            tiles[0].geometry = new Rect(area.x, area.y, leftWidth , area.height);
-            tiles[1].geometry = new Rect(rightX, area.y, rightWidth, area.height);
+            tiles[0].geometry = new Rect(area.x, area.y, leftWidth , area.height).gap(0, gap1, 0, 0);
+            tiles[1].geometry = new Rect(rightX, area.y, rightWidth, area.height).gap(gap2, 0, 0, 0);
             return;
         }
 
@@ -88,9 +91,9 @@ class QuarterLayout implements ILayout {
         const rightBottomHeight = area.height - rightTopHeight;
         const rightBottomY = rightTopHeight;
         if (tiles.length === 3) {
-            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , area.height      );
-            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   );
-            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight);
+            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , area.height      ).gap(0, gap1, 0, 0);
+            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
+            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
             return;
         }
 
@@ -98,10 +101,10 @@ class QuarterLayout implements ILayout {
         const leftBottomHeight = area.height - leftTopHeight;
         const leftBottomY = leftTopHeight;
         if (tiles.length >= 4) {
-            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    );
-            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   );
-            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight);
-            tiles[3].geometry = new Rect(area.x, leftBottomY , leftWidth , leftBottomHeight );
+            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    ).gap(0, gap1, 0, gap1);
+            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
+            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
+            tiles[3].geometry = new Rect(area.x, leftBottomY , leftWidth , leftBottomHeight ).gap(0, gap2, gap2, 0);
         }
 
         if (tiles.length > 4)
