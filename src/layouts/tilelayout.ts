@@ -49,6 +49,9 @@ class TileLayout implements ILayout {
     }
 
     public adjust(area: Rect, tiles: Tile[], basis: Tile) {
+        if (tiles.length <= this.numMaster)
+            return;
+
         const idx = tiles.indexOf(basis);
         if (idx < 0) return;
 
