@@ -59,6 +59,7 @@ class Tile {
 
     public set geometry(value: Rect) {
         this._geometry = value;
+        this.adjustGeometry();
     }
 
     /* private */
