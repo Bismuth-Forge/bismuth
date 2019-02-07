@@ -157,19 +157,22 @@ class Tile {
         /* respect resize increment */
         const unit = this.client.basicUnit;
         if (!(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
-            this.adjustPadding();
-
             const geom = this._geometry;
             const base = this.client.minSize;
 
             const nw = Math.floor((geom.width  - base.width  - this.padWidth ) / unit.width);
             const nh = Math.floor((geom.height - base.height - this.padHeight) / unit.height);
-            width  = base.width  + unit.width  * nw + this.padWidth;
-            height = base.height + unit.height * nh + this.padHeight;
+            width  = base.width  + unit.width  * nw;
+            height = base.height + unit.height * nh;
+            if (!this.noBorder) {
+                this.adjustPadding();
+                width += this.padWidth;
+                height += this.padHeight;
+            }
 
             const pw = this.padWidth;
             const ph = this.padHeight;
-            debugObj(() => ["commitGometry", {geom, base, unit, pw, ph}]);
+            debugObj(() => ["adjustGometry/unit", {geom, base, unit, pw, ph}]);
         }
 
         /* do not resize fixed-size windows */
