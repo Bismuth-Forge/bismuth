@@ -150,7 +150,8 @@ class Tile {
      * Private Methods
      */
 
-    private adjustGeometry() {
+    // TODO: move definition
+    public adjustGeometry() {
         let width = this._geometry.width;
         let height = this._geometry.height;
 

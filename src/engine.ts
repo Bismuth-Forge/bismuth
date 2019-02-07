@@ -97,6 +97,7 @@ class TilingEngine {
         if (tile.isGeometryChanged())
             this.driver.setTimeout(() => {
                 if (!tile.tileable) return;
+                tile.adjustGeometry();
                 tile.commit();
             }, 10);
     }
