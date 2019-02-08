@@ -65,8 +65,6 @@ class Tile {
     /* private */
     private _geometry: Rect; // tslint:disable-line:variable-name
     private noBorder: boolean;
-    private padHeight: number;
-    private padWidth: number;
 
     constructor(client: KWin.Client) {
         this.client = client;
@@ -80,8 +78,6 @@ class Tile {
 
         this._geometry = Rect.from(client.geometry);
         this.noBorder = this.client.noBorder;
-        this.padWidth = 0;
-        this.padHeight = 0;
     }
 
     /*
@@ -155,36 +151,19 @@ class Tile {
         let width = this._geometry.width;
         let height = this._geometry.height;
 
-        /* respect resize increment */
-        const unit = this.client.basicUnit;
-        if (!(unit.width === 1 && unit.height === 1)) /* NOT free-size */ {
-            const geom = this._geometry;
-            const base = this.client.minSize;
-
-            const nw = Math.floor((geom.width  - base.width  - this.padWidth ) / unit.width);
-            const nh = Math.floor((geom.height - base.height - this.padHeight) / unit.height);
-            width  = base.width  + unit.width  * nw;
-            height = base.height + unit.height * nh;
-            if (!this.noBorder) {
-                this.adjustPadding();
-                width += this.padWidth;
-                height += this.padHeight;
-            }
-
-            const pw = this.padWidth;
-            const ph = this.padHeight;
-            debugObj(() => ["adjustGometry/unit", {geom, base, unit, pw, ph}]);
-        }
-
         /* do not resize fixed-size windows */
         if (!this.client.resizeable) {
             width = this.client.geometry.width;
             height = this.client.geometry.height;
-        }
+        } else {
+            /* respect resize increment */
+            if (!(this.client.basicUnit.width === 1 && this.client.basicUnit.height === 1)) /* NOT free-size */
+                [width, height] = this.applyResizeIncrement();
 
-        /* respect min/max size limit */
-        width  = clip(width , this.client.minSize.width , this.client.maxSize.width );
-        height = clip(height, this.client.minSize.height, this.client.maxSize.height);
+            /* respect min/max size limit */
+            width  = clip(width , this.client.minSize.width , this.client.maxSize.width );
+            height = clip(height, this.client.minSize.height, this.client.maxSize.height);
+        }
 
         this._geometry = new Rect(
             this._geometry.x,
@@ -194,11 +173,28 @@ class Tile {
         );
     }
 
-    private adjustPadding() {
-        const size = this.client.clientSize;
-        this.padWidth = this.client.geometry.width - size.width;
-        this.padHeight = this.client.geometry.height - size.height;
-        debugObj(() => ["adjustPadding", {size, w: this.padWidth, h: this.padHeight}]);
+    private applyResizeIncrement(): [number, number] {
+        const unit = this.client.basicUnit;
+        const base = this.client.minSize;
+        const geom = this._geometry;
+
+        const padWidth  = this.client.geometry.width  - this.client.clientSize.width;
+        const padHeight = this.client.geometry.height - this.client.clientSize.height;
+
+        const quotWidth  = Math.floor((geom.width  - base.width  - padWidth ) / unit.width);
+        const quotHeight = Math.floor((geom.height - base.height - padHeight) / unit.height);
+
+        const newWidth  = base.width  + unit.width  * quotWidth  + padWidth ;
+        const newHeight = base.height + unit.height * quotHeight + padHeight;
+
+        debugObj(() => ["applyResizeIncrement", {
+            // tslint:disable-next-line:object-literal-sort-keys
+            unit, base, geom,
+            pad: [padWidth, padHeight].join("x"),
+            size: [newWidth, newHeight].join("x"),
+        }]);
+
+        return [newWidth, newHeight];
     }
 
 }
