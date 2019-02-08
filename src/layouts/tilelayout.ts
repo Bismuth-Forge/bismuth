@@ -133,6 +133,6 @@ class TileLayout implements ILayout {
     }
 
     public toString(): string {
-        return "StairLayout(nmaster=" + this.numMaster + ", ratio=" + this.masterRatio + ")";
+        return "TileLayout(nmaster=" + this.numMaster + ", ratio=" + this.masterRatio + ")";
     }
 }

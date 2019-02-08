@@ -102,12 +102,12 @@ class Tile {
         this.client.noBorder = (this.hideBorder) ? true : this.noBorder;
 
         /* do not commit geometry of non-tileable */
-        if (!this.tileable)
-            return;
+        if (!this.tileable) return;
 
         /* do not commit if not actually changed */
         if (!this.isGeometryChanged()) return;
-        debugObj(() => ["commitGeometry", {client: this.client, from: this.client.geometry, to: this._geometry}]);
+
+        debugObj(() => ["commit", {tile: this, from: this.client.geometry, to: this._geometry}]);
         this.client.geometry = this._geometry.toQRect();
     }
 

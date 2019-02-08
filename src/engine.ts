@@ -144,7 +144,7 @@ class TilingEngine {
      */
 
     public handleUserInput(input: UserInput, data?: any) {
-        debug(() => "handleUserInput: input=" + UserInput[input] + " data=" + data);
+        debugObj(() => ["handleUserInput", {input: UserInput[input], data}]);
 
         const screen = this.getActiveScreen();
         const activity = String(workspace.currentActivity);

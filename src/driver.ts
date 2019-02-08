@@ -168,7 +168,7 @@ class KWinDriver {
 
     private createTile(client: KWin.Client): Tile {
         const key = String(client);
-        debugObj(() => ["loadTile/create", {key, client}]);
+        debugObj(() => ["createTile", {key, client}]);
         return (this.tileMap[key] = new Tile(client));
     }
 

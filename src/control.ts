@@ -70,6 +70,7 @@ class TilingController {
     }
 
     public onTileMoveOver(tile: Tile): void {
+        debugObj(() => ["onTileMoveOver", {tile}]);
         if (tile.tileable) {
             const diff = tile.actualGeometry.subtract(tile.geometry);
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
