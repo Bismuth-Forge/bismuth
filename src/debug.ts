@@ -20,23 +20,27 @@
 
 const DEBUG = {
     enabled: false,
+    started: new Date().getTime(),
 };
 
 function debug(f: () => any) {
     if (!DEBUG.enabled) return;
 
+    const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
+
     // tslint:disable-next-line
-    console.log(f());
+    console.log("[" + timestamp+ "]", f());
 }
 
 function debugObj(f: () => [string, any]) {
     if (!DEBUG.enabled) return;
 
+    const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
     const [name, obj] = f();
     const buf = [];
     for (const i in obj)
         buf.push(i + "=" + obj[i]);
 
     // tslint:disable-next-line
-    console.log(name + ": " + buf.join(' '));
+    console.log("[" + timestamp + "]",  name + ": " + buf.join(' '));
 }
