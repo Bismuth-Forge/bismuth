@@ -253,7 +253,7 @@
        <item>
         <widget class="QLabel" name="ignoreLabel">
          <property name="text">
-          <string>Ignore (Window Class)</string>
+          <string>Ignore Windows</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::NoTextInteraction</set>
@@ -261,17 +261,93 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="kcfg_ignoreClass"/>
+        <layout class="QGridLayout" name="ignoreLayout">
+         <property name="leftMargin">
+          <number>40</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="kcfg_ignoreClass">
+           <property name="statusTip">
+            <string>Comma-separated list of window classes to be ignored by Krohnkite</string>
+           </property>
+           <property name="whatsThis">
+            <string>Comma-separated list of window classes to be ignored by Krohnkite</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="ignoreClassLabel">
+           <property name="text">
+            <string>Class</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="ignoreTitleLabel">
+           <property name="text">
+            <string>Title</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="kcfg_ignoreTitle">
+           <property name="whatsThis">
+            <string>Comma-separated list of title text to be ignored by Krohnkite</string>
+           </property>
+           <property name="accessibleName">
+            <string>Comma-separated list of title text to be ignored by Krohnkite</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="floatingLabel">
          <property name="text">
-          <string>Set Float (Window Class)</string>
+          <string>Float Windows</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="kcfg_floatingClass"/>
+        <layout class="QGridLayout" name="floatLayout">
+         <property name="leftMargin">
+          <number>40</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="kcfg_floatingClass">
+           <property name="whatsThis">
+            <string>Comma-separated list of window classes which will be floated automatically by Krohnkite</string>
+           </property>
+           <property name="accessibleName">
+            <string>Comma-separated list of window classes which will be floated automatically by Krohnkite</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="floatingClassLabel">
+           <property name="text">
+            <string>Class</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="floatingTitleLabel">
+           <property name="text">
+            <string>Title</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="kcfg_floatingTitle">
+           <property name="accessibleName">
+            <string>Comma-separated list of title text which will be floated automatically by Krohnkite</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Comma-separated list of title text which will be floated automatically by Krohnkite</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_floatUtility">

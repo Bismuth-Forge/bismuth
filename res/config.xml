@@ -41,8 +41,18 @@
         <default>krunner,yakuake,spectacle,kded5</default>
     </entry>
 
+    <entry name="ignoreTitle" type="String">
+	    <label>Ignore windows with certain string in title(comma-separated list)</label>
+        <default></default>
+    </entry>
+
     <entry name="floatingClass" type="String">
 	    <label>Float windows with certain classes(comma-separated list)</label>
+        <default></default>
+    </entry>
+
+    <entry name="floatingTitle" type="String">
+	    <label>Float windows with certain string in title(comma-separated list)</label>
         <default></default>
     </entry>
 

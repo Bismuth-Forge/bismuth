@@ -106,7 +106,10 @@ class TilingEngine {
             return;
 
         const className = tile.class;
-        const ignore = (Config.ignoreClass.indexOf(className) >= 0);
+        const ignore = (
+            (Config.ignoreClass.indexOf(className) >= 0)
+            || (matchWords(tile.title, Config.ignoreTitle) >= 0)
+        );
         if (ignore) return;
 
         tile.managed = true;
@@ -115,6 +118,7 @@ class TilingEngine {
             (Config.floatingClass.indexOf(className) >= 0)
             || (Config.floatUtility && tile.utility)
             || tile.modal
+            || (matchWords(tile.title, Config.floatingTitle) >= 0)
         );
         if (floating)
             tile.float = true;

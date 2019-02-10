@@ -111,3 +111,11 @@ function slide(value: number, step: number): number {
         return value;
     return Math.floor(value / step + 1.000001) * step;
 }
+
+function matchWords(str: string, words: string[]): number {
+    for (let i = 0; i < words.length; i++) {
+        if (str.indexOf(words[i]) >= 0)
+            return i;
+    }
+    return -1;
+}

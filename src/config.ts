@@ -38,7 +38,9 @@ class Config {
     public static tileLayoutGap: number;
 
     public static floatingClass: string[];
+    public static floatingTitle: string[];
     public static ignoreClass: string[];
+    public static ignoreTitle: string[];
 
     public static load() {
         function commanSeparate(str: string): string[] {
@@ -73,9 +75,13 @@ class Config {
         load("tileLayoutGap", 0);
 
         Config.floatingClass = commanSeparate(KWin.readConfig("floatingClass", ""));
+        Config.floatingTitle = commanSeparate(KWin.readConfig("floatingTitle", ""));
+        Config.ignoreTitle = commanSeparate(KWin.readConfig("ignoreTitle", ""));
         Config.ignoreClass = commanSeparate(KWin.readConfig("ignoreClass",
             "krunner,yakuake,spectacle,kded5"));
         debug(() => "floatingClass: " + Config.floatingClass);
+        debug(() => "floatingTitle: " + Config.floatingTitle);
         debug(() => "ignoreClass: " + Config.ignoreClass);
+        debug(() => "ignoreTitle: " + Config.ignoreTitle);
     }
 }

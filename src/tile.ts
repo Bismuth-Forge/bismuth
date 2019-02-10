@@ -52,6 +52,7 @@ class Tile {
     public get class(): string { return String(this.client.resourceClass); }
     public get fullScreen(): boolean { return this.client.fullScreen; }
     public get modal(): boolean { return this.client.modal; }
+    public get title(): string { return String(this.client.caption); }
 
     public get special(): boolean {
         return (
