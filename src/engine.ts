@@ -150,10 +150,12 @@ class TilingEngine {
         const desktop = workspace.currentDesktop;
 
         const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
-        const overriden = layout.handleUserInput(input, data);
-        if (overriden) {
-            this.arrange();
-            return;
+        if (layout.handleUserInput) {
+            const overriden = layout.handleUserInput(input, data);
+            if (overriden) {
+                this.arrange();
+                return;
+            }
         }
 
         let tile;

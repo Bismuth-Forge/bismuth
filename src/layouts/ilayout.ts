@@ -23,7 +23,7 @@ interface ILayout {
 
     apply(tiles: Tile[], area: Rect): void;
 
-    handleUserInput(input: UserInput, data?: any): boolean;
+    handleUserInput?(input: UserInput, data?: any): boolean;
     /* if true, layout completely overrides the default behavior */
 
     isEnabled(): boolean;

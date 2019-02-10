@@ -114,11 +114,6 @@ class QuarterLayout implements ILayout {
             });
     }
 
-    /* if true, layout completely overrides the default behavior */
-    public handleUserInput(input: UserInput, data?: any): boolean {
-        return false;
-    }
-
     public isEnabled(): boolean {
         return Config.enableQuarterLayout;
     }

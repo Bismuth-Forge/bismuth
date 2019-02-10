@@ -23,10 +23,6 @@ class MonocleLayout implements ILayout {
         tiles.forEach((tile) => (tile.geometry = area));
     }
 
-    public handleUserInput(input: UserInput) {
-        return false;
-    }
-
     public isEnabled(): boolean {
         return Config.enableMonocleLayout;
     }
