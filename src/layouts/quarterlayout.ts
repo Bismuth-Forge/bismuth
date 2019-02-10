@@ -120,8 +120,7 @@ class QuarterLayout implements ILayout {
     }
 
     public isEnabled(): boolean {
-        // TODO: config
-        return true;
+        return Config.enableQuarterLayout;
     }
 
     public toString(): string {

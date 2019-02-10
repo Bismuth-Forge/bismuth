@@ -23,6 +23,7 @@ class Config {
     public static enableSpreadLayout: boolean;
     public static enableStairLayout: boolean;
     public static enableTileLayout: boolean;
+    public static enableQuarterLayout: boolean;
     public static floatUtility: boolean;
     public static layoutPerActivity: boolean;
     public static layoutPerDesktop: boolean;
@@ -56,6 +57,7 @@ class Config {
         load("enableSpreadLayout", true);
         load("enableStairLayout", true);
         load("enableTileLayout", true);
+        load("enableQuarterLayout", false);
         load("floatUtility", true);
         load("layoutPerActivity", false);
         load("layoutPerDesktop", false);

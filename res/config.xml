@@ -31,6 +31,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="enableQuarterLayout" type="Bool">
+	    <label>Enable/disable Quarter layout</label>
+        <default>false</default>
+    </entry>
+
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
         <default>krunner,yakuake,spectacle,kded5</default>
