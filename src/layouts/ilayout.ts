@@ -21,7 +21,7 @@
 interface ILayout {
     adjust?(area: Rect, tiles: Tile[], basis: Tile): void;
 
-    apply(tiles: Tile[], area: Rect): void;
+    apply(tiles: Tile[], area: Rect, workingArea?: Rect): void;
 
     handleUserInput?(input: UserInput, data?: any): boolean;
     /* if true, layout completely overrides the default behavior */

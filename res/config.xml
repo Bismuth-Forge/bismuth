@@ -66,6 +66,11 @@
         <default>false</default>
     </entry>
 
+    <entry name="monocleMaximize" type="Bool">
+	    <label>Always maximize windows in Monocle layout</label>
+        <default>true</default>
+    </entry>
+
     <entry name="mouseAdjustLayout" type="Bool">
 	    <label>Adjust layout with mouse</label>
         <default>true</default>

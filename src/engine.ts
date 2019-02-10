@@ -84,7 +84,7 @@ class TilingEngine {
                 tile.hideBorder = (Config.noTileBorder) ? tile.tileable : false;
             });
 
-            layout.apply(tileables, area);
+            layout.apply(tileables, area, workingArea);
         }
 
         visibles.forEach((tile) => tile.commit(true));

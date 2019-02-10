@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>580</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -163,6 +163,23 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="monocleLayoutConfigLayout">
+           <property name="leftMargin">
+            <number>40</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="kcfg_monocleMaximize">
+             <property name="text">
+              <string>Maximize window</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableSpreadLayout">

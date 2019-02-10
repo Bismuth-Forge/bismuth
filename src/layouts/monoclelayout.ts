@@ -19,7 +19,11 @@
 // DEALINGS IN THE SOFTWARE.
 
 class MonocleLayout implements ILayout {
-    public apply = (tiles: Tile[], area: Rect): void => {
+    public apply = (tiles: Tile[], area: Rect, workingArea?: Rect): void => {
+        if (Config.monocleMaximize) {
+            area = workingArea || area;
+            tiles.forEach((tile) => tile.hideBorder = true);
+        }
         tiles.forEach((tile) => (tile.geometry = area));
     }
 

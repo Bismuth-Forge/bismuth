@@ -28,6 +28,7 @@ class Config {
     public static layoutPerActivity: boolean;
     public static layoutPerDesktop: boolean;
     public static maximizeSoleTile: boolean;
+    public static monocleMaximize: boolean;
     public static mouseAdjustLayout: boolean;
     public static noTileBorder: boolean;
     public static screenGapBottom: number;
@@ -62,6 +63,7 @@ class Config {
         load("layoutPerActivity", false);
         load("layoutPerDesktop", false);
         load("maximizeSoleTile", false);
+        load("monocleMaximize", true);
         load("mouseAdjustLayout", true);
         load("noTileBorder", false);
         load("screenGapBottom", 0);
