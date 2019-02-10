@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>600</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,84 +39,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="screenGapLabel">
-         <property name="text">
-          <string>Screen Gaps</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="screenGapLayout">
-         <property name="leftMargin">
-          <number>40</number>
-         </property>
-         <item row="3" column="0">
-          <widget class="QLabel" name="screenGapLeft">
-           <property name="text">
-            <string>Left</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QSpinBox" name="kcfg_screenGapLeft">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="3">
-          <widget class="QLabel" name="screenGapRight">
-           <property name="text">
-            <string>Right</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="3">
-          <widget class="QSpinBox" name="kcfg_screenGapRight">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="screenGapTop">
-           <property name="text">
-            <string>Top</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QSpinBox" name="kcfg_screenGapTop">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
-          <widget class="QLabel" name="screenGapBottom">
-           <property name="text">
-            <string>Bottom</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QSpinBox" name="kcfg_screenGapBottom">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="enableLayoutsLabel">
          <property name="text">
           <string>Enable/disable Layout</string>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="enableLayoutsLayout">
          <property name="leftMargin">
           <number>40</number>
          </property>
@@ -132,27 +62,6 @@
             <bool>false</bool>
            </property>
           </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="tileLayoutConfigLayout">
-           <property name="leftMargin">
-            <number>40</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="tileLayoutGapLabel">
-             <property name="text">
-              <string>Gaps between tiles (pixels)</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="kcfg_tileLayoutGap">
-             <property name="maximum">
-              <number>9999</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableMonocleLayout">
@@ -172,7 +81,7 @@
            <item>
             <widget class="QCheckBox" name="kcfg_monocleMaximize">
              <property name="text">
-              <string>Maximize window</string>
+              <string>Always maximize windows</string>
              </property>
              <property name="checked">
               <bool>true</bool>
@@ -211,7 +120,118 @@
         </layout>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="layoutTabVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gapsTab">
+      <attribute name="title">
+       <string>Gaps</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="screenGapLabel">
+         <property name="text">
+          <string>Screen Gaps (pixels)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="screenGapLayout">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <item row="1" column="2">
+          <widget class="QLabel" name="screenGapTop">
+           <property name="text">
+            <string>Top</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QSpinBox" name="kcfg_screenGapTop">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="screenGapLeft">
+           <property name="text">
+            <string>Left</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QSpinBox" name="kcfg_screenGapLeft">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QLabel" name="screenGapRight">
+           <property name="text">
+            <string>Right</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QSpinBox" name="kcfg_screenGapRight">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QLabel" name="screenGapBottom">
+           <property name="text">
+            <string>Bottom</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QSpinBox" name="kcfg_screenGapBottom">
+           <property name="maximum">
+            <number>500</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="tileGapLayout">
+         <item>
+          <widget class="QLabel" name="tileGapLabel">
+           <property name="text">
+            <string>Gaps between tiles (pixels)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="kcfg_tileLayoutGap">
+           <property name="maximum">
+            <number>9999</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="gapsTabVerticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -231,58 +251,51 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="rulesLayout">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
+        <widget class="QLabel" name="ignoreLabel">
+         <property name="text">
+          <string>Ignore (Window Class)</string>
          </property>
-         <item>
-          <widget class="QLabel" name="ignoreLabel">
-           <property name="text">
-            <string>Ignore (Window Class)</string>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::NoTextInteraction</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="kcfg_ignoreClass"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="floatingLabel">
-           <property name="text">
-            <string>Set Float (Window Class)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="kcfg_floatingClass"/>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_floatUtility">
-           <property name="text">
-            <string>Automatically float utility windows
+         <property name="textInteractionFlags">
+          <set>Qt::NoTextInteraction</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="kcfg_ignoreClass"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="floatingLabel">
+         <property name="text">
+          <string>Set Float (Window Class)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="kcfg_floatingClass"/>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_floatUtility">
+         <property name="text">
+          <string>Automatically float utility windows
 (applies to window type Dialog, Splash, Utility)</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="rulesIntroSpace">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="rulesTabVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -355,27 +368,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>configTabs</tabstop>
-  <tabstop>kcfg_layoutPerActivity</tabstop>
-  <tabstop>kcfg_layoutPerDesktop</tabstop>
-  <tabstop>kcfg_screenGapTop</tabstop>
-  <tabstop>kcfg_screenGapLeft</tabstop>
-  <tabstop>kcfg_screenGapRight</tabstop>
-  <tabstop>kcfg_screenGapBottom</tabstop>
-  <tabstop>kcfg_enableTileLayout</tabstop>
-  <tabstop>kcfg_tileLayoutGap</tabstop>
-  <tabstop>kcfg_enableMonocleLayout</tabstop>
-  <tabstop>kcfg_enableSpreadLayout</tabstop>
-  <tabstop>kcfg_enableStairLayout</tabstop>
-  <tabstop>kcfg_ignoreClass</tabstop>
-  <tabstop>kcfg_floatingClass</tabstop>
-  <tabstop>kcfg_floatUtility</tabstop>
-  <tabstop>kcfg_maximizeSoleTile</tabstop>
-  <tabstop>kcfg_noTileBorder</tabstop>
-  <tabstop>kcfg_mouseAdjustLayout</tabstop>
-  <tabstop>kcfg_debug</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
