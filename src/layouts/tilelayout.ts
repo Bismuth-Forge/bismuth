@@ -40,6 +40,10 @@ class TileLayout implements ILayout {
     public static readonly MinMasterRatio = 0.2;
     public static readonly MaxMasterRatio = 0.8;
 
+    public get enabled(): boolean {
+        return Config.enableTileLayout;
+    }
+
     private numMaster: number;
     private masterRatio: number; /* in ratio */
 
@@ -126,10 +130,6 @@ class TileLayout implements ILayout {
                 return false;
         }
         return true;
-    }
-
-    public isEnabled(): boolean {
-        return Config.enableTileLayout;
     }
 
     public toString(): string {

@@ -19,6 +19,10 @@
 // DEALINGS IN THE SOFTWARE.
 
 class StairLayout implements ILayout {
+    public get enabled(): boolean {
+        return Config.enableStairLayout;
+    }
+
     private space: number; /* in PIXELS */
 
     constructor() {
@@ -57,10 +61,6 @@ class StairLayout implements ILayout {
                 return false;
         }
         return true;
-    }
-
-    public isEnabled(): boolean {
-        return Config.enableStairLayout;
     }
 
     public toString(): string {

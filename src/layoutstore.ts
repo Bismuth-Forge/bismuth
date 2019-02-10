@@ -51,7 +51,7 @@ class LayoutStore {
 
             entry.push(layout);
 
-            if (entry[0].isEnabled())
+            if (entry[0].enabled)
                 break;
         }
     }

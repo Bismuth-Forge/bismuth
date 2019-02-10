@@ -21,6 +21,10 @@
 class QuarterLayout implements ILayout {
     public static readonly MaxProportion = 0.8;
 
+    public get enabled(): boolean {
+        return Config.enableQuarterLayout;
+    }
+
     private lhsplit: number;
     private rhsplit: number;
     private vsplit: number;
@@ -112,10 +116,6 @@ class QuarterLayout implements ILayout {
                 t.geometry = t.floatGeometry;
                 t.keepBelow = false;
             });
-    }
-
-    public isEnabled(): boolean {
-        return Config.enableQuarterLayout;
     }
 
     public toString(): string {

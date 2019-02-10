@@ -19,6 +19,10 @@
 // DEALINGS IN THE SOFTWARE.
 
 class SpreadLayout implements ILayout {
+    public get enabled(): boolean {
+        return Config.enableSpreadLayout;
+    }
+
     private space: number; /* in ratio */
 
     constructor() {
@@ -60,10 +64,6 @@ class SpreadLayout implements ILayout {
                 return false;
         }
         return true;
-    }
-
-    public isEnabled(): boolean {
-        return Config.enableSpreadLayout;
     }
 
     public toString(): string {

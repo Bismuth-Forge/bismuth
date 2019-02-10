@@ -19,14 +19,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 interface ILayout {
+    /* read-only */
+    readonly enabled: boolean;
+
+    /* methods */
     adjust?(area: Rect, tiles: Tile[], basis: Tile): void;
-
     apply(tiles: Tile[], area: Rect, workingArea?: Rect): void;
-
-    handleUserInput?(input: UserInput, data?: any): boolean;
-    /* if true, layout completely overrides the default behavior */
-
-    isEnabled(): boolean;
-
     toString(): string;
+
+    /* overriding */
+    handleUserInput?(input: UserInput, data?: any): boolean;
 }
