@@ -108,7 +108,10 @@ class QuarterLayout implements ILayout {
         }
 
         if (tiles.length > 4)
-            tiles.slice(4).forEach((t) => t.geometry = t.floatGeometry);
+            tiles.slice(4).forEach((t) => {
+                t.geometry = t.floatGeometry;
+                t.keepBelow = false;
+            });
     }
 
     /* if true, layout completely overrides the default behavior */
