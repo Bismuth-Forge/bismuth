@@ -39,7 +39,9 @@ class Config {
 
     public static floatingClass: string[];
     public static floatingTitle: string[];
+    public static ignoreActivity: string[];
     public static ignoreClass: string[];
+    public static ignoreScreen: number[];
     public static ignoreTitle: string[];
 
     public static load() {
@@ -83,5 +85,10 @@ class Config {
         debug(() => "floatingTitle: " + Config.floatingTitle);
         debug(() => "ignoreClass: " + Config.ignoreClass);
         debug(() => "ignoreTitle: " + Config.ignoreTitle);
+
+        Config.ignoreActivity = commanSeparate(KWin.readConfig("ignoreActivity", ""));
+        Config.ignoreScreen = commanSeparate(KWin.readConfig("ignoreScreen", "")).map((str) => parseInt(str, 10));
+        debug(() => "ignoreActivity: " + Config.ignoreActivity);
+        debug(() => "ignoreScreen: " + Config.ignoreScreen);
     }
 }

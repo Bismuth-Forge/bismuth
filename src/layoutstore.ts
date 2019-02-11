@@ -25,7 +25,12 @@ class LayoutStore {
         this.store = {};
     }
 
-    public getCurrentLayout(screen: number, activity: string, desktop: number): ILayout {
+    public getCurrentLayout(screen: number, activity: string, desktop: number): ILayout | null {
+        if (Config.ignoreActivity.indexOf(activity) >= 0)
+            return null;
+        if (Config.ignoreScreen.indexOf(screen) >= 0)
+            return null;
+
         const key = this.keygen(screen, activity, desktop);
 
         if (!this.store[key])

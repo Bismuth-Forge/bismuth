@@ -36,9 +36,19 @@
         <default>false</default>
     </entry>
 
+    <entry name="ignoreActivity" type="String">
+	    <label>Do not apply tiling on some activities(comma-separated list of activity names)</label>
+        <default></default>
+    </entry>
+
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
         <default>krunner,yakuake,spectacle,kded5</default>
+    </entry>
+
+    <entry name="ignoreScreen" type="String">
+	    <label>Do not apply tiling on some screens(comma-separated list of screen number)</label>
+        <default></default>
     </entry>
 
     <entry name="ignoreTitle" type="String">

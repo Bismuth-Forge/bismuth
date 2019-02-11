@@ -39,7 +39,7 @@ class TilingEngine {
         const desktop = workspace.currentDesktop;
         const screen = basis.screen;
         const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
-        if (layout.adjust) {
+        if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(screen);
             const tileables = this.tiles.filter((t) => t.isVisible(screen) && t.tileable);
             layout.adjust(area, tileables, basis);
@@ -55,6 +55,11 @@ class TilingEngine {
     public arrangeScreen(screen: number) {
         const activity = String(workspace.currentActivity);
         const desktop = workspace.currentDesktop;
+        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        if (!layout) {
+            debug(() => "ignoring screen: " + screen);
+            return;
+        }
 
         const workingArea = this.driver.getWorkingArea(screen);
         const area = new Rect(
@@ -66,7 +71,6 @@ class TilingEngine {
 
         const visibles = this.getVisibleTiles(screen);
         const tileables = visibles.filter((tile) => (tile.tileable === true));
-        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
         debugObj(() => ["arrangeScreen", {
             layout,
             screen,
@@ -146,7 +150,7 @@ class TilingEngine {
         const desktop = workspace.currentDesktop;
 
         const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
-        if (layout.handleUserInput) {
+        if (layout && layout.handleUserInput) {
             const overriden = layout.handleUserInput(input, data);
             if (overriden) {
                 this.arrange();
