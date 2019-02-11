@@ -37,8 +37,8 @@ function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: 
 }
 
 class TileLayout implements ILayout {
-    public static readonly MinMasterRatio = 0.2;
-    public static readonly MaxMasterRatio = 0.8;
+    public static readonly MIN_MASTER_RATIO = 0.2;
+    public static readonly MAX_MASTER_RATIO = 0.8;
 
     public get enabled(): boolean {
         return Config.enableTileLayout;
@@ -71,7 +71,7 @@ class TileLayout implements ILayout {
                 this.masterRatio = (area.width - newStackWidth) / area.width;
             }
         }
-        this.masterRatio = clip(this.masterRatio, TileLayout.MinMasterRatio, TileLayout.MaxMasterRatio);
+        this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
     }
 
     public apply = (tiles: Tile[], area: Rect): void => {
@@ -108,14 +108,14 @@ class TileLayout implements ILayout {
             case UserInput.Left:
                 this.masterRatio = clip(
                     slide(this.masterRatio, -0.05),
-                    TileLayout.MinMasterRatio,
-                    TileLayout.MaxMasterRatio);
+                    TileLayout.MIN_MASTER_RATIO,
+                    TileLayout.MAX_MASTER_RATIO);
                 break;
             case UserInput.Right:
                 this.masterRatio = clip(
                     slide(this.masterRatio, +0.05),
-                    TileLayout.MinMasterRatio,
-                    TileLayout.MaxMasterRatio);
+                    TileLayout.MIN_MASTER_RATIO,
+                    TileLayout.MAX_MASTER_RATIO);
                 break;
             case UserInput.Increase:
                 // TODO: define arbitrary constant

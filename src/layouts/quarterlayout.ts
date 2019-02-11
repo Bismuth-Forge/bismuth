@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 class QuarterLayout implements ILayout {
-    public static readonly MaxProportion = 0.8;
+    public static readonly MAX_PROPORTION = 0.8;
 
     public get enabled(): boolean {
         return Config.enableQuarterLayout;
@@ -67,9 +67,9 @@ class QuarterLayout implements ILayout {
         }
 
         /* clipping */
-        this.vsplit = clip(this.vsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
-        this.lhsplit = clip(this.lhsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
-        this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MaxProportion, QuarterLayout.MaxProportion);
+        this.vsplit = clip(this.vsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
+        this.lhsplit = clip(this.lhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
+        this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
     }
 
     public apply(tiles: Tile[], area: Rect): void {
