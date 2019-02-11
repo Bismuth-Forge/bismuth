@@ -162,8 +162,8 @@ class Tile {
         else {
             /* HACK: necessary to prevent geometry reset bug in KWin */
             this._client.noBorder = false;
-
             this._client.geometry = this.floatGeometry.toQRect();
+            this.keepBelow = false;
         }
     }
 
