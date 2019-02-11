@@ -74,19 +74,17 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
+        visibles.forEach((tile) => {
+            tile.keepBelow = tile.tileable;
+            tile.hideBorder = (Config.noTileBorder) ? tile.tileable : false;
+        });
+
         if (Config.maximizeSoleTile && tileables.length === 1) {
             tileables[0].keepBelow = true;
             tileables[0].hideBorder = true;
             tileables[0].geometry = this.driver.getWorkingArea(screen);
-        } else {
-            visibles.forEach((tile) => {
-                tile.keepBelow = tile.tileable;
-                tile.hideBorder = (Config.noTileBorder) ? tile.tileable : false;
-            });
-
-            if (tileables.length > 0)
-                layout.apply(tileables, area, workingArea);
-        }
+        } else if (tileables.length > 0)
+            layout.apply(tileables, area, workingArea);
 
         visibles.forEach((tile) => tile.commit(true));
     }
