@@ -18,45 +18,29 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+declare namespace Plasma {
+    /* https://techbase.kde.org/Development/Tutorials/Plasma2/QML2/API#DataSource */
+    interface DataSource {
+        /* read-only*/
+        readonly data: { [key: string]: { [key: string]: any } };
+        readonly sources: string[];
+        readonly valid: boolean;
 
-interface QByteArray {
-    /* keep it empty for now */
-}
+        /* read-write */
+        connectedSources: string[];
+        engine: string;
+        interval: number;
 
-interface QRect extends IRect {
-}
-
-interface QPoint {
-    x: number;
-    y: number;
-}
-
-interface QSize {
-    width: number;
-    height: number;
-}
-
-interface QSignal {
-    connect(callback: any): void;
-    disconnect(callback: any): void;
-}
-
-/* Reference: http://doc.qt.io/qt-5/qml-qtqml-timer.html */
-interface QQmlTimer {
-    interval: number;
-    repeat: boolean;
-    running: boolean;
-    triggeredOnStart: boolean;
-
-    triggered: QSignal;
-
-    restart(): void;
-    start(): void;
-    stop(): void;
-}
-
-declare namespace Qt {
-    function createQmlObject(qml: string, parent: object, filepath?: string): any;
-
-    function rect(x: number, y: number, width: number, height: number): QRect;
+        /* signals */
+        onNewData: QSignal;
+        onSourceAdded: QSignal;
+        onSourceRemoved: QSignal;
+        onSourceConnected: QSignal;
+        onSourceDisconnected: QSignal;
+        onIntervalChanged: QSignal;
+        onEngineChanged: QSignal;
+        onDataChanged: QSignal;
+        onConnectedSourcesChanged: QSignal;
+        onSourcesChanged: QSignal;
+    }
 }
