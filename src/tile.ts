@@ -45,31 +45,35 @@ class TileResizeDelta {
 }
 
 class Tile {
-    /* read-only */
-    public readonly  client: KWin.Client;
+    public static clientToId(client: KWin.Client): string {
+        return String(client);
+    }
 
-    public get actualGeometry(): Rect { return Rect.from(this.client.geometry); }
-    public get class(): string { return String(this.client.resourceClass); }
-    public get fullScreen(): boolean { return this.client.fullScreen; }
-    public get modal(): boolean { return this.client.modal; }
-    public get title(): string { return String(this.client.caption); }
+    /* read-only */
+    public readonly id: string;
+
+    public get actualGeometry(): Rect { return Rect.from(this._client.geometry); }
+    public get className(): string { return String(this._client.resourceClass); }
+    public get modal(): boolean { return this._client.modal; }
+    public get screen(): number { return this._client.screen; }
+    public get title(): string { return String(this._client.caption); }
 
     public get special(): boolean {
         return (
-            this.client.specialWindow ||
-            String(this.client.resourceClass) === "plasmashell"
+            this._client.specialWindow ||
+            String(this._client.resourceClass) === "plasmashell"
         );
     }
 
     public get tileable(): boolean {
         return (
-            (!this.client.fullScreen) &&
+            (!this._client.fullScreen) &&
             (!this.float)
         );
     }
 
     public get utility(): boolean {
-        return (this.client.dialog || this.client.splash || this.client.utility);
+        return (this._client.dialog || this._client.splash || this._client.utility);
     }
 
     /* read-write */
@@ -90,11 +94,12 @@ class Tile {
     }
 
     /* private */
-    private _geometry: Rect; // tslint:disable-line:variable-name
-    private noBorder: boolean;
+    private readonly _client: KWin.Client;
+    private readonly _noBorder: boolean;
+    private _geometry: Rect;
 
     constructor(client: KWin.Client) {
-        this.client = client;
+        this.id = Tile.clientToId(client);
 
         this.error = false;
         this.float = false;
@@ -103,8 +108,9 @@ class Tile {
         this.keepBelow = false;
         this.managed = false;
 
+        this._client = client;
         this._geometry = Rect.from(client.geometry);
-        this.noBorder = this.client.noBorder;
+        this._noBorder = this._client.noBorder;
     }
 
     /*
@@ -112,8 +118,8 @@ class Tile {
      */
 
     public commit(reset?: boolean) {
-        this.client.keepBelow = this.keepBelow;
-        this.client.noBorder = (this.hideBorder) ? true : this.noBorder;
+        this._client.keepBelow = this.keepBelow;
+        this._client.noBorder = (this.hideBorder) ? true : this._noBorder;
 
         /* do not commit geometry of non-tileable */
         if (!this.tileable) return;
@@ -121,23 +127,23 @@ class Tile {
         /* do not commit if not actually changed */
         if (!this.isGeometryChanged()) return;
 
-        debugObj(() => ["commit", {tile: this, from: this.client.geometry, to: this._geometry}]);
-        this.client.geometry = this._geometry.toQRect();
+        debugObj(() => ["commit", {tile: this, from: this._client.geometry, to: this._geometry}]);
+        this._client.geometry = this._geometry.toQRect();
     }
 
     public isGeometryChanged(): boolean {
-        return !this._geometry.equals(this.client.geometry);
+        return !this._geometry.equals(this._client.geometry);
     }
 
     public isVisible(screen: number): boolean {
         try {
             return (
-                (!this.client.minimized) &&
-                (this.client.desktop === workspace.currentDesktop
-                    || this.client.desktop === -1 /* on all desktop */) &&
-                (this.client.activities.length === 0 /* on all activities */
-                    || this.client.activities.indexOf(workspace.currentActivity) !== -1) &&
-                (this.client.screen === screen)
+                (!this._client.minimized) &&
+                (this._client.desktop === workspace.currentDesktop
+                    || this._client.desktop === -1 /* on all desktop */) &&
+                (this._client.activities.length === 0 /* on all activities */
+                    || this._client.activities.indexOf(workspace.currentActivity) !== -1) &&
+                (this._client.screen === screen)
             );
         } catch (e) {
             this.error = true;
@@ -145,19 +151,24 @@ class Tile {
         }
     }
 
+    public activate() {
+        workspace.activeClient = this._client;
+    }
+
     public toggleFloat() {
         this.float = !this.float;
         if (this.float === false)
-            this.floatGeometry = Rect.from(this.client.geometry);
+            this.floatGeometry = Rect.from(this._client.geometry);
         else {
-            this.client.noBorder = false;
-            this.client.keepBelow = false;
-            this.client.geometry = this.floatGeometry.toQRect();
+            /* HACK: necessary to prevent geometry reset bug in KWin */
+            this._client.noBorder = false;
+
+            this._client.geometry = this.floatGeometry.toQRect();
         }
     }
 
     public toString(): string {
-        return "Tile(id=" + this.client.windowId + ", class=" + this.class + ")";
+        return "Tile(id=" + this._client.windowId + ", class=" + this.className + ")";
     }
 
     /*
@@ -170,17 +181,17 @@ class Tile {
         let height = this._geometry.height;
 
         /* do not resize fixed-size windows */
-        if (!this.client.resizeable) {
-            width = this.client.geometry.width;
-            height = this.client.geometry.height;
+        if (!this._client.resizeable) {
+            width = this._client.geometry.width;
+            height = this._client.geometry.height;
         } else {
             /* respect resize increment */
-            if (!(this.client.basicUnit.width === 1 && this.client.basicUnit.height === 1)) /* NOT free-size */
+            if (!(this._client.basicUnit.width === 1 && this._client.basicUnit.height === 1)) /* NOT free-size */
                 [width, height] = this.applyResizeIncrement();
 
             /* respect min/max size limit */
-            width  = clip(width , this.client.minSize.width , this.client.maxSize.width );
-            height = clip(height, this.client.minSize.height, this.client.maxSize.height);
+            width  = clip(width , this._client.minSize.width , this._client.maxSize.width );
+            height = clip(height, this._client.minSize.height, this._client.maxSize.height);
         }
 
         this._geometry = new Rect(
@@ -192,12 +203,12 @@ class Tile {
     }
 
     private applyResizeIncrement(): [number, number] {
-        const unit = this.client.basicUnit;
-        const base = this.client.minSize;
+        const unit = this._client.basicUnit;
+        const base = this._client.minSize;
         const geom = this._geometry;
 
-        const padWidth  = this.client.geometry.width  - this.client.clientSize.width;
-        const padHeight = this.client.geometry.height - this.client.clientSize.height;
+        const padWidth  = this._client.geometry.width  - this._client.clientSize.width;
+        const padHeight = this._client.geometry.height - this._client.clientSize.height;
 
         const quotWidth  = Math.floor((geom.width  - base.width  - padWidth ) / unit.width);
         const quotHeight = Math.floor((geom.height - base.height - padHeight) / unit.height);

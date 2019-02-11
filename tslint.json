@@ -9,7 +9,8 @@
         "max-classes-per-file": false,
         "no-conditional-assignment": false,
         "one-variable-per-declaration": false,
-        "prefer-for-of": false
+        "prefer-for-of": false,
+        "variable-name": [true, "allow-leading-underscore"]
     },
     "rulesDirectory": []
 }

@@ -55,7 +55,7 @@ class KWinDriver {
             const tile = this.createTile(clients[i]);
             this.engine.manageClient(tile);
             if (tile.managed)
-                this.bindTileEvents(tile);
+                this.bindTileEvents(tile, clients[i]);
             else
                 this.removeTile(tile);
         }
@@ -77,10 +77,6 @@ class KWinDriver {
         if (!client)
             return null;
         return this.loadTile(client);
-    }
-
-    public setActiveClient(client: KWin.Client) {
-        workspace.activeClient = client;
     }
 
     /*
@@ -167,18 +163,19 @@ class KWinDriver {
     }
 
     private createTile(client: KWin.Client): Tile {
-        const key = String(client);
+        const tile = new Tile(client);
+        const key = tile.id;
         debugObj(() => ["createTile", {key, client}]);
-        return (this.tileMap[key] = new Tile(client));
+        return (this.tileMap[key] = tile);
     }
 
     private loadTile(client: KWin.Client): Tile | null {
-        const key = String(client);
+        const key = Tile.clientToId(client);
         return this.tileMap[key] || null;
     }
 
     private removeTile(tile: Tile) {
-        const key = String(tile.client);
+        const key = tile.id;
         debugObj(() => ["removeTile", {key}]);
         delete this.tileMap[key];
     }
@@ -201,7 +198,7 @@ class KWinDriver {
                 const tile = this.createTile(client);
                 this.control.onTileAdded(tile);
                 if (tile.managed)
-                    this.bindTileEvents(tile);
+                    this.bindTileEvents(tile, client);
                 else
                     this.removeTile(tile);
 
@@ -232,8 +229,7 @@ class KWinDriver {
          *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
     }
 
-    private bindTileEvents(tile: Tile) {
-        const client = tile.client;
+    private bindTileEvents(tile: Tile, client: KWin.Client) {
         let moving = false;
         let resizing = false;
 

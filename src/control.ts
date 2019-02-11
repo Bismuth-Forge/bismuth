@@ -77,7 +77,8 @@ class TilingController {
             /* TODO: arbitrary constant */
             if (distance > 30) {
                 tile.floatGeometry = tile.actualGeometry;
-                this.engine.setTileFloat(tile);
+                if (!tile.float)
+                    tile.toggleFloat();
                 this.engine.arrange();
             } else
                 tile.commit();
@@ -96,7 +97,7 @@ class TilingController {
         debugObj(() => ["onTileResizeOver", {tile}]);
         if (Config.mouseAdjustLayout && tile.tileable) {
             this.engine.adjustLayout(tile);
-            this.engine.arrangeScreen(tile.client.screen);
+            this.engine.arrangeScreen(tile.screen);
         } else if (!Config.mouseAdjustLayout)
             this.engine.enforceClientSize(tile);
     }

@@ -37,10 +37,10 @@ class TilingEngine {
     public adjustLayout(basis: Tile) {
         const activity = String(workspace.currentActivity);
         const desktop = workspace.currentDesktop;
-        const screen = basis.client.screen;
+        const screen = basis.screen;
         const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
         if (layout.adjust) {
-            const area = this.driver.getWorkingArea(basis.client.screen);
+            const area = this.driver.getWorkingArea(screen);
             const tileables = this.tiles.filter((t) => t.isVisible(screen) && t.tileable);
             layout.adjust(area, tileables, basis);
         }
@@ -78,13 +78,14 @@ class TilingEngine {
             tileables[0].keepBelow = true;
             tileables[0].hideBorder = true;
             tileables[0].geometry = this.driver.getWorkingArea(screen);
-        } else if (tileables.length > 0) {
+        } else {
             visibles.forEach((tile) => {
                 tile.keepBelow = tile.tileable;
                 tile.hideBorder = (Config.noTileBorder) ? tile.tileable : false;
             });
 
-            layout.apply(tileables, area, workingArea);
+            if (tileables.length > 0)
+                layout.apply(tileables, area, workingArea);
         }
 
         visibles.forEach((tile) => tile.commit(true));
@@ -105,7 +106,7 @@ class TilingEngine {
         if (tile.special)
             return;
 
-        const className = tile.class;
+        const className = tile.className;
         const ignore = (
             (Config.ignoreClass.indexOf(className) >= 0)
             || (matchWords(tile.title, Config.ignoreTitle) >= 0)
@@ -133,13 +134,6 @@ class TilingEngine {
 
     public updateScreenCount(count: number) {
         this.screenCount = count;
-    }
-
-    public setTileFloat(tile: Tile): boolean {
-        if (tile.float)
-            return false;
-        tile.toggleFloat();
-        return true;
     }
 
     /*
@@ -209,7 +203,7 @@ class TilingEngine {
             newIndex += visibles.length;
         newIndex = newIndex % visibles.length;
 
-        this.driver.setActiveClient(visibles[newIndex].client);
+        visibles[newIndex].activate();
     }
 
     public moveTile(step: number) {
