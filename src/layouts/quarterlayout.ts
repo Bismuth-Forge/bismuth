@@ -84,7 +84,7 @@ class QuarterLayout implements ILayout {
 
         const leftWidth = Math.floor(area.width * this.vsplit);
         const rightWidth = area.width - leftWidth;
-        const rightX = leftWidth;
+        const rightX = area.x + leftWidth;
         if (tiles.length === 2) {
             tiles[0].geometry = new Rect(area.x, area.y, leftWidth , area.height).gap(0, gap1, 0, 0);
             tiles[1].geometry = new Rect(rightX, area.y, rightWidth, area.height).gap(gap2, 0, 0, 0);
@@ -93,7 +93,7 @@ class QuarterLayout implements ILayout {
 
         const rightTopHeight = Math.floor(area.height * this.rhsplit);
         const rightBottomHeight = area.height - rightTopHeight;
-        const rightBottomY = rightTopHeight;
+        const rightBottomY = area.y + rightTopHeight;
         if (tiles.length === 3) {
             tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , area.height      ).gap(0, gap1, 0, 0);
             tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
@@ -103,7 +103,7 @@ class QuarterLayout implements ILayout {
 
         const leftTopHeight = Math.floor(area.height * this.lhsplit);
         const leftBottomHeight = area.height - leftTopHeight;
-        const leftBottomY = leftTopHeight;
+        const leftBottomY = area.y + leftTopHeight;
         if (tiles.length >= 4) {
             tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    ).gap(0, gap1, 0, gap1);
             tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
