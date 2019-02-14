@@ -19,28 +19,21 @@
 // DEALINGS IN THE SOFTWARE.
 
 declare namespace Plasma {
-    /* https://techbase.kde.org/Development/Tutorials/Plasma2/QML2/API#DataSource */
-    interface DataSource {
-        /* read-only*/
-        readonly data: { [key: string]: { [key: string]: any } };
-        readonly sources: string[];
-        readonly valid: boolean;
+    namespace TaskManager {
+        /* reference: https://github.com/KDE/plasma-workspace/blob/master/libtaskmanager/activityinfo.h */
+        interface ActivityInfo {
+            /* read-only */
+            readonly currentActivity: string;
+            readonly numberOfRunningActivities: number;
 
-        /* read-write */
-        connectedSources: string[];
-        engine: string;
-        interval: number;
+            /* methods */
+            runningActivities(): string[];
+            activityName(id: string): string;
 
-        /* signals */
-        onNewData: QSignal;
-        onSourceAdded: QSignal;
-        onSourceRemoved: QSignal;
-        onSourceConnected: QSignal;
-        onSourceDisconnected: QSignal;
-        onIntervalChanged: QSignal;
-        onEngineChanged: QSignal;
-        onDataChanged: QSignal;
-        onConnectedSourcesChanged: QSignal;
-        onSourcesChanged: QSignal;
+            /* signals */
+            currentActivityChanged: QSignal;
+            numberOfRunningActivitiesChanged: QSignal;
+            namesOfRunningActivitiesChanged: QSignal;
+        }
     }
 }

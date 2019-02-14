@@ -75,12 +75,14 @@ class Context {
  * functions.
  */
 class KWinDriver {
+    private activityNameMap: {[key: string]: string};
     private engine: TilingEngine;
     private control: TilingController;
     private tileMap: {[key: string]: Tile};
     private timerPool: QQmlTimer[];
 
     constructor() {
+        this.activityNameMap = {};
         this.engine = new TilingEngine(this);
         this.control = new TilingController(this.engine);
         this.tileMap = {};
@@ -96,6 +98,7 @@ class KWinDriver {
 
         this.bindEvents();
         this.bindShortcut();
+        this.initActivityNameMap();
 
         this.engine.updateScreenCount(workspace.numScreens);
 
@@ -114,6 +117,12 @@ class KWinDriver {
     /*
      * Utils
      */
+
+    public getActivityName(id: string): string {
+        if (!this.activityNameMap[id])
+            debug(() => "can't find activity name for " + id);
+        return this.activityNameMap[id] || "";
+    }
 
     public getCurrentContext(): Context {
         return new Context(
@@ -205,7 +214,7 @@ class KWinDriver {
      * Signal handlers
      */
 
-    private connect = (signal: QSignal, handler: (..._: any[]) => void) => {
+    private connect(signal: QSignal, handler: (..._: any[]) => void) {
         const wrapper = (...args: any[]) => {
             /* test if script is enabled.
              * XXX: `workspace` become undefined when the script is disabled. */
@@ -335,4 +344,16 @@ class KWinDriver {
     //     this.engine.arrange();
     // }
     /* NOTE: check `bindEvents` for details */
+
+    private initActivityNameMap() {
+        const update = () => {
+            activityInfo.runningActivities().forEach((id) => {
+                this.activityNameMap[id] = activityInfo.activityName(id);
+            });
+            debugObj(() => ["initActivityNameMap/update", this.activityNameMap]);
+        };
+
+        this.connect(activityInfo.namesOfRunningActivitiesChanged, update);
+        update();
+    }
 }
