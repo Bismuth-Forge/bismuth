@@ -18,6 +18,55 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+class Context {
+    public readonly screen: number;
+
+    private readonly _activity: string;
+    private readonly _desktop: number;
+    private readonly _driver: KWinDriver;
+    private _path: string | null;
+
+    public get path(): string {
+        if (!this._path) {
+            this._path = String(this.screen);
+            if (Config.layoutPerActivity)
+                this._path += "@" + this._activity;
+            if (Config.layoutPerDesktop)
+                this._path += "#" + this._desktop;
+        }
+        return this._path;
+    }
+
+    public get skipTiling(): boolean {
+        const activityName = this._driver.getActivityName(this._activity);
+        return (
+            (Config.ignoreActivity.indexOf(activityName) >= 0)
+            || (Config.ignoreScreen.indexOf(this.screen) >= 0)
+        );
+    }
+
+    constructor(driver: KWinDriver, screen: number, activity: string, desktop: number) {
+        this.screen = screen;
+        this._activity = activity;
+        this._desktop = desktop;
+        this._driver = driver;
+        this._path = null;
+    }
+
+    public includes(client: KWin.Client) {
+        return (
+            (client.desktop === this._desktop
+                || client.desktop === -1 /* on all desktop */)
+            && (client.activities.length === 0 /* on all activities */
+                || client.activities.indexOf(this._activity) !== -1)
+        );
+    }
+
+    public withScreen(screen: number): Context {
+        return new Context(this._driver, screen, this._activity, this._desktop);
+    }
+}
+
 /**
  * Abstracts KDE implementation specific details.
  *
@@ -66,17 +115,26 @@ class KWinDriver {
      * Utils
      */
 
-    public getWorkingArea(screenId: number): Rect {
-        return Rect.from(
-            workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
+    public getCurrentContext(): Context {
+        return new Context(
+            this,
+            (workspace.activeClient) ? workspace.activeClient.screen : 0,
+            workspace.currentActivity,
+            workspace.currentDesktop,
         );
     }
 
-    public getActiveTile(): Tile | null {
+    public getCurrentTile(): Tile | null {
         const client = workspace.activeClient;
         if (!client)
             return null;
         return this.loadTile(client);
+    }
+
+    public getWorkingArea(screenId: number): Rect {
+        return Rect.from(
+            workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
+        );
     }
 
     /*

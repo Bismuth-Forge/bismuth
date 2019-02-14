@@ -25,27 +25,21 @@ class LayoutStore {
         this.store = {};
     }
 
-    public getCurrentLayout(screen: number, activity: string, desktop: number): ILayout | null {
-        if (Config.ignoreActivity.indexOf(activity) >= 0)
-            return null;
-        if (Config.ignoreScreen.indexOf(screen) >= 0)
+    public getCurrentLayout(ctx: Context): ILayout | null {
+        if (ctx.skipTiling)
             return null;
 
-        const key = this.keygen(screen, activity, desktop);
-
-        if (!this.store[key])
-            this.initEntry(key);
+        if (!this.store[ctx.path])
+            this.initEntry(ctx.path);
 
         // TODO: if no layout, return floating layout, which is a static object.
-        return this.store[key][0];
+        return this.store[ctx.path][0];
     }
 
-    public cycleLayout(screen: number, activity: string, desktop: number) {
-        const key = this.keygen(screen, activity, desktop);
-
-        const entry = this.store[key];
+    public cycleLayout(ctx: Context) {
+        const entry = this.store[ctx.path];
         if (!entry) {
-            this.initEntry(key);
+            this.initEntry(ctx.path);
             return;
         }
 
@@ -59,17 +53,6 @@ class LayoutStore {
             if (entry[0].enabled)
                 break;
         }
-    }
-
-    private keygen(screen: number, activity: string, desktop: number): string {
-        let key = String(screen);
-
-        if (Config.layoutPerActivity)
-            key += "@" + activity;
-        if (Config.layoutPerDesktop)
-            key += "#" + desktop;
-
-        return key;
     }
 
     private initEntry(key: string) {

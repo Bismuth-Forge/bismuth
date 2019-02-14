@@ -35,33 +35,30 @@ class TilingEngine {
     }
 
     public adjustLayout(basis: Tile) {
-        const activity = String(workspace.currentActivity);
-        const desktop = workspace.currentDesktop;
-        const screen = basis.screen;
-        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        const ctx = this.driver.getCurrentContext().withScreen(basis.screen);
+        const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
-            const area = this.driver.getWorkingArea(screen);
-            const tileables = this.tiles.filter((t) => t.isVisible(screen) && t.tileable);
+            const area = this.driver.getWorkingArea(ctx.screen);
+            const tileables = this.tiles.filter((t) => t.isVisible(ctx) && t.tileable);
             layout.adjust(area, tileables, basis);
         }
     }
 
     public arrange() {
         debugObj(() => ["arrange", {screenCount: this.screenCount}]);
+        const ctx = this.driver.getCurrentContext();
         for (let screen = 0; screen < this.screenCount; screen++)
-            this.arrangeScreen(screen);
+            this.arrangeScreen(ctx.withScreen(screen));
     }
 
-    public arrangeScreen(screen: number) {
-        const activity = String(workspace.currentActivity);
-        const desktop = workspace.currentDesktop;
-        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+    public arrangeScreen(ctx: Context) {
+        const layout = this.layouts.getCurrentLayout(ctx);
         if (!layout) {
-            debug(() => "ignoring screen: " + screen);
+            debug(() => "ignoring screen: " + ctx.screen);
             return;
         }
 
-        const workingArea = this.driver.getWorkingArea(screen);
+        const workingArea = this.driver.getWorkingArea(ctx.screen);
         const area = new Rect(
             workingArea.x + Config.screenGapLeft,
             workingArea.y + Config.screenGapTop,
@@ -69,11 +66,11 @@ class TilingEngine {
             workingArea.height - (Config.screenGapTop + Config.screenGapBottom),
         );
 
-        const visibles = this.getVisibleTiles(screen);
+        const visibles = this.getVisibleTiles(ctx);
         const tileables = visibles.filter((tile) => (tile.tileable === true));
         debugObj(() => ["arrangeScreen", {
             layout,
-            screen,
+            screen: ctx.screen,
             tileables: tileables.length,
             visibles: visibles.length,
         }]);
@@ -86,7 +83,7 @@ class TilingEngine {
         if (Config.maximizeSoleTile && tileables.length === 1) {
             tileables[0].keepBelow = true;
             tileables[0].hideBorder = true;
-            tileables[0].geometry = this.driver.getWorkingArea(screen);
+            tileables[0].geometry = this.driver.getWorkingArea(ctx.screen);
         } else if (tileables.length > 0)
             layout.apply(tileables, area, workingArea);
 
@@ -145,11 +142,9 @@ class TilingEngine {
     public handleUserInput(input: UserInput, data?: any) {
         debugObj(() => ["handleUserInput", {input: UserInput[input], data}]);
 
-        const screen = this.getActiveScreen();
-        const activity = String(workspace.currentActivity);
-        const desktop = workspace.currentDesktop;
+        const ctx = this.driver.getCurrentContext();
 
-        const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.handleUserInput) {
             const overriden = layout.handleUserInput(input, data);
             if (overriden) {
@@ -193,7 +188,8 @@ class TilingEngine {
     public moveFocus(step: number) {
         if (step === 0) return;
 
-        const visibles = this.getVisibleTiles(this.getActiveScreen());
+        const ctx = this.driver.getCurrentContext();
+        const visibles = this.getVisibleTiles(ctx);
         if (visibles.length === 0)
             return;
 
@@ -214,11 +210,11 @@ class TilingEngine {
         const tile = this.getActiveTile();
         if (!tile) return;
 
-        const screen = this.getActiveScreen();
+        const ctx = this.driver.getCurrentContext();
         let tileIdx = this.tiles.indexOf(tile);
         const dir = (step > 0) ? 1 : -1;
         for (let i = tileIdx + dir; 0 <= i && i < this.tiles.length; i += dir) {
-            if (this.tiles[i].isVisible(screen)) {
+            if (this.tiles[i].isVisible(ctx)) {
                 this.tiles[tileIdx] = this.tiles[i];
                 this.tiles[i] = tile;
                 tileIdx = i;
@@ -240,23 +236,16 @@ class TilingEngine {
     }
 
     public nextLayout() {
-        const screen = this.getActiveScreen();
-        const activity = String(workspace.currentActivity);
-        const desktop = workspace.currentDesktop;
-
-        this.layouts.cycleLayout(screen, activity, desktop);
+        this.layouts.cycleLayout(this.driver.getCurrentContext());
     }
 
     public setLayout(cls: any) {
-        const screen = this.getActiveScreen();
-        const activity = String(workspace.currentActivity);
-        const desktop = workspace.currentDesktop;
-
-        const lastLayout = this.layouts.getCurrentLayout(screen, activity, desktop);
+        const ctx = this.driver.getCurrentContext();
+        const lastLayout = this.layouts.getCurrentLayout(ctx);
         for (;;) {
-            this.layouts.cycleLayout(screen, activity, desktop);
+            this.layouts.cycleLayout(ctx);
 
-            const layout = this.layouts.getCurrentLayout(screen, activity, desktop);
+            const layout = this.layouts.getCurrentLayout(ctx);
             if (layout instanceof cls)
                 break;
             if (layout === lastLayout)
@@ -268,20 +257,13 @@ class TilingEngine {
      * Privates
      */
 
-    private getActiveScreen(): number {
-        const client = workspace.activeClient;
-        if (!client)
-            return 0;
-        return client.screen;
-    }
-
     private getActiveTile(): Tile | null {
         /* XXX: may return `null` if the active client is not being managed.
          * I'm just on a defensive manuever, and nothing has been broke actually. */
-        return this.driver.getActiveTile();
+        return this.driver.getCurrentTile();
     }
 
-    private getVisibleTiles(screen: number): Tile[] {
-        return this.tiles.filter((tile) => tile.isVisible(screen));
+    private getVisibleTiles(ctx: Context): Tile[] {
+        return this.tiles.filter((tile) => tile.isVisible(ctx));
     }
 }

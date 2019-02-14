@@ -135,15 +135,12 @@ class Tile {
         return !this._geometry.equals(this._client.geometry);
     }
 
-    public isVisible(screen: number): boolean {
+    public isVisible(ctx: Context): boolean {
         try {
             return (
-                (!this._client.minimized) &&
-                (this._client.desktop === workspace.currentDesktop
-                    || this._client.desktop === -1 /* on all desktop */) &&
-                (this._client.activities.length === 0 /* on all activities */
-                    || this._client.activities.indexOf(workspace.currentActivity) !== -1) &&
-                (this._client.screen === screen)
+                (!this._client.minimized)
+                && (this._client.screen === ctx.screen)
+                && (ctx.includes(this._client))
             );
         } catch (e) {
             this.error = true;

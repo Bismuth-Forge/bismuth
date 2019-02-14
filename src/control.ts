@@ -36,7 +36,7 @@ class TilingController {
 
     public onScreenResized(screen: number): void {
         debugObj(() => ["onScreenResized", {screen}]);
-        this.engine.arrangeScreen(screen);
+        this.engine.arrange();
     }
 
     public onCurrentActivityChanged(activity: string): void {
@@ -97,7 +97,7 @@ class TilingController {
         debugObj(() => ["onTileResizeOver", {tile}]);
         if (Config.mouseAdjustLayout && tile.tileable) {
             this.engine.adjustLayout(tile);
-            this.engine.arrangeScreen(tile.screen);
+            this.engine.arrange();
         } else if (!Config.mouseAdjustLayout)
             this.engine.enforceClientSize(tile);
     }
