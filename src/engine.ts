@@ -167,7 +167,7 @@ class TilingEngine {
                 this.nextLayout();
                 break;
             case UserInput.SetLayout:
-                this.setLayout(data);
+                this.layouts.setLayout(this.driver.getCurrentContext(), data);
                 break;
         }
         this.arrange();
@@ -225,20 +225,6 @@ class TilingEngine {
 
     public nextLayout() {
         this.layouts.cycleLayout(this.driver.getCurrentContext());
-    }
-
-    public setLayout(cls: any) {
-        const ctx = this.driver.getCurrentContext();
-        const lastLayout = this.layouts.getCurrentLayout(ctx);
-        for (;;) {
-            this.layouts.cycleLayout(ctx);
-
-            const layout = this.layouts.getCurrentLayout(ctx);
-            if (layout instanceof cls)
-                break;
-            if (layout === lastLayout)
-                break;
-        }
     }
 
     /*

@@ -29,20 +29,17 @@ class LayoutStore {
         if (ctx.skipTiling)
             return null;
 
-        if (!this.store[ctx.path])
-            this.initEntry(ctx.path);
+        const entry = this.getEntry(ctx.path);
 
         // TODO: if no layout, return floating layout, which is a static object.
-        return this.store[ctx.path][0];
+        return entry[0];
     }
 
     public cycleLayout(ctx: Context) {
-        const entry = this.store[ctx.path];
-        if (!entry) {
-            this.initEntry(ctx.path);
-            return;
-        }
+        if (ctx.skipTiling)
+            return null;
 
+        const entry = this.getEntry(ctx.path);
         for (;;) {
             const layout = entry.shift();
             if (!layout)
@@ -53,6 +50,29 @@ class LayoutStore {
             if (entry[0].enabled)
                 break;
         }
+    }
+
+    public setLayout(ctx: Context, cls: any) {
+        if (ctx.skipTiling)
+            return;
+
+        const entry = this.getEntry(ctx.path);
+        const result = entry.filter((l) => l instanceof cls);
+        if (result.length === 0)
+            return;
+
+        const layout = result[0];
+        if (!layout.enabled)
+            return;
+
+        const idx = entry.indexOf(layout);
+        entry.push(...entry.splice(0, idx));
+    }
+
+    private getEntry(key: string): ILayout[] {
+        if (!this.store[key])
+            this.initEntry(key);
+        return this.store[key];
     }
 
     private initEntry(key: string) {
