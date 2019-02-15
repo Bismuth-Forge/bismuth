@@ -324,7 +324,7 @@ class KWinDriver {
             else if (resizing)
                 this.control.onTileResize(tile);
             else {
-                if (tile.isGeometryChanged())
+                if (!tile.actualGeometry.equals(tile.geometry))
                     this.control.onTileGeometryChanged(tile);
             }
         });

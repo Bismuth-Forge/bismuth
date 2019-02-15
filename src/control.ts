@@ -77,8 +77,7 @@ class TilingController {
             /* TODO: arbitrary constant */
             if (distance > 30) {
                 tile.floatGeometry = tile.actualGeometry;
-                if (!tile.float)
-                    tile.toggleFloat();
+                tile.float = true;
                 this.engine.arrange();
             } else
                 tile.commit();

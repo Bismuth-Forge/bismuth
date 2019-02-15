@@ -39,7 +39,7 @@ class TilingEngine {
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(ctx.screen);
-            const tileables = this.tiles.filter((t) => t.isVisible(ctx) && t.tileable);
+            const tileables = this.tiles.filter((t) => t.visible(ctx) && t.tileable);
             layout.adjust(area, tileables, basis);
         }
     }
@@ -93,7 +93,7 @@ class TilingEngine {
     public enforceClientSize(tile: Tile) {
         if (!tile.tileable) return;
 
-        if (tile.isGeometryChanged())
+        if (!tile.actualGeometry.equals(tile.geometry))
             this.driver.setTimeout(() => {
                 if (!tile.tileable) return;
                 tile.adjustGeometry();
@@ -102,33 +102,21 @@ class TilingEngine {
     }
 
     public manageClient(tile: Tile) {
-        if (tile.special)
+        if (tile.ruleIgnored)
             return;
-
-        const className = tile.className;
-        const ignore = (
-            (Config.ignoreClass.indexOf(className) >= 0)
-            || (matchWords(tile.title, Config.ignoreTitle) >= 0)
-        );
-        if (ignore) return;
 
         tile.managed = true;
 
-        const floating = (
-            (Config.floatingClass.indexOf(className) >= 0)
-            || (Config.floatUtility && tile.utility)
-            || tile.modal
-            || (matchWords(tile.title, Config.floatingTitle) >= 0)
-        );
-        if (floating)
+        if (tile.ruleFloat)
             tile.float = true;
 
         this.tiles.push(tile);
     }
 
     public unmanageClient(tile: Tile) {
-        this.tiles = this.tiles.filter((t) =>
-            t !== tile && !t.error);
+        const idx = this.tiles.indexOf(tile);
+        if (idx >= 0)
+            this.tiles.splice(idx, 1);
     }
 
     public updateScreenCount(count: number) {
@@ -173,7 +161,7 @@ class TilingEngine {
                 break;
             case UserInput.Float:
                 if ((tile = this.getActiveTile()))
-                    tile.toggleFloat();
+                    tile.float = !tile.float;
                 break;
             case UserInput.CycleLayout:
                 this.nextLayout();
@@ -214,7 +202,7 @@ class TilingEngine {
         let tileIdx = this.tiles.indexOf(tile);
         const dir = (step > 0) ? 1 : -1;
         for (let i = tileIdx + dir; 0 <= i && i < this.tiles.length; i += dir) {
-            if (this.tiles[i].isVisible(ctx)) {
+            if (this.tiles[i].visible(ctx)) {
                 this.tiles[tileIdx] = this.tiles[i];
                 this.tiles[i] = tile;
                 tileIdx = i;
@@ -264,6 +252,6 @@ class TilingEngine {
     }
 
     private getVisibleTiles(ctx: Context): Tile[] {
-        return this.tiles.filter((tile) => tile.isVisible(ctx));
+        return this.tiles.filter((tile) => tile.visible(ctx));
     }
 }

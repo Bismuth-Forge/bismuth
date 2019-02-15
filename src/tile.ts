@@ -53,15 +53,26 @@ class Tile {
     public readonly id: string;
 
     public get actualGeometry(): Rect { return Rect.from(this._client.geometry); }
-    public get className(): string { return String(this._client.resourceClass); }
-    public get modal(): boolean { return this._client.modal; }
     public get screen(): number { return this._client.screen; }
-    public get title(): string { return String(this._client.caption); }
 
-    public get special(): boolean {
+    public get ruleIgnored(): boolean {
+        const resourceClass = String(this._client.resourceClass);
         return (
-            this._client.specialWindow ||
-            String(this._client.resourceClass) === "plasmashell"
+            this._client.specialWindow
+            || resourceClass === "plasmashell"
+            || (Config.ignoreClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this._client.caption, Config.ignoreTitle) >= 0)
+        );
+    }
+
+    public get ruleFloat(): boolean {
+        const resourceClass = String(this._client.resourceClass);
+        return (
+            this._client.modal
+            || (Config.floatUtility
+                && (this._client.dialog || this._client.splash || this._client.utility))
+            || (Config.floatingClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this._client.caption, Config.floatingTitle) >= 0)
         );
     }
 
@@ -72,22 +83,29 @@ class Tile {
         );
     }
 
-    public get utility(): boolean {
-        return (this._client.dialog || this._client.splash || this._client.utility);
-    }
-
     /* read-write */
-    public error: boolean;
-    public float: boolean;
     public floatGeometry: Rect;
     public hideBorder: boolean;
     public keepBelow: boolean;
     public managed: boolean;
 
-    public get geometry(): Rect {
-        return this._geometry;
+    public get float(): boolean { return this._float; }
+    public set float(value: boolean) {
+        if (this._float === value)
+            return;
+
+        this._float = value;
+        if (this._float === true) {
+            /* HACK: necessary to prevent geometry reset bug in KWin */
+            this._client.noBorder = false;
+
+            this._client.geometry = this.floatGeometry.toQRect();
+            this.keepBelow = false;
+        } else
+            this.floatGeometry = this.actualGeometry;
     }
 
+    public get geometry(): Rect { return this._geometry; }
     public set geometry(value: Rect) {
         this._geometry = value;
         this.adjustGeometry();
@@ -96,83 +114,31 @@ class Tile {
     /* private */
     private readonly _client: KWin.Client;
     private readonly _noBorder: boolean;
+    private _float: boolean;
     private _geometry: Rect;
 
     constructor(client: KWin.Client) {
         this.id = Tile.clientToId(client);
 
-        this.error = false;
-        this.float = false;
         this.floatGeometry = Rect.from(client.geometry);
         this.hideBorder = false;
         this.keepBelow = false;
         this.managed = false;
 
         this._client = client;
-        this._geometry = Rect.from(client.geometry);
         this._noBorder = this._client.noBorder;
+        this._float = false;
+        this._geometry = Rect.from(client.geometry);
     }
 
     /*
      * Methods
      */
 
-    public commit(reset?: boolean) {
-        this._client.keepBelow = this.keepBelow;
-        this._client.noBorder = (this.hideBorder) ? true : this._noBorder;
-
-        /* do not commit geometry of non-tileable */
-        if (!this.tileable) return;
-
-        /* do not commit if not actually changed */
-        if (!this.isGeometryChanged()) return;
-
-        debugObj(() => ["commit", {tile: this, from: this._client.geometry, to: this._geometry}]);
-        this._client.geometry = this._geometry.toQRect();
-    }
-
-    public isGeometryChanged(): boolean {
-        return !this._geometry.equals(this._client.geometry);
-    }
-
-    public isVisible(ctx: Context): boolean {
-        try {
-            return (
-                (!this._client.minimized)
-                && (this._client.screen === ctx.screen)
-                && (ctx.includes(this._client))
-            );
-        } catch (e) {
-            this.error = true;
-            return false;
-        }
-    }
-
     public activate() {
         workspace.activeClient = this._client;
     }
 
-    public toggleFloat() {
-        this.float = !this.float;
-        if (this.float === false)
-            this.floatGeometry = Rect.from(this._client.geometry);
-        else {
-            /* HACK: necessary to prevent geometry reset bug in KWin */
-            this._client.noBorder = false;
-            this._client.geometry = this.floatGeometry.toQRect();
-            this.keepBelow = false;
-        }
-    }
-
-    public toString(): string {
-        return "Tile(id=" + this._client.windowId + ", class=" + this.className + ")";
-    }
-
-    /*
-     * Private Methods
-     */
-
-    // TODO: move definition
     public adjustGeometry() {
         let width = this._geometry.width;
         let height = this._geometry.height;
@@ -198,6 +164,33 @@ class Tile {
             height,
         );
     }
+
+    public commit(reset?: boolean) {
+        this._client.keepBelow = this.keepBelow;
+        this._client.noBorder = (this.hideBorder) ? true : this._noBorder;
+
+        /* commit only if tiled window is changed in size */
+        if (this.tileable && !this.actualGeometry.equals(this.geometry)) {
+            debugObj(() => ["commit", {tile: this, from: this._client.geometry, to: this._geometry}]);
+            this._client.geometry = this._geometry.toQRect();
+        }
+    }
+
+    public visible(ctx: Context): boolean {
+        return (
+            (!this._client.minimized)
+            && (this._client.screen === ctx.screen)
+            && (ctx.includes(this._client))
+        );
+    }
+
+    public toString(): string {
+        return "Tile(id=" + this._client.windowId + ", class=" + this._client.resourceClass + ")";
+    }
+
+    /*
+     * Private Methods
+     */
 
     private applyResizeIncrement(): [number, number] {
         const unit = this._client.basicUnit;
