@@ -59,6 +59,7 @@ class Context {
                 || client.desktop === -1 /* on all desktop */)
             && (client.activities.length === 0 /* on all activities */
                 || client.activities.indexOf(this._activity) !== -1)
+            && (client.screen === this.screen)
         );
     }
 

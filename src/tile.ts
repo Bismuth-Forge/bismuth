@@ -179,7 +179,6 @@ class Tile {
     public visible(ctx: Context): boolean {
         return (
             (!this._client.minimized)
-            && (this._client.screen === ctx.screen)
             && (ctx.includes(this._client))
         );
     }
