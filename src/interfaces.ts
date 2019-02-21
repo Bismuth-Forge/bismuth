@@ -18,20 +18,29 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class MonocleLayout implements ILayout {
-    public get enabled(): boolean {
-        return Config.enableMonocleLayout;
-    }
+//#region Driver
 
-    public apply = (tiles: Window[], area: Rect, workingArea?: Rect): void => {
-        if (Config.monocleMaximize) {
-            area = workingArea || area;
-            tiles.forEach((window) => window.noBorder = true);
-        }
-        tiles.forEach((window) => (window.geometry = area));
-    }
-
-    public toString(): string {
-        return "MonocleLayout()";
-    }
+interface IConfig {
 }
+
+interface IDriverWindow {
+    readonly context: IDriverContext;
+    readonly fullScreen: boolean;
+    readonly geometry: Rect;
+    readonly id: string;
+
+    commit(geometry: Rect | null, noBorder: boolean, keepBelow: boolean): void;
+    shouldIgnore(): boolean;
+    shouldFloat(): boolean;
+    visible(ctx: IDriverContext): boolean;
+}
+
+interface IDriverContext {
+    readonly id: string;
+    readonly ignore: boolean;
+}
+
+interface IDriver {
+}
+
+//#endregion

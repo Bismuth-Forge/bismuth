@@ -35,7 +35,7 @@ class TilingEngine {
     }
 
     public adjustLayout(basis: Window) {
-        const ctx = basis.context;
+        const ctx = basis.context as KWinContext;
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(ctx);
@@ -46,12 +46,12 @@ class TilingEngine {
 
     public arrange() {
         debugObj(() => ["arrange", {screenCount: this.screenCount}]);
-        this.driver.forEachScreen((ctx: KWinContext) => {
+        this.driver.forEachScreen((ctx: IDriverContext) => {
             this.arrangeScreen(ctx);
         });
     }
 
-    public arrangeScreen(ctx: KWinContext) {
+    public arrangeScreen(ctx: IDriverContext) {
         const layout = this.layouts.getCurrentLayout(ctx);
         if (!layout) {
             debug(() => "ignoring screen: " + ctx);
@@ -76,17 +76,17 @@ class TilingEngine {
 
         visibles.forEach((window) => {
             window.keepBelow = window.tileable;
-            window.hideBorder = (Config.noTileBorder) ? window.tileable : false;
+            window.noBorder = (Config.noTileBorder) ? window.tileable : false;
         });
 
         if (Config.maximizeSoleTile && tileables.length === 1) {
             tileables[0].keepBelow = true;
-            tileables[0].hideBorder = true;
+            tileables[0].noBorder = true;
             tileables[0].geometry = this.driver.getWorkingArea(ctx);
         } else if (tileables.length > 0)
             layout.apply(tileables, area, workingArea);
 
-        visibles.forEach((window) => window.commit(true));
+        visibles.forEach((window) => window.commit());
     }
 
     public enforceClientSize(window: Window) {
@@ -94,19 +94,18 @@ class TilingEngine {
 
         if (!window.actualGeometry.equals(window.geometry))
             KWinSetTimeout(() => {
-                if (!window.tileable) return;
-                window.adjustGeometry();
-                window.commit();
+                if (window.tileable)
+                    window.commit();
             }, 10);
     }
 
     public manageClient(window: Window) {
-        if (window.ruleIgnored)
+        if (window.shouldIgnore)
             return;
 
         window.managed = true;
 
-        if (window.ruleFloat)
+        if (window.shouldFloat)
             window.float = true;
 
         this.windows.push(window);
@@ -197,7 +196,7 @@ class TilingEngine {
         const window = this.getActiveWindow();
         if (!window) return;
 
-        const ctx = this.driver.getCurrentContext();
+        const ctx = window.context;
         let tileIdx = this.windows.indexOf(window);
         const dir = (step > 0) ? 1 : -1;
         for (let i = tileIdx + dir; 0 <= i && i < this.windows.length; i += dir) {
@@ -236,7 +235,7 @@ class TilingEngine {
         return this.driver.getCurrentWindow();
     }
 
-    private getVisibleWindows(ctx: KWinContext): Window[] {
+    private getVisibleWindows(ctx: IDriverContext): Window[] {
         return this.windows.filter((window) => window.visible(ctx));
     }
 }

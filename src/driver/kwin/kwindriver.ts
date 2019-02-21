@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinContext {
+class KWinContext implements IDriverContext {
     public readonly screen: number;
     public readonly activity: string;
     public readonly desktop: number;
@@ -111,12 +111,12 @@ class KWinDriver {
      * Utils
      */
 
-    public forEachScreen(func: (ctx: KWinContext) => void) {
+    public forEachScreen(func: (ctx: IDriverContext) => void) {
         for (let screen = 0; screen < workspace.numScreens; screen ++)
             func(new KWinContext(screen, workspace.currentActivity, workspace.currentDesktop));
     }
 
-    public getCurrentContext(): KWinContext {
+    public getCurrentContext(): IDriverContext {
         return new KWinContext(
             (workspace.activeClient) ? workspace.activeClient.screen : 0,
             workspace.currentActivity,
@@ -131,7 +131,8 @@ class KWinDriver {
         return this.queryWindow(client);
     }
 
-    public getWorkingArea(ctx: KWinContext): Rect {
+    public getWorkingArea(dctx: IDriverContext): Rect {
+        const ctx = dctx as KWinContext;
         return Rect.from(
             workspace.clientArea(KWin.PlacementArea, ctx.screen, workspace.currentDesktop),
         );
@@ -201,14 +202,15 @@ class KWinDriver {
     }
 
     private registerWindow(client: KWin.Client): Window {
-        const window = new Window(client);
+        const window = new Window(new KWinWindow(client));
         const key = window.id;
         debugObj(() => ["registerWindow", {key, client}]);
         return (this.windowMap[key] = window);
     }
 
     private queryWindow(client: KWin.Client): Window | null {
-        const key = Window.clientToId(client);
+        /* TODO: implement a shared function for generating ID */
+        const key = String(client) + "/" + client.windowId;
         return this.windowMap[key] || null;
     }
 

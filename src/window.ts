@@ -45,59 +45,26 @@ class WindowResizeDelta {
 }
 
 class Window {
-    public static clientToId(client: KWin.Client): string {
-        return String(client);
-    }
-
     /* read-only */
     public readonly id: string;
+    public readonly window: IDriverWindow;
 
-    public get actualGeometry(): Rect { return Rect.from(this._client.geometry); }
-    public get screen(): number { return this._client.screen; }
-
-    public get context(): KWinContext {
-        let activity;
-        if (this._client.activities.length === 0)
-            activity = workspace.currentActivity;
-        else if (this._client.activities.indexOf(workspace.currentActivity) >= 0)
-            activity = workspace.currentActivity;
-        else
-            activity = this._client.activities[0];
-
-        return new KWinContext(this._client.screen, activity, this._client.desktop);
-    }
-
-    public get ruleIgnored(): boolean {
-        const resourceClass = String(this._client.resourceClass);
-        return (
-            this._client.specialWindow
-            || resourceClass === "plasmashell"
-            || (Config.ignoreClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this._client.caption, Config.ignoreTitle) >= 0)
-        );
-    }
-
-    public get ruleFloat(): boolean {
-        const resourceClass = String(this._client.resourceClass);
-        return (
-            this._client.modal
-            || (Config.floatUtility
-                && (this._client.dialog || this._client.splash || this._client.utility))
-            || (Config.floatingClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this._client.caption, Config.floatingTitle) >= 0)
-        );
-    }
+    public get actualGeometry(): Rect { return Rect.from(this.window.geometry); }
+    public get context(): IDriverContext { return this.window.context; }
+    public get shouldFloat(): boolean { return this.window.shouldFloat(); }
+    public get shouldIgnore(): boolean { return this.window.shouldIgnore(); }
 
     public get tileable(): boolean {
         return (
-            (!this._client.fullScreen) &&
+            (!this.window.fullScreen) &&
             (!this.float)
         );
     }
 
     /* read-write */
     public floatGeometry: Rect;
-    public hideBorder: boolean;
+    public geometry: Rect;
+    public noBorder: boolean;
     public keepBelow: boolean;
     public managed: boolean;
 
@@ -109,122 +76,48 @@ class Window {
         this._float = value;
         if (this._float === true) {
             /* HACK: necessary to prevent geometry reset bug in KWin */
-            this._client.noBorder = false;
-
-            this._client.geometry = this.floatGeometry.toQRect();
+            this.window.commit(this.floatGeometry, false, false);
             this.keepBelow = false;
         } else
             this.floatGeometry = this.actualGeometry;
     }
 
-    public get geometry(): Rect { return this._geometry; }
-    public set geometry(value: Rect) {
-        this._geometry = value;
-        this.adjustGeometry();
-    }
-
     /* private */
-    private readonly _client: KWin.Client;
-    private readonly _noBorder: boolean;
     private _float: boolean;
-    private _geometry: Rect;
 
-    constructor(client: KWin.Client) {
-        this.id = Window.clientToId(client);
+    constructor(window: IDriverWindow) {
+        this.id = window.id;
 
-        this.floatGeometry = Rect.from(client.geometry);
-        this.hideBorder = false;
+        this.floatGeometry = Rect.from(window.geometry);
+        this.geometry = Rect.from(window.geometry);
+        this.noBorder = false;
         this.keepBelow = false;
         this.managed = false;
 
-        this._client = client;
-        this._noBorder = this._client.noBorder;
+        this.window = window;
         this._float = false;
-        this._geometry = Rect.from(client.geometry);
     }
 
     /*
      * Methods
      */
 
+    /* TODO: remove this method */
     public activate() {
-        workspace.activeClient = this._client;
+        const window = this.window as KWinWindow;
+        workspace.activeClient = window.client;
     }
 
-    public adjustGeometry() {
-        let width = this._geometry.width;
-        let height = this._geometry.height;
-
-        /* do not resize fixed-size windows */
-        if (!this._client.resizeable) {
-            width = this._client.geometry.width;
-            height = this._client.geometry.height;
-        } else {
-            /* respect resize increment */
-            if (!(this._client.basicUnit.width === 1 && this._client.basicUnit.height === 1)) /* NOT free-size */
-                [width, height] = this.applyResizeIncrement();
-
-            /* respect min/max size limit */
-            width  = clip(width , this._client.minSize.width , this._client.maxSize.width );
-            height = clip(height, this._client.minSize.height, this._client.maxSize.height);
-        }
-
-        this._geometry = new Rect(
-            this._geometry.x,
-            this._geometry.y,
-            width,
-            height,
-        );
+    public commit() {
+        const geometry = (this.tileable) ? this.geometry : null;
+        this.window.commit(geometry, this.noBorder, this.keepBelow);
     }
 
-    public commit(reset?: boolean) {
-        this._client.keepBelow = this.keepBelow;
-        this._client.noBorder = (this.hideBorder) ? true : this._noBorder;
-
-        /* commit only if tiled window is changed in size */
-        if (this.tileable && !this.actualGeometry.equals(this.geometry)) {
-            debugObj(() => ["commit", {window: this, from: this._client.geometry, to: this._geometry}]);
-            this._client.geometry = this._geometry.toQRect();
-        }
-    }
-
-    public visible(ctx: KWinContext): boolean {
-        return (
-            (!this._client.minimized)
-            && (ctx.includes(this._client))
-        );
+    public visible(ctx: IDriverContext): boolean {
+        return this.window.visible(ctx);
     }
 
     public toString(): string {
-        return "Window(id=" + this._client.windowId + ", class=" + this._client.resourceClass + ")";
+        return "Window(" + String(this.window) + ")";
     }
-
-    /*
-     * Private Methods
-     */
-
-    private applyResizeIncrement(): [number, number] {
-        const unit = this._client.basicUnit;
-        const base = this._client.minSize;
-        const geom = this._geometry;
-
-        const padWidth  = this._client.geometry.width  - this._client.clientSize.width;
-        const padHeight = this._client.geometry.height - this._client.clientSize.height;
-
-        const quotWidth  = Math.floor((geom.width  - base.width  - padWidth ) / unit.width);
-        const quotHeight = Math.floor((geom.height - base.height - padHeight) / unit.height);
-
-        const newWidth  = base.width  + unit.width  * quotWidth  + padWidth ;
-        const newHeight = base.height + unit.height * quotHeight + padHeight;
-
-        debugObj(() => ["applyResizeIncrement", {
-            // tslint:disable-next-line:object-literal-sort-keys
-            unit, base, geom,
-            pad: [padWidth, padHeight].join("x"),
-            size: [newWidth, newHeight].join("x"),
-        }]);
-
-        return [newWidth, newHeight];
-    }
-
 }

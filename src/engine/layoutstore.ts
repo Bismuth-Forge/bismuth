@@ -25,7 +25,7 @@ class LayoutStore {
         this.store = {};
     }
 
-    public getCurrentLayout(ctx: KWinContext): ILayout | null {
+    public getCurrentLayout(ctx: IDriverContext): ILayout | null {
         if (ctx.ignore)
             return null;
 
@@ -35,7 +35,7 @@ class LayoutStore {
         return entry[0];
     }
 
-    public cycleLayout(ctx: KWinContext) {
+    public cycleLayout(ctx: IDriverContext) {
         if (ctx.ignore)
             return null;
 
@@ -52,7 +52,7 @@ class LayoutStore {
         }
     }
 
-    public setLayout(ctx: KWinContext, cls: any) {
+    public setLayout(ctx: IDriverContext, cls: any) {
         if (ctx.ignore)
             return;
 
