@@ -23,7 +23,6 @@ class KWinContext {
     public readonly activity: string;
     public readonly desktop: number;
 
-    private readonly _driver: KWinDriver;
     private _path: string | null;
 
     public get id(): string {
@@ -38,19 +37,18 @@ class KWinContext {
     }
 
     public get ignore(): boolean {
-        const activityName = this._driver.getActivityName(this.activity);
+        const activityName = activityInfo.activityName(this.activity);
         return (
             (Config.ignoreActivity.indexOf(activityName) >= 0)
             || (Config.ignoreScreen.indexOf(this.screen) >= 0)
         );
     }
 
-    constructor(driver: KWinDriver, screen: number, activity: string, desktop: number) {
+    constructor(screen: number, activity: string, desktop: number) {
         this.screen = screen;
         this.activity = activity;
         this.desktop = desktop;
 
-        this._driver = driver;
         this._path = null;
     }
 
@@ -65,7 +63,7 @@ class KWinContext {
     }
 
     public withScreen(screen: number): KWinContext {
-        return new KWinContext(this._driver, screen, this.activity, this.desktop);
+        return new KWinContext(screen, this.activity, this.desktop);
     }
 }
 
@@ -77,14 +75,12 @@ class KWinContext {
  * functions.
  */
 class KWinDriver {
-    private activityNameMap: {[key: string]: string};
     private engine: TilingEngine;
     private control: TilingController;
     private windowMap: {[key: string]: Window};
     private timerPool: QQmlTimer[];
 
     constructor() {
-        this.activityNameMap = {};
         this.engine = new TilingEngine(this);
         this.control = new TilingController(this.engine);
         this.windowMap = {};
@@ -100,7 +96,6 @@ class KWinDriver {
 
         this.bindEvents();
         this.bindShortcut();
-        this.initActivityNameMap();
 
         this.engine.updateScreenCount(workspace.numScreens);
 
@@ -120,15 +115,8 @@ class KWinDriver {
      * Utils
      */
 
-    public getActivityName(id: string): string {
-        if (!this.activityNameMap[id])
-            debug(() => "can't find activity name for " + id);
-        return this.activityNameMap[id] || "";
-    }
-
     public getCurrentContext(): KWinContext {
         return new KWinContext(
-            this,
             (workspace.activeClient) ? workspace.activeClient.screen : 0,
             workspace.currentActivity,
             workspace.currentDesktop,
@@ -346,16 +334,4 @@ class KWinDriver {
     //     this.engine.arrange();
     // }
     /* NOTE: check `bindEvents` for details */
-
-    private initActivityNameMap() {
-        const update = () => {
-            activityInfo.runningActivities().forEach((id) => {
-                this.activityNameMap[id] = activityInfo.activityName(id);
-            });
-            debugObj(() => ["initActivityNameMap/update", this.activityNameMap]);
-        };
-
-        this.connect(activityInfo.namesOfRunningActivitiesChanged, update);
-        update();
-    }
 }
