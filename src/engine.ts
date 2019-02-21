@@ -46,9 +46,9 @@ class TilingEngine {
 
     public arrange() {
         debugObj(() => ["arrange", {screenCount: this.screenCount}]);
-        const ctx = this.driver.getCurrentContext();
-        for (let screen = 0; screen < this.screenCount; screen++)
-            this.arrangeScreen(ctx.withScreen(screen));
+        this.driver.forEachScreen((ctx: KWinContext) => {
+            this.arrangeScreen(ctx);
+        });
     }
 
     public arrangeScreen(ctx: KWinContext) {

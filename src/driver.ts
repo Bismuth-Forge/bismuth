@@ -61,10 +61,6 @@ class KWinContext {
             && (client.screen === this.screen)
         );
     }
-
-    public withScreen(screen: number): KWinContext {
-        return new KWinContext(screen, this.activity, this.desktop);
-    }
 }
 
 /**
@@ -114,6 +110,11 @@ class KWinDriver {
     /*
      * Utils
      */
+
+    public forEachScreen(func: (ctx: KWinContext) => void) {
+        for (let screen = 0; screen < workspace.numScreens; screen ++)
+            func(new KWinContext(screen, workspace.currentActivity, workspace.currentDesktop));
+    }
 
     public getCurrentContext(): KWinContext {
         return new KWinContext(
