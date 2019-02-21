@@ -18,27 +18,27 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Context {
+class KWinContext {
     public readonly screen: number;
+    public readonly activity: string;
+    public readonly desktop: number;
 
-    private readonly _activity: string;
-    private readonly _desktop: number;
     private readonly _driver: KWinDriver;
     private _path: string | null;
 
-    public get path(): string {
+    public get id(): string {
         if (!this._path) {
             this._path = String(this.screen);
             if (Config.layoutPerActivity)
-                this._path += "@" + this._activity;
+                this._path += "@" + this.activity;
             if (Config.layoutPerDesktop)
-                this._path += "#" + this._desktop;
+                this._path += "#" + this.desktop;
         }
         return this._path;
     }
 
-    public get skipTiling(): boolean {
-        const activityName = this._driver.getActivityName(this._activity);
+    public get ignore(): boolean {
+        const activityName = this._driver.getActivityName(this.activity);
         return (
             (Config.ignoreActivity.indexOf(activityName) >= 0)
             || (Config.ignoreScreen.indexOf(this.screen) >= 0)
@@ -47,24 +47,25 @@ class Context {
 
     constructor(driver: KWinDriver, screen: number, activity: string, desktop: number) {
         this.screen = screen;
-        this._activity = activity;
-        this._desktop = desktop;
+        this.activity = activity;
+        this.desktop = desktop;
+
         this._driver = driver;
         this._path = null;
     }
 
     public includes(client: KWin.Client) {
         return (
-            (client.desktop === this._desktop
+            (client.desktop === this.desktop
                 || client.desktop === -1 /* on all desktop */)
             && (client.activities.length === 0 /* on all activities */
-                || client.activities.indexOf(this._activity) !== -1)
+                || client.activities.indexOf(this.activity) !== -1)
             && (client.screen === this.screen)
         );
     }
 
-    public withScreen(screen: number): Context {
-        return new Context(this._driver, screen, this._activity, this._desktop);
+    public withScreen(screen: number): KWinContext {
+        return new KWinContext(this._driver, screen, this.activity, this.desktop);
     }
 }
 
@@ -125,8 +126,8 @@ class KWinDriver {
         return this.activityNameMap[id] || "";
     }
 
-    public getCurrentContext(): Context {
-        return new Context(
+    public getCurrentContext(): KWinContext {
+        return new KWinContext(
             this,
             (workspace.activeClient) ? workspace.activeClient.screen : 0,
             workspace.currentActivity,
@@ -141,9 +142,9 @@ class KWinDriver {
         return this.queryWindow(client);
     }
 
-    public getWorkingArea(screenId: number): Rect {
+    public getWorkingArea(ctx: KWinContext): Rect {
         return Rect.from(
-            workspace.clientArea(KWin.PlacementArea, screenId, workspace.currentDesktop),
+            workspace.clientArea(KWin.PlacementArea, ctx.screen, workspace.currentDesktop),
         );
     }
 

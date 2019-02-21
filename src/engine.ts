@@ -38,7 +38,7 @@ class TilingEngine {
         const ctx = this.driver.getCurrentContext().withScreen(basis.screen);
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
-            const area = this.driver.getWorkingArea(ctx.screen);
+            const area = this.driver.getWorkingArea(ctx);
             const tileables = this.windows.filter((t) => t.visible(ctx) && t.tileable);
             layout.adjust(area, tileables, basis);
         }
@@ -51,14 +51,14 @@ class TilingEngine {
             this.arrangeScreen(ctx.withScreen(screen));
     }
 
-    public arrangeScreen(ctx: Context) {
+    public arrangeScreen(ctx: KWinContext) {
         const layout = this.layouts.getCurrentLayout(ctx);
         if (!layout) {
-            debug(() => "ignoring screen: " + ctx.screen);
+            debug(() => "ignoring screen: " + ctx);
             return;
         }
 
-        const workingArea = this.driver.getWorkingArea(ctx.screen);
+        const workingArea = this.driver.getWorkingArea(ctx);
         const area = new Rect(
             workingArea.x + Config.screenGapLeft,
             workingArea.y + Config.screenGapTop,
@@ -69,8 +69,7 @@ class TilingEngine {
         const visibles = this.getVisibleWindows(ctx);
         const tileables = visibles.filter((window) => (window.tileable === true));
         debugObj(() => ["arrangeScreen", {
-            layout,
-            screen: ctx.screen,
+            ctx, layout,
             tileables: tileables.length,
             visibles: visibles.length,
         }]);
@@ -83,7 +82,7 @@ class TilingEngine {
         if (Config.maximizeSoleTile && tileables.length === 1) {
             tileables[0].keepBelow = true;
             tileables[0].hideBorder = true;
-            tileables[0].geometry = this.driver.getWorkingArea(ctx.screen);
+            tileables[0].geometry = this.driver.getWorkingArea(ctx);
         } else if (tileables.length > 0)
             layout.apply(tileables, area, workingArea);
 
@@ -237,7 +236,7 @@ class TilingEngine {
         return this.driver.getCurrentWindow();
     }
 
-    private getVisibleWindows(ctx: Context): Window[] {
+    private getVisibleWindows(ctx: KWinContext): Window[] {
         return this.windows.filter((window) => window.visible(ctx));
     }
 }

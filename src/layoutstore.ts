@@ -25,21 +25,21 @@ class LayoutStore {
         this.store = {};
     }
 
-    public getCurrentLayout(ctx: Context): ILayout | null {
-        if (ctx.skipTiling)
+    public getCurrentLayout(ctx: KWinContext): ILayout | null {
+        if (ctx.ignore)
             return null;
 
-        const entry = this.getEntry(ctx.path);
+        const entry = this.getEntry(ctx.id);
 
         // TODO: if no layout, return floating layout, which is a static object.
         return entry[0];
     }
 
-    public cycleLayout(ctx: Context) {
-        if (ctx.skipTiling)
+    public cycleLayout(ctx: KWinContext) {
+        if (ctx.ignore)
             return null;
 
-        const entry = this.getEntry(ctx.path);
+        const entry = this.getEntry(ctx.id);
         for (;;) {
             const layout = entry.shift();
             if (!layout)
@@ -52,11 +52,11 @@ class LayoutStore {
         }
     }
 
-    public setLayout(ctx: Context, cls: any) {
-        if (ctx.skipTiling)
+    public setLayout(ctx: KWinContext, cls: any) {
+        if (ctx.ignore)
             return;
 
-        const entry = this.getEntry(ctx.path);
+        const entry = this.getEntry(ctx.id);
         const result = entry.filter((l) => l instanceof cls);
         if (result.length === 0)
             return;

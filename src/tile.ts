@@ -176,7 +176,7 @@ class Window {
         }
     }
 
-    public visible(ctx: Context): boolean {
+    public visible(ctx: KWinContext): boolean {
         return (
             (!this._client.minimized)
             && (ctx.includes(this._client))
