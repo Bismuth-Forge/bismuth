@@ -35,7 +35,7 @@ class TilingEngine {
     }
 
     public adjustLayout(basis: Window) {
-        const ctx = this.driver.getCurrentContext().withScreen(basis.screen);
+        const ctx = basis.context;
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(ctx);

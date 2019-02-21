@@ -55,6 +55,18 @@ class Window {
     public get actualGeometry(): Rect { return Rect.from(this._client.geometry); }
     public get screen(): number { return this._client.screen; }
 
+    public get context(): KWinContext {
+        let activity;
+        if (this._client.activities.length === 0)
+            activity = workspace.currentActivity;
+        else if (this._client.activities.indexOf(workspace.currentActivity) >= 0)
+            activity = workspace.currentActivity;
+        else
+            activity = this._client.activities[0];
+
+        return new KWinContext(this._client.screen, activity, this._client.desktop);
+    }
+
     public get ruleIgnored(): boolean {
         const resourceClass = String(this._client.resourceClass);
         return (
