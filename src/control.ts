@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * A thin layer which translates window(`Tile`) events to tiling actions.
+ * A thin layer which translates WM events to tiling actions.
  */
 class TilingController {
     private engine: TilingEngine;
@@ -49,68 +49,68 @@ class TilingController {
         this.engine.arrange();
     }
 
-    public onTileAdded(tile: Tile): void {
-        debugObj(() => ["onTileAdded", {tile}]);
-        this.engine.manageClient(tile);
+    public onWindowAdded(window: Window): void {
+        debugObj(() => ["onWindowAdded", {window}]);
+        this.engine.manageClient(window);
         this.engine.arrange();
     }
 
-    public onTileRemoved(tile: Tile): void {
-        debugObj(() => ["onTileRemoved", {tile}]);
-        this.engine.unmanageClient(tile);
+    public onWindowRemoved(window: Window): void {
+        debugObj(() => ["onWindowRemoved", {window}]);
+        this.engine.unmanageClient(window);
         this.engine.arrange();
     }
 
-    public onTileMoveStart(tile: Tile): void {
+    public onWindowMoveStart(window: Window): void {
         /* do nothing */
     }
 
-    public onTileMove(tile: Tile): void {
+    public onWindowMove(window: Window): void {
         /* do nothing */
     }
 
-    public onTileMoveOver(tile: Tile): void {
-        debugObj(() => ["onTileMoveOver", {tile}]);
-        if (tile.tileable) {
-            const diff = tile.actualGeometry.subtract(tile.geometry);
+    public onWindowMoveOver(window: Window): void {
+        debugObj(() => ["onWindowMoveOver", {window}]);
+        if (window.tileable) {
+            const diff = window.actualGeometry.subtract(window.geometry);
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
             /* TODO: arbitrary constant */
             if (distance > 30) {
-                tile.floatGeometry = tile.actualGeometry;
-                tile.float = true;
+                window.floatGeometry = window.actualGeometry;
+                window.float = true;
                 this.engine.arrange();
             } else
-                tile.commit();
+                window.commit();
         }
     }
 
-    public onTileResizeStart(tile: Tile): void {
+    public onWindowResizeStart(window: Window): void {
         /* do nothing */
     }
 
-    public onTileResize(tile: Tile): void {
+    public onWindowResize(window: Window): void {
         /* do nothing */
     }
 
-    public onTileResizeOver(tile: Tile): void {
-        debugObj(() => ["onTileResizeOver", {tile}]);
-        if (Config.mouseAdjustLayout && tile.tileable) {
-            this.engine.adjustLayout(tile);
+    public onWindowResizeOver(window: Window): void {
+        debugObj(() => ["onWindowResizeOver", {window}]);
+        if (Config.mouseAdjustLayout && window.tileable) {
+            this.engine.adjustLayout(window);
             this.engine.arrange();
         } else if (!Config.mouseAdjustLayout)
-            this.engine.enforceClientSize(tile);
+            this.engine.enforceClientSize(window);
     }
 
-    public onTileGeometryChanged(tile: Tile): void {
-        debugObj(() => ["onTileGeometryChanged", {tile}]);
-        this.engine.enforceClientSize(tile);
+    public onWindowGeometryChanged(window: Window): void {
+        debugObj(() => ["onWindowGeometryChanged", {window}]);
+        this.engine.enforceClientSize(window);
     }
 
     // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
     // by itself anyway.
-    public onTileChanged(tile: Tile | null, comment?: string): void {
-        if (!tile) return;
-        debugObj(() => ["onTileChanged", {tile, comment}]);
+    public onWindowChanged(window: Window | null, comment?: string): void {
+        if (!window) return;
+        debugObj(() => ["onWindowChanged", {window, comment}]);
         /* TODO: maybe a less brutal solution? */
         this.engine.arrange();
     }

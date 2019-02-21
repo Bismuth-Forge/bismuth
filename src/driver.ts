@@ -79,14 +79,14 @@ class KWinDriver {
     private activityNameMap: {[key: string]: string};
     private engine: TilingEngine;
     private control: TilingController;
-    private tileMap: {[key: string]: Tile};
+    private windowMap: {[key: string]: Window};
     private timerPool: QQmlTimer[];
 
     constructor() {
         this.activityNameMap = {};
         this.engine = new TilingEngine(this);
         this.control = new TilingController(this.engine);
-        this.tileMap = {};
+        this.windowMap = {};
         this.timerPool = Array();
     }
 
@@ -105,12 +105,12 @@ class KWinDriver {
 
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++) {
-            const tile = this.createTile(clients[i]);
-            this.engine.manageClient(tile);
-            if (tile.managed)
-                this.bindTileEvents(tile, clients[i]);
+            const window = this.registerWindow(clients[i]);
+            this.engine.manageClient(window);
+            if (window.managed)
+                this.bindWindowEvents(window, clients[i]);
             else
-                this.removeTile(tile);
+                this.unregisterWindow(window);
         }
         this.engine.arrange();
     }
@@ -134,11 +134,11 @@ class KWinDriver {
         );
     }
 
-    public getCurrentTile(): Tile | null {
+    public getCurrentWindow(): Window | null {
         const client = workspace.activeClient;
         if (!client)
             return null;
-        return this.loadTile(client);
+        return this.queryWindow(client);
     }
 
     public getWorkingArea(screenId: number): Rect {
@@ -230,22 +230,22 @@ class KWinDriver {
         signal.connect(wrapper);
     }
 
-    private createTile(client: KWin.Client): Tile {
-        const tile = new Tile(client);
-        const key = tile.id;
-        debugObj(() => ["createTile", {key, client}]);
-        return (this.tileMap[key] = tile);
+    private registerWindow(client: KWin.Client): Window {
+        const window = new Window(client);
+        const key = window.id;
+        debugObj(() => ["registerWindow", {key, client}]);
+        return (this.windowMap[key] = window);
     }
 
-    private loadTile(client: KWin.Client): Tile | null {
-        const key = Tile.clientToId(client);
-        return this.tileMap[key] || null;
+    private queryWindow(client: KWin.Client): Window | null {
+        const key = Window.clientToId(client);
+        return this.windowMap[key] || null;
     }
 
-    private removeTile(tile: Tile) {
-        const key = tile.id;
+    private unregisterWindow(window: Window) {
+        const key = window.id;
         debugObj(() => ["removeTile", {key}]);
-        delete this.tileMap[key];
+        delete this.windowMap[key];
     }
 
     private bindEvents() {
@@ -263,12 +263,12 @@ class KWinDriver {
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             const handler = () => {
-                const tile = this.createTile(client);
-                this.control.onTileAdded(tile);
-                if (tile.managed)
-                    this.bindTileEvents(tile, client);
+                const window = this.registerWindow(client);
+                this.control.onWindowAdded(window);
+                if (window.managed)
+                    this.bindWindowEvents(window, client);
                 else
-                    this.removeTile(tile);
+                    this.unregisterWindow(window);
 
                 client.windowShown.disconnect(handler);
             };
@@ -276,68 +276,68 @@ class KWinDriver {
         });
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
-            const tile = this.loadTile(client);
-            if (tile) {
-                this.control.onTileRemoved(tile);
-                this.removeTile(tile);
+            const window = this.queryWindow(client);
+            if (window) {
+                this.control.onWindowRemoved(window);
+                this.unregisterWindow(window);
             }
         });
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-            this.control.onTileChanged(this.loadTile(client), "fullscreen=" + fullScreen + " user=" + user));
+            this.control.onWindowChanged(this.queryWindow(client), "fullscreen=" + fullScreen + " user=" + user));
 
         this.connect(workspace.clientMinimized, (client: KWin.Client) =>
-            this.control.onTileChanged(this.loadTile(client), "minimized"));
+            this.control.onWindowChanged(this.queryWindow(client), "minimized"));
 
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
-            this.control.onTileChanged(this.loadTile(client), "unminimized"));
+            this.control.onWindowChanged(this.queryWindow(client), "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
          *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
     }
 
-    private bindTileEvents(tile: Tile, client: KWin.Client) {
+    private bindWindowEvents(window: Window, client: KWin.Client) {
         let moving = false;
         let resizing = false;
 
         this.connect(client.moveResizedChanged, () => {
-            debugObj(() => ["moveResizedChanged", {tile, move: client.move, resize: client.resize}]);
+            debugObj(() => ["moveResizedChanged", {window, move: client.move, resize: client.resize}]);
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving)
-                    this.control.onTileMoveStart(tile);
+                    this.control.onWindowMoveStart(window);
                 else
-                    this.control.onTileMoveOver(tile);
+                    this.control.onWindowMoveOver(window);
             }
             if (resizing !== client.resize) {
                 resizing = client.resize;
                 if (resizing)
-                    this.control.onTileResizeStart(tile);
+                    this.control.onWindowResizeStart(window);
                 else
-                    this.control.onTileResizeOver(tile);
+                    this.control.onWindowResizeOver(window);
             }
         });
 
         this.connect(client.geometryChanged, () => {
             if (moving)
-                this.control.onTileMove(tile);
+                this.control.onWindowMove(window);
             else if (resizing)
-                this.control.onTileResize(tile);
+                this.control.onWindowResize(window);
             else {
-                if (!tile.actualGeometry.equals(tile.geometry))
-                    this.control.onTileGeometryChanged(tile);
+                if (!window.actualGeometry.equals(window.geometry))
+                    this.control.onWindowGeometryChanged(window);
             }
         });
 
         this.connect(client.screenChanged, () =>
-            this.control.onTileChanged(tile, "screen=" + client.screen));
+            this.control.onWindowChanged(window, "screen=" + client.screen));
 
         this.connect(client.activitiesChanged, () =>
-            this.control.onTileChanged(tile, "activity=" + client.activities.join(",")));
+            this.control.onWindowChanged(window, "activity=" + client.activities.join(",")));
 
         this.connect(client.desktopChanged, () =>
-            this.control.onTileChanged(tile, "desktop=" + client.desktop));
+            this.control.onWindowChanged(window, "desktop=" + client.desktop));
     }
 
     // TODO: private onConfigChanged = () => {

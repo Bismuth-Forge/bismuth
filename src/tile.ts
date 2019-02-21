@@ -18,15 +18,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TileResizeDelta {
+class WindowResizeDelta {
     public readonly diff: Rect;
     public readonly east: number;
     public readonly west: number;
     public readonly south: number;
     public readonly north: number;
 
-    public constructor(tile: Tile) {
-        this.diff = tile.actualGeometry.subtract(tile.geometry);
+    public constructor(window: Window) {
+        this.diff = window.actualGeometry.subtract(window.geometry);
         this.east = this.diff.width + this.diff.x;
         this.west = -this.diff.x;
         this.south = this.diff.height + this.diff.y;
@@ -34,7 +34,7 @@ class TileResizeDelta {
     }
 
     public toString(): string {
-        return "TileResizeDelta(" + [
+        return "WindowResizeDelta(" + [
             "diff=" + this.diff,
             "east=" + this.east,
             "west=" + this.west,
@@ -44,7 +44,7 @@ class TileResizeDelta {
     }
 }
 
-class Tile {
+class Window {
     public static clientToId(client: KWin.Client): string {
         return String(client);
     }
@@ -118,7 +118,7 @@ class Tile {
     private _geometry: Rect;
 
     constructor(client: KWin.Client) {
-        this.id = Tile.clientToId(client);
+        this.id = Window.clientToId(client);
 
         this.floatGeometry = Rect.from(client.geometry);
         this.hideBorder = false;
@@ -171,7 +171,7 @@ class Tile {
 
         /* commit only if tiled window is changed in size */
         if (this.tileable && !this.actualGeometry.equals(this.geometry)) {
-            debugObj(() => ["commit", {tile: this, from: this._client.geometry, to: this._geometry}]);
+            debugObj(() => ["commit", {window: this, from: this._client.geometry, to: this._geometry}]);
             this._client.geometry = this._geometry.toQRect();
         }
     }
@@ -184,7 +184,7 @@ class Tile {
     }
 
     public toString(): string {
-        return "Tile(id=" + this._client.windowId + ", class=" + this._client.resourceClass + ")";
+        return "Window(id=" + this._client.windowId + ", class=" + this._client.resourceClass + ")";
     }
 
     /*

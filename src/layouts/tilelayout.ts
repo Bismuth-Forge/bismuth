@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: number, gap = 0) {
+function stackTiles(tiles: Window[], x: number, y: number, width: number, height: number, gap = 0) {
     if (tiles.length === 1) {
         tiles[0].geometry = new Rect(x, y, width, height);
         return;
@@ -26,8 +26,8 @@ function stackTiles(tiles: Tile[], x: number, y: number, width: number, height: 
 
     const count = tiles.length;
     const tileHeight = Math.floor((height - (count - 1) * gap) / count);
-    tiles.forEach((tile: Tile, i: number) => {
-        tile.geometry = new Rect(
+    tiles.forEach((window: Window, i: number) => {
+        window.geometry = new Rect(
             x,
             y + (tileHeight + gap) * i,
             width,
@@ -52,7 +52,7 @@ class TileLayout implements ILayout {
         this.masterRatio = 0.55;
     }
 
-    public adjust(area: Rect, tiles: Tile[], basis: Tile) {
+    public adjust(area: Rect, tiles: Window[], basis: Window) {
         if (tiles.length <= this.numMaster)
             return;
 
@@ -74,7 +74,7 @@ class TileLayout implements ILayout {
         this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
     }
 
-    public apply = (tiles: Tile[], area: Rect): void => {
+    public apply = (tiles: Window[], area: Rect): void => {
         const masterCount = Math.min(tiles.length, this.numMaster);
         const stackCount = tiles.length - masterCount;
 

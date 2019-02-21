@@ -23,12 +23,12 @@ class MonocleLayout implements ILayout {
         return Config.enableMonocleLayout;
     }
 
-    public apply = (tiles: Tile[], area: Rect, workingArea?: Rect): void => {
+    public apply = (tiles: Window[], area: Rect, workingArea?: Rect): void => {
         if (Config.monocleMaximize) {
             area = workingArea || area;
-            tiles.forEach((tile) => tile.hideBorder = true);
+            tiles.forEach((window) => window.hideBorder = true);
         }
-        tiles.forEach((tile) => (tile.geometry = area));
+        tiles.forEach((window) => (window.geometry = area));
     }
 
     public toString(): string {

@@ -25,21 +25,21 @@ class TilingEngine {
     private driver: KWinDriver;
     private layouts: LayoutStore;
     private screenCount: number;
-    private tiles: Tile[];
+    private windows: Window[];
 
     constructor(driver: KWinDriver) {
         this.driver = driver;
         this.layouts = new LayoutStore();
         this.screenCount = 1;
-        this.tiles = Array();
+        this.windows = Array();
     }
 
-    public adjustLayout(basis: Tile) {
+    public adjustLayout(basis: Window) {
         const ctx = this.driver.getCurrentContext().withScreen(basis.screen);
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(ctx.screen);
-            const tileables = this.tiles.filter((t) => t.visible(ctx) && t.tileable);
+            const tileables = this.windows.filter((t) => t.visible(ctx) && t.tileable);
             layout.adjust(area, tileables, basis);
         }
     }
@@ -66,8 +66,8 @@ class TilingEngine {
             workingArea.height - (Config.screenGapTop + Config.screenGapBottom),
         );
 
-        const visibles = this.getVisibleTiles(ctx);
-        const tileables = visibles.filter((tile) => (tile.tileable === true));
+        const visibles = this.getVisibleWindows(ctx);
+        const tileables = visibles.filter((window) => (window.tileable === true));
         debugObj(() => ["arrangeScreen", {
             layout,
             screen: ctx.screen,
@@ -75,9 +75,9 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
-        visibles.forEach((tile) => {
-            tile.keepBelow = tile.tileable;
-            tile.hideBorder = (Config.noTileBorder) ? tile.tileable : false;
+        visibles.forEach((window) => {
+            window.keepBelow = window.tileable;
+            window.hideBorder = (Config.noTileBorder) ? window.tileable : false;
         });
 
         if (Config.maximizeSoleTile && tileables.length === 1) {
@@ -87,36 +87,36 @@ class TilingEngine {
         } else if (tileables.length > 0)
             layout.apply(tileables, area, workingArea);
 
-        visibles.forEach((tile) => tile.commit(true));
+        visibles.forEach((window) => window.commit(true));
     }
 
-    public enforceClientSize(tile: Tile) {
-        if (!tile.tileable) return;
+    public enforceClientSize(window: Window) {
+        if (!window.tileable) return;
 
-        if (!tile.actualGeometry.equals(tile.geometry))
+        if (!window.actualGeometry.equals(window.geometry))
             this.driver.setTimeout(() => {
-                if (!tile.tileable) return;
-                tile.adjustGeometry();
-                tile.commit();
+                if (!window.tileable) return;
+                window.adjustGeometry();
+                window.commit();
             }, 10);
     }
 
-    public manageClient(tile: Tile) {
-        if (tile.ruleIgnored)
+    public manageClient(window: Window) {
+        if (window.ruleIgnored)
             return;
 
-        tile.managed = true;
+        window.managed = true;
 
-        if (tile.ruleFloat)
-            tile.float = true;
+        if (window.ruleFloat)
+            window.float = true;
 
-        this.tiles.push(tile);
+        this.windows.push(window);
     }
 
-    public unmanageClient(tile: Tile) {
-        const idx = this.tiles.indexOf(tile);
+    public unmanageClient(window: Window) {
+        const idx = this.windows.indexOf(window);
         if (idx >= 0)
-            this.tiles.splice(idx, 1);
+            this.windows.splice(idx, 1);
     }
 
     public updateScreenCount(count: number) {
@@ -141,7 +141,7 @@ class TilingEngine {
             }
         }
 
-        let tile;
+        let window;
         switch (input) {
             case UserInput.Up:
                 this.moveFocus(-1);
@@ -156,12 +156,12 @@ class TilingEngine {
                 this.moveTile(+1);
                 break;
             case UserInput.SetMaster:
-                if ((tile = this.getActiveTile()))
-                    this.setMaster(tile);
+                if ((window = this.getActiveWindow()))
+                    this.setMaster(window);
                 break;
             case UserInput.Float:
-                if ((tile = this.getActiveTile()))
-                    tile.float = !tile.float;
+                if ((window = this.getActiveWindow()))
+                    window.float = !window.float;
                 break;
             case UserInput.CycleLayout:
                 this.nextLayout();
@@ -177,12 +177,12 @@ class TilingEngine {
         if (step === 0) return;
 
         const ctx = this.driver.getCurrentContext();
-        const visibles = this.getVisibleTiles(ctx);
+        const visibles = this.getVisibleWindows(ctx);
         if (visibles.length === 0)
             return;
 
-        const tile = this.getActiveTile();
-        const index = (tile) ? visibles.indexOf(tile) : 0;
+        const window = this.getActiveWindow();
+        const index = (window) ? visibles.indexOf(window) : 0;
 
         let newIndex = index + step;
         while (newIndex < 0)
@@ -195,16 +195,16 @@ class TilingEngine {
     public moveTile(step: number) {
         if (step === 0) return;
 
-        const tile = this.getActiveTile();
-        if (!tile) return;
+        const window = this.getActiveWindow();
+        if (!window) return;
 
         const ctx = this.driver.getCurrentContext();
-        let tileIdx = this.tiles.indexOf(tile);
+        let tileIdx = this.windows.indexOf(window);
         const dir = (step > 0) ? 1 : -1;
-        for (let i = tileIdx + dir; 0 <= i && i < this.tiles.length; i += dir) {
-            if (this.tiles[i].visible(ctx)) {
-                this.tiles[tileIdx] = this.tiles[i];
-                this.tiles[i] = tile;
+        for (let i = tileIdx + dir; 0 <= i && i < this.windows.length; i += dir) {
+            if (this.windows[i].visible(ctx)) {
+                this.windows[tileIdx] = this.windows[i];
+                this.windows[i] = window;
                 tileIdx = i;
 
                 step -= dir;
@@ -214,13 +214,13 @@ class TilingEngine {
         }
     }
 
-    public setMaster(tile: Tile) {
-        if (this.tiles[0] === tile) return;
+    public setMaster(window: Window) {
+        if (this.windows[0] === window) return;
 
-        const index = this.tiles.indexOf(tile);
+        const index = this.windows.indexOf(window);
         for (let i = index - 1; i >= 0; i--)
-            this.tiles[i + 1] = this.tiles[i];
-        this.tiles[0] = tile;
+            this.windows[i + 1] = this.windows[i];
+        this.windows[0] = window;
     }
 
     public nextLayout() {
@@ -231,13 +231,13 @@ class TilingEngine {
      * Privates
      */
 
-    private getActiveTile(): Tile | null {
+    private getActiveWindow(): Window | null {
         /* XXX: may return `null` if the active client is not being managed.
          * I'm just on a defensive manuever, and nothing has been broke actually. */
-        return this.driver.getCurrentTile();
+        return this.driver.getCurrentWindow();
     }
 
-    private getVisibleTiles(ctx: Context): Tile[] {
-        return this.tiles.filter((tile) => tile.visible(ctx));
+    private getVisibleWindows(ctx: Context): Window[] {
+        return this.windows.filter((window) => window.visible(ctx));
     }
 }

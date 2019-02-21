@@ -23,8 +23,8 @@ interface ILayout {
     readonly enabled: boolean;
 
     /* methods */
-    adjust?(area: Rect, tiles: Tile[], basis: Tile): void;
-    apply(tiles: Tile[], area: Rect, workingArea?: Rect): void;
+    adjust?(area: Rect, tiles: Window[], basis: Window): void;
+    apply(tiles: Window[], area: Rect, workingArea?: Rect): void;
     toString(): string;
 
     /* overriding */

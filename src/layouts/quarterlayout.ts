@@ -35,14 +35,14 @@ class QuarterLayout implements ILayout {
         this.vsplit = 0.5;
     }
 
-    public adjust(area: Rect, tiles: Tile[], basis: Tile) {
+    public adjust(area: Rect, tiles: Window[], basis: Window) {
         if (tiles.length <= 1 || tiles.length > 4)
             return;
 
         const idx = tiles.indexOf(basis);
         if (idx < 0) return;
 
-        const delta = new TileResizeDelta(basis);
+        const delta = new WindowResizeDelta(basis);
 
         /* vertical split */
         if ((idx === 0 || idx === 3) && delta.east !== 0)
@@ -72,7 +72,7 @@ class QuarterLayout implements ILayout {
         this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
     }
 
-    public apply(tiles: Tile[], area: Rect): void {
+    public apply(tiles: Window[], area: Rect): void {
         if (tiles.length === 1) {
             tiles[0].geometry = area;
             return;
