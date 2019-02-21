@@ -93,7 +93,7 @@ class TilingEngine {
         if (!window.tileable) return;
 
         if (!window.actualGeometry.equals(window.geometry))
-            this.driver.setTimeout(() => {
+            KWinSetTimeout(() => {
                 if (!window.tileable) return;
                 window.adjustGeometry();
                 window.commit();

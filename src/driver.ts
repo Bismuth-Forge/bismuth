@@ -138,26 +138,6 @@ class KWinDriver {
     }
 
     /*
-     * Timer API
-     */
-
-    public setTimeout(func: () => void, delay: number) {
-        const timer: QQmlTimer = this.timerPool.pop() ||
-            Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
-        timer.interval = delay;
-        timer.repeat = false;
-
-        const callback = () => {
-            try { timer.triggered.disconnect(callback); } catch (e) { /* ignore */ }
-            try { func(); } catch (e) { /* ignore */ }
-            this.timerPool.push(timer);
-            debugObj(() => ["setTimeout/callback", { poolSize: this.timerPool.length}]);
-        };
-        timer.triggered.connect(callback);
-        timer.start();
-    }
-
-    /*
      * Shortcut
      */
 
