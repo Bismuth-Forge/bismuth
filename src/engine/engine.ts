@@ -22,12 +22,12 @@
  * Maintains tiling context and performs various tiling actions.
  */
 class TilingEngine {
-    private driver: KWinDriver;
+    private driver: IDriver;
     private layouts: LayoutStore;
     private screenCount: number;
     private windows: Window[];
 
-    constructor(driver: KWinDriver) {
+    constructor(driver: IDriver) {
         this.driver = driver;
         this.layouts = new LayoutStore();
         this.screenCount = 1;

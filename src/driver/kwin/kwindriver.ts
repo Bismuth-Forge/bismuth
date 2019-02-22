@@ -25,7 +25,7 @@
  * signals(Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
-class KWinDriver {
+class KWinDriver implements IDriver {
     private engine: TilingEngine;
     private control: TilingController;
     private windowMap: {[key: string]: Window};
