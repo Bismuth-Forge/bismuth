@@ -138,6 +138,11 @@ class KWinDriver {
         );
     }
 
+    public setCurrentWindow(window: Window) {
+        const kwindow = window.window as KWinWindow;
+        workspace.activeClient = kwindow.client;
+    }
+
     /*
      * Shortcut
      */

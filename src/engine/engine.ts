@@ -187,7 +187,7 @@ class TilingEngine {
             newIndex += visibles.length;
         newIndex = newIndex % visibles.length;
 
-        visibles[newIndex].activate();
+        this.driver.setCurrentWindow(visibles[newIndex]);
     }
 
     public moveTile(step: number) {

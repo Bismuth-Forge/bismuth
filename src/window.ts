@@ -102,12 +102,6 @@ class Window {
      * Methods
      */
 
-    /* TODO: remove this method */
-    public activate() {
-        const window = this.window as KWinWindow;
-        workspace.activeClient = window.client;
-    }
-
     public commit() {
         const geometry = (this.tileable) ? this.geometry : null;
         this.window.commit(geometry, this.noBorder, this.keepBelow);
