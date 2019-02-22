@@ -20,7 +20,7 @@
 
 class SpreadLayout implements ILayout {
     public get enabled(): boolean {
-        return Config.enableSpreadLayout;
+        return CONFIG.enableSpreadLayout;
     }
 
     private space: number; /* in ratio */

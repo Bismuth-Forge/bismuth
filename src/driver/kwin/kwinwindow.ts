@@ -65,8 +65,8 @@ class KWinWindow implements IDriverWindow {
         return (
             this.client.specialWindow
             || resourceClass === "plasmashell"
-            || (Config.ignoreClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this.client.caption, Config.ignoreTitle) >= 0)
+            || (KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0)
         );
     }
 
@@ -74,10 +74,10 @@ class KWinWindow implements IDriverWindow {
         const resourceClass = String(this.client.resourceClass);
         return (
             this.client.modal
-            || (Config.floatUtility
+            || (KWINCONFIG.floatUtility
                 && (this.client.dialog || this.client.splash || this.client.utility))
-            || (Config.floatingClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this.client.caption, Config.floatingTitle) >= 0)
+            || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0)
         );
     }
 

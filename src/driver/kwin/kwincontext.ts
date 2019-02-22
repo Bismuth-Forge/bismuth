@@ -28,9 +28,9 @@ class KWinContext implements IDriverContext {
     public get id(): string {
         if (!this._path) {
             this._path = String(this.screen);
-            if (Config.layoutPerActivity)
+            if (KWINCONFIG.layoutPerActivity)
                 this._path += "@" + this.activity;
-            if (Config.layoutPerDesktop)
+            if (KWINCONFIG.layoutPerDesktop)
                 this._path += "#" + this.desktop;
         }
         return this._path;
@@ -39,8 +39,8 @@ class KWinContext implements IDriverContext {
     public get ignore(): boolean {
         const activityName = activityInfo.activityName(this.activity);
         return (
-            (Config.ignoreActivity.indexOf(activityName) >= 0)
-            || (Config.ignoreScreen.indexOf(this.screen) >= 0)
+            (KWINCONFIG.ignoreActivity.indexOf(activityName) >= 0)
+            || (KWINCONFIG.ignoreScreen.indexOf(this.screen) >= 0)
         );
     }
 
@@ -62,4 +62,3 @@ class KWinContext implements IDriverContext {
         );
     }
 }
-

@@ -41,7 +41,7 @@ class TileLayout implements ILayout {
     public static readonly MAX_MASTER_RATIO = 0.8;
 
     public get enabled(): boolean {
-        return Config.enableTileLayout;
+        return CONFIG.enableTileLayout;
     }
 
     private numMaster: number;
@@ -88,7 +88,7 @@ class TileLayout implements ILayout {
         const stackWidth = area.width - masterWidth;
         const stackX = (masterWidth > 0) ? masterWidth : 0;
 
-        const gap = Config.tileLayoutGap;
+        const gap = CONFIG.tileLayoutGap;
         const halfgap = Math.ceil(gap / 2);
         stackTiles(
             tiles.slice(0, masterCount),

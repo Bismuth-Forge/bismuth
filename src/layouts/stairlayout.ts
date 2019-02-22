@@ -20,7 +20,7 @@
 
 class StairLayout implements ILayout {
     public get enabled(): boolean {
-        return Config.enableStairLayout;
+        return CONFIG.enableStairLayout;
     }
 
     private space: number; /* in PIXELS */

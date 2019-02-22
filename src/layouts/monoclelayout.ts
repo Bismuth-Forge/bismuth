@@ -20,11 +20,11 @@
 
 class MonocleLayout implements ILayout {
     public get enabled(): boolean {
-        return Config.enableMonocleLayout;
+        return CONFIG.enableMonocleLayout;
     }
 
     public apply = (tiles: Window[], area: Rect, workingArea?: Rect): void => {
-        if (Config.monocleMaximize) {
+        if (CONFIG.monocleMaximize) {
             area = workingArea || area;
             tiles.forEach((window) => window.noBorder = true);
         }

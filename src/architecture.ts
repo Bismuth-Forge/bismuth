@@ -41,6 +41,28 @@ enum UserInput {
 //#region Driver
 
 interface IConfig {
+    //#region Layout
+    enableMonocleLayout: boolean;
+    enableQuarterLayout: boolean;
+    enableSpreadLayout: boolean;
+    enableStairLayout: boolean;
+    enableTileLayout: boolean;
+    monocleMaximize: boolean;
+    maximizeSoleTile: boolean;
+    //#endregion
+
+    //#region Features
+    mouseAdjustLayout: boolean;
+    noTileBorder: boolean;
+    //#endregion
+
+    //#region Gap
+    screenGapBottom: number;
+    screenGapLeft: number;
+    screenGapRight: number;
+    screenGapTop: number;
+    tileLayoutGap: number;
+    //#endregion
 }
 
 interface IDriverWindow {
@@ -82,3 +104,5 @@ interface ILayout {
     /* overriding */
     handleUserInput?(input: UserInput, data?: any): boolean;
 }
+
+let CONFIG: IConfig;

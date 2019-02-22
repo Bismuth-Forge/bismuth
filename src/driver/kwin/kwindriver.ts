@@ -43,7 +43,8 @@ class KWinDriver implements IDriver {
      */
 
     public main() {
-        Config.load();
+        CONFIG = KWINCONFIG = new KWinConfig();
+        debug(() => "Config: " + KWINCONFIG);
 
         this.bindEvents();
         this.bindShortcut();

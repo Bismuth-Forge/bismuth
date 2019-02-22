@@ -22,7 +22,7 @@ class QuarterLayout implements ILayout {
     public static readonly MAX_PROPORTION = 0.8;
 
     public get enabled(): boolean {
-        return Config.enableQuarterLayout;
+        return CONFIG.enableQuarterLayout;
     }
 
     private lhsplit: number;
@@ -79,8 +79,8 @@ class QuarterLayout implements ILayout {
         }
 
         /* TODO: gap config */
-        const gap1 = Math.floor(Config.tileLayoutGap / 2);
-        const gap2 = Config.tileLayoutGap - gap1;
+        const gap1 = Math.floor(CONFIG.tileLayoutGap / 2);
+        const gap2 = CONFIG.tileLayoutGap - gap1;
 
         const leftWidth = Math.floor(area.width * this.vsplit);
         const rightWidth = area.width - leftWidth;

@@ -60,10 +60,10 @@ class TilingEngine {
 
         const workingArea = this.driver.getWorkingArea(ctx);
         const area = new Rect(
-            workingArea.x + Config.screenGapLeft,
-            workingArea.y + Config.screenGapTop,
-            workingArea.width - (Config.screenGapLeft + Config.screenGapRight),
-            workingArea.height - (Config.screenGapTop + Config.screenGapBottom),
+            workingArea.x + CONFIG.screenGapLeft,
+            workingArea.y + CONFIG.screenGapTop,
+            workingArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
+            workingArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
         );
 
         const visibles = this.getVisibleWindows(ctx);
@@ -76,10 +76,10 @@ class TilingEngine {
 
         visibles.forEach((window) => {
             window.keepBelow = window.tileable;
-            window.noBorder = (Config.noTileBorder) ? window.tileable : false;
+            window.noBorder = (CONFIG.noTileBorder) ? window.tileable : false;
         });
 
-        if (Config.maximizeSoleTile && tileables.length === 1) {
+        if (CONFIG.maximizeSoleTile && tileables.length === 1) {
             tileables[0].keepBelow = true;
             tileables[0].noBorder = true;
             tileables[0].geometry = this.driver.getWorkingArea(ctx);
