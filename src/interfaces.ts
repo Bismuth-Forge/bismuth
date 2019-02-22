@@ -69,3 +69,16 @@ interface IDriver {
 }
 
 //#endregion
+
+interface ILayout {
+    /* read-only */
+    readonly enabled: boolean;
+
+    /* methods */
+    adjust?(area: Rect, tiles: Window[], basis: Window): void;
+    apply(tiles: Window[], area: Rect, workingArea?: Rect): void;
+    toString(): string;
+
+    /* overriding */
+    handleUserInput?(input: UserInput, data?: any): boolean;
+}
