@@ -18,26 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-enum UserInput {
-    Left,
-    Right,
-    Up,
-    Down,
-
-    ShiftLeft,
-    ShiftRight,
-    ShiftUp,
-    ShiftDown,
-
-    Increase,
-    Decrease,
-
-    Float,
-    SetMaster,
-    CycleLayout,
-    SetLayout,
-}
-
 function clip(value: number, min: number, max: number): number {
     if (value < min)
         return min;

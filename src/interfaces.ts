@@ -18,6 +18,26 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+enum UserInput {
+    Left,
+    Right,
+    Up,
+    Down,
+
+    ShiftLeft,
+    ShiftRight,
+    ShiftUp,
+    ShiftDown,
+
+    Increase,
+    Decrease,
+
+    Float,
+    SetMaster,
+    CycleLayout,
+    SetLayout,
+}
+
 //#region Driver
 
 interface IConfig {
