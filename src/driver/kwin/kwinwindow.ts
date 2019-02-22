@@ -38,7 +38,7 @@ class KWinWindow implements IDriverWindow {
     }
 
     public get geometry(): Rect {
-        return Rect.from(this.client.geometry);
+        return toRect(this.client.geometry);
     }
 
     public get id(): string {
@@ -57,7 +57,7 @@ class KWinWindow implements IDriverWindow {
         this.client.keepBelow = keepBelow;
 
         if (geometry)
-            this.client.geometry = this.adjustGeometry(geometry).toQRect();
+            this.client.geometry = toQRect(this.adjustGeometry(geometry));
     }
 
     public shouldIgnore(): boolean {

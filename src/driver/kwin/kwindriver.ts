@@ -88,7 +88,7 @@ class KWinDriver implements IDriver {
 
     public getWorkingArea(dctx: IDriverContext): Rect {
         const ctx = dctx as KWinContext;
-        return Rect.from(
+        return toRect(
             workspace.clientArea(KWin.PlacementArea, ctx.screen, workspace.currentDesktop),
         );
     }

@@ -38,18 +38,7 @@ enum UserInput {
     SetLayout,
 }
 
-interface IRect {
-    height: number;
-    width: number;
-    x: number;
-    y: number;
-}
-
-class Rect implements IRect {
-    public static from(rect: IRect) {
-        return new Rect(rect.x, rect.y, rect.width, rect.height);
-    }
-
+class Rect {
     public readonly height: number;
     public readonly width: number;
     public readonly x: number;
@@ -62,7 +51,7 @@ class Rect implements IRect {
         this.y = y;
     }
 
-    public equals(other: IRect) {
+    public equals(other: Rect) {
         return (
             this.x === other.x &&
             this.y === other.y &&
@@ -80,17 +69,13 @@ class Rect implements IRect {
         );
     }
 
-    public subtract(other: IRect) {
+    public subtract(other: Rect) {
         return new Rect(
             this.x - other.x,
             this.y - other.y,
             this.width - other.width,
             this.height - other.height,
         );
-    }
-
-    public toQRect(): QRect {
-        return Qt.rect(this.x, this.y, this.width, this.height);
     }
 
     public toString(): string {

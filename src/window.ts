@@ -49,7 +49,7 @@ class Window {
     public readonly id: string;
     public readonly window: IDriverWindow;
 
-    public get actualGeometry(): Rect { return Rect.from(this.window.geometry); }
+    public get actualGeometry(): Rect { return this.window.geometry; }
     public get context(): IDriverContext { return this.window.context; }
     public get shouldFloat(): boolean { return this.window.shouldFloat(); }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore(); }
@@ -88,8 +88,8 @@ class Window {
     constructor(window: IDriverWindow) {
         this.id = window.id;
 
-        this.floatGeometry = Rect.from(window.geometry);
-        this.geometry = Rect.from(window.geometry);
+        this.floatGeometry = window.geometry;
+        this.geometry = window.geometry;
         this.noBorder = false;
         this.keepBelow = false;
         this.managed = false;
