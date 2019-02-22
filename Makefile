@@ -10,6 +10,8 @@ FILE_QML    = $(PACKAGE_DIR)/contents/ui/main.qml
 FILE_CONFIG_XML = $(PACKAGE_DIR)/contents/config/main.xml
 FILE_CONFIG_UI  = $(PACKAGE_DIR)/contents/ui/config.ui
 
+SRC = $(shell find src -name "*.ts")
+
 all: $(PACKAGE_DIR)
 
 clean:
@@ -41,8 +43,8 @@ $(PACKAGE_DIR): $(FILE_SCRIPT) $(FILE_META) $(FILE_QML)
 $(PACKAGE_DIR): $(FILE_CONFIG_XML) $(FILE_CONFIG_UI)
 	@touch $@
 
-$(FILE_SCRIPT): $(wildcard src/*.ts) $(wildcard src/*/*.ts)
-	@mkdir -vp `dirname $(FILE_SCRIPT)`
+$(FILE_SCRIPT): $(SRC)
+	 @mkdir -vp `dirname $(FILE_SCRIPT)`
 	tsc --outFile $(FILE_SCRIPT)
 
 $(FILE_META): res/metadata.desktop
