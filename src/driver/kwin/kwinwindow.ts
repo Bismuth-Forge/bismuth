@@ -81,6 +81,11 @@ class KWinWindow implements IDriverWindow {
         );
     }
 
+    public toString(): string {
+        /* using a shorthand name to keep debug message tidy */
+        return "KWin(" + this.client.windowId.toString(16) + "." + this.client.resourceClass + ")";
+    }
+
     public visible(dctx: IDriverContext): boolean {
         const ctx = dctx as KWinContext;
         return (
