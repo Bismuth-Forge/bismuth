@@ -61,4 +61,8 @@ class KWinContext implements IDriverContext {
             && (client.screen === this.screen)
         );
     }
+
+    public toString(): string {
+        return "KWinCtx(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
+    }
 }
