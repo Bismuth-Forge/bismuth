@@ -52,11 +52,14 @@ class KWinWindow implements IDriverWindow {
         this._bakNoBorder = client.noBorder;
     }
 
-    public commit(geometry: Rect | null, noBorder: boolean, keepBelow: boolean) {
-        this.client.noBorder = noBorder || this._bakNoBorder;
-        this.client.keepBelow = keepBelow;
+    public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
+        if (noBorder !== undefined)
+            this.client.noBorder = noBorder || this._bakNoBorder;
 
-        if (geometry)
+        if (keepBelow !== undefined)
+            this.client.keepBelow = keepBelow;
+
+        if (geometry !== undefined)
             this.client.geometry = toQRect(this.adjustGeometry(geometry));
     }
 

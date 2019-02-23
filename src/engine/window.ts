@@ -54,36 +54,43 @@ class Window {
     public get shouldFloat(): boolean { return this.window.shouldFloat(); }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore(); }
 
-    public get tileable(): boolean {
-        return (
-            (!this.window.fullScreen) &&
-            (!this.float)
-        );
-    }
-
     /* read-write */
     public floatGeometry: Rect;
     public geometry: Rect;
     public noBorder: boolean;
     public keepBelow: boolean;
-    public managed: boolean;
 
-    public get float(): boolean { return this._float; }
-    public set float(value: boolean) {
-        if (this._float === value)
+    public get state(): WindowState {
+        if (this.window.fullScreen)
+            return WindowState.FullScreen;
+        return this._state;
+    }
+
+    public set state(value: WindowState) {
+        if (value === WindowState.FullScreen) return;
+
+        const state = this.state;
+        if (state === WindowState.FullScreen) {
             return;
-
-        this._float = value;
-        if (this._float === true) {
-            /* HACK: necessary to prevent geometry reset bug in KWin */
+        } else if (state === WindowState.Tile && value === WindowState.Float) {
             this.window.commit(this.floatGeometry, false, false);
-            this.keepBelow = false;
-        } else
+        } else if (state === WindowState.Tile && value === WindowState.FreeTile) {
+            this.window.commit(this.floatGeometry, false, false);
+        } else if (state === WindowState.Float && value === WindowState.Tile) {
             this.floatGeometry = this.actualGeometry;
+        } else if (state === WindowState.Float && value === WindowState.FreeTile) {
+            /* do nothing */
+        } else if (state === WindowState.FreeTile && value === WindowState.Tile) {
+            this.floatGeometry = this.actualGeometry;
+        } else if (state === WindowState.FreeTile && value === WindowState.Float) {
+            return;
+        }
+
+        this._state = value;
     }
 
     /* private */
-    private _float: boolean;
+    private _state: WindowState;
 
     constructor(window: IDriverWindow) {
         this.id = window.id;
@@ -92,10 +99,9 @@ class Window {
         this.geometry = window.geometry;
         this.noBorder = false;
         this.keepBelow = false;
-        this.managed = false;
 
         this.window = window;
-        this._float = false;
+        this._state = WindowState.Unmanaged;
     }
 
     /*
@@ -103,8 +109,8 @@ class Window {
      */
 
     public commit() {
-        const geometry = (this.tileable) ? this.geometry : null;
-        this.window.commit(geometry, this.noBorder, this.keepBelow);
+        if (this.state === WindowState.Tile)
+            this.window.commit(this.geometry, this.noBorder, this.keepBelow);
     }
 
     public visible(ctx: IDriverContext): boolean {

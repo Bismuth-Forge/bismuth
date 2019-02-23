@@ -39,8 +39,9 @@ class TilingEngine {
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout && layout.adjust) {
             const area = this.driver.getWorkingArea(ctx);
-            const tileables = this.windows.filter((t) => t.visible(ctx) && t.tileable);
-            layout.adjust(area, tileables, basis);
+            const tiles = this.windows.filter((win) =>
+                (win.state === WindowState.Tile) && win.visible(ctx));
+            layout.adjust(area, tiles, basis);
         }
     }
 
@@ -66,17 +67,22 @@ class TilingEngine {
             workingArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
         );
 
-        const visibles = this.getVisibleWindows(ctx);
-        const tileables = visibles.filter((window) => (window.tileable === true));
+        const visibles = this.windows.filter((win) => win.visible(ctx));
+        const tileables = visibles.filter((win) => (win.state === WindowState.Tile));
         debugObj(() => ["arrangeScreen", {
             ctx, layout,
             tileables: tileables.length,
             visibles: visibles.length,
         }]);
 
+        /* reset all properties of windows */
         visibles.forEach((window) => {
-            window.keepBelow = window.tileable;
-            window.noBorder = (CONFIG.noTileBorder) ? window.tileable : false;
+            if (window.state === WindowState.FreeTile)
+                window.state = WindowState.Tile;
+
+            const isTile = (window.state === WindowState.Tile);
+            window.keepBelow = isTile;
+            window.noBorder = (CONFIG.noTileBorder) ? isTile : false;
         });
 
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
@@ -90,11 +96,11 @@ class TilingEngine {
     }
 
     public enforceClientSize(window: Window) {
-        if (!window.tileable) return;
+        if (window.state !== WindowState.Tile) return;
 
         if (!window.actualGeometry.equals(window.geometry))
             KWinSetTimeout(() => {
-                if (window.tileable)
+                if (window.state !== WindowState.Tile)
                     window.commit();
             }, 10);
     }
@@ -103,10 +109,7 @@ class TilingEngine {
         if (window.shouldIgnore)
             return;
 
-        window.managed = true;
-
-        if (window.shouldFloat)
-            window.float = true;
+        window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
 
         this.windows.push(window);
     }
@@ -159,7 +162,7 @@ class TilingEngine {
                 break;
             case UserInput.Float:
                 if ((window = this.getActiveWindow()))
-                    window.float = !window.float;
+                    window.state = (window.state === WindowState.Float) ? WindowState.Tile : WindowState.Float;
                 break;
             case UserInput.CycleLayout:
                 this.nextLayout();
@@ -175,7 +178,7 @@ class TilingEngine {
         if (step === 0) return;
 
         const ctx = this.driver.getCurrentContext();
-        const visibles = this.getVisibleWindows(ctx);
+        const visibles = this.windows.filter((win) => win.visible(ctx));
         if (visibles.length === 0)
             return;
 
@@ -233,9 +236,5 @@ class TilingEngine {
         /* XXX: may return `null` if the active client is not being managed.
          * I'm just on a defensive manuever, and nothing has been broke actually. */
         return this.driver.getCurrentWindow();
-    }
-
-    private getVisibleWindows(ctx: IDriverContext): Window[] {
-        return this.windows.filter((window) => window.visible(ctx));
     }
 }

@@ -38,6 +38,14 @@ enum UserInput {
     SetLayout,
 }
 
+enum WindowState {
+    Tile,
+    FreeTile,
+    Float,
+    FullScreen,
+    Unmanaged,
+}
+
 //#region Driver
 
 interface IConfig {
@@ -71,7 +79,7 @@ interface IDriverWindow {
     readonly geometry: Rect;
     readonly id: string;
 
-    commit(geometry: Rect | null, noBorder: boolean, keepBelow: boolean): void;
+    commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
     shouldIgnore(): boolean;
     shouldFloat(): boolean;
     visible(ctx: IDriverContext): boolean;

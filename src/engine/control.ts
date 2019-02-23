@@ -71,13 +71,13 @@ class TilingController {
 
     public onWindowMoveOver(window: Window): void {
         debugObj(() => ["onWindowMoveOver", {window}]);
-        if (window.tileable) {
+        if (window.state === WindowState.Tile) {
             const diff = window.actualGeometry.subtract(window.geometry);
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
             /* TODO: arbitrary constant */
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
-                window.float = true;
+                window.state = WindowState.Float;
                 this.engine.arrange();
             } else
                 window.commit();
@@ -94,7 +94,7 @@ class TilingController {
 
     public onWindowResizeOver(window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
-        if (CONFIG.mouseAdjustLayout && window.tileable) {
+        if (CONFIG.mouseAdjustLayout && window.state === WindowState.Tile) {
             this.engine.adjustLayout(window);
             this.engine.arrange();
         } else if (!CONFIG.mouseAdjustLayout)

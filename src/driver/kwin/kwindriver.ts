@@ -55,7 +55,7 @@ class KWinDriver implements IDriver {
         for (let i = 0; i < clients.length; i++) {
             const window = this.registerWindow(clients[i]);
             this.engine.manageClient(window);
-            if (window.managed)
+            if (window.state !== WindowState.Unmanaged)
                 this.bindWindowEvents(window, clients[i]);
             else
                 this.unregisterWindow(window);
@@ -198,7 +198,7 @@ class KWinDriver implements IDriver {
             const handler = () => {
                 const window = this.registerWindow(client);
                 this.control.onWindowAdded(window);
-                if (window.managed)
+                if (window.state !== WindowState.Unmanaged)
                     this.bindWindowEvents(window, client);
                 else
                     this.unregisterWindow(window);
