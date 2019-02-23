@@ -68,10 +68,11 @@ class TilingEngine {
         );
 
         const visibles = this.windows.filter((win) => win.visible(ctx));
-        const tileables = visibles.filter((win) => (win.state === WindowState.Tile));
+        const tiles = visibles.filter((win) =>
+            (win.state === WindowState.Tile) || (win.state === WindowState.FreeTile));
         debugObj(() => ["arrangeScreen", {
             ctx, layout,
-            tileables: tileables.length,
+            tiles: tiles.length,
             visibles: visibles.length,
         }]);
 
@@ -80,17 +81,15 @@ class TilingEngine {
             if (window.state === WindowState.FreeTile)
                 window.state = WindowState.Tile;
 
-            const isTile = (window.state === WindowState.Tile);
-            window.keepBelow = isTile;
-            window.noBorder = (CONFIG.noTileBorder) ? isTile : false;
+            if (window.state === WindowState.Tile)
+                window.noBorder = CONFIG.noTileBorder;
         });
 
-        if (CONFIG.maximizeSoleTile && tileables.length === 1) {
-            tileables[0].keepBelow = true;
-            tileables[0].noBorder = true;
-            tileables[0].geometry = this.driver.getWorkingArea(ctx);
-        } else if (tileables.length > 0)
-            layout.apply(tileables, area, workingArea);
+        if (CONFIG.maximizeSoleTile && tiles.length === 1) {
+            tiles[0].noBorder = true;
+            tiles[0].geometry = this.driver.getWorkingArea(ctx);
+        } else if (tiles.length > 0)
+            layout.apply(tiles, area, workingArea);
 
         visibles.forEach((window) => window.commit());
     }

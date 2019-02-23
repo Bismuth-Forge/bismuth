@@ -114,7 +114,7 @@ class QuarterLayout implements ILayout {
         if (tiles.length > 4)
             tiles.slice(4).forEach((t) => {
                 t.geometry = t.floatGeometry;
-                t.keepBelow = false;
+                /* TODO: state = freetile */
             });
     }
 

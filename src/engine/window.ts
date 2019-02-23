@@ -58,7 +58,6 @@ class Window {
     public floatGeometry: Rect;
     public geometry: Rect;
     public noBorder: boolean;
-    public keepBelow: boolean;
 
     public get state(): WindowState {
         if (this.window.fullScreen)
@@ -98,7 +97,6 @@ class Window {
         this.floatGeometry = window.geometry;
         this.geometry = window.geometry;
         this.noBorder = false;
-        this.keepBelow = false;
 
         this.window = window;
         this._state = WindowState.Unmanaged;
@@ -110,7 +108,7 @@ class Window {
 
     public commit() {
         if (this.state === WindowState.Tile)
-            this.window.commit(this.geometry, this.noBorder, this.keepBelow);
+            this.window.commit(this.geometry, this.noBorder, true);
     }
 
     public visible(ctx: IDriverContext): boolean {
