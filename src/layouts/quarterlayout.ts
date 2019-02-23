@@ -112,10 +112,7 @@ class QuarterLayout implements ILayout {
         }
 
         if (tiles.length > 4)
-            tiles.slice(4).forEach((t) => {
-                t.geometry = t.floatGeometry;
-                /* TODO: state = freetile */
-            });
+            tiles.slice(4).forEach((tile) => tile.state = WindowState.FreeTile);
     }
 
     public toString(): string {
