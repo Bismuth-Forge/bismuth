@@ -30,7 +30,6 @@ class TilingController {
 
     public onScreenCountChanged(count: number): void {
         debugObj(() => ["onScreenCountChanged", {count}]);
-        this.engine.updateScreenCount(count);
         this.engine.arrange();
     }
 

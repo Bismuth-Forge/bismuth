@@ -24,13 +24,11 @@
 class TilingEngine {
     private driver: IDriver;
     private layouts: LayoutStore;
-    private screenCount: number;
     private windows: Window[];
 
     constructor(driver: IDriver) {
         this.driver = driver;
         this.layouts = new LayoutStore();
-        this.screenCount = 1;
         this.windows = Array();
     }
 
@@ -46,7 +44,7 @@ class TilingEngine {
     }
 
     public arrange() {
-        debugObj(() => ["arrange", {screenCount: this.screenCount}]);
+        debug(() => "arrange");
         this.driver.forEachScreen((ctx: IDriverContext) => {
             this.arrangeScreen(ctx);
         });
@@ -113,10 +111,6 @@ class TilingEngine {
         const idx = this.windows.indexOf(window);
         if (idx >= 0)
             this.windows.splice(idx, 1);
-    }
-
-    public updateScreenCount(count: number) {
-        this.screenCount = count;
     }
 
     /*

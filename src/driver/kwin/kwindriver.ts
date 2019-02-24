@@ -49,8 +49,6 @@ class KWinDriver implements IDriver {
         this.bindEvents();
         this.bindShortcut();
 
-        this.engine.updateScreenCount(workspace.numScreens);
-
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++) {
             const window = this.registerWindow(clients[i]);
