@@ -19,7 +19,12 @@
 // DEALINGS IN THE SOFTWARE.
 
 class KWinWindow implements IDriverWindow {
+    public static generateID(client: KWin.Client) {
+        return String(client) + "/" + client.windowId;
+    }
+
     public readonly client: KWin.Client;
+    public readonly id: string;
 
     public get context(): IDriverContext {
         let activity;
@@ -41,14 +46,11 @@ class KWinWindow implements IDriverWindow {
         return toRect(this.client.geometry);
     }
 
-    public get id(): string {
-        return String(this.client) + "/" + this.client.windowId;
-    }
-
     private readonly _bakNoBorder: boolean;
 
     constructor(client: KWin.Client) {
         this.client = client;
+        this.id = KWinWindow.generateID(client);
         this._bakNoBorder = client.noBorder;
     }
 

@@ -170,8 +170,7 @@ class KWinDriver implements IDriver {
     }
 
     private queryWindow(client: KWin.Client): Window | null {
-        // TODO: implement a shared function for generating ID
-        const key = String(client) + "/" + client.windowId;
+        const key = KWinWindow.generateID(client);
         return this.windowMap[key] || null;
     }
 
