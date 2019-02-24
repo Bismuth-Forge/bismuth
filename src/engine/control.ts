@@ -38,8 +38,8 @@ class TilingController {
         this.engine.arrangeScreen(ctx);
     }
 
-    public onCurrentContextChanged(context: IDriverContext): void {
-        debugObj(() => ["onCurrentContextChanged", {context}]);
+    public onCurrentContextChanged(ctx: IDriverContext): void {
+        debugObj(() => ["onCurrentContextChanged", {ctx}]);
         this.engine.arrange();
     }
 

@@ -94,7 +94,7 @@ interface IDriver {
     forEachScreen(func: (ctx: IDriverContext) => void): void;
     getCurrentContext(): IDriverContext;
     getCurrentWindow(): Window | null;
-    getWorkingArea(dctx: IDriverContext): Rect ;
+    getWorkingArea(ctx: IDriverContext): Rect ;
     setCurrentWindow(window: Window): void;
 }
 

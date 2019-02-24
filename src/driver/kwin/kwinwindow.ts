@@ -95,15 +95,15 @@ class KWinWindow implements IDriverWindow {
         return "KWin(" + this.client.windowId.toString(16) + "." + this.client.resourceClass + ")";
     }
 
-    public visible(dctx: IDriverContext): boolean {
-        const ctx = dctx as KWinContext;
+    public visible(ctx: IDriverContext): boolean {
+        const kctx = ctx as KWinContext;
         return (
             (!this.client.minimized)
-            && (this.client.desktop === ctx.desktop
+            && (this.client.desktop === kctx.desktop
                 || this.client.desktop === -1 /* on all desktop */)
             && (this.client.activities.length === 0 /* on all activities */
-                || this.client.activities.indexOf(ctx.activity) !== -1)
-            && (this.client.screen === ctx.screen)
+                || this.client.activities.indexOf(kctx.activity) !== -1)
+            && (this.client.screen === kctx.screen)
         );
     }
 
