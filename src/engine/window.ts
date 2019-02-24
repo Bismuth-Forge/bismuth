@@ -111,6 +111,8 @@ class Window {
     public commit() {
         if (this.state === WindowState.Tile)
             this.window.commit(this.geometry, this.noBorder, true);
+        else if (this.state === WindowState.FullScreen)
+            this.window.commit(undefined, undefined, false);
     }
 
     public visible(ctx: IDriverContext): boolean {
