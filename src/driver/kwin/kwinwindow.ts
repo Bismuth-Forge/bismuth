@@ -35,7 +35,11 @@ class KWinWindow implements IDriverWindow {
         else
             activity = this.client.activities[0];
 
-        return new KWinContext(this.client.screen, activity, this.client.desktop);
+        const desktop = (this.client.desktop >= 0)
+            ? this.client.desktop
+            : workspace.currentDesktop;
+
+        return new KWinContext(this.client.screen, activity, desktop);
     }
 
     public get fullScreen(): boolean {
