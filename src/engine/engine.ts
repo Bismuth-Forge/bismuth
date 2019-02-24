@@ -168,20 +168,23 @@ class TilingEngine {
         if (step === 0)
             return;
 
-        const ctx = this.driver.getCurrentContext();
+        const window = this.driver.getCurrentWindow();
+        const ctx = (window) ? window.context : this.driver.getCurrentContext();
+
         const visibles = this.windows.filter((win) => win.visible(ctx));
-        if (visibles.length === 0)
+        if (visibles.length === 0) /* nothing to focus */
             return;
 
-        // TODO: simplify
-        const window = this.driver.getCurrentWindow();
-        const index = (window) ? visibles.indexOf(window) : 0;
+        const idx = (window) ? visibles.indexOf(window) : -1;
+        if (!window || idx < 0) { /* unmanaged window -> focus master */
+            this.driver.setCurrentWindow(visibles[0]);
+            return;
+        }
 
-        let newIndex = index + step;
-        while (newIndex < 0)
-            newIndex += visibles.length;
-        newIndex = newIndex % visibles.length;
+        const num = visibles.length;
+        const newIndex = (idx + (step % num) + num) % num;
 
+        debugObj(() => ["moveFocus", {from: window, to: visibles[newIndex]}]);
         this.driver.setCurrentWindow(visibles[newIndex]);
     }
 
@@ -189,36 +192,42 @@ class TilingEngine {
         if (step === 0)
             return;
 
-        const window = this.driver.getCurrentWindow();
-        if (!window)
+        const srcWin = this.driver.getCurrentWindow();
+        if (!srcWin)
             return;
 
-        // TODO: simplify
-        const ctx = window.context;
-        let tileIdx = this.windows.indexOf(window);
-        const dir = (step > 0) ? 1 : -1;
-        for (let i = tileIdx + dir; 0 <= i && i < this.windows.length; i += dir) {
-            if (this.windows[i].visible(ctx)) {
-                this.windows[tileIdx] = this.windows[i];
-                this.windows[i] = window;
-                tileIdx = i;
+        const ctx = srcWin.context;
+        const visibles = this.windows.filter((win) => win.visible(ctx));
+        if (visibles.length < 2)
+            return;
 
-                step -= dir;
-                if (step === 0)
-                    break;
-            }
-        }
+        const num = visibles.length;
+        const srcIdx = visibles.indexOf(srcWin);
+        const destIdx = (srcIdx + (step % num) + num) % num;
+        debugObj(() => ["moveTile", {num, srcIdx, step, destIdx}]);
+        if (srcIdx === destIdx)
+            return;
+
+        const destWin = visibles[destIdx];
+
+        debugObj(() => ["moveTile", {srcWin, destWin}]);
+        const srcListIdx = this.windows.indexOf(srcWin);
+        const destListIdx = this.windows.indexOf(destWin);
+        this.windows[destListIdx] = srcWin ;
+        this.windows[srcListIdx] = destWin;
     }
 
     public setMaster(window: Window) {
         if (this.windows[0] === window)
             return;
 
-        // TODO: simplify
-        const index = this.windows.indexOf(window);
-        for (let i = index - 1; i >= 0; i--)
-            this.windows[i + 1] = this.windows[i];
-        this.windows[0] = window;
+        const idx = this.windows.indexOf(window);
+        if (idx < 0)
+            return;
+
+        debugObj(() => ["setMaster", {to: window}]);
+        this.windows.splice(idx, 1);
+        this.windows.unshift(window);
     }
 
     public cycleLayout() {
