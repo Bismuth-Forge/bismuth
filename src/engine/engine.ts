@@ -95,7 +95,7 @@ class TilingEngine {
     public enforceClientSize(window: Window) {
         if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
             KWinSetTimeout(() => {
-                if (window.state !== WindowState.Tile)
+                if (window.state === WindowState.Tile)
                     window.commit();
             }, 10);
     }
