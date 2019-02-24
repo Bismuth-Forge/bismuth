@@ -33,9 +33,9 @@ class TilingController {
         this.engine.arrange();
     }
 
-    public onScreenResized(screen: any): void {
-        debugObj(() => ["onScreenResized", {screen}]);
-        this.engine.arrange();
+    public onScreenResized(ctx: IDriverContext): void {
+        debugObj(() => ["onScreenResized", {ctx}]);
+        this.engine.arrangeScreen(ctx);
     }
 
     public onCurrentContextChanged(context: IDriverContext): void {

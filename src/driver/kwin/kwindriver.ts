@@ -186,7 +186,8 @@ class KWinDriver implements IDriver {
             this.control.onScreenCountChanged(count));
 
         this.connect(workspace.screenResized, (screen: number) =>
-            this.control.onScreenResized(screen));
+            this.control.onScreenResized(new KWinContext(
+                screen, workspace.currentActivity, workspace.currentDesktop)));
 
         this.connect(workspace.currentActivityChanged, (activity: string) =>
             this.control.onCurrentContextChanged(this.getCurrentContext()));
