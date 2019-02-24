@@ -33,18 +33,13 @@ class TilingController {
         this.engine.arrange();
     }
 
-    public onScreenResized(screen: number): void {
+    public onScreenResized(screen: any): void {
         debugObj(() => ["onScreenResized", {screen}]);
         this.engine.arrange();
     }
 
-    public onCurrentActivityChanged(activity: string): void {
-        debugObj(() => ["onCurrentActivityChanged", {activity}]);
-        this.engine.arrange();
-    }
-
-    public onCurrentDesktopChanged(desktop: number): void {
-        debugObj(() => ["onCurrentDesktopChanged", {desktop}]);
+    public onCurrentContextChanged(context: IDriverContext): void {
+        debugObj(() => ["onCurrentContextChanged", {context}]);
         this.engine.arrange();
     }
 
