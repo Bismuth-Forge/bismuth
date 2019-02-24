@@ -40,7 +40,8 @@ class QuarterLayout implements ILayout {
             return;
 
         const idx = tiles.indexOf(basis);
-        if (idx < 0) return;
+        if (idx < 0)
+            return;
 
         const delta = new WindowResizeDelta(basis);
 
@@ -78,7 +79,6 @@ class QuarterLayout implements ILayout {
             return;
         }
 
-        /* TODO: gap config */
         const gap1 = Math.floor(CONFIG.tileLayoutGap / 2);
         const gap2 = CONFIG.tileLayoutGap - gap1;
 

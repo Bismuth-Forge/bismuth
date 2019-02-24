@@ -59,12 +59,12 @@ class TilingEngine {
             return;
         }
 
-        const workingArea = this.driver.getWorkingArea(ctx);
-        const area = new Rect(
-            workingArea.x + CONFIG.screenGapLeft,
-            workingArea.y + CONFIG.screenGapTop,
-            workingArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
-            workingArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
+        const fullArea = this.driver.getWorkingArea(ctx);
+        const workingArea = new Rect(
+            fullArea.x + CONFIG.screenGapLeft,
+            fullArea.y + CONFIG.screenGapTop,
+            fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
+            fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
         );
 
         const visibles = this.windows.filter((win) => win.visible(ctx));
@@ -87,17 +87,15 @@ class TilingEngine {
 
         if (CONFIG.maximizeSoleTile && tiles.length === 1) {
             tiles[0].noBorder = true;
-            tiles[0].geometry = this.driver.getWorkingArea(ctx);
+            tiles[0].geometry = fullArea;
         } else if (tiles.length > 0)
-            layout.apply(tiles, area, workingArea);
+            layout.apply(tiles, workingArea, fullArea);
 
         visibles.forEach((window) => window.commit());
     }
 
     public enforceClientSize(window: Window) {
-        if (window.state !== WindowState.Tile) return;
-
-        if (!window.actualGeometry.equals(window.geometry))
+        if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
             KWinSetTimeout(() => {
                 if (window.state !== WindowState.Tile)
                     window.commit();
@@ -105,12 +103,10 @@ class TilingEngine {
     }
 
     public manageClient(window: Window) {
-        if (window.shouldIgnore)
-            return;
-
-        window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
-
-        this.windows.push(window);
+        if (!window.shouldIgnore) {
+            window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
+            this.windows.push(window);
+        }
     }
 
     public unmanageClient(window: Window) {
@@ -127,6 +123,7 @@ class TilingEngine {
      * User Input Handling
      */
 
+    // TODO: move this to controller
     public handleUserInput(input: UserInput, data?: any) {
         debugObj(() => ["handleUserInput", {input: UserInput[input], data}]);
 
@@ -164,7 +161,7 @@ class TilingEngine {
                     window.state = (window.state === WindowState.Float) ? WindowState.Tile : WindowState.Float;
                 break;
             case UserInput.CycleLayout:
-                this.nextLayout();
+                this.cycleLayout();
                 break;
             case UserInput.SetLayout:
                 this.layouts.setLayout(this.driver.getCurrentContext(), data);
@@ -174,13 +171,15 @@ class TilingEngine {
     }
 
     public moveFocus(step: number) {
-        if (step === 0) return;
+        if (step === 0)
+            return;
 
         const ctx = this.driver.getCurrentContext();
         const visibles = this.windows.filter((win) => win.visible(ctx));
         if (visibles.length === 0)
             return;
 
+        // TODO: simplify
         const window = this.getActiveWindow();
         const index = (window) ? visibles.indexOf(window) : 0;
 
@@ -193,11 +192,14 @@ class TilingEngine {
     }
 
     public moveTile(step: number) {
-        if (step === 0) return;
+        if (step === 0)
+            return;
 
         const window = this.getActiveWindow();
-        if (!window) return;
+        if (!window)
+            return;
 
+        // TODO: simplify
         const ctx = window.context;
         let tileIdx = this.windows.indexOf(window);
         const dir = (step > 0) ? 1 : -1;
@@ -215,15 +217,17 @@ class TilingEngine {
     }
 
     public setMaster(window: Window) {
-        if (this.windows[0] === window) return;
+        if (this.windows[0] === window)
+            return;
 
+        // TODO: simplify
         const index = this.windows.indexOf(window);
         for (let i = index - 1; i >= 0; i--)
             this.windows[i + 1] = this.windows[i];
         this.windows[0] = window;
     }
 
-    public nextLayout() {
+    public cycleLayout() {
         this.layouts.cycleLayout(this.driver.getCurrentContext());
     }
 
@@ -231,9 +235,8 @@ class TilingEngine {
      * Privates
      */
 
+    // TODO: eliminate this method
     private getActiveWindow(): Window | null {
-        /* XXX: may return `null` if the active client is not being managed.
-         * I'm just on a defensive manuever, and nothing has been broke actually. */
         return this.driver.getCurrentWindow();
     }
 }

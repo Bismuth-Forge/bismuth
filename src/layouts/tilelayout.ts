@@ -57,7 +57,8 @@ class TileLayout implements ILayout {
             return;
 
         const idx = tiles.indexOf(basis);
-        if (idx < 0) return;
+        if (idx < 0)
+            return;
 
         const diff = basis.actualGeometry.subtract(basis.geometry);
         if (idx < this.numMaster) { /* master tiles */

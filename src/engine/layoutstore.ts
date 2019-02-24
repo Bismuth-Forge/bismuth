@@ -77,7 +77,6 @@ class LayoutStore {
 
     private initEntry(key: string) {
         const entry = [];
-        // TODO: user config
         entry.push(new TileLayout());
         entry.push(new MonocleLayout());
         entry.push(new SpreadLayout());

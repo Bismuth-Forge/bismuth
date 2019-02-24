@@ -104,7 +104,9 @@ class KWinDriver implements IDriver {
      */
 
     private bindShortcut() {
-        if (!KWin.registerShortcut) return;
+        /* check if method exists */
+        if (!KWin.registerShortcut)
+            return;
 
         const bind = (seq: string, title: string, input: UserInput) => {
             title = "Krohnkite: " + title;
@@ -170,7 +172,7 @@ class KWinDriver implements IDriver {
     }
 
     private queryWindow(client: KWin.Client): Window | null {
-        /* TODO: implement a shared function for generating ID */
+        // TODO: implement a shared function for generating ID
         const key = String(client) + "/" + client.windowId;
         return this.windowMap[key] || null;
     }

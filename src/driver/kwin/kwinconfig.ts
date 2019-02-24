@@ -47,7 +47,7 @@ class KWinConfig implements IConfig {
     public layoutPerDesktop: boolean;
     //#endregion
 
-    //#region KWin rules
+    //#region KWin-specific Rules
     public floatUtility: boolean;
 
     public floatingClass: string[];
@@ -61,8 +61,8 @@ class KWinConfig implements IConfig {
 
     constructor() {
         function commaSeparate(str: string): string[] {
-            if (!str) return [];
-            if (typeof str !== "string") return [];
+            if (!str || typeof str !== "string")
+                return [];
             return str.split(",").map((part) => part.trim());
         }
 

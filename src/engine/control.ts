@@ -72,9 +72,10 @@ class TilingController {
     public onWindowMoveOver(window: Window): void {
         debugObj(() => ["onWindowMoveOver", {window}]);
         if (window.state === WindowState.Tile) {
+            // TODO: refactor this block;
             const diff = window.actualGeometry.subtract(window.geometry);
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
-            /* TODO: arbitrary constant */
+            // TODO: arbitrary constant
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
                 window.state = WindowState.Float;
@@ -109,9 +110,9 @@ class TilingController {
     // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
     // by itself anyway.
     public onWindowChanged(window: Window | null, comment?: string): void {
-        if (!window) return;
-        debugObj(() => ["onWindowChanged", {window, comment}]);
-        /* TODO: maybe a less brutal solution? */
-        this.engine.arrange();
+        if (window) {
+            debugObj(() => ["onWindowChanged", {window, comment}]);
+            this.engine.arrange();
+        }
     }
 }

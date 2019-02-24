@@ -65,8 +65,10 @@ class Window {
         return this._state;
     }
 
+    /* TODO: maybe, try splitting this into multiple methods, like setTile, setFloat, setFreeTile */
     public set state(value: WindowState) {
-        if (value === WindowState.FullScreen) return;
+        if (value === WindowState.FullScreen)
+            return;
 
         const state = this.state;
         if (state === WindowState.FullScreen) {
