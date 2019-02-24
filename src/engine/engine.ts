@@ -147,11 +147,11 @@ class TilingEngine {
                 this.moveTile(+1);
                 break;
             case UserInput.SetMaster:
-                if ((window = this.getActiveWindow()))
+                if ((window = this.driver.getCurrentWindow()))
                     this.setMaster(window);
                 break;
             case UserInput.Float:
-                if ((window = this.getActiveWindow()))
+                if ((window = this.driver.getCurrentWindow()))
                     window.state = (window.state === WindowState.Float) ? WindowState.Tile : WindowState.Float;
                 break;
             case UserInput.CycleLayout:
@@ -174,7 +174,7 @@ class TilingEngine {
             return;
 
         // TODO: simplify
-        const window = this.getActiveWindow();
+        const window = this.driver.getCurrentWindow();
         const index = (window) ? visibles.indexOf(window) : 0;
 
         let newIndex = index + step;
@@ -189,7 +189,7 @@ class TilingEngine {
         if (step === 0)
             return;
 
-        const window = this.getActiveWindow();
+        const window = this.driver.getCurrentWindow();
         if (!window)
             return;
 
@@ -223,14 +223,5 @@ class TilingEngine {
 
     public cycleLayout() {
         this.layouts.cycleLayout(this.driver.getCurrentContext());
-    }
-
-    /*
-     * Privates
-     */
-
-    // TODO: eliminate this method
-    private getActiveWindow(): Window | null {
-        return this.driver.getCurrentWindow();
     }
 }
