@@ -83,6 +83,7 @@ class KWinWindow implements IDriverWindow {
         const resourceClass = String(this.client.resourceClass);
         return (
             this.client.modal
+            || (!this.client.resizeable)
             || (KWINCONFIG.floatUtility
                 && (this.client.dialog || this.client.splash || this.client.utility))
             || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
