@@ -96,6 +96,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="adjustLayoutLive" type="Bool">
+	    <label>Adjust as window is being resized</label>
+        <default>true</default>
+    </entry>
+
     <entry name="noTileBorder" type="Bool">
         <label>Remove borders of tiled windows</label>
         <default>false</default>

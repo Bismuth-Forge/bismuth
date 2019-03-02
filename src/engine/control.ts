@@ -84,7 +84,13 @@ class TilingController {
     }
 
     public onWindowResize(window: Window): void {
-        /* do nothing */
+        debugObj(() => ["onWindowResizeOver", {window}]);
+        if (CONFIG.mouseAdjustLayout && CONFIG.adjustLayoutLive) {
+            if (window.state === WindowState.Tile) {
+                this.engine.adjustLayout(window);
+                this.engine.arrange();
+            }
+        }
     }
 
     public onWindowResizeOver(window: Window): void {

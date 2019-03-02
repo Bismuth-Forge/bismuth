@@ -61,6 +61,7 @@ interface IConfig {
 
     //#region Features
     mouseAdjustLayout: boolean;
+    adjustLayoutLive: boolean;
     noTileBorder: boolean;
     //#endregion
 
