@@ -35,7 +35,7 @@ class TilingEngine {
     public adjustLayout(basis: Window) {
         const ctx = basis.context as KWinContext;
         const layout = this.layouts.getCurrentLayout(ctx);
-        if (layout && layout.adjust) {
+        if (layout.adjust) {
             const area = this.driver.getWorkingArea(ctx);
             const tiles = this.windows.filter((win) =>
                 (win.state === WindowState.Tile) && win.visible(ctx));
@@ -52,10 +52,6 @@ class TilingEngine {
 
     public arrangeScreen(ctx: IDriverContext) {
         const layout = this.layouts.getCurrentLayout(ctx);
-        if (!layout) {
-            debug(() => "ignoring screen: " + ctx);
-            return;
-        }
 
         const fullArea = this.driver.getWorkingArea(ctx);
         const workingArea = new Rect(
@@ -124,7 +120,7 @@ class TilingEngine {
         const ctx = this.driver.getCurrentContext();
 
         const layout = this.layouts.getCurrentLayout(ctx);
-        if (layout && layout.handleUserInput) {
+        if (layout.handleUserInput) {
             const overriden = layout.handleUserInput(input, data);
             if (overriden) {
                 this.arrange();
