@@ -30,7 +30,7 @@ class KWinConfig implements IConfig {
     //#endregion
 
     //#region Features
-    public mouseAdjustLayout: boolean;
+    public adjustLayout: boolean;
     public adjustLayoutLive: boolean;
     public noTileBorder: boolean;
     //#endregion
@@ -77,7 +77,7 @@ class KWinConfig implements IConfig {
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);
         this.monocleMaximize      = KWin.readConfig("monocleMaximize"     , true);
 
-        this.mouseAdjustLayout    = KWin.readConfig("mouseAdjustLayout"   , true);
+        this.adjustLayout         = KWin.readConfig("adjustLayout"        , true);
         this.adjustLayoutLive     = KWin.readConfig("adjustLayoutLive"    , true);
         this.noTileBorder         = KWin.readConfig("noTileBorder"        , false);
 

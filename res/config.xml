@@ -91,7 +91,7 @@
         <default>true</default>
     </entry>
 
-    <entry name="mouseAdjustLayout" type="Bool">
+    <entry name="adjustLayout" type="Bool">
 	    <label>Adjust layout with mouse</label>
         <default>true</default>
     </entry>

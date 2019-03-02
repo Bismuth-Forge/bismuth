@@ -419,14 +419,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_mouseAdjustLayout">
+        <widget class="QCheckBox" name="kcfg_adjustLayout">
          <property name="text">
           <string>Adjust layout with mouse</string>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="mouseAdjustLayoutLayout">
+        <layout class="QVBoxLayout" name="adjustLayoutLayout">
          <property name="leftMargin">
           <number>40</number>
          </property>

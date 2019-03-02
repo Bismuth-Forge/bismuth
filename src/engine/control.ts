@@ -85,7 +85,7 @@ class TilingController {
 
     public onWindowResize(window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
-        if (CONFIG.mouseAdjustLayout && CONFIG.adjustLayoutLive) {
+        if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
             if (window.state === WindowState.Tile) {
                 this.engine.adjustLayout(window);
                 this.engine.arrange();
@@ -95,10 +95,10 @@ class TilingController {
 
     public onWindowResizeOver(window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
-        if (CONFIG.mouseAdjustLayout && window.state === WindowState.Tile) {
+        if (CONFIG.adjustLayout && window.state === WindowState.Tile) {
             this.engine.adjustLayout(window);
             this.engine.arrange();
-        } else if (!CONFIG.mouseAdjustLayout)
+        } else if (!CONFIG.adjustLayout)
             this.engine.enforceClientSize(window);
     }
 
