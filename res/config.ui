@@ -26,22 +26,28 @@
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QCheckBox" name="kcfg_layoutPerActivity">
+         <property name="toolTip">
+          <string>Use different layouts for each activity. Can be combined with &quot;Use separate layout per Desktop&quot; option.</string>
+         </property>
          <property name="text">
-          <string>Use Separate Layouts per Activity</string>
+          <string>Use separate layout per Activity</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_layoutPerDesktop">
+         <property name="toolTip">
+          <string>Use different layouts for each virtual desktop. Can be combined with &quot;Use separate layout per Activity&quot; option.</string>
+         </property>
          <property name="text">
-          <string>Use Separate Layouts per Desktop</string>
+          <string>Use separate layout per Desktop</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="enableLayoutsLabel">
          <property name="text">
-          <string>Enable/disable Layout</string>
+          <string>Per-layout Settings</string>
          </property>
         </widget>
        </item>
@@ -52,11 +58,11 @@
          </property>
          <item>
           <widget class="QCheckBox" name="kcfg_enableTileLayout">
+           <property name="toolTip">
+            <string>Enable Tile layout</string>
+           </property>
            <property name="text">
             <string>Tile Layout</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
            </property>
            <property name="tristate">
             <bool>false</bool>
@@ -65,11 +71,11 @@
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableMonocleLayout">
+           <property name="toolTip">
+            <string>Enable Monocle layout</string>
+           </property>
            <property name="text">
             <string>Monocle Layout</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -80,11 +86,11 @@
            </property>
            <item>
             <widget class="QCheckBox" name="kcfg_monocleMaximize">
+             <property name="toolTip">
+              <string>All windows will be maximized in Monocle layout</string>
+             </property>
              <property name="text">
               <string>Always maximize windows</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -92,26 +98,29 @@
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableSpreadLayout">
+           <property name="toolTip">
+            <string>Enable Spread layout</string>
+           </property>
            <property name="text">
             <string>Spread Layout</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableStairLayout">
+           <property name="toolTip">
+            <string>Enable Stair layout</string>
+           </property>
            <property name="text">
             <string>Stair Layout</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="kcfg_enableQuarterLayout">
+           <property name="toolTip">
+            <string>Enable Quarter layout</string>
+           </property>
            <property name="text">
             <string>Quarter Layout</string>
            </property>
@@ -267,11 +276,8 @@
          </property>
          <item row="0" column="1">
           <widget class="QLineEdit" name="kcfg_ignoreClass">
-           <property name="statusTip">
-            <string>Comma-separated list of window classes to be ignored by Krohnkite</string>
-           </property>
-           <property name="whatsThis">
-            <string>Comma-separated list of window classes to be ignored by Krohnkite</string>
+           <property name="toolTip">
+            <string>Comma-separated list of window classes. Matching windows will not be tiled.</string>
            </property>
           </widget>
          </item>
@@ -291,11 +297,8 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="kcfg_ignoreTitle">
-           <property name="whatsThis">
-            <string>Comma-separated list of title text to be ignored by Krohnkite</string>
-           </property>
-           <property name="accessibleName">
-            <string>Comma-separated list of title text to be ignored by Krohnkite</string>
+           <property name="toolTip">
+            <string>Comma-separated list of keywords(or substrings). Any windows with matching title will not be tiled.</string>
            </property>
           </widget>
          </item>
@@ -315,11 +318,8 @@
          </property>
          <item row="0" column="1">
           <widget class="QLineEdit" name="kcfg_floatingClass">
-           <property name="whatsThis">
-            <string>Comma-separated list of window classes which will be floated automatically by Krohnkite</string>
-           </property>
-           <property name="accessibleName">
-            <string>Comma-separated list of window classes which will be floated automatically by Krohnkite</string>
+           <property name="toolTip">
+            <string>Comma-separated list of window classes. Matching windows will become float automatically.</string>
            </property>
           </widget>
          </item>
@@ -339,11 +339,8 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="kcfg_floatingTitle">
-           <property name="accessibleName">
-            <string>Comma-separated list of title text which will be floated automatically by Krohnkite</string>
-           </property>
-           <property name="accessibleDescription">
-            <string>Comma-separated list of title text which will be floated automatically by Krohnkite</string>
+           <property name="toolTip">
+            <string>Comma-separated list of keywords(or substrings). Any windows with matching title will become float automatically</string>
            </property>
           </widget>
          </item>
@@ -351,6 +348,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_floatUtility">
+         <property name="toolTip">
+          <string>This is mainly for debugging purpose, but can also be used to meet some specific requirements.</string>
+         </property>
          <property name="text">
           <string>Automatically float utility windows
 (applies to window type Dialog, Splash, Utility)</string>
@@ -370,7 +370,11 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLineEdit" name="kcfg_ignoreActivity"/>
+          <widget class="QLineEdit" name="kcfg_ignoreActivity">
+           <property name="toolTip">
+            <string>Comma-separated list of activity names. Windows in corresponding activities will not be tiled.</string>
+           </property>
+          </widget>
          </item>
          <item row="0" column="1">
           <widget class="QLabel" name="ignoreScreenLabel">
@@ -380,7 +384,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="kcfg_ignoreScreen"/>
+          <widget class="QLineEdit" name="kcfg_ignoreScreen">
+           <property name="toolTip">
+            <string>Comma-separated list of screen numbers. Windows in corresponding screens will not be tiled.</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -406,6 +414,9 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QCheckBox" name="kcfg_maximizeSoleTile">
+         <property name="toolTip">
+          <string>If there's only one window to be tiled, the window will be maximized with its borders removed to maximize usable screen space.</string>
+         </property>
          <property name="text">
           <string>Maximize the sole window</string>
          </property>
@@ -413,6 +424,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_noTileBorder">
+         <property name="toolTip">
+          <string>All tiled windows will have no borders. Borders will be added back if window become float.</string>
+         </property>
          <property name="text">
           <string>Remove borders of tiled windows</string>
          </property>
@@ -420,8 +434,11 @@
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_adjustLayout">
+         <property name="toolTip">
+          <string>Resizing window will cause layout to be adjusted. The actual behaviour might differ based on layout in use.</string>
+         </property>
          <property name="text">
-          <string>Adjust layout with mouse</string>
+          <string>Adjust layout by resizing windows with mouse</string>
          </property>
         </widget>
        </item>
@@ -433,7 +450,7 @@
          <item>
           <widget class="QCheckBox" name="kcfg_adjustLayoutLive">
            <property name="toolTip">
-            <string/>
+            <string>If enabled, resizing window will immediately adjust layout. If disabled, layout will be adjusted *after* window resizing is over.</string>
            </property>
            <property name="text">
             <string>Live adjust as window is being resized</string>
@@ -460,6 +477,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_debug">
+         <property name="toolTip">
+          <string>Use this option to debug the script or submit detailed bug report.</string>
+         </property>
          <property name="text">
           <string>Print debug messages
 (must run KWin from terminal)</string>
