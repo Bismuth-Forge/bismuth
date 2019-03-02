@@ -71,8 +71,12 @@ class Window {
             return;
 
         const state = this.state;
-        if (state === WindowState.FullScreen) {
+        if (state === value) {
             return;
+        } else if (state === WindowState.Unmanaged) {
+            /* internally accept the new state */
+        } else if (state === WindowState.FullScreen) {
+            /* internally accept the new state */
         } else if (state === WindowState.Tile && value === WindowState.Float) {
             this.window.commit(this.floatGeometry, false, false);
         } else if (state === WindowState.Tile && value === WindowState.FreeTile) {
@@ -84,6 +88,10 @@ class Window {
         } else if (state === WindowState.FreeTile && value === WindowState.Tile) {
             this.floatGeometry = this.actualGeometry;
         } else if (state === WindowState.FreeTile && value === WindowState.Float) {
+            /* do nothing */
+        } else {
+            /* deny */
+            debugObj(() => ["Window.state/ignored", {from: state, to: value}]);
             return;
         }
 
