@@ -219,8 +219,13 @@ class KWinDriver implements IDriver {
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
             this.control.onWindowChanged(this.queryWindow(client), "fullscreen=" + fullScreen + " user=" + user));
 
-        this.connect(workspace.clientMinimized, (client: KWin.Client) =>
-            this.control.onWindowChanged(this.queryWindow(client), "minimized"));
+        this.connect(workspace.clientMinimized, (client: KWin.Client) => {
+            if (KWINCONFIG.preventMinimize) {
+                client.minimized = false;
+                workspace.activeClient = client;
+            } else
+                this.control.onWindowChanged(this.queryWindow(client), "minimized");
+        });
 
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
             this.control.onWindowChanged(this.queryWindow(client), "unminimized"));
