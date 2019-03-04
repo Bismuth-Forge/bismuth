@@ -36,7 +36,13 @@ class TilingEngine {
         const ctx = basis.context as KWinContext;
         const layout = this.layouts.getCurrentLayout(ctx);
         if (layout.adjust) {
-            const area = this.driver.getWorkingArea(ctx);
+            const fullArea = this.driver.getWorkingArea(ctx);
+            const area = new Rect(
+                fullArea.x + CONFIG.screenGapLeft,
+                fullArea.y + CONFIG.screenGapTop,
+                fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
+                fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
+            );
             const tiles = this.windows.filter((win) =>
                 (win.state === WindowState.Tile) && win.visible(ctx));
             layout.adjust(area, tiles, basis);
