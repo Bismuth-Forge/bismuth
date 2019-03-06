@@ -453,7 +453,8 @@
             <string>If enabled, resizing window will immediately adjust layout. If disabled, layout will be adjusted *after* window resizing is over.</string>
            </property>
            <property name="text">
-            <string>Live adjust as window is being resized</string>
+            <string>Live adjust as window is being resized
+(experimental)</string>
            </property>
           </widget>
          </item>
