@@ -59,6 +59,9 @@ class KWinWindow implements IDriverWindow {
     }
 
     public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
+        if (this.client.move || this.client.resize)
+            return;
+
         if (noBorder !== undefined)
             this.client.noBorder = noBorder || this._bakNoBorder;
 
