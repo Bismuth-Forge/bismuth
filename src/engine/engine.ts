@@ -68,8 +68,7 @@ class TilingEngine {
         );
 
         const visibles = this.windows.filter((win) => win.visible(ctx));
-        const tiles = visibles.filter((win) =>
-            (win.state === WindowState.Tile) || (win.state === WindowState.FreeTile));
+        const tiles = visibles.filter((win) => win.tileable);
         debugObj(() => ["arrangeScreen", {
             ctx, layout,
             tiles: tiles.length,

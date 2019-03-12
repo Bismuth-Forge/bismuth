@@ -54,6 +54,10 @@ class Window {
     public get shouldFloat(): boolean { return this.window.shouldFloat(); }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore(); }
 
+    public get tileable(): boolean {
+        return (this.state === WindowState.Tile) || (this.state === WindowState.FreeTile);
+    }
+
     /* read-write */
     public floatGeometry: Rect;
     public geometry: Rect;
