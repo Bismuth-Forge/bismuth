@@ -52,16 +52,6 @@ class KWinContext implements IDriverContext {
         this._path = null;
     }
 
-    public includes(client: KWin.Client) {
-        return (
-            (client.desktop === this.desktop
-                || client.desktop === -1 /* on all desktop */)
-            && (client.activities.length === 0 /* on all activities */
-                || client.activities.indexOf(this.activity) !== -1)
-            && (client.screen === this.screen)
-        );
-    }
-
     public toString(): string {
         return "KWinCtx(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
     }
