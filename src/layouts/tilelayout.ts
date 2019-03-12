@@ -76,32 +76,24 @@ class TileLayout implements ILayout {
     }
 
     public apply = (tiles: Window[], area: Rect): void => {
-        const masterCount = Math.min(tiles.length, this.numMaster);
-        const stackCount = tiles.length - masterCount;
-
-        let masterWidth;
-        if (stackCount === 0)
-            masterWidth = area.width;
-        else if (masterCount === 0)
-            masterWidth = 0;
-        else
-            masterWidth = Math.floor(area.width * this.masterRatio);
-        const stackWidth = area.width - masterWidth;
-        const stackX = (masterWidth > 0) ? masterWidth : 0;
-
         const gap = CONFIG.tileLayoutGap;
-        const halfgap = Math.ceil(gap / 2);
-        stackTiles(
-            tiles.slice(0, masterCount),
-            area.x, area.y, masterWidth - halfgap, area.height,
-            gap,
-        );
 
-        stackTiles(
-            tiles.slice(masterCount),
-            area.x + stackX + halfgap, area.y, stackWidth - halfgap, area.height,
-            gap,
-        );
+        if (tiles.length <= this.numMaster) /* only master */
+            stackTiles(tiles, area.x, area.y, area.width, area.height, gap);
+        else if (this.numMaster === 0) /* only stack */
+            stackTiles(tiles, area.x, area.y, area.width, area.height, gap);
+        else { /* master & stack */
+            const mgap = Math.ceil(gap / 2);
+            const sgap = gap - mgap;
+
+            const masterFullWidth = Math.floor(area.width * this.masterRatio);
+            const masterWidth = masterFullWidth - mgap;
+            const stackWidth = area.width - masterFullWidth - sgap;
+            const stackX = area.x + masterFullWidth + sgap;
+
+            stackTiles(tiles.slice(0, this.numMaster), area.x, area.y, masterWidth, area.height, gap);
+            stackTiles(tiles.slice(this.numMaster), stackX, area.y, stackWidth, area.height, gap);
+        }
     }
 
     public handleUserInput(input: UserInput) {
