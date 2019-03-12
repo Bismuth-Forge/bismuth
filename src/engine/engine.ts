@@ -93,7 +93,7 @@ class TilingEngine {
         visibles.forEach((window) => window.commit());
     }
 
-    public enforceClientSize(window: Window) {
+    public enforceSize(window: Window) {
         if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
             KWinSetTimeout(() => {
                 if (window.state === WindowState.Tile)
@@ -101,14 +101,14 @@ class TilingEngine {
             }, 10);
     }
 
-    public manageClient(window: Window) {
+    public manage(window: Window) {
         if (!window.shouldIgnore) {
             window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
             this.windows.push(window);
         }
     }
 
-    public unmanageClient(window: Window) {
+    public unmanage(window: Window) {
         const idx = this.windows.indexOf(window);
         if (idx >= 0)
             this.windows.splice(idx, 1);

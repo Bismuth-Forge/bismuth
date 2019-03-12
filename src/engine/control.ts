@@ -45,13 +45,13 @@ class TilingController {
 
     public onWindowAdded(window: Window): void {
         debugObj(() => ["onWindowAdded", {window}]);
-        this.engine.manageClient(window);
+        this.engine.manage(window);
         this.engine.arrange();
     }
 
     public onWindowRemoved(window: Window): void {
         debugObj(() => ["onWindowRemoved", {window}]);
-        this.engine.unmanageClient(window);
+        this.engine.unmanage(window);
         this.engine.arrange();
     }
 
@@ -99,12 +99,12 @@ class TilingController {
             this.engine.adjustLayout(window);
             this.engine.arrange();
         } else if (!CONFIG.adjustLayout)
-            this.engine.enforceClientSize(window);
+            this.engine.enforceSize(window);
     }
 
     public onWindowGeometryChanged(window: Window): void {
         debugObj(() => ["onWindowGeometryChanged", {window}]);
-        this.engine.enforceClientSize(window);
+        this.engine.enforceSize(window);
     }
 
     // NOTE: accepts `null` to simplify caller. This event is a catch-all hack

@@ -52,7 +52,7 @@ class KWinDriver implements IDriver {
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++) {
             const window = this.registerWindow(clients[i]);
-            this.engine.manageClient(window);
+            this.engine.manage(window);
             if (window.state !== WindowState.Unmanaged)
                 this.bindWindowEvents(window, clients[i]);
             else
