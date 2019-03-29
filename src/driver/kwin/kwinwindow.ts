@@ -50,6 +50,28 @@ class KWinWindow implements IDriverWindow {
         return toRect(this.client.geometry);
     }
 
+    public get shouldIgnore(): boolean {
+        const resourceClass = String(this.client.resourceClass);
+        return (
+            this.client.specialWindow
+            || resourceClass === "plasmashell"
+            || (KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0)
+        );
+    }
+
+    public get shouldFloat(): boolean {
+        const resourceClass = String(this.client.resourceClass);
+        return (
+            this.client.modal
+            || (!this.client.resizeable)
+            || (KWINCONFIG.floatUtility
+                && (this.client.dialog || this.client.splash || this.client.utility))
+            || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
+            || (matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0)
+        );
+    }
+
     private readonly _bakNoBorder: boolean;
 
     constructor(client: KWin.Client) {
@@ -70,28 +92,6 @@ class KWinWindow implements IDriverWindow {
 
         if (geometry !== undefined)
             this.client.geometry = toQRect(this.adjustGeometry(geometry));
-    }
-
-    public shouldIgnore(): boolean {
-        const resourceClass = String(this.client.resourceClass);
-        return (
-            this.client.specialWindow
-            || resourceClass === "plasmashell"
-            || (KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0)
-        );
-    }
-
-    public shouldFloat(): boolean {
-        const resourceClass = String(this.client.resourceClass);
-        return (
-            this.client.modal
-            || (!this.client.resizeable)
-            || (KWINCONFIG.floatUtility
-                && (this.client.dialog || this.client.splash || this.client.utility))
-            || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
-            || (matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0)
-        );
     }
 
     public toString(): string {

@@ -79,10 +79,10 @@ interface IDriverWindow {
     readonly fullScreen: boolean;
     readonly geometry: Rect;
     readonly id: string;
+    readonly shouldIgnore: boolean;
+    readonly shouldFloat: boolean;
 
     commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
-    shouldIgnore(): boolean;
-    shouldFloat(): boolean;
     visible(ctx: IDriverContext): boolean;
 }
 
