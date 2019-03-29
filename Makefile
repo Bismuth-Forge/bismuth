@@ -49,7 +49,9 @@ $(FILE_SCRIPT): $(SRC)
 
 $(FILE_META): res/metadata.desktop
 	@mkdir -vp `dirname $(FILE_META)`
-	sed "s/0\.0/$(PACKAGE_VER)/" $< > $(FILE_META)
+	sed "s/\$$VER/$(PACKAGE_VER)/" $< \
+		| sed "s/\$$REV/`git rev-parse HEAD | cut -b-7`/" \
+		> $(FILE_META)
 
 $(FILE_QML): res/main.qml
 	@mkdir -vp `dirname $@`
