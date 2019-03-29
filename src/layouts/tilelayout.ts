@@ -25,13 +25,13 @@ function stackTiles(tiles: Window[], x: number, y: number, width: number, height
     }
 
     const count = tiles.length;
-    const tileHeight = Math.floor((height - (count - 1) * gap) / count);
+    const tileHeight = (height + gap) / count - gap;
     tiles.forEach((window: Window, i: number) => {
         window.geometry = new Rect(
             x,
-            y + (tileHeight + gap) * i,
+            y + Math.floor(i * (tileHeight + gap)),
             width,
-            tileHeight,
+            Math.floor(tileHeight),
         );
     });
 }
