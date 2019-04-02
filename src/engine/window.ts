@@ -51,8 +51,8 @@ class Window {
 
     public get actualGeometry(): Rect { return this.window.geometry; }
     public get context(): IDriverContext { return this.window.context; }
-    public get shouldFloat(): boolean { return this.window.shouldFloat(); }
-    public get shouldIgnore(): boolean { return this.window.shouldIgnore(); }
+    public get shouldFloat(): boolean { return this.window.shouldFloat; }
+    public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
     public get tileable(): boolean {
         return (this.state === WindowState.Tile) || (this.state === WindowState.FreeTile);
