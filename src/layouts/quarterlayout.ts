@@ -119,3 +119,7 @@ class QuarterLayout implements ILayout {
         return "QuarterLayout()";
     }
 }
+
+try {
+    exports.QuarterLayout = QuarterLayout;
+} catch (e) { /* ignore */ }

@@ -116,3 +116,7 @@ class TilingController {
         }
     }
 }
+
+try {
+    exports.TilingController = TilingController;
+} catch (e) { /* ignore */ }

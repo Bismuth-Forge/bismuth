@@ -67,3 +67,7 @@ class StairLayout implements ILayout {
         return "StairLayout(" + this.space + ")";
     }
 }
+
+try {
+    exports.StairLayout = StairLayout;
+} catch (e) { /* ignore */ }

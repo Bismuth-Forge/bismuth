@@ -129,3 +129,7 @@ class TileLayout implements ILayout {
         return "TileLayout(nmaster=" + this.numMaster + ", ratio=" + this.masterRatio + ")";
     }
 }
+
+try {
+    exports.TileLayout = TileLayout;
+} catch (e) { /* ignore */ }

@@ -35,3 +35,7 @@ class MonocleLayout implements ILayout {
         return "MonocleLayout()";
     }
 }
+
+try {
+    exports.MonocleLayout = MonocleLayout;
+} catch (e) { /* ignore */ }

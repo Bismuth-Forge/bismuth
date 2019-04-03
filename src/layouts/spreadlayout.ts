@@ -70,3 +70,7 @@ class SpreadLayout implements ILayout {
         return "SpreadLayout(" + this.space + ")";
     }
 }
+
+try {
+    exports.SpreadLayout = SpreadLayout;
+} catch (e) { /* ignore */ }

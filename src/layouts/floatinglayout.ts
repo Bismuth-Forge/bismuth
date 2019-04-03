@@ -34,3 +34,7 @@ class FloatingLayout implements ILayout {
         return "FloatingLayout()";
     }
 }
+
+try {
+    exports.FloatingLayout = FloatingLayout;
+} catch (e) { /* ignore */ }

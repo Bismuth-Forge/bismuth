@@ -235,3 +235,7 @@ class TilingEngine {
         this.layouts.cycleLayout(this.driver.getCurrentContext());
     }
 }
+
+try {
+    exports.TilingEngine = TilingEngine;
+} catch (e) { /* ignore */ }

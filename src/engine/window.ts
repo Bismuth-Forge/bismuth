@@ -135,3 +135,7 @@ class Window {
         return "Window(" + String(this.window) + ")";
     }
 }
+
+try {
+    exports.Window = Window;
+} catch (e) { /* ignore */ }
