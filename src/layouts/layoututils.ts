@@ -18,19 +18,19 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-function stackTiles(tiles: Window[], x: number, y: number, width: number, height: number, gap = 0) {
+function stackTiles(tiles: Window[], area: Rect, gap = 0) {
     if (tiles.length === 1) {
-        tiles[0].geometry = new Rect(x, y, width, height);
+        tiles[0].geometry = area;
         return;
     }
 
     const count = tiles.length;
-    const tileHeight = (height + gap) / count - gap;
+    const tileHeight = (area.height + gap) / count - gap;
     tiles.forEach((window: Window, i: number) => {
         window.geometry = new Rect(
-            x,
-            y + Math.floor(i * (tileHeight + gap)),
-            width,
+            area.x,
+            area.y + Math.floor(i * (tileHeight + gap)),
+            area.width,
             Math.floor(tileHeight),
         );
     });

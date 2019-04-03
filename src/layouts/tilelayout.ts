@@ -61,9 +61,9 @@ class TileLayout implements ILayout {
         const gap = CONFIG.tileLayoutGap;
 
         if (tiles.length <= this.numMaster) /* only master */
-            stackTiles(tiles, area.x, area.y, area.width, area.height, gap);
+            stackTiles(tiles, area, gap);
         else if (this.numMaster === 0) /* only stack */
-            stackTiles(tiles, area.x, area.y, area.width, area.height, gap);
+            stackTiles(tiles, area, gap);
         else { /* master & stack */
             const mgap = Math.ceil(gap / 2);
             const sgap = gap - mgap;
@@ -73,8 +73,8 @@ class TileLayout implements ILayout {
             const stackWidth = area.width - masterFullWidth - sgap;
             const stackX = area.x + masterFullWidth + sgap;
 
-            stackTiles(tiles.slice(0, this.numMaster), area.x, area.y, masterWidth, area.height, gap);
-            stackTiles(tiles.slice(this.numMaster), stackX, area.y, stackWidth, area.height, gap);
+            stackTiles(tiles.slice(0, this.numMaster), new Rect(area.x, area.y, masterWidth, area.height), gap);
+            stackTiles(tiles.slice(this.numMaster), new Rect(stackX, area.y, stackWidth, area.height), gap);
         }
     }
 
