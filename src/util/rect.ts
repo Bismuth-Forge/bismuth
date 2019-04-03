@@ -62,3 +62,7 @@ class Rect {
         return "Rect(" + [this.x, this.y, this.width, this.height].join(", ") + ")";
     }
 }
+
+try {
+    exports.Rect = Rect;
+} catch (e) { /* ignore */ }
