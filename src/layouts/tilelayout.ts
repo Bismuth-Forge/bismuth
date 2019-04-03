@@ -18,24 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-function stackTiles(tiles: Window[], x: number, y: number, width: number, height: number, gap = 0) {
-    if (tiles.length === 1) {
-        tiles[0].geometry = new Rect(x, y, width, height);
-        return;
-    }
-
-    const count = tiles.length;
-    const tileHeight = (height + gap) / count - gap;
-    tiles.forEach((window: Window, i: number) => {
-        window.geometry = new Rect(
-            x,
-            y + Math.floor(i * (tileHeight + gap)),
-            width,
-            Math.floor(tileHeight),
-        );
-    });
-}
-
 class TileLayout implements ILayout {
     public static readonly MIN_MASTER_RATIO = 0.2;
     public static readonly MAX_MASTER_RATIO = 0.8;
