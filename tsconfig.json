@@ -2,7 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "target": "es5",
-        "outFile": "pkg/contents/code/script.js",
+        "outFile": "krohnkite.js",
         "removeComments": true,
         "lib": ["es5"],
         "alwaysStrict": true,
