@@ -1,9 +1,11 @@
 /pkg/
 /node_modules/
 
+/TODO.md
 /krohnkite.js
 /package-lock.json
 /package.json
 
+/*.qml
 *.kwinscript
 *.bak
