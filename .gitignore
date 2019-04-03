@@ -1,3 +1,9 @@
+/pkg/
+/node_modules/
+
+/krohnkite.js
+/package-lock.json
+/package.json
+
 *.kwinscript
-script.js
-pkg/
+*.bak

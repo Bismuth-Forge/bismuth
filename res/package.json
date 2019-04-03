@@ -1,0 +1,26 @@
+{
+  "name": "krohnkite",
+  "version": "$VER",
+  "description": "A dynamic tiling extension for KWin",
+  "main": "krohnkite.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^6.0.0"
+  },
+  "scripts": {
+    "test": "mocha 'test/*.spec.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esjeon/krohnkite.git"
+  },
+  "author": "Eon S. Jeon <esjeon@hyunmu.am>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/esjeon/krohnkite/issues"
+  },
+  "homepage": "https://github.com/esjeon/krohnkite#readme"
+}

@@ -1,68 +1,82 @@
-PACKAGE_NAME = krohnkite
-PACKAGE_VER  = 0.6
-PACKAGE_FILE = $(PACKAGE_NAME)-$(PACKAGE_VER).kwinscript
+PROJECT_NAME = krohnkite
+PROJECT_VER  = 0.6
+PROJECT_REV  = $(shell git rev-parse HEAD | cut -b-7)
 
-PACKAGE_DIR = pkg
+KWINPKG_FILE = $(PROJECT_NAME)-$(PROJECT_VER).kwinscript
+KWINPKG_DIR = pkg
 
-FILE_SCRIPT = $(PACKAGE_DIR)/contents/code/script.js
-FILE_META   = $(PACKAGE_DIR)/metadata.desktop
-FILE_QML    = $(PACKAGE_DIR)/contents/ui/main.qml
-FILE_CONFIG_XML = $(PACKAGE_DIR)/contents/config/main.xml
-FILE_CONFIG_UI  = $(PACKAGE_DIR)/contents/ui/config.ui
+KWIN_SCRIPT = $(KWINPKG_DIR)/contents/code/script.js
+KWIN_META   = $(KWINPKG_DIR)/metadata.desktop
+KWIN_QML    = $(KWINPKG_DIR)/contents/ui/main.qml
+KWIN_CONFIG_XML = $(KWINPKG_DIR)/contents/config/main.xml
+KWIN_CONFIG_UI  = $(KWINPKG_DIR)/contents/ui/config.ui
+
+NODE_SCRIPT = krohnkite.js
+NODE_META   = package.json
+NODE_FILES  = $(NODE_SCRIPT) $(NODE_META) package-lock.json
 
 SRC = $(shell find src -name "*.ts")
 
-all: $(PACKAGE_DIR)
+all: $(KWINPKG_DIR)
 
 clean:
-	@rm -vf script.json
-	@rm -rvf $(PACKAGE_DIR)
+	@rm -rvf $(KWINPKG_DIR)
+	@rm -vf $(NODE_FILES)
 
 install: package
-	plasmapkg2 -t kwinscript -s $(PACKAGE_NAME) \
-		&& plasmapkg2 -u $(PACKAGE_FILE) \
-		|| plasmapkg2 -i $(PACKAGE_FILE)
+	plasmapkg2 -t kwinscript -s $(PROJECT_NAME) \
+		&& plasmapkg2 -u $(KWINPKG_FILE) \
+		|| plasmapkg2 -i $(KWINPKG_FILE)
 		
 uninstall:
-	plasmapkg2 -t kwinscript -r $(PACKAGE_NAME)
+	plasmapkg2 -t kwinscript -r $(PROJECT_NAME)
 
-package: $(PACKAGE_FILE)
+package: $(KWINPKG_FILE)
 
-run: $(PACKAGE_DIR)
-	bin/load-script.sh "$(FILE_QML)" "$(PACKAGE_NAME)-test"
-	@find "$(PACKAGE_DIR)" '(' -name "*.qmlc" -o -name "*.jsc" ')' -delete
+test: $(NODE_SCRIPT) $(NODE_META)
+	npm test
+
+run: $(KWINPKG_DIR)
+	bin/load-script.sh "$(KWIN_QML)" "$(PROJECT_NAME)-test"
+	@find "$(KWINPKG_DIR)" '(' -name "*.qmlc" -o -name "*.jsc" ')' -delete
 
 stop:
-	bin/load-script.sh "unload" "$(PACKAGE_NAME)-test"
+	bin/load-script.sh "unload" "$(PROJECT_NAME)-test"
 
-$(PACKAGE_FILE): $(PACKAGE_DIR)
-	@rm -f "$(PACKAGE_FILE)"
-	@7z a -tzip $(PACKAGE_FILE) ./$(PACKAGE_DIR)/*
+$(KWINPKG_FILE): $(KWINPKG_DIR)
+	@rm -f "$(KWINPKG_FILE)"
+	@7z a -tzip $(KWINPKG_FILE) ./$(KWINPKG_DIR)/*
 
-$(PACKAGE_DIR): $(FILE_SCRIPT) $(FILE_META) $(FILE_QML)
-$(PACKAGE_DIR): $(FILE_CONFIG_XML) $(FILE_CONFIG_UI)
+$(KWINPKG_DIR): $(KWIN_SCRIPT) $(KWIN_META) $(KWIN_QML)
+$(KWINPKG_DIR): $(KWIN_CONFIG_XML) $(KWIN_CONFIG_UI)
 	@touch $@
 
-$(FILE_SCRIPT): $(SRC)
-	 @mkdir -vp `dirname $(FILE_SCRIPT)`
-	tsc --outFile $(FILE_SCRIPT)
+$(KWIN_SCRIPT): $(NODE_SCRIPT)
+	 @mkdir -vp `dirname $(KWIN_SCRIPT)`
+	cp -a $< $@
 
-$(FILE_META): res/metadata.desktop
-	@mkdir -vp `dirname $(FILE_META)`
-	sed "s/\$$VER/$(PACKAGE_VER)/" $< \
-		| sed "s/\$$REV/`git rev-parse HEAD | cut -b-7`/" \
-		> $(FILE_META)
+$(KWIN_META): res/metadata.desktop
+	@mkdir -vp `dirname $(KWIN_META)`
+	sed "s/\$$VER/$(PROJECT_VER)/" $< \
+		| sed "s/\$$REV/$(PROJECT_REV)/" \
+		> $(KWIN_META)
 
-$(FILE_QML): res/main.qml
+$(KWIN_QML): res/main.qml
 	@mkdir -vp `dirname $@`
 	@cp -v $< $@
 
-$(FILE_CONFIG_XML): res/config.xml
+$(KWIN_CONFIG_XML): res/config.xml
 	@mkdir -vp `dirname $@`
 	@cp -v $< $@
 
-$(FILE_CONFIG_UI): res/config.ui
+$(KWIN_CONFIG_UI): res/config.ui
 	@mkdir -vp `dirname $@`
 	@cp -v $< $@
 
-.PHONY: all clean install package
+$(NODE_SCRIPT): $(SRC)
+	tsc
+
+$(NODE_META): res/package.json
+	sed "s/\$$VER/$(PROJECT_VER).0/" $< > $@
+
+.PHONY: all clean install package test run stop
