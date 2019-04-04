@@ -35,3 +35,19 @@ function stackTiles(tiles: Window[], area: Rect, gap = 0) {
         );
     });
 }
+
+function stackTilesWithWeight(tiles: Window[], area: Rect, weights: number[], gap = 0) {
+    let wsum = 0;
+    tiles.forEach((tile, i) => {
+        wsum += (weights[i] !== undefined) ? weights[i] : 1;
+    });
+
+    let wacc = 0;
+    tiles.forEach((tile, i) => {
+        const winy = area.y + area.height * wacc / wsum;
+        const winh = area.height * weights[i] / wsum;
+
+        tile.geometry = new Rect(area.x, winy, area.width, winh);
+        wacc += weights[i];
+    });
+}
