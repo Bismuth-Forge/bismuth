@@ -97,6 +97,7 @@ interface IDriver {
     getCurrentWindow(): Window | null;
     getWorkingArea(ctx: IDriverContext): Rect ;
     setCurrentWindow(window: Window): void;
+    setTimeout(func: () => void, timeout: number): void;
 }
 
 //#endregion

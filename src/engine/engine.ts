@@ -95,7 +95,7 @@ class TilingEngine {
 
     public enforceSize(window: Window) {
         if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
-            setTimeout(() => {
+            this.driver.setTimeout(() => {
                 if (window.state === WindowState.Tile)
                     window.commit();
             }, 10);

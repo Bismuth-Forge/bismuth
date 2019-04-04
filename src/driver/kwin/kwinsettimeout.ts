@@ -48,11 +48,3 @@ class KWinTimerPool {
 function KWinSetTimeout(func: () => void, timeout: number) {
     KWinTimerPool.instance.setTimeout(func, timeout);
 }
-
-declare var setTimeout: any;
-try {
-    if (!setTimeout)
-        setTimeout = KWinSetTimeout;
-} catch (e) {
-    /* ignore */
-}

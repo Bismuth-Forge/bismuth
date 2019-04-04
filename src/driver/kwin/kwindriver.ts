@@ -97,6 +97,10 @@ class KWinDriver implements IDriver {
         workspace.activeClient = kwindow.client;
     }
 
+    public setTimeout(func: () => void, timeout: number) {
+        KWinSetTimeout(func, timeout);
+    }
+
     /*
      * Shortcut
      */

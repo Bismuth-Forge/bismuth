@@ -60,6 +60,10 @@ class TestDriver implements IDriver {
         if (idx !== -1)
             this.currentWindow = idx;
     }
+
+    public setTimeout(func: () => void, timeout: number) {
+        setTimeout(func, timeout);
+    }
 }
 
 class TestContext implements IDriverContext {
