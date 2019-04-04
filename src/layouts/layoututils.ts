@@ -50,7 +50,7 @@ function stackTilesWithWeight(tiles: Window[], area: Rect, weights: number[], ga
         const winy = area.y + (hsum * wacc) / wsum + i * gap;
         const winh = hsum * weights[i] / wsum;
 
-        tile.geometry = new Rect(area.x, winy, area.width, winh);
+        tile.geometry = new Rect(area.x, Math.floor(winy), area.width, Math.floor(winh));
         wacc += weights[i];
     });
 }
