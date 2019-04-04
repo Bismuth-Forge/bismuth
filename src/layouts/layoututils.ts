@@ -42,10 +42,13 @@ function stackTilesWithWeight(tiles: Window[], area: Rect, weights: number[], ga
         wsum += (weights[i] !== undefined) ? weights[i] : 1;
     });
 
+    const n = tiles.length;
+    const hsum = area.height - (n - 1) * gap;
+
     let wacc = 0;
     tiles.forEach((tile, i) => {
-        const winy = area.y + area.height * wacc / wsum;
-        const winh = area.height * weights[i] / wsum;
+        const winy = area.y + (hsum * wacc) / wsum + i * gap;
+        const winh = hsum * weights[i] / wsum;
 
         tile.geometry = new Rect(area.x, winy, area.width, winh);
         wacc += weights[i];
