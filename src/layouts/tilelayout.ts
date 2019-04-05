@@ -28,12 +28,12 @@ class TileLayout implements ILayout {
 
     private numMaster: number;
     private masterRatio: number; /* in ratio */
-    private weights: {[key: string]: [Window, number]};
+    private weights: LayoutWeightMap;
 
     constructor() {
         this.numMaster = 1;
         this.masterRatio = 0.55;
-        this.weights = {};
+        this.weights = new LayoutWeightMap();
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window) {
@@ -50,43 +50,35 @@ class TileLayout implements ILayout {
                 const newMasterWidth = Math.floor(area.width * this.masterRatio) + delta.east;
                 this.masterRatio = newMasterWidth / area.width;
             }
-            if ((idx > 0 && delta.north !== 0) || (idx < this.numMaster - 1 && delta.south !== 0)) {
-                let wsum = 0;
-                for (let i = 0; i < Math.min(this.numMaster, tiles.length); i++)
-                    wsum += (this.weights[tiles[i].id]) ? this.weights[tiles[i].id][1] : 1;
-                const newWeight = basis.actualGeometry.height * wsum / area.height;
-                this.weights[basis.id][1] = newWeight;
-            }
+            if (idx < this.numMaster - 1 && Math.abs(delta.south) > 3)
+                adjustStackWeights(tiles.slice(0, this.numMaster), basis, this.weights,
+                    area.height, "forward", CONFIG.tileLayoutGap);
+            if ((idx > 0 && delta.north !== 0))
+                adjustStackWeights(tiles.slice(0, this.numMaster), basis, this.weights,
+                    area.height, "backward", CONFIG.tileLayoutGap);
         } else { /* stack tiles */
             if (delta.west !== 0) {
                 const newStackWidth = (area.width - Math.floor(area.width * this.masterRatio)) + delta.west;
                 this.masterRatio = (area.width - newStackWidth) / area.width;
             }
-            if ((idx > this.numMaster && delta.north !== 0) || (idx < tiles.length - 1 && delta.south !== 0)) {
-                let wsum = 0;
-                for (let i = this.numMaster; i < tiles.length; i++)
-                    wsum += (this.weights[tiles[i].id]) ? this.weights[tiles[i].id][1] : 1;
-                const newWeight = basis.actualGeometry.height * wsum / area.height;
-                this.weights[basis.id][1] = newWeight;
-            }
+            if (idx < tiles.length - 1 && Math.abs(delta.south) > 3)
+                adjustStackWeights(tiles.slice(this.numMaster), basis, this.weights,
+                    area.height, "forward", CONFIG.tileLayoutGap);
+            if ((idx > this.numMaster && Math.abs(delta.north) > 3))
+                adjustStackWeights(tiles.slice(this.numMaster), basis, this.weights,
+                    area.height, "backward", CONFIG.tileLayoutGap);
         }
         this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
     }
 
     public apply = (tiles: Window[], area: Rect): void => {
         const gap = CONFIG.tileLayoutGap;
-        const weights: number[] = tiles.map((window): number => {
-            let entry = this.weights[window.id];
-            if (entry === undefined)
-                entry = this.weights[window.id] = [window, 1];
-            return entry[1];
-        });
         /* TODO: clean up cache / check invalidated(unmanage) entries */
 
         if (tiles.length <= this.numMaster) /* only master */
-            stackTilesWithWeight(tiles, area, weights, gap);
+            stackTilesWithWeight(tiles, area, this.weights, gap);
         else if (this.numMaster === 0) /* only stack */
-            stackTilesWithWeight(tiles, area, weights, gap);
+            stackTilesWithWeight(tiles, area, this.weights, gap);
         else { /* master & stack */
             const mgap = Math.ceil(gap / 2);
             const sgap = gap - mgap;
@@ -98,10 +90,10 @@ class TileLayout implements ILayout {
 
             stackTilesWithWeight(tiles.slice(0, this.numMaster),
                 new Rect(area.x, area.y, masterWidth, area.height),
-                weights.slice(0, this.numMaster), gap);
+                this.weights, gap);
             stackTilesWithWeight(tiles.slice(this.numMaster),
                 new Rect(stackX, area.y, stackWidth, area.height),
-                weights.slice(this.numMaster), gap);
+                this.weights, gap);
         }
     }
 
