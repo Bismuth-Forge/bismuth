@@ -127,6 +127,11 @@ class KWinDriver implements IDriver {
         bind("Shift+H", "Move Left"     , UserInput.ShiftLeft);
         bind("Shift+L", "Move Right"    , UserInput.ShiftRight);
 
+        bind("Ctrl+J", "Grow Height"    , UserInput.GrowHeight);
+        bind("Ctrl+K", "Shrink Height"  , UserInput.ShrinkHeight);
+        bind("Ctrl+H", "Shrink Width"   , UserInput.ShrinkWidth);
+        bind("Ctrl+L", "Grow Width"     , UserInput.GrowWidth);
+
         bind("I", "Increase", UserInput.Increase);
         bind("D", "Decrease", UserInput.Decrease);
         bind("F", "Float", UserInput.Float);

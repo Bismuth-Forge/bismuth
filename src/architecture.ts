@@ -29,6 +29,11 @@ enum UserInput {
     ShiftUp,
     ShiftDown,
 
+    GrowWidth,
+    GrowHeight,
+    ShrinkWidth,
+    ShrinkHeight,
+
     Increase,
     Decrease,
 
