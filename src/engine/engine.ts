@@ -114,57 +114,6 @@ class TilingEngine {
             this.windows.splice(idx, 1);
     }
 
-    /*
-     * User Input Handling
-     */
-
-    // TODO: move this to controller
-    public handleUserInput(input: UserInput, data?: any) {
-        debugObj(() => ["handleUserInput", {input: UserInput[input], data}]);
-
-        const ctx = this.driver.getCurrentContext();
-
-        const layout = this.layouts.getCurrentLayout(ctx);
-        if (layout.handleUserInput) {
-            const overriden = layout.handleUserInput(input, data);
-            if (overriden) {
-                this.arrange();
-                return;
-            }
-        }
-
-        let window;
-        switch (input) {
-            case UserInput.Up:
-                this.moveFocus(-1);
-                break;
-            case UserInput.Down:
-                this.moveFocus(+1);
-                break;
-            case UserInput.ShiftUp:
-                this.moveTile(-1);
-                break;
-            case UserInput.ShiftDown:
-                this.moveTile(+1);
-                break;
-            case UserInput.SetMaster:
-                if ((window = this.driver.getCurrentWindow()))
-                    this.setMaster(window);
-                break;
-            case UserInput.Float:
-                if ((window = this.driver.getCurrentWindow()))
-                    window.state = (window.state === WindowState.Float) ? WindowState.Tile : WindowState.Float;
-                break;
-            case UserInput.CycleLayout:
-                this.cycleLayout();
-                break;
-            case UserInput.SetLayout:
-                this.layouts.setLayout(this.driver.getCurrentContext(), data);
-                break;
-        }
-        this.arrange();
-    }
-
     public moveFocus(step: number) {
         if (step === 0)
             return;
@@ -218,7 +167,21 @@ class TilingEngine {
         this.windows[srcListIdx] = destWin;
     }
 
-    public setMaster(window: Window) {
+    public toggleFloat() {
+        const window = this.driver.getCurrentWindow();
+        if (!window)
+            return;
+
+        window.state = (window.state === WindowState.Float)
+            ? WindowState.Tile
+            : WindowState.Float;
+    }
+
+    public setMaster() {
+        const window = this.driver.getCurrentWindow();
+        if (!window)
+            return;
+
         if (this.windows[0] === window)
             return;
 
@@ -233,6 +196,18 @@ class TilingEngine {
 
     public cycleLayout() {
         this.layouts.cycleLayout(this.driver.getCurrentContext());
+    }
+
+    public setLayout(layout: any) {
+        if (layout)
+            this.layouts.setLayout(this.driver.getCurrentContext(), layout);
+    }
+
+    public handleLayoutShortcut(input: Shortcut, data?: any): boolean {
+        const layout = this.layouts.getCurrentLayout(this.driver.getCurrentContext());
+        if (layout.handleShortcut)
+            return layout.handleShortcut(input, data);
+        return false;
     }
 }
 

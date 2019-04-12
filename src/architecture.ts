@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-enum UserInput {
+enum Shortcut {
     Left,
     Right,
     Up,
@@ -37,7 +37,7 @@ enum UserInput {
     Increase,
     Decrease,
 
-    Float,
+    ToggleFloat,
     SetMaster,
     CycleLayout,
     SetLayout,
@@ -117,7 +117,7 @@ interface ILayout {
     toString(): string;
 
     /* overriding */
-    handleUserInput?(input: UserInput, data?: any): boolean;
+    handleShortcut?(input: Shortcut, data?: any): boolean;
 }
 
 let CONFIG: IConfig;

@@ -115,6 +115,27 @@ class TilingController {
             this.engine.arrange();
         }
     }
+
+    public onShortcut(input: Shortcut, data?: any) {
+        if (this.engine.handleLayoutShortcut(input, data))
+            return;
+
+        switch (input) {
+            case Shortcut.Up  : this.engine.moveFocus(-1); break;
+            case Shortcut.Down: this.engine.moveFocus(+1); break;
+
+            case Shortcut.ShiftUp  : this.engine.moveTile(-1); break;
+            case Shortcut.ShiftDown: this.engine.moveTile(+1); break;
+
+            case Shortcut.SetMaster  : this.engine.setMaster(); break;
+            case Shortcut.ToggleFloat: this.engine.toggleFloat(); break;
+
+            case Shortcut.CycleLayout: this.engine.cycleLayout();
+            case Shortcut.SetLayout: this.engine.setLayout(data); break;
+        }
+
+        this.engine.arrange();
+    }
 }
 
 try {

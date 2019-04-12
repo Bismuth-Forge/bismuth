@@ -97,26 +97,26 @@ class TileLayout implements ILayout {
         }
     }
 
-    public handleUserInput(input: UserInput) {
+    public handleShortcut(input: Shortcut) {
         switch (input) {
-            case UserInput.Left:
+            case Shortcut.Left:
                 this.masterRatio = clip(
                     slide(this.masterRatio, -0.05),
                     TileLayout.MIN_MASTER_RATIO,
                     TileLayout.MAX_MASTER_RATIO);
                 break;
-            case UserInput.Right:
+            case Shortcut.Right:
                 this.masterRatio = clip(
                     slide(this.masterRatio, +0.05),
                     TileLayout.MIN_MASTER_RATIO,
                     TileLayout.MAX_MASTER_RATIO);
                 break;
-            case UserInput.Increase:
+            case Shortcut.Increase:
                 // TODO: define arbitrary constant
                 if (this.numMaster < 10)
                     this.numMaster += 1;
                 break;
-            case UserInput.Decrease:
+            case Shortcut.Decrease:
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
                 break;

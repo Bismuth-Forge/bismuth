@@ -110,46 +110,46 @@ class KWinDriver implements IDriver {
         if (!KWin.registerShortcut)
             return;
 
-        const bind = (seq: string, title: string, input: UserInput) => {
+        const bind = (seq: string, title: string, input: Shortcut) => {
             title = "Krohnkite: " + title;
             seq = "Meta+" + seq;
-            const cb = () => { this.engine.handleUserInput(input); };
+            const cb = () => { this.control.onShortcut(input); };
             KWin.registerShortcut(title, "", seq, cb);
         };
 
-        bind("J", "Down/Next", UserInput.Down);
-        bind("K", "Up/Prev"  , UserInput.Up);
-        bind("H", "Left"     , UserInput.Left);
-        bind("L", "Right"    , UserInput.Right);
+        bind("J", "Down/Next", Shortcut.Down);
+        bind("K", "Up/Prev"  , Shortcut.Up);
+        bind("H", "Left"     , Shortcut.Left);
+        bind("L", "Right"    , Shortcut.Right);
 
-        bind("Shift+J", "Move Down/Next", UserInput.ShiftDown);
-        bind("Shift+K", "Move Up/Prev"  , UserInput.ShiftUp);
-        bind("Shift+H", "Move Left"     , UserInput.ShiftLeft);
-        bind("Shift+L", "Move Right"    , UserInput.ShiftRight);
+        bind("Shift+J", "Move Down/Next", Shortcut.ShiftDown);
+        bind("Shift+K", "Move Up/Prev"  , Shortcut.ShiftUp);
+        bind("Shift+H", "Move Left"     , Shortcut.ShiftLeft);
+        bind("Shift+L", "Move Right"    , Shortcut.ShiftRight);
 
-        bind("Ctrl+J", "Grow Height"    , UserInput.GrowHeight);
-        bind("Ctrl+K", "Shrink Height"  , UserInput.ShrinkHeight);
-        bind("Ctrl+H", "Shrink Width"   , UserInput.ShrinkWidth);
-        bind("Ctrl+L", "Grow Width"     , UserInput.GrowWidth);
+        bind("Ctrl+J", "Grow Height"    , Shortcut.GrowHeight);
+        bind("Ctrl+K", "Shrink Height"  , Shortcut.ShrinkHeight);
+        bind("Ctrl+H", "Shrink Width"   , Shortcut.ShrinkWidth);
+        bind("Ctrl+L", "Grow Width"     , Shortcut.GrowWidth);
 
-        bind("I", "Increase", UserInput.Increase);
-        bind("D", "Decrease", UserInput.Decrease);
-        bind("F", "Float", UserInput.Float);
-        bind("\\", "Cycle Layout", UserInput.CycleLayout);
+        bind("I", "Increase", Shortcut.Increase);
+        bind("D", "Decrease", Shortcut.Decrease);
+        bind("F", "Float", Shortcut.ToggleFloat);
+        bind("\\", "Cycle Layout", Shortcut.CycleLayout);
 
-        bind("Return", "Set master", UserInput.SetMaster);
+        bind("Return", "Set master", Shortcut.SetMaster);
 
         KWin.registerShortcut("Krohnkite: Tile Layout", "", "Meta+T", () => {
-            this.engine.handleUserInput(UserInput.SetLayout, TileLayout); });
+            this.control.onShortcut(Shortcut.SetLayout, TileLayout); });
 
         KWin.registerShortcut("Krohnkite: Monocle Layout", "", "Meta+M", () => {
-            this.engine.handleUserInput(UserInput.SetLayout, MonocleLayout); });
+            this.control.onShortcut(Shortcut.SetLayout, MonocleLayout); });
 
         KWin.registerShortcut("Krohnkite: Spread Layout", "", "", () => {
-            this.engine.handleUserInput(UserInput.SetLayout, SpreadLayout); });
+            this.control.onShortcut(Shortcut.SetLayout, SpreadLayout); });
 
         KWin.registerShortcut("Krohnkite: Stair Layout", "", "", () => {
-            this.engine.handleUserInput(UserInput.SetLayout, StairLayout); });
+            this.control.onShortcut(Shortcut.SetLayout, StairLayout); });
     }
 
     /*

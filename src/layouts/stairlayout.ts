@@ -47,13 +47,13 @@ class StairLayout implements ILayout {
         }
     }
 
-    public handleUserInput(input: UserInput) {
+    public handleShortcut(input: Shortcut) {
         switch (input) {
-            case UserInput.Decrease:
+            case Shortcut.Decrease:
                 // TODO: define arbitrary constants
                 this.space = Math.max(16, this.space - 8);
                 break;
-            case UserInput.Increase:
+            case Shortcut.Increase:
                 // TODO: define arbitrary constants
                 this.space = Math.min(160, this.space + 8);
                 break;

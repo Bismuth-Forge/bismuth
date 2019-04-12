@@ -50,13 +50,13 @@ class SpreadLayout implements ILayout {
             );
     }
 
-    public handleUserInput(input: UserInput) {
+    public handleShortcut(input: Shortcut) {
         switch (input) {
-            case UserInput.Decrease:
+            case Shortcut.Decrease:
                 // TODO: define arbitrary constants
                 this.space = Math.max(0.04, this.space - 0.01);
                 break;
-            case UserInput.Increase:
+            case Shortcut.Increase:
                 // TODO: define arbitrary constants
                 this.space = Math.min(0.10, this.space + 0.01);
                 break;
