@@ -33,7 +33,7 @@ class KWinDriver implements IDriver {
 
     constructor() {
         this.engine = new TilingEngine(this);
-        this.control = new TilingController(this.engine);
+        this.control = new TilingController(this, this.engine);
         this.windowMap = {};
         this.timerPool = Array();
     }

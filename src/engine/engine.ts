@@ -21,7 +21,7 @@
 /**
  * Maintains tiling context and performs various tiling actions.
  */
-class TilingEngine {
+class TilingEngine implements IEngine {
     private driver: IDriver;
     private layouts: LayoutStore;
     private windows: WindowStore;
@@ -111,11 +111,10 @@ class TilingEngine {
         this.windows.remove(window);
     }
 
-    public moveFocus(step: number) {
+    public moveFocus(window: Window, step: number) {
         if (step === 0)
             return;
 
-        const window = this.driver.getCurrentWindow();
         const ctx = (window) ? window.context : this.driver.getCurrentContext();
 
         const visibles = this.windows.visibles(ctx);
@@ -135,42 +134,31 @@ class TilingEngine {
         this.driver.setCurrentWindow(visibles[newIndex]);
     }
 
-    public moveTile(step: number) {
+    public moveTile(window: Window, step: number) {
         if (step === 0)
             return;
 
-        const srcWin = this.driver.getCurrentWindow();
-        if (!srcWin)
-            return;
-
-        const ctx = srcWin.context;
+        const ctx = window.context;
         const visibles = this.windows.visibles(ctx);
         if (visibles.length < 2)
             return;
 
-        const vsrc = visibles.indexOf(srcWin);
+        const vsrc = visibles.indexOf(window);
         const vdst = wrapIndex(vsrc + step, visibles.length);
         const dstWin = visibles[vdst];
 
         const dst = this.windows.indexOf(dstWin);
-        this.windows.move(srcWin, dst + step);
+        debugObj(() => ["moveTile", {step, vsrc, vdst, dst}]);
+        this.windows.move(window, dst);
     }
 
-    public toggleFloat() {
-        const window = this.driver.getCurrentWindow();
-        if (!window)
-            return;
-
+    public toggleFloat(window: Window) {
         window.state = (window.state === WindowState.Float)
             ? WindowState.Tile
             : WindowState.Float;
     }
 
-    public setMaster() {
-        const window = this.driver.getCurrentWindow();
-        if (!window)
-            return;
-
+    public setMaster(window: Window) {
         this.windows.move(window, 0);
     }
 

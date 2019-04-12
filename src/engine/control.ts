@@ -22,9 +22,11 @@
  * A thin layer which translates WM events to tiling actions.
  */
 class TilingController {
+    private driver: IDriver;
     private engine: TilingEngine;
 
-    public constructor(engine: TilingEngine) {
+    public constructor(driver: IDriver, engine: TilingEngine) {
+        this.driver = driver;
         this.engine = engine;
     }
 
@@ -120,15 +122,16 @@ class TilingController {
         if (this.engine.handleLayoutShortcut(input, data))
             return;
 
+        const window = this.driver.getCurrentWindow();
         switch (input) {
-            case Shortcut.Up  : this.engine.moveFocus(-1); break;
-            case Shortcut.Down: this.engine.moveFocus(+1); break;
+            case Shortcut.Up  : if (window) this.engine.moveFocus(window, -1); break;
+            case Shortcut.Down: if (window) this.engine.moveFocus(window, +1); break;
 
-            case Shortcut.ShiftUp  : this.engine.moveTile(-1); break;
-            case Shortcut.ShiftDown: this.engine.moveTile(+1); break;
+            case Shortcut.ShiftUp  : if (window) this.engine.moveTile(window, -1); break;
+            case Shortcut.ShiftDown: if (window) this.engine.moveTile(window, +1); break;
 
-            case Shortcut.SetMaster  : this.engine.setMaster(); break;
-            case Shortcut.ToggleFloat: this.engine.toggleFloat(); break;
+            case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
+            case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;
 
             case Shortcut.CycleLayout: this.engine.cycleLayout();
             case Shortcut.SetLayout: this.engine.setLayout(data); break;
