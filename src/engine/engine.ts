@@ -24,12 +24,12 @@
 class TilingEngine {
     private driver: IDriver;
     private layouts: LayoutStore;
-    private windows: Window[];
+    private windows: WindowStore;
 
     constructor(driver: IDriver) {
         this.driver = driver;
         this.layouts = new LayoutStore();
-        this.windows = Array();
+        this.windows = new WindowStore();
     }
 
     public adjustLayout(basis: Window) {
@@ -43,8 +43,7 @@ class TilingEngine {
                 fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
                 fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
             );
-            const tiles = this.windows.filter((win) =>
-                (win.state === WindowState.Tile) && win.visible(ctx));
+            const tiles = this.windows.visibleTiles(ctx);
             layout.adjust(area, tiles, basis);
         }
     }
@@ -67,8 +66,8 @@ class TilingEngine {
             fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
         );
 
-        const visibles = this.windows.filter((win) => win.visible(ctx));
-        const tiles = visibles.filter((win) => win.tileable);
+        const visibles = this.windows.visibles(ctx);
+        const tiles = this.windows.visibleTiles(ctx);
         debugObj(() => ["arrangeScreen", {
             ctx, layout,
             tiles: tiles.length,
@@ -109,9 +108,7 @@ class TilingEngine {
     }
 
     public unmanage(window: Window) {
-        const idx = this.windows.indexOf(window);
-        if (idx >= 0)
-            this.windows.splice(idx, 1);
+        this.windows.remove(window);
     }
 
     public moveFocus(step: number) {
@@ -121,7 +118,7 @@ class TilingEngine {
         const window = this.driver.getCurrentWindow();
         const ctx = (window) ? window.context : this.driver.getCurrentContext();
 
-        const visibles = this.windows.filter((win) => win.visible(ctx));
+        const visibles = this.windows.visibles(ctx);
         if (visibles.length === 0) /* nothing to focus */
             return;
 
@@ -147,24 +144,16 @@ class TilingEngine {
             return;
 
         const ctx = srcWin.context;
-        const visibles = this.windows.filter((win) => win.visible(ctx));
+        const visibles = this.windows.visibles(ctx);
         if (visibles.length < 2)
             return;
 
-        const num = visibles.length;
-        const srcIdx = visibles.indexOf(srcWin);
-        const destIdx = (srcIdx + (step % num) + num) % num;
-        debugObj(() => ["moveTile", {num, srcIdx, step, destIdx}]);
-        if (srcIdx === destIdx)
-            return;
+        const vsrc = visibles.indexOf(srcWin);
+        const vdst = wrapIndex(vsrc + step, visibles.length);
+        const dstWin = visibles[vdst];
 
-        const destWin = visibles[destIdx];
-
-        debugObj(() => ["moveTile", {srcWin, destWin}]);
-        const srcListIdx = this.windows.indexOf(srcWin);
-        const destListIdx = this.windows.indexOf(destWin);
-        this.windows[destListIdx] = srcWin ;
-        this.windows[srcListIdx] = destWin;
+        const dst = this.windows.indexOf(dstWin);
+        this.windows.move(srcWin, dst + step);
     }
 
     public toggleFloat() {
@@ -182,16 +171,7 @@ class TilingEngine {
         if (!window)
             return;
 
-        if (this.windows[0] === window)
-            return;
-
-        const idx = this.windows.indexOf(window);
-        if (idx < 0)
-            return;
-
-        debugObj(() => ["setMaster", {to: window}]);
-        this.windows.splice(idx, 1);
-        this.windows.unshift(window);
+        this.windows.move(window, 0);
     }
 
     public cycleLayout() {

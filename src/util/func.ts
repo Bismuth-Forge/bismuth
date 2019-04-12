@@ -39,3 +39,11 @@ function matchWords(str: string, words: string[]): number {
     }
     return -1;
 }
+
+function wrapIndex(index: number, length: number): number {
+    if (index < 0)
+        return index + length;
+    if (index >= length)
+        return index - length;
+    return index;
+}
