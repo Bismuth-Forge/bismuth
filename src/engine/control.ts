@@ -119,8 +119,10 @@ class TilingController {
     }
 
     public onShortcut(input: Shortcut, data?: any) {
-        if (this.engine.handleLayoutShortcut(input, data))
+        if (this.engine.handleLayoutShortcut(input, data)) {
+            this.engine.arrange();
             return;
+        }
 
         const window = this.driver.getCurrentWindow();
         switch (input) {
