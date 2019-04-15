@@ -90,8 +90,18 @@ class KWinWindow implements IDriverWindow {
         if (keepBelow !== undefined)
             this.client.keepBelow = keepBelow;
 
-        if (geometry !== undefined)
-            this.client.geometry = toQRect(this.adjustGeometry(geometry));
+        if (geometry !== undefined) {
+            geometry = this.adjustGeometry(geometry);
+            const area = toRect(workspace.clientArea(KWin.PlacementArea, this.client.screen, workspace.currentDesktop));
+            if (!area.includes(geometry)) {
+                /* assume windows will extrude only through right and bottom edges */
+                const x = geometry.x + Math.min(area.maxX - geometry.maxX, 0);
+                const y = geometry.y + Math.min(area.maxY - geometry.maxY, 0);
+                geometry = new Rect(x, y, geometry.width, geometry.height);
+                geometry = this.adjustGeometry(geometry);
+            }
+            this.client.geometry = toQRect(geometry);
+        }
     }
 
     public toString(): string {

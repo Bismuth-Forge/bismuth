@@ -24,6 +24,9 @@ class Rect {
     public readonly x: number;
     public readonly y: number;
 
+    public get maxX(): number { return this.x + this.width; }
+    public get maxY(): number { return this.y + this.height; }
+
     constructor(x: number, y: number, w: number, h: number) {
         this.height = h;
         this.width = w;
@@ -46,6 +49,15 @@ class Rect {
             this.y + top,
             this.width - (left + right),
             this.height - (top + bottom),
+        );
+    }
+
+    public includes(other: Rect): boolean {
+        return (
+            this.x <= other.x &&
+            this.y <= other.y &&
+            other.maxX < this.maxX &&
+            other.maxY < this.maxY
         );
     }
 
