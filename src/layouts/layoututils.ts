@@ -85,20 +85,20 @@ function stackTilesWithWeight(tiles: Window[], area: Rect, weights: LayoutWeight
 }
 
 function adjustStackWeights(
-    stack: Window[], basis: Window, weights: LayoutWeightMap,
-    height: number, dir: "forward" | "backward", gap = 0,
+    stack: Window[], basis: Window, basisHeight: number, weights: LayoutWeightMap,
+    stackHeight: number, direction: "forward" | "backward", gap = 0,
 ) {
     const idx = stack.indexOf(basis);
 
-    const H = height - (stack.length - 1) * gap;
+    const H = stackHeight - (stack.length - 1) * gap;
     const W = stack.reduce((acc, tile) => acc + weights.get(tile), 0);
 
-    const rest = (dir === "forward")
+    const rest = (direction === "forward")
         ? stack.slice(idx + 1)
         : stack.slice(0, idx);
     const restW = rest.reduce((acc, tile) => acc + weights.get(tile), 0);
 
-    const w = basis.actualGeometry.height * W / H;
+    const w = basisHeight * W / H;
     const dw = w - weights.get(basis);
     const restScale = (restW - dw) / restW;
 

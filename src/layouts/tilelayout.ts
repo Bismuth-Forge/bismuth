@@ -50,22 +50,24 @@ class TileLayout implements ILayout {
                 const newMasterWidth = Math.floor(area.width * this.masterRatio) + delta.east;
                 this.masterRatio = newMasterWidth / area.width;
             }
+            let height = basis.geometry.height;
             if (idx < this.numMaster - 1 && Math.abs(delta.south) > 3)
-                adjustStackWeights(tiles.slice(0, this.numMaster), basis, this.weights,
+                adjustStackWeights(tiles.slice(0, this.numMaster), basis, (height += delta.south), this.weights,
                     area.height, "forward", CONFIG.tileLayoutGap);
             if ((idx > 0 && delta.north !== 0))
-                adjustStackWeights(tiles.slice(0, this.numMaster), basis, this.weights,
+                adjustStackWeights(tiles.slice(0, this.numMaster), basis, (height += delta.north), this.weights,
                     area.height, "backward", CONFIG.tileLayoutGap);
         } else { /* stack tiles */
             if (delta.west !== 0) {
                 const newStackWidth = (area.width - Math.floor(area.width * this.masterRatio)) + delta.west;
                 this.masterRatio = (area.width - newStackWidth) / area.width;
             }
+            let height = basis.geometry.height;
             if (idx < tiles.length - 1 && Math.abs(delta.south) > 3)
-                adjustStackWeights(tiles.slice(this.numMaster), basis, this.weights,
+                adjustStackWeights(tiles.slice(this.numMaster), basis, (height += delta.south), this.weights,
                     area.height, "forward", CONFIG.tileLayoutGap);
             if ((idx > this.numMaster && Math.abs(delta.north) > 3))
-                adjustStackWeights(tiles.slice(this.numMaster), basis, this.weights,
+                adjustStackWeights(tiles.slice(this.numMaster), basis, (height += delta.north), this.weights,
                     area.height, "backward", CONFIG.tileLayoutGap);
         }
         this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
@@ -119,6 +121,10 @@ class TileLayout implements ILayout {
             case Shortcut.Decrease:
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
+                break;
+            case Shortcut.GrowHeight:
+                break;
+            case Shortcut.ShrinkHeight:
                 break;
             default:
                 return false;
