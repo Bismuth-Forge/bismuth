@@ -47,6 +47,7 @@ class KWinConfig implements IConfig {
     public layoutPerActivity: boolean;
     public layoutPerDesktop: boolean;
     public preventMinimize: boolean;
+    public preventProtrusion: boolean;
     //#endregion
 
     //#region KWin-specific Rules
@@ -92,6 +93,7 @@ class KWinConfig implements IConfig {
         this.layoutPerDesktop     = KWin.readConfig("layoutPerDesktop"    , false);
         this.floatUtility         = KWin.readConfig("floatUtility"        , true);
         this.preventMinimize      = KWin.readConfig("preventMinimize"     , false);
+        this.preventProtrusion    = KWin.readConfig("preventProtrusion"   , true);
 
         this.floatingClass  = commaSeparate(KWin.readConfig("floatingClass" , ""));
         this.floatingTitle  = commaSeparate(KWin.readConfig("floatingTitle" , ""));
