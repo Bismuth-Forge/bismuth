@@ -152,6 +152,9 @@ class KWinDriver implements IDriver {
 
         KWin.registerShortcut("Krohnkite: Stair Layout", "", "", () => {
             this.control.onShortcut(Shortcut.SetLayout, StairLayout); });
+
+        KWin.registerShortcut("Krohnkite: Floating Layout", "", "", () => {
+            this.control.onShortcut(Shortcut.SetLayout, FloatingLayout); });
     }
 
     /*
