@@ -122,7 +122,7 @@ class Window {
 
     public commit() {
         if (this.state === WindowState.Tile)
-            this.window.commit(this.geometry, this.noBorder, true);
+            this.window.commit(this.geometry, this.noBorder, CONFIG.keepTileBelow ? true : false);
         else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, false);
     }

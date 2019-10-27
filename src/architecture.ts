@@ -67,6 +67,7 @@ interface IConfig {
     //#region Features
     adjustLayout: boolean;
     adjustLayoutLive: boolean;
+    keepTileBelow: boolean;
     noTileBorder: boolean;
     //#endregion
 

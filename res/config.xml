@@ -101,6 +101,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="keepTileBelow" type="Bool">
+	    <label>Keep tiled windows below floating windows</label>
+        <default>true</default>
+    </entry>
+
     <entry name="noTileBorder" type="Bool">
         <label>Remove borders of tiled windows</label>
         <default>false</default>

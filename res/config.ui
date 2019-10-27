@@ -461,6 +461,13 @@
         </layout>
        </item>
        <item>
+        <widget class="QCheckBox" name="kcfg_keepTileBelow">
+         <property name="text">
+          <string>Keep tile windows below</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_preventMinimize">
          <property name="text">
           <string>Prevent windows from minimizing (experimental)</string>
