@@ -38,6 +38,7 @@ class LayoutStoreEntry {
             new SpreadLayout(),
             new StairLayout(),
             new QuarterLayout(),
+            new FloatingLayout(CONFIG.enableFloatingLayout),
         ];
     }
 

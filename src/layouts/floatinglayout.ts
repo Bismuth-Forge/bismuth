@@ -19,10 +19,16 @@
 // DEALINGS IN THE SOFTWARE.
 
 class FloatingLayout implements ILayout {
-    public static instance = new FloatingLayout();
+    public static instance = new FloatingLayout(true);
+
+    private _enabled: boolean;
+
+    constructor(enabled: boolean) {
+        this._enabled = enabled;
+    }
 
     public get enabled(): boolean {
-        return true;
+        return this._enabled;
     }
 
     public apply = (tiles: Window[], area: Rect, workingArea?: Rect): void => {
@@ -31,7 +37,7 @@ class FloatingLayout implements ILayout {
     }
 
     public toString(): string {
-        return "FloatingLayout()";
+        return "FloatingLayout(" + this._enabled + ")";
     }
 }
 

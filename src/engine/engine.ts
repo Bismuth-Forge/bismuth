@@ -67,10 +67,8 @@ class TilingEngine implements IEngine {
         );
 
         const visibles = this.windows.visibles(ctx);
-        const tiles = this.windows.visibleTiles(ctx);
         debugObj(() => ["arrangeScreen", {
             ctx, layout,
-            tiles: tiles.length,
             visibles: visibles.length,
         }]);
 
@@ -83,6 +81,7 @@ class TilingEngine implements IEngine {
                 window.noBorder = CONFIG.noTileBorder;
         });
 
+        const tiles = this.windows.visibleTiles(ctx);
         if (CONFIG.maximizeSoleTile && tiles.length === 1) {
             tiles[0].noBorder = true;
             tiles[0].geometry = fullArea;
