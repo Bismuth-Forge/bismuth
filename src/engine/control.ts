@@ -134,6 +134,7 @@ class TilingController {
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;
+            case Shortcut.FloatAll   : this.engine.floatAll(this.driver.getCurrentContext()); break;
 
             case Shortcut.CycleLayout: this.engine.cycleLayout();
             case Shortcut.SetLayout: this.engine.setLayout(data); break;

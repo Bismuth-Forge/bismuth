@@ -134,7 +134,9 @@ class KWinDriver implements IDriver {
 
         bind("I", "Increase", Shortcut.Increase);
         bind("D", "Decrease", Shortcut.Decrease);
+
         bind("F", "Float", Shortcut.ToggleFloat);
+        bind("Shift+F", "Float All", Shortcut.FloatAll);
         bind("\\", "Cycle Layout", Shortcut.CycleLayout);
 
         bind("Return", "Set master", Shortcut.SetMaster);

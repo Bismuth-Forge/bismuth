@@ -158,6 +158,15 @@ class TilingEngine implements IEngine {
             : WindowState.Float;
     }
 
+    public floatAll(ctx: IDriverContext) {
+        const tiles = this.windows.visibleTiles(ctx);
+        tiles.forEach((window) => {
+            /* TODO: do not use arbitrary constants */
+            window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
+            window.state = WindowState.Float;
+        });
+    }
+
     public setMaster(window: Window) {
         this.windows.move(window, 0);
     }

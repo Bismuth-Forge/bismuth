@@ -38,6 +38,7 @@ enum Shortcut {
     Decrease,
 
     ToggleFloat,
+    FloatAll,
     SetMaster,
     CycleLayout,
     SetLayout,
