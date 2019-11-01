@@ -96,7 +96,7 @@ configuration of KWin scripts. This is a limitation of KWin scripting.
 To enable configuration, you must perform the following in command-line:
 
     mkdir -p ~/.local/share/kservices5/
-    cp ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
+    ln -s ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
 
 A configuration button will appear in `KWin Scripts` in `System Settings`.
 
