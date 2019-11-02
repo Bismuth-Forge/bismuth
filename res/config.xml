@@ -51,6 +51,11 @@
         <default>krunner,yakuake,spectacle,kded5</default>
     </entry>
 
+    <entry name="ignoreRole" type="String">
+	    <label>Ignore windows with specific role(comma-separated list)</label>
+        <default>quake</default>
+    </entry>
+
     <entry name="ignoreScreen" type="String">
 	    <label>Do not apply tiling on some screens(comma-separated list of screen number)</label>
         <default></default>

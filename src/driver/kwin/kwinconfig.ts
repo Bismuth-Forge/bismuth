@@ -59,6 +59,7 @@ class KWinConfig implements IConfig {
     public floatingTitle: string[];
     public ignoreClass: string[];
     public ignoreTitle: string[];
+    public ignoreRole: string[];
 
     public ignoreActivity: string[];
     public ignoreScreen: number[];
@@ -104,6 +105,8 @@ class KWinConfig implements IConfig {
         this.ignoreActivity = commaSeparate(KWin.readConfig("ignoreActivity", ""));
         this.ignoreClass    = commaSeparate(KWin.readConfig("ignoreClass"   ,
             "krunner,yakuake,spectacle,kded5"));
+        this.ignoreRole     = commaSeparate(KWin.readConfig("ignoreRole"    ,
+            "quake"));
 
         this.ignoreScreen = commaSeparate(KWin.readConfig("ignoreScreen", ""))
             .map((str) => parseInt(str, 10));

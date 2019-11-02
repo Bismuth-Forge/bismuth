@@ -52,11 +52,13 @@ class KWinWindow implements IDriverWindow {
 
     public get shouldIgnore(): boolean {
         const resourceClass = String(this.client.resourceClass);
+        const windowRole = String(this.client.windowRole);
         return (
             this.client.specialWindow
             || resourceClass === "plasmashell"
             || (KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0)
             || (matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0)
+            || (KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0)
         );
     }
 
@@ -81,6 +83,8 @@ class KWinWindow implements IDriverWindow {
     }
 
     public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
+        debugObj(() => ["KwinWindow#commit", { geometry, noBorder, keepBelow }]);
+
         if (this.client.move || this.client.resize)
             return;
 
