@@ -139,7 +139,7 @@ interface ILayout {
 
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window): void;
-    apply(tiles: Window[], area: Rect, workingArea?: Rect): void;
+    apply(tiles: Window[], area: Rect, workingArea?: Rect, driver?: IDriver): void;
     toString(): string;
 
     /* overriding */

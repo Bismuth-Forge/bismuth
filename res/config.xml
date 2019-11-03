@@ -101,6 +101,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="monocleMinimizeRest" type="Bool">
+	    <label>Minimize other tiles than the current one in Monocle layout</label>
+        <default>false</default>
+    </entry>
+
     <entry name="adjustLayout" type="Bool">
 	    <label>Adjust layout with mouse</label>
         <default>true</default>

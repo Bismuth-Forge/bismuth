@@ -86,9 +86,10 @@ class TilingEngine implements IEngine {
             tiles[0].noBorder = true;
             tiles[0].geometry = fullArea;
         } else if (tiles.length > 0)
-            layout.apply(tiles, workingArea, fullArea);
+            layout.apply(tiles, workingArea, fullArea, this.driver);
 
         visibles.forEach((window) => window.commit());
+        debugObj(() => ["arrangeScreen/finished", { ctx }]);
     }
 
     public enforceSize(window: Window) {

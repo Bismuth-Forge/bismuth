@@ -28,6 +28,7 @@ class KWinConfig implements IConfig {
     public enableFloatingLayout: boolean;
     public maximizeSoleTile: boolean;
     public monocleMaximize: boolean;
+    public monocleMinimizeRest: boolean; // KWin-specific
     //#endregion
 
     //#region Features
@@ -82,6 +83,7 @@ class KWinConfig implements IConfig {
         this.enableFloatingLayout = KWin.readConfig("enableFloatingLayout", false);
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);
         this.monocleMaximize      = KWin.readConfig("monocleMaximize"     , true);
+        this.monocleMinimizeRest  = KWin.readConfig("monocleMinimizeRest" , false);
 
         this.adjustLayout         = KWin.readConfig("adjustLayout"        , true);
         this.adjustLayoutLive     = KWin.readConfig("adjustLayoutLive"    , true);
@@ -111,6 +113,11 @@ class KWinConfig implements IConfig {
         this.ignoreScreen = commaSeparate(KWin.readConfig("ignoreScreen", ""))
             .map((str) => parseInt(str, 10));
         this.ignoreTitle  = commaSeparate(KWin.readConfig("ignoreTitle" , ""));
+
+        if (this.preventMinimize && this.monocleMinimizeRest) {
+            debug(() => "preventMinimize is disabled because of monocleMinimizeRest.");
+            this.preventMinimize = false;
+        }
     }
 
     public toString(): string {

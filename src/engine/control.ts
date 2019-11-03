@@ -114,7 +114,11 @@ class TilingController {
     public onWindowChanged(window: Window | null, comment?: string): void {
         if (window) {
             debugObj(() => ["onWindowChanged", {window, comment}]);
-            this.engine.arrange();
+
+            if (comment === "unminimized")
+                this.driver.setCurrentWindow(window);
+
+            this.driver.setTimeout(() => this.engine.arrange(), 50);
         }
     }
 
