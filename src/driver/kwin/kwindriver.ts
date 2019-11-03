@@ -30,12 +30,14 @@ class KWinDriver implements IDriver {
     private control: TilingController;
     private windowMap: {[key: string]: Window};
     private timerPool: QQmlTimer[];
+    private entered: boolean;
 
     constructor() {
         this.engine = new TilingEngine(this);
         this.control = new TilingController(this, this.engine);
         this.windowMap = {};
         this.timerPool = Array();
+        this.entered = false;
     }
 
     /*
@@ -98,7 +100,7 @@ class KWinDriver implements IDriver {
     }
 
     public setTimeout(func: () => void, timeout: number) {
-        KWinSetTimeout(func, timeout);
+        KWinSetTimeout(() => this.enter(func), timeout);
     }
 
     /*
@@ -161,7 +163,7 @@ class KWinDriver implements IDriver {
      * Signal handlers
      */
 
-    private connect(signal: QSignal, handler: (..._: any[]) => void) {
+    private connect(signal: QSignal, handler: (..._: any[]) => void): (() => void) {
         const wrapper = (...args: any[]) => {
             /* test if script is enabled.
              * XXX: `workspace` become undefined when the script is disabled. */
@@ -169,11 +171,30 @@ class KWinDriver implements IDriver {
             try { enabled = !!workspace; } catch (e) { /* ignore */ }
 
             if (enabled)
-                handler.apply(this, args);
+                this.enter(() => handler.apply(this, args));
             else
                 signal.disconnect(wrapper);
         };
         signal.connect(wrapper);
+
+        return wrapper;
+    }
+
+    private enter(callback: () => void) {
+        if (this.entered) {
+            debug(() => "re-entry refused");
+            return;
+        }
+
+        this.entered = true;
+        try {
+            callback();
+        } catch (e) {
+            throw e;
+        } finally {
+            this.entered = false;
+            debug(() => "--------------------")
+        }
     }
 
     private registerWindow(client: KWin.Client): Window {
@@ -209,6 +230,7 @@ class KWinDriver implements IDriver {
             this.control.onCurrentContextChanged(this.getCurrentContext()));
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
+            let wrapper: (() => void);
             const handler = () => {
                 const window = this.registerWindow(client);
                 this.control.onWindowAdded(window);
@@ -217,9 +239,10 @@ class KWinDriver implements IDriver {
                 else
                     this.unregisterWindow(window);
 
-                client.windowShown.disconnect(handler);
+                client.windowShown.disconnect(wrapper);
             };
-            client.windowShown.connect(handler);
+
+            wrapper = this.connect(client.windowShown, handler);
         });
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
