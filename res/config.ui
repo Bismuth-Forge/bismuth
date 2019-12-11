@@ -97,7 +97,7 @@
            <item>
             <widget class="QCheckBox" name="kcfg_monocleMinimizeRest">
              <property name="text">
-              <string>Minimize other windows</string>
+              <string>Minimize other windows (experimental)</string>
              </property>
             </widget>
            </item>
