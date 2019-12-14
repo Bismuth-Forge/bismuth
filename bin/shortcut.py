@@ -80,6 +80,16 @@ def parse_arguments() -> argparse.Namespace:
         help='''Remove all Krohnkite shortcuts from KWin.
         This doesn't reset other key bindings changed by this script.''')
 
+    #
+    # register-desktops command
+    #
+    parser_register_desktops = subparsers.add_parser('register-desktops',
+        help='''Set virtual desktop shortcuts to MOD+NUMBER, which is a recommended setup.''')
+    parser_register_desktops.add_argument('--force', '-f', action='store_true',
+        help='Remove any conflicting shortcuts before registering new ones')
+    parser_register_desktops.add_argument('--modifier', '-m', default='meta', dest='modifier', type=str,
+        help='''A modifier key to use. Defaults to meta.''')
+
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
@@ -97,6 +107,15 @@ def get_keycode(keycomb: str):
 def is_key_valid(keycomb: str) -> bool:
     # NOTE: this might be internal detail that should not be accessed.
     return get_keycode(keycomb) != 0x1FFFFFF
+
+def register_shortcut(action_id, keycomb, force=False):
+    if force is True:
+        unregister_colliding_shortcut(keycomb)
+
+    keycode = get_keycode(keycomb)
+    if VERBOSE:
+        print("register [{2:<14}] to '{1}/{0}'.".format(action_id[1], action_id[2], keycomb))
+    kglobalaccel.setForeignShortcut(action_id, [keycode])
 
 def register_krohnkite_shortcut(action: str, keycomb_full: str):
     action = "Krohnkite: " + action
@@ -137,6 +156,12 @@ def is_shortcut_already_bound(keycomb_full: str) -> bool:
     '''Check if the given key combination is already bound to something. '''
     action_id = kglobalaccel.action(get_keycode(keycomb_full))
     return not not action_id
+
+def register_desktop_shortcuts(modifier, force):
+    for i in range(1,10):
+        action = "Switch to Desktop {}".format(i)
+        keycomb = "{}+{}".format(modifier, i)
+        register_shortcut(["kwin", action, "KWin", action], keycomb, force=force)
 
 def main():
     config = parse_arguments()
@@ -182,6 +207,8 @@ def main():
 
     elif config.command == 'unregister':
         unregister_all_krohnkite_shortcuts()
+    elif config.command == 'register-desktops':
+        register_desktop_shortcuts(config.modifier, config.force)
     else:
         pass
 
