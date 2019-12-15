@@ -45,6 +45,8 @@ KROHNKITE_DEFAULT_BINDINGS = [
     ('Floating Layout', None),
 ]
 
+NUMBER_SHIFT_MAP = ")!@#$%^&*()"
+
 VERBOSE = True
 
 
@@ -161,6 +163,10 @@ def register_desktop_shortcuts(modifier, force):
     for i in range(1,10):
         action = "Switch to Desktop {}".format(i)
         keycomb = "{}+{}".format(modifier, i)
+        register_shortcut(["kwin", action, "KWin", action], keycomb, force=force)
+
+        action = "Window to Desktop {}".format(i)
+        keycomb = "{}+{}".format(modifier, NUMBER_SHIFT_MAP[i])
         register_shortcut(["kwin", action, "KWin", action], keycomb, force=force)
 
 def main():
