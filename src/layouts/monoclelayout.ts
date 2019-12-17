@@ -24,23 +24,25 @@ class MonocleLayout implements ILayout {
     }
 
     public apply = (tiles: Window[], area: Rect, workingArea?: Rect, driver?: IDriver): void => {
-        /* KWin-specific `monocleMinimizeRest` option */
-        if (driver && driver instanceof KWinDriver && KWINCONFIG.monocleMinimizeRest) {
-            const current = driver.getCurrentWindow();
-            if (current && current.state === WindowState.Tile) {
-                tiles.forEach((window) => {
-                    if (window !== current)
-                        (window.window as KWinWindow).client.minimized = true;
-                });
-                tiles = [current];
-            }
-        }
-
         if (CONFIG.monocleMaximize) {
             area = workingArea || area;
             tiles.forEach((window) => window.noBorder = true);
         }
         tiles.forEach((window) => (window.geometry = area));
+
+        /* KWin-specific `monocleMinimizeRest` option */
+        if (driver && driver instanceof KWinDriver && KWINCONFIG.monocleMinimizeRest) {
+            const tiles_clone = [...tiles];
+            driver.setTimeout(() => {
+                const current = driver.getCurrentWindow();
+                if (current && current.state === WindowState.Tile) {
+                    tiles_clone.forEach((window) => {
+                        if (window !== current)
+                            (window.window as KWinWindow).client.minimized = true;
+                    });
+                }
+            }, 50);
+        }
     }
 
     public toString(): string {

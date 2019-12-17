@@ -118,7 +118,7 @@ class TilingController {
             if (comment === "unminimized")
                 this.driver.setCurrentWindow(window);
 
-            this.driver.setTimeout(() => this.engine.arrange(), 50);
+            this.engine.arrange();
         }
     }
 
