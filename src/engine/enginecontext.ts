@@ -23,8 +23,7 @@ class EngineContext implements IDriverContext {
     constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
     }
 
-    // TODO: reloated most of this into Engine
-    public moveWindow(window: Window, target: Window) {
-        this.engine.windows.move(window, target);
+    public moveWindow(window: Window, target: Window, after?: boolean) {
+        this.engine.windows.move(window, target, after);
     }
 }

@@ -18,6 +18,90 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+class LayoutUtils {
+    /**
+     * Splits a (virtual) line into weighted lines w/ gaps.
+     * @param length    The length of the line to be splitted
+     * @param weights   The weight of each part
+     * @param gap       The size of gap b/w parts
+     * @returns An array of extends of each parts: [begin, length]
+     */
+    public static splitWeighted(
+        [begin, length]: [number, number],
+        weights: number[],
+        gap: number,
+    ): Array<[number, number]> {
+        gap = (gap !== undefined) ? gap : 0;
+
+        const n = weights.length;
+        const actualLength = length - (n - 1) * gap;
+        const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
+
+        let weightAcc = 0;
+        return weights.map((weight, i) => {
+            const partBegin = actualLength * weightAcc / weightSum + (i * gap);
+            const partLength = actualLength * weight / weightSum;
+            weightAcc += weight;
+            return [begin + Math.floor(partBegin), Math.floor(partLength)];
+        });
+    }
+
+    /**
+     * Splits an area into multiple areas based on their weights.
+     * @param area          The area to be splitted
+     * @param weights       The weight of each parts
+     * @param gap           The size of gaps b/w parts
+     * @param horizontal    If true, split horizontally instead of vertically
+     */
+    public static splitAreaWeighted(area: Rect, weights: number[], gap?: number, horizontal?: boolean): Rect[] {
+        gap = (gap !== undefined) ? gap : 0;
+        horizontal = (horizontal !== undefined) ? horizontal : false;
+
+        const line: [number, number] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
+        const parts = LayoutUtils.splitWeighted(line, weights, gap);
+
+        return parts.map(([begin, length]) =>
+            (horizontal)
+                ? new Rect(begin, area.y, length, area.height)
+                : new Rect(area.x, begin, area.width, length),
+        );
+    }
+
+    public static splitAreaHalfWeighted(area: Rect, weight: number, gap?: number, horizontal?: boolean): Rect[] {
+        gap = (gap !== undefined) ? gap : 0;
+        horizontal = (horizontal !== undefined) ? horizontal : false;
+
+        const [lineBase, lineLength] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
+        const part1: [number, number] = [lineBase, Math.floor((lineLength - gap) * weight)];
+        const part2: [number, number] = [lineBase + (part1[1] + gap), lineLength - (part1[1] + gap)]
+        const parts: Array<[number, number]> = [part1, part2];
+
+        return parts.map(([begin, length]) =>
+            (horizontal)
+                ? new Rect(begin, area.y, length, area.height)
+                : new Rect(area.x, begin, area.width, length),
+        );
+    }
+
+
+    public static calculateWeights(parts: number[]): number[] {
+        const length = parts.reduce((acc, partLength) => acc + partLength, 0);
+        return parts.map((partLength) => partLength / length);
+    }
+
+    public static calculateAreaWeights(area: Rect, geometries: Rect[], gap?: number, horizontal?: boolean): number[] {
+        gap = (gap !== undefined) ? gap : 0;
+        horizontal = (horizontal !== undefined) ? horizontal : false;
+
+        const line = (horizontal) ? area.width : area.height;
+        const parts = (horizontal)
+            ? geometries.map((geometry) => geometry.width)
+            : geometries.map((geometry) => geometry.height)
+            ;
+        return LayoutUtils.calculateWeights(parts);
+    }
+}
+
 function stackTiles(tiles: Window[], area: Rect, gap = 0) {
     if (tiles.length === 1) {
         tiles[0].geometry = area;

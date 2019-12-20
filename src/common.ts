@@ -36,6 +36,8 @@ enum Shortcut {
 
     Increase,
     Decrease,
+    ShiftIncrease,
+    ShiftDecrease,
 
     ToggleFloat,
     FloatAll,
