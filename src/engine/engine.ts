@@ -21,7 +21,7 @@
 /**
  * Maintains tiling context and performs various tiling actions.
  */
-class TilingEngine implements IEngine {
+class TilingEngine {
     private driver: IDriver;
     private layouts: LayoutStore;
     private windows: WindowStore;
