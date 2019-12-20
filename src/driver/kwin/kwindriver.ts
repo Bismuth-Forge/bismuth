@@ -192,7 +192,7 @@ class KWinDriver implements IDriverContext {
             throw e;
         } finally {
             this.entered = false;
-            debug(() => "--------------------")
+            debug(() => "--------------------");
         }
     }
 

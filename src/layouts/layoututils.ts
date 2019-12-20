@@ -73,7 +73,7 @@ class LayoutUtils {
 
         const [lineBase, lineLength] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
         const part1: [number, number] = [lineBase, Math.floor((lineLength - gap) * weight)];
-        const part2: [number, number] = [lineBase + (part1[1] + gap), lineLength - (part1[1] + gap)]
+        const part2: [number, number] = [lineBase + (part1[1] + gap), lineLength - (part1[1] + gap)];
         const parts: Array<[number, number]> = [part1, part2];
 
         return parts.map(([begin, length]) =>
@@ -82,7 +82,6 @@ class LayoutUtils {
                 : new Rect(area.x, begin, area.width, length),
         );
     }
-
 
     public static calculateWeights(parts: number[]): number[] {
         const length = parts.reduce((acc, partLength) => acc + partLength, 0);

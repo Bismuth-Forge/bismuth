@@ -33,6 +33,7 @@ class LayoutStoreEntry {
 
     constructor() {
         this.layouts = [
+            new ColumnLayout(),
             new TileLayout(),
             new MonocleLayout(),
             new SpreadLayout(),

@@ -80,7 +80,7 @@ class ColumnLayout implements ILayout {
                 tileAreas.forEach((tileArea, tileIndex) => {
                     const tile = columnTiles[tileIndex];
                     tile.geometry = tileArea;
-                    this.tileCache[tile.id] = [column, tileIndex]
+                    this.tileCache[tile.id] = [column, tileIndex];
                 });
             });
         }
@@ -105,7 +105,7 @@ class ColumnLayout implements ILayout {
     }
 
     public handleShortcut?(ctx: EngineContext, input: Shortcut, data: any): boolean {
-        switch(input) {
+        switch (input) {
             case Shortcut.Increase: this.resizeColumn(ctx, +1); return true;
             case Shortcut.Decrease: this.resizeColumn(ctx, -1); return true;
             case Shortcut.ShiftIncrease: this.addColumn(); return true;
