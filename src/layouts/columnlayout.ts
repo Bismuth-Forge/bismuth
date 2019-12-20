@@ -25,15 +25,21 @@ class ColumnLayout implements ILayout {
         return true;
     }
 
+    private columnFocus: number[];
     private columnWeights: number[];
     private columnMasters: number[];
+    private nextColumn: number | null | undefined;
+    private stackFocus: number;
     private stackRatio: number;
     private tileCache: {[key: string]: [number | null, number]};
     private tileWeights: LayoutWeightMap;
 
     constructor() {
+        this.columnFocus = [0];
         this.columnWeights = [1];
         this.columnMasters = [1];
+        this.nextColumn = undefined;
+        this.stackFocus = 0;
         this.stackRatio = 0.25;
         this.tileCache = {};
         this.tileWeights = new LayoutWeightMap();
@@ -83,6 +89,15 @@ class ColumnLayout implements ILayout {
                     this.tileCache[tile.id] = [column, tileIndex];
                 });
             });
+
+            /* change column */
+            if (this.nextColumn !== undefined && this.nextColumn !== null) {
+                const columnTiles = columnTilesList[this.nextColumn];
+                if (columnsTiles) {
+                    const focus = clip(this.columnFocus[this.nextColumn], 0, columnTiles.length - 1);
+                    columnTiles[focus].focus();
+                }
+            }
         }
 
         /* tile stack */
@@ -97,7 +112,16 @@ class ColumnLayout implements ILayout {
                 stackTiles[tileIndex].geometry = tileArea;
                 this.tileCache[tile.id] = [null, tileIndex];
             });
+
+            /* change column */
+            if (this.nextColumn === null) {
+                const focus = clip(this.stackFocus, 0, stackTiles.length);
+                stackTiles[focus].focus();
+            }
         }
+
+        /* reset column changing */
+        this.nextColumn = undefined;
     }
 
     public toString(): string {
@@ -106,6 +130,8 @@ class ColumnLayout implements ILayout {
 
     public handleShortcut?(ctx: EngineContext, input: Shortcut, data: any): boolean {
         switch (input) {
+            case Shortcut.Left : this.focusSide(ctx, -1); return true;
+            case Shortcut.Right: this.focusSide(ctx, +1); return true;
             case Shortcut.Increase: this.resizeColumn(ctx, +1); return true;
             case Shortcut.Decrease: this.resizeColumn(ctx, -1); return true;
             case Shortcut.ShiftIncrease: this.addColumn(); return true;
@@ -116,7 +142,7 @@ class ColumnLayout implements ILayout {
 
     private resizeColumn(ctx: EngineContext, step: number) {
         if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
-            const [column, focus] = this.tileCache[ctx.currentWindow.id];
+            const [column, _] = this.tileCache[ctx.currentWindow.id];
             if (column !== null) {
                 this.columnMasters[column] = clip(
                     this.columnMasters[column] + step, 1, 10);
@@ -124,12 +150,32 @@ class ColumnLayout implements ILayout {
         }
     }
 
+    private focusSide(ctx: EngineContext, step: number) {
+        if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
+            const [column, index] = this.tileCache[ctx.currentWindow.id];
+
+            /* save current focus */
+            if (column !== null)
+                this.columnFocus[column] = index;
+            else
+                this.stackFocus = index;
+
+            const numColumns = this.columnMasters.length;
+            const nextColumn = clip(step + ((column === null) ? numColumns : column),
+                0, numColumns);
+
+            this.nextColumn = (nextColumn === numColumns) ? null : nextColumn;
+        }
+    }
+
     private addColumn() {
+        this.columnFocus.push(0);
         this.columnMasters.push(1);
         this.columnWeights.push(1);
     }
 
     private removeColumn() {
+        this.columnFocus.pop();
         this.columnMasters.pop();
         this.columnWeights.pop();
     }
