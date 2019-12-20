@@ -33,16 +33,16 @@ class TestDriver implements IDriver {
         this.windows = [];
     }
 
-    public forEachScreen(func: (ctx: IDriverContext) => void) {
+    public forEachScreen(func: (srf: ISurface) => void) {
         for (let screen = 0; screen < this.numScreen; screen ++)
-            func(new TestContext(screen));
+            func(new TestSurface(screen));
     }
 
-    public getCurrentContext(): IDriverContext {
+    public getCurrentSurface(): ISurface {
         const window = this.getCurrentWindow();
         if (window)
-            return window.context;
-        return new TestContext(0);
+            return window.surface;
+        return new TestSurface(0);
     }
 
     public getCurrentWindow(): Window | null {
@@ -51,7 +51,7 @@ class TestDriver implements IDriver {
             : null;
     }
 
-    public getWorkingArea(ctx: IDriverContext): Rect {
+    public getWorkingArea(srf: ISurface): Rect {
         return this.screenSize;
     }
 
@@ -66,7 +66,7 @@ class TestDriver implements IDriver {
     }
 }
 
-class TestContext implements IDriverContext {
+class TestSurface implements ISurface {
     public readonly screen: number;
 
     public get id(): string {
@@ -90,20 +90,20 @@ class TestWindow implements IDriverWindow {
     public readonly shouldFloat: boolean;
     public readonly shouldIgnore: boolean;
 
-    public context: TestContext;
+    public surface: TestSurface;
     public fullScreen: boolean;
     public geometry: Rect;
     public keepBelow: boolean;
     public noBorder: boolean;
 
-    constructor(ctx: TestContext, geometry?: Rect, ignore?: boolean, float?: boolean) {
+    constructor(srf: TestSurface, geometry?: Rect, ignore?: boolean, float?: boolean) {
         this.id = String(TestWindow.windowCount);
         TestWindow.windowCount += 1;
 
         this.shouldFloat = (float !== undefined) ? float : false;
         this.shouldIgnore = (ignore !== undefined) ? ignore : false;
 
-        this.context = ctx;
+        this.surface = srf;
         this.fullScreen = false;
         this.geometry = geometry || new Rect(0, 0, 100, 100);
         this.keepBelow = false;
@@ -119,9 +119,9 @@ class TestWindow implements IDriverWindow {
             this.keepBelow = keepBelow;
     }
 
-    public visible(ctx: IDriverContext): boolean {
-        const tctx = ctx as TestContext;
-        return this.context.screen === tctx.screen;
+    public visible(srf: ISurface): boolean {
+        const tctx = srf as TestSurface;
+        return this.surface.screen === tctx.screen;
     }
 }
 
@@ -132,7 +132,7 @@ function setTestConfig(name: string, value: any) {
 }
 
 try {
-    exports.TestContext = TestContext;
+    exports.TestSurface = TestSurface;
     exports.TestDriver = TestDriver;
     exports.TestWindow = TestWindow;
     exports.setTestConfig = setTestConfig;

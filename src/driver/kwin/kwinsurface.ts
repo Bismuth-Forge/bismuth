@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinContext implements IDriverContext {
+class KWinSurface implements ISurface {
     public readonly screen: number;
     public readonly activity: string;
     public readonly desktop: number;

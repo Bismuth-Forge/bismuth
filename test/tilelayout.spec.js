@@ -25,20 +25,20 @@ describe('TileLayout', function() {
   describe('#apply', function() {
     let layout = new K.TileLayout();
     let area = new K.Rect(0, 0, 1000, 1000);
-    let ctx = new K.TestContext(0);
+    let srf = new K.TestSurface(0);
     let gap;
 
     K.setTestConfig('tileLayoutGap', gap = 0);
 
     it('tiles sole master to full screen', function() {
-      let win = new K.Window(new K.TestWindow(ctx));
+      let win = new K.Window(new K.TestWindow(srf));
       layout.apply([win], area);
       assert(win.geometry.equals(area));
     });
 
     it('corretly applies master ratio', function() {
-      let master = new K.Window(new K.TestWindow(ctx));
-      let stack = new K.Window(new K.TestWindow(ctx));
+      let master = new K.Window(new K.TestWindow(srf));
+      let stack = new K.Window(new K.TestWindow(srf));
 
       let ratio = layout.masterRatio;
       let masterWidth = Math.floor(area.width * ratio);
@@ -55,7 +55,7 @@ describe('TileLayout', function() {
 
       let tiles = [];
       for (let i = 0; i < 5; i++) {
-        tiles.push(new K.Window(new K.TestWindow(ctx)));
+        tiles.push(new K.Window(new K.TestWindow(srf)));
         layout.apply(tiles, area);
 
         for (let j = 0; j <= i; j++) {

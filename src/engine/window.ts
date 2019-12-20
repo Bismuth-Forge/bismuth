@@ -50,7 +50,7 @@ class Window {
     public readonly window: IDriverWindow;
 
     public get actualGeometry(): Rect { return this.window.geometry; }
-    public get context(): IDriverContext { return this.window.context; }
+    public get surface(): ISurface { return this.window.surface; }
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
@@ -127,8 +127,8 @@ class Window {
             this.window.commit(undefined, undefined, false);
     }
 
-    public visible(ctx: IDriverContext): boolean {
-        return this.window.visible(ctx);
+    public visible(srf: ISurface): boolean {
+        return this.window.visible(srf);
     }
 
     public toString(): string {

@@ -33,32 +33,32 @@ class TilingEngine implements IEngine {
     }
 
     public adjustLayout(basis: Window) {
-        const ctx = basis.context as KWinContext;
-        const layout = this.layouts.getCurrentLayout(ctx);
+        const srf = basis.surface as KWinSurface;
+        const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            const fullArea = this.driver.getWorkingArea(ctx);
+            const fullArea = this.driver.getWorkingArea(srf);
             const area = new Rect(
                 fullArea.x + CONFIG.screenGapLeft,
                 fullArea.y + CONFIG.screenGapTop,
                 fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
                 fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
             );
-            const tiles = this.windows.visibleTiles(ctx);
+            const tiles = this.windows.visibleTiles(srf);
             layout.adjust(area, tiles, basis);
         }
     }
 
     public arrange() {
         debug(() => "arrange");
-        this.driver.forEachScreen((ctx: IDriverContext) => {
-            this.arrangeScreen(ctx);
+        this.driver.forEachScreen((srf: ISurface) => {
+            this.arrangeScreen(srf);
         });
     }
 
-    public arrangeScreen(ctx: IDriverContext) {
-        const layout = this.layouts.getCurrentLayout(ctx);
+    public arrangeScreen(srf: ISurface) {
+        const layout = this.layouts.getCurrentLayout(srf);
 
-        const fullArea = this.driver.getWorkingArea(ctx);
+        const fullArea = this.driver.getWorkingArea(srf);
         const workingArea = new Rect(
             fullArea.x + CONFIG.screenGapLeft,
             fullArea.y + CONFIG.screenGapTop,
@@ -66,9 +66,9 @@ class TilingEngine implements IEngine {
             fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
         );
 
-        const visibles = this.windows.visibles(ctx);
+        const visibles = this.windows.visibles(srf);
         debugObj(() => ["arrangeScreen", {
-            ctx, layout,
+            srf, layout,
             visibles: visibles.length,
         }]);
 
@@ -81,7 +81,7 @@ class TilingEngine implements IEngine {
                 window.noBorder = CONFIG.noTileBorder;
         });
 
-        const tiles = this.windows.visibleTiles(ctx);
+        const tiles = this.windows.visibleTiles(srf);
         if (CONFIG.maximizeSoleTile && tiles.length === 1) {
             tiles[0].noBorder = true;
             tiles[0].geometry = fullArea;
@@ -89,7 +89,7 @@ class TilingEngine implements IEngine {
             layout.apply(tiles, workingArea, fullArea, this.driver);
 
         visibles.forEach((window) => window.commit());
-        debugObj(() => ["arrangeScreen/finished", { ctx }]);
+        debugObj(() => ["arrangeScreen/finished", { srf }]);
     }
 
     public enforceSize(window: Window) {
@@ -115,9 +115,9 @@ class TilingEngine implements IEngine {
         if (step === 0)
             return;
 
-        const ctx = (window) ? window.context : this.driver.getCurrentContext();
+        const srf = (window) ? window.surface : this.driver.getCurrentSurface();
 
-        const visibles = this.windows.visibles(ctx);
+        const visibles = this.windows.visibles(srf);
         if (visibles.length === 0) /* nothing to focus */
             return;
 
@@ -138,8 +138,8 @@ class TilingEngine implements IEngine {
         if (step === 0)
             return;
 
-        const ctx = window.context;
-        const visibles = this.windows.visibles(ctx);
+        const srf = window.surface;
+        const visibles = this.windows.visibles(srf);
         if (visibles.length < 2)
             return;
 
@@ -158,8 +158,8 @@ class TilingEngine implements IEngine {
             : WindowState.Float;
     }
 
-    public floatAll(ctx: IDriverContext) {
-        const tiles = this.windows.visibleTiles(ctx);
+    public floatAll(srf: ISurface) {
+        const tiles = this.windows.visibleTiles(srf);
         tiles.forEach((window) => {
             /* TODO: do not use arbitrary constants */
             window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
@@ -172,16 +172,16 @@ class TilingEngine implements IEngine {
     }
 
     public cycleLayout() {
-        this.layouts.cycleLayout(this.driver.getCurrentContext());
+        this.layouts.cycleLayout(this.driver.getCurrentSurface());
     }
 
     public setLayout(layout: any) {
         if (layout)
-            this.layouts.setLayout(this.driver.getCurrentContext(), layout);
+            this.layouts.setLayout(this.driver.getCurrentSurface(), layout);
     }
 
     public handleLayoutShortcut(input: Shortcut, data?: any): boolean {
-        const layout = this.layouts.getCurrentLayout(this.driver.getCurrentContext());
+        const layout = this.layouts.getCurrentLayout(this.driver.getCurrentSurface());
         if (layout.handleShortcut)
             return layout.handleShortcut(input, data);
         return false;

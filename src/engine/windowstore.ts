@@ -62,19 +62,19 @@ class WindowStore {
 
     //#region Querying Windows
 
-    public visibles(ctx: IDriverContext): Window[] {
-        return this.list.filter((win) => win.visible(ctx));
+    public visibles(srf: ISurface): Window[] {
+        return this.list.filter((win) => win.visible(srf));
     }
 
-    public visibleTiles(ctx: IDriverContext): Window[] {
+    public visibleTiles(srf: ISurface): Window[] {
         return this.list.filter((win) =>
-            win.state === WindowState.Tile && win.visible(ctx));
+            win.state === WindowState.Tile && win.visible(srf));
     }
 
-    public visibleTileables(ctx: IDriverContext): Window[] {
+    public visibleTileables(srf: ISurface): Window[] {
         return this.list.filter((win) =>
             (win.state === WindowState.Tile || win.state === WindowState.FreeTile)
-            && win.visible(ctx));
+            && win.visible(srf));
     }
 
     //#endregion

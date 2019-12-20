@@ -72,22 +72,22 @@ class LayoutStore {
         this.store = {};
     }
 
-    public getCurrentLayout(ctx: IDriverContext): ILayout {
-        return (ctx.ignore)
+    public getCurrentLayout(srf: ISurface): ILayout {
+        return (srf.ignore)
             ? FloatingLayout.instance
-            : this.getEntry(ctx.id).currentLayout;
+            : this.getEntry(srf.id).currentLayout;
     }
 
-    public cycleLayout(ctx: IDriverContext) {
-        if (ctx.ignore)
+    public cycleLayout(srf: ISurface) {
+        if (srf.ignore)
             return;
-        this.getEntry(ctx.id).cycleLayout();
+        this.getEntry(srf.id).cycleLayout();
     }
 
-    public setLayout(ctx: IDriverContext, cls: any) {
-        if (ctx.ignore)
+    public setLayout(srf: ISurface, cls: any) {
+        if (srf.ignore)
             return;
-        this.getEntry(ctx.id).setLayout(cls);
+        this.getEntry(srf.id).setLayout(cls);
     }
 
     private getEntry(key: string): LayoutStoreEntry {

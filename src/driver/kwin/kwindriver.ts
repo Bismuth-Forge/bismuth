@@ -67,13 +67,13 @@ class KWinDriver implements IDriver {
      * Utils
      */
 
-    public forEachScreen(func: (ctx: IDriverContext) => void) {
+    public forEachScreen(func: (srf: ISurface) => void) {
         for (let screen = 0; screen < workspace.numScreens; screen ++)
-            func(new KWinContext(screen, workspace.currentActivity, workspace.currentDesktop));
+            func(new KWinSurface(screen, workspace.currentActivity, workspace.currentDesktop));
     }
 
-    public getCurrentContext(): IDriverContext {
-        return new KWinContext(
+    public getCurrentSurface(): ISurface {
+        return new KWinSurface(
             (workspace.activeClient) ? workspace.activeClient.screen : 0,
             workspace.currentActivity,
             workspace.currentDesktop,
@@ -87,10 +87,10 @@ class KWinDriver implements IDriver {
         return this.queryWindow(client);
     }
 
-    public getWorkingArea(ctx: IDriverContext): Rect {
-        const kctx = ctx as KWinContext;
+    public getWorkingArea(srf: ISurface): Rect {
+        const ksrf = srf as KWinSurface;
         return toRect(
-            workspace.clientArea(KWin.PlacementArea, kctx.screen, workspace.currentDesktop),
+            workspace.clientArea(KWin.PlacementArea, ksrf.screen, workspace.currentDesktop),
         );
     }
 
@@ -220,14 +220,14 @@ class KWinDriver implements IDriver {
             this.control.onScreenCountChanged(count));
 
         this.connect(workspace.screenResized, (screen: number) =>
-            this.control.onScreenResized(new KWinContext(
+            this.control.onScreenResized(new KWinSurface(
                 screen, workspace.currentActivity, workspace.currentDesktop)));
 
         this.connect(workspace.currentActivityChanged, (activity: string) =>
-            this.control.onCurrentContextChanged(this.getCurrentContext()));
+            this.control.onCurrentSurfaceChanged(this.getCurrentSurface()));
 
         this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) =>
-            this.control.onCurrentContextChanged(this.getCurrentContext()));
+            this.control.onCurrentSurfaceChanged(this.getCurrentSurface()));
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             let wrapper: (() => void);

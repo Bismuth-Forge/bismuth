@@ -26,7 +26,7 @@ class KWinWindow implements IDriverWindow {
     public readonly client: KWin.Client;
     public readonly id: string;
 
-    public get context(): IDriverContext {
+    public get surface(): ISurface {
         let activity;
         if (this.client.activities.length === 0)
             activity = workspace.currentActivity;
@@ -39,7 +39,7 @@ class KWinWindow implements IDriverWindow {
             ? this.client.desktop
             : workspace.currentDesktop;
 
-        return new KWinContext(this.client.screen, activity, desktop);
+        return new KWinSurface(this.client.screen, activity, desktop);
     }
 
     public get fullScreen(): boolean {
@@ -116,15 +116,15 @@ class KWinWindow implements IDriverWindow {
         return "KWin(" + this.client.windowId.toString(16) + "." + this.client.resourceClass + ")";
     }
 
-    public visible(ctx: IDriverContext): boolean {
-        const kctx = ctx as KWinContext;
+    public visible(srf: ISurface): boolean {
+        const ksrf = srf as KWinSurface;
         return (
             (!this.client.minimized)
-            && (this.client.desktop === kctx.desktop
+            && (this.client.desktop === ksrf.desktop
                 || this.client.desktop === -1 /* on all desktop */)
             && (this.client.activities.length === 0 /* on all activities */
-                || this.client.activities.indexOf(kctx.activity) !== -1)
-            && (this.client.screen === kctx.screen)
+                || this.client.activities.indexOf(ksrf.activity) !== -1)
+            && (this.client.screen === ksrf.screen)
         );
     }
 

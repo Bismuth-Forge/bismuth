@@ -83,7 +83,7 @@ interface IConfig {
 }
 
 interface IDriverWindow {
-    readonly context: IDriverContext;
+    readonly surface: ISurface;
     readonly fullScreen: boolean;
     readonly geometry: Rect;
     readonly id: string;
@@ -91,19 +91,19 @@ interface IDriverWindow {
     readonly shouldFloat: boolean;
 
     commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
-    visible(ctx: IDriverContext): boolean;
+    visible(srf: ISurface): boolean;
 }
 
-interface IDriverContext {
+interface ISurface {
     readonly id: string;
     readonly ignore: boolean;
 }
 
 interface IDriver {
-    forEachScreen(func: (ctx: IDriverContext) => void): void;
-    getCurrentContext(): IDriverContext;
+    forEachScreen(func: (srf: ISurface) => void): void;
+    getCurrentSurface(): ISurface;
     getCurrentWindow(): Window | null;
-    getWorkingArea(ctx: IDriverContext): Rect ;
+    getWorkingArea(srf: ISurface): Rect ;
     setCurrentWindow(window: Window): void;
     setTimeout(func: () => void, timeout: number): void;
 }
@@ -112,7 +112,7 @@ interface IDriver {
 
 interface IEngine {
     adjustLayout(basis: Window): void;
-    arrangeScreen(ctx: IDriverContext): void;
+    arrangeScreen(srf: ISurface): void;
 
     /* window */
     enforceSize(window: Window): void;

@@ -35,13 +35,13 @@ class TilingController {
         this.engine.arrange();
     }
 
-    public onScreenResized(ctx: IDriverContext): void {
-        debugObj(() => ["onScreenResized", {ctx}]);
-        this.engine.arrangeScreen(ctx);
+    public onScreenResized(srf: ISurface): void {
+        debugObj(() => ["onScreenResized", {srf}]);
+        this.engine.arrangeScreen(srf);
     }
 
-    public onCurrentContextChanged(ctx: IDriverContext): void {
-        debugObj(() => ["onCurrentContextChanged", {ctx}]);
+    public onCurrentSurfaceChanged(srf: ISurface): void {
+        debugObj(() => ["onCurrentSurfaceChanged", {srf}]);
         this.engine.arrange();
     }
 
@@ -138,7 +138,7 @@ class TilingController {
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;
-            case Shortcut.FloatAll   : this.engine.floatAll(this.driver.getCurrentContext()); break;
+            case Shortcut.FloatAll   : this.engine.floatAll(this.driver.getCurrentSurface()); break;
 
             case Shortcut.CycleLayout: this.engine.cycleLayout();
             case Shortcut.SetLayout: this.engine.setLayout(data); break;
