@@ -69,10 +69,10 @@ class ColumnLayout implements ILayout {
         /* tile columns */
         if (columnsArea) {
             // TODO: configurable column gap
-            const columnAreas =
-                LayoutUtils.splitAreaWeighted(columnsArea, this.columnWeights, 20, true);
-            const columnTilesList =
-                partitionArrayBySizes(columnsTiles, this.columnMasters);
+            const columnTilesList = partitionArrayBySizes(columnsTiles, this.columnMasters)
+                .filter((arr) => arr.length > 0);
+            const columnWeights = this.columnWeights.slice(0, columnTilesList.length);
+            const columnAreas = LayoutUtils.splitAreaWeighted(columnsArea, columnWeights, 20, true);
 
             // TODO: zipping columnAreas and columnTilesList?
             columnAreas.forEach((columnArea, column) => {
