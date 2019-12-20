@@ -28,12 +28,14 @@ class ColumnLayout implements ILayout {
     private columnWeights: number[];
     private columnMasters: number[];
     private stackRatio: number;
+    private tileCache: {[key: string]: [number | null, number]};
     private tileWeights: LayoutWeightMap;
 
     constructor() {
         this.columnWeights = [1];
         this.columnMasters = [1];
         this.stackRatio = 0.25;
+        this.tileCache = {};
         this.tileWeights = new LayoutWeightMap();
     }
 
@@ -41,6 +43,8 @@ class ColumnLayout implements ILayout {
     // }
 
     public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+        this.tileCache = {};
+
         const numColumns = this.columnMasters.length;
         const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);
 
@@ -74,7 +78,9 @@ class ColumnLayout implements ILayout {
 
                 // TODO zipping tileAreas and columnTiles?
                 tileAreas.forEach((tileArea, tileIndex) => {
-                    columnTiles[tileIndex].geometry = tileArea;
+                    const tile = columnTiles[tileIndex];
+                    tile.geometry = tileArea;
+                    this.tileCache[tile.id] = [column, tileIndex]
                 });
             });
         }
@@ -87,7 +93,9 @@ class ColumnLayout implements ILayout {
 
             // TODO zipping tileAreas and stackTiles?
             tileAreas.forEach((tileArea, tileIndex) => {
+                const tile = stackTiles[tileIndex];
                 stackTiles[tileIndex].geometry = tileArea;
+                this.tileCache[tile.id] = [null, tileIndex];
             });
         }
     }
@@ -98,12 +106,22 @@ class ColumnLayout implements ILayout {
 
     public handleShortcut?(ctx: EngineContext, input: Shortcut, data: any): boolean {
         switch(input) {
-            case Shortcut.Increase: break;
-            case Shortcut.Decrease: break;
+            case Shortcut.Increase: this.resizeColumn(ctx, +1); return true;
+            case Shortcut.Decrease: this.resizeColumn(ctx, -1); return true;
             case Shortcut.ShiftIncrease: this.addColumn(); return true;
             case Shortcut.ShiftDecrease: this.removeColumn(); return true;
         }
         return false;
+    }
+
+    private resizeColumn(ctx: EngineContext, step: number) {
+        if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
+            const [column, focus] = this.tileCache[ctx.currentWindow.id];
+            if (column !== null) {
+                this.columnMasters[column] = clip(
+                    this.columnMasters[column] + step, 1, 10);
+            }
+        }
     }
 
     private addColumn() {
