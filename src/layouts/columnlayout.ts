@@ -20,6 +20,12 @@
 
 // TODO: find a way to save column focus when focus is changed by mouse
 
+/**
+ * ColumnLayout is a dynamic column-based layout, somewhat similar to TileLayout.
+ *
+ * ColumnLayout has a vertical stack on the right side, and columns on the left side. There can be multiple columns,
+ * where each column can also have multiple tiles.
+ */
 class ColumnLayout implements ILayout {
     public get enabled(): boolean {
         return true;
@@ -28,9 +34,11 @@ class ColumnLayout implements ILayout {
     private columnFocus: number[];
     private columnWeights: number[];
     private columnMasters: number[];
+    /** The index of column to activate during the next "arrangement". * `undefined` means no-op, `null` means stack. */
     private nextColumn: number | null | undefined;
     private stackFocus: number;
     private stackRatio: number;
+    /** Location of tiles. Each entry is a `column`-`index` pair. `null` value for `column` means stack column. */
     private tileCache: {[key: string]: [number | null, number]};
     private tileWeights: LayoutWeightMap;
 
@@ -51,7 +59,7 @@ class ColumnLayout implements ILayout {
     public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         this.tileCache = {};
 
-        const numColumns = this.columnMasters.length;
+        /** the total number of tiles in all columns */
         const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);
 
         const [columnsTiles, stackTiles] = partitionArray(tiles, (tile, idx) => idx < numColumnTiles);
@@ -69,8 +77,10 @@ class ColumnLayout implements ILayout {
         /* tile columns */
         if (columnsArea) {
             // TODO: configurable column gap
+            /** Lists of tiles in each columns */
             const columnTilesList = partitionArrayBySizes(columnsTiles, this.columnMasters)
                 .filter((arr) => arr.length > 0);
+
             const columnWeights = this.columnWeights.slice(0, columnTilesList.length);
             const columnAreas = LayoutUtils.splitAreaWeighted(columnsArea, columnWeights, 20, true);
 
@@ -140,6 +150,7 @@ class ColumnLayout implements ILayout {
         return false;
     }
 
+    /** change the number of tiles in the current column */
     private resizeColumn(ctx: EngineContext, step: number) {
         if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
             const [column, _] = this.tileCache[ctx.currentWindow.id];
@@ -150,6 +161,7 @@ class ColumnLayout implements ILayout {
         }
     }
 
+    /** focus a neighboring column */
     private focusSide(ctx: EngineContext, step: number) {
         if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
             const [column, index] = this.tileCache[ctx.currentWindow.id];
@@ -164,16 +176,19 @@ class ColumnLayout implements ILayout {
             const nextColumn = clip(step + ((column === null) ? numColumns : column),
                 0, numColumns);
 
+            /* reserve column focus changing. (actual operation takes place in `apply`) */
             this.nextColumn = (nextColumn === numColumns) ? null : nextColumn;
         }
     }
 
+    /** add a new column to the end */
     private addColumn() {
         this.columnFocus.push(0);
         this.columnMasters.push(1);
         this.columnWeights.push(1);
     }
 
+    /** remove the last column */
     private removeColumn() {
         this.columnFocus.pop();
         this.columnMasters.pop();
