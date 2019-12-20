@@ -47,3 +47,40 @@ function wrapIndex(index: number, length: number): number {
         return index - length;
     return index;
 }
+
+/**
+ * Partition the given array into two parts, based on the value of the predicate
+ *
+ * @param array
+ * @param predicate A function which accepts an item and returns a boolean value.
+ * @return A tuple containing an array of true(matched) items, and an array of false(unmatched) items.
+ */
+function partitionArray<T>(array: T[], predicate: (item: T, index: number) => boolean): [T[], T[]] {
+    return array.reduce((parts: [T[], T[]], item: T, index: number) => {
+        parts[predicate(item, index) ? 0 : 1].push(item);
+        return parts;
+    }, [[], []]);
+}
+
+/**
+ * Partition the array into chunks of designated sizes.
+ *
+ * This function splits the given array into N+1 chunks, where N chunks are
+ * specified by `sizes`, and the additional chunk is for remaining items. When
+ * the array runs out of items first, any remaining chunks will be empty.
+ * @param array
+ * @param sizes     A list of chunk sizes
+ * @returns An array of (N+1) chunks, where the last chunk contains remaining
+ * items.
+ */
+function partitionArrayBySizes<T>(array: T[], sizes: number[]): T[][] {
+    let base = 0;
+    const chunks = sizes.map((size): T[] => {
+        const chunk = array.slice(base, base + size);
+        base += size;
+        return chunk;
+    });
+    chunks.push(array.slice(base));
+
+    return chunks;
+}

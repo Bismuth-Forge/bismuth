@@ -127,6 +127,10 @@ class Window {
             this.window.commit(undefined, undefined, false);
     }
 
+    public focus() {
+        this.window.focus();
+    }
+
     public visible(srf: ISurface): boolean {
         return this.window.visible(srf);
     }

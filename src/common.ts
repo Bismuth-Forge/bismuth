@@ -91,21 +91,22 @@ interface IDriverWindow {
     readonly shouldFloat: boolean;
 
     commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
+    focus(): void;
     visible(srf: ISurface): boolean;
 }
 
 interface ISurface {
     readonly id: string;
     readonly ignore: boolean;
+    readonly workingArea: Rect;
 }
 
-interface IDriver {
-    forEachScreen(func: (srf: ISurface) => void): void;
-    getCurrentSurface(): ISurface;
-    getCurrentWindow(): Window | null;
-    getWorkingArea(srf: ISurface): Rect ;
-    setCurrentWindow(window: Window): void;
-    setTimeout(func: () => void, timeout: number): void;
+interface IDriverContext {
+    readonly backend: string;
+    readonly currentSurface: ISurface;
+    readonly currentWindow: Window | null; // TODO: IWindow
+    readonly screens: ISurface[];
+    readonly setTimeout: (func: () => void, timeout: number) => void;
 }
 
 //#endregion
@@ -116,11 +117,11 @@ interface ILayout {
 
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window): void;
-    apply(tiles: Window[], area: Rect, workingArea?: Rect, driver?: IDriver): void;
+    apply(ctx: EngineContext, tiles: Window[], area: Rect): void;
     toString(): string;
 
     /* overriding */
-    handleShortcut?(input: Shortcut, data?: any): boolean;
+    handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
 }
 
 let CONFIG: IConfig;

@@ -25,13 +25,21 @@ class WindowStore {
         this.list = windows || [];
     }
 
-    public move(window: Window, newIdx: number) {
-        const idx = this.list.indexOf(window);
-        if (idx < 0)
+    public move(srcWin: Window, destWin: Window, after?: boolean) {
+        const srcIdx = this.list.indexOf(srcWin);
+        const destIdx = this.list.indexOf(destWin);
+        if (srcIdx === -1 || destIdx === -1)
             return;
 
+        this.list.splice(srcIdx, 1);
+        this.list.splice((after) ? (destIdx + 1) : destIdx, 0, srcWin);
+    }
+
+    public setMaster(window: Window) {
+        const idx = this.list.indexOf(window);
+        if (idx === -1) return;
         this.list.splice(idx, 1);
-        this.list.splice(newIdx, 0, window);
+        this.list.splice(0, 0, window);
     }
 
     //#region Storage Operation

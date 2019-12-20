@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TestDriver implements IDriver {
+class TestDriver {
     public currentScreen: number;
     public currentWindow: number;
     public numScreen: number;
@@ -35,14 +35,14 @@ class TestDriver implements IDriver {
 
     public forEachScreen(func: (srf: ISurface) => void) {
         for (let screen = 0; screen < this.numScreen; screen ++)
-            func(new TestSurface(screen));
+            func(new TestSurface(this, screen));
     }
 
-    public getCurrentSurface(): ISurface {
+    public getCurrentContext(): ISurface {
         const window = this.getCurrentWindow();
         if (window)
             return window.surface;
-        return new TestSurface(0);
+        return new TestSurface(this, 0);
     }
 
     public getCurrentWindow(): Window | null {
@@ -74,11 +74,15 @@ class TestSurface implements ISurface {
     }
 
     public get ignore(): boolean {
-        // TODO: optionally ignore some context to test LayoutStore
+        // TODO: optionally ignore some surface to test LayoutStore
         return false;
     }
 
-    constructor(screen: number) {
+    public get workingArea(): Rect {
+        return this.driver.screenSize;
+    }
+
+    constructor(private driver: TestDriver, screen: number) {
         this.screen = screen;
     }
 }
@@ -119,6 +123,10 @@ class TestWindow implements IDriverWindow {
             this.keepBelow = keepBelow;
     }
 
+    public focus() {
+        // TODO: track focus
+    }
+
     public visible(srf: ISurface): boolean {
         const tctx = srf as TestSurface;
         return this.surface.screen === tctx.screen;
@@ -132,7 +140,7 @@ function setTestConfig(name: string, value: any) {
 }
 
 try {
-    exports.TestSurface = TestSurface;
+    exports.TestContext = TestSurface;
     exports.TestDriver = TestDriver;
     exports.TestWindow = TestWindow;
     exports.setTestConfig = setTestConfig;

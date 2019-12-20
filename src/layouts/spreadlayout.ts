@@ -29,7 +29,7 @@ class SpreadLayout implements ILayout {
         this.space = 0.07;
     }
 
-    public apply = (tiles: Window[], area: Rect): void => {
+    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         let numTiles = tiles.length;
         const spaceWidth = Math.floor(area.width * this.space);
         let cardWidth = area.width - (spaceWidth * (numTiles - 1));
@@ -50,7 +50,7 @@ class SpreadLayout implements ILayout {
             );
     }
 
-    public handleShortcut(input: Shortcut) {
+    public handleShortcut(ctx: EngineContext, input: Shortcut) {
         switch (input) {
             case Shortcut.Decrease:
                 // TODO: define arbitrary constants

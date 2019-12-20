@@ -22,21 +22,19 @@
  * Maintains tiling context and performs various tiling actions.
  */
 class TilingEngine {
-    private driver: IDriver;
-    private layouts: LayoutStore;
-    private windows: WindowStore;
+    public layouts: LayoutStore;
+    public windows: WindowStore;
 
-    constructor(driver: IDriver) {
-        this.driver = driver;
+    constructor() {
         this.layouts = new LayoutStore();
         this.windows = new WindowStore();
     }
 
     public adjustLayout(basis: Window) {
-        const srf = basis.surface as KWinSurface;
+        const srf = basis.surface;
         const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            const fullArea = this.driver.getWorkingArea(srf);
+            const fullArea = srf.workingArea;
             const area = new Rect(
                 fullArea.x + CONFIG.screenGapLeft,
                 fullArea.y + CONFIG.screenGapTop,
@@ -48,27 +46,28 @@ class TilingEngine {
         }
     }
 
-    public arrange() {
+    public arrange(ctx: IDriverContext) {
         debug(() => "arrange");
-        this.driver.forEachScreen((srf: ISurface) => {
-            this.arrangeScreen(srf);
+        ctx.screens.forEach((srf: ISurface) => {
+            this.arrangeScreen(ctx, srf);
         });
     }
 
-    public arrangeScreen(srf: ISurface) {
+    public arrangeScreen(ctx: IDriverContext, srf: ISurface) {
         const layout = this.layouts.getCurrentLayout(srf);
 
-        const fullArea = this.driver.getWorkingArea(srf);
-        const workingArea = new Rect(
-            fullArea.x + CONFIG.screenGapLeft,
-            fullArea.y + CONFIG.screenGapTop,
-            fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
-            fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
-        );
+        const workingArea = srf.workingArea;
+
+        let tilingArea;
+        if (CONFIG.monocleMaximize && layout instanceof MonocleLayout)
+            tilingArea = workingArea;
+        else
+            tilingArea = workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
+                CONFIG.screenGapTop, CONFIG.screenGapBottom);
 
         const visibles = this.windows.visibles(srf);
         debugObj(() => ["arrangeScreen", {
-            srf, layout,
+            layout, srf,
             visibles: visibles.length,
         }]);
 
@@ -84,17 +83,17 @@ class TilingEngine {
         const tiles = this.windows.visibleTiles(srf);
         if (CONFIG.maximizeSoleTile && tiles.length === 1) {
             tiles[0].noBorder = true;
-            tiles[0].geometry = fullArea;
+            tiles[0].geometry = workingArea;
         } else if (tiles.length > 0)
-            layout.apply(tiles, workingArea, fullArea, this.driver);
+            layout.apply(new EngineContext(ctx, this), tiles, tilingArea);
 
         visibles.forEach((window) => window.commit());
         debugObj(() => ["arrangeScreen/finished", { srf }]);
     }
 
-    public enforceSize(window: Window) {
+    public enforceSize(ctx: IDriverContext, window: Window) {
         if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
-            this.driver.setTimeout(() => {
+            ctx.setTimeout(() => {
                 if (window.state === WindowState.Tile)
                     window.commit();
             }, 10);
@@ -111,11 +110,11 @@ class TilingEngine {
         this.windows.remove(window);
     }
 
-    public moveFocus(window: Window, step: number) {
+    public moveFocus(ctx: IDriverContext, window: Window, step: number) {
         if (step === 0)
             return;
 
-        const srf = (window) ? window.surface : this.driver.getCurrentSurface();
+        const srf = (window) ? window.surface : ctx.currentSurface;
 
         const visibles = this.windows.visibles(srf);
         if (visibles.length === 0) /* nothing to focus */
@@ -123,7 +122,7 @@ class TilingEngine {
 
         const idx = (window) ? visibles.indexOf(window) : -1;
         if (!window || idx < 0) { /* unmanaged window -> focus master */
-            this.driver.setCurrentWindow(visibles[0]);
+            visibles[0].focus();
             return;
         }
 
@@ -131,7 +130,7 @@ class TilingEngine {
         const newIndex = (idx + (step % num) + num) % num;
 
         debugObj(() => ["moveFocus", {from: window, to: visibles[newIndex]}]);
-        this.driver.setCurrentWindow(visibles[newIndex]);
+        visibles[newIndex].focus();
     }
 
     public moveTile(window: Window, step: number) {
@@ -147,9 +146,7 @@ class TilingEngine {
         const vdst = wrapIndex(vsrc + step, visibles.length);
         const dstWin = visibles[vdst];
 
-        const dst = this.windows.indexOf(dstWin);
-        debugObj(() => ["moveTile", {step, vsrc, vdst, dst}]);
-        this.windows.move(window, dst);
+        this.windows.move(window, dstWin);
     }
 
     public toggleFloat(window: Window) {
@@ -168,22 +165,22 @@ class TilingEngine {
     }
 
     public setMaster(window: Window) {
-        this.windows.move(window, 0);
+        this.windows.setMaster(window);
     }
 
-    public cycleLayout() {
-        this.layouts.cycleLayout(this.driver.getCurrentSurface());
+    public cycleLayout(ctx: IDriverContext) {
+        this.layouts.cycleLayout(ctx.currentSurface);
     }
 
-    public setLayout(layout: any) {
+    public setLayout(ctx: IDriverContext, layout: any) {
         if (layout)
-            this.layouts.setLayout(this.driver.getCurrentSurface(), layout);
+            this.layouts.setLayout(ctx.currentSurface, layout);
     }
 
-    public handleLayoutShortcut(input: Shortcut, data?: any): boolean {
-        const layout = this.layouts.getCurrentLayout(this.driver.getCurrentSurface());
+    public handleLayoutShortcut(ctx: IDriverContext, input: Shortcut, data?: any): boolean {
+        const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
         if (layout.handleShortcut)
-            return layout.handleShortcut(input, data);
+            return layout.handleShortcut(new EngineContext(ctx, this), input, data);
         return false;
     }
 }

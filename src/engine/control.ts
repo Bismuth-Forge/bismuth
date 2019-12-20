@@ -19,42 +19,41 @@
 // DEALINGS IN THE SOFTWARE.
 
 /**
- * A thin layer which translates WM events to tiling actions.
+ * TilingController translates events to actions, implementing high-level
+ * window management logic.
  */
 class TilingController {
-    private driver: IDriver;
     private engine: TilingEngine;
 
-    public constructor(driver: IDriver, engine: TilingEngine) {
-        this.driver = driver;
+    public constructor(engine: TilingEngine) {
         this.engine = engine;
     }
 
-    public onScreenCountChanged(count: number): void {
+    public onScreenCountChanged(ctx: IDriverContext, count: number): void {
         debugObj(() => ["onScreenCountChanged", {count}]);
-        this.engine.arrange();
+        this.engine.arrange(ctx);
     }
 
-    public onScreenResized(srf: ISurface): void {
+    public onScreenResized(ctx: IDriverContext, srf: ISurface): void {
         debugObj(() => ["onScreenResized", {srf}]);
-        this.engine.arrangeScreen(srf);
+        this.engine.arrangeScreen(ctx, srf);
     }
 
-    public onCurrentSurfaceChanged(srf: ISurface): void {
-        debugObj(() => ["onCurrentSurfaceChanged", {srf}]);
-        this.engine.arrange();
+    public onCurrentContextChanged(ctx: IDriverContext): void {
+        debugObj(() => ["onCurrentContextChanged", {srf: ctx.currentSurface}]);
+        this.engine.arrange(ctx);
     }
 
-    public onWindowAdded(window: Window): void {
+    public onWindowAdded(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowAdded", {window}]);
         this.engine.manage(window);
-        this.engine.arrange();
+        this.engine.arrange(ctx);
     }
 
-    public onWindowRemoved(window: Window): void {
+    public onWindowRemoved(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowRemoved", {window}]);
         this.engine.unmanage(window);
-        this.engine.arrange();
+        this.engine.arrange(ctx);
     }
 
     public onWindowMoveStart(window: Window): void {
@@ -65,7 +64,7 @@ class TilingController {
         /* do nothing */
     }
 
-    public onWindowMoveOver(window: Window): void {
+    public onWindowMoveOver(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowMoveOver", {window}]);
         if (window.state === WindowState.Tile) {
             // TODO: refactor this block;
@@ -75,7 +74,7 @@ class TilingController {
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
                 window.state = WindowState.Float;
-                this.engine.arrange();
+                this.engine.arrange(ctx);
             } else
                 window.commit();
         }
@@ -85,66 +84,66 @@ class TilingController {
         /* do nothing */
     }
 
-    public onWindowResize(window: Window): void {
+    public onWindowResize(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
         if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
             if (window.state === WindowState.Tile) {
                 this.engine.adjustLayout(window);
-                this.engine.arrange();
+                this.engine.arrange(ctx);
             }
         }
     }
 
-    public onWindowResizeOver(window: Window): void {
+    public onWindowResizeOver(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
         if (CONFIG.adjustLayout && window.state === WindowState.Tile) {
             this.engine.adjustLayout(window);
-            this.engine.arrange();
+            this.engine.arrange(ctx);
         } else if (!CONFIG.adjustLayout)
-            this.engine.enforceSize(window);
+            this.engine.enforceSize(ctx, window);
     }
 
-    public onWindowGeometryChanged(window: Window): void {
+    public onWindowGeometryChanged(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowGeometryChanged", {window}]);
-        this.engine.enforceSize(window);
+        this.engine.enforceSize(ctx, window);
     }
 
     // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
     // by itself anyway.
-    public onWindowChanged(window: Window | null, comment?: string): void {
+    public onWindowChanged(ctx: IDriverContext, window: Window | null, comment?: string): void {
         if (window) {
             debugObj(() => ["onWindowChanged", {window, comment}]);
 
             if (comment === "unminimized")
-                this.driver.setCurrentWindow(window);
+                window.focus();
 
-            this.engine.arrange();
+            this.engine.arrange(ctx);
         }
     }
 
-    public onShortcut(input: Shortcut, data?: any) {
-        if (this.engine.handleLayoutShortcut(input, data)) {
-            this.engine.arrange();
+    public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
+        if (this.engine.handleLayoutShortcut(ctx, input, data)) {
+            this.engine.arrange(ctx);
             return;
         }
 
-        const window = this.driver.getCurrentWindow();
+        const window = ctx.currentWindow;
         switch (input) {
-            case Shortcut.Up  : if (window) this.engine.moveFocus(window, -1); break;
-            case Shortcut.Down: if (window) this.engine.moveFocus(window, +1); break;
+            case Shortcut.Up  : if (window) this.engine.moveFocus(ctx, window, -1); break;
+            case Shortcut.Down: if (window) this.engine.moveFocus(ctx, window, +1); break;
 
             case Shortcut.ShiftUp  : if (window) this.engine.moveTile(window, -1); break;
             case Shortcut.ShiftDown: if (window) this.engine.moveTile(window, +1); break;
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;
-            case Shortcut.FloatAll   : this.engine.floatAll(this.driver.getCurrentSurface()); break;
+            case Shortcut.FloatAll   : this.engine.floatAll(ctx.currentSurface); break;
 
-            case Shortcut.CycleLayout: this.engine.cycleLayout();
-            case Shortcut.SetLayout: this.engine.setLayout(data); break;
+            case Shortcut.CycleLayout: this.engine.cycleLayout(ctx);
+            case Shortcut.SetLayout: this.engine.setLayout(ctx, data); break;
         }
 
-        this.engine.arrange();
+        this.engine.arrange(ctx);
     }
 }
 

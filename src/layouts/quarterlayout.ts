@@ -73,7 +73,7 @@ class QuarterLayout implements ILayout {
         this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
     }
 
-    public apply(tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         if (tiles.length === 1) {
             tiles[0].geometry = area;
             return;

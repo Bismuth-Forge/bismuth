@@ -29,7 +29,7 @@ class StairLayout implements ILayout {
         this.space = 24;
     }
 
-    public apply = (tiles: Window[], area: Rect): void => {
+    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         const len = tiles.length;
         const space = this.space;
 
@@ -47,7 +47,7 @@ class StairLayout implements ILayout {
         }
     }
 
-    public handleShortcut(input: Shortcut) {
+    public handleShortcut(ctx: EngineContext, input: Shortcut) {
         switch (input) {
             case Shortcut.Decrease:
                 // TODO: define arbitrary constants

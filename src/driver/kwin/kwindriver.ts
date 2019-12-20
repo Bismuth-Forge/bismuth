@@ -25,7 +25,38 @@
  * signals(Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
-class KWinDriver implements IDriver {
+class KWinDriver implements IDriverContext {
+    public static backendName: string = "kwin";
+
+    // TODO: split context implementation
+    //#region implement properties of IDriverContext (except `setTimeout`)
+    public get backend(): string {
+        return KWinDriver.backendName;
+    }
+
+    public get currentSurface(): ISurface {
+        return new KWinSurface(
+            (workspace.activeClient) ? workspace.activeClient.screen : 0,
+            workspace.currentActivity,
+            workspace.currentDesktop,
+        );
+    }
+
+    public get currentWindow(): Window | null {
+        const client = workspace.activeClient;
+        return (client) ? this.queryWindow(client) : null;
+    }
+
+    public get screens(): ISurface[] {
+        const screens = [];
+        for (let screen = 0; screen < workspace.numScreens; screen++)
+            screens.push(new KWinSurface(
+                screen, workspace.currentActivity, workspace.currentDesktop));
+        return screens;
+    }
+
+    //#endregion
+
     private engine: TilingEngine;
     private control: TilingController;
     private windowMap: {[key: string]: Window};
@@ -33,8 +64,8 @@ class KWinDriver implements IDriver {
     private entered: boolean;
 
     constructor() {
-        this.engine = new TilingEngine(this);
-        this.control = new TilingController(this, this.engine);
+        this.engine = new TilingEngine();
+        this.control = new TilingController(this.engine);
         this.windowMap = {};
         this.timerPool = Array();
         this.entered = false;
@@ -60,48 +91,14 @@ class KWinDriver implements IDriver {
             else
                 this.unregisterWindow(window);
         }
-        this.engine.arrange();
+        this.engine.arrange(this);
     }
 
-    /*
-     * Utils
-     */
-
-    public forEachScreen(func: (srf: ISurface) => void) {
-        for (let screen = 0; screen < workspace.numScreens; screen ++)
-            func(new KWinSurface(screen, workspace.currentActivity, workspace.currentDesktop));
-    }
-
-    public getCurrentSurface(): ISurface {
-        return new KWinSurface(
-            (workspace.activeClient) ? workspace.activeClient.screen : 0,
-            workspace.currentActivity,
-            workspace.currentDesktop,
-        );
-    }
-
-    public getCurrentWindow(): Window | null {
-        const client = workspace.activeClient;
-        if (!client)
-            return null;
-        return this.queryWindow(client);
-    }
-
-    public getWorkingArea(srf: ISurface): Rect {
-        const ksrf = srf as KWinSurface;
-        return toRect(
-            workspace.clientArea(KWin.PlacementArea, ksrf.screen, workspace.currentDesktop),
-        );
-    }
-
-    public setCurrentWindow(window: Window) {
-        const kwindow = window.window as KWinWindow;
-        workspace.activeClient = kwindow.client;
-    }
-
+    //#region implement `setTimeout` of IDriverContext`
     public setTimeout(func: () => void, timeout: number) {
         KWinSetTimeout(() => this.enter(func), timeout);
     }
+    //#endregion
 
     /*
      * Shortcut
@@ -115,7 +112,7 @@ class KWinDriver implements IDriver {
         const bind = (seq: string, title: string, input: Shortcut) => {
             title = "Krohnkite: " + title;
             seq = "Meta+" + seq;
-            const cb = () => { this.control.onShortcut(input); };
+            const cb = () => { this.control.onShortcut(this, input); };
             KWin.registerShortcut(title, "", seq, cb);
         };
 
@@ -144,19 +141,19 @@ class KWinDriver implements IDriver {
         bind("Return", "Set master", Shortcut.SetMaster);
 
         KWin.registerShortcut("Krohnkite: Tile Layout", "", "Meta+T", () => {
-            this.control.onShortcut(Shortcut.SetLayout, TileLayout); });
+            this.control.onShortcut(this, Shortcut.SetLayout, TileLayout); });
 
         KWin.registerShortcut("Krohnkite: Monocle Layout", "", "Meta+M", () => {
-            this.control.onShortcut(Shortcut.SetLayout, MonocleLayout); });
+            this.control.onShortcut(this, Shortcut.SetLayout, MonocleLayout); });
 
         KWin.registerShortcut("Krohnkite: Spread Layout", "", "", () => {
-            this.control.onShortcut(Shortcut.SetLayout, SpreadLayout); });
+            this.control.onShortcut(this, Shortcut.SetLayout, SpreadLayout); });
 
         KWin.registerShortcut("Krohnkite: Stair Layout", "", "", () => {
-            this.control.onShortcut(Shortcut.SetLayout, StairLayout); });
+            this.control.onShortcut(this, Shortcut.SetLayout, StairLayout); });
 
         KWin.registerShortcut("Krohnkite: Floating Layout", "", "", () => {
-            this.control.onShortcut(Shortcut.SetLayout, FloatingLayout); });
+            this.control.onShortcut(this, Shortcut.SetLayout, FloatingLayout); });
     }
 
     /*
@@ -217,23 +214,23 @@ class KWinDriver implements IDriver {
 
     private bindEvents() {
         this.connect(workspace.numberScreensChanged, (count: number) =>
-            this.control.onScreenCountChanged(count));
+            this.control.onScreenCountChanged(this, count));
 
         this.connect(workspace.screenResized, (screen: number) =>
-            this.control.onScreenResized(new KWinSurface(
+            this.control.onScreenResized(this, new KWinSurface(
                 screen, workspace.currentActivity, workspace.currentDesktop)));
 
         this.connect(workspace.currentActivityChanged, (activity: string) =>
-            this.control.onCurrentSurfaceChanged(this.getCurrentSurface()));
+            this.control.onCurrentContextChanged(this));
 
         this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) =>
-            this.control.onCurrentSurfaceChanged(this.getCurrentSurface()));
+            this.control.onCurrentContextChanged(this));
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             let wrapper: (() => void);
             const handler = () => {
                 const window = this.registerWindow(client);
-                this.control.onWindowAdded(window);
+                this.control.onWindowAdded(this, window);
                 if (window.state !== WindowState.Unmanaged)
                     this.bindWindowEvents(window, client);
                 else
@@ -248,24 +245,24 @@ class KWinDriver implements IDriver {
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
             const window = this.queryWindow(client);
             if (window) {
-                this.control.onWindowRemoved(window);
+                this.control.onWindowRemoved(this, window);
                 this.unregisterWindow(window);
             }
         });
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-            this.control.onWindowChanged(this.queryWindow(client), "fullscreen=" + fullScreen + " user=" + user));
+            this.control.onWindowChanged(this, this.queryWindow(client), "fullscreen=" + fullScreen + " user=" + user));
 
         this.connect(workspace.clientMinimized, (client: KWin.Client) => {
             if (KWINCONFIG.preventMinimize) {
                 client.minimized = false;
                 workspace.activeClient = client;
             } else
-                this.control.onWindowChanged(this.queryWindow(client), "minimized");
+                this.control.onWindowChanged(this, this.queryWindow(client), "minimized");
         });
 
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
-            this.control.onWindowChanged(this.queryWindow(client), "unminimized"));
+            this.control.onWindowChanged(this, this.queryWindow(client), "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
@@ -283,14 +280,14 @@ class KWinDriver implements IDriver {
                 if (moving)
                     this.control.onWindowMoveStart(window);
                 else
-                    this.control.onWindowMoveOver(window);
+                    this.control.onWindowMoveOver(this, window);
             }
             if (resizing !== client.resize) {
                 resizing = client.resize;
                 if (resizing)
                     this.control.onWindowResizeStart(window);
                 else
-                    this.control.onWindowResizeOver(window);
+                    this.control.onWindowResizeOver(this, window);
             }
         });
 
@@ -298,21 +295,21 @@ class KWinDriver implements IDriver {
             if (moving)
                 this.control.onWindowMove(window);
             else if (resizing)
-                this.control.onWindowResize(window);
+                this.control.onWindowResize(this, window);
             else {
                 if (!window.actualGeometry.equals(window.geometry))
-                    this.control.onWindowGeometryChanged(window);
+                    this.control.onWindowGeometryChanged(this, window);
             }
         });
 
         this.connect(client.screenChanged, () =>
-            this.control.onWindowChanged(window, "screen=" + client.screen));
+            this.control.onWindowChanged(this, window, "screen=" + client.screen));
 
         this.connect(client.activitiesChanged, () =>
-            this.control.onWindowChanged(window, "activity=" + client.activities.join(",")));
+            this.control.onWindowChanged(this, window, "activity=" + client.activities.join(",")));
 
         this.connect(client.desktopChanged, () =>
-            this.control.onWindowChanged(window, "desktop=" + client.desktop));
+            this.control.onWindowChanged(this, window, "desktop=" + client.desktop));
     }
 
     // TODO: private onConfigChanged = () => {

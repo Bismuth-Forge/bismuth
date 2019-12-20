@@ -23,20 +23,19 @@ class MonocleLayout implements ILayout {
         return CONFIG.enableMonocleLayout;
     }
 
-    public apply = (tiles: Window[], area: Rect, workingArea?: Rect, driver?: IDriver): void => {
-        if (CONFIG.monocleMaximize) {
-            area = workingArea || area;
+    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+        if (CONFIG.monocleMaximize)
             tiles.forEach((window) => window.noBorder = true);
-        }
+
         tiles.forEach((window) => (window.geometry = area));
 
         /* KWin-specific `monocleMinimizeRest` option */
-        if (driver && driver instanceof KWinDriver && KWINCONFIG.monocleMinimizeRest) {
-            const tiles_clone = [...tiles];
-            driver.setTimeout(() => {
-                const current = driver.getCurrentWindow();
+        if (ctx.backend === KWinDriver.backendName && KWINCONFIG.monocleMinimizeRest) {
+            const tilesBak = [...tiles];
+            ctx.setTimeout(() => {
+                const current = ctx.currentWindow;
                 if (current && current.state === WindowState.Tile) {
-                    tiles_clone.forEach((window) => {
+                    tilesBak.forEach((window) => {
                         if (window !== current)
                             (window.window as KWinWindow).client.minimized = true;
                     });

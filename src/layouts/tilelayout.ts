@@ -73,7 +73,7 @@ class TileLayout implements ILayout {
         this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
     }
 
-    public apply = (tiles: Window[], area: Rect): void => {
+    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         const gap = CONFIG.tileLayoutGap;
         /* TODO: clean up cache / check invalidated(unmanage) entries */
 
@@ -99,7 +99,7 @@ class TileLayout implements ILayout {
         }
     }
 
-    public handleShortcut(input: Shortcut) {
+    public handleShortcut(ctx: EngineContext, input: Shortcut) {
         switch (input) {
             case Shortcut.Left:
                 this.masterRatio = clip(

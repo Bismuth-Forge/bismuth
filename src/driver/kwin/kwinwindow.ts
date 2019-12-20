@@ -111,6 +111,10 @@ class KWinWindow implements IDriverWindow {
         }
     }
 
+    public focus(): void {
+        workspace.activeClient = this.client;
+    }
+
     public toString(): string {
         /* using a shorthand name to keep debug message tidy */
         return "KWin(" + this.client.windowId.toString(16) + "." + this.client.resourceClass + ")";
