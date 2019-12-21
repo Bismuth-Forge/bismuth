@@ -43,7 +43,7 @@ class QuarterLayout implements ILayout {
         if (idx < 0)
             return;
 
-        const delta = new WindowResizeDelta(basis);
+        const delta = WindowResizeDelta.fromWindow(basis);
 
         /* vertical split */
         if ((idx === 0 || idx === 3) && delta.east !== 0)
