@@ -53,8 +53,77 @@ class ColumnLayout implements ILayout {
         this.tileWeights = new LayoutWeightMap();
     }
 
-    // public adjust(area: Rect, tiles: Window[], basis: Window): void {
-    // }
+    public adjust(area: Rect, tiles: Window[], basis: Window): void {
+        /* TODO: make this function simpler by spliting layout-building logic into a new method */
+
+        const entry = this.tileCache[basis.id];
+        if (!entry) return;
+
+        const numColumns = this.columnMasters.length;
+        const [basisColumn, basisIndex] = entry;
+        const delta =  WindowResizeDelta.fromWindow(basis);
+
+        /* horizontal adjustment */
+        if (basisColumn === null) {
+            /* the stack is resized. */
+            /* adjust colums-stack ratio. */
+            this.stackRatio = 1 - LayoutUtils.adjustAreaHalfWeights(area, 1 - this.stackRatio, 20,
+                1, delta, true);
+        } else if (basisColumn === numColumns - 1) {
+            /* the last column is resized */
+            /* adjust columns-stack ratio */
+            if (delta.east !== 0) {
+                const columnsDelta = new WindowResizeDelta(delta.east, 0, 0, 0);
+                this.stackRatio = 1 - LayoutUtils.adjustAreaHalfWeights(area, 1 - this.stackRatio, 20,
+                    0, columnsDelta, true);
+            }
+
+            /* adjust colums ratio */
+            if (delta.west !== 0) {
+                const columnDelta = new WindowResizeDelta(0, delta.west, 0, 0);
+                const newWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, 20,
+                    basisColumn, columnDelta, true);
+                this.columnWeights = newWeights;
+            }
+        } else {
+            /* any other columns */
+            /* adjust colums weights */
+            const newWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, 20,
+                basisColumn, delta, true);
+            this.columnWeights = newWeights;
+        }
+
+        const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);
+        const [columnsTiles, stackTiles] = partitionArray(tiles, (tile, idx) => idx < numColumnTiles);
+
+        /* vertical adjustment */
+        if (basisColumn === null) {
+            /* stack */
+            if (stackTiles.length > 0) {
+                const stackTileWeights = stackTiles.map((tile) => this.tileWeights.get(tile));
+                const newWeights = LayoutUtils.adjustAreaWeights(area, stackTileWeights, CONFIG.tileLayoutGap,
+                    basisIndex, delta);
+                newWeights.forEach((weight, index) => {
+                    const tile = stackTiles[index];
+                    this.tileWeights.set(tile, weight * stackTiles.length);
+                });
+            }
+        } else {
+            /* column */
+            if (columnsTiles.length > 0) {
+                const columnTilesList = partitionArrayBySizes(columnsTiles, this.columnMasters)
+                    .filter((arr) => arr.length > 0);
+                const columnTiles = columnTilesList[basisColumn];
+                const weights = columnTiles.map((tile) => this.tileWeights.get(tile));
+                const newWeights = LayoutUtils.adjustAreaWeights(area, weights, CONFIG.tileLayoutGap,
+                    basisIndex, delta);
+                newWeights.forEach((weight, index) => {
+                    const tile = columnTiles[index];
+                    this.tileWeights.set(tile, weight * columnTiles.length);
+                });
+            }
+        }
+    }
 
     public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
         this.tileCache = {};

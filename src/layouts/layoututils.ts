@@ -71,9 +71,103 @@ class LayoutUtils {
         return LayoutUtils.splitAreaWeighted(area, [weight, 1 - weight], gap, horizontal);
     }
 
-    public static calculateWeights(parts: number[]): number[] {
-        const length = parts.reduce((acc, partLength) => acc + partLength, 0);
-        return parts.map((partLength) => partLength / length);
+    /**
+     * adjustWeights recalculates the weights of subareas of the line, based on size change.
+     * @param line      The line being aplitted
+     * @param weights   The weight of each part
+     * @param gap       The gap size b/w parts
+     * @param target    The index of the part being changed.
+     * @param deltaFw   The amount of growth towards the origin.
+     * @param deltaBw   The amount of growth towards the infinity.
+     */
+    public static adjustWeights(
+        [begin, length]: [number, number],
+        weights: number[],
+        gap: number,
+        target: number,
+        deltaFw: number,
+        deltaBw: number,
+    ): number[] {
+        // TODO: configurable min length?
+        const minLength = 1;
+
+        const parts = this.splitWeighted([begin, length], weights, gap);
+        const [targetBase, targetLength] = parts[target];
+
+        /* apply backward delta */
+        if (target > 0 && deltaBw !== 0) {
+            const neighbor = target - 1;
+            const [neighborBase, neighborLength] = parts[neighbor];
+
+            /* limit delta to prevent squeezing windows */
+            const delta = clip(deltaBw,
+                minLength - targetLength,
+                neighborLength - minLength,
+            );
+
+            parts[target] = [(targetBase - delta), (targetLength + delta)];
+            parts[neighbor] = [neighborBase, (neighborLength - delta)];
+        }
+
+        /* apply forward delta */
+        if (target < parts.length - 1 && deltaFw !== 0) {
+            const neighbor = target + 1;
+            const [neighborBase, neighborLength] = parts[neighbor];
+
+            /* limit delta to prevent squeezing windows */
+            const delta = clip(deltaFw,
+                minLength - targetLength,
+                neighborLength - minLength,
+            );
+
+            parts[target] = [targetBase, targetLength + delta];
+            parts[neighbor] = [neighborBase + delta, neighborLength - delta];
+        }
+
+        return LayoutUtils.calculateWeights(parts);
+    }
+
+    /**
+     * adjustAreaWeights recalculates weights of subareas splitting the given area, based on size change.
+     * @param area          The area being splitted
+     * @param weights       The weight of each part
+     * @param gap           The gap size b/w parts
+     * @param target        The index of the part being changed.
+     * @param delta         The changes in dimension of the target
+     * @param horizontal    If true, calculate horizontal weights, instead of vertical.
+     */
+    public static adjustAreaWeights(
+        area: Rect,
+        weights: number[],
+        gap: number,
+        target: number,
+        delta: WindowResizeDelta,
+        horizontal?: boolean,
+    ): number[] {
+        const line: [number, number] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
+        const [deltaFw, deltaBw] = (horizontal)
+            ? [delta.east, delta.west]
+            : [delta.south, delta.north]
+            ;
+        return LayoutUtils.adjustWeights(line, weights, gap, target, deltaFw, deltaBw);
+    }
+
+    public static adjustAreaHalfWeights(
+        area: Rect,
+        weight: number,
+        gap: number,
+        target: number,
+        delta: WindowResizeDelta,
+        horizontal?: boolean,
+    ): number {
+        const weights = [weight, 1 - weight];
+        const newWeights = LayoutUtils.adjustAreaWeights(area, weights, gap, target, delta, horizontal);
+        return newWeights[0];
+    }
+
+    public static calculateWeights(parts: Array<[number, number]>): number[] {
+        const totalLength = parts.reduce((acc, [base, length]) => acc + length, 0);
+        return parts.map(([base, length]) => length / totalLength);
     }
 
     public static calculateAreaWeights(area: Rect, geometries: Rect[], gap?: number, horizontal?: boolean): number[] {
@@ -81,9 +175,9 @@ class LayoutUtils {
         horizontal = (horizontal !== undefined) ? horizontal : false;
 
         const line = (horizontal) ? area.width : area.height;
-        const parts = (horizontal)
-            ? geometries.map((geometry) => geometry.width)
-            : geometries.map((geometry) => geometry.height)
+        const parts: Array<[number, number]> = (horizontal)
+            ? geometries.map((geometry) => [geometry.x, geometry.width])
+            : geometries.map((geometry) => [geometry.y, geometry.height])
             ;
         return LayoutUtils.calculateWeights(parts);
     }
