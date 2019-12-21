@@ -68,19 +68,7 @@ class LayoutUtils {
     }
 
     public static splitAreaHalfWeighted(area: Rect, weight: number, gap?: number, horizontal?: boolean): Rect[] {
-        gap = (gap !== undefined) ? gap : 0;
-        horizontal = (horizontal !== undefined) ? horizontal : false;
-
-        const [lineBase, lineLength] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
-        const part1: [number, number] = [lineBase, Math.floor((lineLength - gap) * weight)];
-        const part2: [number, number] = [lineBase + (part1[1] + gap), lineLength - (part1[1] + gap)];
-        const parts: Array<[number, number]> = [part1, part2];
-
-        return parts.map(([begin, length]) =>
-            (horizontal)
-                ? new Rect(begin, area.y, length, area.height)
-                : new Rect(area.x, begin, area.width, length),
-        );
+        return LayoutUtils.splitAreaWeighted(area, [weight, 1 - weight], gap, horizontal);
     }
 
     public static calculateWeights(parts: number[]): number[] {
