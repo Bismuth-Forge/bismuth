@@ -28,7 +28,7 @@
  */
 class ColumnLayout implements ILayout {
     public get enabled(): boolean {
-        return true;
+        return CONFIG.enableColumnLayout;
     }
 
     private columnFocus: number[];
