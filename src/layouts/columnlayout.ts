@@ -194,7 +194,7 @@ class ColumnLayout implements ILayout {
 
             /* change column */
             if (this.nextColumn === null) {
-                const focus = clip(this.stackFocus, 0, stackTiles.length);
+                const focus = clip(this.stackFocus, 0, stackTiles.length - 1);
                 stackTiles[focus].focus();
             }
         }
