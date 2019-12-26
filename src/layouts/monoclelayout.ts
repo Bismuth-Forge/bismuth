@@ -23,7 +23,11 @@ class MonocleLayout implements ILayout {
         return CONFIG.enableMonocleLayout;
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+        /* Tile all tileables */
+        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        const tiles = tileables;
+
         if (CONFIG.monocleMaximize)
             tiles.forEach((window) => window.noBorder = true);
 

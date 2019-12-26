@@ -41,7 +41,7 @@ class TilingEngine {
                 fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
                 fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
             );
-            const tiles = this.windows.visibleTiles(srf);
+            const tiles = this.windows.getVisibleTiles(srf);
             layout.adjust(area, tiles, basis);
         }
     }
@@ -65,27 +65,20 @@ class TilingEngine {
             tilingArea = workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
                 CONFIG.screenGapTop, CONFIG.screenGapBottom);
 
-        const visibles = this.windows.visibles(srf);
+        const visibles = this.windows.getVisibleWindows(srf);
         debugObj(() => ["arrangeScreen", {
             layout, srf,
             visibles: visibles.length,
         }]);
 
-        /* reset all properties of windows */
-        visibles.forEach((window) => {
-            if (window.state === WindowState.FreeTile)
-                window.state = WindowState.Tile;
-
-            if (window.state === WindowState.Tile)
-                window.noBorder = CONFIG.noTileBorder;
-        });
-
-        const tiles = this.windows.visibleTiles(srf);
-        if (CONFIG.maximizeSoleTile && tiles.length === 1) {
-            tiles[0].noBorder = true;
-            tiles[0].geometry = workingArea;
-        } else if (tiles.length > 0)
-            layout.apply(new EngineContext(ctx, this), tiles, tilingArea);
+        // TODO: use WindowStore#getVisibleTileables
+        const tileables = this.windows.getVisibleTileables(srf);
+        if (CONFIG.maximizeSoleTile && tileables.length === 1) {
+            tileables[0].state = WindowState.Tile;
+            tileables[0].noBorder = true;
+            tileables[0].geometry = workingArea;
+        } else if (tileables.length > 0)
+            layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
 
         visibles.forEach((window) => window.commit());
         debugObj(() => ["arrangeScreen/finished", { srf }]);
@@ -116,7 +109,7 @@ class TilingEngine {
 
         const srf = (window) ? window.surface : ctx.currentSurface;
 
-        const visibles = this.windows.visibles(srf);
+        const visibles = this.windows.getVisibleWindows(srf);
         if (visibles.length === 0) /* nothing to focus */
             return;
 
@@ -138,7 +131,7 @@ class TilingEngine {
             return;
 
         const srf = window.surface;
-        const visibles = this.windows.visibles(srf);
+        const visibles = this.windows.getVisibleWindows(srf);
         if (visibles.length < 2)
             return;
 
@@ -156,19 +149,19 @@ class TilingEngine {
     }
 
     public floatAll(srf: ISurface) {
-        const tiles = this.windows.visibles(srf);
-        const numFloats = tiles.reduce<number>((count, window) => {
+        const windows = this.windows.getVisibleWindows(srf);
+        const numFloats = windows.reduce<number>((count, window) => {
             return (window.state === WindowState.Float) ? count + 1 : count;
         }, 0);
 
-        if (numFloats < tiles.length / 2)
-            tiles.forEach((window) => {
+        if (numFloats < windows.length / 2)
+            windows.forEach((window) => {
                 /* TODO: do not use arbitrary constants */
                 window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
                 window.state = WindowState.Float;
             });
         else
-            tiles.forEach((window) => {
+            windows.forEach((window) => {
                 window.state = WindowState.Tile;
             });
     }

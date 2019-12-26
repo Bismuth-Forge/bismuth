@@ -70,19 +70,23 @@ class WindowStore {
 
     //#region Querying Windows
 
-    public visibles(srf: ISurface): Window[] {
+    /** Returns all visible windows on the given surface. */
+    public getVisibleWindows(srf: ISurface): Window[] {
         return this.list.filter((win) => win.visible(srf));
     }
 
-    public visibleTiles(srf: ISurface): Window[] {
+    /** Return all visible "Tile" windows on the given surface. */
+    public getVisibleTiles(srf: ISurface): Window[] {
         return this.list.filter((win) =>
             win.state === WindowState.Tile && win.visible(srf));
     }
 
-    public visibleTileables(srf: ISurface): Window[] {
-        return this.list.filter((win) =>
-            (win.state === WindowState.Tile || win.state === WindowState.FreeTile)
-            && win.visible(srf));
+    /**
+     * Return all visible "tileable" windows on the given surface
+     * @see Window#tileable
+     */
+    public getVisibleTileables(srf: ISurface): Window[] {
+        return this.list.filter((win) => win.tileable && win.visible(srf));
     }
 
     //#endregion

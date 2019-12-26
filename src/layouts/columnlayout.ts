@@ -125,8 +125,12 @@ class ColumnLayout implements ILayout {
         }
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         this.tileCache = {};
+
+        /* Tile all tileables */
+        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        const tiles = tileables;
 
         /** the total number of tiles in all columns */
         const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);

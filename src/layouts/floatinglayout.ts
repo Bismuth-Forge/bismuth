@@ -31,9 +31,9 @@ class FloatingLayout implements ILayout {
         return this._enabled;
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
-        tiles.forEach((tile: Window) =>
-            tile.state = WindowState.FreeTile);
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+        tileables.forEach((tileable: Window) =>
+            tileable.state = WindowState.FreeTile);
     }
 
     public toString(): string {

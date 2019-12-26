@@ -73,9 +73,15 @@ class QuarterLayout implements ILayout {
         this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
-        if (tiles.length === 1) {
-            tiles[0].geometry = area;
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+        for (let i = 0; i < 4 && i < tileables.length; i++)
+            tileables[i].state = WindowState.Tile;
+
+        if (tileables.length > 4)
+            tileables.slice(4).forEach((tile) => tile.state = WindowState.FreeTile);
+
+        if (tileables.length === 1) {
+            tileables[0].geometry = area;
             return;
         }
 
@@ -85,34 +91,31 @@ class QuarterLayout implements ILayout {
         const leftWidth = Math.floor(area.width * this.vsplit);
         const rightWidth = area.width - leftWidth;
         const rightX = area.x + leftWidth;
-        if (tiles.length === 2) {
-            tiles[0].geometry = new Rect(area.x, area.y, leftWidth , area.height).gap(0, gap1, 0, 0);
-            tiles[1].geometry = new Rect(rightX, area.y, rightWidth, area.height).gap(gap2, 0, 0, 0);
+        if (tileables.length === 2) {
+            tileables[0].geometry = new Rect(area.x, area.y, leftWidth , area.height).gap(0, gap1, 0, 0);
+            tileables[1].geometry = new Rect(rightX, area.y, rightWidth, area.height).gap(gap2, 0, 0, 0);
             return;
         }
 
         const rightTopHeight = Math.floor(area.height * this.rhsplit);
         const rightBottomHeight = area.height - rightTopHeight;
         const rightBottomY = area.y + rightTopHeight;
-        if (tiles.length === 3) {
-            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , area.height      ).gap(0, gap1, 0, 0);
-            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
-            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
+        if (tileables.length === 3) {
+            tileables[0].geometry = new Rect(area.x, area.y      , leftWidth , area.height      ).gap(0, gap1, 0, 0);
+            tileables[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
+            tileables[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
             return;
         }
 
         const leftTopHeight = Math.floor(area.height * this.lhsplit);
         const leftBottomHeight = area.height - leftTopHeight;
         const leftBottomY = area.y + leftTopHeight;
-        if (tiles.length >= 4) {
-            tiles[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    ).gap(0, gap1, 0, gap1);
-            tiles[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
-            tiles[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
-            tiles[3].geometry = new Rect(area.x, leftBottomY , leftWidth , leftBottomHeight ).gap(0, gap2, gap2, 0);
+        if (tileables.length >= 4) {
+            tileables[0].geometry = new Rect(area.x, area.y      , leftWidth , leftTopHeight    ).gap(0, gap1, 0, gap1);
+            tileables[1].geometry = new Rect(rightX, area.y      , rightWidth, rightTopHeight   ).gap(gap2, 0, 0, gap1);
+            tileables[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
+            tileables[3].geometry = new Rect(area.x, leftBottomY , leftWidth , leftBottomHeight ).gap(0, gap2, gap2, 0);
         }
-
-        if (tiles.length > 4)
-            tiles.slice(4).forEach((tile) => tile.state = WindowState.FreeTile);
     }
 
     public toString(): string {

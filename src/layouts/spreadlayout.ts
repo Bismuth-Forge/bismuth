@@ -29,7 +29,11 @@ class SpreadLayout implements ILayout {
         this.space = 0.07;
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+        /* Tile all tileables */
+        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        const tiles = tileables;
+
         let numTiles = tiles.length;
         const spaceWidth = Math.floor(area.width * this.space);
         let cardWidth = area.width - (spaceWidth * (numTiles - 1));

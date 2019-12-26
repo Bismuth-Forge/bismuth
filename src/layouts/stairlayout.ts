@@ -29,7 +29,11 @@ class StairLayout implements ILayout {
         this.space = 24;
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+        /* Tile all tileables */
+        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        const tiles = tileables;
+
         const len = tiles.length;
         const space = this.space;
 

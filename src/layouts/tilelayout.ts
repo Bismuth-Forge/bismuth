@@ -73,9 +73,13 @@ class TileLayout implements ILayout {
         this.masterRatio = clip(this.masterRatio, TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
     }
 
-    public apply(ctx: EngineContext, tiles: Window[], area: Rect): void {
+    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         const gap = CONFIG.tileLayoutGap;
         /* TODO: clean up cache / check invalidated(unmanage) entries */
+
+        /* Tile all tileables */
+        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        const tiles = tileables;
 
         if (tiles.length <= this.numMaster) /* only master */
             stackTilesWithWeight(tiles, area, this.weights, gap);

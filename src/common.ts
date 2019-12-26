@@ -120,7 +120,7 @@ interface ILayout {
 
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window): void;
-    apply(ctx: EngineContext, tiles: Window[], area: Rect): void;
+    apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
     toString(): string;
 
     /* overriding */
