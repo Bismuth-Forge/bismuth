@@ -156,12 +156,21 @@ class TilingEngine {
     }
 
     public floatAll(srf: ISurface) {
-        const tiles = this.windows.visibleTiles(srf);
-        tiles.forEach((window) => {
-            /* TODO: do not use arbitrary constants */
-            window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
-            window.state = WindowState.Float;
-        });
+        const tiles = this.windows.visibles(srf);
+        const numFloats = tiles.reduce<number>((count, window) => {
+            return (window.state === WindowState.Float) ? count + 1 : count;
+        }, 0);
+
+        if (numFloats < tiles.length / 2)
+            tiles.forEach((window) => {
+                /* TODO: do not use arbitrary constants */
+                window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
+                window.state = WindowState.Float;
+            });
+        else
+            tiles.forEach((window) => {
+                window.state = WindowState.Tile;
+            });
     }
 
     public setMaster(window: Window) {

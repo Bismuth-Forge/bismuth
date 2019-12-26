@@ -40,7 +40,7 @@ enum Shortcut {
     ShiftDecrease,
 
     ToggleFloat,
-    FloatAll,
+    ToggleFloatAll,
     SetMaster,
     CycleLayout,
     SetLayout,
