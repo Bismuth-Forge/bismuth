@@ -16,11 +16,11 @@ class EngineContext implements IDriverContext {
         return this.drvctx.screens;
     }
 
-    public get setTimeout(): (func: () => void, timeout: number) => void {
-        return this.drvctx.setTimeout;
+    constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
     }
 
-    constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
+    public setTimeout(func: () => void, timeout: number): void {
+        this.drvctx.setTimeout(func, timeout);
     }
 
     public moveWindow(window: Window, target: Window, after?: boolean) {
