@@ -1,19 +1,11 @@
 
-class EngineContext implements IDriverContext {
+class EngineContext {
     public get backend(): string {
         return this.drvctx.backend;
     }
 
-    public get currentSurface(): ISurface {
-        return this.drvctx.currentSurface;
-    }
-
     public get currentWindow(): Window | null {
         return this.drvctx.currentWindow;
-    }
-
-    public get screens(): ISurface[] {
-        return this.drvctx.screens;
     }
 
     constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
