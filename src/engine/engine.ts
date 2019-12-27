@@ -42,17 +42,19 @@ class TilingEngine {
     }
 
     public adjustWindowSize(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
+        const srf = basis.surface;
+
         // TODO: configurable step size?
-        const stepSize = 10;
+        const hStepSize = srf.workingArea.width  * 0.03;
+        const vStepSize = srf.workingArea.height * 0.03;
         let delta: RectDelta;
         switch (dir) {
-            case "east" : delta = new RectDelta(stepSize * step, 0, 0, 0); break;
-            case "west" : delta = new RectDelta(0, stepSize * step, 0, 0); break;
-            case "south": delta = new RectDelta(0, 0, stepSize * step, 0); break;
-            case "north": delta = new RectDelta(0, 0, 0, stepSize * step); break;
+            case "east" : delta = new RectDelta(hStepSize * step, 0, 0, 0); break;
+            case "west" : delta = new RectDelta(0, hStepSize * step, 0, 0); break;
+            case "south": delta = new RectDelta(0, 0, vStepSize * step, 0); break;
+            case "north": delta = new RectDelta(0, 0, 0, vStepSize * step); break;
         }
 
-        const srf = basis.surface;
         const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
             const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
