@@ -46,6 +46,26 @@ class TilingEngine {
         }
     }
 
+    public adjustWindowSize(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
+        // TODO: configurable step size?
+        const stepSize = 10;
+        let delta: RectDelta;
+        switch (dir) {
+            case "east" : delta = new RectDelta(stepSize * step, 0, 0, 0); break;
+            case "west" : delta = new RectDelta(0, stepSize * step, 0, 0); break;
+            case "south": delta = new RectDelta(0, 0, stepSize * step, 0); break;
+            case "north": delta = new RectDelta(0, 0, 0, stepSize * step); break;
+        }
+
+        const srf = basis.surface;
+        const layout = this.layouts.getCurrentLayout(srf);
+        if (layout.adjust) {
+            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
+                CONFIG.screenGapTop, CONFIG.screenGapBottom);
+            layout.adjust(area, this.windows.getVisibleWindows(srf), basis, delta);
+        }
+    }
+
     public arrange(ctx: IDriverContext) {
         debug(() => "arrange");
         ctx.screens.forEach((srf: ISurface) => {

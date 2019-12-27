@@ -132,6 +132,11 @@ class TilingController {
             case Shortcut.Up  : if (window) this.engine.moveFocus(ctx, window, -1); break;
             case Shortcut.Down: if (window) this.engine.moveFocus(ctx, window, +1); break;
 
+            case Shortcut.GrowWidth   : if (window) this.engine.adjustWindowSize(window, "east" ,  1); break;
+            case Shortcut.ShrinkWidth : if (window) this.engine.adjustWindowSize(window, "east" , -1); break;
+            case Shortcut.GrowHeight  : if (window) this.engine.adjustWindowSize(window, "south",  1); break;
+            case Shortcut.ShrinkHeight: if (window) this.engine.adjustWindowSize(window, "south", -1); break;
+
             case Shortcut.ShiftUp  : if (window) this.engine.moveTile(window, -1); break;
             case Shortcut.ShiftDown: if (window) this.engine.moveTile(window, +1); break;
 
