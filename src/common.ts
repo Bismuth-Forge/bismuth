@@ -119,7 +119,7 @@ interface ILayout {
     readonly enabled: boolean;
 
     /* methods */
-    adjust?(area: Rect, tiles: Window[], basis: Window): void;
+    adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
     apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
     toString(): string;
 

@@ -36,7 +36,7 @@ class TileLayout implements ILayout {
         this.weights = new LayoutWeightMap();
     }
 
-    public adjust(area: Rect, tiles: Window[], basis: Window) {
+    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
         if (tiles.length <= this.numMaster)
             return;
 
@@ -44,7 +44,6 @@ class TileLayout implements ILayout {
         if (idx < 0)
             return;
 
-        const delta = basis.geometryDelta;
         if (idx < this.numMaster) { /* master tiles */
             if (delta.east !== 0) {
                 const newMasterWidth = Math.floor(area.width * this.masterRatio) + delta.east;

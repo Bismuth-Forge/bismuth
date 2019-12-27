@@ -42,7 +42,7 @@ class TilingEngine {
                 fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
             );
             const tiles = this.windows.getVisibleTiles(srf);
-            layout.adjust(area, tiles, basis);
+            layout.adjust(area, tiles, basis, basis.geometryDelta);
         }
     }
 

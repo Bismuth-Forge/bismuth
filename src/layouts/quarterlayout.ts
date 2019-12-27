@@ -35,15 +35,13 @@ class QuarterLayout implements ILayout {
         this.vsplit = 0.5;
     }
 
-    public adjust(area: Rect, tiles: Window[], basis: Window) {
+    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
         if (tiles.length <= 1 || tiles.length > 4)
             return;
 
         const idx = tiles.indexOf(basis);
         if (idx < 0)
             return;
-
-        const delta = basis.geometryDelta;
 
         /* vertical split */
         if ((idx === 0 || idx === 3) && delta.east !== 0)

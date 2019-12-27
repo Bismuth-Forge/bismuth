@@ -53,7 +53,7 @@ class ColumnLayout implements ILayout {
         this.tileWeights = new LayoutWeightMap();
     }
 
-    public adjust(area: Rect, tiles: Window[], basis: Window): void {
+    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
         /* TODO: make this function simpler by spliting layout-building logic into a new method */
 
         const entry = this.tileCache[basis.id];
@@ -61,7 +61,6 @@ class ColumnLayout implements ILayout {
 
         const numColumns = this.columnMasters.length;
         const [basisColumn, basisIndex] = entry;
-        const delta = basis.geometryDelta;
 
         /* horizontal adjustment */
         if (basisColumn === null) {
