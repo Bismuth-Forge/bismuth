@@ -103,10 +103,7 @@ class TilingEngine {
         this.windows.remove(window);
     }
 
-    public moveFocus(ctx: IDriverContext, window: Window, step: number) {
-        if (step === 0)
-            return;
-
+    public moveFocus(ctx: IDriverContext, window: Window, step: -1 | 1) {
         const srf = (window) ? window.surface : ctx.currentSurface;
 
         const visibles = this.windows.getVisibleWindows(srf);
@@ -126,10 +123,7 @@ class TilingEngine {
         visibles[newIndex].focus();
     }
 
-    public moveTile(window: Window, step: number) {
-        if (step === 0)
-            return;
-
+    public moveTile(window: Window, step: -1 | 1) {
         const srf = window.surface;
         const visibles = this.windows.getVisibleWindows(srf);
         if (visibles.length < 2)
