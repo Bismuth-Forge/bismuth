@@ -61,7 +61,7 @@ class ColumnLayout implements ILayout {
 
         const numColumns = this.columnMasters.length;
         const [basisColumn, basisIndex] = entry;
-        const delta =  WindowResizeDelta.fromWindow(basis);
+        const delta = basis.geometryDelta;
 
         /* horizontal adjustment */
         if (basisColumn === null) {
@@ -73,14 +73,14 @@ class ColumnLayout implements ILayout {
             /* the last column is resized */
             /* adjust columns-stack ratio */
             if (delta.east !== 0) {
-                const columnsDelta = new WindowResizeDelta(delta.east, 0, 0, 0);
+                const columnsDelta = new RectDelta(delta.east, 0, 0, 0);
                 this.stackRatio = 1 - LayoutUtils.adjustAreaHalfWeights(area, 1 - this.stackRatio, 20,
                     0, columnsDelta, true);
             }
 
             /* adjust colums ratio */
             if (delta.west !== 0) {
-                const columnDelta = new WindowResizeDelta(0, delta.west, 0, 0);
+                const columnDelta = new RectDelta(0, delta.west, 0, 0);
                 const newWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, 20,
                     basisColumn, columnDelta, true);
                 this.columnWeights = newWeights;

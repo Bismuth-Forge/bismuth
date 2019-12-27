@@ -18,35 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class WindowResizeDelta {
-    public static fromWindow(window: Window): WindowResizeDelta {
-        const diff = window.actualGeometry.subtract(window.geometry);
-        return new WindowResizeDelta(
-            diff.width + diff.x,
-            -diff.x,
-            diff.height + diff.y,
-            -diff.y,
-        );
-    }
-
-    constructor(
-        public readonly east: number,
-        public readonly west: number,
-        public readonly south: number,
-        public readonly north: number,
-    ) {
-    }
-
-    public toString(): string {
-        return "WindowResizeDelta(" + [
-            "east=" + this.east,
-            "west=" + this.west,
-            "north=" + this.north,
-            "south=" + this.south,
-        ].join(" ") + ")";
-    }
-}
-
 class Window {
     /* read-only */
     public readonly id: string;
@@ -56,6 +27,10 @@ class Window {
     public get surface(): ISurface { return this.window.surface; }
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
+
+    public get geometryDelta(): RectDelta {
+        return RectDelta.fromRects(this.geometry, this.actualGeometry);
+    }
 
     public get tileable(): boolean {
         return (this.state === WindowState.Tile) || (this.state === WindowState.FreeTile);

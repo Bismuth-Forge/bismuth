@@ -44,7 +44,7 @@ class TileLayout implements ILayout {
         if (idx < 0)
             return;
 
-        const delta = WindowResizeDelta.fromWindow(basis);
+        const delta = basis.geometryDelta;
         if (idx < this.numMaster) { /* master tiles */
             if (delta.east !== 0) {
                 const newMasterWidth = Math.floor(area.width * this.masterRatio) + delta.east;

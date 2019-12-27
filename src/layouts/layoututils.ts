@@ -141,7 +141,7 @@ class LayoutUtils {
         weights: number[],
         gap: number,
         target: number,
-        delta: WindowResizeDelta,
+        delta: RectDelta,
         horizontal?: boolean,
     ): number[] {
         const line: [number, number] = (horizontal) ? [area.x, area.width] : [area.y, area.height];
@@ -157,7 +157,7 @@ class LayoutUtils {
         weight: number,
         gap: number,
         target: number,
-        delta: WindowResizeDelta,
+        delta: RectDelta,
         horizontal?: boolean,
     ): number {
         const weights = [weight, 1 - weight];
