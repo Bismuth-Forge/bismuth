@@ -34,13 +34,8 @@ class TilingEngine {
         const srf = basis.surface;
         const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            const fullArea = srf.workingArea;
-            const area = new Rect(
-                fullArea.x + CONFIG.screenGapLeft,
-                fullArea.y + CONFIG.screenGapTop,
-                fullArea.width - (CONFIG.screenGapLeft + CONFIG.screenGapRight),
-                fullArea.height - (CONFIG.screenGapTop + CONFIG.screenGapBottom),
-            );
+            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
+                CONFIG.screenGapTop, CONFIG.screenGapBottom);
             const tiles = this.windows.getVisibleTiles(srf);
             layout.adjust(area, tiles, basis, basis.geometryDelta);
         }
