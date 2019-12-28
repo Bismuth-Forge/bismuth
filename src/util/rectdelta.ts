@@ -18,7 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * Describes geometric changes of a rectangle, in terms of changes per edge.
+ * Outward changes are in positive, and inward changes are in negative.
+ */
 class RectDelta {
+    /** Generate a delta that transforms basis to target. */
     public static fromRects(basis: Rect, target: Rect): RectDelta {
         const diff = target.subtract(basis);
         return new RectDelta(

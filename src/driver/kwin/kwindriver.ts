@@ -98,14 +98,11 @@ class KWinDriver implements IDriverContext {
     }
     //#endregion
 
-    /*
-     * Shortcut
-     */
-
     private bindShortcut() {
-        /* check if method exists */
-        if (!KWin.registerShortcut)
+        if (!KWin.registerShortcut) {
+            debug(() => "KWin.registerShortcut doesn't exist. Omitting shortcut binding.");
             return;
+        }
 
         const bind = (seq: string, title: string, input: Shortcut) => {
             title = "Krohnkite: " + title;
@@ -158,47 +155,51 @@ class KWinDriver implements IDriverContext {
         bindLayout("", "Floating", FloatingLayout);
     }
 
-    /*
-     * Signal handlers
+    //#region Helper functions
+    /**
+     * Binds callback to the signal w/ extra fail-safe measures, like re-entry
+     * prevention and auto-disconnect on termination.
      */
-
     private connect(signal: QSignal, handler: (..._: any[]) => void): (() => void) {
         const wrapper = (...args: any[]) => {
-            /* test if script is enabled.
-             * XXX: `workspace` become undefined when the script is disabled. */
-            let enabled = false;
-            try { enabled = !!workspace; } catch (e) { /* ignore */ }
-
-            if (enabled)
-                this.enter(() => handler.apply(this, args));
-            else
+            /* HACK: `workspace` become undefined when the script is disabled. */
+            if (typeof workspace === "undefined")
                 signal.disconnect(wrapper);
+            else
+                this.enter(() => handler.apply(this, args));
         };
         signal.connect(wrapper);
 
         return wrapper;
     }
 
+    /**
+     * Run the given function in a protected(?) context to prevent nested event
+     * handling.
+     *
+     * KWin emits signals as soons as window states are changed, even when
+     * those states are modified by the script. This causes multiple re-entry
+     * during event handling, resulting in performance degradation and harder
+     * debugging.
+     */
     private enter(callback: () => void) {
-        if (this.entered) {
-            debug(() => "re-entry refused");
+        if (this.entered)
             return;
-        }
 
         this.entered = true;
         try {
             callback();
         } catch (e) {
-            debug(() => ["an error has occurred", e]);
+            debug(() => e);
         } finally {
             this.entered = false;
         }
     }
+    //#endregion
 
     private registerWindow(client: KWin.Client): Window {
         const window = new Window(new KWinWindow(client));
         const key = window.id;
-        debugObj(() => ["registerWindow", {key, client}]);
         return (this.windowMap[key] = window);
     }
 
@@ -209,7 +210,6 @@ class KWinDriver implements IDriverContext {
 
     private unregisterWindow(window: Window) {
         const key = window.id;
-        debugObj(() => ["removeTile", {key}]);
         delete this.windowMap[key];
     }
 
@@ -222,13 +222,14 @@ class KWinDriver implements IDriverContext {
                 screen, workspace.currentActivity, workspace.currentDesktop)));
 
         this.connect(workspace.currentActivityChanged, (activity: string) =>
-            this.control.onCurrentContextChanged(this));
+            this.control.onCurrentSurfaceChanged(this));
 
         this.connect(workspace.currentDesktopChanged, (desktop: number, client: KWin.Client) =>
-            this.control.onCurrentContextChanged(this));
+            this.control.onCurrentSurfaceChanged(this));
 
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
-            let wrapper: (() => void);
+            /* NOTE: windowShown can be fired in various situations.
+             *       We need only the first one - when window is created. */
             const handler = () => {
                 const window = this.registerWindow(client);
                 this.control.onWindowAdded(this, window);
@@ -240,7 +241,7 @@ class KWinDriver implements IDriverContext {
                 client.windowShown.disconnect(wrapper);
             };
 
-            wrapper = this.connect(client.windowShown, handler);
+            const wrapper = this.connect(client.windowShown, handler);
         });
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {

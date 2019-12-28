@@ -97,8 +97,3 @@ class LayoutStore {
         return this.store[key];
     }
 }
-
-try {
-    exports.LayoutStore = LayoutStore;
-    exports.LayoutStoreEntry = LayoutStoreEntry;
-} catch (e) { /* ignore */ }

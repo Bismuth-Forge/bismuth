@@ -18,6 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+/**
+ * Provides contextual information and operations to Layout layer.
+ *
+ * Its purpose is to limit the visibility of information and operation. It's
+ * not really a find-grained control mechanism, but is simple and concise.
+ */
 class EngineContext {
     public get backend(): string {
         return this.drvctx.backend;

@@ -83,7 +83,7 @@ class KWinWindow implements IDriverWindow {
     }
 
     public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
-        debugObj(() => ["KwinWindow#commit", { geometry, noBorder, keepBelow }]);
+        debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepBelow }]);
 
         if (this.client.move || this.client.resize)
             return;
@@ -134,6 +134,7 @@ class KWinWindow implements IDriverWindow {
 
     //#region Private Methods
 
+    /** apply various resize hints to the given geometry */
     private adjustGeometry(geometry: Rect): Rect {
         let width = geometry.width;
         let height = geometry.height;
@@ -168,12 +169,12 @@ class KWinWindow implements IDriverWindow {
         const newWidth  = base.width  + unit.width  * quotWidth  + padWidth ;
         const newHeight = base.height + unit.height * quotHeight + padHeight;
 
-        debugObj(() => ["applyResizeIncrement", {
-            // tslint:disable-next-line:object-literal-sort-keys
-            unit, base, geom,
-            pad: [padWidth, padHeight].join("x"),
-            size: [newWidth, newHeight].join("x"),
-        }]);
+        // debugObj(() => ["applyResizeIncrement", {
+        //     // tslint:disable-next-line:object-literal-sort-keys
+        //     unit, base, geom,
+        //     pad: [padWidth, padHeight].join("x"),
+        //     size: [newWidth, newHeight].join("x"),
+        // }]);
 
         return [newWidth, newHeight];
     }

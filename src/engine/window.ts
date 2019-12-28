@@ -73,7 +73,7 @@ class Window {
             /* do nothing */
         } else {
             /* deny */
-            debugObj(() => ["Window.state/ignored", {from: state, to: value}]);
+            debugObj(() => ["Window#state/ignored", {from: state, to: value}]);
             return;
         }
 
@@ -117,7 +117,3 @@ class Window {
         return "Window(" + String(this.window) + ")";
     }
 }
-
-try {
-    exports.Window = Window;
-} catch (e) { /* ignore */ }

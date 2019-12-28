@@ -40,7 +40,3 @@ class FloatingLayout implements ILayout {
         return "FloatingLayout(" + this._enabled + ")";
     }
 }
-
-try {
-    exports.FloatingLayout = FloatingLayout;
-} catch (e) { /* ignore */ }

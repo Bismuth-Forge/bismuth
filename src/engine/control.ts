@@ -21,6 +21,8 @@
 /**
  * TilingController translates events to actions, implementing high-level
  * window management logic.
+ *
+ * In short, this class is just a bunch of event handling methods.
  */
 class TilingController {
     private engine: TilingEngine;
@@ -39,8 +41,8 @@ class TilingController {
         this.engine.arrangeScreen(ctx, srf);
     }
 
-    public onCurrentContextChanged(ctx: IDriverContext): void {
-        debugObj(() => ["onCurrentContextChanged", {srf: ctx.currentSurface}]);
+    public onCurrentSurfaceChanged(ctx: IDriverContext): void {
+        debugObj(() => ["onCurrentSurfaceChanged", {srf: ctx.currentSurface}]);
         this.engine.arrange(ctx);
     }
 
@@ -85,7 +87,7 @@ class TilingController {
     }
 
     public onWindowResize(ctx: IDriverContext, window: Window): void {
-        debugObj(() => ["onWindowResizeOver", {window}]);
+        debugObj(() => ["onWindowResize", {window}]);
         if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
             if (window.state === WindowState.Tile) {
                 this.engine.adjustLayout(window);
@@ -151,7 +153,3 @@ class TilingController {
         this.engine.arrange(ctx);
     }
 }
-
-try {
-    exports.TilingController = TilingController;
-} catch (e) { /* ignore */ }

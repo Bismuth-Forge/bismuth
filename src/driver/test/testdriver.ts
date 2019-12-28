@@ -138,12 +138,3 @@ function setTestConfig(name: string, value: any) {
         CONFIG = {} as any;
     (CONFIG as any)[name] = value;
 }
-
-try {
-    exports.TestContext = TestSurface;
-    exports.TestDriver = TestDriver;
-    exports.TestWindow = TestWindow;
-    exports.setTestConfig = setTestConfig;
-} catch (e) {
-    /* ignore */
-}

@@ -30,6 +30,14 @@ class TilingEngine {
         this.windows = new WindowStore();
     }
 
+    /**
+     * Adjust layout based on the change in size of a tile.
+     *
+     * This operation is completely layout-dependent, and no general implementation is
+     * provided.
+     *
+     * Used when tile is resized using mouse.
+     */
     public adjustLayout(basis: Window) {
         const srf = basis.surface;
         const layout = this.layouts.getCurrentLayout(srf);
@@ -41,6 +49,11 @@ class TilingEngine {
         }
     }
 
+    /**
+     * Resize tile by adjusting layout.
+     *
+     * Used by grow/shrink shortcuts.
+     */
     public adjustWindowSize(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
         const srf = basis.surface;
 
@@ -63,6 +76,9 @@ class TilingEngine {
         }
     }
 
+    /**
+     * Arrange tiles on all screens.
+     */
     public arrange(ctx: IDriverContext) {
         debug(() => "arrange");
         ctx.screens.forEach((srf: ISurface) => {
@@ -70,6 +86,9 @@ class TilingEngine {
         });
     }
 
+    /**
+     * Arrange tiles on a screen.
+     */
     public arrangeScreen(ctx: IDriverContext, srf: ISurface) {
         const layout = this.layouts.getCurrentLayout(srf);
 
@@ -101,6 +120,13 @@ class TilingEngine {
         debugObj(() => ["arrangeScreen/finished", { srf }]);
     }
 
+    /**
+     * Re-apply window geometry, computed by layout algorithm.
+     *
+     * Sometimes applications move or resize windows without user intervention,
+     * which is straigh against the purpose of tiling WM. This operation
+     * move/resize such windows back to where/how they should be.
+     */
     public enforceSize(ctx: IDriverContext, window: Window) {
         if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
             ctx.setTimeout(() => {
@@ -109,6 +135,9 @@ class TilingEngine {
             }, 10);
     }
 
+    /**
+     * Register the given window to WM.
+     */
     public manage(window: Window) {
         if (!window.shouldIgnore) {
             window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
@@ -116,10 +145,16 @@ class TilingEngine {
         }
     }
 
+    /**
+     * Unregister the given window from WM.
+     */
     public unmanage(window: Window) {
         this.windows.remove(window);
     }
 
+    /**
+     * Move focus to next/previous window.
+     */
     public moveFocus(ctx: IDriverContext, window: Window, step: -1 | 1) {
         const srf = (window) ? window.surface : ctx.currentSurface;
 
@@ -136,10 +171,12 @@ class TilingEngine {
         const num = visibles.length;
         const newIndex = (idx + (step % num) + num) % num;
 
-        debugObj(() => ["moveFocus", {from: window, to: visibles[newIndex]}]);
         visibles[newIndex].focus();
     }
 
+    /**
+     * Reorder windows by moving the current window next to next/previous window.
+     */
     public moveTile(window: Window, step: -1 | 1) {
         const srf = window.surface;
         const visibles = this.windows.getVisibleWindows(srf);
@@ -153,12 +190,22 @@ class TilingEngine {
         this.windows.move(window, dstWin);
     }
 
+    /**
+     * Toggle float mode of window.
+     */
     public toggleFloat(window: Window) {
         window.state = (window.state === WindowState.Float)
             ? WindowState.Tile
             : WindowState.Float;
     }
 
+    /**
+     * Toggle float on all windows on the given surface.
+     *
+     * The behaviours of this operation depends on the number of floating
+     * windows: windows will be tiled if more than half are floating, and will
+     * be floated otherwise.
+     */
     public floatAll(srf: ISurface) {
         const windows = this.windows.getVisibleWindows(srf);
         const numFloats = windows.reduce<number>((count, window) => {
@@ -177,19 +224,37 @@ class TilingEngine {
             });
     }
 
+    /**
+     * Set the current window as the "master".
+     *
+     * The "master" window is simply the first window in the window list.
+     * Some layouts depend on this assumption, and will make such windows more
+     * visible than others.
+     */
     public setMaster(window: Window) {
         this.windows.setMaster(window);
     }
 
+    /**
+     * Change the layout of the current surface to the next.
+     */
     public cycleLayout(ctx: IDriverContext) {
         this.layouts.cycleLayout(ctx.currentSurface);
     }
 
+    /**
+     * Set the layout of the current surface to the specified layout.
+     */
     public setLayout(ctx: IDriverContext, layout: any) {
         if (layout)
             this.layouts.setLayout(ctx.currentSurface, layout);
     }
 
+    /**
+     * Let the current layout override shortcut.
+     *
+     * @returns True if the layout overrides the shortcut. False, otherwise.
+     */
     public handleLayoutShortcut(ctx: IDriverContext, input: Shortcut, data?: any): boolean {
         const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
         if (layout.handleShortcut)
@@ -197,7 +262,3 @@ class TilingEngine {
         return false;
     }
 }
-
-try {
-    exports.TilingEngine = TilingEngine;
-} catch (e) { /* ignore */ }

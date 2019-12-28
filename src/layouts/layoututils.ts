@@ -20,11 +20,11 @@
 
 class LayoutUtils {
     /**
-     * Splits a (virtual) line into weighted lines w/ gaps.
+     * Split a (virtual) line into weighted lines w/ gaps.
      * @param length    The length of the line to be splitted
      * @param weights   The weight of each part
      * @param gap       The size of gap b/w parts
-     * @returns An array of extends of each parts: [begin, length]
+     * @returns An array of parts: [begin, length]
      */
     public static splitWeighted(
         [begin, length]: [number, number],
@@ -47,11 +47,11 @@ class LayoutUtils {
     }
 
     /**
-     * Splits an area into multiple areas based on their weights.
+     * Split an area into multiple parts based on weight.
      * @param area          The area to be splitted
-     * @param weights       The weight of each parts
+     * @param weights       The weight of each part
      * @param gap           The size of gaps b/w parts
-     * @param horizontal    If true, split horizontally instead of vertically
+     * @param horizontal    If true, split horizontally. Otherwise, vertically.
      */
     public static splitAreaWeighted(area: Rect, weights: number[], gap?: number, horizontal?: boolean): Rect[] {
         gap = (gap !== undefined) ? gap : 0;
@@ -67,12 +67,19 @@ class LayoutUtils {
         );
     }
 
+    /**
+     * Split an area into two based on weight.
+     * @param area          The area to be splitted
+     * @param weight        The weight of the left/upper part.
+     * @param gap           The size of gaps b/w parts
+     * @param horizontal    If true, split horizontally. Otherwise, vertically.
+     */
     public static splitAreaHalfWeighted(area: Rect, weight: number, gap?: number, horizontal?: boolean): Rect[] {
         return LayoutUtils.splitAreaWeighted(area, [weight, 1 - weight], gap, horizontal);
     }
 
     /**
-     * adjustWeights recalculates the weights of subareas of the line, based on size change.
+     * Recalculate the weights of subareas of the line, based on size change.
      * @param line      The line being aplitted
      * @param weights   The weight of each part
      * @param gap       The gap size b/w parts
@@ -128,7 +135,7 @@ class LayoutUtils {
     }
 
     /**
-     * adjustAreaWeights recalculates weights of subareas splitting the given area, based on size change.
+     * Recalculate weights of subareas splitting the given area, based on size change.
      * @param area          The area being splitted
      * @param weights       The weight of each part
      * @param gap           The gap size b/w parts
@@ -152,6 +159,15 @@ class LayoutUtils {
         return LayoutUtils.adjustWeights(line, weights, gap, target, deltaFw, deltaBw);
     }
 
+    /**
+     * Recalculate weights of two areas splitting the given area, based on size change.
+     * @param area          The area being splitted
+     * @param weight        The weight of the left/upper part
+     * @param gap           The gap size b/w parts
+     * @param target        The index of the part being changed.
+     * @param delta         The changes in dimension of the target
+     * @param horizontal    If true, calculate horizontal weights, instead of vertical.
+     */
     public static adjustAreaHalfWeights(
         area: Rect,
         weight: number,
@@ -165,11 +181,17 @@ class LayoutUtils {
         return newWeights[0];
     }
 
+    /**
+     * Calculates the weights of all parts, splitting a line.
+     */
     public static calculateWeights(parts: Array<[number, number]>): number[] {
         const totalLength = parts.reduce((acc, [base, length]) => acc + length, 0);
         return parts.map(([base, length]) => length / totalLength);
     }
 
+    /**
+     * Calculates the weights of all parts, splitting an area.
+     */
     public static calculateAreaWeights(area: Rect, geometries: Rect[], gap?: number, horizontal?: boolean): number[] {
         gap = (gap !== undefined) ? gap : 0;
         horizontal = (horizontal !== undefined) ? horizontal : false;
