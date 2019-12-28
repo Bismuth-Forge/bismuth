@@ -187,7 +187,7 @@ class KWinDriver implements IDriverContext {
         try {
             callback();
         } catch (e) {
-            throw e;
+            debug(() => ["an error has occurred", e]);
         } finally {
             this.entered = false;
         }
