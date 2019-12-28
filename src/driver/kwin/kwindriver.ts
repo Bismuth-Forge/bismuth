@@ -47,6 +47,11 @@ class KWinDriver implements IDriverContext {
         return (client) ? this.queryWindow(client) : null;
     }
 
+    public set currentWindow(window: Window | null) {
+        if (window !== null)
+            workspace.activeClient = (window.window as KWinWindow).client;
+    }
+
     public get screens(): ISurface[] {
         const screens = [];
         for (let screen = 0; screen < workspace.numScreens; screen++)

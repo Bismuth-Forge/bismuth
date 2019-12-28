@@ -177,7 +177,7 @@ class ColumnLayout implements ILayout {
                 const columnTiles = columnTilesList[this.nextColumn];
                 if (columnsTiles) {
                     const focus = clip(this.columnFocus[this.nextColumn], 0, columnTiles.length - 1);
-                    columnTiles[focus].focus();
+                    ctx.currentWindow = columnTiles[focus];
                 }
             }
         }
@@ -198,7 +198,7 @@ class ColumnLayout implements ILayout {
             /* change column */
             if (this.nextColumn === null) {
                 const focus = clip(this.stackFocus, 0, stackTiles.length - 1);
-                stackTiles[focus].focus();
+                ctx.currentWindow = stackTiles[focus];
             }
         }
 

@@ -164,14 +164,14 @@ class TilingEngine {
 
         const idx = (window) ? visibles.indexOf(window) : -1;
         if (!window || idx < 0) { /* unmanaged window -> focus master */
-            visibles[0].focus();
+            ctx.currentWindow = visibles[0];
             return;
         }
 
         const num = visibles.length;
         const newIndex = (idx + (step % num) + num) % num;
 
-        visibles[newIndex].focus();
+        ctx.currentWindow = visibles[newIndex];
     }
 
     /**

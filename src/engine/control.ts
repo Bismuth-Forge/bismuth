@@ -117,7 +117,7 @@ class TilingController {
             debugObj(() => ["onWindowChanged", {window, comment}]);
 
             if (comment === "unminimized")
-                window.focus();
+                ctx.currentWindow = window;
 
             this.engine.arrange(ctx);
         }

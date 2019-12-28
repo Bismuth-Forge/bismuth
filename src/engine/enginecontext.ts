@@ -33,6 +33,10 @@ class EngineContext {
         return this.drvctx.currentWindow;
     }
 
+    public set currentWindow(window: Window | null) {
+        this.drvctx.currentWindow = window;
+    }
+
     constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
     }
 

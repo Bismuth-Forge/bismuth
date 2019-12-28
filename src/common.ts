@@ -94,7 +94,6 @@ interface IDriverWindow {
     readonly shouldFloat: boolean;
 
     commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
-    focus(): void;
     visible(srf: ISurface): boolean;
 }
 
@@ -107,9 +106,10 @@ interface ISurface {
 interface IDriverContext {
     readonly backend: string;
     readonly currentSurface: ISurface;
-    readonly currentWindow: Window | null; // TODO: IWindow
     readonly screens: ISurface[];
     readonly setTimeout: (func: () => void, timeout: number) => void;
+
+    currentWindow: Window | null;
 }
 
 //#endregion

@@ -38,6 +38,7 @@ declare namespace KWin {
 
     interface WorkspaceWrapper {
         /* read-only */
+        readonly activeScreen: number;
         readonly currentActivity: string;
         readonly numScreens: number;
 
