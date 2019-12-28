@@ -3,6 +3,7 @@
     "compilerOptions": {
         "target": "es5",
         "outFile": "krohnkite.js",
+        "noEmitOnError": false,
         "removeComments": true,
         "lib": ["es5"],
         "alwaysStrict": true,
