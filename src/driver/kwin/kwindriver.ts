@@ -60,14 +60,12 @@ class KWinDriver implements IDriverContext {
     private engine: TilingEngine;
     private control: TilingController;
     private windowMap: {[key: string]: Window};
-    private timerPool: QQmlTimer[];
     private entered: boolean;
 
     constructor() {
         this.engine = new TilingEngine();
         this.control = new TilingController(this.engine);
         this.windowMap = {};
-        this.timerPool = Array();
         this.entered = false;
     }
 
