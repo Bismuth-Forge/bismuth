@@ -110,8 +110,10 @@ class KWinDriver implements IDriverContext {
         const bind = (seq: string, title: string, input: Shortcut) => {
             title = "Krohnkite: " + title;
             seq = "Meta+" + seq;
-            const cb = () => { this.control.onShortcut(this, input); };
-            KWin.registerShortcut(title, "", seq, cb);
+            KWin.registerShortcut(title, "", seq, () => {
+                this.enter(() =>
+                    this.control.onShortcut(this, input));
+            });
         };
 
         bind("J", "Down/Next", Shortcut.Down);
@@ -140,20 +142,20 @@ class KWinDriver implements IDriverContext {
 
         bind("Return", "Set master", Shortcut.SetMaster);
 
-        KWin.registerShortcut("Krohnkite: Tile Layout", "", "Meta+T", () => {
-            this.control.onShortcut(this, Shortcut.SetLayout, TileLayout); });
+        const bindLayout = (seq: string, title: string, layout: any) => {
+            title = "Krohnkite: " + title + " Layout";
+            seq = (seq !== "") ? "Meta+" + seq : "";
+            KWin.registerShortcut(title, "", seq, () => {
+                this.enter(() =>
+                    this.control.onShortcut(this, Shortcut.SetLayout, layout));
+            });
+        };
 
-        KWin.registerShortcut("Krohnkite: Monocle Layout", "", "Meta+M", () => {
-            this.control.onShortcut(this, Shortcut.SetLayout, MonocleLayout); });
-
-        KWin.registerShortcut("Krohnkite: Spread Layout", "", "", () => {
-            this.control.onShortcut(this, Shortcut.SetLayout, SpreadLayout); });
-
-        KWin.registerShortcut("Krohnkite: Stair Layout", "", "", () => {
-            this.control.onShortcut(this, Shortcut.SetLayout, StairLayout); });
-
-        KWin.registerShortcut("Krohnkite: Floating Layout", "", "", () => {
-            this.control.onShortcut(this, Shortcut.SetLayout, FloatingLayout); });
+        bindLayout("T", "Tile", TileLayout);
+        bindLayout("M", "Monocle", MonocleLayout);
+        bindLayout("", "Spread", SpreadLayout);
+        bindLayout("", "Stair", StairLayout);
+        bindLayout("", "Floating", FloatingLayout);
     }
 
     /*
