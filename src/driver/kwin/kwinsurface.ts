@@ -53,6 +53,6 @@ class KWinSurface implements ISurface {
     }
 
     public toString(): string {
-        return "KWinCtx(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
+        return "KWinSurface(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
     }
 }
