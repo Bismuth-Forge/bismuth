@@ -107,7 +107,6 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
-        // TODO: use WindowStore#getVisibleTileables
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
             tileables[0].state = WindowState.Tile;
