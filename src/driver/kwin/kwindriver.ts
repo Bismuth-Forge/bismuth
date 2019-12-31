@@ -44,7 +44,7 @@ class KWinDriver implements IDriverContext {
 
     public get currentWindow(): Window | null {
         const client = workspace.activeClient;
-        return (client) ? this.queryWindow(client) : null;
+        return (client) ? this.windowMap.get(client) : null;
     }
 
     public set currentWindow(window: Window | null) {
@@ -64,13 +64,16 @@ class KWinDriver implements IDriverContext {
 
     private engine: TilingEngine;
     private control: TilingController;
-    private windowMap: {[key: string]: Window};
+    private windowMap: WrapperMap<KWin.Client, Window>;
     private entered: boolean;
 
     constructor() {
         this.engine = new TilingEngine();
         this.control = new TilingController(this.engine);
-        this.windowMap = {};
+        this.windowMap = new WrapperMap(
+            (client: KWin.Client) => KWinWindow.generateID(client),
+            (client: KWin.Client) => new Window(new KWinWindow(client)),
+        );
         this.entered = false;
     }
 
@@ -87,12 +90,12 @@ class KWinDriver implements IDriverContext {
 
         const clients = workspace.clientList();
         for (let i = 0; i < clients.length; i++) {
-            const window = this.registerWindow(clients[i]);
+            const window = this.windowMap.add(clients[i]);
             this.engine.manage(window);
             if (window.state !== WindowState.Unmanaged)
                 this.bindWindowEvents(window, clients[i]);
             else
-                this.unregisterWindow(window);
+                this.windowMap.remove(clients[i]);
         }
         this.engine.arrange(this);
     }
@@ -202,22 +205,6 @@ class KWinDriver implements IDriverContext {
     }
     //#endregion
 
-    private registerWindow(client: KWin.Client): Window {
-        const window = new Window(new KWinWindow(client));
-        const key = window.id;
-        return (this.windowMap[key] = window);
-    }
-
-    private queryWindow(client: KWin.Client): Window | null {
-        const key = KWinWindow.generateID(client);
-        return this.windowMap[key] || null;
-    }
-
-    private unregisterWindow(window: Window) {
-        const key = window.id;
-        delete this.windowMap[key];
-    }
-
     private bindEvents() {
         this.connect(workspace.numberScreensChanged, (count: number) =>
             this.control.onSurfaceUpdate(this, "screens=" + count));
@@ -238,12 +225,12 @@ class KWinDriver implements IDriverContext {
             /* NOTE: windowShown can be fired in various situations.
              *       We need only the first one - when window is created. */
             const handler = () => {
-                const window = this.registerWindow(client);
+                const window = this.windowMap.add(client);
                 this.control.onWindowAdded(this, window);
                 if (window.state !== WindowState.Unmanaged)
                     this.bindWindowEvents(window, client);
                 else
-                    this.unregisterWindow(window);
+                    this.windowMap.remove(client);
 
                 client.windowShown.disconnect(wrapper);
             };
@@ -252,26 +239,27 @@ class KWinDriver implements IDriverContext {
         });
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
-            const window = this.queryWindow(client);
+            const window = this.windowMap.get(client);
             if (window) {
                 this.control.onWindowRemoved(this, window);
-                this.unregisterWindow(window);
+                this.windowMap.remove(client);
             }
         });
 
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-            this.control.onWindowChanged(this, this.queryWindow(client), "fullscreen=" + fullScreen + " user=" + user));
+            this.control.onWindowChanged(this, this.windowMap.get(client),
+                "fullscreen=" + fullScreen + " user=" + user));
 
         this.connect(workspace.clientMinimized, (client: KWin.Client) => {
             if (KWINCONFIG.preventMinimize) {
                 client.minimized = false;
                 workspace.activeClient = client;
             } else
-                this.control.onWindowChanged(this, this.queryWindow(client), "minimized");
+                this.control.onWindowChanged(this, this.windowMap.get(client), "minimized");
         });
 
         this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
-            this.control.onWindowChanged(this, this.queryWindow(client), "unminimized"));
+            this.control.onWindowChanged(this, this.windowMap.get(client), "unminimized"));
 
         // TODO: options.configChanged.connect(this.onConfigChanged);
         /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
