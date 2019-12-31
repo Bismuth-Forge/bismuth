@@ -220,11 +220,13 @@ class KWinDriver implements IDriverContext {
 
     private bindEvents() {
         this.connect(workspace.numberScreensChanged, (count: number) =>
-            this.control.onScreenCountChanged(this, count));
+            this.control.onSurfaceUpdate(this, "screens=" + count));
 
-        this.connect(workspace.screenResized, (screen: number) =>
-            this.control.onScreenResized(this, new KWinSurface(
-                screen, workspace.currentActivity, workspace.currentDesktop)));
+        this.connect(workspace.screenResized, (screen: number) => {
+            const srf = new KWinSurface(
+                screen, workspace.currentActivity, workspace.currentDesktop);
+            this.control.onSurfaceUpdate(this, "resized " + srf.toString());
+        });
 
         this.connect(workspace.currentActivityChanged, (activity: string) =>
             this.control.onCurrentSurfaceChanged(this));

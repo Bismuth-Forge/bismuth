@@ -31,14 +31,9 @@ class TilingController {
         this.engine = engine;
     }
 
-    public onScreenCountChanged(ctx: IDriverContext, count: number): void {
-        debugObj(() => ["onScreenCountChanged", {count}]);
+    public onSurfaceUpdate(ctx: IDriverContext, comment: string): void {
+        debugObj(() => ["onSurfaceUpdate", {comment}]);
         this.engine.arrange(ctx);
-    }
-
-    public onScreenResized(ctx: IDriverContext, srf: ISurface): void {
-        debugObj(() => ["onScreenResized", {srf}]);
-        this.engine.arrangeScreen(ctx, srf);
     }
 
     public onCurrentSurfaceChanged(ctx: IDriverContext): void {
