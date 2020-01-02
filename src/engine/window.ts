@@ -64,7 +64,7 @@ class Window {
     public get state(): WindowState {
         if (this.window.fullScreen)
             return WindowState.FullScreen;
-        return this._state;
+        return this.internalState;
     }
 
     public set state(value: WindowState) {
@@ -80,20 +80,20 @@ class Window {
         else if (Window.isFloatingState(state) && Window.isTileableState(value))
             this.floatGeometry = this.actualGeometry;
 
-        this._state = value;
+        this.internalState = value;
     }
 
-    private _state: WindowState;
+    private internalState: WindowState;
     private shouldCommitFloat: boolean;
 
     constructor(window: IDriverWindow) {
         this.id = window.id;
+        this.window = window;
 
         this.floatGeometry = window.geometry;
         this.geometry = window.geometry;
 
-        this.window = window;
-        this._state = WindowState.Unmanaged;
+        this.internalState = WindowState.Unmanaged;
         this.shouldCommitFloat = false;
     }
 
@@ -102,10 +102,10 @@ class Window {
             this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.keepTileBelow);
         else if (this.state === WindowState.FullTile)
             this.window.commit(this.geometry, true, CONFIG.keepTileBelow);
-        else if (this.state === WindowState.FloatTile) {
+        else if (this.state === WindowState.FloatTile && this.shouldCommitFloat) {
             this.window.commit(this.floatGeometry, false, false);
             this.shouldCommitFloat = false;
-        } else if (this.state === WindowState.Float) {
+        } else if (this.state === WindowState.Float && this.shouldCommitFloat) {
             this.window.commit(this.floatGeometry, false, false);
             this.shouldCommitFloat = false;
         } else if (this.state === WindowState.FullScreen)
