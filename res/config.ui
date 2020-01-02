@@ -104,6 +104,16 @@
           </layout>
          </item>
          <item>
+          <widget class="QCheckBox" name="kcfg_enableThreeColumnLayout">
+           <property name="toolTip">
+            <string>Enable Three Column layout</string>
+           </property>
+           <property name="text">
+            <string>Three Column Layout</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="kcfg_enableSpreadLayout">
            <property name="toolTip">
             <string>Enable Spread layout</string>

@@ -56,6 +56,7 @@ interface IConfig {
     enableStairLayout: boolean;
     enableTileLayout: boolean;
     enableFloatingLayout: boolean;
+    enableThreeColumnLayout: boolean;
     monocleMaximize: boolean;
     maximizeSoleTile: boolean;
     //#endregion

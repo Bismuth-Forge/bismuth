@@ -20,7 +20,7 @@
 
 class ThreeColumnLayout implements ILayout {
     public get enabled(): boolean {
-        return true;
+        return CONFIG.enableThreeColumnLayout;
     }
 
     private masterRatio: number;
