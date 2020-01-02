@@ -158,6 +158,7 @@ class KWinDriver implements IDriverContext {
 
         bindLayout("T", "Tile", TileLayout);
         bindLayout("M", "Monocle", MonocleLayout);
+        bindLayout("", "Three Column", ThreeColumnLayout);
         bindLayout("", "Spread", SpreadLayout);
         bindLayout("", "Stair", StairLayout);
         bindLayout("", "Floating", FloatingLayout);
