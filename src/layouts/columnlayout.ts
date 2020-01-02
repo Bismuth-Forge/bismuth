@@ -53,7 +53,7 @@ class ColumnLayout implements ILayout {
         const entry = this.tileCache[basis.id];
         if (!entry) return;
 
-        const numColumns = this.columnMasters.length;
+        const numColumns = this.columnWeights.length;
         const [basisColumn, basisIndex] = entry;
 
         /* adjust colums weights */
@@ -69,7 +69,7 @@ class ColumnLayout implements ILayout {
             basisIndex, delta);
 
         /* update */
-        this.columnWeights = newColumnWeights;
+        this.columnWeights = newColumnWeights.map((weight) => weight * numColumns);
         newTileWeights.forEach((weight, index) => {
             const tile = columnTiles[index];
             this.tileWeights.set(tile, weight * columnTiles.length);
