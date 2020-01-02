@@ -26,7 +26,6 @@ class KWinConfig implements IConfig {
     public enableStairLayout: boolean;
     public enableTileLayout: boolean;
     public enableFloatingLayout: boolean;
-    public enableColumnLayout: boolean;
     public maximizeSoleTile: boolean;
     public monocleMaximize: boolean;
     public monocleMinimizeRest: boolean; // KWin-specific
@@ -82,7 +81,6 @@ class KWinConfig implements IConfig {
         this.enableStairLayout    = KWin.readConfig("enableStairLayout"   , true);
         this.enableTileLayout     = KWin.readConfig("enableTileLayout"    , true);
         this.enableFloatingLayout = KWin.readConfig("enableFloatingLayout", false);
-        this.enableColumnLayout   = KWin.readConfig("enableColumnLayout"  , false);
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);
         this.monocleMaximize      = KWin.readConfig("monocleMaximize"     , true);
         this.monocleMinimizeRest  = KWin.readConfig("monocleMinimizeRest" , false);

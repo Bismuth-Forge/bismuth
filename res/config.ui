@@ -57,13 +57,6 @@
           <number>40</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="kcfg_enableColumnLayout">
-           <property name="text">
-            <string>Column Layout (WIP)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QCheckBox" name="kcfg_enableTileLayout">
            <property name="toolTip">
             <string>Enable Tile layout</string>
