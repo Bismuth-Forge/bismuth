@@ -35,6 +35,7 @@ class LayoutStoreEntry {
         this.layouts = [
             new TileLayout(),
             new MonocleLayout(),
+            new ThreeColumnLayout(),
             new SpreadLayout(),
             new StairLayout(),
             new QuarterLayout(),
