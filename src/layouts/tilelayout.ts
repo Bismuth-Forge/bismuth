@@ -125,10 +125,6 @@ class TileLayout implements ILayout {
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
                 break;
-            case Shortcut.GrowHeight:
-                break;
-            case Shortcut.ShrinkHeight:
-                break;
             default:
                 return false;
         }
