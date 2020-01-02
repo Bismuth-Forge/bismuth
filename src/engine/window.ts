@@ -67,7 +67,6 @@ class Window {
         return this._state;
     }
 
-    /* TODO: maybe, try splitting this into multiple methods, like setTile, setFloat, setFreeTile */
     public set state(value: WindowState) {
         if (value === WindowState.FullScreen)
             return;
@@ -77,15 +76,15 @@ class Window {
             return;
 
         if (Window.isTileableState(state) && Window.isFloatingState(value))
-            this.window.commit(this.floatGeometry, false, false);
+            this.shouldCommitFloat = true;
         else if (Window.isFloatingState(state) && Window.isTileableState(value))
             this.floatGeometry = this.actualGeometry;
 
         this._state = value;
     }
 
-
     private _state: WindowState;
+    private shouldCommitFloat: boolean;
 
     constructor(window: IDriverWindow) {
         this.id = window.id;
@@ -95,6 +94,7 @@ class Window {
 
         this.window = window;
         this._state = WindowState.Unmanaged;
+        this.shouldCommitFloat = false;
     }
 
     public commit() {
@@ -102,7 +102,13 @@ class Window {
             this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.keepTileBelow);
         else if (this.state === WindowState.FullTile)
             this.window.commit(this.geometry, true, CONFIG.keepTileBelow);
-        else if (this.state === WindowState.FullScreen)
+        else if (this.state === WindowState.FloatTile) {
+            this.window.commit(this.floatGeometry, false, false);
+            this.shouldCommitFloat = false;
+        } else if (this.state === WindowState.Float) {
+            this.window.commit(this.floatGeometry, false, false);
+            this.shouldCommitFloat = false;
+        } else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, false);
     }
 
