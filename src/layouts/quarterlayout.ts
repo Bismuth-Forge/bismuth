@@ -76,7 +76,7 @@ class QuarterLayout implements ILayout {
             tileables[i].state = WindowState.Tile;
 
         if (tileables.length > 4)
-            tileables.slice(4).forEach((tile) => tile.state = WindowState.FreeTile);
+            tileables.slice(4).forEach((tile) => tile.state = WindowState.FloatTile);
 
         if (tileables.length === 1) {
             tileables[0].geometry = area;

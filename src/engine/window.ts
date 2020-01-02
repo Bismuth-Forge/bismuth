@@ -18,8 +18,31 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+enum WindowState {
+    Tile,
+    FullTile,
+    FloatTile,
+    Float,
+    FullScreen,
+    Unmanaged,
+}
+
 class Window {
-    /* read-only */
+    public static isTileableState(state: WindowState): boolean {
+        return (
+            (state === WindowState.Tile)
+            || (state === WindowState.FullTile)
+            || (state === WindowState.FloatTile)
+        );
+    }
+
+    public static isFloatingState(state: WindowState): boolean {
+        return (
+            (state === WindowState.Float)
+            || (state === WindowState.FloatTile)
+        );
+    }
+
     public readonly id: string;
     public readonly window: IDriverWindow;
 
@@ -28,18 +51,15 @@ class Window {
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
+    public get tileable(): boolean { return Window.isTileableState(this.state); }
+    public get floating(): boolean { return Window.isFloatingState(this.state); }
+
     public get geometryDelta(): RectDelta {
         return RectDelta.fromRects(this.geometry, this.actualGeometry);
     }
 
-    public get tileable(): boolean {
-        return (this.state === WindowState.Tile) || (this.state === WindowState.FreeTile);
-    }
-
-    /* read-write */
     public floatGeometry: Rect;
     public geometry: Rect;
-    public noBorder: boolean;
 
     public get state(): WindowState {
         if (this.window.fullScreen)
@@ -53,34 +73,18 @@ class Window {
             return;
 
         const state = this.state;
-        if (state === value) {
+        if (state === value)
             return;
-        } else if (state === WindowState.Unmanaged) {
-            /* internally accept the new state */
-        } else if (state === WindowState.FullScreen) {
-            /* internally accept the new state */
-        } else if (state === WindowState.Tile && value === WindowState.Float) {
+
+        if (Window.isTileableState(state) && Window.isFloatingState(value))
             this.window.commit(this.floatGeometry, false, false);
-        } else if (state === WindowState.Tile && value === WindowState.FreeTile) {
-            this.window.commit(this.floatGeometry, false, false);
-        } else if (state === WindowState.Float && value === WindowState.Tile) {
+        else if (Window.isFloatingState(state) && Window.isTileableState(value))
             this.floatGeometry = this.actualGeometry;
-        } else if (state === WindowState.Float && value === WindowState.FreeTile) {
-            /* do nothing */
-        } else if (state === WindowState.FreeTile && value === WindowState.Tile) {
-            this.floatGeometry = this.actualGeometry;
-        } else if (state === WindowState.FreeTile && value === WindowState.Float) {
-            /* do nothing */
-        } else {
-            /* deny */
-            debugObj(() => ["Window#state/ignored", {from: state, to: value}]);
-            return;
-        }
 
         this._state = value;
     }
 
-    /* private */
+
     private _state: WindowState;
 
     constructor(window: IDriverWindow) {
@@ -88,19 +92,16 @@ class Window {
 
         this.floatGeometry = window.geometry;
         this.geometry = window.geometry;
-        this.noBorder = false;
 
         this.window = window;
         this._state = WindowState.Unmanaged;
     }
 
-    /*
-     * Methods
-     */
-
     public commit() {
         if (this.state === WindowState.Tile)
-            this.window.commit(this.geometry, this.noBorder, CONFIG.keepTileBelow ? true : false);
+            this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.keepTileBelow);
+        else if (this.state === WindowState.FullTile)
+            this.window.commit(this.geometry, true, CONFIG.keepTileBelow);
         else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, false);
     }

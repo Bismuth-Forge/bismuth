@@ -109,8 +109,7 @@ class TilingEngine {
 
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
-            tileables[0].state = WindowState.Tile;
-            tileables[0].noBorder = true;
+            tileables[0].state = WindowState.FullTile;
             tileables[0].geometry = workingArea;
         } else if (tileables.length > 0)
             layout.apply(new EngineContext(ctx, this), tileables, tilingArea);

@@ -46,14 +46,6 @@ enum Shortcut {
     SetLayout,
 }
 
-enum WindowState {
-    Tile,
-    FreeTile,
-    Float,
-    FullScreen,
-    Unmanaged,
-}
-
 //#region Driver
 
 interface IConfig {
