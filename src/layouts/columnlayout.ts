@@ -34,94 +34,46 @@ class ColumnLayout implements ILayout {
     private columnFocus: number[];
     private columnWeights: number[];
     private columnMasters: number[];
-    /** The index of column to activate during the next "arrangement". * `undefined` means no-op, `null` means stack. */
-    private nextColumn: number | null | undefined;
-    private stackFocus: number;
-    private stackRatio: number;
-    /** Location of tiles. Each entry is a `column`-`index` pair. `null` value for `column` means stack column. */
-    private tileCache: {[key: string]: [number | null, number]};
+    /** The index of column to activate during the next "arrangement". `undefined` means no-op. */
+    private nextColumn: number | undefined;
+    /** Location of tiles. Each entry is a `column`-`index` pair. */
+    private tileCache: {[key: string]: [number, number]};
     private tileWeights: LayoutWeightMap;
 
     constructor() {
-        this.columnFocus = [0];
-        this.columnWeights = [1];
+        this.columnFocus = [0, 0];
+        this.columnWeights = [1, 1];
         this.columnMasters = [1];
         this.nextColumn = undefined;
-        this.stackFocus = 0;
-        this.stackRatio = 0.25;
         this.tileCache = {};
         this.tileWeights = new LayoutWeightMap();
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
-        /* TODO: make this function simpler by spliting layout-building logic into a new method */
-
         const entry = this.tileCache[basis.id];
         if (!entry) return;
 
         const numColumns = this.columnMasters.length;
         const [basisColumn, basisIndex] = entry;
 
-        /* horizontal adjustment */
-        if (basisColumn === null) {
-            /* the stack is resized. */
-            /* adjust colums-stack ratio. */
-            this.stackRatio = 1 - LayoutUtils.adjustAreaHalfWeights(area, 1 - this.stackRatio, 20,
-                1, delta, true);
-        } else if (basisColumn === numColumns - 1) {
-            /* the last column is resized */
-            /* adjust columns-stack ratio */
-            if (delta.east !== 0) {
-                const columnsDelta = new RectDelta(delta.east, 0, 0, 0);
-                this.stackRatio = 1 - LayoutUtils.adjustAreaHalfWeights(area, 1 - this.stackRatio, 20,
-                    0, columnsDelta, true);
-            }
+        /* adjust colums weights */
+        const newColumnWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, CONFIG.tileLayoutGap,
+            basisColumn, delta, true);
 
-            /* adjust colums ratio */
-            if (delta.west !== 0) {
-                const columnDelta = new RectDelta(0, delta.west, 0, 0);
-                const newWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, 20,
-                    basisColumn, columnDelta, true);
-                this.columnWeights = newWeights;
-            }
-        } else {
-            /* any other columns */
-            /* adjust colums weights */
-            const newWeights = LayoutUtils.adjustAreaWeights(area, this.columnWeights, 20,
-                basisColumn, delta, true);
-            this.columnWeights = newWeights;
-        }
+        /* adjust tile weights */
+        const tilesPerColumn = partitionArrayBySizes(tiles, this.columnMasters)
+            .filter((arr) => arr.length > 0);
+        const columnTiles = tilesPerColumn[basisColumn];
+        const weights = columnTiles.map((tile) => this.tileWeights.get(tile));
+        const newTileWeights = LayoutUtils.adjustAreaWeights(area, weights, CONFIG.tileLayoutGap,
+            basisIndex, delta);
 
-        const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);
-        const [columnsTiles, stackTiles] = partitionArray(tiles, (tile, idx) => idx < numColumnTiles);
-
-        /* vertical adjustment */
-        if (basisColumn === null) {
-            /* stack */
-            if (stackTiles.length > 0) {
-                const stackTileWeights = stackTiles.map((tile) => this.tileWeights.get(tile));
-                const newWeights = LayoutUtils.adjustAreaWeights(area, stackTileWeights, CONFIG.tileLayoutGap,
-                    basisIndex, delta);
-                newWeights.forEach((weight, index) => {
-                    const tile = stackTiles[index];
-                    this.tileWeights.set(tile, weight * stackTiles.length);
-                });
-            }
-        } else {
-            /* column */
-            if (columnsTiles.length > 0) {
-                const columnTilesList = partitionArrayBySizes(columnsTiles, this.columnMasters)
-                    .filter((arr) => arr.length > 0);
-                const columnTiles = columnTilesList[basisColumn];
-                const weights = columnTiles.map((tile) => this.tileWeights.get(tile));
-                const newWeights = LayoutUtils.adjustAreaWeights(area, weights, CONFIG.tileLayoutGap,
-                    basisIndex, delta);
-                newWeights.forEach((weight, index) => {
-                    const tile = columnTiles[index];
-                    this.tileWeights.set(tile, weight * columnTiles.length);
-                });
-            }
-        }
+        /* update */
+        this.columnWeights = newColumnWeights;
+        newTileWeights.forEach((weight, index) => {
+            const tile = columnTiles[index];
+            this.tileWeights.set(tile, weight * columnTiles.length);
+        });
     }
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
@@ -131,74 +83,33 @@ class ColumnLayout implements ILayout {
         tileables.forEach((tileable) => tileable.state = WindowState.Tile);
         const tiles = tileables;
 
-        /** the total number of tiles in all columns */
-        const numColumnTiles = this.columnMasters.reduce((sum, numMaster) => sum + numMaster, 0);
+        const tilesPerColumn = partitionArrayBySizes(tiles, this.columnMasters)
+            .filter((arr) => arr.length > 0);
 
-        const [columnsTiles, stackTiles] = partitionArray(tiles, (tile, idx) => idx < numColumnTiles);
+        const columnWeights = this.columnWeights.slice(0, tilesPerColumn.length);
+        const columnAreas = LayoutUtils.splitAreaWeighted(area, columnWeights, CONFIG.tileLayoutGap, true);
 
-        /* split the working area into columns & stack, ONLY WHEN REQUIRED */
-        let columnsArea: Rect | null = null;
-        let stackArea: Rect | null = null;
-        if (stackTiles.length > 0 && columnsTiles.length > 0)
-            [columnsArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(area, 1 - this.stackRatio, 20, true);
-        else if (columnsTiles.length > 0) /* no stack */
-            columnsArea = area;
-        else /* no columns */
-            stackArea = area;
+        // TODO: zipping columnAreas and columnTilesList?
+        columnAreas.forEach((columnArea, column) => {
+            const columnTiles = tilesPerColumn[column];
+            const tileWeights = columnTiles.map((tile) => this.tileWeights.get(tile));
 
-        /* tile columns */
-        if (columnsArea) {
-            // TODO: configurable column gap
-            /** Lists of tiles in each columns */
-            const columnTilesList = partitionArrayBySizes(columnsTiles, this.columnMasters)
-                .filter((arr) => arr.length > 0);
+            const tileAreas = LayoutUtils.splitAreaWeighted(columnArea, tileWeights, CONFIG.tileLayoutGap);
 
-            const columnWeights = this.columnWeights.slice(0, columnTilesList.length);
-            const columnAreas = LayoutUtils.splitAreaWeighted(columnsArea, columnWeights, 20, true);
-
-            // TODO: zipping columnAreas and columnTilesList?
-            columnAreas.forEach((columnArea, column) => {
-                const columnTiles = columnTilesList[column];
-                const tileWeights = columnTiles.map((tile) => this.tileWeights.get(tile));
-
-                // TODO: independently configurable tile gap
-                const tileAreas = LayoutUtils.splitAreaWeighted(columnArea, tileWeights, CONFIG.tileLayoutGap);
-
-                // TODO zipping tileAreas and columnTiles?
-                tileAreas.forEach((tileArea, tileIndex) => {
-                    const tile = columnTiles[tileIndex];
-                    tile.geometry = tileArea;
-                    this.tileCache[tile.id] = [column, tileIndex];
-                });
-            });
-
-            /* change column */
-            if (this.nextColumn !== undefined && this.nextColumn !== null) {
-                const columnTiles = columnTilesList[this.nextColumn];
-                if (columnsTiles) {
-                    const focus = clip(this.columnFocus[this.nextColumn], 0, columnTiles.length - 1);
-                    ctx.currentWindow = columnTiles[focus];
-                }
-            }
-        }
-
-        /* tile stack */
-        if (stackArea) {
-            const tileWeights = stackTiles.map((tile) => this.tileWeights.get(tile));
-            // TODO: independently configurable tile gap
-            const tileAreas = LayoutUtils.splitAreaWeighted(stackArea, tileWeights, CONFIG.tileLayoutGap);
-
-            // TODO zipping tileAreas and stackTiles?
+            // TODO zipping tileAreas and columnTiles?
             tileAreas.forEach((tileArea, tileIndex) => {
-                const tile = stackTiles[tileIndex];
-                stackTiles[tileIndex].geometry = tileArea;
-                this.tileCache[tile.id] = [null, tileIndex];
+                const tile = columnTiles[tileIndex];
+                tile.geometry = tileArea;
+                this.tileCache[tile.id] = [column, tileIndex];
             });
+        });
 
-            /* change column */
-            if (this.nextColumn === null) {
-                const focus = clip(this.stackFocus, 0, stackTiles.length - 1);
-                ctx.currentWindow = stackTiles[focus];
+        /* change column */
+        if (this.nextColumn !== undefined) {
+            const columnTiles = tilesPerColumn[this.nextColumn];
+            if (columnTiles) {
+                const focus = clip(this.columnFocus[this.nextColumn], 0, columnTiles.length - 1);
+                ctx.currentWindow = columnTiles[focus];
             }
         }
 
@@ -226,30 +137,23 @@ class ColumnLayout implements ILayout {
     private resizeColumn(ctx: EngineContext, step: number) {
         if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
             const [column, _] = this.tileCache[ctx.currentWindow.id];
-            if (column !== null) {
-                this.columnMasters[column] = clip(
-                    this.columnMasters[column] + step, 1, 10);
-            }
+            this.columnMasters[column] = clip(
+                this.columnMasters[column] + step, 1, 10);
         }
     }
 
     /** focus a neighboring column */
-    private focusSide(ctx: EngineContext, step: number) {
+    private focusSide(ctx: EngineContext, step: -1 | 1) {
         if (ctx.currentWindow && this.tileCache[ctx.currentWindow.id]) {
             const [column, index] = this.tileCache[ctx.currentWindow.id];
 
             /* save current focus */
-            if (column !== null)
-                this.columnFocus[column] = index;
-            else
-                this.stackFocus = index;
+            this.columnFocus[column] = index;
 
-            const numColumns = this.columnMasters.length;
-            const nextColumn = clip(step + ((column === null) ? numColumns : column),
-                0, numColumns);
+            const nextColumn = clip(column + step, 0, this.columnMasters.length);
 
             /* reserve column focus changing. (actual operation takes place in `apply`) */
-            this.nextColumn = (nextColumn === numColumns) ? null : nextColumn;
+            this.nextColumn = nextColumn;
         }
     }
 
