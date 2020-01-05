@@ -22,12 +22,19 @@ class KWinTimerPool {
     public static readonly instance = new KWinTimerPool();
 
     public timers: QQmlTimer[];
+    public numTimers: number;
 
     constructor() {
         this.timers = [];
+        this.numTimers = 0;
     }
 
     public setTimeout(func: () => void, timeout: number) {
+        if (this.timers.length === 0) {
+            this.numTimers ++;
+            debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers}]);
+        }
+
         const timer: QQmlTimer = this.timers.pop() ||
             Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
 
@@ -35,7 +42,6 @@ class KWinTimerPool {
             try { timer.triggered.disconnect(callback); } catch (e) { /* ignore */ }
             try { func(); } catch (e) { /* ignore */ }
             this.timers.push(timer);
-            debugObj(() => ["setTimeout/callback", { poolSize: this.timers.length}]);
         };
 
         timer.interval = timeout;
