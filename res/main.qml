@@ -32,6 +32,11 @@ Item {
         id: activityInfo
     }
 
+    PlasmaCore.DataSource {
+        id: mousePoller
+        engine: 'executable'
+    }
+
     Component.onCompleted: {
         console.log("KROHNKITE: starting the script");
         (new K.KWinDriver()).main();

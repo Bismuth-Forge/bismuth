@@ -27,6 +27,13 @@ class Rect {
     public get maxX(): number { return this.x + this.width; }
     public get maxY(): number { return this.y + this.height; }
 
+    public get center(): [number, number] {
+        return [
+            this.x + Math.floor(this.width / 2),
+            this.y + Math.floor(this.height / 2),
+        ];
+    }
+
     constructor(x: number, y: number, w: number, h: number) {
         this.height = h;
         this.width = w;
@@ -58,6 +65,13 @@ class Rect {
             this.y <= other.y &&
             other.maxX < this.maxX &&
             other.maxY < this.maxY
+        );
+    }
+
+    public includesPoint([x, y]: [number, number]): boolean {
+        return (
+            (this.x <= x && x <= this.maxX)
+            && (this.y <= y && y <= this.maxY)
         );
     }
 

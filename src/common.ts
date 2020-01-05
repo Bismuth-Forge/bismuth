@@ -100,6 +100,7 @@ interface IDriverContext {
     readonly currentSurface: ISurface;
     readonly screens: ISurface[];
     readonly setTimeout: (func: () => void, timeout: number) => void;
+    readonly cursorPosition: [number, number] | null;
 
     currentWindow: Window | null;
 }

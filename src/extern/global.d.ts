@@ -20,5 +20,6 @@
 
 declare var activityInfo: Plasma.TaskManager.ActivityInfo;
 declare var scriptRoot: object;
+declare var mousePoller: Plasma.PlasmaCore.DataSource;
 
 declare let setTimeout: any;

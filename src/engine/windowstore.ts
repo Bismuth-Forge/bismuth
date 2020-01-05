@@ -42,6 +42,16 @@ class WindowStore {
         this.list.splice(0, 0, window);
     }
 
+    public swap(alpha: Window, beta: Window) {
+        const alphaIndex = this.list.indexOf(alpha);
+        const betaIndex = this.list.indexOf(beta);
+        if (alphaIndex < 0 || betaIndex < 0)
+            return;
+
+        this.list[alphaIndex] = beta;
+        this.list[betaIndex] = alpha;
+    }
+
     //#region Storage Operation
 
     public get length(): number {

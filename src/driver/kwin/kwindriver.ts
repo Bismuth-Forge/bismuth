@@ -60,12 +60,17 @@ class KWinDriver implements IDriverContext {
         return screens;
     }
 
+    public get cursorPosition(): [number, number] | null {
+        return this.mousePoller.mousePosition;
+    }
+
     //#endregion
 
     private engine: TilingEngine;
     private control: TilingController;
     private windowMap: WrapperMap<KWin.Client, Window>;
     private entered: boolean;
+    private mousePoller: KWinMousePoller;
 
     constructor() {
         this.engine = new TilingEngine();
@@ -75,6 +80,7 @@ class KWinDriver implements IDriverContext {
             (client: KWin.Client) => new Window(new KWinWindow(client)),
         );
         this.entered = false;
+        this.mousePoller = new KWinMousePoller();
     }
 
     /*
@@ -276,10 +282,13 @@ class KWinDriver implements IDriverContext {
             debugObj(() => ["moveResizedChanged", {window, move: client.move, resize: client.resize}]);
             if (moving !== client.move) {
                 moving = client.move;
-                if (moving)
+                if (moving) {
+                    this.mousePoller.start();
                     this.control.onWindowMoveStart(window);
-                else
+                } else {
                     this.control.onWindowMoveOver(this, window);
+                    this.mousePoller.stop();
+                }
             }
             if (resizing !== client.resize) {
                 resizing = client.resize;
