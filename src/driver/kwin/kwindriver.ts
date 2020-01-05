@@ -42,6 +42,17 @@ class KWinDriver implements IDriverContext {
         );
     }
 
+    public set currentSurface(value: ISurface) {
+        const ksrf = value as KWinSurface;
+
+        /* NOTE: only supports switching desktops */
+        // TODO: fousing window on other screen?
+        // TODO: find a way to change activity
+
+        if (workspace.currentDesktop !== ksrf.desktop)
+            workspace.currentDesktop = ksrf.desktop;
+    }
+
     public get currentWindow(): Window | null {
         const client = workspace.activeClient;
         return (client) ? this.windowMap.get(client) : null;

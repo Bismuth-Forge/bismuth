@@ -78,12 +78,13 @@ interface IConfig {
 }
 
 interface IDriverWindow {
-    readonly surface: ISurface;
     readonly fullScreen: boolean;
     readonly geometry: Rect;
     readonly id: string;
     readonly shouldIgnore: boolean;
     readonly shouldFloat: boolean;
+
+    surface: ISurface;
 
     commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
     visible(srf: ISurface): boolean;
@@ -93,15 +94,17 @@ interface ISurface {
     readonly id: string;
     readonly ignore: boolean;
     readonly workingArea: Rect;
+
+    next(): ISurface | null;
 }
 
 interface IDriverContext {
     readonly backend: string;
-    readonly currentSurface: ISurface;
     readonly screens: ISurface[];
     readonly setTimeout: (func: () => void, timeout: number) => void;
     readonly cursorPosition: [number, number] | null;
 
+    currentSurface: ISurface;
     currentWindow: Window | null;
 }
 
@@ -109,6 +112,7 @@ interface IDriverContext {
 
 interface ILayout {
     /* read-only */
+    readonly capacity?: number;
     readonly enabled: boolean;
 
     /* methods */

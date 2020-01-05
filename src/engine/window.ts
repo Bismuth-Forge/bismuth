@@ -54,7 +54,6 @@ class Window {
     public readonly window: IDriverWindow;
 
     public get actualGeometry(): Rect { return this.window.geometry; }
-    public get surface(): ISurface { return this.window.surface; }
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
@@ -100,6 +99,14 @@ class Window {
             this.floatGeometry = this.actualGeometry;
 
         this.internalState = value;
+    }
+
+    public get surface(): ISurface {
+        return this.window.surface;
+    }
+
+    public set surface(srf: ISurface) {
+        this.window.surface = srf;
     }
 
     private internalState: WindowState;

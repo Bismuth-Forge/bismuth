@@ -44,6 +44,22 @@ class TilingController {
     public onWindowAdded(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowAdded", {window}]);
         this.engine.manage(window);
+
+        /* move window to next surface if the current surface is "full" */
+        if (window.tileable) {
+            const srf = ctx.currentSurface;
+            const tiles = this.engine.windows.getVisibleTiles(srf);
+            const layoutCapcity = this.engine.layouts.getCurrentLayout(srf).capacity;
+            if (layoutCapcity !== undefined && tiles.length > layoutCapcity) {
+                const nsrf = ctx.currentSurface.next();
+                if (nsrf) {
+                    // (window.window as KWinWindow).client.desktop = (nsrf as KWinSurface).desktop;
+                    window.surface = nsrf;
+                    ctx.currentSurface = nsrf;
+                }
+            }
+        }
+
         this.engine.arrange(ctx);
     }
 

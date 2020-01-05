@@ -45,7 +45,7 @@ declare namespace KWin {
         /* read-write */
         activeClient: KWin.Client;
         currentDesktop: number;
-            /* NOTE: if no window is present, this points to desktop. */
+        desktops: number;
 
         /* signals */
         activitiesChanged: QSignal;

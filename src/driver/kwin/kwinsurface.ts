@@ -52,6 +52,15 @@ class KWinSurface implements ISurface {
         this.desktop = desktop;
     }
 
+    public next(): ISurface | null {
+        if (this.desktop === workspace.desktops)
+            /* this is the last virtual desktop */
+            /* TODO: option to create additional desktop */
+            return null;
+
+        return new KWinSurface(this.screen, this.activity, this.desktop + 1);
+    }
+
     public toString(): string {
         return "KWinSurface(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
     }

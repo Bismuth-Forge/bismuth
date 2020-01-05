@@ -85,6 +85,10 @@ class TestSurface implements ISurface {
     constructor(private driver: TestDriver, screen: number) {
         this.screen = screen;
     }
+
+    public next(): ISurface {
+        return new TestSurface(this.driver, this.screen + 1);
+    }
 }
 
 class TestWindow implements IDriverWindow {

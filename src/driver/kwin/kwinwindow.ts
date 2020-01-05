@@ -26,22 +26,6 @@ class KWinWindow implements IDriverWindow {
     public readonly client: KWin.Client;
     public readonly id: string;
 
-    public get surface(): ISurface {
-        let activity;
-        if (this.client.activities.length === 0)
-            activity = workspace.currentActivity;
-        else if (this.client.activities.indexOf(workspace.currentActivity) >= 0)
-            activity = workspace.currentActivity;
-        else
-            activity = this.client.activities[0];
-
-        const desktop = (this.client.desktop >= 0)
-            ? this.client.desktop
-            : workspace.currentDesktop;
-
-        return new KWinSurface(this.client.screen, activity, desktop);
-    }
-
     public get fullScreen(): boolean {
         return this.client.fullScreen;
     }
@@ -72,6 +56,31 @@ class KWinWindow implements IDriverWindow {
             || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
             || (matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0)
         );
+    }
+
+    public get surface(): ISurface {
+        let activity;
+        if (this.client.activities.length === 0)
+            activity = workspace.currentActivity;
+        else if (this.client.activities.indexOf(workspace.currentActivity) >= 0)
+            activity = workspace.currentActivity;
+        else
+            activity = this.client.activities[0];
+
+        const desktop = (this.client.desktop >= 0)
+            ? this.client.desktop
+            : workspace.currentDesktop;
+
+        return new KWinSurface(this.client.screen, activity, desktop);
+    }
+
+    public set surface(srf: ISurface) {
+        const ksrf = srf as KWinSurface;
+
+        // TODO: setting activity?
+        // TODO: setting screen = move to the screen
+        if (this.client.desktop !== ksrf.desktop)
+            this.client.desktop = ksrf.desktop;
     }
 
     private readonly _bakNoBorder: boolean;

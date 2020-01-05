@@ -21,6 +21,10 @@
 class QuarterLayout implements ILayout {
     public static readonly MAX_PROPORTION = 0.8;
 
+    public get capacity(): number {
+        return 4;
+    }
+
     public get enabled(): boolean {
         return CONFIG.enableQuarterLayout;
     }
