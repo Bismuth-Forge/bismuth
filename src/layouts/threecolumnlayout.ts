@@ -78,7 +78,7 @@ class ThreeColumnLayout implements ILayout {
                     groupTiles.indexOf(basis),
                     delta)
                 .forEach((newWeight, i) =>
-                    this.weights.set(groupTiles[i], newWeight));
+                    this.weights.set(groupTiles[i], newWeight * groupTiles.length));
         }
     }
 
