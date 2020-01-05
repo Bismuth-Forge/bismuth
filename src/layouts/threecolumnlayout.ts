@@ -50,7 +50,7 @@ class ThreeColumnLayout implements ILayout {
             let basisGroup;
             if (basisIndex < this.masterSize)
                 basisGroup = 1; /* master */
-            else if (basisIndex < (this.masterSize + tiles.length) / 2)
+            else if (basisIndex < Math.floor((this.masterSize + tiles.length) / 2))
                 basisGroup = 2; /* R-stack */
             else
                 basisGroup = 0; /* L-stack */
