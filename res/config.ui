@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>476</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -512,6 +512,16 @@
         <widget class="QCheckBox" name="kcfg_preventProtrusion">
          <property name="text">
           <string>Prevent windows from protruding out of screen</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_pollMouseXdotool">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actual mouse position will be used for certain operations. (e.g. swapping tile by dragging)&lt;/p&gt;&lt;p&gt;To use this feature, user &lt;span style=&quot; text-decoration: underline;&quot;&gt;MUST make sure &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; text-decoration: underline;&quot;&gt;xdotool &lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;is installed&lt;/span&gt; on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Poll actual mouse position using xdotool (hack!)</string>
          </property>
         </widget>
        </item>

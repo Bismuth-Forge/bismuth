@@ -52,6 +52,7 @@ class KWinConfig implements IConfig {
     public layoutPerDesktop: boolean;
     public preventMinimize: boolean;
     public preventProtrusion: boolean;
+    public pollMouseXdotool: boolean;
     //#endregion
 
     //#region KWin-specific Rules
@@ -103,6 +104,7 @@ class KWinConfig implements IConfig {
         this.floatUtility         = KWin.readConfig("floatUtility"        , true);
         this.preventMinimize      = KWin.readConfig("preventMinimize"     , false);
         this.preventProtrusion    = KWin.readConfig("preventProtrusion"   , true);
+        this.pollMouseXdotool     = KWin.readConfig("pollMouseXdotool"    , false);
 
         this.floatingClass  = commaSeparate(KWin.readConfig("floatingClass" , ""));
         this.floatingTitle  = commaSeparate(KWin.readConfig("floatingTitle" , ""));

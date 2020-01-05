@@ -56,7 +56,8 @@ class KWinMousePoller {
 
     public start() {
         this.startCount += 1;
-        mousePoller.connectSource(KWinMousePoller.COMMAND);
+        if (KWINCONFIG.pollMouseXdotool)
+            mousePoller.connectSource(KWinMousePoller.COMMAND);
     }
 
     public stop() {
