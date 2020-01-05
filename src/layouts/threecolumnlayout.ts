@@ -38,7 +38,7 @@ class ThreeColumnLayout implements ILayout {
         if (basisIndex < 0)
             return;
 
-        if (tiles.length === 2) {
+        if (tiles.length === this.masterSize + 1) {
             this.masterRatio = LayoutUtils.adjustAreaHalfWeights(
                 area,
                 this.masterRatio,
@@ -46,7 +46,7 @@ class ThreeColumnLayout implements ILayout {
                 basisIndex,
                 delta,
                 true);
-        } else if (tiles.length >= 3) {
+        } else if (tiles.length > this.masterSize + 1) {
             let basisGroup;
             if (basisIndex < this.masterSize)
                 basisGroup = 1; /* master */
