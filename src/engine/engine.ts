@@ -72,7 +72,7 @@ class TilingEngine {
         if (layout.adjust) {
             const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight,
                 CONFIG.screenGapTop, CONFIG.screenGapBottom);
-            layout.adjust(area, this.windows.getVisibleWindows(srf), basis, delta);
+            layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
         }
     }
 
