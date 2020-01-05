@@ -88,7 +88,7 @@ class WindowStore {
     /** Return all visible "Tile" windows on the given surface. */
     public getVisibleTiles(srf: ISurface): Window[] {
         return this.list.filter((win) =>
-            win.state === WindowState.Tile && win.visible(srf));
+            win.tiled && win.visible(srf));
     }
 
     /**

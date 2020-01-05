@@ -126,9 +126,9 @@ class TilingEngine {
      * move/resize such windows back to where/how they should be.
      */
     public enforceSize(ctx: IDriverContext, window: Window) {
-        if (window.state === WindowState.Tile && !window.actualGeometry.equals(window.geometry))
+        if (window.tiled && !window.actualGeometry.equals(window.geometry))
             ctx.setTimeout(() => {
-                if (window.state === WindowState.Tile)
+                if (window.tiled)
                     window.commit();
             }, 10);
     }
@@ -192,7 +192,7 @@ class TilingEngine {
      * Toggle float mode of window.
      */
     public toggleFloat(window: Window) {
-        window.state = (window.state === WindowState.Float)
+        window.state = (!window.tileable)
             ? WindowState.Tile
             : WindowState.Float;
     }

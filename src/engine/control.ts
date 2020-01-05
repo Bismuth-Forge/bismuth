@@ -112,7 +112,7 @@ class TilingController {
 
     public onWindowResizeOver(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowResizeOver", {window}]);
-        if (CONFIG.adjustLayout && window.state === WindowState.Tile) {
+        if (CONFIG.adjustLayout && window.tiled) {
             this.engine.adjustLayout(window);
             this.engine.arrange(ctx);
         } else if (!CONFIG.adjustLayout)

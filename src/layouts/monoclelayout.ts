@@ -37,7 +37,7 @@ class MonocleLayout implements ILayout {
             const tiles = [...tileables];
             ctx.setTimeout(() => {
                 const current = ctx.currentWindow;
-                if (current && current.state === WindowState.Tile) {
+                if (current && current.tiled) {
                     tiles.forEach((window) => {
                         if (window !== current)
                             (window.window as KWinWindow).client.minimized = true;

@@ -36,6 +36,13 @@ class Window {
         );
     }
 
+    public static isTiledState(state: WindowState): boolean {
+        return (
+            (state === WindowState.Tile)
+            || (state === WindowState.FullTile)
+        );
+    }
+
     public static isFloatingState(state: WindowState): boolean {
         return (
             (state === WindowState.Float)
@@ -51,7 +58,11 @@ class Window {
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
+    /** If this window ***can be*** tiled by layout. */
     public get tileable(): boolean { return Window.isTileableState(this.state); }
+    /** If this window is ***already*** tiled, thus a part of the current layout. */
+    public get tiled(): boolean { return Window.isTiledState(this.state); }
+    /** If this window is floating, thus its geometry is not tightly managed. */
     public get floating(): boolean { return Window.isFloatingState(this.state); }
 
     public get geometryDelta(): RectDelta {
@@ -61,6 +72,14 @@ class Window {
     public floatGeometry: Rect;
     public geometry: Rect;
 
+    /**
+     * The current state of the window.
+     *
+     * This value affects what and how properties gets commited to the backend.
+     *
+     * Avoid comparing this value directly, and use `tileable`, `tiled`,
+     * `floating` as much as possible.
+     */
     public get state(): WindowState {
         if (this.window.fullScreen)
             return WindowState.FullScreen;
