@@ -154,6 +154,17 @@ class TilingController {
     }
 
     public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
+        /* TODO: configurable */
+        const position = false;
+        if (position) {
+            switch (input) {
+                case Shortcut.Up   : input = Shortcut.FocusUp; break;
+                case Shortcut.Down : input = Shortcut.FocusDown; break;
+                case Shortcut.Left : input = Shortcut.FocusLeft; break;
+                case Shortcut.Right: input = Shortcut.FocusRight; break;
+            }
+        }
+
         if (this.engine.handleLayoutShortcut(ctx, input, data)) {
             this.engine.arrange(ctx);
             return;
@@ -163,6 +174,11 @@ class TilingController {
         switch (input) {
             case Shortcut.Up  : if (window) this.engine.moveFocus(ctx, window, -1); break;
             case Shortcut.Down: if (window) this.engine.moveFocus(ctx, window, +1); break;
+
+            case Shortcut.FocusUp   : if (window) this.engine.focusDirection(ctx, window, "up"   ); break;
+            case Shortcut.FocusDown : if (window) this.engine.focusDirection(ctx, window, "down" ); break;
+            case Shortcut.FocusLeft : if (window) this.engine.focusDirection(ctx, window, "left" ); break;
+            case Shortcut.FocusRight: if (window) this.engine.focusDirection(ctx, window, "right"); break;
 
             case Shortcut.GrowWidth   : if (window) this.engine.adjustWindowSize(window, "east" ,  1); break;
             case Shortcut.ShrinkWidth : if (window) this.engine.adjustWindowSize(window, "east" , -1); break;

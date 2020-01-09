@@ -24,6 +24,12 @@ enum Shortcut {
     Up,
     Down,
 
+    /* Alternate HJKL bindings */
+    FocusUp,
+    FocusDown,
+    FocusLeft,
+    FocusRight,
+
     ShiftLeft,
     ShiftRight,
     ShiftUp,

@@ -84,3 +84,17 @@ function partitionArrayBySizes<T>(array: T[], sizes: number[]): T[][] {
 
     return chunks;
 }
+
+/**
+ * Tests if two ranges are overlapping
+ * @param min1 Range 1, begin
+ * @param max1 Range 1, end
+ * @param min2 Range 2, begin
+ * @param max2 Range 2, end
+ */
+function overlap(min1: number, max1: number, min2: number, max2: number): boolean {
+    const min = Math.min;
+    const max = Math.max;
+    const dx = max(0, min(max1, max2) - max(min1, min2));
+    return (dx > 0);
+}

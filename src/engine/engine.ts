@@ -172,6 +172,40 @@ class TilingEngine {
         ctx.currentWindow = visibles[newIndex];
     }
 
+    public focusDirection(ctx: IDriverContext, window: Window, dir: "up" | "down" | "left" | "right") {
+        const vertical = (dir === "up" || dir === "down");
+        const step = (dir === "up" || dir === "left") ? -1 : 1;
+
+        const candidates = this.windows.getVisibleTiles(ctx.currentSurface)
+            .filter((vertical)
+                ? ((tile) => tile.geometry.y * step > window.geometry.y * step)
+                : ((tile) => tile.geometry.x * step > window.geometry.x * step))
+            .filter((vertical)
+                ? ((tile) => overlap(window.geometry.x, window.geometry.maxX, tile.geometry.x, tile.geometry.maxX))
+                : ((tile) => overlap(window.geometry.y, window.geometry.maxY, tile.geometry.y, tile.geometry.maxY)));
+
+        if (candidates.length > 0) {
+            let min = candidates.reduce(
+                (vertical)
+                    ? ((prevMin, tile): number => Math.min(tile.geometry.y * step, prevMin))
+                    : ((prevMin, tile): number => Math.min(tile.geometry.x * step, prevMin)),
+                Infinity);
+            min *= step;
+
+            const closest = candidates.filter( (vertical)
+                ? (tile) => tile.geometry.y === min
+                : (tile) => tile.geometry.x === min);
+            if (closest.length === 1) {
+                ctx.currentWindow = closest[0];
+            } else {
+                // TODO: focus the most recent among the candidates
+                ctx.currentWindow = closest[0];
+            }
+        } else {
+            // TODO: focus wrapping
+        }
+    }
+
     /**
      * Reorder windows by moving the current window next to next/previous window.
      */
