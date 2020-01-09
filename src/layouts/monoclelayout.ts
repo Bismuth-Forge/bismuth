@@ -47,6 +47,25 @@ class MonocleLayout implements ILayout {
         }
     }
 
+    public handleShortcut(ctx: EngineContext, input: Shortcut, data?: any): boolean {
+        switch (input) {
+            case Shortcut.Up:
+            case Shortcut.FocusUp:
+            case Shortcut.Left:
+            case Shortcut.FocusLeft:
+                ctx.moveFocus(-1);
+                return true;
+            case Shortcut.Down:
+            case Shortcut.FocusDown:
+            case Shortcut.Right:
+            case Shortcut.FocusRight:
+                ctx.moveFocus(1);
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public toString(): string {
         return "MonocleLayout()";
     }
