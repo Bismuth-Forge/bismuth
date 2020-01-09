@@ -19,6 +19,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 class ThreeColumnLayout implements ILayout {
+    public static readonly MIN_MASTER_RATIO = 0.2;
+    public static readonly MAX_MASTER_RATIO = 0.75;
+
     public get enabled(): boolean {
         return CONFIG.enableThreeColumnLayout;
     }
@@ -138,6 +141,18 @@ class ThreeColumnLayout implements ILayout {
         switch (input) {
             case Shortcut.Increase: this.resizeMaster(+1); return true;
             case Shortcut.Decrease: this.resizeMaster(-1); return true;
+            case Shortcut.Left:
+                this.masterRatio = clip(
+                    slide(this.masterRatio, -0.05),
+                    ThreeColumnLayout.MIN_MASTER_RATIO,
+                    ThreeColumnLayout.MAX_MASTER_RATIO);
+                return true;
+            case Shortcut.Right:
+                this.masterRatio = clip(
+                    slide(this.masterRatio, +0.05),
+                    ThreeColumnLayout.MIN_MASTER_RATIO,
+                    ThreeColumnLayout.MAX_MASTER_RATIO);
+                return true;
             default:
                 return false;
         }
