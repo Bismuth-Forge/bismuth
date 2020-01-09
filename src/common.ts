@@ -81,6 +81,10 @@ interface IConfig {
     screenGapTop: number;
     tileLayoutGap: number;
     //#endregion
+
+    //#region Behavior
+    directionalKeyMode: "dwm" | "focus";
+    //#endregion
 }
 
 interface IDriverWindow {

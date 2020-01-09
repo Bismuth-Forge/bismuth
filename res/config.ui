@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>476</height>
+    <width>500</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -265,6 +265,63 @@
        </item>
        <item>
         <spacer name="gapsTabVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="behaviorTab">
+      <attribute name="title">
+       <string>Behavior</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="directionalKeyLabel">
+         <property name="text">
+          <string>Directional Key Behaviors (Up, Down, Left, Right)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="directionalKeyLayout">
+         <property name="leftMargin">
+          <number>40</number>
+         </property>
+         <item>
+          <widget class="QRadioButton" name="kcfg_directionalKeyDwm">
+           <property name="text">
+            <string>[dwm]
+Up/Down = Focus Previous/Next Window
+Left/Right = Reduce/Extend Master Area</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">directionalKeyButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="kcfg_directionalKeyFocus">
+           <property name="text">
+            <string>[focus]
+Focus to Above, Below, Left, Right</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">directionalKeyButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="behaviorTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -573,4 +630,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="directionalKeyButtonGroup"/>
+ </buttongroups>
 </ui>

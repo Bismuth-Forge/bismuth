@@ -47,6 +47,10 @@ class KWinConfig implements IConfig {
     public tileLayoutGap: number;
     //#endregion
 
+    //#region Behavior
+    public directionalKeyMode: "dwm" | "focus";
+    //#endregion
+
     //#region KWin-specific
     public layoutPerActivity: boolean;
     public layoutPerDesktop: boolean;
@@ -98,6 +102,10 @@ class KWinConfig implements IConfig {
         this.screenGapRight       = KWin.readConfig("screenGapRight"      , 0);
         this.screenGapTop         = KWin.readConfig("screenGapTop"        , 0);
         this.tileLayoutGap        = KWin.readConfig("tileLayoutGap"       , 0);
+
+        const directionalKeyDwm   = KWin.readConfig("directionalKeyDwm"   , true);
+        const directionalKeyFocus = KWin.readConfig("directionalKeyFocus" , false);
+        this.directionalKeyMode = (directionalKeyDwm) ? "dwm" : "focus";
 
         this.layoutPerActivity    = KWin.readConfig("layoutPerActivity"   , false);
         this.layoutPerDesktop     = KWin.readConfig("layoutPerDesktop"    , false);

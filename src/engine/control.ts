@@ -154,9 +154,7 @@ class TilingController {
     }
 
     public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
-        /* TODO: configurable */
-        const position = false;
-        if (position) {
+        if (CONFIG.directionalKeyMode === "focus") {
             switch (input) {
                 case Shortcut.Up   : input = Shortcut.FocusUp; break;
                 case Shortcut.Down : input = Shortcut.FocusDown; break;

@@ -171,5 +171,14 @@
         <default>false</default>
     </entry>
 
+    <entry name="directionalKeyDwm" type="Bool">
+	    <label>Up, Down, Left, and Right shortcut behaves like dwm</label>
+        <default>true</default>
+    </entry>
+
+    <entry name="directionalKeyFocus" type="Bool">
+	    <label>Up, Down, Left, and Right shortcut moves focus</label>
+        <default>false</default>
+    </entry>
   </group>
 </kcfg>
