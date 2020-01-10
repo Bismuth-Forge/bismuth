@@ -97,6 +97,7 @@ declare namespace KWin {
 
     interface Client extends Toplevel {
         /* read-only */
+        readonly active: boolean;
         readonly caption: string;
         readonly maxSize: QSize;
         readonly minSize: QSize;
@@ -118,6 +119,7 @@ declare namespace KWin {
         basicUnit: QSize;
 
         /* signals */
+        activeChanged: QSignal;
         desktopChanged: QSignal;
         moveResizedChanged: QSignal;
     }

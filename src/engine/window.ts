@@ -70,6 +70,7 @@ class Window {
 
     public floatGeometry: Rect;
     public geometry: Rect;
+    public timestamp: number;
 
     /**
      * The current state of the window.
@@ -118,6 +119,7 @@ class Window {
 
         this.floatGeometry = window.geometry;
         this.geometry = window.geometry;
+        this.timestamp = 0;
 
         this.internalState = WindowState.Unmanaged;
         this.shouldCommitFloat = false;

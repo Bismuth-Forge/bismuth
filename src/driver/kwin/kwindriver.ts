@@ -321,6 +321,11 @@ class KWinDriver implements IDriverContext {
             }
         });
 
+        this.connect(client.activeChanged, () => {
+            if (client.active)
+                this.control.onWindowFocused(this, window);
+        });
+
         this.connect(client.screenChanged, () =>
             this.control.onWindowChanged(this, window, "screen=" + client.screen));
 

@@ -195,12 +195,10 @@ class TilingEngine {
             const closest = candidates.filter( (vertical)
                 ? (tile) => tile.geometry.y === min
                 : (tile) => tile.geometry.x === min);
-            if (closest.length === 1) {
-                ctx.currentWindow = closest[0];
-            } else {
-                // TODO: focus the most recent among the candidates
-                ctx.currentWindow = closest[0];
-            }
+
+            ctx.currentWindow = (closest.length > 1)
+                ? candidates.sort((a, b) => b.timestamp - a.timestamp)[0]
+                : closest[0];
         } else {
             // TODO: focus wrapping
         }

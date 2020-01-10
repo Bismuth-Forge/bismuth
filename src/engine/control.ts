@@ -153,6 +153,10 @@ class TilingController {
         }
     }
 
+    public onWindowFocused(ctx: IDriverContext, window: Window) {
+        window.timestamp = new Date().getTime();
+    }
+
     public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
         if (CONFIG.directionalKeyMode === "focus") {
             switch (input) {
