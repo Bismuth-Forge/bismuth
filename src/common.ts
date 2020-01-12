@@ -111,11 +111,12 @@ interface ISurface {
 interface IDriverContext {
     readonly backend: string;
     readonly screens: ISurface[];
-    readonly setTimeout: (func: () => void, timeout: number) => void;
     readonly cursorPosition: [number, number] | null;
 
     currentSurface: ISurface;
     currentWindow: Window | null;
+
+    setTimeout(func: () => void, timeout: number): void;
 }
 
 //#endregion
