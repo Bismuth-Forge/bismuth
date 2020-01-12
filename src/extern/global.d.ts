@@ -18,8 +18,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-declare var activityInfo: Plasma.TaskManager.ActivityInfo;
-declare var scriptRoot: object;
-declare var mousePoller: Plasma.PlasmaCore.DataSource;
+/* KWin global objects */
+declare var workspace: KWin.WorkspaceWrapper;
+declare var options: KWin.Options;
 
+/* QML objects */
+declare var activityInfo: Plasma.TaskManager.ActivityInfo;
+declare var mousePoller: Plasma.PlasmaCore.DataSource;
+declare var scriptRoot: object;
+
+/* Common Javascript globals */
+declare let console: any;
 declare let setTimeout: any;

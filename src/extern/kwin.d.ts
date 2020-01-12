@@ -21,8 +21,6 @@
 // API Reference:
 //     https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9
 
-declare var console: any;
-
 declare namespace KWin {
     /* enum ClientAreaOption */
     var PlacementArea: number;
@@ -124,6 +122,3 @@ declare namespace KWin {
         moveResizedChanged: QSignal;
     }
 }
-
-declare var workspace: KWin.WorkspaceWrapper;
-declare var options: KWin.Options;
