@@ -236,22 +236,25 @@ class TilingEngine {
      * windows: windows will be tiled if more than half are floating, and will
      * be floated otherwise.
      */
-    public floatAll(srf: ISurface) {
+    public floatAll(ctx: IDriverContext, srf: ISurface) {
         const windows = this.windows.getVisibleWindows(srf);
         const numFloats = windows.reduce<number>((count, window) => {
             return (window.state === WindowState.Float) ? count + 1 : count;
         }, 0);
 
-        if (numFloats < windows.length / 2)
+        if (numFloats < windows.length / 2) {
             windows.forEach((window) => {
                 /* TODO: do not use arbitrary constants */
                 window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
                 window.state = WindowState.Float;
             });
-        else
+            ctx.showNotification("Float All");
+        } else {
             windows.forEach((window) => {
                 window.state = WindowState.Tile;
             });
+            ctx.showNotification("Tile All");
+        }
     }
 
     /**
@@ -269,15 +272,20 @@ class TilingEngine {
      * Change the layout of the current surface to the next.
      */
     public cycleLayout(ctx: IDriverContext) {
-        this.layouts.cycleLayout(ctx.currentSurface);
+        const layout = this.layouts.cycleLayout(ctx.currentSurface);
+        if (layout)
+            ctx.showNotification(layout.description);
     }
 
     /**
      * Set the layout of the current surface to the specified layout.
      */
-    public setLayout(ctx: IDriverContext, layout: any) {
-        if (layout)
-            this.layouts.setLayout(ctx.currentSurface, layout);
+    public setLayout(ctx: IDriverContext, layoutType: any) {
+        if (layoutType) {
+            const layout = this.layouts.setLayout(ctx.currentSurface, layoutType);
+            if (layout)
+                ctx.showNotification(layout.description);
+        }
     }
 
     /**

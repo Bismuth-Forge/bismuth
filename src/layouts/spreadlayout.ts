@@ -19,6 +19,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 class SpreadLayout implements ILayout {
+    public readonly description = "Spread";
+
     public get enabled(): boolean {
         return CONFIG.enableSpreadLayout;
     }

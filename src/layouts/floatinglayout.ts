@@ -21,6 +21,8 @@
 class FloatingLayout implements ILayout {
     public static instance = new FloatingLayout(true);
 
+    public readonly description: string = "Floating";
+
     private _enabled: boolean;
 
     constructor(enabled: boolean) {

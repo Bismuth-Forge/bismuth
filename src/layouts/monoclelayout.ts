@@ -19,6 +19,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 class MonocleLayout implements ILayout {
+    public readonly description: string = "Monocle";
+
     public get enabled(): boolean {
         return CONFIG.enableMonocleLayout;
     }

@@ -126,6 +126,7 @@ interface ILayout {
     /* read-only */
     readonly capacity?: number;
     readonly enabled: boolean;
+    readonly description: string;
 
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;

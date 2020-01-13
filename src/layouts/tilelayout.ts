@@ -22,6 +22,10 @@ class TileLayout implements ILayout {
     public static readonly MIN_MASTER_RATIO = 0.2;
     public static readonly MAX_MASTER_RATIO = 0.8;
 
+    public get description(): string {
+        return "Tile [" + this.numMaster + "]";
+    }
+
     public get enabled(): boolean {
         return CONFIG.enableTileLayout;
     }
@@ -120,10 +124,12 @@ class TileLayout implements ILayout {
                 // TODO: define arbitrary constant
                 if (this.numMaster < 10)
                     this.numMaster += 1;
+                ctx.showNotification(this.description);
                 break;
             case Shortcut.Decrease:
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
+                ctx.showNotification(this.description);
                 break;
             default:
                 return false;

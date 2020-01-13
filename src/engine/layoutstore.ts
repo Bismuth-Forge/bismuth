@@ -43,26 +43,27 @@ class LayoutStoreEntry {
         ];
     }
 
-    public cycleLayout() {
+    public cycleLayout(): ILayout | null {
         const start = this.layouts[0];
         for (;;) {
             this.layouts.push(this.layouts.shift() as ILayout);
             if (this.layouts[0].enabled)
-                break;
+                return this.layouts[0];
             if (this.layouts[0] === start)
-                break;
+                return null;
         }
     }
 
-    public setLayout(cls: any) {
+    public setLayout(cls: any): ILayout | null {
         const result = this.layouts.filter((lo) =>
             lo.enabled && (lo instanceof cls));
         if (result.length === 0)
-            return;
+            return null;
         const layout = result[0];
 
         while (this.layouts[0] !== layout)
             this.layouts.push(this.layouts.shift() as ILayout);
+        return this.layouts[0];
     }
 }
 
@@ -79,16 +80,16 @@ class LayoutStore {
             : this.getEntry(srf.id).currentLayout;
     }
 
-    public cycleLayout(srf: ISurface) {
+    public cycleLayout(srf: ISurface): ILayout | null {
         if (srf.ignore)
-            return;
-        this.getEntry(srf.id).cycleLayout();
+            return null;
+        return this.getEntry(srf.id).cycleLayout();
     }
 
-    public setLayout(srf: ISurface, cls: any) {
+    public setLayout(srf: ISurface, cls: any): ILayout | null {
         if (srf.ignore)
-            return;
-        this.getEntry(srf.id).setLayout(cls);
+            return null;
+        return this.getEntry(srf.id).setLayout(cls);
     }
 
     private getEntry(key: string): LayoutStoreEntry {

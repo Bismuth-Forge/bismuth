@@ -19,6 +19,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 class StairLayout implements ILayout {
+    public readonly description = "Stair";
+
     public get enabled(): boolean {
         return CONFIG.enableStairLayout;
     }

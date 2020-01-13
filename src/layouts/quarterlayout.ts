@@ -21,6 +21,8 @@
 class QuarterLayout implements ILayout {
     public static readonly MAX_PROPORTION = 0.8;
 
+    public readonly description = "Quarter";
+
     public get capacity(): number {
         return 4;
     }
