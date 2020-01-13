@@ -35,6 +35,7 @@ PlasmaCore.Dialog {
     type: PlasmaCore.Dialog.OnScreenDisplay
     flags: Qt.Popup | Qt.WindowStaysOnTopHint
     location: PlasmaCore.Types.Floating
+    outputOnly: true
 
     visible: false
 
