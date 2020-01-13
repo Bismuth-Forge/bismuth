@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Krohnkite
 Comment=A dynamic tiling script for KWin ($REV)
-#Icon=
+Icon=dialog-tile-clones
 
 X-Plasma-API=declarativescript
 X-Plasma-MainScript=ui/main.qml
