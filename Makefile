@@ -5,12 +5,8 @@ PROJECT_REV  = $(shell git rev-parse HEAD | cut -b-7)
 KWINPKG_FILE = $(PROJECT_NAME)-$(PROJECT_VER).kwinscript
 KWINPKG_DIR = pkg
 
-KWIN_SCRIPT = $(KWINPKG_DIR)/contents/code/script.js
 KWIN_META   = $(KWINPKG_DIR)/metadata.desktop
 KWIN_QML    = $(KWINPKG_DIR)/contents/ui/main.qml
-KWIN_POPQML = $(KWINPKG_DIR)/contents/ui/popup.qml
-KWIN_CONFIG_XML = $(KWINPKG_DIR)/contents/config/main.xml
-KWIN_CONFIG_UI  = $(KWINPKG_DIR)/contents/ui/config.ui
 
 NODE_SCRIPT = krohnkite.js
 NODE_META   = package.json
@@ -48,13 +44,13 @@ $(KWINPKG_FILE): $(KWINPKG_DIR)
 	@rm -f "$(KWINPKG_FILE)"
 	@7z a -tzip $(KWINPKG_FILE) ./$(KWINPKG_DIR)/*
 
-$(KWINPKG_DIR): $(KWIN_SCRIPT) $(KWIN_META) $(KWIN_QML) $(KWIN_POPQML)
-$(KWINPKG_DIR): $(KWIN_CONFIG_XML) $(KWIN_CONFIG_UI)
+$(KWINPKG_DIR): $(KWIN_META)
+$(KWINPKG_DIR): $(KWIN_QML)
+$(KWINPKG_DIR): $(KWINPKG_DIR)/contents/ui/config.ui
+$(KWINPKG_DIR): $(KWINPKG_DIR)/contents/ui/popup.qml
+$(KWINPKG_DIR): $(KWINPKG_DIR)/contents/code/script.js
+$(KWINPKG_DIR): $(KWINPKG_DIR)/contents/config/main.xml
 	@touch $@
-
-$(KWIN_SCRIPT): $(NODE_SCRIPT)
-	@mkdir -vp `dirname $(KWIN_SCRIPT)`
-	cp -a $< $@
 
 $(KWIN_META): res/metadata.desktop
 	@mkdir -vp `dirname $(KWIN_META)`
@@ -63,18 +59,11 @@ $(KWIN_META): res/metadata.desktop
 		> $(KWIN_META)
 
 $(KWIN_QML): res/main.qml
-	@mkdir -vp `dirname $@`
-	@cp -v $< $@
-
-$(KWIN_POPQML): res/popup.qml
-	@mkdir -vp `dirname $@`
-	@cp -v $< $@
-
-$(KWIN_CONFIG_XML): res/config.xml
-	@mkdir -vp `dirname $@`
-	@cp -v $< $@
-
-$(KWIN_CONFIG_UI): res/config.ui
+$(KWINPKG_DIR)/contents/ui/config.ui: res/config.ui
+$(KWINPKG_DIR)/contents/ui/popup.qml: res/popup.qml
+$(KWINPKG_DIR)/contents/code/script.js: $(NODE_SCRIPT)
+$(KWINPKG_DIR)/contents/config/main.xml: res/config.xml
+$(KWINPKG_DIR)/%:
 	@mkdir -vp `dirname $@`
 	@cp -v $< $@
 
