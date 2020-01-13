@@ -117,6 +117,7 @@ interface IDriverContext {
     currentWindow: Window | null;
 
     setTimeout(func: () => void, timeout: number): void;
+    showNotification(text: string): void;
 }
 
 //#endregion

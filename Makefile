@@ -8,6 +8,7 @@ KWINPKG_DIR = pkg
 KWIN_SCRIPT = $(KWINPKG_DIR)/contents/code/script.js
 KWIN_META   = $(KWINPKG_DIR)/metadata.desktop
 KWIN_QML    = $(KWINPKG_DIR)/contents/ui/main.qml
+KWIN_POPQML = $(KWINPKG_DIR)/contents/ui/popup.qml
 KWIN_CONFIG_XML = $(KWINPKG_DIR)/contents/config/main.xml
 KWIN_CONFIG_UI  = $(KWINPKG_DIR)/contents/ui/config.ui
 
@@ -47,12 +48,12 @@ $(KWINPKG_FILE): $(KWINPKG_DIR)
 	@rm -f "$(KWINPKG_FILE)"
 	@7z a -tzip $(KWINPKG_FILE) ./$(KWINPKG_DIR)/*
 
-$(KWINPKG_DIR): $(KWIN_SCRIPT) $(KWIN_META) $(KWIN_QML)
+$(KWINPKG_DIR): $(KWIN_SCRIPT) $(KWIN_META) $(KWIN_QML) $(KWIN_POPQML)
 $(KWINPKG_DIR): $(KWIN_CONFIG_XML) $(KWIN_CONFIG_UI)
 	@touch $@
 
 $(KWIN_SCRIPT): $(NODE_SCRIPT)
-	 @mkdir -vp `dirname $(KWIN_SCRIPT)`
+	@mkdir -vp `dirname $(KWIN_SCRIPT)`
 	cp -a $< $@
 
 $(KWIN_META): res/metadata.desktop
@@ -62,6 +63,10 @@ $(KWIN_META): res/metadata.desktop
 		> $(KWIN_META)
 
 $(KWIN_QML): res/main.qml
+	@mkdir -vp `dirname $@`
+	@cp -v $< $@
+
+$(KWIN_POPQML): res/popup.qml
 	@mkdir -vp `dirname $@`
 	@cp -v $< $@
 

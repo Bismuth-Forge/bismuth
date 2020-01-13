@@ -117,9 +117,13 @@ class KWinDriver implements IDriverContext {
         this.engine.arrange(this);
     }
 
-    //#region implement `setTimeout` of IDriverContext`
+    //#region implement methods of IDriverContext`
     public setTimeout(func: () => void, timeout: number) {
         KWinSetTimeout(() => this.enter(func), timeout);
+    }
+
+    public showNotification(text: string) {
+        popupDialog.show(text);
     }
     //#endregion
 

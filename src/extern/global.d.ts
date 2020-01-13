@@ -27,6 +27,11 @@ declare var activityInfo: Plasma.TaskManager.ActivityInfo;
 declare var mousePoller: Plasma.PlasmaCore.DataSource;
 declare var scriptRoot: object;
 
+interface PopupDialog {
+    show(text: string): void;
+}
+declare var popupDialog: PopupDialog;
+
 /* Common Javascript globals */
 declare let console: any;
 declare let setTimeout: any;

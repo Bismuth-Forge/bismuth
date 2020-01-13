@@ -52,4 +52,8 @@ class EngineContext {
     public moveWindow(window: Window, target: Window, after?: boolean) {
         this.engine.windows.move(window, target, after);
     }
+
+    public showNotification(text: string) {
+        this.drvctx.showNotification(text);
+    }
 }

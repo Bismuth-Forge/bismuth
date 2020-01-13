@@ -37,6 +37,16 @@ Item {
         engine: 'executable'
     }
 
+    Loader {
+        id: popupDialog
+        source: "popup.qml"
+
+        function show(text) {
+            var area = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
+            this.item.show(text, area, 1000);
+        }
+    }
+
     Component.onCompleted: {
         console.log("KROHNKITE: starting the script");
         (new K.KWinDriver()).main();
