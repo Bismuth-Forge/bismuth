@@ -32,7 +32,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore;
 
 PlasmaCore.Dialog {
     id: popupDialog
-    type: PlasmaCore.Dialog.PopupMenu
+    type: PlasmaCore.Dialog.OnScreenDisplay
     flags: Qt.Popup | Qt.WindowStaysOnTopHint
     location: PlasmaCore.Types.Floating
 
