@@ -127,14 +127,14 @@ class Window {
 
     public commit() {
         if (this.state === WindowState.Tile)
-            this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.keepTileBelow);
+            this.window.commit(this.geometry, CONFIG.noTileBorder, false);
         else if (this.state === WindowState.FullTile)
-            this.window.commit(this.geometry, true, CONFIG.keepTileBelow);
+            this.window.commit(this.geometry, true, false);
         else if (this.state === WindowState.FloatTile && this.shouldCommitFloat) {
-            this.window.commit(this.floatGeometry, false, false);
+            this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
         } else if (this.state === WindowState.Float && this.shouldCommitFloat) {
-            this.window.commit(this.floatGeometry, false, false);
+            this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
         } else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, false);

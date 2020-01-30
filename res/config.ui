@@ -552,9 +552,9 @@ Focus to Above, Below, Left, Right</string>
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_keepTileBelow">
+        <widget class="QCheckBox" name="kcfg_keepFloatAbove">
          <property name="text">
-          <string>Keep tile windows below</string>
+          <string>Keep floating windows above tiled windows</string>
          </property>
         </widget>
        </item>

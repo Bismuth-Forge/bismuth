@@ -91,8 +91,8 @@ class KWinWindow implements IDriverWindow {
         this._bakNoBorder = client.noBorder;
     }
 
-    public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
-        debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepBelow }]);
+    public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
+        debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
 
         if (this.client.move || this.client.resize)
             return;
@@ -100,8 +100,8 @@ class KWinWindow implements IDriverWindow {
         if (noBorder !== undefined)
             this.client.noBorder = noBorder || this._bakNoBorder;
 
-        if (keepBelow !== undefined)
-            this.client.keepBelow = keepBelow;
+        if (keepAbove !== undefined)
+            this.client.keepAbove = keepAbove;
 
         if (geometry !== undefined) {
             geometry = this.adjustGeometry(geometry);

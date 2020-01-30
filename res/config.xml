@@ -121,7 +121,7 @@
         <default>true</default>
     </entry>
 
-    <entry name="keepTileBelow" type="Bool">
+    <entry name="keepFloatAbove" type="Bool">
 	    <label>Keep tiled windows below floating windows</label>
         <default>true</default>
     </entry>

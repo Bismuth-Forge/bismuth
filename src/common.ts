@@ -70,7 +70,7 @@ interface IConfig {
     //#region Features
     adjustLayout: boolean;
     adjustLayoutLive: boolean;
-    keepTileBelow: boolean;
+    keepFloatAbove: boolean;
     noTileBorder: boolean;
     //#endregion
 
@@ -96,7 +96,7 @@ interface IDriverWindow {
 
     surface: ISurface;
 
-    commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean): void;
+    commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
     visible(srf: ISurface): boolean;
 }
 

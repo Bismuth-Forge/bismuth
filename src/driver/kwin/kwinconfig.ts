@@ -35,7 +35,7 @@ class KWinConfig implements IConfig {
     //#region Features
     public adjustLayout: boolean;
     public adjustLayoutLive: boolean;
-    public keepTileBelow: boolean;
+    public keepFloatAbove: boolean;
     public noTileBorder: boolean;
     //#endregion
 
@@ -94,7 +94,7 @@ class KWinConfig implements IConfig {
 
         this.adjustLayout         = KWin.readConfig("adjustLayout"        , true);
         this.adjustLayoutLive     = KWin.readConfig("adjustLayoutLive"    , true);
-        this.keepTileBelow        = KWin.readConfig("keepTileBelow"       , true);
+        this.keepFloatAbove       = KWin.readConfig("keepFloatAbove"      , true);
         this.noTileBorder         = KWin.readConfig("noTileBorder"        , false);
 
         this.screenGapBottom      = KWin.readConfig("screenGapBottom"     , 0);

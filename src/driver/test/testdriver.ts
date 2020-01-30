@@ -101,7 +101,7 @@ class TestWindow implements IDriverWindow {
     public surface: TestSurface;
     public fullScreen: boolean;
     public geometry: Rect;
-    public keepBelow: boolean;
+    public keepAbove: boolean;
     public noBorder: boolean;
 
     constructor(srf: TestSurface, geometry?: Rect, ignore?: boolean, float?: boolean) {
@@ -114,17 +114,17 @@ class TestWindow implements IDriverWindow {
         this.surface = srf;
         this.fullScreen = false;
         this.geometry = geometry || new Rect(0, 0, 100, 100);
-        this.keepBelow = false;
+        this.keepAbove = false;
         this.noBorder = false;
     }
 
-    public commit(geometry?: Rect, noBorder?: boolean, keepBelow?: boolean) {
+    public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
         if (geometry)
             this.geometry = geometry;
         if (noBorder !== undefined)
             this.noBorder = noBorder;
-        if (keepBelow !== undefined)
-            this.keepBelow = keepBelow;
+        if (keepAbove !== undefined)
+            this.keepAbove = keepAbove;
     }
 
     public focus() {
