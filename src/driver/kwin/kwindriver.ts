@@ -221,6 +221,7 @@ class KWinDriver implements IDriverContext {
         try {
             callback();
         } catch (e) {
+            debug(() => "Error raised from line " + e.lineNumber);
             debug(() => e);
         } finally {
             this.entered = false;
