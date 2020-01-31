@@ -74,7 +74,7 @@ class ThreeColumnLayout implements ILayout {
             this.masterRatio = newMasterRatio;
 
             /* adjust tile weight */
-            const rstackNumTile = Math.floor((tiles.length - 1) / 2);
+            const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
             const [masterTiles, rstackTiles, lstackTiles] =
                 partitionArrayBySizes<Window>(tiles, [this.masterSize, rstackNumTile])
             const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
