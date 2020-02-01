@@ -65,7 +65,8 @@ class TilingEngine {
             case "east" : delta = new RectDelta(hStepSize * step, 0, 0, 0); break;
             case "west" : delta = new RectDelta(0, hStepSize * step, 0, 0); break;
             case "south": delta = new RectDelta(0, 0, vStepSize * step, 0); break;
-            case "north": delta = new RectDelta(0, 0, 0, vStepSize * step); break;
+            case "north": /* passthru */
+            default     : delta = new RectDelta(0, 0, 0, vStepSize * step); break;
         }
 
         const layout = this.layouts.getCurrentLayout(srf);
