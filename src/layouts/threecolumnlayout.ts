@@ -35,7 +35,7 @@ class ThreeColumnLayout implements ILayout {
     private weights: LayoutWeightMap;
 
     constructor() {
-        this.masterRatio = 0.5;
+        this.masterRatio = 0.6;
         this.masterSize = 1;
         this.weights = new LayoutWeightMap();
     }
@@ -63,15 +63,15 @@ class ThreeColumnLayout implements ILayout {
                 basisGroup = 0; /* L-stack */
 
             /* adjust master-stack ratio */
-            const stackRatio = (1 - this.masterRatio) / 2;
-            const [, newMasterRatio, _] = LayoutUtils.adjustAreaWeights(
+            const stackRatio = 1 - this.masterRatio;
+            const [, newMasterRatio, newStackRatio] = LayoutUtils.adjustAreaWeights(
                 area,
                 [stackRatio, this.masterRatio, stackRatio],
                 CONFIG.tileLayoutGap,
                 basisGroup,
                 delta,
                 true);
-            this.masterRatio = newMasterRatio;
+            this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
 
             /* adjust tile weight */
             const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
@@ -118,7 +118,7 @@ class ThreeColumnLayout implements ILayout {
             tiles[tiles.length - 1].geometry = stackArea;
         } else if (tiles.length > this.masterSize + 1) {
             /* L-stack & master & R-stack */
-            const stackRatio = (1 - this.masterRatio) / 2;
+            const stackRatio = 1 - this.masterRatio;
 
             /** Areas allocated to L-stack, master, and R-stack */
             const groupAreas = LayoutUtils.splitAreaWeighted(
