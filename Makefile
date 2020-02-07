@@ -1,5 +1,5 @@
 PROJECT_NAME = krohnkite
-PROJECT_VER  = 0.6
+PROJECT_VER  = 0.6.1
 PROJECT_REV  = $(shell git rev-parse HEAD | cut -b-7)
 
 KWINPKG_FILE = $(PROJECT_NAME)-$(PROJECT_VER).kwinscript
