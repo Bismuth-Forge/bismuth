@@ -94,7 +94,7 @@ class Window {
         if (state === value)
             return;
 
-        if (Window.isTileableState(state) && Window.isFloatingState(value))
+        if ((state === WindowState.Unmanaged || Window.isTileableState(state)) && Window.isFloatingState(value))
             this.shouldCommitFloat = true;
         else if (Window.isFloatingState(state) && Window.isTileableState(value))
             this.floatGeometry = this.actualGeometry;
