@@ -22,13 +22,7 @@ class LayoutStoreEntry {
     public layouts: ILayout[];
 
     public get currentLayout(): ILayout {
-        if (this.layouts[0].enabled)
-            return this.layouts[0];
-
-        this.cycleLayout();
-        if (this.layouts[0].enabled)
-            return this.layouts[0];
-        return FloatingLayout.instance;
+        return this.layouts[0];
     }
 
     constructor() {
@@ -39,24 +33,17 @@ class LayoutStoreEntry {
             new SpreadLayout(),
             new StairLayout(),
             new QuarterLayout(),
-            new FloatingLayout(CONFIG.enableFloatingLayout),
+            new FloatingLayout(),
         ];
     }
 
     public cycleLayout(): ILayout | null {
-        const start = this.layouts[0];
-        for (;;) {
-            this.layouts.push(this.layouts.shift() as ILayout);
-            if (this.layouts[0].enabled)
-                return this.layouts[0];
-            if (this.layouts[0] === start)
-                return null;
-        }
+        this.layouts.push(this.layouts.shift() as ILayout);
+        return this.layouts[0];
     }
 
     public setLayout(cls: any): ILayout | null {
-        const result = this.layouts.filter((lo) =>
-            lo.enabled && (lo instanceof cls));
+        const result = this.layouts.filter((lo) => (lo instanceof cls));
         if (result.length === 0)
             return null;
         const layout = result[0];

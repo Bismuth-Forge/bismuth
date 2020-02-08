@@ -26,10 +26,6 @@ class TileLayout implements ILayout {
         return "Tile [" + this.numMaster + "]";
     }
 
-    public get enabled(): boolean {
-        return CONFIG.enableTileLayout;
-    }
-
     private numMaster: number;
     private masterRatio: number; /* in ratio */
     private weights: LayoutWeightMap;

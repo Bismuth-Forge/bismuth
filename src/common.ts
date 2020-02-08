@@ -56,13 +56,6 @@ enum Shortcut {
 
 interface IConfig {
     //#region Layout
-    enableMonocleLayout: boolean;
-    enableQuarterLayout: boolean;
-    enableSpreadLayout: boolean;
-    enableStairLayout: boolean;
-    enableTileLayout: boolean;
-    enableFloatingLayout: boolean;
-    enableThreeColumnLayout: boolean;
     monocleMaximize: boolean;
     maximizeSoleTile: boolean;
     //#endregion
@@ -125,7 +118,6 @@ interface IDriverContext {
 interface ILayout {
     /* read-only */
     readonly capacity?: number;
-    readonly enabled: boolean;
     readonly description: string;
 
     /* methods */

@@ -20,13 +20,6 @@
 
 class KWinConfig implements IConfig {
     //#region Layout
-    public enableMonocleLayout: boolean;
-    public enableQuarterLayout: boolean;
-    public enableSpreadLayout: boolean;
-    public enableStairLayout: boolean;
-    public enableTileLayout: boolean;
-    public enableFloatingLayout: boolean;
-    public enableThreeColumnLayout: boolean;
     public maximizeSoleTile: boolean;
     public monocleMaximize: boolean;
     public monocleMinimizeRest: boolean; // KWin-specific
@@ -81,13 +74,13 @@ class KWinConfig implements IConfig {
 
         DEBUG.enabled = DEBUG.enabled || KWin.readConfig("debug", false);
 
-        this.enableMonocleLayout  = KWin.readConfig("enableMonocleLayout" , true);
-        this.enableQuarterLayout  = KWin.readConfig("enableQuarterLayout" , false);
-        this.enableSpreadLayout   = KWin.readConfig("enableSpreadLayout"  , true);
-        this.enableStairLayout    = KWin.readConfig("enableStairLayout"   , true);
-        this.enableTileLayout     = KWin.readConfig("enableTileLayout"    , true);
-        this.enableFloatingLayout = KWin.readConfig("enableFloatingLayout", false);
-        this.enableThreeColumnLayout = KWin.readConfig("enableThreeColumnLayout", true);
+        // KWin.readConfig("enableMonocleLayout" , true);
+        // KWin.readConfig("enableQuarterLayout" , false);
+        // KWin.readConfig("enableSpreadLayout"  , true);
+        // KWin.readConfig("enableStairLayout"   , true);
+        // KWin.readConfig("enableTileLayout"    , true);
+        // KWin.readConfig("enableFloatingLayout", false);
+        // KWin.readConfig("enableThreeColumnLayout", true);
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);
         this.monocleMaximize      = KWin.readConfig("monocleMaximize"     , true);
         this.monocleMinimizeRest  = KWin.readConfig("monocleMinimizeRest" , false);

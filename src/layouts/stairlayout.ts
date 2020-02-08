@@ -21,10 +21,6 @@
 class StairLayout implements ILayout {
     public readonly description = "Stair";
 
-    public get enabled(): boolean {
-        return CONFIG.enableStairLayout;
-    }
-
     private space: number; /* in PIXELS */
 
     constructor() {

@@ -21,10 +21,6 @@
 class MonocleLayout implements ILayout {
     public readonly description: string = "Monocle";
 
-    public get enabled(): boolean {
-        return CONFIG.enableMonocleLayout;
-    }
-
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         /* Tile all tileables */
         tileables.forEach((tile) => {

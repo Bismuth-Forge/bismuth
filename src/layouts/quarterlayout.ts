@@ -27,10 +27,6 @@ class QuarterLayout implements ILayout {
         return 4;
     }
 
-    public get enabled(): boolean {
-        return CONFIG.enableQuarterLayout;
-    }
-
     private lhsplit: number;
     private rhsplit: number;
     private vsplit: number;

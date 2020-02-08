@@ -26,10 +26,6 @@ class ThreeColumnLayout implements ILayout {
         return "Three-Column [" + (this.masterSize) + "]";
     }
 
-    public get enabled(): boolean {
-        return CONFIG.enableThreeColumnLayout;
-    }
-
     private masterRatio: number;
     private masterSize: number;
     private weights: LayoutWeightMap;

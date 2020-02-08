@@ -19,19 +19,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 class FloatingLayout implements ILayout {
-    public static instance = new FloatingLayout(true);
+    public static instance = new FloatingLayout();
 
     public readonly description: string = "Floating";
-
-    private _enabled: boolean;
-
-    constructor(enabled: boolean) {
-        this._enabled = enabled;
-    }
-
-    public get enabled(): boolean {
-        return this._enabled;
-    }
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         tileables.forEach((tileable: Window) =>
@@ -39,6 +29,6 @@ class FloatingLayout implements ILayout {
     }
 
     public toString(): string {
-        return "FloatingLayout(" + this._enabled + ")";
+        return "FloatingLayout()";
     }
 }
