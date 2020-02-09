@@ -48,7 +48,8 @@ enum Shortcut {
     ToggleFloat,
     ToggleFloatAll,
     SetMaster,
-    CycleLayout,
+    NextLayout,
+    PreviousLayout,
     SetLayout,
 }
 

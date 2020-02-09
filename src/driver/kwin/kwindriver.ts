@@ -164,7 +164,9 @@ class KWinDriver implements IDriverContext {
 
         bind("F", "Float", Shortcut.ToggleFloat);
         bind("Shift+F", "Float All", Shortcut.ToggleFloatAll);
-        bind("\\", "Cycle Layout", Shortcut.CycleLayout);
+        bind("", "Cycle Layout", Shortcut.NextLayout); // TODO: remove this shortcut
+        bind("\\", "Next Layout", Shortcut.NextLayout);
+        bind("|", "Previous Layout", Shortcut.PreviousLayout);
 
         bind("Return", "Set master", Shortcut.SetMaster);
 

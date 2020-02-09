@@ -272,8 +272,8 @@ class TilingEngine {
     /**
      * Change the layout of the current surface to the next.
      */
-    public cycleLayout(ctx: IDriverContext) {
-        const layout = this.layouts.cycleLayout(ctx.currentSurface);
+    public cycleLayout(ctx: IDriverContext, step: 1 | -1) {
+        const layout = this.layouts.cycleLayout(ctx.currentSurface, step);
         if (layout)
             ctx.showNotification(layout.description);
     }
