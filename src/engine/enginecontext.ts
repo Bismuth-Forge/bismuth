@@ -44,9 +44,8 @@ class EngineContext {
         this.drvctx.setTimeout(func, timeout);
     }
 
-    public moveFocus(step: -1 | 1) {
-        if (this.currentWindow)
-            this.engine.moveFocus(this.drvctx, this.currentWindow, step);
+    public cycleFocus(step: -1 | 1) {
+        this.engine.cycleFocus(this.drvctx, step);
     }
 
     public moveWindow(window: Window, target: Window, after?: boolean) {

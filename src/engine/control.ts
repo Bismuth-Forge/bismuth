@@ -174,13 +174,13 @@ class TilingController {
 
         const window = ctx.currentWindow;
         switch (input) {
-            case Shortcut.Up  : if (window) this.engine.moveFocus(ctx, window, -1); break;
-            case Shortcut.Down: if (window) this.engine.moveFocus(ctx, window, +1); break;
+            case Shortcut.Up  : this.engine.cycleFocus(ctx, -1); break;
+            case Shortcut.Down: this.engine.cycleFocus(ctx, +1); break;
 
-            case Shortcut.FocusUp   : if (window) this.engine.focusDirection(ctx, window, "up"   ); break;
-            case Shortcut.FocusDown : if (window) this.engine.focusDirection(ctx, window, "down" ); break;
-            case Shortcut.FocusLeft : if (window) this.engine.focusDirection(ctx, window, "left" ); break;
-            case Shortcut.FocusRight: if (window) this.engine.focusDirection(ctx, window, "right"); break;
+            case Shortcut.FocusUp   : this.engine.moveFocus(ctx, "up"   ); break;
+            case Shortcut.FocusDown : this.engine.moveFocus(ctx, "down" ); break;
+            case Shortcut.FocusLeft : this.engine.moveFocus(ctx, "left" ); break;
+            case Shortcut.FocusRight: this.engine.moveFocus(ctx, "right"); break;
 
             case Shortcut.GrowWidth   : if (window) this.engine.adjustWindowSize(window, "east" ,  1); break;
             case Shortcut.ShrinkWidth : if (window) this.engine.adjustWindowSize(window, "east" , -1); break;

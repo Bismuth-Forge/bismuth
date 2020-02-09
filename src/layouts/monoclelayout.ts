@@ -59,13 +59,13 @@ class MonocleLayout implements ILayout {
             case Shortcut.FocusUp:
             case Shortcut.Left:
             case Shortcut.FocusLeft:
-                ctx.moveFocus(-1);
+                ctx.cycleFocus(-1);
                 return true;
             case Shortcut.Down:
             case Shortcut.FocusDown:
             case Shortcut.Right:
             case Shortcut.FocusRight:
-                ctx.moveFocus(1);
+                ctx.cycleFocus(1);
                 return true;
             default:
                 return false;

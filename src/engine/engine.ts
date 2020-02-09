@@ -154,14 +154,22 @@ class TilingEngine {
     /**
      * Move focus to next/previous window.
      */
-    public moveFocus(ctx: IDriverContext, window: Window, step: -1 | 1) {
-        const srf = (window) ? window.surface : ctx.currentSurface;
+    public cycleFocus(ctx: IDriverContext, step: -1 | 1) {
+        const window = ctx.currentWindow;
 
-        const visibles = this.windows.getVisibleWindows(srf);
+        /* if no current window, select the first tile. */
+        if (window === null) {
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            if (tiles.length > 1)
+                ctx.currentWindow = tiles[0];
+            return;
+        }
+
+        const visibles = this.windows.getVisibleWindows(ctx.currentSurface);
         if (visibles.length === 0) /* nothing to focus */
             return;
 
-        const idx = (window) ? visibles.indexOf(window) : -1;
+        const idx = visibles.indexOf(window);
         if (!window || idx < 0) { /* unmanaged window -> focus master */
             ctx.currentWindow = visibles[0];
             return;
@@ -173,7 +181,17 @@ class TilingEngine {
         ctx.currentWindow = visibles[newIndex];
     }
 
-    public focusDirection(ctx: IDriverContext, window: Window, dir: "up" | "down" | "left" | "right") {
+    public moveFocus(ctx: IDriverContext, dir: "up" | "down" | "left" | "right") {
+        const window = ctx.currentWindow;
+
+        /* if no current window, select the first tile. */
+        if (window === null) {
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            if (tiles.length > 1)
+                ctx.currentWindow = tiles[0];
+            return;
+        }
+
         const vertical = (dir === "up" || dir === "down");
         const step = (dir === "up" || dir === "left") ? -1 : 1;
 
