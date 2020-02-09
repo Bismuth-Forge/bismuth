@@ -159,8 +159,6 @@ class KWinDriver implements IDriverContext {
 
         bind("I", "Increase", Shortcut.Increase);
         bind("D", "Decrease", Shortcut.Decrease);
-        bind("Shift+I", "Increase (2)", Shortcut.ShiftIncrease);
-        bind("Shift+D", "Decrease (2)", Shortcut.ShiftDecrease);
 
         bind("F", "Float", Shortcut.ToggleFloat);
         bind("Shift+F", "Float All", Shortcut.ToggleFloatAll);
