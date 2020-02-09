@@ -195,7 +195,7 @@ class TilingController {
             case Shortcut.ToggleFloatAll: this.engine.floatAll(ctx, ctx.currentSurface); break;
 
             case Shortcut.CycleLayout: this.engine.cycleLayout(ctx);
-            case Shortcut.SetLayout: this.engine.setLayout(ctx, data); break;
+            case Shortcut.SetLayout: if (typeof data === "string") this.engine.setLayout(ctx, data); break;
         }
 
         this.engine.arrange(ctx);

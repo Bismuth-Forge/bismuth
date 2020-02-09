@@ -21,6 +21,9 @@
 class ThreeColumnLayout implements ILayout {
     public static readonly MIN_MASTER_RATIO = 0.2;
     public static readonly MAX_MASTER_RATIO = 0.75;
+    public static readonly id = "ThreeColumnLayout";
+
+    public readonly classID = ThreeColumnLayout.id;
 
     public get description(): string {
         return "Three-Column [" + (this.masterSize) + "]";
@@ -135,6 +138,13 @@ class ThreeColumnLayout implements ILayout {
                         groupTiles[i].geometry = tileArea);
             });
         }
+    }
+
+    public clone(): ILayout {
+        const other = new ThreeColumnLayout();
+        other.masterRatio = this.masterRatio;
+        other.masterSize = this.masterSize;
+        return other;
     }
 
     public handleShortcut(ctx: EngineContext, input: Shortcut, data?: any): boolean {

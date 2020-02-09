@@ -19,6 +19,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 class SpreadLayout implements ILayout {
+    public static readonly id = "SpreadLayout";
+
+    public readonly classID = SpreadLayout.id;
     public readonly description = "Spread";
 
     private space: number; /* in ratio */
@@ -50,6 +53,12 @@ class SpreadLayout implements ILayout {
                 cardWidth,
                 area.height,
             );
+    }
+
+    public clone(): ILayout {
+        const other = new SpreadLayout();
+        other.space = this.space;
+        return other;
     }
 
     public handleShortcut(ctx: EngineContext, input: Shortcut) {

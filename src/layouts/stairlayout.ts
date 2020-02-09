@@ -19,6 +19,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 class StairLayout implements ILayout {
+    public static readonly id = "StairLayout";
+
+    public readonly classID = StairLayout.id;
     public readonly description = "Stair";
 
     private space: number; /* in PIXELS */
@@ -47,6 +50,12 @@ class StairLayout implements ILayout {
                 area.height - dy,
             );
         }
+    }
+
+    public clone(): ILayout {
+        const other = new StairLayout();
+        other.space = this.space;
+        return other;
     }
 
     public handleShortcut(ctx: EngineContext, input: Shortcut) {

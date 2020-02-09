@@ -21,6 +21,9 @@
 class TileLayout implements ILayout {
     public static readonly MIN_MASTER_RATIO = 0.2;
     public static readonly MAX_MASTER_RATIO = 0.8;
+    public static readonly id = "TileLayout";
+
+    public readonly classID = TileLayout.id;
 
     public get description(): string {
         return "Tile [" + this.numMaster + "]";
@@ -100,6 +103,13 @@ class TileLayout implements ILayout {
                 new Rect(stackX, area.y, stackWidth, area.height),
                 this.weights, gap);
         }
+    }
+
+    public clone(): ILayout {
+        const other = new TileLayout();
+        other.masterRatio = this.masterRatio;
+        other.numMaster = this.numMaster;
+        return other;
     }
 
     public handleShortcut(ctx: EngineContext, input: Shortcut) {

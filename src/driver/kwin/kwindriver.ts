@@ -168,12 +168,12 @@ class KWinDriver implements IDriverContext {
 
         bind("Return", "Set master", Shortcut.SetMaster);
 
-        const bindLayout = (seq: string, title: string, layout: any) => {
+        const bindLayout = (seq: string, title: string, layoutClass: ILayoutClass) => {
             title = "Krohnkite: " + title + " Layout";
             seq = (seq !== "") ? "Meta+" + seq : "";
             KWin.registerShortcut(title, "", seq, () => {
                 this.enter(() =>
-                    this.control.onShortcut(this, Shortcut.SetLayout, layout));
+                    this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id));
             });
         };
 

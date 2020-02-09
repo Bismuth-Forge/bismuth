@@ -19,7 +19,10 @@
 // DEALINGS IN THE SOFTWARE.
 
 class MonocleLayout implements ILayout {
+    public static readonly id = "MonocleLayout";
     public readonly description: string = "Monocle";
+
+    public readonly classID = MonocleLayout.id;
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         /* Tile all tileables */
@@ -43,6 +46,11 @@ class MonocleLayout implements ILayout {
                 }
             }, 50);
         }
+    }
+
+    public clone(): this {
+        /* fake clone */
+        return this;
     }
 
     public handleShortcut(ctx: EngineContext, input: Shortcut, data?: any): boolean {

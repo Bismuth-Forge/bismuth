@@ -20,6 +20,7 @@
 
 class KWinConfig implements IConfig {
     //#region Layout
+    public layouts: ILayout[];
     public maximizeSoleTile: boolean;
     public monocleMaximize: boolean;
     public monocleMinimizeRest: boolean; // KWin-specific
@@ -74,13 +75,21 @@ class KWinConfig implements IConfig {
 
         DEBUG.enabled = DEBUG.enabled || KWin.readConfig("debug", false);
 
-        // KWin.readConfig("enableMonocleLayout" , true);
-        // KWin.readConfig("enableQuarterLayout" , false);
-        // KWin.readConfig("enableSpreadLayout"  , true);
-        // KWin.readConfig("enableStairLayout"   , true);
-        // KWin.readConfig("enableTileLayout"    , true);
-        // KWin.readConfig("enableFloatingLayout", false);
-        // KWin.readConfig("enableThreeColumnLayout", true);
+        this.layouts = [];
+        ([
+            ["enableTileLayout"       , true , TileLayout],
+            ["enableMonocleLayout"    , true , MonocleLayout],
+            ["enableThreeColumnLayout", true , ThreeColumnLayout],
+            ["enableSpreadLayout"     , true , SpreadLayout],
+            ["enableStairLayout"      , true , StairLayout],
+            ["enableQuarterLayout"    , false, QuarterLayout],
+            ["enableFloatingLayout"   , false, FloatingLayout],
+        ] as Array<[string, boolean, ILayoutClass]>)
+            .forEach(([configKey, defaultValue, layoutClass]) => {
+                if (KWin.readConfig(configKey, defaultValue))
+                    this.layouts.push(new layoutClass());
+            });
+
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);
         this.monocleMaximize      = KWin.readConfig("monocleMaximize"     , true);
         this.monocleMinimizeRest  = KWin.readConfig("monocleMinimizeRest" , false);

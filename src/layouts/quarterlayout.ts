@@ -20,7 +20,9 @@
 
 class QuarterLayout implements ILayout {
     public static readonly MAX_PROPORTION = 0.8;
+    public static readonly id = "QuarterLayout";
 
+    public readonly classID = QuarterLayout.id;
     public readonly description = "Quarter";
 
     public get capacity(): number {
@@ -71,6 +73,14 @@ class QuarterLayout implements ILayout {
         this.vsplit = clip(this.vsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
         this.lhsplit = clip(this.lhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
         this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
+    }
+
+    public clone(): ILayout {
+        const other = new QuarterLayout();
+        other.lhsplit = this.lhsplit;
+        other.rhsplit = this.rhsplit;
+        other.vsplit  = this.vsplit;
+        return other;
     }
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {

@@ -19,38 +19,63 @@
 // DEALINGS IN THE SOFTWARE.
 
 class LayoutStoreEntry {
-    public layouts: ILayout[];
+    public index: number | null;
+    public key: string;
+    public layouts: {[key: string]: ILayout};
 
     public get currentLayout(): ILayout {
-        return this.layouts[0];
+        return (this.index === null)
+            ? this.layouts[this.key]
+            : this.layouts[CONFIG.layouts[this.index].classID]
+            ;
     }
 
     constructor() {
-        this.layouts = [
-            new TileLayout(),
-            new MonocleLayout(),
-            new ThreeColumnLayout(),
-            new SpreadLayout(),
-            new StairLayout(),
-            new QuarterLayout(),
-            new FloatingLayout(),
-        ];
+        this.index = 0;
+        this.key = CONFIG.layouts[0].classID;
+        this.layouts = {};
+
+        CONFIG.layouts.forEach((layout: ILayout) => {
+            this.layouts[layout.classID] = layout.clone();
+        });
+
+        [
+            TileLayout,
+            MonocleLayout,
+            ThreeColumnLayout,
+            SpreadLayout,
+            StairLayout,
+            QuarterLayout,
+            FloatingLayout,
+        ].forEach((layoutClass: ILayoutClass) => {
+            if (!this.layouts[layoutClass.id])
+                this.layouts[layoutClass.id] = new layoutClass();
+        });
     }
 
-    public cycleLayout(): ILayout | null {
-        this.layouts.push(this.layouts.shift() as ILayout);
-        return this.layouts[0];
+    public cycleLayout(step: -1 | 1 = 1): ILayout {
+        this.index = (this.index !== null)
+            ? wrapIndex(this.index + step, CONFIG.layouts.length)
+            : 0
+            ;
+        return this.currentLayout;
     }
 
-    public setLayout(cls: any): ILayout | null {
-        const result = this.layouts.filter((lo) => (lo instanceof cls));
-        if (result.length === 0)
-            return null;
-        const layout = result[0];
+    public setLayout(classID: string): ILayout {
+        const layout = this.layouts[classID];
+        if (!layout)
+            return this.currentLayout;
 
-        while (this.layouts[0] !== layout)
-            this.layouts.push(this.layouts.shift() as ILayout);
-        return this.layouts[0];
+        this.key = layout.classID;
+
+        this.index = null;
+        for (let i = 0; i < CONFIG.layouts.length; i ++) {
+            if (CONFIG.layouts[i].classID === this.key) {
+                this.index = i;
+                break;
+            }
+        }
+        return layout;
     }
 }
 
@@ -73,10 +98,10 @@ class LayoutStore {
         return this.getEntry(srf.id).cycleLayout();
     }
 
-    public setLayout(srf: ISurface, cls: any): ILayout | null {
+    public setLayout(srf: ISurface, layoutClassID: string): ILayout | null {
         if (srf.ignore)
             return null;
-        return this.getEntry(srf.id).setLayout(cls);
+        return this.getEntry(srf.id).setLayout(layoutClassID);
     }
 
     private getEntry(key: string): LayoutStoreEntry {

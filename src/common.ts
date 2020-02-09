@@ -56,6 +56,7 @@ enum Shortcut {
 
 interface IConfig {
     //#region Layout
+    layouts: ILayout[];
     monocleMaximize: boolean;
     maximizeSoleTile: boolean;
     //#endregion
@@ -115,14 +116,21 @@ interface IDriverContext {
 
 //#endregion
 
+interface ILayoutClass {
+    readonly id: string;
+    new(): ILayout;
+}
+
 interface ILayout {
     /* read-only */
     readonly capacity?: number;
+    readonly classID: string;
     readonly description: string;
 
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
     apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
+    clone(): ILayout;
     toString(): string;
 
     /* overriding */

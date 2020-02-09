@@ -281,12 +281,10 @@ class TilingEngine {
     /**
      * Set the layout of the current surface to the specified layout.
      */
-    public setLayout(ctx: IDriverContext, layoutType: any) {
-        if (layoutType) {
-            const layout = this.layouts.setLayout(ctx.currentSurface, layoutType);
-            if (layout)
-                ctx.showNotification(layout.description);
-        }
+    public setLayout(ctx: IDriverContext, layoutClassID: string) {
+        const layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
+        if (layout)
+            ctx.showNotification(layout.description);
     }
 
     /**
