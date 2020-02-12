@@ -83,12 +83,14 @@ class KWinWindow implements IDriverWindow {
             this.client.desktop = ksrf.desktop;
     }
 
-    private readonly _bakNoBorder: boolean;
+    private noBorderManaged: boolean;
+    private noBorderOriginal: boolean;
 
     constructor(client: KWin.Client) {
         this.client = client;
         this.id = KWinWindow.generateID(client);
-        this._bakNoBorder = client.noBorder;
+        this.noBorderManaged = false;
+        this.noBorderOriginal = client.noBorder;
     }
 
     public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
@@ -97,8 +99,25 @@ class KWinWindow implements IDriverWindow {
         if (this.client.move || this.client.resize)
             return;
 
-        if (noBorder !== undefined)
-            this.client.noBorder = noBorder || this._bakNoBorder;
+        if (noBorder !== undefined) {
+            if (!this.noBorderManaged && noBorder)
+                /* Backup border state when transitioning from unmanaged to managed */
+                this.noBorderOriginal = this.client.noBorder;
+            else if (this.noBorderManaged && !this.client.noBorder)
+                /* If border is enabled while in managed mode, remember it.
+                 * Note that there's no way to know if border is re-disabled in managed mode. */
+                this.noBorderOriginal = false;
+
+            if (noBorder)
+                /* (Re)entering managed mode: remove border. */
+                this.client.noBorder = true;
+            else if (this.noBorderManaged)
+                /* Exiting managed mode: restore original value. */
+                this.client.noBorder = this.noBorderOriginal;
+
+            /* update mode */
+            this.noBorderManaged = noBorder;
+        }
 
         if (keepAbove !== undefined)
             this.client.keepAbove = keepAbove;
