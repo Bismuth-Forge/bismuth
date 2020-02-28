@@ -59,6 +59,24 @@ class TilingEngine {
     public adjustWindowSize(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
         const srf = basis.surface;
 
+        if (dir === "east") {
+            const maxX = basis.geometry.maxX;
+            const easternNeighbor = this.windows.getVisibleTiles(srf)
+                .filter((tile) => tile.geometry.x >= maxX);
+            if (easternNeighbor.length === 0) {
+                dir = "west";
+                step *= -1;
+            }
+        } else if (dir === "south") {
+            const maxY = basis.geometry.maxY;
+            const southernNeighbor = this.windows.getVisibleTiles(srf)
+                .filter((tile) => tile.geometry.y >= maxY);
+            if (southernNeighbor.length === 0) {
+                dir = "north";
+                step *= -1;
+            }
+        }
+
         // TODO: configurable step size?
         const hStepSize = srf.workingArea.width  * 0.03;
         const vStepSize = srf.workingArea.height * 0.03;
