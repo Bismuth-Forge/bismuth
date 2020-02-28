@@ -18,6 +18,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+type Direction = "up" | "down" | "left" | "right";
+
 /**
  * Maintains tiling context and performs various tiling actions.
  */
@@ -181,7 +183,7 @@ class TilingEngine {
         ctx.currentWindow = visibles[newIndex];
     }
 
-    public moveFocus(ctx: IDriverContext, dir: "up" | "down" | "left" | "right") {
+    public moveFocus(ctx: IDriverContext, dir: Direction) {
         const window = ctx.currentWindow;
 
         /* if no current window, select the first tile. */
@@ -192,35 +194,9 @@ class TilingEngine {
             return;
         }
 
-        const vertical = (dir === "up" || dir === "down");
-        const step = (dir === "up" || dir === "left") ? -1 : 1;
-
-        const candidates = this.windows.getVisibleTiles(ctx.currentSurface)
-            .filter((vertical)
-                ? ((tile) => tile.geometry.y * step > window.geometry.y * step)
-                : ((tile) => tile.geometry.x * step > window.geometry.x * step))
-            .filter((vertical)
-                ? ((tile) => overlap(window.geometry.x, window.geometry.maxX, tile.geometry.x, tile.geometry.maxX))
-                : ((tile) => overlap(window.geometry.y, window.geometry.maxY, tile.geometry.y, tile.geometry.maxY)));
-
-        if (candidates.length > 0) {
-            let min = candidates.reduce(
-                (vertical)
-                    ? ((prevMin, tile): number => Math.min(tile.geometry.y * step, prevMin))
-                    : ((prevMin, tile): number => Math.min(tile.geometry.x * step, prevMin)),
-                Infinity);
-            min *= step;
-
-            const closest = candidates.filter( (vertical)
-                ? (tile) => tile.geometry.y === min
-                : (tile) => tile.geometry.x === min);
-
-            ctx.currentWindow = (closest.length > 1)
-                ? candidates.sort((a, b) => b.timestamp - a.timestamp)[0]
-                : closest[0];
-        } else {
-            // TODO: focus wrapping
-        }
+        const neighbor = this.getNeighborByDirection(ctx, window, dir);
+        if (neighbor)
+            ctx.currentWindow = neighbor;
     }
 
     /**
@@ -315,5 +291,40 @@ class TilingEngine {
         if (layout.handleShortcut)
             return layout.handleShortcut(new EngineContext(ctx, this), input, data);
         return false;
+    }
+
+    private getNeighborByDirection(ctx: IDriverContext, basis: Window, dir: Direction): Window | null{
+        let vertical: boolean;
+        let sign: -1 | 1;
+        switch (dir) {
+            case "up"   : vertical = true ; sign = -1; break;
+            case "down" : vertical = true ; sign =  1; break;
+            case "left" : vertical = false; sign = -1; break;
+            case "right": vertical = false; sign =  1; break;
+            default: return null;
+        }
+
+        const candidates = this.windows.getVisibleTiles(ctx.currentSurface)
+            .filter((vertical)
+                ? ((tile) => tile.geometry.y * sign > basis.geometry.y * sign)
+                : ((tile) => tile.geometry.x * sign > basis.geometry.x * sign))
+            .filter((vertical)
+                ? ((tile) => overlap(basis.geometry.x, basis.geometry.maxX, tile.geometry.x, tile.geometry.maxX))
+                : ((tile) => overlap(basis.geometry.y, basis.geometry.maxY, tile.geometry.y, tile.geometry.maxY)));
+        if (candidates.length === 0)
+            return null;
+
+        const min = sign * candidates.reduce(
+            (vertical)
+                ? ((prevMin, tile): number => Math.min(tile.geometry.y * sign, prevMin))
+                : ((prevMin, tile): number => Math.min(tile.geometry.x * sign, prevMin)),
+            Infinity);
+
+        const closest = candidates.filter(
+            (vertical)
+                ? (tile) => tile.geometry.y === min
+                : (tile) => tile.geometry.x === min);
+
+        return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
     }
 }
