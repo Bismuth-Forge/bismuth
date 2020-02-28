@@ -35,6 +35,11 @@ enum Shortcut {
     ShiftUp,
     ShiftDown,
 
+    SwapUp,
+    SwapDown,
+    SwapLeft,
+    SwapRight,
+
     GrowWidth,
     GrowHeight,
     ShrinkWidth,

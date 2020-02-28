@@ -216,6 +216,24 @@ class TilingEngine {
     }
 
     /**
+     * Swap the current window position w/ a neighbor at the given direction.
+     */
+    public moveTileDirection(ctx: IDriverContext, dir: Direction) {
+        const window = ctx.currentWindow;
+        if (window === null) {
+            /* if no current window, select the first tile. */
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            if (tiles.length > 1)
+                ctx.currentWindow = tiles[0];
+            return;
+        }
+
+        const neighbor = this.getNeighborByDirection(ctx, window, dir);
+        if (neighbor)
+            this.windows.swap(window, neighbor);
+    }
+
+    /**
      * Toggle float mode of window.
      */
     public toggleFloat(window: Window) {

@@ -164,6 +164,11 @@ class TilingController {
                 case Shortcut.Down : input = Shortcut.FocusDown; break;
                 case Shortcut.Left : input = Shortcut.FocusLeft; break;
                 case Shortcut.Right: input = Shortcut.FocusRight; break;
+
+                case Shortcut.ShiftUp   : input = Shortcut.SwapUp; break;
+                case Shortcut.ShiftDown : input = Shortcut.SwapDown; break;
+                case Shortcut.ShiftLeft : input = Shortcut.SwapLeft; break;
+                case Shortcut.ShiftRight: input = Shortcut.SwapRight; break;
             }
         }
 
@@ -189,6 +194,11 @@ class TilingController {
 
             case Shortcut.ShiftUp  : if (window) this.engine.moveTile(window, -1); break;
             case Shortcut.ShiftDown: if (window) this.engine.moveTile(window, +1); break;
+
+            case Shortcut.SwapUp   : this.engine.moveTileDirection(ctx, "up"); break;
+            case Shortcut.SwapDown : this.engine.moveTileDirection(ctx, "down"); break;
+            case Shortcut.SwapLeft : this.engine.moveTileDirection(ctx, "left"); break;
+            case Shortcut.SwapRight: this.engine.moveTileDirection(ctx, "right"); break;
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;
