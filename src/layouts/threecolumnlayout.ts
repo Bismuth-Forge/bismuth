@@ -44,7 +44,23 @@ class ThreeColumnLayout implements ILayout {
         if (basisIndex < 0)
             return;
 
-        if (tiles.length === this.masterSize + 1) {
+        if (tiles.length === 0)
+            /* no tiles */
+            return;
+        else if (tiles.length <= this.masterSize) {
+            /* one column */
+            LayoutUtils.adjustAreaWeights(
+                    area,
+                    tiles.map((tile) => this.weights.get(tile)),
+                    CONFIG.tileLayoutGap,
+                    tiles.indexOf(basis),
+                    delta,
+                ).forEach((newWeight, i) =>
+                    this.weights.set(tiles[i], newWeight * tiles.length));
+        } else if (tiles.length === this.masterSize + 1) {
+            /* two columns */
+
+            /* adjust master-stack ratio */
             this.masterRatio = LayoutUtils.adjustAreaHalfWeights(
                 area,
                 this.masterRatio,
@@ -52,7 +68,21 @@ class ThreeColumnLayout implements ILayout {
                 basisIndex,
                 delta,
                 true);
+
+            /* adjust master tile weights */
+            if (basisIndex < this.masterSize) {
+                const masterTiles = tiles.slice(0, -1);
+                LayoutUtils.adjustAreaWeights(
+                        area,
+                        masterTiles.map((tile) => this.weights.get(tile)),
+                        CONFIG.tileLayoutGap,
+                        basisIndex,
+                        delta,
+                    ).forEach((newWeight, i) =>
+                        this.weights.set(masterTiles[i], newWeight * masterTiles.length));
+            }
         } else if (tiles.length > this.masterSize + 1) {
+            /* three columns */
             let basisGroup;
             if (basisIndex < this.masterSize)
                 basisGroup = 1; /* master */
