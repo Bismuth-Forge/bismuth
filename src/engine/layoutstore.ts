@@ -22,6 +22,7 @@ class LayoutStoreEntry {
     public index: number | null;
     public key: string;
     public layouts: {[key: string]: ILayout};
+    public prevKey: string;
 
     public get currentLayout(): ILayout {
         return (this.index === null)
@@ -34,6 +35,7 @@ class LayoutStoreEntry {
         this.index = 0;
         this.key = CONFIG.layouts[0].classID;
         this.layouts = {};
+        this.prevKey = this.key;
 
         CONFIG.layouts.forEach((layout: ILayout) => {
             this.layouts[layout.classID] = layout.clone();
@@ -62,10 +64,18 @@ class LayoutStoreEntry {
     }
 
     public setLayout(classID: string): ILayout {
+        if (this.key === classID) {
+            if (classID === MonocleLayout.id)
+                classID = this.prevKey;
+            else
+                return this.currentLayout;
+        }
+
         const layout = this.layouts[classID];
         if (!layout)
             return this.currentLayout;
 
+        this.prevKey = this.key;
         this.key = layout.classID;
 
         this.index = null;
