@@ -56,10 +56,12 @@ class LayoutStoreEntry {
     }
 
     public cycleLayout(step: -1 | 1): ILayout {
+        this.prevKey = this.key;
         this.index = (this.index !== null)
             ? wrapIndex(this.index + step, CONFIG.layouts.length)
             : 0
             ;
+        this.key = CONFIG.layouts[this.index].classID;
         return this.currentLayout;
     }
 
