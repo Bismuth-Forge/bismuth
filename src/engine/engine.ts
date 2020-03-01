@@ -135,6 +135,18 @@ class TilingEngine {
         } else if (tileables.length > 0)
             layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
 
+        if (CONFIG.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
+            const maxWidth = Math.floor(workingArea.height * CONFIG.limitTileWidthRatio);
+            tileables.filter((tile) => tile.tiled && tile.geometry.width > maxWidth)
+                .forEach((tile) => {
+                    const g = tile.geometry;
+                    tile.geometry = new Rect(
+                        g.x + Math.floor((g.width - maxWidth) / 2),
+                        g.y, maxWidth, g.height,
+                    );
+                });
+        }
+
         visibles.forEach((window) => window.commit());
         debugObj(() => ["arrangeScreen/finished", { srf }]);
     }

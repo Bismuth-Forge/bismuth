@@ -72,6 +72,7 @@ interface IConfig {
     adjustLayoutLive: boolean;
     keepFloatAbove: boolean;
     noTileBorder: boolean;
+    limitTileWidthRatio: number;
     //#endregion
 
     //#region Gap

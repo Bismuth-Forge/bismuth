@@ -31,6 +31,7 @@ class KWinConfig implements IConfig {
     public adjustLayoutLive: boolean;
     public keepFloatAbove: boolean;
     public noTileBorder: boolean;
+    public limitTileWidthRatio: number;
     //#endregion
 
     //#region Gap
@@ -98,6 +99,10 @@ class KWinConfig implements IConfig {
         this.adjustLayoutLive     = KWin.readConfig("adjustLayoutLive"    , true);
         this.keepFloatAbove       = KWin.readConfig("keepFloatAbove"      , true);
         this.noTileBorder         = KWin.readConfig("noTileBorder"        , false);
+
+        this.limitTileWidthRatio  = 0;
+        if (KWin.readConfig("limitTileWidth" , false))
+            this.limitTileWidthRatio = KWin.readConfig("limitTileWidthRatio", 1.6);
 
         this.screenGapBottom      = KWin.readConfig("screenGapBottom"     , 0);
         this.screenGapLeft        = KWin.readConfig("screenGapLeft"       , 0);
