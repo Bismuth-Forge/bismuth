@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>500</height>
+    <width>440</width>
+    <height>450</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>440</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -25,135 +31,151 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QCheckBox" name="kcfg_layoutPerActivity">
-         <property name="toolTip">
-          <string>Use different layouts for each activity. Can be combined with &quot;Use separate layout per Desktop&quot; option.</string>
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string/>
          </property>
-         <property name="text">
-          <string>Use separate layout per Activity</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QCheckBox" name="kcfg_layoutPerActivity">
+            <property name="toolTip">
+             <string>Use different layouts for each activity. Can be combined with &quot;Use separate layout per Desktop&quot; option.</string>
+            </property>
+            <property name="text">
+             <string>Use separate layouts for each Activity</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_layoutPerDesktop">
+            <property name="toolTip">
+             <string>Use different layouts for each virtual desktop. Can be combined with &quot;Use separate layout per Activity&quot; option.</string>
+            </property>
+            <property name="text">
+             <string>Use separate layouts for each Desktop</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_layoutPerDesktop">
-         <property name="toolTip">
-          <string>Use different layouts for each virtual desktop. Can be combined with &quot;Use separate layout per Activity&quot; option.</string>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Layouts</string>
          </property>
-         <property name="text">
-          <string>Use separate layout per Desktop</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableTileLayout">
+            <property name="toolTip">
+             <string>Enable Tile layout</string>
+            </property>
+            <property name="text">
+             <string>Tile Layout</string>
+            </property>
+            <property name="tristate">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableMonocleLayout">
+            <property name="toolTip">
+             <string>Enable Monocle layout</string>
+            </property>
+            <property name="text">
+             <string>Monocle Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="monocleLayoutConfigLayout">
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="rightMargin">
+             <number>20</number>
+            </property>
+            <item>
+             <widget class="QGroupBox" name="groupBox_10">
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <widget class="QCheckBox" name="kcfg_monocleMaximize">
+                 <property name="toolTip">
+                  <string>All windows will be maximized in Monocle layout</string>
+                 </property>
+                 <property name="text">
+                  <string>Fully maximize windows (no borders, no gaps)</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="kcfg_monocleMinimizeRest">
+                 <property name="text">
+                  <string>Minimize unfocused windows (WIP)</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableThreeColumnLayout">
+            <property name="toolTip">
+             <string>Enable Three Column layout</string>
+            </property>
+            <property name="text">
+             <string>Three Column Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableQuarterLayout">
+            <property name="toolTip">
+             <string>Enable Quarter layout</string>
+            </property>
+            <property name="text">
+             <string>Quarter Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableSpreadLayout">
+            <property name="toolTip">
+             <string>Enable Spread layout</string>
+            </property>
+            <property name="text">
+             <string>Spread Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableStairLayout">
+            <property name="toolTip">
+             <string>Enable Stair layout</string>
+            </property>
+            <property name="text">
+             <string>Stair Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableFloatingLayout">
+            <property name="text">
+             <string>Floating Layout</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="enableLayoutsLabel">
-         <property name="text">
-          <string>Per-layout Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="enableLayoutsLayout">
-         <property name="leftMargin">
-          <number>40</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableTileLayout">
-           <property name="toolTip">
-            <string>Enable Tile layout</string>
-           </property>
-           <property name="text">
-            <string>Tile Layout</string>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableMonocleLayout">
-           <property name="toolTip">
-            <string>Enable Monocle layout</string>
-           </property>
-           <property name="text">
-            <string>Monocle Layout</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="monocleLayoutConfigLayout">
-           <property name="leftMargin">
-            <number>40</number>
-           </property>
-           <item>
-            <widget class="QCheckBox" name="kcfg_monocleMaximize">
-             <property name="toolTip">
-              <string>All windows will be maximized in Monocle layout</string>
-             </property>
-             <property name="text">
-              <string>Always maximize windows</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="kcfg_monocleMinimizeRest">
-             <property name="text">
-              <string>Minimize other windows (experimental)</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableThreeColumnLayout">
-           <property name="toolTip">
-            <string>Enable Three Column layout</string>
-           </property>
-           <property name="text">
-            <string>Three Column Layout</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableSpreadLayout">
-           <property name="toolTip">
-            <string>Enable Spread layout</string>
-           </property>
-           <property name="text">
-            <string>Spread Layout</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableStairLayout">
-           <property name="toolTip">
-            <string>Enable Stair layout</string>
-           </property>
-           <property name="text">
-            <string>Stair Layout</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableQuarterLayout">
-           <property name="toolTip">
-            <string>Enable Quarter layout</string>
-           </property>
-           <property name="text">
-            <string>Quarter Layout</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="kcfg_enableFloatingLayout">
-           <property name="text">
-            <string>Floating Layout</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="layoutTabVerticalSpacer">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -167,86 +189,126 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="gapsTab">
+     <widget class="QWidget" name="geometryTab">
       <attribute name="title">
-       <string>Gaps</string>
+       <string>Geometry</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="screenGapLabel">
-         <property name="text">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
           <string>Screen Gaps (pixels)</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="3">
+           <widget class="QSpinBox" name="kcfg_screenGapTop">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QSpinBox" name="kcfg_screenGapLeft">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QSpinBox" name="kcfg_screenGapRight">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="screenGapTop">
+            <property name="text">
+             <string>Top</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QSpinBox" name="kcfg_screenGapBottom">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="QLabel" name="screenGapBottom">
+            <property name="text">
+             <string>Bottom</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="screenGapLeft">
+            <property name="text">
+             <string>Left</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLabel" name="screenGapRight">
+            <property name="text">
+             <string>Right</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="screenGapLayout">
-         <property name="leftMargin">
-          <number>20</number>
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>Maximum Tile Width</string>
          </property>
-         <property name="rightMargin">
-          <number>20</number>
-         </property>
-         <item row="1" column="2">
-          <widget class="QLabel" name="screenGapTop">
-           <property name="text">
-            <string>Top</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QSpinBox" name="kcfg_screenGapTop">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="screenGapLeft">
-           <property name="text">
-            <string>Left</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QSpinBox" name="kcfg_screenGapLeft">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="3">
-          <widget class="QLabel" name="screenGapRight">
-           <property name="text">
-            <string>Right</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="3">
-          <widget class="QSpinBox" name="kcfg_screenGapRight">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
-          <widget class="QLabel" name="screenGapBottom">
-           <property name="text">
-            <string>Bottom</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="2">
-          <widget class="QSpinBox" name="kcfg_screenGapBottom">
-           <property name="maximum">
-            <number>500</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="kcfg_limitTileWidth">
+            <property name="text">
+             <string>Limit the width of tiled windows</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="limitTileWidthRatioLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Ratio of the max width to screen height </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="kcfg_limitTileWidthRatio"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="tileGapLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="tileGapLabel">
            <property name="text">
@@ -264,7 +326,7 @@
         </layout>
        </item>
        <item>
-        <spacer name="gapsTabVerticalSpacer">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -284,44 +346,247 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="directionalKeyLabel">
-         <property name="text">
-          <string>Directional Key Behaviors (Up, Down, Left, Right)</string>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Layout Adjustment</string>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QCheckBox" name="kcfg_adjustLayout">
+            <property name="toolTip">
+             <string>Resizing window will cause layout to be adjusted. The actual behaviour might differ based on layout in use.</string>
+            </property>
+            <property name="text">
+             <string>Adjust layout by resizing windows</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_adjustLayoutLive">
+            <property name="toolTip">
+             <string>If enabled, resizing window will immediately adjust layout. If disabled, layout will be adjusted *after* window resizing is over.</string>
+            </property>
+            <property name="text">
+             <string>Adjust layout in realtime as window is being resized</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="directionalKeyLayout">
-         <property name="leftMargin">
-          <number>40</number>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
          </property>
-         <item>
-          <widget class="QRadioButton" name="kcfg_directionalKeyDwm">
-           <property name="text">
-            <string>[dwm]
-Up/Down = Focus Previous/Next Window
-Left/Right = Reduce/Extend Master Area</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">directionalKeyButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="kcfg_directionalKeyFocus">
-           <property name="text">
-            <string>[focus]
-Focus to Above, Below, Left, Right</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">directionalKeyButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-        </layout>
+         <property name="title">
+          <string>Directional Keys Behaviors</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Up</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="kcfg_directionalKeyFocus">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Directional</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">directionalKeyButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="kcfg_directionalKeyDwm">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>DWM style</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">directionalKeyButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Left</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Focus Next</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_3">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Down</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Right</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Focus Prev</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Adjust Layout</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Adjust Layout</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Focus Up</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Focus Down</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Focus Left</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Focus Right</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <spacer name="behaviorTabSpacer">
+        <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -341,150 +606,142 @@ Focus to Above, Below, Left, Right</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="ignoreLabel">
-         <property name="text">
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
           <string>Ignore Windows</string>
          </property>
-         <property name="textInteractionFlags">
-          <set>Qt::NoTextInteraction</set>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="1" column="0">
+           <widget class="QLabel" name="ignoreTitleLabel">
+            <property name="text">
+             <string>By Title</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="ignoreClassLabel">
+            <property name="text">
+             <string>By Class</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="kcfg_ignoreClass">
+            <property name="toolTip">
+             <string>Comma-separated list of window classes. Matching windows will not be tiled.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="kcfg_ignoreTitle">
+            <property name="toolTip">
+             <string>Comma-separated list of keywords(or substrings). Any windows with matching title will not be tiled.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="ignoreRoleLabel">
+            <property name="text">
+             <string>By Role</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="kcfg_ignoreRole"/>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="ignoreLayout">
-         <property name="leftMargin">
-          <number>40</number>
-         </property>
-         <item row="1" column="0">
-          <widget class="QLabel" name="ignoreTitleLabel">
-           <property name="text">
-            <string>Title</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="kcfg_ignoreTitle">
-           <property name="toolTip">
-            <string>Comma-separated list of keywords(or substrings). Any windows with matching title will not be tiled.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="kcfg_ignoreClass">
-           <property name="toolTip">
-            <string>Comma-separated list of window classes. Matching windows will not be tiled.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="ignoreRoleLabel">
-           <property name="text">
-            <string>Role</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="ignoreClassLabel">
-           <property name="text">
-            <string>Class</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="kcfg_ignoreRole"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="floatingLabel">
-         <property name="text">
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
           <string>Float Windows</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="floatLayout">
-         <property name="leftMargin">
-          <number>40</number>
-         </property>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="kcfg_floatingClass">
-           <property name="toolTip">
-            <string>Comma-separated list of window classes. Matching windows will become float automatically.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="floatingClassLabel">
-           <property name="text">
-            <string>Class</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="floatingTitleLabel">
-           <property name="text">
-            <string>Title</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="kcfg_floatingTitle">
-           <property name="toolTip">
-            <string>Comma-separated list of keywords(or substrings). Any windows with matching title will become float automatically</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_floatUtility">
-         <property name="toolTip">
-          <string>This is mainly for debugging purpose, but can also be used to meet some specific requirements.</string>
-         </property>
-         <property name="text">
-          <string>Automatically float utility windows
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="floatingClassLabel">
+            <property name="text">
+             <string>By Class</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="kcfg_floatingClass">
+            <property name="toolTip">
+             <string>Comma-separated list of window classes. Matching windows will become float automatically.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="floatingTitleLabel">
+            <property name="text">
+             <string>By Title</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="kcfg_floatingTitle">
+            <property name="toolTip">
+             <string>Comma-separated list of keywords(or substrings). Any windows with matching title will become float automatically</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="kcfg_floatUtility">
+            <property name="toolTip">
+             <string>This is mainly for debugging purpose, but can also be used to meet some specific requirements.</string>
+            </property>
+            <property name="text">
+             <string>Float utility windows
 (applies to window type Dialog, Splash, Utility)</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="ignoreActivityScreenLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="ignoreActivityLabel">
-           <property name="text">
-            <string>Ignore Activity</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="kcfg_ignoreActivity">
-           <property name="toolTip">
-            <string>Comma-separated list of activity names. Windows in corresponding activities will not be tiled.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="ignoreScreenLabel">
-           <property name="text">
-            <string>Ignore Screen</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="kcfg_ignoreScreen">
-           <property name="toolTip">
-            <string>Comma-separated list of screen numbers. Windows in corresponding screens will not be tiled.</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string>Disable Tiling</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="kcfg_ignoreActivity">
+            <property name="toolTip">
+             <string>Comma-separated list of activity names. Windows in corresponding activities will not be tiled.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="ignoreActivityLabel">
+            <property name="text">
+             <string>On Activity (name)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="ignoreScreenLabel">
+            <property name="text">
+             <string>On Screen (number)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="kcfg_ignoreScreen">
+            <property name="toolTip">
+             <string>Comma-separated list of screen numbers. Windows in corresponding screens will not be tiled.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <spacer name="rulesTabVerticalSpacer">
+        <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -524,34 +781,6 @@ Focus to Above, Below, Left, Right</string>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_adjustLayout">
-         <property name="toolTip">
-          <string>Resizing window will cause layout to be adjusted. The actual behaviour might differ based on layout in use.</string>
-         </property>
-         <property name="text">
-          <string>Adjust layout by resizing windows with mouse</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="adjustLayoutLayout">
-         <property name="leftMargin">
-          <number>40</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="kcfg_adjustLayoutLive">
-           <property name="toolTip">
-            <string>If enabled, resizing window will immediately adjust layout. If disabled, layout will be adjusted *after* window resizing is over.</string>
-           </property>
-           <property name="text">
-            <string>Live adjust as window is being resized
-(experimental)</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
         <widget class="QCheckBox" name="kcfg_keepFloatAbove">
          <property name="text">
           <string>Keep floating windows above tiled windows</string>
@@ -568,7 +797,7 @@ Focus to Above, Below, Left, Right</string>
        <item>
         <widget class="QCheckBox" name="kcfg_preventProtrusion">
          <property name="text">
-          <string>Prevent windows from protruding out of screen</string>
+          <string>Prevent window from protruding from its screen</string>
          </property>
         </widget>
        </item>
@@ -578,7 +807,7 @@ Focus to Above, Below, Left, Right</string>
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, actual mouse position will be used for certain operations. (e.g. swapping tile by dragging)&lt;/p&gt;&lt;p&gt;To use this feature, user &lt;span style=&quot; text-decoration: underline;&quot;&gt;MUST make sure &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; text-decoration: underline;&quot;&gt;xdotool &lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;is installed&lt;/span&gt; on the system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
-          <string>Poll actual mouse position using xdotool (hack!)</string>
+          <string>Get actual mouse position using xdotool while resizing (HACK)</string>
          </property>
         </widget>
        </item>
@@ -610,14 +839,14 @@ Focus to Above, Below, Left, Right</string>
         </widget>
        </item>
        <item>
-        <spacer name="optionsTabSpacer">
+        <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>0</width>
-           <height>0</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
         </spacer>
