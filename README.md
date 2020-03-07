@@ -178,6 +178,11 @@ convinient if title bars are removed.
 3. Append the followings to the section:
     - `frame=61,174,233`: set the border color of active window to *RGB(61,174,233)*
     - `inactiveFrame=239,240,241`: set the border color of inactive window to *RGB(239,240,241)*
+
+   Here's a nice 2-liner that'll do it for you:
+
+        kwriteconfig5 --file ~/.config/kdeglobals --group WM --key frame 61,174,233
+        kwriteconfig5 --file ~/.config/kdeglobals --group WM --key inactiveFrame  239,240,241
 4. You must **restart** your session to see changes. (i.e. re-login, reboot)
 
 (Note: the RGB values presented here are for the default Breeze theme)
@@ -197,3 +202,4 @@ Useful Development Resources
     - [Development/Tutorials/Using KConfig XT](https://techbase.kde.org/Development/Tutorials/Using_KConfig_XT)
  * `*.ui` files can be edited with [Qt Designer](http://doc.qt.io/qt-5/qtdesigner-manual.html).
    It's very straight-forward if you're used to UI programming.
+
