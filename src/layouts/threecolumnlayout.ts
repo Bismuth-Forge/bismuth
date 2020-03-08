@@ -65,7 +65,7 @@ class ThreeColumnLayout implements ILayout {
                 area,
                 this.masterRatio,
                 CONFIG.tileLayoutGap,
-                basisIndex,
+                (basisIndex < this.masterSize) ? 0 : 1,
                 delta,
                 true);
 
@@ -93,13 +93,15 @@ class ThreeColumnLayout implements ILayout {
 
             /* adjust master-stack ratio */
             const stackRatio = 1 - this.masterRatio;
-            const [, newMasterRatio, newStackRatio] = LayoutUtils.adjustAreaWeights(
+            const newRatios = LayoutUtils.adjustAreaWeights(
                 area,
                 [stackRatio, this.masterRatio, stackRatio],
                 CONFIG.tileLayoutGap,
                 basisGroup,
                 delta,
                 true);
+            const newMasterRatio = newRatios[1];
+            const newStackRatio = (basisGroup === 0) ? newRatios[0] : newRatios[2];
             this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
 
             /* adjust tile weight */
