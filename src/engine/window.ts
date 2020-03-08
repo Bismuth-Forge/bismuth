@@ -110,8 +110,24 @@ class Window {
         this.window.surface = srf;
     }
 
+    public get weight(): number {
+        const srfID = this.window.surface.id;
+        const weight: number | undefined = this.weightMap[srfID];
+        if (weight === undefined) {
+            this.weightMap[srfID] = 1.0;
+            return 1.0;
+        }
+        return weight;
+    }
+
+    public set weight(value: number) {
+        const srfID = this.window.surface.id;
+        this.weightMap[srfID] = value;
+    }
+
     private internalState: WindowState;
     private shouldCommitFloat: boolean;
+    private weightMap: {[key: string]: number};
 
     constructor(window: IDriverWindow) {
         this.id = window.id;
@@ -123,6 +139,7 @@ class Window {
 
         this.internalState = WindowState.Unmanaged;
         this.shouldCommitFloat = false;
+        this.weightMap = {};
     }
 
     public commit() {

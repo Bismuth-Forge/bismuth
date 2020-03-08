@@ -204,34 +204,3 @@ class LayoutUtils {
         return LayoutUtils.calculateWeights(parts);
     }
 }
-
-class LayoutWeightMap {
-    private map: {[key: string]: [Window, number]};
-    constructor() {
-        this.map = {};
-    }
-
-    public get(window: Window) {
-        return this.getEntry(window)[1];
-    }
-
-    public set(window: Window, weight: number) {
-        this.getEntry(window)[1] = weight;
-    }
-
-    public multiply(window: Window, ratio: number) {
-        this.getEntry(window)[1] *= ratio;
-    }
-
-    public clean() {
-        for (const key in this.map) {
-            if (!this.map[key][0].window)
-                delete this.map[key];
-        }
-    }
-
-    private getEntry(window: Window): [Window, number] {
-        const entry = this.map[window.id];
-        return (entry) ? entry : (this.map[window.id] = [window, 1]);
-    }
-}

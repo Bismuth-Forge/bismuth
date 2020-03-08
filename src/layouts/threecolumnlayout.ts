@@ -31,12 +31,10 @@ class ThreeColumnLayout implements ILayout {
 
     private masterRatio: number;
     private masterSize: number;
-    private weights: LayoutWeightMap;
 
     constructor() {
         this.masterRatio = 0.6;
         this.masterSize = 1;
-        this.weights = new LayoutWeightMap();
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
@@ -51,12 +49,12 @@ class ThreeColumnLayout implements ILayout {
             /* one column */
             LayoutUtils.adjustAreaWeights(
                     area,
-                    tiles.map((tile) => this.weights.get(tile)),
+                    tiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap,
                     tiles.indexOf(basis),
                     delta,
                 ).forEach((newWeight, i) =>
-                    this.weights.set(tiles[i], newWeight * tiles.length));
+                    tiles[i].weight = newWeight * tiles.length);
         } else if (tiles.length === this.masterSize + 1) {
             /* two columns */
 
@@ -74,12 +72,12 @@ class ThreeColumnLayout implements ILayout {
                 const masterTiles = tiles.slice(0, -1);
                 LayoutUtils.adjustAreaWeights(
                         area,
-                        masterTiles.map((tile) => this.weights.get(tile)),
+                        masterTiles.map((tile) => tile.weight),
                         CONFIG.tileLayoutGap,
                         basisIndex,
                         delta,
                     ).forEach((newWeight, i) =>
-                        this.weights.set(masterTiles[i], newWeight * masterTiles.length));
+                        masterTiles[i].weight = newWeight * masterTiles.length);
             }
         } else if (tiles.length > this.masterSize + 1) {
             /* three columns */
@@ -107,16 +105,16 @@ class ThreeColumnLayout implements ILayout {
             /* adjust tile weight */
             const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
             const [masterTiles, rstackTiles, lstackTiles] =
-                partitionArrayBySizes<Window>(tiles, [this.masterSize, rstackNumTile])
+                partitionArrayBySizes<Window>(tiles, [this.masterSize, rstackNumTile]);
             const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
             LayoutUtils.adjustAreaWeights(
                     area, /* we only need height */
-                    groupTiles.map((tile) => this.weights.get(tile)),
+                    groupTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap,
                     groupTiles.indexOf(basis),
                     delta)
                 .forEach((newWeight, i) =>
-                    this.weights.set(groupTiles[i], newWeight * groupTiles.length));
+                    groupTiles[i].weight = newWeight * groupTiles.length);
         }
     }
 
@@ -129,7 +127,7 @@ class ThreeColumnLayout implements ILayout {
             /* only master */
             LayoutUtils.splitAreaWeighted(
                     area,
-                    tiles.map((tile) => this.weights.get(tile)),
+                    tiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap)
                 .forEach((tileArea, i) =>
                     tiles[i].geometry = tileArea);
@@ -141,7 +139,7 @@ class ThreeColumnLayout implements ILayout {
             const masterTiles = tiles.slice(0, this.masterSize);
             LayoutUtils.splitAreaWeighted(
                     masterArea,
-                    masterTiles.map((tile) => this.weights.get(tile)),
+                    masterTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap)
                 .forEach((tileArea, i) =>
                     masterTiles[i].geometry = tileArea);
@@ -164,7 +162,7 @@ class ThreeColumnLayout implements ILayout {
             [lstackTiles, masterTiles, rstackTiles].forEach((groupTiles, group) => {
                 LayoutUtils.splitAreaWeighted(
                         groupAreas[group],
-                        groupTiles.map((tile) => this.weights.get(tile)),
+                        groupTiles.map((tile) => tile.weight),
                         CONFIG.tileLayoutGap)
                     .forEach((tileArea, i) =>
                         groupTiles[i].geometry = tileArea);

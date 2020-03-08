@@ -31,12 +31,10 @@ class TileLayout implements ILayout {
 
     private numMaster: number;
     private masterRatio: number; /* in ratio */
-    private weights: LayoutWeightMap;
 
     constructor() {
         this.numMaster = 1;
         this.masterRatio = 0.55;
-        this.weights = new LayoutWeightMap();
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
@@ -58,23 +56,23 @@ class TileLayout implements ILayout {
             const masterTiles = tiles.slice(0, this.numMaster);
             LayoutUtils.adjustAreaWeights(
                     area,
-                    masterTiles.map((tile) => this.weights.get(tile)),
+                    masterTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap,
                     masterTiles.indexOf(basis),
                     delta)
                 .forEach((weight, i) => {
-                    this.weights.set(masterTiles[i], weight * masterTiles.length);
+                    masterTiles[i].weight = weight * masterTiles.length;
                 });
         } else { /* stack tiles */
             const stackTiles = tiles.slice(this.numMaster);
             LayoutUtils.adjustAreaWeights(
                     area,
-                    stackTiles.map((tile) => this.weights.get(tile)),
+                    stackTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap,
                     stackTiles.indexOf(basis),
                     delta)
                 .forEach((weight, i) => {
-                    this.weights.set(stackTiles[i], weight * stackTiles.length);
+                    stackTiles[i].weight = weight * stackTiles.length;
                 });
         }
     }
@@ -87,7 +85,7 @@ class TileLayout implements ILayout {
         if (tiles.length <= this.numMaster || this.numMaster === 0) /* only master OR only stack*/
             LayoutUtils.splitAreaWeighted(
                     area,
-                    tiles.map((tile) => this.weights.get(tile)),
+                    tiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap)
                 .forEach((rect, i) => {
                     tiles[i].geometry = rect;
@@ -100,7 +98,7 @@ class TileLayout implements ILayout {
 
             LayoutUtils.splitAreaWeighted(
                     masterArea,
-                    masterTiles.map((tile) => this.weights.get(tile)),
+                    masterTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap)
                 .forEach((rect, i) => {
                     masterTiles[i].geometry = rect;
@@ -108,7 +106,7 @@ class TileLayout implements ILayout {
 
             LayoutUtils.splitAreaWeighted(
                     stackArea,
-                    stackTiles.map((tile) => this.weights.get(tile)),
+                    stackTiles.map((tile) => tile.weight),
                     CONFIG.tileLayoutGap)
                 .forEach((rect, i) => {
                     stackTiles[i].geometry = rect;
