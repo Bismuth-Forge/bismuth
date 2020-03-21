@@ -154,7 +154,7 @@ class Window {
             this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
         } else if (this.state === WindowState.FullScreen)
-            this.window.commit(undefined, undefined, false);
+            this.window.commit(undefined, undefined, undefined);
     }
 
     public visible(srf: ISurface): boolean {
