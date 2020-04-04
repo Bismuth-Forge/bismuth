@@ -135,6 +135,10 @@ class TilingController {
             this.engine.enforceSize(ctx, window);
     }
 
+    public onWindowMaximizeChanged(ctx: IDriverContext, window: Window, maximized: boolean): void {
+        this.engine.arrange(ctx);
+    }
+
     public onWindowGeometryChanged(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowGeometryChanged", {window}]);
         this.engine.enforceSize(ctx, window);

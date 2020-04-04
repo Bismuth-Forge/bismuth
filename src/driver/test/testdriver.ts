@@ -102,6 +102,7 @@ class TestWindow implements IDriverWindow {
     public fullScreen: boolean;
     public geometry: Rect;
     public keepAbove: boolean;
+    public maximized: boolean;
     public noBorder: boolean;
 
     constructor(srf: TestSurface, geometry?: Rect, ignore?: boolean, float?: boolean) {
@@ -115,6 +116,7 @@ class TestWindow implements IDriverWindow {
         this.fullScreen = false;
         this.geometry = geometry || new Rect(0, 0, 100, 100);
         this.keepAbove = false;
+        this.maximized = false;
         this.noBorder = false;
     }
 

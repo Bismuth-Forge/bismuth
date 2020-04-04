@@ -270,6 +270,15 @@ class KWinDriver implements IDriverContext {
             }
         });
 
+        this.connect(workspace.clientMaximizeSet, (client: KWin.Client, h: boolean, v: boolean) => {
+            const maximized = (h === true && v === true);
+            const window = this.windowMap.get(client);
+            if (window) {
+                (window.window as KWinWindow).maximized = maximized;
+                this.control.onWindowMaximizeChanged(this, window, maximized);
+            }
+        });
+
         this.connect(workspace.clientFullScreenSet, (client: KWin.Client, fullScreen: boolean, user: boolean) =>
             this.control.onWindowChanged(this, this.windowMap.get(client),
                 "fullscreen=" + fullScreen + " user=" + user));

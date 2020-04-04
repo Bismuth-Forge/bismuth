@@ -92,6 +92,7 @@ interface IDriverWindow {
     readonly fullScreen: boolean;
     readonly geometry: Rect;
     readonly id: string;
+    readonly maximized: boolean;
     readonly shouldIgnore: boolean;
     readonly shouldFloat: boolean;
 

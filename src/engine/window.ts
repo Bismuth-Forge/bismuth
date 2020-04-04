@@ -23,6 +23,7 @@ enum WindowState {
     FullTile,
     FloatTile,
     Float,
+    Maximized,
     FullScreen,
     Unmanaged,
 }
@@ -83,6 +84,8 @@ class Window {
     public get state(): WindowState {
         if (this.window.fullScreen)
             return WindowState.FullScreen;
+        if (this.window.maximized)
+            return WindowState.Maximized;
         return this.internalState;
     }
 
@@ -153,6 +156,8 @@ class Window {
         } else if (this.state === WindowState.Float && this.shouldCommitFloat) {
             this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
+        } else if (this.state === WindowState.Maximized) {
+            this.window.commit(this.geometry, undefined, true);
         } else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, undefined);
     }

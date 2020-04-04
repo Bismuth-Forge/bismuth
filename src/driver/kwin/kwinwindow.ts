@@ -58,6 +58,8 @@ class KWinWindow implements IDriverWindow {
         );
     }
 
+    public maximized: boolean;
+
     public get surface(): ISurface {
         let activity;
         if (this.client.activities.length === 0)
@@ -89,6 +91,7 @@ class KWinWindow implements IDriverWindow {
     constructor(client: KWin.Client) {
         this.client = client;
         this.id = KWinWindow.generateID(client);
+        this.maximized = false;
         this.noBorderManaged = false;
         this.noBorderOriginal = client.noBorder;
     }

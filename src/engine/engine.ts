@@ -115,7 +115,7 @@ class TilingEngine {
 
         const workingArea = srf.workingArea;
 
-        let tilingArea;
+        let tilingArea: Rect;
         if (CONFIG.monocleMaximize && layout instanceof MonocleLayout)
             tilingArea = workingArea;
         else
@@ -127,6 +127,11 @@ class TilingEngine {
             layout, srf,
             visibles: visibles.length,
         }]);
+
+        visibles.forEach((window) => {
+            if (window.state === WindowState.Maximized)
+                window.geometry = tilingArea;
+        });
 
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
