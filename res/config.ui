@@ -763,7 +763,7 @@
        <item>
         <widget class="QCheckBox" name="kcfg_maximizeSoleTile">
          <property name="toolTip">
-          <string>If there's only one window to be tiled, the window will be maximized with its borders removed to maximize usable screen space.</string>
+          <string>&lt;p&gt;If there's only one window to be tiled, the window will be maximized with its borders removed to maximize usable screen space.&lt;/p&gt;&lt;p&gt;When using this option it's advisable to enable the &amp;quot;Allow resizing maximized windows from window edges&amp;quot; in &amp;quot;Breeze Window Decoration&amp;quot; settings, as this will often leave windows maximized, preventing borders from returning when windows are no longer sole otherwise.&lt;/p&gt;</string>
          </property>
          <property name="text">
           <string>Maximize the sole window</string>
