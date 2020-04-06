@@ -157,7 +157,7 @@ class Window {
             this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
         } else if (this.state === WindowState.Maximized) {
-            this.window.commit(this.geometry, undefined, true);
+            this.window.commit(undefined, undefined, undefined);
         } else if (this.state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, undefined);
     }

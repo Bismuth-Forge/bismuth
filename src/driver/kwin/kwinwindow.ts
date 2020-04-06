@@ -97,6 +97,9 @@ class KWinWindow implements IDriverWindow {
     }
 
     public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
+        if (this.maximized)
+            keepAbove = true;
+
         debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
 
         if (this.client.move || this.client.resize)

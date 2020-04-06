@@ -128,11 +128,6 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
-        visibles.forEach((window) => {
-            if (window.state === WindowState.Maximized)
-                window.geometry = tilingArea;
-        });
-
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
             tileables[0].state = WindowState.FullTile;
