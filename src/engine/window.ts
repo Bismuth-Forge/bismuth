@@ -146,19 +146,21 @@ class Window {
     }
 
     public commit() {
-        if (this.state === WindowState.Tile)
+        const state = this.state;
+        debugObj(() => ["Window#commit", {state: WindowState[state]}]);
+        if (state === WindowState.Tile)
             this.window.commit(this.geometry, CONFIG.noTileBorder, false);
-        else if (this.state === WindowState.FullTile)
+        else if (state === WindowState.FullTile)
             this.window.commit(this.geometry, true, false);
-        else if (this.state === WindowState.FloatTile && this.shouldCommitFloat) {
+        else if (state === WindowState.FloatTile && this.shouldCommitFloat) {
             this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
-        } else if (this.state === WindowState.Float && this.shouldCommitFloat) {
+        } else if (state === WindowState.Float && this.shouldCommitFloat) {
             this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
             this.shouldCommitFloat = false;
-        } else if (this.state === WindowState.Maximized) {
+        } else if (state === WindowState.Maximized) {
             this.window.commit(undefined, undefined, undefined);
-        } else if (this.state === WindowState.FullScreen)
+        } else if (state === WindowState.FullScreen)
             this.window.commit(undefined, undefined, undefined);
     }
 
