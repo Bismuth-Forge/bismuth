@@ -85,6 +85,7 @@ class KWinConfig implements IConfig {
             ["enableStairLayout"      , true , StairLayout],
             ["enableQuarterLayout"    , false, QuarterLayout],
             ["enableFloatingLayout"   , false, FloatingLayout],
+            ["enableCascadeLayout"    , false, CascadeLayout], // TODO: add config
         ] as Array<[string, boolean, ILayoutClass]>)
             .forEach(([configKey, defaultValue, layoutClass]) => {
                 if (KWin.readConfig(configKey, defaultValue))
