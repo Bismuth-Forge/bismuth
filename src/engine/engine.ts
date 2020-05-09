@@ -130,7 +130,7 @@ class TilingEngine {
 
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
-            tileables[0].state = WindowState.FullTile;
+            tileables[0].state = WindowState.Maximized;
             tileables[0].geometry = workingArea;
         } else if (tileables.length > 0)
             layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
@@ -171,7 +171,7 @@ class TilingEngine {
      */
     public manage(window: Window) {
         if (!window.shouldIgnore) {
-            window.state = (window.shouldFloat) ? WindowState.Float : WindowState.Tile;
+            window.state = (window.shouldFloat) ? WindowState.Floating : WindowState.Tiled;
             this.windows.push(window);
         }
     }
@@ -268,8 +268,8 @@ class TilingEngine {
      */
     public toggleFloat(window: Window) {
         window.state = (!window.tileable)
-            ? WindowState.Tile
-            : WindowState.Float;
+            ? WindowState.Tiled
+            : WindowState.Floating;
     }
 
     /**
@@ -282,19 +282,19 @@ class TilingEngine {
     public floatAll(ctx: IDriverContext, srf: ISurface) {
         const windows = this.windows.getVisibleWindows(srf);
         const numFloats = windows.reduce<number>((count, window) => {
-            return (window.state === WindowState.Float) ? count + 1 : count;
+            return (window.state === WindowState.Floating) ? count + 1 : count;
         }, 0);
 
         if (numFloats < windows.length / 2) {
             windows.forEach((window) => {
                 /* TODO: do not use arbitrary constants */
                 window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
-                window.state = WindowState.Float;
+                window.state = WindowState.Floating;
             });
             ctx.showNotification("Float All");
         } else {
             windows.forEach((window) => {
-                window.state = WindowState.Tile;
+                window.state = WindowState.Tiled;
             });
             ctx.showNotification("Tile All");
         }

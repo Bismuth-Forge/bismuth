@@ -120,7 +120,7 @@ class ThreeColumnLayout implements ILayout {
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         /* Tile all tileables */
-        tileables.forEach((tileable) => tileable.state = WindowState.Tile);
+        tileables.forEach((tileable) => tileable.state = WindowState.Tiled);
         const tiles = tileables;
 
         if (tiles.length <= this.masterSize) {

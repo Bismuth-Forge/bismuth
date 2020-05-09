@@ -97,7 +97,7 @@ class CascadeLayout implements ILayout {
 
         let x = baseX, y = baseY;
         tileables.forEach((tile) => {
-            tile.state = WindowState.Tile;
+            tile.state = WindowState.Tiled;
             tile.geometry = new Rect(x, y, windowWidth, windowHeight);
 
             x += horzStep * stepSize;

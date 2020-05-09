@@ -28,8 +28,8 @@ class MonocleLayout implements ILayout {
         /* Tile all tileables */
         tileables.forEach((tile) => {
             tile.state = (CONFIG.monocleMaximize)
-                ? WindowState.FullTile
-                : WindowState.Tile;
+                ? WindowState.Maximized
+                : WindowState.Tiled;
             tile.geometry = area;
         });
 

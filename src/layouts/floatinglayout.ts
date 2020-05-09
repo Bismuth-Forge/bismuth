@@ -27,7 +27,7 @@ class FloatingLayout implements ILayout {
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         tileables.forEach((tileable: Window) =>
-            tileable.state = WindowState.FloatTile);
+            tileable.state = WindowState.TiledAfloat);
     }
 
     public clone(): this {

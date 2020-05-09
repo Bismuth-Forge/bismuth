@@ -81,7 +81,7 @@ class TilingController {
         debugObj(() => ["onWindowMoveOver", {window}]);
 
         /* swap window by dragging */
-        if (window.state === WindowState.Tile) {
+        if (window.state === WindowState.Tiled) {
             const tiles = this.engine.windows.getVisibleTiles(ctx.currentSurface);
             const cursorPos = ctx.cursorPosition || window.actualGeometry.center;
 
@@ -96,13 +96,13 @@ class TilingController {
         }
 
         /* ... or float window by dragging */
-        if (window.state === WindowState.Tile) {
+        if (window.state === WindowState.Tiled) {
             const diff = window.actualGeometry.subtract(window.geometry);
             const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
             // TODO: arbitrary constant
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
-                window.state = WindowState.Float;
+                window.state = WindowState.Floating;
                 this.engine.arrange(ctx);
                 return;
             }
@@ -119,7 +119,7 @@ class TilingController {
     public onWindowResize(ctx: IDriverContext, window: Window): void {
         debugObj(() => ["onWindowResize", {window}]);
         if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
-            if (window.state === WindowState.Tile) {
+            if (window.state === WindowState.Tiled) {
                 this.engine.adjustLayout(window);
                 this.engine.arrange(ctx);
             }

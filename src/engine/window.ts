@@ -19,35 +19,41 @@
 // DEALINGS IN THE SOFTWARE.
 
 enum WindowState {
-    Tile,
-    FullTile,
-    FloatTile,
-    Float,
-    Maximized,
-    FullScreen,
+    /* initial value */
     Unmanaged,
+
+    /* script-external state - overrides internal state */
+    NativeFullscreen,
+    NativeMaximized,
+
+    /* script-internal state */
+    Floating,
+    Maximized,
+    Tiled,
+    TiledAfloat,
+    Undecided,
 }
 
 class Window {
     public static isTileableState(state: WindowState): boolean {
         return (
-            (state === WindowState.Tile)
-            || (state === WindowState.FullTile)
-            || (state === WindowState.FloatTile)
+            (state === WindowState.Tiled)
+            || (state === WindowState.Maximized)
+            || (state === WindowState.TiledAfloat)
         );
     }
 
     public static isTiledState(state: WindowState): boolean {
         return (
-            (state === WindowState.Tile)
-            || (state === WindowState.FullTile)
+            (state === WindowState.Tiled)
+            || (state === WindowState.Maximized)
         );
     }
 
     public static isFloatingState(state: WindowState): boolean {
         return (
-            (state === WindowState.Float)
-            || (state === WindowState.FloatTile)
+            (state === WindowState.Floating)
+            || (state === WindowState.TiledAfloat)
         );
     }
 
@@ -82,24 +88,26 @@ class Window {
      * `floating` as much as possible.
      */
     public get state(): WindowState {
+        /* external states override the internal state. */
         if (this.window.fullScreen)
-            return WindowState.FullScreen;
+            return WindowState.NativeFullscreen;
         if (this.window.maximized)
-            return WindowState.Maximized;
+            return WindowState.NativeMaximized;
+
         return this.internalState;
     }
 
     public set state(value: WindowState) {
-        if (value === WindowState.FullScreen)
-            return;
-
         const state = this.state;
+
+        /* cannot transit to the current state */
         if (state === value)
             return;
 
         if ((state === WindowState.Unmanaged || Window.isTileableState(state)) && Window.isFloatingState(value))
             this.shouldCommitFloat = true;
         else if (Window.isFloatingState(state) && Window.isTileableState(value))
+            /* save the current geometry before leaving floating state */
             this.floatGeometry = this.actualGeometry;
 
         this.internalState = value;
@@ -148,20 +156,35 @@ class Window {
     public commit() {
         const state = this.state;
         debugObj(() => ["Window#commit", {state: WindowState[state]}]);
-        if (state === WindowState.Tile)
-            this.window.commit(this.geometry, CONFIG.noTileBorder, false);
-        else if (state === WindowState.FullTile)
-            this.window.commit(this.geometry, true, false);
-        else if (state === WindowState.FloatTile && this.shouldCommitFloat) {
-            this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
-            this.shouldCommitFloat = false;
-        } else if (state === WindowState.Float && this.shouldCommitFloat) {
-            this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
-            this.shouldCommitFloat = false;
-        } else if (state === WindowState.Maximized) {
-            this.window.commit(undefined, undefined, undefined);
-        } else if (state === WindowState.FullScreen)
-            this.window.commit(undefined, undefined, undefined);
+        switch (state) {
+            case WindowState.NativeMaximized:
+                this.window.commit(undefined, undefined, undefined);
+                break;
+
+            case WindowState.NativeFullscreen:
+                this.window.commit(undefined, undefined, undefined);
+                break;
+
+            case WindowState.Floating:
+                if (!this.shouldCommitFloat) break;
+                this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+                this.shouldCommitFloat = false;
+                break;
+
+            case WindowState.Maximized:
+                this.window.commit(this.geometry, true, false);
+                break;
+
+            case WindowState.Tiled:
+                this.window.commit(this.geometry, CONFIG.noTileBorder, false);
+                break;
+
+            case WindowState.TiledAfloat:
+                if (!this.shouldCommitFloat) break;
+                this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+                this.shouldCommitFloat = false;
+                break;
+        }
     }
 
     public visible(srf: ISurface): boolean {
