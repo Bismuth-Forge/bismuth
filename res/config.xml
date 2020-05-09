@@ -88,12 +88,12 @@
 
     <entry name="layoutPerActivity" type="Bool">
         <label>Use separate layouts per activity.</label>
-        <default>false</default>
+        <default>true</default>
     </entry>
 
     <entry name="layoutPerDesktop" type="Bool">
         <label>Use separate layouts per desktop.</label>
-        <default>false</default>
+        <default>true</default>
     </entry>
 
     <entry name="maximizeSoleTile" type="Bool">

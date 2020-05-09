@@ -115,8 +115,8 @@ class KWinConfig implements IConfig {
         const directionalKeyFocus = KWin.readConfig("directionalKeyFocus" , false);
         this.directionalKeyMode = (directionalKeyDwm) ? "dwm" : "focus";
 
-        this.layoutPerActivity    = KWin.readConfig("layoutPerActivity"   , false);
-        this.layoutPerDesktop     = KWin.readConfig("layoutPerDesktop"    , false);
+        this.layoutPerActivity    = KWin.readConfig("layoutPerActivity"   , true);
+        this.layoutPerDesktop     = KWin.readConfig("layoutPerDesktop"    , true);
         this.floatUtility         = KWin.readConfig("floatUtility"        , true);
         this.preventMinimize      = KWin.readConfig("preventMinimize"     , false);
         this.preventProtrusion    = KWin.readConfig("preventProtrusion"   , true);
