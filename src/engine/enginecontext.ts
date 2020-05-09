@@ -45,7 +45,7 @@ class EngineContext {
     }
 
     public cycleFocus(step: -1 | 1) {
-        this.engine.cycleFocus(this.drvctx, step);
+        this.engine.focusOrder(this.drvctx, step);
     }
 
     public moveWindow(window: Window, target: Window, after?: boolean) {

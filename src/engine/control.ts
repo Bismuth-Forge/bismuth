@@ -183,26 +183,26 @@ class TilingController {
 
         const window = ctx.currentWindow;
         switch (input) {
-            case Shortcut.Up  : this.engine.cycleFocus(ctx, -1); break;
-            case Shortcut.Down: this.engine.cycleFocus(ctx, +1); break;
+            case Shortcut.Up  : this.engine.focusOrder(ctx, -1); break;
+            case Shortcut.Down: this.engine.focusOrder(ctx, +1); break;
 
-            case Shortcut.FocusUp   : this.engine.moveFocus(ctx, "up"   ); break;
-            case Shortcut.FocusDown : this.engine.moveFocus(ctx, "down" ); break;
-            case Shortcut.FocusLeft : this.engine.moveFocus(ctx, "left" ); break;
-            case Shortcut.FocusRight: this.engine.moveFocus(ctx, "right"); break;
+            case Shortcut.FocusUp   : this.engine.focusDir(ctx, "up"   ); break;
+            case Shortcut.FocusDown : this.engine.focusDir(ctx, "down" ); break;
+            case Shortcut.FocusLeft : this.engine.focusDir(ctx, "left" ); break;
+            case Shortcut.FocusRight: this.engine.focusDir(ctx, "right"); break;
 
-            case Shortcut.GrowWidth   : if (window) this.engine.adjustWindowSize(window, "east" ,  1); break;
-            case Shortcut.ShrinkWidth : if (window) this.engine.adjustWindowSize(window, "east" , -1); break;
-            case Shortcut.GrowHeight  : if (window) this.engine.adjustWindowSize(window, "south",  1); break;
-            case Shortcut.ShrinkHeight: if (window) this.engine.adjustWindowSize(window, "south", -1); break;
+            case Shortcut.GrowWidth   : if (window) this.engine.resizeTile(window, "east" ,  1); break;
+            case Shortcut.ShrinkWidth : if (window) this.engine.resizeTile(window, "east" , -1); break;
+            case Shortcut.GrowHeight  : if (window) this.engine.resizeTile(window, "south",  1); break;
+            case Shortcut.ShrinkHeight: if (window) this.engine.resizeTile(window, "south", -1); break;
 
-            case Shortcut.ShiftUp  : if (window) this.engine.moveTile(window, -1); break;
-            case Shortcut.ShiftDown: if (window) this.engine.moveTile(window, +1); break;
+            case Shortcut.ShiftUp  : if (window) this.engine.swapOrder(window, -1); break;
+            case Shortcut.ShiftDown: if (window) this.engine.swapOrder(window, +1); break;
 
-            case Shortcut.SwapUp   : this.engine.moveTileDirection(ctx, "up"); break;
-            case Shortcut.SwapDown : this.engine.moveTileDirection(ctx, "down"); break;
-            case Shortcut.SwapLeft : this.engine.moveTileDirection(ctx, "left"); break;
-            case Shortcut.SwapRight: this.engine.moveTileDirection(ctx, "right"); break;
+            case Shortcut.SwapUp   : this.engine.swapDirection(ctx, "up"); break;
+            case Shortcut.SwapDown : this.engine.swapDirection(ctx, "down"); break;
+            case Shortcut.SwapLeft : this.engine.swapDirection(ctx, "left"); break;
+            case Shortcut.SwapRight: this.engine.swapDirection(ctx, "right"); break;
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;

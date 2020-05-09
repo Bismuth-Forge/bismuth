@@ -52,11 +52,11 @@ class TilingEngine {
     }
 
     /**
-     * Resize tile by adjusting layout.
+     * Resize the current tile by adjusting the layout.
      *
      * Used by grow/shrink shortcuts.
      */
-    public adjustWindowSize(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
+    public resizeTile(basis: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
         const srf = basis.surface;
 
         if (dir === "east") {
@@ -190,9 +190,9 @@ class TilingEngine {
     }
 
     /**
-     * Move focus to next/previous window.
+     * Focus the next or previous window.
      */
-    public cycleFocus(ctx: IDriverContext, step: -1 | 1) {
+    public focusOrder(ctx: IDriverContext, step: -1 | 1) {
         const window = ctx.currentWindow;
 
         /* if no current window, select the first tile. */
@@ -219,7 +219,10 @@ class TilingEngine {
         ctx.currentWindow = visibles[newIndex];
     }
 
-    public moveFocus(ctx: IDriverContext, dir: Direction) {
+    /**
+     * Focus a neighbor at the given direction.
+     */
+    public focusDir(ctx: IDriverContext, dir: Direction) {
         const window = ctx.currentWindow;
 
         /* if no current window, select the first tile. */
@@ -236,9 +239,9 @@ class TilingEngine {
     }
 
     /**
-     * Reorder windows by moving the current window next to next/previous window.
+     * Swap the position of the current window with the next or previous window.
      */
-    public moveTile(window: Window, step: -1 | 1) {
+    public swapOrder(window: Window, step: -1 | 1) {
         const srf = window.surface;
         const visibles = this.windows.getVisibleWindows(srf);
         if (visibles.length < 2)
@@ -252,9 +255,9 @@ class TilingEngine {
     }
 
     /**
-     * Swap the current window position w/ a neighbor at the given direction.
+     * Swap the position of the current window with a neighbor at the given direction.
      */
-    public moveTileDirection(ctx: IDriverContext, dir: Direction) {
+    public swapDirection(ctx: IDriverContext, dir: Direction) {
         const window = ctx.currentWindow;
         if (window === null) {
             /* if no current window, select the first tile. */
