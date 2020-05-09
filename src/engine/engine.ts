@@ -128,6 +128,11 @@ class TilingEngine {
             visibles: visibles.length,
         }]);
 
+        visibles.forEach((window) => {
+            if (window.state === WindowState.Undecided)
+                window.state = (window.shouldFloat) ? WindowState.Floating : WindowState.Tiled;
+        });
+
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
             tileables[0].state = WindowState.Maximized;
@@ -171,7 +176,8 @@ class TilingEngine {
      */
     public manage(window: Window) {
         if (!window.shouldIgnore) {
-            window.state = (window.shouldFloat) ? WindowState.Floating : WindowState.Tiled;
+            /* engine#arrange will update the state when required. */
+            window.state = WindowState.Undecided;
             this.windows.push(window);
         }
     }
