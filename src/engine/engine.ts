@@ -52,6 +52,33 @@ class TilingEngine {
     }
 
     /**
+     * Resize the current floating window.
+     *
+     * @param window a floating window
+     */
+    public resizeFloat(window: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
+        const srf = window.surface;
+
+        // TODO: configurable step size?
+        const hStepSize = srf.workingArea.width  * 0.05;
+        const vStepSize = srf.workingArea.height * 0.05;
+
+        let hStep, vStep;
+        switch (dir) {
+            case "east" : hStep =  step, vStep =      0; break;
+            case "west" : hStep = -step, vStep =      0; break;
+            case "south": hStep =      0, vStep =  step; break;
+            case "north": hStep =      0, vStep = -step; break;
+        }
+
+        const geometry = window.actualGeometry;
+        const width  = geometry.width  + hStepSize * hStep;
+        const height = geometry.height + vStepSize * vStep;
+
+        window.forceSetGeometry(new Rect(geometry.x, geometry.y, width, height));
+    }
+
+    /**
      * Resize the current tile by adjusting the layout.
      *
      * Used by grow/shrink shortcuts.
@@ -95,6 +122,22 @@ class TilingEngine {
                 CONFIG.screenGapTop, CONFIG.screenGapBottom);
             layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
         }
+    }
+
+    /**
+     * Resize the given window, by moving border inward or outward.
+     *
+     * The actual behavior depends on the state of the given window.
+     *
+     * @param dir which border
+     * @param step which direction. 1 means outward, -1 means inward.
+     */
+    public resizeWindow(window: Window, dir: "east" | "west" | "south" | "north", step: -1 | 1) {
+        const state = window.state;
+        if (Window.isFloatingState(state))
+            this.resizeFloat(window, dir, step);
+        else if (Window.isTiledState(state))
+            this.resizeTile(window, dir, step);
     }
 
     /**

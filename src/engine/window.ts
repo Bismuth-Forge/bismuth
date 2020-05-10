@@ -187,6 +187,16 @@ class Window {
         }
     }
 
+    /**
+     * Force apply the geometry *immediately*.
+     *
+     * This method is a quick hack created for engine#resizeFloat, thus should
+     * not be used in other places.
+     */
+    public forceSetGeometry(geometry: Rect) {
+        this.window.commit(geometry);
+    }
+
     public visible(srf: ISurface): boolean {
         return this.window.visible(srf);
     }
