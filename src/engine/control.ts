@@ -199,10 +199,10 @@ class TilingController {
             case Shortcut.ShiftUp  : if (window) this.engine.swapOrder(window, -1); break;
             case Shortcut.ShiftDown: if (window) this.engine.swapOrder(window, +1); break;
 
-            case Shortcut.SwapUp   : this.engine.swapDirection(ctx, "up"); break;
-            case Shortcut.SwapDown : this.engine.swapDirection(ctx, "down"); break;
-            case Shortcut.SwapLeft : this.engine.swapDirection(ctx, "left"); break;
-            case Shortcut.SwapRight: this.engine.swapDirection(ctx, "right"); break;
+            case Shortcut.SwapUp   : this.engine.swapDirOrMoveFloat(ctx, "up"); break;
+            case Shortcut.SwapDown : this.engine.swapDirOrMoveFloat(ctx, "down"); break;
+            case Shortcut.SwapLeft : this.engine.swapDirOrMoveFloat(ctx, "left"); break;
+            case Shortcut.SwapRight: this.engine.swapDirOrMoveFloat(ctx, "right"); break;
 
             case Shortcut.SetMaster  : if (window) this.engine.setMaster(window); break;
             case Shortcut.ToggleFloat: if (window) this.engine.toggleFloat(window); break;

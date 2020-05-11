@@ -316,6 +316,44 @@ class TilingEngine {
     }
 
     /**
+     * Move the given window towards the given direction by one step.
+     * @param window a floating window
+     * @param dir which direction
+     */
+    public moveFloat(window: Window, dir: Direction) {
+        const srf = window.surface;
+
+        // TODO: configurable step size?
+        const hStepSize = srf.workingArea.width  * 0.05;
+        const vStepSize = srf.workingArea.height * 0.05;
+
+        let hStep, vStep;
+        switch (dir) {
+            case "up"   : hStep =  0, vStep = -1; break;
+            case "down" : hStep =  0, vStep =  1; break;
+            case "left" : hStep = -1, vStep =  0; break;
+            case "right": hStep =  1, vStep =  0; break;
+        }
+
+        const geometry = window.actualGeometry;
+        const x = geometry.x + hStepSize * hStep;
+        const y = geometry.y + vStepSize * vStep;
+
+        window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
+    }
+
+    public swapDirOrMoveFloat(ctx: IDriverContext, dir: Direction) {
+        const window = ctx.currentWindow;
+        if (!window) return;
+
+        const state = window.state;
+        if (Window.isFloatingState(state))
+            this.moveFloat(window, dir);
+        else if (Window.isTiledState(state))
+            this.swapDirection(ctx, dir);
+    }
+
+    /**
      * Toggle float mode of window.
      */
     public toggleFloat(window: Window) {
