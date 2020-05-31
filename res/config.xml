@@ -190,5 +190,10 @@
 	    <label>Ratio of maximum tile width to the height of screen</label>
         <default>1.6</default>
     </entry>
+
+    <entry name="newWindowAsMaster" type="Bool">
+        <label>Put new window as master</label>
+        <default>false</default>
+    </entry>
   </group>
 </kcfg>

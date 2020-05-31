@@ -44,6 +44,7 @@ class KWinConfig implements IConfig {
 
     //#region Behavior
     public directionalKeyMode: "dwm" | "focus";
+    public newWindowAsMaster: boolean;
     //#endregion
 
     //#region KWin-specific
@@ -114,6 +115,7 @@ class KWinConfig implements IConfig {
         const directionalKeyDwm   = KWin.readConfig("directionalKeyDwm"   , true);
         const directionalKeyFocus = KWin.readConfig("directionalKeyFocus" , false);
         this.directionalKeyMode = (directionalKeyDwm) ? "dwm" : "focus";
+        this.newWindowAsMaster    = KWin.readConfig("newWindowAsMaster"   , false);
 
         this.layoutPerActivity    = KWin.readConfig("layoutPerActivity"   , true);
         this.layoutPerDesktop     = KWin.readConfig("layoutPerDesktop"    , true);

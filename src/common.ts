@@ -85,6 +85,7 @@ interface IConfig {
 
     //#region Behavior
     directionalKeyMode: "dwm" | "focus";
+    newWindowAsMaster: boolean;
     //#endregion
 }
 

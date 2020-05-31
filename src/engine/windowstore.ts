@@ -76,6 +76,9 @@ class WindowStore {
             this.list.splice(idx, 1);
     }
 
+    public unshift(window: Window) {
+        this.list.unshift(window);
+    }
     //#endregion
 
     //#region Querying Windows
