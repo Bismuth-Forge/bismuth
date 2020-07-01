@@ -91,7 +91,7 @@ interface IConfig {
 
 interface IDriverWindow {
     readonly fullScreen: boolean;
-    readonly geometry: Rect;
+    readonly geometry: Readonly<Rect>;
     readonly id: string;
     readonly maximized: boolean;
     readonly shouldIgnore: boolean;
@@ -106,7 +106,7 @@ interface IDriverWindow {
 interface ISurface {
     readonly id: string;
     readonly ignore: boolean;
-    readonly workingArea: Rect;
+    readonly workingArea: Readonly<Rect>;
 
     next(): ISurface | null;
 }

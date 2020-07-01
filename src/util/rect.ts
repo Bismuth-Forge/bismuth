@@ -19,10 +19,13 @@
 // DEALINGS IN THE SOFTWARE.
 
 class Rect {
-    public readonly height: number;
-    public readonly width: number;
-    public readonly x: number;
-    public readonly y: number;
+    constructor(
+        public x: number,
+        public y: number,
+        public width: number,
+        public height: number,
+    ) {
+    }
 
     public get maxX(): number { return this.x + this.width; }
     public get maxY(): number { return this.y + this.height; }
@@ -34,11 +37,8 @@ class Rect {
         ];
     }
 
-    constructor(x: number, y: number, w: number, h: number) {
-        this.height = h;
-        this.width = w;
-        this.x = x;
-        this.y = y;
+    public clone(): Rect {
+        return new Rect(this.x, this.y, this.width, this.height);
     }
 
     public equals(other: Rect): boolean {
@@ -57,6 +57,14 @@ class Rect {
             this.width - (left + right),
             this.height - (top + bottom),
         );
+    }
+
+    public gap_mut(left: number, right: number, top: number, bottom: number): this {
+        this.x += left;
+        this.y += top;
+        this.width -= (left + right);
+        this.height -= (top + bottom);
+        return this;
     }
 
     public includes(other: Rect): boolean {
