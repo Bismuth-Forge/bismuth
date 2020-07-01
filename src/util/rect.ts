@@ -41,7 +41,7 @@ class Rect {
         this.y = y;
     }
 
-    public equals(other: Rect) {
+    public equals(other: Rect): boolean {
         return (
             this.x === other.x &&
             this.y === other.y &&
@@ -75,7 +75,7 @@ class Rect {
         );
     }
 
-    public subtract(other: Rect) {
+    public subtract(other: Rect): Rect {
         return new Rect(
             this.x - other.x,
             this.y - other.y,
