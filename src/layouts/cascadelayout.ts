@@ -32,41 +32,18 @@ enum CascadeDirection {
 class CascadeLayout implements ILayout {
     public static readonly id = "CascadeLayout";
 
+    /** Decompose direction into vertical and horizontal steps */
     public static decomposeDirection(dir: CascadeDirection): [-1|0|1, -1|0|1] {
-        let vertStep: -1|0|1;
         switch (dir) {
-            case CascadeDirection.North :
-            case CascadeDirection.NorthEast:
-            case CascadeDirection.NorthWest:
-                vertStep = -1;
-                break;
-            case CascadeDirection.South :
-            case CascadeDirection.SouthEast:
-            case CascadeDirection.SouthWest:
-                vertStep = 1;
-                break;
-            default:
-                vertStep = 0;
-                break;
+            case CascadeDirection.NorthWest: return [ -1, -1 ];
+            case CascadeDirection.North    : return [ -1,  0 ];
+            case CascadeDirection.NorthEast: return [ -1,  1 ];
+            case CascadeDirection.East     : return [  0,  1 ];
+            case CascadeDirection.SouthEast: return [  1,  1 ];
+            case CascadeDirection.South    : return [  1,  0 ];
+            case CascadeDirection.SouthWest: return [  1, -1 ];
+            case CascadeDirection.West     : return [  0, -1 ];
         }
-
-        let horzStep: -1|0|1;
-        switch (dir) {
-            case CascadeDirection.East :
-            case CascadeDirection.NorthEast:
-            case CascadeDirection.SouthEast:
-                horzStep = 1;
-                break;
-            case CascadeDirection.West :
-            case CascadeDirection.NorthWest:
-            case CascadeDirection.SouthWest:
-                horzStep = -1;
-                break;
-            default:
-                horzStep = 0;
-                break;
-        }
-        return [vertStep, horzStep];
     }
 
     public readonly classID = CascadeLayout.id;
