@@ -56,8 +56,11 @@ class HalfSplitLayoutPart implements ILayoutPart {
                 true,
             );
 
-            ((targetIndex === /* primary */ 0)? this.primary : this.secondary)
-                .adjust(area, tiles, basis, delta);
+            if (targetIndex === /* primary */ 0) {
+               this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta);
+            } else {
+               this.secondary.adjust(area, tiles.slice(this.primarySize), basis, delta);
+            }
         }
     }
 
