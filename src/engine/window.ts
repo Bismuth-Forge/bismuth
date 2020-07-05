@@ -60,7 +60,7 @@ class Window {
     public readonly id: string;
     public readonly window: IDriverWindow;
 
-    public get actualGeometry(): Rect { return this.window.geometry; }
+    public get actualGeometry(): Readonly<Rect> { return this.window.geometry; }
     public get shouldFloat(): boolean { return this.window.shouldFloat; }
     public get shouldIgnore(): boolean { return this.window.shouldIgnore; }
 
