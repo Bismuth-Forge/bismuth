@@ -111,12 +111,12 @@ class StackLayoutPart implements ILayoutPart {
 class RotateLayoutPart implements ILayoutPart {
     constructor(
         public child: ILayoutPart,
-        public direction: 0 | 90 | 180 | 270 = 0,
+        public angle: 0 | 90 | 180 | 270 = 0,
     ) {
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
-        switch (this.direction) {
+        switch (this.angle) {
             case 0  : break;
             case 90 :
                 area = new Rect(area.y, area.x, area.height, area.width);
@@ -132,7 +132,7 @@ class RotateLayoutPart implements ILayoutPart {
     }
 
     public apply(area: Rect, tiles: Window[]): Rect[] {
-        switch (this.direction) {
+        switch (this.angle) {
             case 0  : break;
             case 90 : area = new Rect(area.y, area.x, area.height, area.width); break;
             case 180: break;
@@ -141,7 +141,7 @@ class RotateLayoutPart implements ILayoutPart {
 
         const childResult = this.child.apply(area, tiles);
 
-        switch (this.direction) {
+        switch (this.angle) {
             case 0:
                 return childResult;
             case 90:
@@ -160,5 +160,16 @@ class RotateLayoutPart implements ILayoutPart {
                     return new Rect(g.y, newY, g.height, g.width)
                 });
         }
+    }
+
+    public rotate(amount: -90 | 90): void {
+        // -90 | 0 | 90 | 180 | 270 | 360
+        let angle = this.angle + amount;
+        if (angle < 0)
+            angle = 270;
+        else if (angle >= 360)
+            angle = 0;
+
+        this.angle = angle as (0 | 90 | 180 | 270);
     }
 }
