@@ -56,6 +56,9 @@ enum Shortcut {
     NextLayout,
     PreviousLayout,
     SetLayout,
+
+    Rotate,
+    RotatePart,
 }
 
 //#region Driver

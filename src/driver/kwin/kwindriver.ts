@@ -166,6 +166,8 @@ class KWinDriver implements IDriverContext {
         bind("\\", "Next Layout", Shortcut.NextLayout);
         bind("|", "Previous Layout", Shortcut.PreviousLayout);
 
+        bind("R", "Rotate", Shortcut.Rotate);
+
         bind("Return", "Set master", Shortcut.SetMaster);
 
         const bindLayout = (seq: string, title: string, layoutClass: ILayoutClass) => {
