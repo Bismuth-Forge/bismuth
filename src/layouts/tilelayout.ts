@@ -32,6 +32,7 @@ class TileLayout implements ILayout {
     private masterPart: StackLayoutPart;
     private stackPart: StackLayoutPart;
     private halfPart: HalfSplitLayoutPart;
+    private rotatePart: RotateLayoutPart;
 
     private get numMaster(): number {
         return this.halfPart.primarySize;
@@ -53,10 +54,11 @@ class TileLayout implements ILayout {
         this.masterPart = new StackLayoutPart();
         this.stackPart = new StackLayoutPart();
         this.halfPart = new HalfSplitLayoutPart(this.masterPart, this.stackPart);
+        this.rotatePart = new RotateLayoutPart(this.halfPart);
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
-        this.halfPart.adjust(area, tiles, basis, delta);
+        this.rotatePart.adjust(area, tiles, basis, delta);
     }
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
@@ -67,7 +69,7 @@ class TileLayout implements ILayout {
         this.stackPart.gap = CONFIG.tileLayoutGap;
         this.halfPart.gap = CONFIG.tileLayoutGap;
 
-        this.halfPart.apply(area, tileables)
+        this.rotatePart.apply(area, tileables)
             .forEach((geometry, i) => {
                 tileables[i].geometry = geometry;
             });
@@ -104,6 +106,9 @@ class TileLayout implements ILayout {
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
                 ctx.showNotification(this.description);
+                break;
+            case Shortcut.Rotate:
+                this.rotatePart.rotate(90);
                 break;
             default:
                 return false;
