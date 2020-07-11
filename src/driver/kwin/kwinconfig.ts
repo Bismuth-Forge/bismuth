@@ -20,7 +20,8 @@
 
 class KWinConfig implements IConfig {
     //#region Layout
-    public layouts: ILayout[];
+    public layoutOrder: string[];
+    public layoutFactories: {[key: string]: () => ILayout};
     public maximizeSoleTile: boolean;
     public monocleMaximize: boolean;
     public monocleMinimizeRest: boolean; // KWin-specific
@@ -77,20 +78,22 @@ class KWinConfig implements IConfig {
 
         DEBUG.enabled = DEBUG.enabled || KWin.readConfig("debug", false);
 
-        this.layouts = [];
+        this.layoutOrder = [];
+        this.layoutFactories = {};
         ([
-            ["enableTileLayout"       , true , TileLayout],
-            ["enableMonocleLayout"    , true , MonocleLayout],
+            ["enableTileLayout"       , true , TileLayout       ],
+            ["enableMonocleLayout"    , true , MonocleLayout    ],
             ["enableThreeColumnLayout", true , ThreeColumnLayout],
-            ["enableSpreadLayout"     , true , SpreadLayout],
-            ["enableStairLayout"      , true , StairLayout],
-            ["enableQuarterLayout"    , false, QuarterLayout],
-            ["enableFloatingLayout"   , false, FloatingLayout],
-            ["enableCascadeLayout"    , false, CascadeLayout], // TODO: add config
+            ["enableSpreadLayout"     , true , SpreadLayout     ],
+            ["enableStairLayout"      , true , StairLayout      ],
+            ["enableQuarterLayout"    , false, QuarterLayout    ],
+            ["enableFloatingLayout"   , false, FloatingLayout   ],
+            ["enableCascadeLayout"    , false, CascadeLayout    ], // TODO: add config
         ] as Array<[string, boolean, ILayoutClass]>)
             .forEach(([configKey, defaultValue, layoutClass]) => {
                 if (KWin.readConfig(configKey, defaultValue))
-                    this.layouts.push(new layoutClass());
+                    this.layoutOrder.push(layoutClass.id);
+                this.layoutFactories[layoutClass.id] = (() => new layoutClass());
             });
 
         this.maximizeSoleTile     = KWin.readConfig("maximizeSoleTile"    , false);

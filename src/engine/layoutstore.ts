@@ -19,75 +19,61 @@
 // DEALINGS IN THE SOFTWARE.
 
 class LayoutStoreEntry {
-    public index: number | null;
-    public key: string;
-    public layouts: {[key: string]: ILayout};
-    public prevKey: string;
-
     public get currentLayout(): ILayout {
-        return (this.index === null)
-            ? this.layouts[this.key]
-            : this.layouts[CONFIG.layouts[this.index].classID]
-            ;
+        return this.loadLayout(this.currentID);
     }
 
+    private currentIndex: number | null;
+    private currentID: string;
+    private layouts: {[key: string]: ILayout};
+    private previousID: string;
+  
     constructor() {
-        this.index = 0;
-        this.key = CONFIG.layouts[0].classID;
+        this.currentIndex = 0;
+        this.currentID = CONFIG.layoutOrder[0];
         this.layouts = {};
-        this.prevKey = this.key;
+        this.previousID = this.currentID;
 
-        CONFIG.layouts.forEach((layout: ILayout) => {
-            this.layouts[layout.classID] = layout.clone();
-        });
-
-        [
-            TileLayout,
-            MonocleLayout,
-            ThreeColumnLayout,
-            SpreadLayout,
-            StairLayout,
-            QuarterLayout,
-            FloatingLayout,
-        ].forEach((layoutClass: ILayoutClass) => {
-            if (!this.layouts[layoutClass.id])
-                this.layouts[layoutClass.id] = new layoutClass();
-        });
+        this.loadLayout(this.currentID);
     }
 
     public cycleLayout(step: -1 | 1): ILayout {
-        this.prevKey = this.key;
-        this.index = (this.index !== null)
-            ? wrapIndex(this.index + step, CONFIG.layouts.length)
+        this.previousID = this.currentID;
+        this.currentIndex = (this.currentIndex !== null)
+            ? wrapIndex(this.currentIndex + step, CONFIG.layoutOrder.length)
             : 0
             ;
-        this.key = CONFIG.layouts[this.index].classID;
-        return this.currentLayout;
+        this.currentID = CONFIG.layoutOrder[this.currentIndex];
+        return this.loadLayout(this.currentID);
     }
 
-    public setLayout(classID: string): ILayout {
-        if (this.key === classID) {
-            if (classID === MonocleLayout.id)
-                classID = this.prevKey;
-            else
-                return this.currentLayout;
+    public setLayout(targetID: string): ILayout {
+        const targetLayout = this.loadLayout(targetID);
+        if (targetLayout instanceof MonocleLayout
+            && this.currentLayout instanceof MonocleLayout) {
+            /* toggle Monocle "OFF" */
+            this.currentID = this.previousID;
+            this.previousID = targetID;
+        } else if (this.currentID !== targetID) {
+            this.previousID = this.currentID;
+            this.currentID = targetID;
         }
 
-        const layout = this.layouts[classID];
+        this.updateCurrentIndex();
+        return targetLayout;
+    }
+
+    private updateCurrentIndex(): void {
+        const idx = CONFIG.layoutOrder.indexOf(this.currentID);
+        this.currentIndex = (idx === -1) ? null : idx;
+    }
+
+    private loadLayout(ID: string): ILayout {
+        console.log('loadLayout', ID, Object.keys(this.layouts))
+        let layout = this.layouts[ID];
         if (!layout)
-            return this.currentLayout;
-
-        this.prevKey = this.key;
-        this.key = layout.classID;
-
-        this.index = null;
-        for (let i = 0; i < CONFIG.layouts.length; i ++) {
-            if (CONFIG.layouts[i].classID === this.key) {
-                this.index = i;
-                break;
-            }
-        }
-        return layout;
+            layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
+        return layout
     }
 }
 
