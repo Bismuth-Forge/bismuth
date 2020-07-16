@@ -142,10 +142,9 @@ interface ILayout {
     /* methods */
     adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
     apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
-    toString(): string;
-
-    /* overriding */
     handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
+
+    toString(): string;
 }
 
 let CONFIG: IConfig;
