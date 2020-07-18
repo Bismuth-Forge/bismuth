@@ -250,7 +250,12 @@ class KWinDriver implements IDriverContext {
         this.connect(workspace.clientAdded, (client: KWin.Client) => {
             /* NOTE: windowShown can be fired in various situations.
              *       We need only the first one - when window is created. */
+            let handled = false;
             const handler = () => {
+                if (handled)
+                    return;
+                handled = true;
+
                 const window = this.windowMap.add(client);
                 this.control.onWindowAdded(this, window);
                 if (window.state !== WindowState.Unmanaged)
@@ -262,6 +267,7 @@ class KWinDriver implements IDriverContext {
             };
 
             const wrapper = this.connect(client.windowShown, handler);
+            this.setTimeout(handler, 50);
         });
 
         this.connect(workspace.clientRemoved, (client: KWin.Client) => {
