@@ -30,6 +30,8 @@ class WrapperMap<F, T> {
 
     public add(item: F): T {
         const key = this.hasher(item);
+        if (this.items[key] !== undefined)
+            throw "WrapperMap: the key [" + key + "] already exists!";
         const wrapped = this.wrapper(item);
         this.items[key] = wrapped;
         return wrapped;
