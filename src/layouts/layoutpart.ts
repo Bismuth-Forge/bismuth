@@ -16,14 +16,14 @@ class FillLayoutPart implements ILayoutPart {
     }
 }
 
-class HalfSplitLayoutPart implements ILayoutPart {
+class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implements ILayoutPart {
     public gap: number;
     public primarySize: number;
     public ratio: number;
 
     constructor(
-        public primary: ILayoutPart,
-        public secondary: ILayoutPart,
+        public primary: L,
+        public secondary: R,
     ) {
         this.gap = 0;
         this.primarySize = 1;
@@ -108,9 +108,9 @@ class StackLayoutPart implements ILayoutPart {
     }
 }
 
-class RotateLayoutPart implements ILayoutPart {
+class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
     constructor(
-        public child: ILayoutPart,
+        public child: T,
         public angle: 0 | 90 | 180 | 270 = 0,
     ) {
     }
