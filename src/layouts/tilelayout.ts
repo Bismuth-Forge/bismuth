@@ -29,7 +29,13 @@ class TileLayout implements ILayout {
         return "Tile [" + this.numMaster + "]";
     }
 
-    private parts: RotateLayoutPart<HalfSplitLayoutPart<StackLayoutPart, StackLayoutPart>>;
+    private parts: (
+        RotateLayoutPart<
+        HalfSplitLayoutPart<
+            RotateLayoutPart<StackLayoutPart>,
+            StackLayoutPart
+        >>
+    );
 
     private get numMaster(): number {
         return this.parts.inner.primarySize;
@@ -49,12 +55,14 @@ class TileLayout implements ILayout {
 
     constructor() {
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(
-            new StackLayoutPart(),
+            new RotateLayoutPart(new StackLayoutPart()),
             new StackLayoutPart(),
         ));
 
         const masterPart = this.parts.inner;
-        masterPart.gap = masterPart.primary.gap = masterPart.secondary.gap = CONFIG.tileLayoutGap;
+        masterPart.gap =
+        masterPart.primary.inner.gap =
+        masterPart.secondary.gap = CONFIG.tileLayoutGap;
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
@@ -105,6 +113,9 @@ class TileLayout implements ILayout {
                 break;
             case Shortcut.Rotate:
                 this.parts.rotate(90);
+                break;
+            case Shortcut.RotatePart:
+                this.parts.inner.primary.rotate(90);
                 break;
             default:
                 return false;
