@@ -167,6 +167,7 @@ class KWinDriver implements IDriverContext {
         bind("|", "Previous Layout", Shortcut.PreviousLayout);
 
         bind("R", "Rotate", Shortcut.Rotate);
+        bind("Shift+R", "Rotate Part", Shortcut.RotatePart);
 
         bind("Return", "Set master", Shortcut.SetMaster);
 
