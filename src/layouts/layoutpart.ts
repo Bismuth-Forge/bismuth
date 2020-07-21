@@ -110,7 +110,7 @@ class StackLayoutPart implements ILayoutPart {
 
 class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
     constructor(
-        public child: T,
+        public inner: T,
         public angle: 0 | 90 | 180 | 270 = 0,
     ) {
     }
@@ -128,7 +128,7 @@ class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
                 delta = new RectDelta(delta.north, delta.south, delta.east, delta.west); break;
         }
 
-        this.child.adjust(area, tiles, basis, delta);
+        this.inner.adjust(area, tiles, basis, delta);
     }
 
     public apply(area: Rect, tiles: Window[]): Rect[] {
@@ -139,22 +139,22 @@ class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
             case 270: area = new Rect(area.y, area.x, area.height, area.width); break;
         }
 
-        const childResult = this.child.apply(area, tiles);
+        const innerResult = this.inner.apply(area, tiles);
 
         switch (this.angle) {
             case 0:
-                return childResult;
+                return innerResult;
             case 90:
-                return childResult.map((g) =>
+                return innerResult.map((g) =>
                     new Rect(g.y, g.x, g.height, g.width));
             case 180:
-                return childResult.map((g) => {
+                return innerResult.map((g) => {
                     const rx = g.x - area.x;
                     const newX = area.x + area.width - (rx + g.width);
                     return new Rect(newX, g.y, g.width, g.height)
                 });
             case 270:
-                return childResult.map((g) => {
+                return innerResult.map((g) => {
                     const rx = g.x - area.x;
                     const newY = area.x + area.width - (rx + g.width);
                     return new Rect(g.y, newY, g.height, g.width)

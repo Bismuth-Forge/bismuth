@@ -29,47 +29,43 @@ class TileLayout implements ILayout {
         return "Tile [" + this.numMaster + "]";
     }
 
-    private masterPart: StackLayoutPart;
-    private stackPart: StackLayoutPart;
-    private halfPart: HalfSplitLayoutPart;
-    private rotatePart: RotateLayoutPart;
+    private parts: RotateLayoutPart<HalfSplitLayoutPart<StackLayoutPart, StackLayoutPart>>;
 
     private get numMaster(): number {
-        return this.halfPart.primarySize;
+        return this.parts.inner.primarySize;
     }
     
     private set numMaster(value: number) {
-        this.halfPart.primarySize = value;
+        this.parts.inner.primarySize = value;
     }
 
     private get masterRatio(): number {
-        return this.halfPart.ratio;
+        return this.parts.inner.ratio;
     }
     
     private set masterRatio(value: number) {
-        this.halfPart.ratio = value;
+        this.parts.inner.ratio = value;
     }
 
     constructor() {
-        this.masterPart = new StackLayoutPart();
-        this.stackPart = new StackLayoutPart();
-        this.halfPart = new HalfSplitLayoutPart(this.masterPart, this.stackPart);
-        this.rotatePart = new RotateLayoutPart(this.halfPart);
+        this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(
+            new StackLayoutPart(),
+            new StackLayoutPart(),
+        ));
+
+        const masterPart = this.parts.inner;
+        masterPart.gap = masterPart.primary.gap = masterPart.secondary.gap = CONFIG.tileLayoutGap;
     }
 
     public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
-        this.rotatePart.adjust(area, tiles, basis, delta);
+        this.parts.adjust(area, tiles, basis, delta);
     }
 
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         tileables.forEach((tileable) =>
             tileable.state = WindowState.Tiled);
 
-        this.masterPart.gap = CONFIG.tileLayoutGap;
-        this.stackPart.gap = CONFIG.tileLayoutGap;
-        this.halfPart.gap = CONFIG.tileLayoutGap;
-
-        this.rotatePart.apply(area, tileables)
+        this.parts.apply(area, tileables)
             .forEach((geometry, i) => {
                 tileables[i].geometry = geometry;
             });
@@ -108,7 +104,7 @@ class TileLayout implements ILayout {
                 ctx.showNotification(this.description);
                 break;
             case Shortcut.Rotate:
-                this.rotatePart.rotate(90);
+                this.parts.rotate(90);
                 break;
             default:
                 return false;
