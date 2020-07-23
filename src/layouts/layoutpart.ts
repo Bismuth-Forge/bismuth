@@ -17,14 +17,34 @@ class FillLayoutPart implements ILayoutPart {
 }
 
 class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implements ILayoutPart {
+    /** the rotation angle for this part.
+     *
+     *    | angle | direction  | primary |
+     *    | ----- | ---------- | ------- |
+     *    |     0 | horizontal | left    |
+     *    |    90 | vertical   | top     |
+     *    |   180 | horizontal | right   |
+     *    |   270 | vertical   | bottom  |
+     */
+    public angle: 0 | 90 | 180 | 270;
+
     public gap: number;
     public primarySize: number;
     public ratio: number;
+
+    private get horizontal(): boolean {
+        return this.angle === 0 || this.angle === 180;
+    }
+
+    private get reversed(): boolean {
+        return this.angle === 180 || this.angle === 270;
+    }
 
     constructor(
         public primary: L,
         public secondary: R,
     ) {
+        this.angle = 0;
         this.gap = 0;
         this.primarySize = 1;
         this.ratio = 0.5;
@@ -49,12 +69,14 @@ class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implemen
 
             this.ratio = LayoutUtils.adjustAreaHalfWeights(
                 area,
-                this.ratio,
+                (this.reversed) ? 1 - this.ratio: this.ratio,
                 this.gap,
                 targetIndex,
                 delta,
-                true,
+                this.horizontal,
             );
+            if (this.reversed)
+                this.ratio = 1 - this.ratio;
 
             if (targetIndex === /* primary */ 0) {
                this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta);
@@ -73,7 +95,8 @@ class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implemen
             return this.secondary.apply(area, tiles);
         } else {
             /* both parts */
-            const [primaryArea, secondaryArea] = LayoutUtils.splitAreaHalfWeighted(area, this.ratio, this.gap, true);
+            const ratio = (this.reversed) ? 1 - this.ratio: this.ratio;
+            const [primaryArea, secondaryArea] = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal);
             const primaryResult = this.primary.apply(primaryArea, tiles.slice(0, this.primarySize));
             const secondaryResult = this.secondary.apply(secondaryArea, tiles.slice(this.primarySize));
             return primaryResult.concat(secondaryResult);
