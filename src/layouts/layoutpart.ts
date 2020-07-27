@@ -118,11 +118,12 @@ class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implemen
             return this.secondary.apply(area, tiles);
         } else {
             /* both parts */
-            const ratio = (this.reversed) ? 1 - this.ratio: this.ratio;
-            const [primaryArea, secondaryArea] = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal);
-            const primaryResult = this.primary.apply(primaryArea, tiles.slice(0, this.primarySize));
-            const secondaryResult = this.secondary.apply(secondaryArea, tiles.slice(this.primarySize));
-            return primaryResult.concat(secondaryResult);
+            const reversed = this.reversed;
+            const ratio = (reversed) ? 1 - this.ratio: this.ratio;
+            const [area1, area2] = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal);
+            const result1 = this.primary.apply((reversed) ? area2 : area1, tiles.slice(0, this.primarySize));
+            const result2 = this.secondary.apply((reversed) ? area1 : area2, tiles.slice(this.primarySize));
+            return result1.concat(result2);
         }
     }
 }
