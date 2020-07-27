@@ -34,7 +34,9 @@ class SpiralLayout implements ILayout {
         this.parts.gap = CONFIG.tileLayoutGap;
     }
 
-    //adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
+    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
+        this.parts.adjust(area, tiles, basis, delta);
+    }
  
     public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
         tileables.forEach((tileable) =>
