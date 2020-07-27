@@ -96,15 +96,29 @@ class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart> implemen
 
             this.ratio = LayoutUtils.adjustAreaHalfWeights(
                 area,
-                (this.reversed) ? 1 - this.ratio: this.ratio,
+                (this.reversed) ? 1 - this.ratio : this.ratio,
                 this.gap,
-                targetIndex,
+                (this.reversed) ? 1 - targetIndex : targetIndex,
                 delta,
                 this.horizontal,
             );
             if (this.reversed)
                 this.ratio = 1 - this.ratio;
 
+            switch((this.angle * 10) + targetIndex + 1) {
+                case    1: /*   0, Primary */
+                case 1802: /* 180, Secondary */
+                    return new RectDelta(0, delta.west, delta.south, delta.north);
+                case    2:
+                case 1801:
+                    return new RectDelta(delta.east, 0, delta.south, delta.north);
+                case  901:
+                case 2702:
+                    return new RectDelta(delta.east, delta.west, 0, delta.north);
+                case  902:
+                case 2701:
+                    return new RectDelta(delta.east, delta.west, delta.south, 0);
+            }
             return delta;
         }
     }
