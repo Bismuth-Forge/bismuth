@@ -26,6 +26,11 @@
         <default>true</default>
     </entry>
 
+    <entry name="enableSpiralLayout" type="Bool">
+        <label>Enable/disable Spiral layout</label>
+        <default>true</default>
+    </entry>
+
     <entry name="enableSpreadLayout" type="Bool">
 	    <label>Enable/disable Spread layout</label>
         <default>true</default>

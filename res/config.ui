@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>450</height>
+    <height>547</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -131,6 +131,13 @@
             </property>
             <property name="text">
              <string>Three Column Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="kcfg_enableSpiralLayout">
+            <property name="text">
+             <string>Spiral Layout</string>
             </property>
            </widget>
           </item>
