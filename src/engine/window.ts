@@ -149,7 +149,7 @@ class Window {
         this.timestamp = 0;
 
         this.internalState = WindowState.Unmanaged;
-        this.shouldCommitFloat = false;
+        this.shouldCommitFloat = this.shouldFloat;
         this.weightMap = {};
     }
 
