@@ -102,7 +102,7 @@ A configuration button will appear in `KWin Scripts` in `System Settings`.
 
 ![config button shown](img/conf.png)
 
-To make changes effective, **the script must be reactivate**:
+To make changes effective, **the script must be reactivated**:
   1) On `KWin Scripts` dialog, untick Krohnkite
   2) `Apply`
   3) tick Krohnkite
