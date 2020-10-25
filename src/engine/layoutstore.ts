@@ -69,7 +69,6 @@ class LayoutStoreEntry {
     }
 
     private loadLayout(ID: string): ILayout {
-        console.log('loadLayout', ID, Object.keys(this.layouts))
         let layout = this.layouts[ID];
         if (!layout)
             layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
