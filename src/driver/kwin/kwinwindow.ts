@@ -36,11 +36,13 @@ class KWinWindow implements IDriverWindow {
 
     public get shouldIgnore(): boolean {
         const resourceClass = String(this.client.resourceClass);
+        const resourceName = String(this.client.resourceName);
         const windowRole = String(this.client.windowRole);
         return (
             this.client.specialWindow
             || resourceClass === "plasmashell"
             || (KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0)
+            || (KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0)
             || (matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0)
             || (KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0)
         );
@@ -48,12 +50,14 @@ class KWinWindow implements IDriverWindow {
 
     public get shouldFloat(): boolean {
         const resourceClass = String(this.client.resourceClass);
+        const resourceName = String(this.client.resourceName);
         return (
             this.client.modal
             || (!this.client.resizeable)
             || (KWINCONFIG.floatUtility
                 && (this.client.dialog || this.client.splash || this.client.utility))
             || (KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0)
+            || (KWINCONFIG.floatingClass.indexOf(resourceName) >= 0)
             || (matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0)
         );
     }
