@@ -185,7 +185,10 @@ convinient if title bars are removed.
         kwriteconfig5 --file ~/.config/kdeglobals --group WM --key inactiveFrame  239,240,241
 4. You must **restart** your session to see changes. (i.e. re-login, reboot)
 
-(Note: the RGB values presented here are for the default Breeze theme)
+Note: the RGB values presented here are for the default Breeze theme
+
+Note: You might also need to set the border size larger than the theme's default:
+`System Settings` > `Application Style` > `Window Decorations`: Untick `Use theme's default window border size` and adjust the size (right from the checkbox).
 
 
 Useful Development Resources
