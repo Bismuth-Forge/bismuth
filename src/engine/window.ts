@@ -158,7 +158,7 @@ class Window {
         debugObj(() => ["Window#commit", {state: WindowState[state]}]);
         switch (state) {
             case WindowState.NativeMaximized:
-                this.window.commit(undefined, undefined, undefined);
+                this.window.commit(undefined, undefined, false);
                 break;
 
             case WindowState.NativeFullscreen:
