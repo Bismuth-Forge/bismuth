@@ -190,6 +190,19 @@ Note: the RGB values presented here are for the default Breeze theme
 Note: You might also need to set the border size larger than the theme's default:
 `System Settings` > `Application Style` > `Window Decorations`: Untick `Use theme's default window border size` and adjust the size (right from the checkbox).
 
+### Setting Minimum Geometry Size ###
+
+Some applications like discord and KDE settings dont tile nicely as they have a minimum size requirement.
+This causes the applications to overlap with other applications. To mitigate this we can set minimum size for all windows to be 0.
+
+1. `System Setting` > `Window Management` > `Window Rules`
+2. Click on `+ Add New...`
+3. Set `Window class` to be `Unimportant`
+4. Set `Window types` to `Normal Window`
+5. Click `+ Add Properties...`
+6. Add the `Minimum Size` Property
+7. Set the fields to `Force` and `0` x `0`
+8. Apply
 
 Useful Development Resources
 ----------------------------
