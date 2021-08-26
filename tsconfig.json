@@ -1,12 +1,17 @@
 {
-    "compileOnSave": true,
-    "compilerOptions": {
-        "target": "es5",
-        "outFile": "krohnkite.js",
-        "noEmitOnError": false,
-        "removeComments": true,
-        "lib": ["es5"],
-        "alwaysStrict": true,
-        "strict": true
-    }
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "noEmitOnError": false,
+    "removeComments": true,
+    "lib": [
+      "es5"
+    ],
+    "alwaysStrict": true,
+    "strict": true
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ]
 }

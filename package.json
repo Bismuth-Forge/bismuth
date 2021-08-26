@@ -1,16 +1,31 @@
 {
   "name": "krohnkite",
-  "version": "$VER",
+  "version": "0.8.0",
   "description": "A dynamic tiling extension for KWin",
   "main": "krohnkite.js",
   "directories": {
+    "build": "build",
     "test": "test"
+  },
+  "config": {
+    "node_script": "krohnkite.js",
+    "build_dir": "build"
   },
   "dependencies": {},
   "devDependencies": {
     "mocha": "^6.0.0"
   },
   "scripts": {
+    "clean": "bin/clean.sh",
+    "build": "bin/build.sh",
+    "prestart": "npm run build",
+    "start": "bin/start.sh",
+    "stop": "bin/stop.sh",
+    "prepackage": "npm run build",
+    "package": "bin/package.sh",
+    "preinstall": "npm run package",
+    "install": "bin/install.sh",
+    "uninstall": "bin/uninstall.sh",
     "test": "mocha 'test/*.spec.js'"
   },
   "repository": {
