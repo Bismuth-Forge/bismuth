@@ -1,11 +1,11 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2016",
     "noEmitOnError": false,
     "removeComments": true,
     "lib": [
-      "es5"
+      "es2016"
     ],
     "alwaysStrict": true,
     "strict": true
