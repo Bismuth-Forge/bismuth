@@ -8,7 +8,7 @@ mkdir -p $npm_package_config_build_dir/contents/ui
 
 # Compile source into the single script used by KWin
 echo "Compiling typescript..."
-tsc --outFile $npm_package_config_build_dir/contents/code/script.js
+npx tsc --outFile $npm_package_config_build_dir/contents/code/script.js
 
 # Copy resources to the build directory with correct paths
 cp -v res/config.ui $npm_package_config_build_dir/contents/ui/config.ui
