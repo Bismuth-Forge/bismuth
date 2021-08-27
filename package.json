@@ -12,6 +12,10 @@
     "build_dir": "build"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
     "mocha": "^6.0.0",
     "prettier": "2.3.2",
     "typedoc": "^0.21.6",
@@ -40,5 +44,47 @@
   "bugs": {
     "url": "https://github.com/esjeon/krohnkite/issues"
   },
-  "homepage": "https://github.com/esjeon/krohnkite#readme"
+  "homepage": "https://github.com/esjeon/krohnkite#readme",
+  "eslintConfig": {
+    "root": true,
+    "ignorePatterns": [
+      "/build"
+    ],
+    "env": {
+      "es6": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "tsconfig.json",
+      "sourceType": "module"
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "eslint-plugin-jsdoc",
+      "eslint-plugin-prefer-arrow"
+    ],
+    "rules": {
+      "curly": "error",
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": [
+            "variable"
+          ],
+          "leadingUnderscore": "allow"
+        }
+      ],
+      "@typescript-eslint/prefer-for-of": "off",
+      "one-var": "error",
+      "max-classes-per-file": "off",
+      "no-cond-assign": "error"
+    }
+  }
 }
