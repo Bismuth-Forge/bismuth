@@ -15,6 +15,9 @@ stop:
 test:
 	npm test
 
+docs:
+	npm run docs
+
 package:
 	npm run package
 

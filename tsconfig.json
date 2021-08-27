@@ -10,6 +10,11 @@
     "alwaysStrict": true,
     "strict": true
   },
+  "typedocOptions": {
+    "entryPoints": [
+      "src"
+    ]
+  },
   "include": [
     "src/**/*",
     "test/**/*"
