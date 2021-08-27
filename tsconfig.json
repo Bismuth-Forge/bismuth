@@ -4,19 +4,12 @@
     "target": "es2016",
     "noEmitOnError": false,
     "removeComments": true,
-    "lib": [
-      "es2016"
-    ],
+    "lib": ["es2016"],
     "alwaysStrict": true,
     "strict": true
   },
   "typedocOptions": {
-    "entryPoints": [
-      "src"
-    ]
+    "entryPoints": ["src"]
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ]
+  "include": ["src/**/*", "test/**/*"]
 }

@@ -18,25 +18,25 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-let assert = require('assert');
-let K = require('../krohnkite');
+let assert = require("assert");
+let K = require("../krohnkite");
 
-describe('TileLayout', function() {
-  describe('#apply', function() {
+describe("TileLayout", function () {
+  describe("#apply", function () {
     let layout = new K.TileLayout();
     let area = new K.Rect(0, 0, 1000, 1000);
     let srf = new K.TestContext(0);
     let gap;
 
-    K.setTestConfig('tileLayoutGap', gap = 0);
+    K.setTestConfig("tileLayoutGap", (gap = 0));
 
-    it('tiles sole master to full screen', function() {
+    it("tiles sole master to full screen", function () {
       let win = new K.Window(new K.TestWindow(srf));
       layout.apply([win], area);
       assert(win.geometry.equals(area));
     });
 
-    it('corretly applies master ratio', function() {
+    it("corretly applies master ratio", function () {
       let master = new K.Window(new K.TestWindow(srf));
       let stack = new K.Window(new K.TestWindow(srf));
 
@@ -48,7 +48,7 @@ describe('TileLayout', function() {
       assert.equal(stack.geometry.width, area.width - masterWidth);
     });
 
-    it('supports non-origin screen', function() {
+    it("supports non-origin screen", function () {
       const base = 30;
       const size = 1000;
       const area = new K.Rect(base, base, size, size);
@@ -61,7 +61,7 @@ describe('TileLayout', function() {
         for (let j = 0; j <= i; j++) {
           assert(tiles[i].geometry.x >= base);
           assert(tiles[i].geometry.y >= base);
-          assert(tiles[i].geometry.x + tiles[i].geometry.width  <= base + size);
+          assert(tiles[i].geometry.x + tiles[i].geometry.width <= base + size);
           assert(tiles[i].geometry.y + tiles[i].geometry.height <= base + size);
         }
       }

@@ -19,111 +19,114 @@
 // DEALINGS IN THE SOFTWARE.
 
 class TileLayout implements ILayout {
-    public static readonly MIN_MASTER_RATIO = 0.2;
-    public static readonly MAX_MASTER_RATIO = 0.8;
-    public static readonly id = "TileLayout";
+  public static readonly MIN_MASTER_RATIO = 0.2;
+  public static readonly MAX_MASTER_RATIO = 0.8;
+  public static readonly id = "TileLayout";
 
-    public readonly classID = TileLayout.id;
+  public readonly classID = TileLayout.id;
 
-    public get description(): string {
-        return "Tile [" + this.numMaster + "]";
-    }
+  public get description(): string {
+    return "Tile [" + this.numMaster + "]";
+  }
 
-    private parts: (
-        RotateLayoutPart<
-        HalfSplitLayoutPart<
-            RotateLayoutPart<StackLayoutPart>,
-            StackLayoutPart
-        >>
+  private parts: RotateLayoutPart<
+    HalfSplitLayoutPart<RotateLayoutPart<StackLayoutPart>, StackLayoutPart>
+  >;
+
+  private get numMaster(): number {
+    return this.parts.inner.primarySize;
+  }
+
+  private set numMaster(value: number) {
+    this.parts.inner.primarySize = value;
+  }
+
+  private get masterRatio(): number {
+    return this.parts.inner.ratio;
+  }
+
+  private set masterRatio(value: number) {
+    this.parts.inner.ratio = value;
+  }
+
+  constructor() {
+    this.parts = new RotateLayoutPart(
+      new HalfSplitLayoutPart(
+        new RotateLayoutPart(new StackLayoutPart()),
+        new StackLayoutPart()
+      )
     );
 
-    private get numMaster(): number {
-        return this.parts.inner.primarySize;
-    }
-    
-    private set numMaster(value: number) {
-        this.parts.inner.primarySize = value;
-    }
+    const masterPart = this.parts.inner;
+    masterPart.gap =
+      masterPart.primary.inner.gap =
+      masterPart.secondary.gap =
+        CONFIG.tileLayoutGap;
+  }
 
-    private get masterRatio(): number {
-        return this.parts.inner.ratio;
-    }
-    
-    private set masterRatio(value: number) {
-        this.parts.inner.ratio = value;
-    }
+  public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
+    this.parts.adjust(area, tiles, basis, delta);
+  }
 
-    constructor() {
-        this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(
-            new RotateLayoutPart(new StackLayoutPart()),
-            new StackLayoutPart(),
-        ));
+  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+    tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
 
-        const masterPart = this.parts.inner;
-        masterPart.gap =
-        masterPart.primary.inner.gap =
-        masterPart.secondary.gap = CONFIG.tileLayoutGap;
+    this.parts.apply(area, tileables).forEach((geometry, i) => {
+      tileables[i].geometry = geometry;
+    });
+  }
+
+  public clone(): ILayout {
+    const other = new TileLayout();
+    other.masterRatio = this.masterRatio;
+    other.numMaster = this.numMaster;
+    return other;
+  }
+
+  public handleShortcut(ctx: EngineContext, input: Shortcut) {
+    switch (input) {
+      case Shortcut.Left:
+        this.masterRatio = clip(
+          slide(this.masterRatio, -0.05),
+          TileLayout.MIN_MASTER_RATIO,
+          TileLayout.MAX_MASTER_RATIO
+        );
+        break;
+      case Shortcut.Right:
+        this.masterRatio = clip(
+          slide(this.masterRatio, +0.05),
+          TileLayout.MIN_MASTER_RATIO,
+          TileLayout.MAX_MASTER_RATIO
+        );
+        break;
+      case Shortcut.Increase:
+        // TODO: define arbitrary constant
+        if (this.numMaster < 10) this.numMaster += 1;
+        ctx.showNotification(this.description);
+        break;
+      case Shortcut.Decrease:
+        if (this.numMaster > 0) this.numMaster -= 1;
+        ctx.showNotification(this.description);
+        break;
+      case Shortcut.Rotate:
+        this.parts.rotate(90);
+        break;
+      case Shortcut.RotatePart:
+        this.parts.inner.primary.rotate(90);
+        break;
+      default:
+        return false;
     }
+    return true;
+  }
 
-    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
-        this.parts.adjust(area, tiles, basis, delta);
-    }
-
-    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
-        tileables.forEach((tileable) =>
-            tileable.state = WindowState.Tiled);
-
-        this.parts.apply(area, tileables)
-            .forEach((geometry, i) => {
-                tileables[i].geometry = geometry;
-            });
-    }
-
-    public clone(): ILayout {
-        const other = new TileLayout();
-        other.masterRatio = this.masterRatio;
-        other.numMaster = this.numMaster;
-        return other;
-    }
-
-    public handleShortcut(ctx: EngineContext, input: Shortcut) {
-        switch (input) {
-            case Shortcut.Left:
-                this.masterRatio = clip(
-                    slide(this.masterRatio, -0.05),
-                    TileLayout.MIN_MASTER_RATIO,
-                    TileLayout.MAX_MASTER_RATIO);
-                break;
-            case Shortcut.Right:
-                this.masterRatio = clip(
-                    slide(this.masterRatio, +0.05),
-                    TileLayout.MIN_MASTER_RATIO,
-                    TileLayout.MAX_MASTER_RATIO);
-                break;
-            case Shortcut.Increase:
-                // TODO: define arbitrary constant
-                if (this.numMaster < 10)
-                    this.numMaster += 1;
-                ctx.showNotification(this.description);
-                break;
-            case Shortcut.Decrease:
-                if (this.numMaster > 0)
-                    this.numMaster -= 1;
-                ctx.showNotification(this.description);
-                break;
-            case Shortcut.Rotate:
-                this.parts.rotate(90);
-                break;
-            case Shortcut.RotatePart:
-                this.parts.inner.primary.rotate(90);
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
-
-    public toString(): string {
-        return "TileLayout(nmaster=" + this.numMaster + ", ratio=" + this.masterRatio + ")";
-    }
+  public toString(): string {
+    return (
+      "TileLayout(nmaster=" +
+      this.numMaster +
+      ", ratio=" +
+      this.masterRatio +
+      ")"
+    );
+  }
 }

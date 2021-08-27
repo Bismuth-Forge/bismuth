@@ -19,49 +19,55 @@
 // DEALINGS IN THE SOFTWARE.
 
 class KWinSurface implements ISurface {
-    public static generateId(screen: number, activity: string, desktop: number) {
-        let path = String(screen);
-        if (KWINCONFIG.layoutPerActivity)
-            path += "@" + activity;
-        if (KWINCONFIG.layoutPerDesktop)
-            path += "#" + desktop;
-        return path;
-    }
+  public static generateId(screen: number, activity: string, desktop: number) {
+    let path = String(screen);
+    if (KWINCONFIG.layoutPerActivity) path += "@" + activity;
+    if (KWINCONFIG.layoutPerDesktop) path += "#" + desktop;
+    return path;
+  }
 
-    public readonly id: string;
-    public readonly ignore: boolean;
-    public readonly workingArea: Rect;
+  public readonly id: string;
+  public readonly ignore: boolean;
+  public readonly workingArea: Rect;
 
-    public readonly screen: number;
-    public readonly activity: string;
-    public readonly desktop: number;
+  public readonly screen: number;
+  public readonly activity: string;
+  public readonly desktop: number;
 
-    constructor(screen: number, activity: string, desktop: number) {
-        const activityName = activityInfo.activityName(activity);
+  constructor(screen: number, activity: string, desktop: number) {
+    const activityName = activityInfo.activityName(activity);
 
-        this.id = KWinSurface.generateId(screen, activity, desktop);
-        this.ignore = (
-            (KWINCONFIG.ignoreActivity.indexOf(activityName) >= 0)
-            || (KWINCONFIG.ignoreScreen.indexOf(screen) >= 0)
-        );
-        this.workingArea = toRect(
-            workspace.clientArea(KWin.PlacementArea, screen, desktop));
+    this.id = KWinSurface.generateId(screen, activity, desktop);
+    this.ignore =
+      KWINCONFIG.ignoreActivity.indexOf(activityName) >= 0 ||
+      KWINCONFIG.ignoreScreen.indexOf(screen) >= 0;
+    this.workingArea = toRect(
+      workspace.clientArea(KWin.PlacementArea, screen, desktop)
+    );
 
-        this.screen = screen;
-        this.activity = activity;
-        this.desktop = desktop;
-    }
+    this.screen = screen;
+    this.activity = activity;
+    this.desktop = desktop;
+  }
 
-    public next(): ISurface | null {
-        if (this.desktop === workspace.desktops)
-            /* this is the last virtual desktop */
-            /* TODO: option to create additional desktop */
-            return null;
+  public next(): ISurface | null {
+    if (this.desktop === workspace.desktops)
+      /* this is the last virtual desktop */
+      /* TODO: option to create additional desktop */
+      return null;
 
-        return new KWinSurface(this.screen, this.activity, this.desktop + 1);
-    }
+    return new KWinSurface(this.screen, this.activity, this.desktop + 1);
+  }
 
-    public toString(): string {
-        return "KWinSurface(" + [this.screen, activityInfo.activityName(this.activity), this.desktop].join(", ") + ")";
-    }
+  public toString(): string {
+    return (
+      "KWinSurface(" +
+      [
+        this.screen,
+        activityInfo.activityName(this.activity),
+        this.desktop,
+      ].join(", ") +
+      ")"
+    );
+  }
 }

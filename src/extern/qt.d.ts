@@ -18,49 +18,48 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-
 interface QByteArray {
-    /* keep it empty for now */
+  /* keep it empty for now */
 }
 
 interface QRect {
-    height: number;
-    width: number;
-    x: number;
-    y: number;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
 }
 
 interface QPoint {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 }
 
 interface QSize {
-    width: number;
-    height: number;
+  width: number;
+  height: number;
 }
 
 interface QSignal {
-    connect(callback: any): void;
-    disconnect(callback: any): void;
+  connect(callback: any): void;
+  disconnect(callback: any): void;
 }
 
 /* Reference: http://doc.qt.io/qt-5/qml-qtqml-timer.html */
 interface QQmlTimer {
-    interval: number;
-    repeat: boolean;
-    running: boolean;
-    triggeredOnStart: boolean;
+  interval: number;
+  repeat: boolean;
+  running: boolean;
+  triggeredOnStart: boolean;
 
-    triggered: QSignal;
+  triggered: QSignal;
 
-    restart(): void;
-    start(): void;
-    stop(): void;
+  restart(): void;
+  start(): void;
+  stop(): void;
 }
 
 declare namespace Qt {
-    function createQmlObject(qml: string, parent: object, filepath?: string): any;
+  function createQmlObject(qml: string, parent: object, filepath?: string): any;
 
-    function rect(x: number, y: number, width: number, height: number): QRect;
+  function rect(x: number, y: number, width: number, height: number): QRect;
 }

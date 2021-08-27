@@ -19,60 +19,67 @@
 // DEALINGS IN THE SOFTWARE.
 
 class MonocleLayout implements ILayout {
-    public static readonly id = "MonocleLayout";
-    public readonly description: string = "Monocle";
+  public static readonly id = "MonocleLayout";
+  public readonly description: string = "Monocle";
 
-    public readonly classID = MonocleLayout.id;
+  public readonly classID = MonocleLayout.id;
 
-    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
-        /* Tile all tileables */
-        tileables.forEach((tile) => {
-            tile.state = (CONFIG.monocleMaximize)
-                ? WindowState.Maximized
-                : WindowState.Tiled;
-            tile.geometry = area;
-        });
+  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+    /* Tile all tileables */
+    tileables.forEach((tile) => {
+      tile.state = CONFIG.monocleMaximize
+        ? WindowState.Maximized
+        : WindowState.Tiled;
+      tile.geometry = area;
+    });
 
-        /* KWin-specific `monocleMinimizeRest` option */
-        if (ctx.backend === KWinDriver.backendName && KWINCONFIG.monocleMinimizeRest) {
-            const tiles = [...tileables];
-            ctx.setTimeout(() => {
-                const current = ctx.currentWindow;
-                if (current && current.tiled) {
-                    tiles.forEach((window) => {
-                        if (window !== current)
-                            (window.window as KWinWindow).client.minimized = true;
-                    });
-                }
-            }, 50);
+    /* KWin-specific `monocleMinimizeRest` option */
+    if (
+      ctx.backend === KWinDriver.backendName &&
+      KWINCONFIG.monocleMinimizeRest
+    ) {
+      const tiles = [...tileables];
+      ctx.setTimeout(() => {
+        const current = ctx.currentWindow;
+        if (current && current.tiled) {
+          tiles.forEach((window) => {
+            if (window !== current)
+              (window.window as KWinWindow).client.minimized = true;
+          });
         }
+      }, 50);
     }
+  }
 
-    public clone(): this {
-        /* fake clone */
-        return this;
-    }
+  public clone(): this {
+    /* fake clone */
+    return this;
+  }
 
-    public handleShortcut(ctx: EngineContext, input: Shortcut, data?: any): boolean {
-        switch (input) {
-            case Shortcut.Up:
-            case Shortcut.FocusUp:
-            case Shortcut.Left:
-            case Shortcut.FocusLeft:
-                ctx.cycleFocus(-1);
-                return true;
-            case Shortcut.Down:
-            case Shortcut.FocusDown:
-            case Shortcut.Right:
-            case Shortcut.FocusRight:
-                ctx.cycleFocus(1);
-                return true;
-            default:
-                return false;
-        }
+  public handleShortcut(
+    ctx: EngineContext,
+    input: Shortcut,
+    data?: any
+  ): boolean {
+    switch (input) {
+      case Shortcut.Up:
+      case Shortcut.FocusUp:
+      case Shortcut.Left:
+      case Shortcut.FocusLeft:
+        ctx.cycleFocus(-1);
+        return true;
+      case Shortcut.Down:
+      case Shortcut.FocusDown:
+      case Shortcut.Right:
+      case Shortcut.FocusRight:
+        ctx.cycleFocus(1);
+        return true;
+      default:
+        return false;
     }
+  }
 
-    public toString(): string {
-        return "MonocleLayout()";
-    }
+  public toString(): string {
+    return "MonocleLayout()";
+  }
 }

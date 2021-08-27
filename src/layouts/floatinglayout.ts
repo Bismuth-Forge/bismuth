@@ -19,23 +19,24 @@
 // DEALINGS IN THE SOFTWARE.
 
 class FloatingLayout implements ILayout {
-    public static readonly id = "FloatingLayout ";
-    public static instance = new FloatingLayout();
+  public static readonly id = "FloatingLayout ";
+  public static instance = new FloatingLayout();
 
-    public readonly classID = FloatingLayout.id;
-    public readonly description: string = "Floating";
+  public readonly classID = FloatingLayout.id;
+  public readonly description: string = "Floating";
 
-    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
-        tileables.forEach((tileable: Window) =>
-            tileable.state = WindowState.TiledAfloat);
-    }
+  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+    tileables.forEach(
+      (tileable: Window) => (tileable.state = WindowState.TiledAfloat)
+    );
+  }
 
-    public clone(): this {
-        /* fake clone */
-        return this;
-    }
+  public clone(): this {
+    /* fake clone */
+    return this;
+  }
 
-    public toString(): string {
-        return "FloatingLayout()";
-    }
+  public toString(): string {
+    return "FloatingLayout()";
+  }
 }

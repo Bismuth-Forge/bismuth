@@ -18,70 +18,85 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-
-type SpiralLayoutPart = HalfSplitLayoutPart<FillLayoutPart, SpiralLayoutPart | FillLayoutPart>;
+type SpiralLayoutPart = HalfSplitLayoutPart<
+  FillLayoutPart,
+  SpiralLayoutPart | FillLayoutPart
+>;
 
 class SpiralLayout implements ILayout {
-    public readonly description = "Spiral";
+  public readonly description = "Spiral";
 
-    private depth: number;
-    private parts: SpiralLayoutPart;
+  private depth: number;
+  private parts: SpiralLayoutPart;
 
-    constructor() {
-        this.depth = 1;
-        this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
-        this.parts.angle = 0;
-        this.parts.gap = CONFIG.tileLayoutGap;
+  constructor() {
+    this.depth = 1;
+    this.parts = new HalfSplitLayoutPart(
+      new FillLayoutPart(),
+      new FillLayoutPart()
+    );
+    this.parts.angle = 0;
+    this.parts.gap = CONFIG.tileLayoutGap;
+  }
+
+  public adjust(
+    area: Rect,
+    tiles: Window[],
+    basis: Window,
+    delta: RectDelta
+  ): void {
+    this.parts.adjust(area, tiles, basis, delta);
+  }
+
+  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+    tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+
+    this.bore(tileables.length);
+
+    this.parts.apply(area, tileables).forEach((geometry, i) => {
+      tileables[i].geometry = geometry;
+    });
+  }
+
+  //handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
+
+  public toString(): string {
+    return "Spiral()";
+  }
+
+  private bore(depth: number): void {
+    if (this.depth >= depth) return;
+
+    let hpart = this.parts;
+    let i;
+    for (i = 0; i < this.depth - 1; i++) {
+      hpart = hpart.secondary as SpiralLayoutPart;
     }
 
-    public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void {
-        this.parts.adjust(area, tiles, basis, delta);
+    const lastFillPart = hpart.secondary as FillLayoutPart;
+    let npart: SpiralLayoutPart;
+    while (i < depth - 1) {
+      npart = new HalfSplitLayoutPart(new FillLayoutPart(), lastFillPart);
+      npart.gap = CONFIG.tileLayoutGap;
+      switch ((i + 1) % 4) {
+        case 0:
+          npart.angle = 0;
+          break;
+        case 1:
+          npart.angle = 90;
+          break;
+        case 2:
+          npart.angle = 180;
+          break;
+        case 3:
+          npart.angle = 270;
+          break;
+      }
+
+      hpart.secondary = npart;
+      hpart = npart;
+      i++;
     }
- 
-    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
-        tileables.forEach((tileable) =>
-            tileable.state = WindowState.Tiled);
- 
-        this.bore(tileables.length);
-
-        this.parts.apply(area, tileables)
-            .forEach((geometry, i) => {
-                tileables[i].geometry = geometry;
-            });
-    }
-
-    //handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
-
-    public toString(): string {
-        return "Spiral()";
-    }
-
-    private bore(depth: number): void {
-        if (this.depth >= depth)
-            return;
-
-        let hpart = this.parts;
-        let i;
-        for(i = 0; i < this.depth - 1; i ++) {
-            hpart = hpart.secondary as SpiralLayoutPart;
-        }
- 
-        const lastFillPart = hpart.secondary as FillLayoutPart;
-        let npart: SpiralLayoutPart;
-        while (i < depth - 1) {
-            npart = new HalfSplitLayoutPart(new FillLayoutPart(), lastFillPart);
-            npart.gap = CONFIG.tileLayoutGap;
-            switch((i + 1) % 4) {
-                case 0: npart.angle = 0; break;
-                case 1: npart.angle = 90; break;
-                case 2: npart.angle = 180; break;
-                case 3: npart.angle = 270; break;
-            }
- 
-            hpart.secondary = npart;
-            hpart = npart;
-            i ++;
-        }
-        this.depth = depth;
-    }
+    this.depth = depth;
+  }
 }

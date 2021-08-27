@@ -19,69 +19,66 @@
 // DEALINGS IN THE SOFTWARE.
 
 class KWinMousePoller {
-    public static readonly COMMAND = "xdotool getmouselocation";
-    public static readonly INTERVAL = 50; /* ms */
+  public static readonly COMMAND = "xdotool getmouselocation";
+  public static readonly INTERVAL = 50; /* ms */
 
-    public get started(): boolean {
-        return this.startCount > 0;
-    }
+  public get started(): boolean {
+    return this.startCount > 0;
+  }
 
-    public get mousePosition(): [number, number] | null {
-        return this.parseResult();
-    }
+  public get mousePosition(): [number, number] | null {
+    return this.parseResult();
+  }
 
-    /** poller activates only when count > 0 */
-    private startCount: number;
-    private cmdResult: string | null;
+  /** poller activates only when count > 0 */
+  private startCount: number;
+  private cmdResult: string | null;
 
-    constructor() {
-        this.startCount = 0;
-        this.cmdResult = null;
+  constructor() {
+    this.startCount = 0;
+    this.cmdResult = null;
 
-        /* we will poll manually, because this interval value will be
-         * aligned to intervalAlignment, which probably is 1000. */
-        mousePoller.interval = 0;
+    /* we will poll manually, because this interval value will be
+     * aligned to intervalAlignment, which probably is 1000. */
+    mousePoller.interval = 0;
 
-        mousePoller.onNewData.connect((sourceName: string, data: any) => {
-            // tslint:disable-next-line:no-string-literal
-            this.cmdResult = (data["exit code"] === 0) ? data["stdout"] : null;
-            mousePoller.disconnectSource(KWinMousePoller.COMMAND);
+    mousePoller.onNewData.connect((sourceName: string, data: any) => {
+      // tslint:disable-next-line:no-string-literal
+      this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
+      mousePoller.disconnectSource(KWinMousePoller.COMMAND);
 
-            KWinSetTimeout(() => {
-                if (this.started)
-                    mousePoller.connectSource(KWinMousePoller.COMMAND);
-            }, KWinMousePoller.INTERVAL);
-        });
-    }
+      KWinSetTimeout(() => {
+        if (this.started) mousePoller.connectSource(KWinMousePoller.COMMAND);
+      }, KWinMousePoller.INTERVAL);
+    });
+  }
 
-    public start() {
-        this.startCount += 1;
-        if (KWINCONFIG.pollMouseXdotool)
-            mousePoller.connectSource(KWinMousePoller.COMMAND);
-    }
+  public start() {
+    this.startCount += 1;
+    if (KWINCONFIG.pollMouseXdotool)
+      mousePoller.connectSource(KWinMousePoller.COMMAND);
+  }
 
-    public stop() {
-        this.startCount = Math.max(this.startCount - 1, 0);
-    }
+  public stop() {
+    this.startCount = Math.max(this.startCount - 1, 0);
+  }
 
-    private parseResult(): [number, number] | null {
-        // output example: x:1031 y:515 screen:0 window:90177537
-        if (!this.cmdResult)
-            return null;
+  private parseResult(): [number, number] | null {
+    // output example: x:1031 y:515 screen:0 window:90177537
+    if (!this.cmdResult) return null;
 
-        let x: number | null = null;
-        let y: number | null = null;
-        this.cmdResult
-            .split(" ")
-            .slice(0, 2)
-            .forEach((part) => {
-                const [key, value, _] = part.split(":");
-                if (key === "x") x = parseInt(value, 10);
-                if (key === "y") y = parseInt(value, 10);
-            });
+    let x: number | null = null;
+    let y: number | null = null;
+    this.cmdResult
+      .split(" ")
+      .slice(0, 2)
+      .forEach((part) => {
+        const [key, value, _] = part.split(":");
+        if (key === "x") x = parseInt(value, 10);
+        if (key === "y") y = parseInt(value, 10);
+      });
 
-        if (x === null || y === null)
-            return null;
-        return [x, y];
-    }
+    if (x === null || y === null) return null;
+    return [x, y];
+  }
 }

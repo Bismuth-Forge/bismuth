@@ -19,38 +19,47 @@
 // DEALINGS IN THE SOFTWARE.
 
 class KWinTimerPool {
-    public static readonly instance = new KWinTimerPool();
+  public static readonly instance = new KWinTimerPool();
 
-    public timers: QQmlTimer[];
-    public numTimers: number;
+  public timers: QQmlTimer[];
+  public numTimers: number;
 
-    constructor() {
-        this.timers = [];
-        this.numTimers = 0;
+  constructor() {
+    this.timers = [];
+    this.numTimers = 0;
+  }
+
+  public setTimeout(func: () => void, timeout: number) {
+    if (this.timers.length === 0) {
+      this.numTimers++;
+      debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
     }
 
-    public setTimeout(func: () => void, timeout: number) {
-        if (this.timers.length === 0) {
-            this.numTimers ++;
-            debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers}]);
-        }
+    const timer: QQmlTimer =
+      this.timers.pop() ||
+      Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
 
-        const timer: QQmlTimer = this.timers.pop() ||
-            Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
+    const callback = () => {
+      try {
+        timer.triggered.disconnect(callback);
+      } catch (e) {
+        /* ignore */
+      }
+      try {
+        func();
+      } catch (e) {
+        /* ignore */
+      }
+      this.timers.push(timer);
+    };
 
-        const callback = () => {
-            try { timer.triggered.disconnect(callback); } catch (e) { /* ignore */ }
-            try { func(); } catch (e) { /* ignore */ }
-            this.timers.push(timer);
-        };
-
-        timer.interval = timeout;
-        timer.repeat = false;
-        timer.triggered.connect(callback);
-        timer.start();
-    }
+    timer.interval = timeout;
+    timer.repeat = false;
+    timer.triggered.connect(callback);
+    timer.start();
+  }
 }
 
 function KWinSetTimeout(func: () => void, timeout: number) {
-    KWinTimerPool.instance.setTimeout(func, timeout);
+  KWinTimerPool.instance.setTimeout(func, timeout);
 }

@@ -25,34 +25,33 @@
  * not really a find-grained control mechanism, but is simple and concise.
  */
 class EngineContext {
-    public get backend(): string {
-        return this.drvctx.backend;
-    }
+  public get backend(): string {
+    return this.drvctx.backend;
+  }
 
-    public get currentWindow(): Window | null {
-        return this.drvctx.currentWindow;
-    }
+  public get currentWindow(): Window | null {
+    return this.drvctx.currentWindow;
+  }
 
-    public set currentWindow(window: Window | null) {
-        this.drvctx.currentWindow = window;
-    }
+  public set currentWindow(window: Window | null) {
+    this.drvctx.currentWindow = window;
+  }
 
-    constructor(private drvctx: IDriverContext, private engine: TilingEngine) {
-    }
+  constructor(private drvctx: IDriverContext, private engine: TilingEngine) {}
 
-    public setTimeout(func: () => void, timeout: number): void {
-        this.drvctx.setTimeout(func, timeout);
-    }
+  public setTimeout(func: () => void, timeout: number): void {
+    this.drvctx.setTimeout(func, timeout);
+  }
 
-    public cycleFocus(step: -1 | 1) {
-        this.engine.focusOrder(this.drvctx, step);
-    }
+  public cycleFocus(step: -1 | 1) {
+    this.engine.focusOrder(this.drvctx, step);
+  }
 
-    public moveWindow(window: Window, target: Window, after?: boolean) {
-        this.engine.windows.move(window, target, after);
-    }
+  public moveWindow(window: Window, target: Window, after?: boolean) {
+    this.engine.windows.move(window, target, after);
+  }
 
-    public showNotification(text: string) {
-        this.drvctx.showNotification(text);
-    }
+  public showNotification(text: string) {
+    this.drvctx.showNotification(text);
+  }
 }

@@ -19,62 +19,62 @@
 // DEALINGS IN THE SOFTWARE.
 
 class StairLayout implements ILayout {
-    public static readonly id = "StairLayout";
+  public static readonly id = "StairLayout";
 
-    public readonly classID = StairLayout.id;
-    public readonly description = "Stair";
+  public readonly classID = StairLayout.id;
+  public readonly description = "Stair";
 
-    private space: number; /* in PIXELS */
+  private space: number; /* in PIXELS */
 
-    constructor() {
-        this.space = 24;
+  constructor() {
+    this.space = 24;
+  }
+
+  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+    /* Tile all tileables */
+    tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+    const tiles = tileables;
+
+    const len = tiles.length;
+    const space = this.space;
+
+    // TODO: limit the maximum number of staired windows.
+
+    for (let i = 0; i < len; i++) {
+      const dx = space * (len - i - 1);
+      const dy = space * i;
+      tiles[i].geometry = new Rect(
+        area.x + dx,
+        area.y + dy,
+        area.width - dx,
+        area.height - dy
+      );
     }
+  }
 
-    public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
-        /* Tile all tileables */
-        tileables.forEach((tileable) => tileable.state = WindowState.Tiled);
-        const tiles = tileables;
+  public clone(): ILayout {
+    const other = new StairLayout();
+    other.space = this.space;
+    return other;
+  }
 
-        const len = tiles.length;
-        const space = this.space;
-
-        // TODO: limit the maximum number of staired windows.
-
-        for (let i = 0; i < len; i++) {
-            const dx = space * (len - i - 1);
-            const dy = space * i;
-            tiles[i].geometry = new Rect(
-                area.x + dx,
-                area.y + dy,
-                area.width - dx,
-                area.height - dy,
-            );
-        }
+  public handleShortcut(ctx: EngineContext, input: Shortcut) {
+    switch (input) {
+      case Shortcut.Decrease:
+        // TODO: define arbitrary constants
+        this.space = Math.max(16, this.space - 8);
+        break;
+      case Shortcut.Increase:
+        // TODO: define arbitrary constants
+        this.space = Math.min(160, this.space + 8);
+        break;
+      default:
+        return false;
     }
+    return true;
+  }
 
-    public clone(): ILayout {
-        const other = new StairLayout();
-        other.space = this.space;
-        return other;
-    }
-
-    public handleShortcut(ctx: EngineContext, input: Shortcut) {
-        switch (input) {
-            case Shortcut.Decrease:
-                // TODO: define arbitrary constants
-                this.space = Math.max(16, this.space - 8);
-                break;
-            case Shortcut.Increase:
-                // TODO: define arbitrary constants
-                this.space = Math.min(160, this.space + 8);
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
-
-    public toString(): string {
-        return "StairLayout(" + this.space + ")";
-    }
+  public toString(): string {
+    return "StairLayout(" + this.space + ")";
+  }
 }
