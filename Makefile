@@ -22,9 +22,9 @@ package:
 	npm run package
 
 install:
-	npm run install
+	npm run script-install
 
 uninstall:
-	npm run uninstall
+	npm run script-uninstall
 
 .PHONY: all clean build run start stop test package pack install

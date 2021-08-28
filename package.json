@@ -30,8 +30,8 @@
     "prepackage": "npm run build",
     "package": "bin/package.sh",
     "preinstall": "npm run package",
-    "install": "bin/install.sh",
-    "uninstall": "bin/uninstall.sh",
+    "script-install": "bin/install.sh",
+    "script-uninstall": "bin/uninstall.sh",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
     "test": "mocha 'test/*.spec.js'"
   },
