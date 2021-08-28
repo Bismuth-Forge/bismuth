@@ -11,12 +11,12 @@ Project goals are the following:
 
 ## Features
 
-- DWM-like window tiling
+- Automatic window tiling
   - Dynamically tile windows, rather than manually placing each.
   - Floating windows
 - Fully integrates into KWin features, including:
-  - **Multi-screen**
-  - **Activities & Virtual desktop**
+  - Multi-screen
+  - Activities & Virtual desktop
   - Basic window management (minimize, fullscreen, switching, etc)
 - Multiple Layout Support
   - Tiling layout
