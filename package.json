@@ -8,7 +8,6 @@
     "test": "test"
   },
   "config": {
-    "node_script": "bismuth.js",
     "build_dir": "build"
   },
   "devDependencies": {
