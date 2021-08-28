@@ -1,16 +1,16 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: ""
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 **Symptom**
 A simple description of the problem you're experiencing.
 
 **How to Reproduce**
+
 1. Launch '....'
 2. Press key '....'
 3. See error
@@ -19,10 +19,11 @@ A simple description of the problem you're experiencing.
 A concise description of what you expected to happen.
 
 **Environment**
- - Distro: [e.g. Ubuntu 18.04, Debian 9.5, Archlinux]
- - KWin version: [e.g. 5.14.2]
- - Krohnkite version: [e.g. 0.1, git commit]
- - List of KWin scripts in use: [e.g. MinimizeAll, VideoWall]
+
+- Distro: [e.g. Ubuntu 18.04, Debian 9.5, Archlinux]
+- KWin version: [e.g. 5.14.2]
+- Krohnkite version: [e.g. 0.1, git commit]
+- List of KWin scripts in use: [e.g. MinimizeAll, VideoWall]
 
 **Notes**
 Anything that you want to tell developers about.
