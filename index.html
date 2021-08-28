@@ -84,31 +84,16 @@
 						</ul>
 					</li>
 				</ul>
-				<a href="#development-requirement" id="development-requirement" style="color: inherit; text-decoration: none;">
-					<h2>Development Requirement</h2>
-				</a>
-				<ul>
-					<li>NPM</li>
-					<li>p7zip (7z)</li>
-				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
 				<pre><code><span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">install</span>
 <span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">uninstall</span><span style="color: #000000"> # </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">uninstall</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">script</span>
 </code></pre>
-				<a href="#simply-trying-out" id="simply-trying-out" style="color: inherit; text-decoration: none;">
-					<h2>Simply Trying Out</h2>
-				</a>
-				<p>Bismuth can be temporarily loaded without installing the script:</p>
-				<pre><code><span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">run</span>
-<span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">stop</span>
-</code></pre>
-				<p>Note that Bismuth can destroy itself completely once it is disabled, so no
-				restart is required to deactivated it.</p>
 				<a href="#enabling-user-configuration" id="enabling-user-configuration" style="color: inherit; text-decoration: none;">
 					<h3>Enabling User-Configuration</h3>
 				</a>
+				<!-- TODO: This section should not exist in ideal world. -->
 				<p><a href="https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357">It is reported</a> that a manual step is required to enable user
 				configuration of KWin scripts. This is a limitation of KWin scripting.</p>
 				<p>To enable configuration, you must perform the following in command-line:</p>
@@ -124,6 +109,10 @@
 					<li>tick Bismuth</li>
 					<li><code>Apply</code></li>
 				</ol>
+				<a href="#tweaks" id="tweaks" style="color: inherit; text-decoration: none;">
+					<h3>Tweaks</h3>
+				</a>
+				<p>Proceed to the <a href="TWEAKS.md">TWEAKS section</a>.</p>
 				<a href="#default-key-bindings" id="default-key-bindings" style="color: inherit; text-decoration: none;">
 					<h2>Default Key Bindings</h2>
 				</a>
@@ -219,79 +208,6 @@
 							<td>Use Stair Layout</td>
 						</tr>
 				</tbody></table>
-				<a href="#tips" id="tips" style="color: inherit; text-decoration: none;">
-					<h2>Tips</h2>
-				</a>
-				<a href="#setting-up-for-multi-screen" id="setting-up-for-multi-screen" style="color: inherit; text-decoration: none;">
-					<h3>Setting Up for Multi-Screen</h3>
-				</a>
-				<p>Bismuth supports multi-screen setup, but KWin has to be configured to unlock
-				the full potential of the script.</p>
-				<ol>
-					<li>Enable <code>Separate Screen Focus</code> under <code>Window Management</code> &gt;
-					<code>Window Behavior</code> &gt; <code>Multiscreen Behaviour</code></li>
-					<li>Bind keys for global shortcut <code>Switch to Next/Previous Screen</code>
-					(Recommend: <code>Meta + ,</code> / <code>Meta + .</code>)</li>
-					<li>Bind keys for global shortcut <code>Window to Next/Previous Screen</code>
-					(Recommend: <code>Meta + &lt;</code> / <code>Meta + &gt;</code>)</li>
-				</ol>
-				<p>Note: <code>Separate Screen Focus</code> appears only when multiple monitors are present.</p>
-				<a href="#removing-title-bars" id="removing-title-bars" style="color: inherit; text-decoration: none;">
-					<h3>Removing Title Bars</h3>
-				</a>
-				<p>Breeze window decoration can be configured to completely remove title bars from
-				all windows:</p>
-				<ol>
-					<li><code>System Setting</code> &gt; <code>Application Style</code> &gt; <code>Window Decorations</code></li>
-					<li>Click <code>Configure Breeze</code> inside the decoration preview.</li>
-					<li><code>Window-Specific Overrides</code> tab &gt; <code>Add</code> button</li>
-					<li>Enter the followings, and press <code>Ok</code>:<ul>
-							<li><code>Regular expression to match</code>: <code>.*</code></li>
-							<li>Tick <code>Hide window title bar</code></li>
-						</ul>
-					</li>
-				</ol>
-				<a href="#changing-border-colors" id="changing-border-colors" style="color: inherit; text-decoration: none;">
-					<h3>Changing Border Colors</h3>
-				</a>
-				<p>Changing the border color makes it easier to identify current window. This is
-				convenient if title bars are removed.</p>
-				<ol>
-					<li><p>Open <code>~/.config/kdeglobals</code> with your favorite editor</p>
-					</li>
-					<li><p>Scroll down and find <code>[WM]</code> section</p>
-					</li>
-					<li><p>Append the followings to the section:</p>
-						<ul>
-							<li><code>frame=61,174,233</code>: set the border color of active window to <em>RGB(61,174,233)</em></li>
-							<li><code>inactiveFrame=239,240,241</code>: set the border color of inactive window to <em>RGB(239,240,241)</em></li>
-						</ul>
-						<p>Here&#39;s a nice 2-liner that&#39;ll do it for you:</p>
-						<pre><code><span style="color: #000000"> </span><span style="color: #001080">kwriteconfig5</span><span style="color: #000000"> --</span><span style="color: #001080">file</span><span style="color: #000000"> ~/.</span><span style="color: #001080">config</span><span style="color: #000000">/</span><span style="color: #001080">kdeglobals</span><span style="color: #000000"> --</span><span style="color: #001080">group</span><span style="color: #000000"> </span><span style="color: #0070C1">WM</span><span style="color: #000000"> --</span><span style="color: #001080">key</span><span style="color: #000000"> </span><span style="color: #001080">frame</span><span style="color: #000000"> </span><span style="color: #098658">61</span><span style="color: #000000">,</span><span style="color: #098658">174</span><span style="color: #000000">,</span><span style="color: #098658">233</span>
-<span style="color: #000000"> </span><span style="color: #001080">kwriteconfig5</span><span style="color: #000000"> --</span><span style="color: #001080">file</span><span style="color: #000000"> ~/.</span><span style="color: #001080">config</span><span style="color: #000000">/</span><span style="color: #001080">kdeglobals</span><span style="color: #000000"> --</span><span style="color: #001080">group</span><span style="color: #000000"> </span><span style="color: #0070C1">WM</span><span style="color: #000000"> --</span><span style="color: #001080">key</span><span style="color: #000000"> </span><span style="color: #001080">inactiveFrame</span><span style="color: #000000">  </span><span style="color: #098658">239</span><span style="color: #000000">,</span><span style="color: #098658">240</span><span style="color: #000000">,</span><span style="color: #098658">241</span>
-</code></pre>
-					</li>
-					<li><p>You must <strong>restart</strong> your session to see changes. (i.e. re-login, reboot)</p>
-					</li>
-				</ol>
-				<p>Note: the RGB values presented here are for the default Breeze theme</p>
-				<p>Note: You might also need to set the border size larger than the theme&#39;s default:
-				<code>System Settings</code> &gt; <code>Application Style</code> &gt; <code>Window Decorations</code>: Untick <code>Use theme&#39;s default window border size</code> and adjust the size (right from the checkbox).</p>
-				<a href="#setting-minimum-geometry-size" id="setting-minimum-geometry-size" style="color: inherit; text-decoration: none;">
-					<h3>Setting Minimum Geometry Size</h3>
-				</a>
-				<p>Some applications like discord and KDE settings don&#39;t tile nicely as they have a minimum size requirement.
-				This causes the applications to overlap with other applications. To mitigate this we can set minimum size for all windows to be 0.</p>
-				<ol>
-					<li><code>System Setting</code> &gt; <code>Window Management</code> &gt; <code>Window Rules</code></li>
-					<li>Click on <code>+ Add New...</code></li>
-					<li>Set <code>Window class</code> to be <code>Unimportant</code></li>
-					<li>Set <code>Window types</code> to <code>Normal Window</code></li>
-					<li>Click <code>+ Add Properties...</code></li>
-					<li>Add the <code>Minimum Size</code> Property</li>
-					<li>Set the fields to <code>Force</code> and <code>0</code> x <code>0</code></li>
-					<li>Apply</li>
-				</ol>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
