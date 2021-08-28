@@ -1,8 +1,6 @@
 Kröhnkite
 =========
 
-[![AUR-git](https://img.shields.io/aur/version/kwin-scripts-krohnkite-git.svg?label=AUR-git)](https://aur.archlinux.org/packages/kwin-scripts-krohnkite-git/)
-
 A dynamic tiling extension for KWin.
 
 Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to
@@ -46,7 +44,7 @@ You can install Kröhnkite in multiple ways.
 
 ### Using .kwinscript package file ###
 
-You can download `krohnkite-x.x.kwinscript` file, and install it through
+You can download `bismuth-x.x.kwinscript` file, and install it through
 *System Settings*.
 
  1. Download the kwinscript file
@@ -56,12 +54,12 @@ You can download `krohnkite-x.x.kwinscript` file, and install it through
 
 Alternatively, through command-line:
 
-    plasmapkg2 -t kwinscript -i krohnkite.kwinscript # installing new script
-    plasmapkg2 -t kwinscript -u krohnkite.kwinscript # upgrading existing script
+    plasmapkg2 -t kwinscript -i bismuth.kwinscript # installing new script
+    plasmapkg2 -t kwinscript -u bismuth.kwinscript # upgrading existing script
 
 To uninstall the package:
 
-    plasmapkg2 -t kwinscript -r krohnkite
+    plasmapkg2 -t kwinscript -r bismuth
 
 ### Installing from Git repository ###
 
@@ -80,12 +78,12 @@ The generated package file can be imported from "KWin Script" dialog.
 
 ### Simply Trying Out ###
 
-Krohnkite can be temporarily loaded without installing the script:
+Bismuth can be temporarily loaded without installing the script:
 
     make run
     make stop
 
-Note that Krohnkite can destroy itself completely once it is disabled, so no
+Note that Bismuth can destroy itself completely once it is disabled, so no
 restart is required to deactivated it.
 
 ### Enabling User-Configuration ###
@@ -96,16 +94,16 @@ configuration of KWin scripts. This is a limitation of KWin scripting.
 To enable configuration, you must perform the following in command-line:
 
     mkdir -p ~/.local/share/kservices5/
-    ln -s ~/.local/share/kwin/scripts/krohnkite/metadata.desktop ~/.local/share/kservices5/krohnkite.desktop
+    ln -s ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
 
 A configuration button will appear in `KWin Scripts` in `System Settings`.
 
 ![config button shown](img/conf.png)
 
 To make changes effective, **the script must be reactivated**:
-  1) On `KWin Scripts` dialog, untick Krohnkite
+  1) On `KWin Scripts` dialog, untick Bismuth
   2) `Apply`
-  3) tick Krohnkite
+  3) tick Bismuth
   4) `Apply`
 
 [kwinconf]: https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357
@@ -144,7 +142,7 @@ Tips
 
 ### Setting Up for Multi-Screen ###
 
-Krohnkite supports multi-screen setup, but KWin has to be configured to unlock
+Bismuth supports multi-screen setup, but KWin has to be configured to unlock
 the full potential of the script.
 
 1. Enable `Separate Screen Focus` under `Window Management` > 

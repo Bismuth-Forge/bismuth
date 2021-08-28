@@ -48,7 +48,7 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("KROHNKITE: starting the script");
+        console.log("BISMUTH: starting the script");
         (new K.KWinDriver()).main();
     }
 }

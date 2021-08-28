@@ -1,14 +1,14 @@
 {
-  "name": "krohnkite",
+  "name": "bismuth",
   "version": "0.8.0",
   "description": "A dynamic tiling extension for KWin",
-  "main": "krohnkite.js",
+  "main": "bismuth.js",
   "directories": {
     "build": "build",
     "test": "test"
   },
   "config": {
-    "node_script": "krohnkite.js",
+    "node_script": "bismuth.js",
     "build_dir": "build"
   },
   "devDependencies": {
@@ -37,14 +37,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/esjeon/krohnkite.git"
+    "url": "git+https://github.com/gikari/bismuth.git"
   },
   "author": "Eon S. Jeon <esjeon@hyunmu.am>",
+  "contributors": [
+    "Mikhail Zolotukhin <mail@genda.life> (https://genda.life)"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/esjeon/krohnkite/issues"
+    "url": "https://github.com/gikari/bismuth/issues"
   },
-  "homepage": "https://github.com/esjeon/krohnkite#readme",
+  "homepage": "https://github.com/gikari/bismuth#readme",
   "eslintConfig": {
     "root": true,
     "ignorePatterns": [
