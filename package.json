@@ -29,7 +29,7 @@
     "stop": "bin/stop.sh",
     "prepackage": "npm run build",
     "package": "bin/package.sh",
-    "preinstall": "npm run package",
+    "prescript-install": "npm run package",
     "script-install": "bin/install.sh",
     "script-uninstall": "bin/uninstall.sh",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
