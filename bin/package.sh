@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-KWINPKG_FILE="${npm_package_name}-${npm_package_version}.kwinscript"
+KWINPKG_FILE="$npm_package_config_build_dir/${npm_package_name}-${npm_package_version}.kwinscript"
 
 # Remove old archive
 rm -f "$KWINPKG_FILE"
