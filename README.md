@@ -1,8 +1,6 @@
 # Bismuth
 
-A dynamic tiling extension for KWin.
-
-![screenshot](img/screenshot.png)
+This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.
 
 ## Features
 
@@ -20,49 +18,16 @@ A dynamic tiling extension for KWin.
 
 ## Development Requirement
 
-- Typescript (tested w/ 3.1.x)
-- GNU Make
+- NPM
 - p7zip (7z)
 
 ## Installation
 
-You can install Bismuth in multiple ways.
-
-### Using .kwinscript package file
-
-You can download `bismuth-x.x.kwinscript` file, and install it through
-_System Settings_.
-
-1.  Download the kwinscript file
-2.  Open `System Settings` > `Window Management` > `KWin Scripts`
-3.  Press `Import KWin script...` on the top-right corner
-4.  Select the downloaded file
-
-Alternatively, through command-line:
-
-    plasmapkg2 -t kwinscript -i bismuth.kwinscript # installing new script
-    plasmapkg2 -t kwinscript -u bismuth.kwinscript # upgrading existing script
-
-To uninstall the package:
-
-    plasmapkg2 -t kwinscript -r bismuth
-
-### Installing from Git repository
-
-The simplest method would be:
 
     make install
     make uninstall # to uninstall the script
 
-This will automatically build and install kwinscript package.
-
-You can also manually build package file using:
-
-    make package
-
-The generated package file can be imported from "KWin Script" dialog.
-
-### Simply Trying Out
+## Simply Trying Out
 
 Bismuth can be temporarily loaded without installing the script:
 
@@ -152,7 +117,7 @@ all windows:
 ### Changing Border Colors
 
 Changing the border color makes it easier to identify current window. This is
-convinient if title bars are removed.
+convenient if title bars are removed.
 
 1.  Open `~/.config/kdeglobals` with your favorite editor
 2.  Scroll down and find `[WM]` section
@@ -175,7 +140,7 @@ Note: You might also need to set the border size larger than the theme's default
 
 ### Setting Minimum Geometry Size
 
-Some applications like discord and KDE settings dont tile nicely as they have a minimum size requirement.
+Some applications like discord and KDE settings don't tile nicely as they have a minimum size requirement.
 This causes the applications to overlap with other applications. To mitigate this we can set minimum size for all windows to be 0.
 
 1. `System Setting` > `Window Management` > `Window Rules`
@@ -187,12 +152,3 @@ This causes the applications to overlap with other applications. To mitigate thi
 7. Set the fields to `Force` and `0` x `0`
 8. Apply
 
-## Useful Development Resources
-
-- [KWin Scripting Tutorial](https://techbase.kde.org/Development/Tutorials/KWin/Scripting)
-- [KWin Scripting API 4.9 Reference](https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9)
-- Adding configuration dialog
-  - [Development/Tutorials/Plasma/JavaScript/ConfigDialog](https://techbase.kde.org/Development/Tutorials/Plasma/JavaScript/ConfigDialog)
-  - [Development/Tutorials/Using KConfig XT](https://techbase.kde.org/Development/Tutorials/Using_KConfig_XT)
-- `*.ui` files can be edited with [Qt Designer](http://doc.qt.io/qt-5/qtdesigner-manual.html).
-  It's very straight-forward if you're used to UI programming.
