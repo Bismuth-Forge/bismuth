@@ -14,7 +14,7 @@ import dbus
 # TODO: manually syncing key bindings? sucks!
 #       split this into a data file, which then can be translated into
 #       typescript code or included in other places.
-KROHNKITE_DEFAULT_BINDINGS = [
+BISMUTH_DEFAULT_BINDINGS = [
     ("Down/Next"     , "j"      ),
     ("Up/Prev"       , "k"      ),
     ("Left"          , "h"      ),
@@ -119,7 +119,7 @@ def register_shortcut(action_id, keycomb, force=False):
         print("register [{2:<14}] to '{1}/{0}'.".format(action_id[1], action_id[2], keycomb))
     kglobalaccel.setForeignShortcut(action_id, [keycode])
 
-def register_krohnkite_shortcut(action: str, keycomb_full: str):
+def register_bismuth_shortcut(action: str, keycomb_full: str):
     action = "Krohnkite: " + action
     keycode = get_keycode(keycomb_full)
 
@@ -127,7 +127,7 @@ def register_krohnkite_shortcut(action: str, keycomb_full: str):
 
     kglobalaccel.setForeignShortcut(["kwin", action, "KWin", ""], [keycode])
 
-def unregister_krohnkite_shortcut(action: str):
+def unregister_bismuth_shortcut(action: str):
     action = "Krohnkite: " + action
 
     if VERBOSE: print("unregister '{}'.".format(action))
@@ -144,7 +144,7 @@ def unregister_colliding_shortcut(keycomb_full: str):
         if VERBOSE: print("unregister [{:<14}] bound to '{}'".format(keycomb_full, action_id[1]))
         kglobalaccel.setForeignShortcut(action_id, [])
 
-def unregister_all_krohnkite_shortcuts():
+def unregister_all_bismuth_shortcuts():
     names = [
         str(name) for name
         in kwin_component.shortcutNames()
@@ -176,7 +176,7 @@ def main():
     VERBOSE = False if config.quiet else True
 
     if config.command == 'register':
-        binds = dict(KROHNKITE_DEFAULT_BINDINGS)
+        binds = dict(BISMUTH_DEFAULT_BINDINGS)
 
         if config.binds is not None:
             # parse ACTION=KEY parameter
@@ -203,16 +203,16 @@ def main():
         # register shortcuts
         for action, keycomb in binds.items():
             if keycomb is None:
-                unregister_krohnkite_shortcut(action)
+                unregister_bismuth_shortcut(action)
             else:
                 keycomb_full = config.modifier + '+' + keycomb
                 if is_shortcut_colliding(keycomb):
                     print("skipping {} due to shortcut collision...".format(keycomb_full))
                 else:
-                    register_krohnkite_shortcut(action, keycomb_full)
+                    register_bismuth_shortcut(action, keycomb_full)
 
     elif config.command == 'unregister':
-        unregister_all_krohnkite_shortcuts()
+        unregister_all_bismuth_shortcuts()
     elif config.command == 'register-desktops':
         register_desktop_shortcuts(config.modifier, config.force)
     else:

@@ -19,7 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 let assert = require("assert");
-let K = require("../krohnkite");
+let K = require("../bismuth");
 
 describe("TileLayout", function () {
   describe("#apply", function () {

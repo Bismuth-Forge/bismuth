@@ -13,7 +13,7 @@ case "$edition" in
 esac
 
 projdir=$(realpath "$(dirname "$0")/..")
-ctname="krohnkite-$edition"
+ctname="bismuth-$edition"
 
 Xephyr \
 	-dpi 96 \
