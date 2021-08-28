@@ -1,15 +1,15 @@
-# Bismuth
+# 🌈 Bismuth
 
 This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.
 
-## Goals
+## 🗺️ Goals
 
 Project goals are the following:
 
 1. Provide full-fledged tiling window manager experience in KDE Plasma with minimal effort on user side
 2. Wayland support
 
-## Features
+## 🌟 Features
 
 - Automatic window tiling
   - Dynamically tile windows, rather than manually placing each.
@@ -23,7 +23,7 @@ Project goals are the following:
   - Monocle layout
   - Desktop-friendly layouts (Spread, Stair)
 
-## Installation
+## 🔧 Installation
 
     make install
     make uninstall # to uninstall the script
@@ -57,7 +57,7 @@ To make changes effective, **the script must be reactivated**:
 
 Proceed to the [TWEAKS section](TWEAKS.md).
 
-## Default Key Bindings
+## ⌨️ Default Key Bindings
 
 | Key              | Action             |
 | ---------------- | ------------------ |
@@ -82,4 +82,3 @@ Proceed to the [TWEAKS section](TWEAKS.md).
 | Meta + M         | Use Monocle Layout |
 | _unbound_        | Use Spread Layout  |
 | _unbound_        | Use Stair Layout   |
-
