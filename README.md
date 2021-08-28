@@ -1,16 +1,7 @@
-Kröhnkite
+Bismuth
 =========
 
 A dynamic tiling extension for KWin.
-
-Kröhnkite is mainly inspired by [dwm][] from suckless folks, and aims to
-provide rock solid stability while fully integrating into KWin.
-
-The name of the script is from mineral [Kröhnkite][wikipedia]; it starts with
-K and looks cool.
-
-[dwm]: https://dwm.suckless.org/
-[wikipedia]: https://en.wikipedia.org/wiki/Kr%C3%B6hnkite
 
 ![screenshot](img/screenshot.png)
 
@@ -40,7 +31,7 @@ Development Requirement
 Installation
 ------------
 
-You can install Kröhnkite in multiple ways.
+You can install Bismuth in multiple ways.
 
 ### Using .kwinscript package file ###
 
