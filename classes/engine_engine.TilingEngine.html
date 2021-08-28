@@ -1,0 +1,1020 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>TilingEngine | bismuth</title>
+	<meta name="description" content="Documentation for bismuth">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">bismuth</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">bismuth</a>
+				</li>
+				<li>
+					<a href="../modules/engine_engine.html">engine/engine</a>
+				</li>
+				<li>
+					<a href="engine_engine.TilingEngine.html">TilingEngine</a>
+				</li>
+			</ul>
+			<h1>Class TilingEngine</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Maintains tiling context and performs various tiling actions.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">TilingEngine</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#layouts" class="tsd-kind-icon">layouts</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#windows" class="tsd-kind-icon">windows</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#adjustLayout" class="tsd-kind-icon">adjust<wbr>Layout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#arrange" class="tsd-kind-icon">arrange</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#arrangeScreen" class="tsd-kind-icon">arrange<wbr>Screen</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#cycleLayout" class="tsd-kind-icon">cycle<wbr>Layout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#enforceSize" class="tsd-kind-icon">enforce<wbr>Size</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#floatAll" class="tsd-kind-icon">float<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#focusDir" class="tsd-kind-icon">focus<wbr>Dir</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#focusOrder" class="tsd-kind-icon">focus<wbr>Order</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine_engine.TilingEngine.html#getNeighborByDirection" class="tsd-kind-icon">get<wbr>Neighbor<wbr>ByDirection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#handleLayoutShortcut" class="tsd-kind-icon">handle<wbr>Layout<wbr>Shortcut</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#manage" class="tsd-kind-icon">manage</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#moveFloat" class="tsd-kind-icon">move<wbr>Float</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#resizeFloat" class="tsd-kind-icon">resize<wbr>Float</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#resizeTile" class="tsd-kind-icon">resize<wbr>Tile</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#resizeWindow" class="tsd-kind-icon">resize<wbr>Window</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#setLayout" class="tsd-kind-icon">set<wbr>Layout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#setMaster" class="tsd-kind-icon">set<wbr>Master</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#swapDirOrMoveFloat" class="tsd-kind-icon">swap<wbr>Dir<wbr>OrMove<wbr>Float</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#swapDirection" class="tsd-kind-icon">swap<wbr>Direction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#swapOrder" class="tsd-kind-icon">swap<wbr>Order</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#toggleFloat" class="tsd-kind-icon">toggle<wbr>Float</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_engine.TilingEngine.html#unmanage" class="tsd-kind-icon">unmanage</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Tiling<wbr>Engine<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="engine_engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L30">engine/engine.ts:30</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="engine_engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="layouts" class="tsd-anchor"></a>
+					<h3>layouts</h3>
+					<div class="tsd-signature tsd-kind-icon">layouts<span class="tsd-signature-symbol">:</span> <a href="engine_layoutstore.LayoutStore.html" class="tsd-signature-type" data-tsd-kind="Class">LayoutStore</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L27">engine/engine.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="windows" class="tsd-anchor"></a>
+					<h3>windows</h3>
+					<div class="tsd-signature tsd-kind-icon">windows<span class="tsd-signature-symbol">:</span> <a href="engine_windowstore.WindowStore.html" class="tsd-signature-type" data-tsd-kind="Class">WindowStore</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L28">engine/engine.ts:28</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="adjustLayout" class="tsd-anchor"></a>
+					<h3>adjust<wbr>Layout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">adjust<wbr>Layout<span class="tsd-signature-symbol">(</span>basis<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L43">engine/engine.ts:43</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adjust layout based on the change in size of a tile.</p>
+								</div>
+								<p>This operation is completely layout-dependent, and no general implementation is
+								provided.</p>
+								<p>Used when tile is resized using mouse.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>basis: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="arrange" class="tsd-anchor"></a>
+					<h3>arrange</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">arrange<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L182">engine/engine.ts:182</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Arrange tiles on all screens.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="arrangeScreen" class="tsd-anchor"></a>
+					<h3>arrange<wbr>Screen</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">arrange<wbr>Screen<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, srf<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L192">engine/engine.ts:192</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Arrange tiles on a screen.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>srf: <a href="../interfaces/common.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cycleLayout" class="tsd-anchor"></a>
+					<h3>cycle<wbr>Layout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cycle<wbr>Layout<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L456">engine/engine.ts:456</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Change the layout of the current surface to the next.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="enforceSize" class="tsd-anchor"></a>
+					<h3>enforce<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">enforce<wbr>Size<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L260">engine/engine.ts:260</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Re-apply window geometry, computed by layout algorithm.</p>
+								</div>
+								<p>Sometimes applications move or resize windows without user intervention,
+									which is straigh against the purpose of tiling WM. This operation
+								move/resize such windows back to where/how they should be.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="floatAll" class="tsd-anchor"></a>
+					<h3>float<wbr>All</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">float<wbr>All<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, srf<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L421">engine/engine.ts:421</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Toggle float on all windows on the given surface.</p>
+								</div>
+								<p>The behaviours of this operation depends on the number of floating
+									windows: windows will be tiled if more than half are floating, and will
+								be floated otherwise.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>srf: <a href="../interfaces/common.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="focusDir" class="tsd-anchor"></a>
+					<h3>focus<wbr>Dir</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">focus<wbr>Dir<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, dir<span class="tsd-signature-symbol">: </span><a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L318">engine/engine.ts:318</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Focus a neighbor at the given direction.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>dir: <a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="focusOrder" class="tsd-anchor"></a>
+					<h3>focus<wbr>Order</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">focus<wbr>Order<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L289">engine/engine.ts:289</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Focus the next or previous window.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getNeighborByDirection" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Neighbor<wbr>ByDirection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Neighbor<wbr>ByDirection<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, basis<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, dir<span class="tsd-signature-symbol">: </span><a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L485">engine/engine.ts:485</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>basis: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+								<li>
+									<h5>dir: <a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="handleLayoutShortcut" class="tsd-anchor"></a>
+					<h3>handle<wbr>Layout<wbr>Shortcut</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Layout<wbr>Shortcut<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, input<span class="tsd-signature-symbol">: </span><a href="../enums/common.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L474">engine/engine.ts:474</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Let the current layout override shortcut.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>input: <a href="../enums/common.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if the layout overrides the shortcut. False, otherwise.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="manage" class="tsd-anchor"></a>
+					<h3>manage</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">manage<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L270">engine/engine.ts:270</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Register the given window to WM.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="moveFloat" class="tsd-anchor"></a>
+					<h3>move<wbr>Float</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">move<wbr>Float<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, dir<span class="tsd-signature-symbol">: </span><a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L368">engine/engine.ts:368</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Move the given window towards the given direction by one step.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a floating window</p>
+									</div>
+								</li>
+								<li>
+									<h5>dir: <a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>which direction</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="resizeFloat" class="tsd-anchor"></a>
+					<h3>resize<wbr>Float</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">resize<wbr>Float<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, dir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L63">engine/engine.ts:63</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resize the current floating window.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a floating window</p>
+									</div>
+								</li>
+								<li>
+									<h5>dir: <span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span></h5>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="resizeTile" class="tsd-anchor"></a>
+					<h3>resize<wbr>Tile</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">resize<wbr>Tile<span class="tsd-signature-symbol">(</span>basis<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, dir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L102">engine/engine.ts:102</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resize the current tile by adjusting the layout.</p>
+								</div>
+								<p>Used by grow/shrink shortcuts.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>basis: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+								<li>
+									<h5>dir: <span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span></h5>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="resizeWindow" class="tsd-anchor"></a>
+					<h3>resize<wbr>Window</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">resize<wbr>Window<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, dir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L169">engine/engine.ts:169</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resize the given window, by moving border inward or outward.</p>
+								</div>
+								<p>The actual behavior depends on the state of the given window.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+								<li>
+									<h5>dir: <span class="tsd-signature-type">&quot;east&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;west&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;south&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;north&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>which border</p>
+									</div>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>which direction. 1 means outward, -1 means inward.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setLayout" class="tsd-anchor"></a>
+					<h3>set<wbr>Layout</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Layout<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, layoutClassID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L464">engine/engine.ts:464</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the layout of the current surface to the specified layout.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>layoutClassID: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setMaster" class="tsd-anchor"></a>
+					<h3>set<wbr>Master</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Master<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L449">engine/engine.ts:449</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the current window as the &quot;master&quot;.</p>
+								</div>
+								<p>The &quot;master&quot; window is simply the first window in the window list.
+									Some layouts depend on this assumption, and will make such windows more
+								visible than others.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="swapDirOrMoveFloat" class="tsd-anchor"></a>
+					<h3>swap<wbr>Dir<wbr>OrMove<wbr>Float</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">swap<wbr>Dir<wbr>OrMove<wbr>Float<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, dir<span class="tsd-signature-symbol">: </span><a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L398">engine/engine.ts:398</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>dir: <a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="swapDirection" class="tsd-anchor"></a>
+					<h3>swap<wbr>Direction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">swap<wbr>Direction<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a>, dir<span class="tsd-signature-symbol">: </span><a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L350">engine/engine.ts:350</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Swap the position of the current window with a neighbor at the given direction.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ctx: <a href="../interfaces/common.IDriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">IDriverContext</a></h5>
+								</li>
+								<li>
+									<h5>dir: <a href="../modules/engine_engine.html#Direction" class="tsd-signature-type" data-tsd-kind="Type alias">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="swapOrder" class="tsd-anchor"></a>
+					<h3>swap<wbr>Order</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">swap<wbr>Order<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, step<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L335">engine/engine.ts:335</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Swap the position of the current window with the next or previous window.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+								<li>
+									<h5>step: <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="toggleFloat" class="tsd-anchor"></a>
+					<h3>toggle<wbr>Float</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">toggle<wbr>Float<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L410">engine/engine.ts:410</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Toggle float mode of window.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="unmanage" class="tsd-anchor"></a>
+					<h3>unmanage</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">unmanage<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/57269a0/src/engine/engine.ts#L282">engine/engine.ts:282</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unregister the given window from WM.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/engine_engine.html">engine/engine</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="engine_engine.TilingEngine.html" class="tsd-kind-icon">Tiling<wbr>Engine</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#layouts" class="tsd-kind-icon">layouts</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#windows" class="tsd-kind-icon">windows</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#adjustLayout" class="tsd-kind-icon">adjust<wbr>Layout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#arrange" class="tsd-kind-icon">arrange</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#arrangeScreen" class="tsd-kind-icon">arrange<wbr>Screen</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#cycleLayout" class="tsd-kind-icon">cycle<wbr>Layout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#enforceSize" class="tsd-kind-icon">enforce<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#floatAll" class="tsd-kind-icon">float<wbr>All</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#focusDir" class="tsd-kind-icon">focus<wbr>Dir</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#focusOrder" class="tsd-kind-icon">focus<wbr>Order</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="engine_engine.TilingEngine.html#getNeighborByDirection" class="tsd-kind-icon">get<wbr>Neighbor<wbr>ByDirection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#handleLayoutShortcut" class="tsd-kind-icon">handle<wbr>Layout<wbr>Shortcut</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#manage" class="tsd-kind-icon">manage</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#moveFloat" class="tsd-kind-icon">move<wbr>Float</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#resizeFloat" class="tsd-kind-icon">resize<wbr>Float</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#resizeTile" class="tsd-kind-icon">resize<wbr>Tile</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#resizeWindow" class="tsd-kind-icon">resize<wbr>Window</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#setLayout" class="tsd-kind-icon">set<wbr>Layout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#setMaster" class="tsd-kind-icon">set<wbr>Master</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#swapDirOrMoveFloat" class="tsd-kind-icon">swap<wbr>Dir<wbr>OrMove<wbr>Float</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#swapDirection" class="tsd-kind-icon">swap<wbr>Direction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#swapOrder" class="tsd-kind-icon">swap<wbr>Order</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#toggleFloat" class="tsd-kind-icon">toggle<wbr>Float</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="engine_engine.TilingEngine.html#unmanage" class="tsd-kind-icon">unmanage</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/engine_engine.html#Direction" class="tsd-kind-icon">Direction</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
