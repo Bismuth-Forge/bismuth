@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Krohnkite
-Comment=A dynamic tiling script for KWin ($REV)
+Name=Bismuth
+Comment=Tiling extention that gets you down to bismuth ($REV)
 Icon=dialog-tile-clones
 
 X-Plasma-API=declarativescript
