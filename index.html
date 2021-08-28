@@ -61,8 +61,7 @@
 				<a href="#bismuth" id="bismuth" style="color: inherit; text-decoration: none;">
 					<h1>Bismuth</h1>
 				</a>
-				<p>A dynamic tiling extension for KWin.</p>
-				<p><img src="img/screenshot.png" alt="screenshot"></p>
+				<p>This is a fork of <a href="https://github.com/esjeon/krohnkite">Krohnkite</a> - a dynamic tiling extension for KWin.</p>
 				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
 					<h2>Features</h2>
 				</a>
@@ -89,46 +88,17 @@
 					<h2>Development Requirement</h2>
 				</a>
 				<ul>
-					<li>Typescript (tested w/ 3.1.x)</li>
-					<li>GNU Make</li>
+					<li>NPM</li>
 					<li>p7zip (7z)</li>
 				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<p>You can install Bismuth in multiple ways.</p>
-				<a href="#using-kwinscript-package-file" id="using-kwinscript-package-file" style="color: inherit; text-decoration: none;">
-					<h3>Using .kwinscript package file</h3>
-				</a>
-				<p>You can download <code>bismuth-x.x.kwinscript</code> file, and install it through
-				<em>System Settings</em>.</p>
-				<ol>
-					<li>Download the kwinscript file</li>
-					<li>Open <code>System Settings</code> &gt; <code>Window Management</code> &gt; <code>KWin Scripts</code></li>
-					<li>Press <code>Import KWin script...</code> on the top-right corner</li>
-					<li>Select the downloaded file</li>
-				</ol>
-				<p>Alternatively, through command-line:</p>
-				<pre><code><span style="color: #001080">plasmapkg2</span><span style="color: #000000"> -</span><span style="color: #001080">t</span><span style="color: #000000"> </span><span style="color: #001080">kwinscript</span><span style="color: #000000"> -</span><span style="color: #001080">i</span><span style="color: #000000"> </span><span style="color: #001080">bismuth</span><span style="color: #000000">.</span><span style="color: #001080">kwinscript</span><span style="color: #000000"> # </span><span style="color: #001080">installing</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">script</span>
-<span style="color: #001080">plasmapkg2</span><span style="color: #000000"> -</span><span style="color: #001080">t</span><span style="color: #000000"> </span><span style="color: #001080">kwinscript</span><span style="color: #000000"> -</span><span style="color: #001080">u</span><span style="color: #000000"> </span><span style="color: #001080">bismuth</span><span style="color: #000000">.</span><span style="color: #001080">kwinscript</span><span style="color: #000000"> # </span><span style="color: #001080">upgrading</span><span style="color: #000000"> </span><span style="color: #001080">existing</span><span style="color: #000000"> </span><span style="color: #001080">script</span>
-</code></pre>
-				<p>To uninstall the package:</p>
-				<pre><code><span style="color: #001080">plasmapkg2</span><span style="color: #000000"> -</span><span style="color: #001080">t</span><span style="color: #000000"> </span><span style="color: #001080">kwinscript</span><span style="color: #000000"> -</span><span style="color: #001080">r</span><span style="color: #000000"> </span><span style="color: #001080">bismuth</span>
-</code></pre>
-				<a href="#installing-from-git-repository" id="installing-from-git-repository" style="color: inherit; text-decoration: none;">
-					<h3>Installing from Git repository</h3>
-				</a>
-				<p>The simplest method would be:</p>
 				<pre><code><span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">install</span>
 <span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">uninstall</span><span style="color: #000000"> # </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">uninstall</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">script</span>
 </code></pre>
-				<p>This will automatically build and install kwinscript package.</p>
-				<p>You can also manually build package file using:</p>
-				<pre><code><span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #AF00DB">package</span>
-</code></pre>
-				<p>The generated package file can be imported from &quot;KWin Script&quot; dialog.</p>
 				<a href="#simply-trying-out" id="simply-trying-out" style="color: inherit; text-decoration: none;">
-					<h3>Simply Trying Out</h3>
+					<h2>Simply Trying Out</h2>
 				</a>
 				<p>Bismuth can be temporarily loaded without installing the script:</p>
 				<pre><code><span style="color: #001080">make</span><span style="color: #000000"> </span><span style="color: #001080">run</span>
@@ -285,7 +255,7 @@
 					<h3>Changing Border Colors</h3>
 				</a>
 				<p>Changing the border color makes it easier to identify current window. This is
-				convinient if title bars are removed.</p>
+				convenient if title bars are removed.</p>
 				<ol>
 					<li><p>Open <code>~/.config/kdeglobals</code> with your favorite editor</p>
 					</li>
@@ -310,7 +280,7 @@
 				<a href="#setting-minimum-geometry-size" id="setting-minimum-geometry-size" style="color: inherit; text-decoration: none;">
 					<h3>Setting Minimum Geometry Size</h3>
 				</a>
-				<p>Some applications like discord and KDE settings dont tile nicely as they have a minimum size requirement.
+				<p>Some applications like discord and KDE settings don&#39;t tile nicely as they have a minimum size requirement.
 				This causes the applications to overlap with other applications. To mitigate this we can set minimum size for all windows to be 0.</p>
 				<ol>
 					<li><code>System Setting</code> &gt; <code>Window Management</code> &gt; <code>Window Rules</code></li>
@@ -322,20 +292,6 @@
 					<li>Set the fields to <code>Force</code> and <code>0</code> x <code>0</code></li>
 					<li>Apply</li>
 				</ol>
-				<a href="#useful-development-resources" id="useful-development-resources" style="color: inherit; text-decoration: none;">
-					<h2>Useful Development Resources</h2>
-				</a>
-				<ul>
-					<li><a href="https://techbase.kde.org/Development/Tutorials/KWin/Scripting">KWin Scripting Tutorial</a></li>
-					<li><a href="https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9">KWin Scripting API 4.9 Reference</a></li>
-					<li>Adding configuration dialog<ul>
-							<li><a href="https://techbase.kde.org/Development/Tutorials/Plasma/JavaScript/ConfigDialog">Development/Tutorials/Plasma/JavaScript/ConfigDialog</a></li>
-							<li><a href="https://techbase.kde.org/Development/Tutorials/Using_KConfig_XT">Development/Tutorials/Using KConfig XT</a></li>
-						</ul>
-					</li>
-					<li><code>*.ui</code> files can be edited with <a href="http://doc.qt.io/qt-5/qtdesigner-manual.html">Qt Designer</a>.
-					It&#39;s very straight-forward if you&#39;re used to UI programming.</li>
-				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
