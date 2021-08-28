@@ -2,6 +2,13 @@
 
 This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.
 
+## Goals
+
+Project goals are the following:
+
+1. Provide full-fledged tiling window manager experience in KDE Plasma with minimal effort on user side
+2. Wayland support
+
 ## Features
 
 - DWM-like window tiling
