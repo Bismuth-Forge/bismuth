@@ -13,8 +13,9 @@ npx tsc --outDir $npm_package_config_build_dir/contents/code/
 # Rename all js files to mjs, because TypeScript cannot do that (https://github.com/Microsoft/TypeScript/issues/18442)
 # We need to to that in order to use Javascripts modules from Qt
 find $npm_package_config_build_dir/contents/code/ -name "*.js" -exec bash -c 'mv "$1" "${1%.js}".mjs' - '{}' \;
+
 # Fix the import statements (replace .js to .mjs, or add .mjs extention)
-find $npm_package_config_build_dir/contents/code/ -name "*.mjs" -exec sed -i '/^import/s/\.js/.mjs/g' {} +
+find $npm_package_config_build_dir/contents/code/ -name "*.mjs" -exec sed -i '/^import/s/\(\.js\)*";*$/.mjs";/g' {} +
 
 # Copy resources to the build directory with correct paths
 cp -v res/config.ui $npm_package_config_build_dir/contents/ui/config.ui
