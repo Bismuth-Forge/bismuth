@@ -6,7 +6,8 @@
     "removeComments": true,
     "lib": ["es5"],
     "alwaysStrict": true,
-    "strict": true
+    "strict": true,
+    "module": "ES6"
   },
   "typedocOptions": {
     "entryPoints": ["src"]

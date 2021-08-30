@@ -23,7 +23,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore;
 import org.kde.plasma.components 2.0 as Plasma;
 import org.kde.kwin 2.0;
 import org.kde.taskmanager 0.1 as TaskManager
-import "../code/script.js" as K
+import "../code/index.mjs" as K
 
 Item {
     id: scriptRoot
@@ -48,7 +48,8 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("BISMUTH: starting the script");
-        (new K.KWinDriver()).main();
+        console.log("BISMUTH2: starting the script");
+        K.main();
+        // (new K.KWinDriver()).main();
     }
 }
