@@ -18,7 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TestWindow implements IDriverWindow {
+import IDriverWindow from "../../idriver_window";
+import TestSurface from "./test_surface";
+import ISurface from "../../isurface";
+import Rect from "../../util/rect";
+
+export default class TestWindow implements IDriverWindow {
   private static windowCount: number = 0;
 
   public readonly id: string;

@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class WrapperMap<F, T> {
+export default class WrapperMap<F, T> {
   private items: { [key: string]: T };
 
   constructor(

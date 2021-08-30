@@ -18,7 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface IDriverWindow {
+import ISurface from "./isurface";
+import Rect from "./util/rect";
+
+export default interface IDriverWindow {
   readonly fullScreen: boolean;
   readonly geometry: Readonly<Rect>;
   readonly id: string;

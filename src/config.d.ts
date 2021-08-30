@@ -18,4 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-let CONFIG: IConfig;
+import IConfig from "./iconfig";
+
+declare global {
+    var CONFIG: IConfig;
+}
+
+// export let CONFIG: IConfig;

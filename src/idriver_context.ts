@@ -18,7 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface IDriverContext {
+import ISurface from "./isurface";
+import Window from "./engine/window";
+
+export default interface IDriverContext {
   readonly backend: string;
   readonly screens: ISurface[];
   readonly cursorPosition: [number, number] | null;

@@ -18,7 +18,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class SpreadLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import { Shortcut } from "../shortcut";
+import Rect from "../util/rect";
+
+export default class SpreadLayout implements ILayout {
   public static readonly id = "SpreadLayout";
 
   public readonly classID = SpreadLayout.id;

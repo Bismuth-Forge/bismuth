@@ -18,7 +18,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface IConfig {
+import { ILayout } from "./ilayout";
+
+export default interface IConfig {
   //#region Layout
   layoutOrder: string[];
   layoutFactories: { [key: string]: () => ILayout };

@@ -1,7 +1,8 @@
-import hello from "./mod.js"
+import KWinDriver from "./driver/kwin/kwin_driver"
 
-export function main() {
-  console.log("Hello from main script!")
-  console.log("import mod.js")
-  hello()
+export function init() {
+  const driver = new KWinDriver()
+  console.log("Workspace var: " + workspace);
+
+  driver.main()
 }

@@ -18,7 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinSurface implements ISurface {
+import ISurface from "../../isurface";
+import { toRect } from "../../util/kwinutil";
+import Rect from "../../util/rect";
+import { KWINCONFIG } from "./kwin_config";
+
+export default class KWinSurface implements ISurface {
   public static generateId(screen: number, activity: string, desktop: number) {
     let path = String(screen);
     if (KWINCONFIG.layoutPerActivity) path += "@" + activity;

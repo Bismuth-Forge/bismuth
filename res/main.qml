@@ -1,4 +1,5 @@
 // Copyright (c) 2018 Eon S. Jeon <esjeon@hyunmu.am>
+// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -23,7 +24,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore;
 import org.kde.plasma.components 2.0 as Plasma;
 import org.kde.kwin 2.0;
 import org.kde.taskmanager 0.1 as TaskManager
-import "../code/index.mjs" as K
+import "../code/index.mjs" as Bismuth
 
 Item {
     id: scriptRoot
@@ -48,8 +49,7 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("BISMUTH2: starting the script");
-        K.main();
-        // (new K.KWinDriver()).main();
+        console.log("Bismuth: Initiating the script");
+        Bismuth.init();
     }
 }

@@ -18,13 +18,17 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import TilingEngine from "./tiling_engine";
+import Window from "./window";
+import IDriverContext from "../idriver_context";
+
 /**
  * Provides contextual information and operations to Layout layer.
  *
  * Its purpose is to limit the visibility of information and operation. It's
  * not really a find-grained control mechanism, but is simple and concise.
  */
-class EngineContext {
+export default class EngineContext {
   public get backend(): string {
     return this.drvctx.backend;
   }
@@ -37,7 +41,7 @@ class EngineContext {
     this.drvctx.currentWindow = window;
   }
 
-  constructor(private drvctx: IDriverContext, private engine: TilingEngine) {}
+  constructor(private drvctx: IDriverContext, private engine: TilingEngine) { }
 
   public setTimeout(func: () => void, timeout: number): void {
     this.drvctx.setTimeout(func, timeout);

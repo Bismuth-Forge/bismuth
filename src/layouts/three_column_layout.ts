@@ -18,7 +18,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class ThreeColumnLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+// import { CONFIG } from "../config";
+import LayoutUtils from "./layout_utils";
+import { Shortcut } from "../shortcut";
+import { WindowState } from "../engine/window";
+import { partitionArrayBySizes, clip, slide } from "../util/func";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+
+export default class ThreeColumnLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.75;
   public static readonly id = "ThreeColumnLayout";

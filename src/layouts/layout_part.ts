@@ -18,7 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface ILayoutPart {
+import Window from "../engine/window";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+// import { CONFIG } from "../config";
+import LayoutUtils from "./layout_utils";
+
+export interface ILayoutPart {
   adjust(
     area: Rect,
     tiles: Window[],
@@ -28,7 +34,7 @@ interface ILayoutPart {
   apply(area: Rect, tiles: Window[]): Rect[];
 }
 
-class FillLayoutPart implements ILayoutPart {
+export class FillLayoutPart implements ILayoutPart {
   public adjust(
     area: Rect,
     tiles: Window[],
@@ -46,9 +52,8 @@ class FillLayoutPart implements ILayoutPart {
   }
 }
 
-class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
-  implements ILayoutPart
-{
+export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
+  implements ILayoutPart {
   /** the rotation angle for this part.
    *
    *    | angle | direction  | primary |
@@ -174,7 +179,7 @@ class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
   }
 }
 
-class StackLayoutPart implements ILayoutPart {
+export class StackLayoutPart implements ILayoutPart {
   public gap: number;
 
   constructor() {
@@ -215,8 +220,8 @@ class StackLayoutPart implements ILayoutPart {
   }
 }
 
-class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
-  constructor(public inner: T, public angle: 0 | 90 | 180 | 270 = 0) {}
+export class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
+  constructor(public inner: T, public angle: 0 | 90 | 180 | 270 = 0) { }
 
   public adjust(
     area: Rect,

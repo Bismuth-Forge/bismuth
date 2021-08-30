@@ -18,7 +18,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface ISurface {
+import Rect from "./util/rect";
+
+export default interface ISurface {
   readonly id: string;
   readonly ignore: boolean;
   readonly workingArea: Readonly<Rect>;

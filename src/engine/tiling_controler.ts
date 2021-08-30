@@ -18,13 +18,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import TilingEngine from "./tiling_engine";
+import IDriverContext from "../idriver_context";
+import Window from "./window";
+import { WindowState } from "./window";
+// import { CONFIG } from "../config";
+import { Shortcut } from "../shortcut";
+import { debugObj } from "../util/debug";
+
 /**
  * TilingController translates events to actions, implementing high-level
  * window management logic.
  *
  * In short, this class is just a bunch of event handling methods.
  */
-class TilingController {
+export default class TilingController {
   private engine: TilingEngine;
 
   public constructor(engine: TilingEngine) {

@@ -18,7 +18,11 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TestSurface implements ISurface {
+import ISurface from "../../isurface";
+import Rect from "../../util/rect";
+import TestDriver from "./test_driver";
+
+export default class TestSurface implements ISurface {
   public readonly screen: number;
 
   public get id(): string {

@@ -18,7 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class FloatingLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import Rect from "../util/rect";
+
+export default class FloatingLayout implements ILayout {
   public static readonly id = "FloatingLayout ";
   public static instance = new FloatingLayout();
 

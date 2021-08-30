@@ -18,25 +18,25 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-function clip(value: number, min: number, max: number): number {
+export function clip(value: number, min: number, max: number): number {
   if (value < min) return min;
   if (value > max) return max;
   return value;
 }
 
-function slide(value: number, step: number): number {
+export function slide(value: number, step: number): number {
   if (step === 0) return value;
   return Math.floor(value / step + 1.000001) * step;
 }
 
-function matchWords(str: string, words: string[]): number {
+export function matchWords(str: string, words: string[]): number {
   for (let i = 0; i < words.length; i++) {
     if (str.indexOf(words[i]) >= 0) return i;
   }
   return -1;
 }
 
-function wrapIndex(index: number, length: number): number {
+export function wrapIndex(index: number, length: number): number {
   if (index < 0) return index + length;
   if (index >= length) return index - length;
   return index;
@@ -49,7 +49,7 @@ function wrapIndex(index: number, length: number): number {
  * @param predicate A function which accepts an item and returns a boolean value.
  * @return A tuple containing an array of true(matched) items, and an array of false(unmatched) items.
  */
-function partitionArray<T>(
+export function partitionArray<T>(
   array: T[],
   predicate: (item: T, index: number) => boolean
 ): [T[], T[]] {
@@ -73,7 +73,7 @@ function partitionArray<T>(
  * @returns An array of (N+1) chunks, where the last chunk contains remaining
  * items.
  */
-function partitionArrayBySizes<T>(array: T[], sizes: number[]): T[][] {
+export function partitionArrayBySizes<T>(array: T[], sizes: number[]): T[][] {
   let base = 0;
   const chunks = sizes.map((size): T[] => {
     const chunk = array.slice(base, base + size);
@@ -92,7 +92,7 @@ function partitionArrayBySizes<T>(array: T[], sizes: number[]): T[][] {
  * @param min2 Range 2, begin
  * @param max2 Range 2, end
  */
-function overlap(
+export function overlap(
   min1: number,
   max1: number,
   min2: number,

@@ -18,12 +18,28 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-type Direction = "up" | "down" | "left" | "right";
+import MonocleLayout from "../layouts/monocle_layout";
+
+import LayoutStore from "./layout_store";
+import EngineContext from "./engine_context";
+import WindowStore from "./window_store";
+import Window from "./window";
+// import { CONFIG } from "../config";
+import IDriverContext from "../idriver_context";
+import ISurface from "../isurface";
+import { Shortcut } from "../shortcut";
+import { WindowState } from "./window";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+import { debug, debugObj } from "../util/debug";
+import { overlap, wrapIndex } from "../util/func";
+
+export type Direction = "up" | "down" | "left" | "right";
 
 /**
  * Maintains tiling context and performs various tiling actions.
  */
-class TilingEngine {
+export default class TilingEngine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 
@@ -520,19 +536,19 @@ class TilingEngine {
       .filter(
         vertical
           ? (tile) =>
-              overlap(
-                basis.geometry.x,
-                basis.geometry.maxX,
-                tile.geometry.x,
-                tile.geometry.maxX
-              )
+            overlap(
+              basis.geometry.x,
+              basis.geometry.maxX,
+              tile.geometry.x,
+              tile.geometry.maxX
+            )
           : (tile) =>
-              overlap(
-                basis.geometry.y,
-                basis.geometry.maxY,
-                tile.geometry.y,
-                tile.geometry.maxY
-              )
+            overlap(
+              basis.geometry.y,
+              basis.geometry.maxY,
+              tile.geometry.y,
+              tile.geometry.maxY
+            )
       );
     if (candidates.length === 0) return null;
 
@@ -542,7 +558,7 @@ class TilingEngine {
         vertical
           ? (prevMin, tile): number => Math.min(tile.geometry.y * sign, prevMin)
           : (prevMin, tile): number =>
-              Math.min(tile.geometry.x * sign, prevMin),
+            Math.min(tile.geometry.x * sign, prevMin),
         Infinity
       );
 

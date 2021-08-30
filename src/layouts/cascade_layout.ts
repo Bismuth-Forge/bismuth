@@ -18,7 +18,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-enum CascadeDirection {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import { Shortcut } from "../shortcut";
+import Rect from "../util/rect";
+
+export enum CascadeDirection {
   NorthWest = 0,
   North = 1,
   NorthEast = 2,
@@ -29,7 +36,7 @@ enum CascadeDirection {
   West = 7,
 }
 
-class CascadeLayout implements ILayout {
+export default class CascadeLayout implements ILayout {
   public static readonly id = "CascadeLayout";
 
   /** Decompose direction into vertical and horizontal steps */

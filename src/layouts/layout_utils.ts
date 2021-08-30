@@ -18,7 +18,11 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class LayoutUtils {
+import { clip } from "../util/func";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+
+export default class LayoutUtils {
   /**
    * Split a (virtual) line into weighted lines w/ gaps.
    * @param length    The length of the line to be splitted

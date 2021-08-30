@@ -18,13 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class Rect {
+export default class Rect {
   constructor(
     public x: number,
     public y: number,
     public width: number,
     public height: number
-  ) {}
+  ) { }
 
   public get maxX(): number {
     return this.x + this.width;

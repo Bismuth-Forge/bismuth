@@ -18,12 +18,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-interface ILayoutClass {
+import EngineContext from "./engine/engine_context";
+import { Shortcut } from "./shortcut";
+import Window from "./engine/window";
+import Rect from "./util/rect";
+import RectDelta from "./util/rectdelta";
+
+export interface ILayoutClass {
   readonly id: string;
-  new (): ILayout;
+  new(): ILayout;
 }
 
-interface ILayout {
+export interface ILayout {
   /* read-only */
   readonly capacity?: number;
   readonly description: string;

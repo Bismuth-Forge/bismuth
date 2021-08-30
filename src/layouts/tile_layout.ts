@@ -18,7 +18,19 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TileLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+// import { CONFIG } from "../config";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import { Shortcut } from "../shortcut";
+
+import { RotateLayoutPart, HalfSplitLayoutPart, StackLayoutPart } from "./layout_part";
+import { clip, slide } from "../util/func";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+
+export default class TileLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.8;
   public static readonly id = "TileLayout";
@@ -61,7 +73,7 @@ class TileLayout implements ILayout {
     masterPart.gap =
       masterPart.primary.inner.gap =
       masterPart.secondary.gap =
-        CONFIG.tileLayoutGap;
+      CONFIG.tileLayoutGap;
   }
 
   public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {

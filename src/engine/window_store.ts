@@ -18,7 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class WindowStore {
+import ISurface from "../isurface";
+import Window from "./window";
+
+export default class WindowStore {
   public list: Window[];
 
   constructor(windows?: Window[]) {

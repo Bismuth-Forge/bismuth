@@ -18,7 +18,22 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinConfig implements IConfig {
+import MonocleLayout from "../../layouts/monocle_layout";
+import TileLayout from "../../layouts/tile_layout";
+import ThreeColumnLayout from "../../layouts/three_column_layout";
+import StairLayout from "../../layouts/stair_layout";
+import SpiralLayout from "../../layouts/spiral_layout";
+import SpreadLayout from "../../layouts/spread_layout";
+import FloatingLayout from "../../layouts/floating_layout";
+import QuarterLayout from "../../layouts/quarter_layout";
+import CascadeLayout from "../../layouts/cascade_layout";
+
+import IConfig from "../../iconfig";
+import { ILayout } from "../../ilayout";
+import { ILayoutClass } from "../../ilayout";
+import { debug } from "../../util/debug";
+
+export default class KWinConfig implements IConfig {
   //#region Layout
   public layoutOrder: string[];
   public layoutFactories: { [key: string]: () => ILayout };
@@ -155,4 +170,4 @@ class KWinConfig implements IConfig {
 }
 
 /* HACK: save casting */
-let KWINCONFIG: KWinConfig;
+export let KWINCONFIG: KWinConfig;

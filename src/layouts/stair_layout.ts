@@ -18,7 +18,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class StairLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import { Shortcut } from "../shortcut";
+import Rect from "../util/rect";
+
+export default class StairLayout implements ILayout {
   public static readonly id = "StairLayout";
 
   public readonly classID = StairLayout.id;

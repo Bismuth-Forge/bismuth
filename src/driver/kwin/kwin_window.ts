@@ -18,7 +18,16 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinWindow implements IDriverWindow {
+import { KWINCONFIG } from "./kwin_config";
+import IDriverWindow from "../../idriver_window";
+import ISurface from "../../isurface";
+import KWinSurface from "./kwin_surface";
+import Rect from "../../util/rect";
+import { toQRect, toRect } from "../../util/kwinutil";
+import { clip, matchWords } from "../../util/func";
+import { debugObj } from "../../util/debug";
+
+export default class KWinWindow implements IDriverWindow {
   public static generateID(client: KWin.Client) {
     return String(client) + "/" + client.windowId;
   }

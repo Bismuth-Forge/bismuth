@@ -18,7 +18,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class KWinTimerPool {
+import { debugObj } from "../../util/debug";
+
+export default class KWinTimerPool {
   public static readonly instance = new KWinTimerPool();
 
   public timers: QQmlTimer[];
@@ -60,6 +62,6 @@ class KWinTimerPool {
   }
 }
 
-function KWinSetTimeout(func: () => void, timeout: number) {
+export function KWinSetTimeout(func: () => void, timeout: number) {
   KWinTimerPool.instance.setTimeout(func, timeout);
 }

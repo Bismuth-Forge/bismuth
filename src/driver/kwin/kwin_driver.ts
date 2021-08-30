@@ -18,6 +18,32 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import MonocleLayout from "../../layouts/monocle_layout";
+import TileLayout from "../../layouts/tile_layout";
+import ThreeColumnLayout from "../../layouts/three_column_layout";
+import StairLayout from "../../layouts/stair_layout";
+import SpreadLayout from "../../layouts/spread_layout";
+import FloatingLayout from "../../layouts/floating_layout";
+import QuarterLayout from "../../layouts/quarter_layout";
+
+import TilingEngine from "../../engine/tiling_engine";
+import TilingController from "../../engine/tiling_controler";
+import KWinConfig from "./kwin_config";
+import { KWINCONFIG } from "./kwin_config";
+import IDriverContext from "../../idriver_context";
+import ISurface from "../../isurface";
+import Window from "../../engine/window";
+import KWinSurface from "./kwin_surface";
+import KWinWindow from "./kwin_window";
+import { Shortcut } from "../../shortcut";
+import KWinMousePoller from "./kwin_mouse_poller";
+import { KWinSetTimeout } from "./kwin_set_timeout";
+import { ILayoutClass } from "../../ilayout";
+import { WindowState } from "../../engine/window";
+import WrapperMap from "../../util/wrappermap";
+import { debug, debugObj } from "../../util/debug";
+// import { workspace } from "../../extern/global";
+
 /**
  * Abstracts KDE implementation specific details.
  *
@@ -25,7 +51,7 @@
  * signals(Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
-class KWinDriver implements IDriverContext {
+export default class KWinDriver implements IDriverContext {
   public static backendName: string = "kwin";
 
   // TODO: split context implementation
@@ -99,26 +125,27 @@ class KWinDriver implements IDriverContext {
     this.mousePoller = new KWinMousePoller();
   }
 
-  /*
-   * Main
+  /**
+   * Entry point
    */
-
   public main() {
-    CONFIG = KWINCONFIG = new KWinConfig();
-    debug(() => "Config: " + KWINCONFIG);
+    console.log("Initiating systems!");
 
-    this.bindEvents();
-    this.bindShortcut();
+    // CONFIG = KWINCONFIG = new KWinConfig();
+    // debug(() => "Config: " + KWINCONFIG);
 
-    const clients = workspace.clientList();
-    for (let i = 0; i < clients.length; i++) {
-      const window = this.windowMap.add(clients[i]);
-      this.engine.manage(window);
-      if (window.state !== WindowState.Unmanaged)
-        this.bindWindowEvents(window, clients[i]);
-      else this.windowMap.remove(clients[i]);
-    }
-    this.engine.arrange(this);
+    // this.bindEvents();
+    // this.bindShortcut();
+
+    // const clients = workspace.clientList();
+    // for (let i = 0; i < clients.length; i++) {
+    //   const window = this.windowMap.add(clients[i]);
+    //   this.engine.manage(window);
+    //   if (window.state !== WindowState.Unmanaged)
+    //     this.bindWindowEvents(window, clients[i]);
+    //   else this.windowMap.remove(clients[i]);
+    // }
+    // this.engine.arrange(this);
   }
 
   //#region implement methods of IDriverContext`

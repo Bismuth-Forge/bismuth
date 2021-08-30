@@ -18,7 +18,16 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class QuarterLayout implements ILayout {
+import EngineContext from "../engine/engine_context";
+import { ILayout } from "../ilayout";
+import Window from "../engine/window";
+import { WindowState } from "../engine/window";
+import { clip } from "../util/func";
+import Rect from "../util/rect";
+import RectDelta from "../util/rectdelta";
+// import { CONFIG } from "../config";
+
+export default class QuarterLayout implements ILayout {
   public static readonly MAX_PROPORTION = 0.8;
   public static readonly id = "QuarterLayout";
 

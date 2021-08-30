@@ -18,7 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-class TestDriver {
+import Window from "../../engine/window";
+import ISurface from "../../isurface";
+import Rect from "../../util/rect";
+import TestSurface from "./test_surface";
+// import { CONFIG } from "../../config";
+
+export default class TestDriver {
   public currentScreen: number;
   public currentWindow: number;
   public numScreen: number;
