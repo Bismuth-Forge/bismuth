@@ -50,6 +50,6 @@ Item {
 
     Component.onCompleted: {
         console.log("Bismuth: Initiating the script");
-        Bismuth.init();
+        Bismuth.init(mousePoller);
     }
 }

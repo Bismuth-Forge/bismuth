@@ -114,7 +114,7 @@ export default class KWinDriver implements IDriverContext {
   private entered: boolean;
   private mousePoller: KWinMousePoller;
 
-  constructor() {
+  constructor(qmlMousePoller: Plasma.PlasmaCore.DataSource) {
     this.engine = new TilingEngine();
     this.control = new TilingController(this.engine);
     this.windowMap = new WrapperMap(
@@ -122,7 +122,7 @@ export default class KWinDriver implements IDriverContext {
       (client: KWin.Client) => new Window(new KWinWindow(client))
     );
     this.entered = false;
-    this.mousePoller = new KWinMousePoller();
+    this.mousePoller = new KWinMousePoller(qmlMousePoller);
   }
 
   /**

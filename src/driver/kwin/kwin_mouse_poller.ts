@@ -36,22 +36,24 @@ export default class KWinMousePoller {
   /** poller activates only when count > 0 */
   private startCount: number;
   private cmdResult: string | null;
+  private qmlMousePoller: Plasma.PlasmaCore.DataSource;
 
-  constructor() {
+  constructor(qmlMousePoller: Plasma.PlasmaCore.DataSource) {
     this.startCount = 0;
     this.cmdResult = null;
+    this.qmlMousePoller = qmlMousePoller;
 
     /* we will poll manually, because this interval value will be
      * aligned to intervalAlignment, which probably is 1000. */
-    mousePoller.interval = 0;
+    this.qmlMousePoller.interval = 0;
 
-    mousePoller.onNewData.connect((sourceName: string, data: any) => {
+    this.qmlMousePoller.onNewData.connect((sourceName: string, data: any) => {
       // tslint:disable-next-line:no-string-literal
       this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
-      mousePoller.disconnectSource(KWinMousePoller.COMMAND);
+      this.qmlMousePoller.disconnectSource(KWinMousePoller.COMMAND);
 
       KWinSetTimeout(() => {
-        if (this.started) mousePoller.connectSource(KWinMousePoller.COMMAND);
+        if (this.started) qmlMousePoller.connectSource(KWinMousePoller.COMMAND);
       }, KWinMousePoller.INTERVAL);
     });
   }
@@ -59,7 +61,7 @@ export default class KWinMousePoller {
   public start() {
     this.startCount += 1;
     if (KWINCONFIG.pollMouseXdotool)
-      mousePoller.connectSource(KWinMousePoller.COMMAND);
+      this.qmlMousePoller.connectSource(KWinMousePoller.COMMAND);
   }
 
   public stop() {

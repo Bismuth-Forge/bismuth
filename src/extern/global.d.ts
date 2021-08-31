@@ -24,7 +24,7 @@ declare var options: KWin.Options;
 
 /* QML objects */
 declare var activityInfo: Plasma.TaskManager.ActivityInfo;
-declare var mousePoller: Plasma.PlasmaCore.DataSource;
+// declare var mousePoller: Plasma.PlasmaCore.DataSource;
 declare var scriptRoot: object;
 
 interface PopupDialog {
