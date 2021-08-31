@@ -25,9 +25,7 @@ cp -v res/config.xml $npm_package_config_build_dir/contents/config/main.xml
 
 # Copy and update metadata
 METADATA_FILE=$npm_package_config_build_dir/metadata.desktop
-PROJECT_REV=$(git rev-parse HEAD | cut -b-7)
 
 cp -v res/metadata.desktop $METADATA_FILE
 sed -i "s/\$VER/$npm_package_version/" $METADATA_FILE
-sed -i "s/\$REV/$PROJECT_REV/" $METADATA_FILE
 
