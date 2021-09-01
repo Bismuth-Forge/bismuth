@@ -1,4 +1,5 @@
 // Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -62,9 +63,11 @@ export default class KWinDriver implements IDriverContext {
 
   public get currentSurface(): ISurface {
     return new KWinSurface(
-      workspace.activeClient ? workspace.activeClient.screen : 0,
-      workspace.currentActivity,
-      workspace.currentDesktop
+      this.kwinApi.workspace.activeClient ? this.kwinApi.workspace.activeClient.screen : 0,
+      this.kwinApi.workspace.currentActivity,
+      this.kwinApi.workspace.currentDesktop,
+      this.qml.activityInfo,
+      this.kwinApi
     );
   }
 
@@ -75,28 +78,30 @@ export default class KWinDriver implements IDriverContext {
     // TODO: fousing window on other screen?
     // TODO: find a way to change activity
 
-    if (workspace.currentDesktop !== ksrf.desktop)
-      workspace.currentDesktop = ksrf.desktop;
+    if (this.kwinApi.workspace.currentDesktop !== ksrf.desktop)
+      this.kwinApi.workspace.currentDesktop = ksrf.desktop;
   }
 
   public get currentWindow(): Window | null {
-    const client = workspace.activeClient;
+    const client = this.kwinApi.workspace.activeClient;
     return client ? this.windowMap.get(client) : null;
   }
 
   public set currentWindow(window: Window | null) {
     if (window !== null)
-      workspace.activeClient = (window.window as KWinWindow).client;
+      this.kwinApi.workspace.activeClient = (window.window as KWinWindow).client;
   }
 
   public get screens(): ISurface[] {
     const screens = [];
-    for (let screen = 0; screen < workspace.numScreens; screen++)
+    for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++)
       screens.push(
         new KWinSurface(
           screen,
-          workspace.currentActivity,
-          workspace.currentDesktop
+          this.kwinApi.workspace.currentActivity,
+          this.kwinApi.workspace.currentDesktop,
+          this.qml.activityInfo,
+          this.kwinApi
         )
       );
     return screens;
@@ -113,16 +118,20 @@ export default class KWinDriver implements IDriverContext {
   private windowMap: WrapperMap<KWin.Client, Window>;
   private entered: boolean;
   private mousePoller: KWinMousePoller;
+  private qml: Bismuth.Qml.Main;
+  private kwinApi: KWin.Api;
 
-  constructor(qmlMousePoller: Plasma.PlasmaCore.DataSource) {
+  constructor(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api) {
     this.engine = new TilingEngine();
     this.control = new TilingController(this.engine);
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
-      (client: KWin.Client) => new Window(new KWinWindow(client))
+      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi))
     );
     this.entered = false;
-    this.mousePoller = new KWinMousePoller(qmlMousePoller);
+    this.mousePoller = new KWinMousePoller(qmlObjects);
+    this.qml = qmlObjects;
+    this.kwinApi = kwinScriptingApi;
   }
 
   /**
@@ -150,11 +159,11 @@ export default class KWinDriver implements IDriverContext {
 
   //#region implement methods of IDriverContext`
   public setTimeout(func: () => void, timeout: number) {
-    KWinSetTimeout(() => this.enter(func), timeout);
+    KWinSetTimeout(() => this.enter(func), timeout, this.qml.scriptRoot);
   }
 
   public showNotification(text: string) {
-    popupDialog.show(text);
+    this.qml.popupDialog.show(text);
   }
   //#endregion
 
@@ -234,7 +243,7 @@ export default class KWinDriver implements IDriverContext {
   private connect(signal: QSignal, handler: (..._: any[]) => void): () => void {
     const wrapper = (...args: any[]) => {
       /* HACK: `workspace` become undefined when the script is disabled. */
-      if (typeof workspace === "undefined") signal.disconnect(wrapper);
+      if (typeof this.kwinApi.workspace === "undefined") signal.disconnect(wrapper);
       else this.enter(() => handler.apply(this, args));
     };
     signal.connect(wrapper);
@@ -268,30 +277,32 @@ export default class KWinDriver implements IDriverContext {
   //#endregion
 
   private bindEvents() {
-    this.connect(workspace.numberScreensChanged, (count: number) =>
+    this.connect(this.kwinApi.workspace.numberScreensChanged, (count: number) =>
       this.control.onSurfaceUpdate(this, "screens=" + count)
     );
 
-    this.connect(workspace.screenResized, (screen: number) => {
+    this.connect(this.kwinApi.workspace.screenResized, (screen: number) => {
       const srf = new KWinSurface(
         screen,
-        workspace.currentActivity,
-        workspace.currentDesktop
+        this.kwinApi.workspace.currentActivity,
+        this.kwinApi.workspace.currentDesktop,
+        this.qml.activityInfo,
+        this.kwinApi
       );
       this.control.onSurfaceUpdate(this, "resized " + srf.toString());
     });
 
-    this.connect(workspace.currentActivityChanged, (activity: string) =>
+    this.connect(this.kwinApi.workspace.currentActivityChanged, (activity: string) =>
       this.control.onCurrentSurfaceChanged(this)
     );
 
     this.connect(
-      workspace.currentDesktopChanged,
+      this.kwinApi.workspace.currentDesktopChanged,
       (desktop: number, client: KWin.Client) =>
         this.control.onCurrentSurfaceChanged(this)
     );
 
-    this.connect(workspace.clientAdded, (client: KWin.Client) => {
+    this.connect(this.kwinApi.workspace.clientAdded, (client: KWin.Client) => {
       /* NOTE: windowShown can be fired in various situations.
        *       We need only the first one - when window is created. */
       let handled = false;
@@ -312,7 +323,7 @@ export default class KWinDriver implements IDriverContext {
       this.setTimeout(handler, 50);
     });
 
-    this.connect(workspace.clientRemoved, (client: KWin.Client) => {
+    this.connect(this.kwinApi.workspace.clientRemoved, (client: KWin.Client) => {
       const window = this.windowMap.get(client);
       if (window) {
         this.control.onWindowRemoved(this, window);
@@ -321,7 +332,7 @@ export default class KWinDriver implements IDriverContext {
     });
 
     this.connect(
-      workspace.clientMaximizeSet,
+      this.kwinApi.workspace.clientMaximizeSet,
       (client: KWin.Client, h: boolean, v: boolean) => {
         const maximized = h === true && v === true;
         const window = this.windowMap.get(client);
@@ -333,7 +344,7 @@ export default class KWinDriver implements IDriverContext {
     );
 
     this.connect(
-      workspace.clientFullScreenSet,
+      this.kwinApi.workspace.clientFullScreenSet,
       (client: KWin.Client, fullScreen: boolean, user: boolean) =>
         this.control.onWindowChanged(
           this,
@@ -342,10 +353,10 @@ export default class KWinDriver implements IDriverContext {
         )
     );
 
-    this.connect(workspace.clientMinimized, (client: KWin.Client) => {
+    this.connect(this.kwinApi.workspace.clientMinimized, (client: KWin.Client) => {
       if (KWINCONFIG.preventMinimize) {
         client.minimized = false;
-        workspace.activeClient = client;
+        this.kwinApi.workspace.activeClient = client;
       } else
         this.control.onWindowChanged(
           this,
@@ -354,7 +365,7 @@ export default class KWinDriver implements IDriverContext {
         );
     });
 
-    this.connect(workspace.clientUnminimized, (client: KWin.Client) =>
+    this.connect(this.kwinApi.workspace.clientUnminimized, (client: KWin.Client) =>
       this.control.onWindowChanged(
         this,
         this.windowMap.get(client),

@@ -76,15 +76,15 @@ export default class KWinWindow implements IDriverWindow {
   public get surface(): ISurface {
     let activity;
     if (this.client.activities.length === 0)
-      activity = workspace.currentActivity;
-    else if (this.client.activities.indexOf(workspace.currentActivity) >= 0)
-      activity = workspace.currentActivity;
+      activity = this.kwinApi.workspace.currentActivity;
+    else if (this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >= 0)
+      activity = this.kwinApi.workspace.currentActivity;
     else activity = this.client.activities[0];
 
     const desktop =
-      this.client.desktop >= 0 ? this.client.desktop : workspace.currentDesktop;
+      this.client.desktop >= 0 ? this.client.desktop : this.kwinApi.workspace.currentDesktop;
 
-    return new KWinSurface(this.client.screen, activity, desktop);
+    return new KWinSurface(this.client.screen, activity, desktop, this.qml.activityInfo, this.kwinApi);
   }
 
   public set surface(srf: ISurface) {
@@ -98,13 +98,17 @@ export default class KWinWindow implements IDriverWindow {
 
   private noBorderManaged: boolean;
   private noBorderOriginal: boolean;
+  private qml: Bismuth.Qml.Main;
+  private kwinApi: KWin.Api;
 
-  constructor(client: KWin.Client) {
+  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api) {
     this.client = client;
     this.id = KWinWindow.generateID(client);
     this.maximized = false;
     this.noBorderManaged = false;
     this.noBorderOriginal = client.noBorder;
+    this.qml = qml;
+    this.kwinApi = kwinApi;
   }
 
   public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
@@ -138,10 +142,10 @@ export default class KWinWindow implements IDriverWindow {
       geometry = this.adjustGeometry(geometry);
       if (KWINCONFIG.preventProtrusion) {
         const area = toRect(
-          workspace.clientArea(
+          this.kwinApi.workspace.clientArea(
             KWin.PlacementArea,
             this.client.screen,
-            workspace.currentDesktop
+            this.kwinApi.workspace.currentDesktop
           )
         );
         if (!area.includes(geometry)) {

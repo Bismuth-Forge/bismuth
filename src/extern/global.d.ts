@@ -18,19 +18,20 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-/* KWin global objects */
-declare var workspace: KWin.WorkspaceWrapper;
-declare var options: KWin.Options;
+declare namespace Bismuth {
+  export namespace Qml {
+    export interface Main {
+      scriptRoot: object;
+      activityInfo: Plasma.TaskManager.ActivityInfo;
+      mousePoller: Plasma.PlasmaCore.DataSource;
+      popupDialog: PopupDialog;
+    }
 
-/* QML objects */
-declare var activityInfo: Plasma.TaskManager.ActivityInfo;
-// declare var mousePoller: Plasma.PlasmaCore.DataSource;
-declare var scriptRoot: object;
-
-interface PopupDialog {
-  show(text: string): void;
+    export interface PopupDialog {
+      show(text: string): void;
+    }
+  }
 }
-declare var popupDialog: PopupDialog;
 
 /* Common Javascript globals */
 declare let console: any;

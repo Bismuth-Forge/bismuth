@@ -18,10 +18,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-// API Reference:
-//     https://techbase.kde.org/Development/Tutorials/KWin/Scripting/API_4.9
+// API Reference: https://develop.kde.org/docs/plasma/kwin/api/
 
 declare namespace KWin {
+  interface Api {
+    workspace: KWin.WorkspaceWrapper;
+    options: KWin.Options;
+  }
+
   /* enum ClientAreaOption */
   var PlacementArea: number;
 

@@ -31,7 +31,7 @@ export default class KWinTimerPool {
     this.numTimers = 0;
   }
 
-  public setTimeout(func: () => void, timeout: number) {
+  public setTimeout(func: () => void, timeout: number, scriptRoot: object) {
     if (this.timers.length === 0) {
       this.numTimers++;
       debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
@@ -62,6 +62,6 @@ export default class KWinTimerPool {
   }
 }
 
-export function KWinSetTimeout(func: () => void, timeout: number) {
-  KWinTimerPool.instance.setTimeout(func, timeout);
+export function KWinSetTimeout(func: () => void, timeout: number, scriptRoot: object) {
+  KWinTimerPool.instance.setTimeout(func, timeout, scriptRoot);
 }

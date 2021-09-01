@@ -39,15 +39,21 @@ export default class KWinSurface implements ISurface {
   public readonly activity: string;
   public readonly desktop: number;
 
-  constructor(screen: number, activity: string, desktop: number) {
+  private activityInfo: Plasma.TaskManager.ActivityInfo;
+  private kwinApi: KWin.Api;
+
+  constructor(screen: number, activity: string, desktop: number, activityInfo: Plasma.TaskManager.ActivityInfo, kwinApi: KWin.Api) {
     const activityName = activityInfo.activityName(activity);
+
+    this.activityInfo = activityInfo;
+    this.kwinApi = kwinApi;
 
     this.id = KWinSurface.generateId(screen, activity, desktop);
     this.ignore =
       KWINCONFIG.ignoreActivity.indexOf(activityName) >= 0 ||
       KWINCONFIG.ignoreScreen.indexOf(screen) >= 0;
     this.workingArea = toRect(
-      workspace.clientArea(KWin.PlacementArea, screen, desktop)
+      this.kwinApi.workspace.clientArea(KWin.PlacementArea, screen, desktop)
     );
 
     this.screen = screen;
@@ -56,12 +62,12 @@ export default class KWinSurface implements ISurface {
   }
 
   public next(): ISurface | null {
-    if (this.desktop === workspace.desktops)
+    if (this.desktop === this.kwinApi.workspace.desktops)
       /* this is the last virtual desktop */
       /* TODO: option to create additional desktop */
       return null;
 
-    return new KWinSurface(this.screen, this.activity, this.desktop + 1);
+    return new KWinSurface(this.screen, this.activity, this.desktop + 1, this.activityInfo, this.kwinApi);
   }
 
   public toString(): string {
@@ -69,7 +75,7 @@ export default class KWinSurface implements ISurface {
       "KWinSurface(" +
       [
         this.screen,
-        activityInfo.activityName(this.activity),
+        this.activityInfo.activityName(this.activity),
         this.desktop,
       ].join(", ") +
       ")"

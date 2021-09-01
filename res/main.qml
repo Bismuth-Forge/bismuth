@@ -50,6 +50,19 @@ Item {
 
     Component.onCompleted: {
         console.log("Bismuth: Initiating the script");
-        Bismuth.init(mousePoller);
+
+        const qmlObjects = {
+            scriptRoot: scriptRoot,
+            activityInfo: activityInfo,
+            mousePoller: mousePoller,
+            popupDialog: popupDialog
+        };
+
+        const kwinScriptingAPI = {
+            workspace: workspace,
+            options: options,
+        };
+
+        Bismuth.init(qmlObjects, kwinScriptingAPI);
     }
 }
