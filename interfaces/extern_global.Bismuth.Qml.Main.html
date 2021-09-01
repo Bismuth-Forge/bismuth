@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>QPoint | bismuth</title>
+	<title>Main | bismuth</title>
 	<meta name="description" content="Documentation for bismuth">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,19 @@
 					<a href="../modules.html">bismuth</a>
 				</li>
 				<li>
-					<a href="../modules/extern_qt.html">extern/qt</a>
+					<a href="../modules/extern_global.html">extern/global</a>
 				</li>
 				<li>
-					<a href="extern_qt.QPoint.html">QPoint</a>
+					<a href="../modules/extern_global.Bismuth.html">Bismuth</a>
+				</li>
+				<li>
+					<a href="../modules/extern_global.Bismuth.Qml.html">Qml</a>
+				</li>
+				<li>
+					<a href="extern_global.Bismuth.Qml.Main.html">Main</a>
 				</li>
 			</ul>
-			<h1>Interface QPoint</h1>
+			<h1>Interface Main</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">QPoint</span>
+						<span class="target">Main</span>
 					</li>
 				</ul>
 			</section>
@@ -83,8 +89,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_qt.QPoint.html#x" class="tsd-kind-icon">x</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_qt.QPoint.html#y" class="tsd-kind-icon">y</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_global.Bismuth.Qml.Main.html#activityInfo" class="tsd-kind-icon">activity<wbr>Info</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_global.Bismuth.Qml.Main.html#mousePoller" class="tsd-kind-icon">mouse<wbr>Poller</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_global.Bismuth.Qml.Main.html#popupDialog" class="tsd-kind-icon">popup<wbr>Dialog</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="extern_global.Bismuth.Qml.Main.html#scriptRoot" class="tsd-kind-icon">script<wbr>Root</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,22 +101,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="x" class="tsd-anchor"></a>
-					<h3>x</h3>
-					<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="activityInfo" class="tsd-anchor"></a>
+					<h3>activity<wbr>Info</h3>
+					<div class="tsd-signature tsd-kind-icon">activity<wbr>Info<span class="tsd-signature-symbol">:</span> <a href="extern_plasma.Plasma.TaskManager.ActivityInfo.html" class="tsd-signature-type" data-tsd-kind="Interface">ActivityInfo</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/qt.d.ts#L33">extern/qt.d.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/global.d.ts#L25">extern/global.d.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="y" class="tsd-anchor"></a>
-					<h3>y</h3>
-					<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="mousePoller" class="tsd-anchor"></a>
+					<h3>mouse<wbr>Poller</h3>
+					<div class="tsd-signature tsd-kind-icon">mouse<wbr>Poller<span class="tsd-signature-symbol">:</span> <a href="extern_plasma.Plasma.PlasmaCore.DataSource.html" class="tsd-signature-type" data-tsd-kind="Interface">DataSource</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/qt.d.ts#L34">extern/qt.d.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/global.d.ts#L26">extern/global.d.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="popupDialog" class="tsd-anchor"></a>
+					<h3>popup<wbr>Dialog</h3>
+					<div class="tsd-signature tsd-kind-icon">popup<wbr>Dialog<span class="tsd-signature-symbol">:</span> <a href="extern_global.Bismuth.Qml.PopupDialog.html" class="tsd-signature-type" data-tsd-kind="Interface">PopupDialog</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/global.d.ts#L27">extern/global.d.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="scriptRoot" class="tsd-anchor"></a>
+					<h3>script<wbr>Root</h3>
+					<div class="tsd-signature tsd-kind-icon">script<wbr>Root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/extern/global.d.ts#L24">extern/global.d.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -121,10 +149,15 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/extern_qt.html">extern/qt</a>
+						<a href="../modules/extern_global.html">extern/global</a>
 						<ul>
-							<li class=" tsd-kind-namespace tsd-parent-kind-module">
-								<a href="../modules/extern_qt.Qt.html">Qt</a>
+							<li class="current tsd-kind-namespace tsd-parent-kind-module">
+								<a href="../modules/extern_global.Bismuth.html">Bismuth</a>
+								<ul>
+									<li class="current tsd-kind-namespace tsd-parent-kind-namespace">
+										<a href="../modules/extern_global.Bismuth.Qml.html">Qml</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -132,35 +165,29 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QByteArray.html" class="tsd-kind-icon">QByte<wbr>Array</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QPoint.html" class="tsd-kind-icon">QPoint</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="extern_global.Bismuth.Qml.Main.html" class="tsd-kind-icon">Main</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="extern_qt.QPoint.html#x" class="tsd-kind-icon">x</a>
+								<a href="extern_global.Bismuth.Qml.Main.html#activityInfo" class="tsd-kind-icon">activity<wbr>Info</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="extern_qt.QPoint.html#y" class="tsd-kind-icon">y</a>
+								<a href="extern_global.Bismuth.Qml.Main.html#mousePoller" class="tsd-kind-icon">mouse<wbr>Poller</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="extern_global.Bismuth.Qml.Main.html#popupDialog" class="tsd-kind-icon">popup<wbr>Dialog</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="extern_global.Bismuth.Qml.Main.html#scriptRoot" class="tsd-kind-icon">script<wbr>Root</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QQmlTimer.html" class="tsd-kind-icon">QQml<wbr>Timer</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QRect.html" class="tsd-kind-icon">QRect</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QSignal.html" class="tsd-kind-icon">QSignal</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="extern_qt.QSize.html" class="tsd-kind-icon">QSize</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="extern_global.Bismuth.Qml.PopupDialog.html" class="tsd-kind-icon">Popup<wbr>Dialog</a>
 					</li>
 				</ul>
 			</nav>

@@ -96,9 +96,11 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#activity" class="tsd-kind-icon">activity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_surface.default.html#activityInfo" class="tsd-kind-icon">activity<wbr>Info</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#desktop" class="tsd-kind-icon">desktop</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#ignore" class="tsd-kind-icon">ignore</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_surface.default.html#kwinApi" class="tsd-kind-icon">kwin<wbr>Api</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#screen" class="tsd-kind-icon">screen</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="driver_kwin_kwin_surface.default.html#workingArea" class="tsd-kind-icon">working<wbr>Area</a></li>
 							</ul>
@@ -120,13 +122,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new default<span class="tsd-signature-symbol">(</span>screen<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, activity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, desktop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_kwin_kwin_surface.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></li>
+						<li class="tsd-signature tsd-kind-icon">new default<span class="tsd-signature-symbol">(</span>screen<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, activity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, desktop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, activityInfo<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_plasma.Plasma.TaskManager.ActivityInfo.html" class="tsd-signature-type" data-tsd-kind="Interface">ActivityInfo</a>, kwinApi<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_kwin_kwin_surface.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L42">driver/kwin/kwin_surface.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L45">driver/kwin/kwin_surface.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -139,6 +141,12 @@
 								</li>
 								<li>
 									<h5>desktop: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>activityInfo: <a href="../interfaces/extern_plasma.Plasma.TaskManager.ActivityInfo.html" class="tsd-signature-type" data-tsd-kind="Interface">ActivityInfo</a></h5>
+								</li>
+								<li>
+									<h5>kwinApi: <a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="driver_kwin_kwin_surface.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
@@ -154,7 +162,17 @@
 					<div class="tsd-signature tsd-kind-icon">activity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L39">driver/kwin/kwin_surface.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L39">driver/kwin/kwin_surface.ts:39</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="activityInfo" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> activity<wbr>Info</h3>
+					<div class="tsd-signature tsd-kind-icon">activity<wbr>Info<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_plasma.Plasma.TaskManager.ActivityInfo.html" class="tsd-signature-type" data-tsd-kind="Interface">ActivityInfo</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L42">driver/kwin/kwin_surface.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">desktop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L40">driver/kwin/kwin_surface.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L40">driver/kwin/kwin_surface.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +193,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/isurface.default.html">default</a>.<a href="../interfaces/isurface.default.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L34">driver/kwin/kwin_surface.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L34">driver/kwin/kwin_surface.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -186,7 +204,17 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/isurface.default.html">default</a>.<a href="../interfaces/isurface.default.html#ignore">ignore</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L35">driver/kwin/kwin_surface.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L35">driver/kwin/kwin_surface.ts:35</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="kwinApi" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> kwin<wbr>Api</h3>
+					<div class="tsd-signature tsd-kind-icon">kwin<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L43">driver/kwin/kwin_surface.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -196,7 +224,7 @@
 					<div class="tsd-signature tsd-kind-icon">screen<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L38">driver/kwin/kwin_surface.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L38">driver/kwin/kwin_surface.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,7 +235,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/isurface.default.html">default</a>.<a href="../interfaces/isurface.default.html#workingArea">workingArea</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L36">driver/kwin/kwin_surface.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L36">driver/kwin/kwin_surface.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -225,7 +253,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/isurface.default.html">default</a>.<a href="../interfaces/isurface.default.html#next">next</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L58">driver/kwin/kwin_surface.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L64">driver/kwin/kwin_surface.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/isurface.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a></h4>
@@ -242,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L67">driver/kwin/kwin_surface.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L73">driver/kwin/kwin_surface.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -259,7 +287,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/eb51e0c/src/driver/kwin/kwin_surface.ts#L27">driver/kwin/kwin_surface.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_surface.ts#L27">driver/kwin/kwin_surface.ts:27</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -304,6 +332,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="driver_kwin_kwin_surface.default.html#activity" class="tsd-kind-icon">activity</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="driver_kwin_kwin_surface.default.html#activityInfo" class="tsd-kind-icon">activity<wbr>Info</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="driver_kwin_kwin_surface.default.html#desktop" class="tsd-kind-icon">desktop</a>
 							</li>
@@ -312,6 +343,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="driver_kwin_kwin_surface.default.html#ignore" class="tsd-kind-icon">ignore</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="driver_kwin_kwin_surface.default.html#kwinApi" class="tsd-kind-icon">kwin<wbr>Api</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="driver_kwin_kwin_surface.default.html#screen" class="tsd-kind-icon">screen</a>
@@ -360,6 +394,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
