@@ -40,9 +40,8 @@ import { KWinSetTimeout } from "./kwin_set_timeout";
 import { ILayoutClass } from "../../ilayout";
 import { WindowState } from "../../engine/window";
 import WrapperMap from "../../util/wrappermap";
-import { debug, debugObj } from "../../util/debug";
 import IConfig, { Config } from "../../config";
-// import { workspace } from "../../extern/global";
+import Debug from "../../util/debug";
 
 /**
  * Abstracts KDE implementation specific details.
@@ -123,24 +122,38 @@ export default class KWinDriver implements IDriverContext {
   private kwinApi: KWin.Api;
 
   private config: IConfig;
+  private debug: Debug;
 
-  constructor(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api, config?: IConfig) {
+  /**
+   * @param qmlObjects objects from QML gui. Required for the interaction with QML, as we cannot access globals.
+   * @param kwinApi KWin scripting API. Required for interaction with KWin, as we cannot access globals.
+   * @param config Bismuth configuration. If none is provided, the configuration is read from KConfig (in most cases from config file).
+   */
+  constructor(qmlObjects: Bismuth.Qml.Main, kwinApi: KWin.Api, config?: IConfig) {
     if (config) {
       this.config = config;
     } else {
-      this.config = new Config();
+      this.config = new Config(kwinApi);
+    }
+    this.debug = new Debug(this.config);
+
+    if (this.config.preventMinimize && this.config.monocleMinimizeRest) {
+      this.debug.debug(
+        () => "preventMinimize is disabled because of monocleMinimizeRest."
+      );
+      this.config.preventMinimize = false;
     }
 
-    this.engine = new TilingEngine(this.config);
-    this.control = new TilingController(this.engine, this.config);
+    this.engine = new TilingEngine(this.config, this.debug);
+    this.control = new TilingController(this.engine, this.config, this.debug);
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
-      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi, this.config), this.config)
+      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi, this.config, this.debug), this.config, this.debug)
     );
     this.entered = false;
-    this.mousePoller = new KWinMousePoller(qmlObjects, this.config);
+    this.mousePoller = new KWinMousePoller(qmlObjects, this.config, this.debug);
     this.qml = qmlObjects;
-    this.kwinApi = kwinScriptingApi;
+    this.kwinApi = kwinApi;
   }
 
   /**
@@ -149,12 +162,7 @@ export default class KWinDriver implements IDriverContext {
   public main() {
     console.log("Initiating systems!");
 
-    // DEBUG = {
-    //   enabled: false,
-    //   started: new Date().getTime(),
-    // };
-
-    // debug(() => "Config: " + this.config);
+    this.debug.debug(() => "Config: " + this.config);
 
     this.bindEvents();
     this.bindShortcut();
@@ -172,7 +180,7 @@ export default class KWinDriver implements IDriverContext {
 
   //#region implement methods of IDriverContext`
   public setTimeout(func: () => void, timeout: number) {
-    KWinSetTimeout(() => this.enter(func), timeout, this.qml.scriptRoot);
+    KWinSetTimeout(() => this.enter(func), timeout, this.qml.scriptRoot, this.debug);
   }
 
   public showNotification(text: string) {
@@ -181,8 +189,8 @@ export default class KWinDriver implements IDriverContext {
   //#endregion
 
   private bindShortcut() {
-    if (!KWin.registerShortcut) {
-      debug(
+    if (!this.kwinApi.KWin.registerShortcut) {
+      this.debug.debug(
         () => "KWin.registerShortcut doesn't exist. Omitting shortcut binding."
       );
       return;
@@ -191,7 +199,7 @@ export default class KWinDriver implements IDriverContext {
     const bind = (seq: string, title: string, input: Shortcut) => {
       title = "Krohnkite: " + title;
       seq = "Meta+" + seq;
-      KWin.registerShortcut(title, "", seq, () => {
+      this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
         this.enter(() => this.control.onShortcut(this, input));
       });
     };
@@ -232,7 +240,7 @@ export default class KWinDriver implements IDriverContext {
     ) => {
       title = "Krohnkite: " + title + " Layout";
       seq = seq !== "" ? "Meta+" + seq : "";
-      KWin.registerShortcut(title, "", seq, () => {
+      this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
         this.enter(() =>
           this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id)
         );
@@ -268,7 +276,7 @@ export default class KWinDriver implements IDriverContext {
    * Run the given function in a protected(?) context to prevent nested event
    * handling.
    *
-   * KWin emits signals as soons as window states are changed, even when
+   * KWin emits signals as soon as window states are changed, even when
    * those states are modified by the script. This causes multiple re-entry
    * during event handling, resulting in performance degradation and harder
    * debugging.
@@ -282,7 +290,7 @@ export default class KWinDriver implements IDriverContext {
     } catch (e) {
       // TODO: investigate why this line prevents compiling
       // debug(() => "Error raised from line " + e.lineNumber);
-      debug(() => e);
+      this.debug.debug(() => e);
     } finally {
       this.entered = false;
     }
@@ -397,7 +405,7 @@ export default class KWinDriver implements IDriverContext {
     let resizing = false;
 
     this.connect(client.moveResizedChanged, () => {
-      debugObj(() => [
+      this.debug.debugObj(() => [
         "moveResizedChanged",
         { window, move: client.move, resize: client.resize },
       ]);

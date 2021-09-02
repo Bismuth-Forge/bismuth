@@ -55,7 +55,7 @@ export default class KWinSurface implements ISurface {
       this.config.ignoreActivity.indexOf(activityName) >= 0 ||
       this.config.ignoreScreen.indexOf(screen) >= 0;
     this.workingArea = toRect(
-      this.kwinApi.workspace.clientArea(KWin.PlacementArea, screen, desktop)
+      this.kwinApi.workspace.clientArea(this.kwinApi.KWin.PlacementArea, screen, desktop)
     );
 
     this.screen = screen;

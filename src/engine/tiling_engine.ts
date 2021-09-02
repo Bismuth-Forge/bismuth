@@ -30,9 +30,9 @@ import { Shortcut } from "../shortcut";
 import { WindowState } from "./window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import { debug, debugObj } from "../util/debug";
 import { overlap, wrapIndex } from "../util/func";
 import IConfig from "../config";
+import Debug from "../util/debug";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -44,9 +44,11 @@ export default class TilingEngine {
   public windows: WindowStore;
 
   private config: IConfig;
+  private debug: Debug;
 
-  constructor(config: IConfig) {
+  constructor(config: IConfig, debug: Debug) {
     this.config = config;
+    this.debug = debug;
     this.layouts = new LayoutStore(this.config);
     this.windows = new WindowStore();
   }
@@ -199,7 +201,7 @@ export default class TilingEngine {
    * Arrange tiles on all screens.
    */
   public arrange(ctx: IDriverContext) {
-    debug(() => "arrange");
+    this.debug.debug(() => "arrange");
     ctx.screens.forEach((srf: ISurface) => {
       this.arrangeScreen(ctx, srf);
     });
@@ -225,7 +227,7 @@ export default class TilingEngine {
       );
 
     const visibles = this.windows.getVisibleWindows(srf);
-    debugObj(() => [
+    this.debug.debugObj(() => [
       "arrangeScreen",
       {
         layout,
@@ -266,7 +268,7 @@ export default class TilingEngine {
     }
 
     visibles.forEach((window) => window.commit());
-    debugObj(() => ["arrangeScreen/finished", { srf }]);
+    this.debug.debugObj(() => ["arrangeScreen/finished", { srf }]);
   }
 
   /**

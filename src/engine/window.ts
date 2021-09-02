@@ -21,7 +21,7 @@
 import IConfig from "../config";
 import IDriverWindow from "../idriver_window";
 import ISurface from "../isurface";
-import { debugObj } from "../util/debug";
+import Debug from "../util/debug";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 
@@ -154,9 +154,11 @@ export default class Window {
   private weightMap: { [key: string]: number };
 
   private config: IConfig;
+  private debug: Debug;
 
-  constructor(window: IDriverWindow, config: IConfig) {
+  constructor(window: IDriverWindow, config: IConfig, debug: Debug) {
     this.config = config;
+    this.debug = debug;
 
     this.id = window.id;
     this.window = window;
@@ -172,7 +174,7 @@ export default class Window {
 
   public commit() {
     const state = this.state;
-    debugObj(() => ["Window#commit", { state: WindowState[state] }]);
+    this.debug.debugObj(() => ["Window#commit", { state: WindowState[state] }]);
     switch (state) {
       case WindowState.NativeMaximized:
         this.window.commit(undefined, undefined, false);

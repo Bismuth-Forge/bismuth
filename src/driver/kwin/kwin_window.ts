@@ -24,8 +24,8 @@ import KWinSurface from "./kwin_surface";
 import Rect from "../../util/rect";
 import { toQRect, toRect } from "../../util/kwinutil";
 import { clip, matchWords } from "../../util/func";
-import { debugObj } from "../../util/debug";
 import IConfig from "../../config";
+import Debug from "../../util/debug";
 
 export default class KWinWindow implements IDriverWindow {
   public static generateID(client: KWin.Client) {
@@ -101,8 +101,9 @@ export default class KWinWindow implements IDriverWindow {
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
   private config: IConfig;
+  private debug: Debug;
 
-  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api, config: IConfig) {
+  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api, config: IConfig, debug: Debug) {
     this.client = client;
     this.id = KWinWindow.generateID(client);
     this.maximized = false;
@@ -111,10 +112,11 @@ export default class KWinWindow implements IDriverWindow {
     this.qml = qml;
     this.kwinApi = kwinApi;
     this.config = config;
+    this.debug = debug;
   }
 
   public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
-    debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
+    this.debug.debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
 
     if (this.client.move || this.client.resize) return;
 
@@ -145,7 +147,7 @@ export default class KWinWindow implements IDriverWindow {
       if (this.config.preventProtrusion) {
         const area = toRect(
           this.kwinApi.workspace.clientArea(
-            KWin.PlacementArea,
+            this.kwinApi.KWin.PlacementArea,
             this.client.screen,
             this.kwinApi.workspace.currentDesktop
           )

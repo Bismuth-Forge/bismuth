@@ -61,6 +61,7 @@ Item {
         const kwinScriptingAPI = {
             workspace: workspace,
             options: options,
+            KWin: KWin
         };
 
         Bismuth.init(qmlObjects, kwinScriptingAPI);

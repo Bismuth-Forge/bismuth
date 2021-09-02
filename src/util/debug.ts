@@ -1,4 +1,5 @@
 // Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -18,29 +19,32 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-declare global {
-  var DEBUG: any
-}
+import IConfig from "../config";
 
-var DEBUG = {
-  enabled: false,
-  started: new Date().getTime(),
-};
+export default class Debug {
+  private enabled: boolean;
+  private started: number;
 
-export function debug(f: () => any) {
-  if (DEBUG.enabled) {
-    const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
-    console.log("[" + timestamp + "]", f()); // tslint:disable-line:no-console
+  constructor(config: IConfig) {
+    this.enabled = config.debugEnabled;
+    this.started = new Date().getTime();
   }
-}
 
-export function debugObj(f: () => [string, any]) {
-  if (DEBUG.enabled) {
-    const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
-    const [name, obj] = f();
-    const buf = [];
-    for (const i in obj) buf.push(i + "=" + obj[i]);
+  public debug(f: () => any): void {
+    if (this.enabled) {
+      const timestamp = (new Date().getTime() - this.started) / 1000;
+      console.log("[" + timestamp + "]", f()); // tslint:disable-line:no-console
+    }
+  }
 
-    console.log("[" + timestamp + "]", name + ": " + buf.join(" ")); // tslint:disable-line:no-console
+  public debugObj(f: () => [string, any]): void {
+    if (this.enabled) {
+      const timestamp = (new Date().getTime() - this.started) / 1000;
+      const [name, obj] = f();
+      const buf = [];
+      for (const i in obj) buf.push(i + "=" + obj[i]);
+
+      console.log("[" + timestamp + "]", name + ": " + buf.join(" ")); // tslint:disable-line:no-console
+    }
   }
 }

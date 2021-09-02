@@ -1,4 +1,5 @@
 // Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -20,23 +21,19 @@
 
 // API Reference: https://develop.kde.org/docs/plasma/kwin/api/
 
+// TODO: Register the rest of the API
 declare namespace KWin {
   interface Api {
     workspace: KWin.WorkspaceWrapper;
     options: KWin.Options;
+    KWin: KWin.KWin;
   }
 
-  /* enum ClientAreaOption */
-  var PlacementArea: number;
-
-  function readConfig(key: string, defaultValue?: any): any;
-
-  function registerShortcut(
-    title: string,
-    text: string,
-    keySequence: string,
-    callback: any
-  ): boolean;
+  interface KWin {
+    readConfig(key: string, defaultValue?: any): any;
+    registerShortcut(title: string, text: string, keySequence: string, callback: any): boolean;
+    PlacementArea: number;
+  }
 
   interface WorkspaceWrapper {
     /* read-only */

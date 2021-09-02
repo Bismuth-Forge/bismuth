@@ -23,8 +23,8 @@ import IDriverContext from "../idriver_context";
 import Window from "./window";
 import { WindowState } from "./window";
 import { Shortcut } from "../shortcut";
-import { debugObj } from "../util/debug";
 import IConfig from "../config";
+import Debug from "../util/debug";
 
 /**
  * TilingController translates events to actions, implementing high-level
@@ -35,24 +35,26 @@ import IConfig from "../config";
 export default class TilingController {
   private engine: TilingEngine;
   private config: IConfig;
+  private debug: Debug;
 
-  public constructor(engine: TilingEngine, config: IConfig) {
+  public constructor(engine: TilingEngine, config: IConfig, debug: Debug) {
     this.engine = engine;
     this.config = config;
+    this.debug = debug;
   }
 
   public onSurfaceUpdate(ctx: IDriverContext, comment: string): void {
-    debugObj(() => ["onSurfaceUpdate", { comment }]);
+    this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
     this.engine.arrange(ctx);
   }
 
   public onCurrentSurfaceChanged(ctx: IDriverContext): void {
-    debugObj(() => ["onCurrentSurfaceChanged", { srf: ctx.currentSurface }]);
+    this.debug.debugObj(() => ["onCurrentSurfaceChanged", { srf: ctx.currentSurface }]);
     this.engine.arrange(ctx);
   }
 
   public onWindowAdded(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowAdded", { window }]);
+    this.debug.debugObj(() => ["onWindowAdded", { window }]);
     this.engine.manage(window);
 
     /* move window to next surface if the current surface is "full" */
@@ -74,7 +76,7 @@ export default class TilingController {
   }
 
   public onWindowRemoved(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowRemoved", { window }]);
+    this.debug.debugObj(() => ["onWindowRemoved", { window }]);
     this.engine.unmanage(window);
     this.engine.arrange(ctx);
   }
@@ -88,7 +90,7 @@ export default class TilingController {
   }
 
   public onWindowMoveOver(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowMoveOver", { window }]);
+    this.debug.debugObj(() => ["onWindowMoveOver", { window }]);
 
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
@@ -129,7 +131,7 @@ export default class TilingController {
   }
 
   public onWindowResize(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowResize", { window }]);
+    this.debug.debugObj(() => ["onWindowResize", { window }]);
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
         this.engine.adjustLayout(window);
@@ -139,7 +141,7 @@ export default class TilingController {
   }
 
   public onWindowResizeOver(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowResizeOver", { window }]);
+    this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange(ctx);
@@ -155,7 +157,7 @@ export default class TilingController {
   }
 
   public onWindowGeometryChanged(ctx: IDriverContext, window: Window): void {
-    debugObj(() => ["onWindowGeometryChanged", { window }]);
+    this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
     this.engine.enforceSize(ctx, window);
   }
 
@@ -167,7 +169,7 @@ export default class TilingController {
     comment?: string
   ): void {
     if (window) {
-      debugObj(() => ["onWindowChanged", { window, comment }]);
+      this.debug.debugObj(() => ["onWindowChanged", { window, comment }]);
 
       if (comment === "unminimized") ctx.currentWindow = window;
 

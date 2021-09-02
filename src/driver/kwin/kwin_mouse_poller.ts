@@ -19,6 +19,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 import IConfig from "../../config";
+import Debug from "../../util/debug";
 import { KWinSetTimeout } from "./kwin_set_timeout";
 
 export default class KWinMousePoller {
@@ -39,7 +40,7 @@ export default class KWinMousePoller {
   private qml: Bismuth.Qml.Main;
   private config: IConfig;
 
-  constructor(qml: Bismuth.Qml.Main, config: IConfig) {
+  constructor(qml: Bismuth.Qml.Main, config: IConfig, debug: Debug) {
     this.startCount = 0;
     this.cmdResult = null;
     this.qml = qml;
@@ -56,7 +57,7 @@ export default class KWinMousePoller {
 
       KWinSetTimeout(() => {
         if (this.started) qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
-      }, KWinMousePoller.INTERVAL, this.qml.scriptRoot);
+      }, KWinMousePoller.INTERVAL, this.qml.scriptRoot, debug);
     });
   }
 

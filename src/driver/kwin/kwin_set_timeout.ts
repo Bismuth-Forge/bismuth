@@ -18,7 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-import { debugObj } from "../../util/debug";
+import Debug from "../../util/debug";
 
 export default class KWinTimerPool {
   public static readonly instance = new KWinTimerPool();
@@ -31,10 +31,10 @@ export default class KWinTimerPool {
     this.numTimers = 0;
   }
 
-  public setTimeout(func: () => void, timeout: number, scriptRoot: object) {
+  public setTimeout(func: () => void, timeout: number, scriptRoot: object, debug: Debug) {
     if (this.timers.length === 0) {
       this.numTimers++;
-      debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
+      debug.debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
     }
 
     const timer: QQmlTimer =
@@ -62,6 +62,6 @@ export default class KWinTimerPool {
   }
 }
 
-export function KWinSetTimeout(func: () => void, timeout: number, scriptRoot: object) {
-  KWinTimerPool.instance.setTimeout(func, timeout, scriptRoot);
+export function KWinSetTimeout(func: () => void, timeout: number, scriptRoot: object, debug: Debug) {
+  KWinTimerPool.instance.setTimeout(func, timeout, scriptRoot, debug);
 }

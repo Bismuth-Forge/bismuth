@@ -18,9 +18,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-
 import KWinDriver from "./driver/kwin/kwin_driver"
 
+/**
+ * Script entry-point from QML side.
+ * @param qmlObjects objects from QML gui. Required for the interaction with QML, as we cannot access globals.
+ * @param kwinApi KWin scripting API. Required for interaction with KWin, as we cannot access globals.
+ */
 export function init(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api) {
   const driver = new KWinDriver(qmlObjects, kwinScriptingApi)
   driver.main()
