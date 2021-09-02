@@ -105,6 +105,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_driver.default.html#config" class="tsd-kind-icon">config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_driver.default.html#control" class="tsd-kind-icon">control</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_driver.default.html#engine" class="tsd-kind-icon">engine</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_kwin_kwin_driver.default.html#entered" class="tsd-kind-icon">entered</a></li>
@@ -147,13 +148,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new default<span class="tsd-signature-symbol">(</span>qmlObjects<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a>, kwinScriptingApi<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_kwin_kwin_driver.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></li>
+						<li class="tsd-signature tsd-kind-icon">new default<span class="tsd-signature-symbol">(</span>qmlObjects<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a>, kwinScriptingApi<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a>, config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_kwin_kwin_driver.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L124">driver/kwin/kwin_driver.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L127">driver/kwin/kwin_driver.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -164,6 +165,9 @@
 								<li>
 									<h5>kwinScriptingApi: <a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a></h5>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/config.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="driver_kwin_kwin_driver.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
 						</li>
@@ -173,12 +177,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="config" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L125">driver/kwin/kwin_driver.ts:125</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="control" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> control</h3>
 					<div class="tsd-signature tsd-kind-icon">control<span class="tsd-signature-symbol">:</span> <a href="engine_tiling_controler.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L117">driver/kwin/kwin_driver.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L118">driver/kwin/kwin_driver.ts:118</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -188,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">engine<span class="tsd-signature-symbol">:</span> <a href="engine_tiling_engine.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L116">driver/kwin/kwin_driver.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L117">driver/kwin/kwin_driver.ts:117</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -198,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">entered<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L119">driver/kwin/kwin_driver.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L120">driver/kwin/kwin_driver.ts:120</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -208,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">kwin<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L122">driver/kwin/kwin_driver.ts:122</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L123">driver/kwin/kwin_driver.ts:123</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -218,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">mouse<wbr>Poller<span class="tsd-signature-symbol">:</span> <a href="driver_kwin_kwin_mouse_poller.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L120">driver/kwin/kwin_driver.ts:120</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L121">driver/kwin/kwin_driver.ts:121</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">qml<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L121">driver/kwin/kwin_driver.ts:121</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L122">driver/kwin/kwin_driver.ts:122</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -238,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">window<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="util_wrappermap.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/extern_kwin.KWin.Client.html" class="tsd-signature-type" data-tsd-kind="Interface">Client</a><span class="tsd-signature-symbol">, </span><a href="engine_window.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L118">driver/kwin/kwin_driver.ts:118</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L119">driver/kwin/kwin_driver.ts:119</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -248,7 +262,7 @@
 					<div class="tsd-signature tsd-kind-icon">backend<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;kwin&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L56">driver/kwin/kwin_driver.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L55">driver/kwin/kwin_driver.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -266,7 +280,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#backend">backend</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L60">driver/kwin/kwin_driver.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L59">driver/kwin/kwin_driver.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -285,7 +299,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L64">driver/kwin/kwin_driver.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L63">driver/kwin/kwin_driver.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/isurface.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a></h4>
@@ -294,7 +308,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L74">driver/kwin/kwin_driver.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L74">driver/kwin/kwin_driver.ts:74</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -319,7 +333,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L85">driver/kwin/kwin_driver.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L85">driver/kwin/kwin_driver.ts:85</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
@@ -328,7 +342,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L90">driver/kwin/kwin_driver.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L90">driver/kwin/kwin_driver.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -352,7 +366,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#cursorPosition">cursorPosition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L110">driver/kwin/kwin_driver.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L111">driver/kwin/kwin_driver.ts:111</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4>
@@ -370,7 +384,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#screens">screens</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L95">driver/kwin/kwin_driver.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L95">driver/kwin/kwin_driver.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/isurface.default.html" class="tsd-signature-type" data-tsd-kind="Interface">default</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -390,7 +404,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L279">driver/kwin/kwin_driver.ts:279</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L292">driver/kwin/kwin_driver.ts:292</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -407,7 +421,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L170">driver/kwin/kwin_driver.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L183">driver/kwin/kwin_driver.ts:183</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -424,7 +438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L381">driver/kwin/kwin_driver.ts:381</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L395">driver/kwin/kwin_driver.ts:395</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -450,7 +464,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L243">driver/kwin/kwin_driver.ts:243</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L256">driver/kwin/kwin_driver.ts:256</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -518,7 +532,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L263">driver/kwin/kwin_driver.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L276">driver/kwin/kwin_driver.ts:276</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,7 +577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L140">driver/kwin/kwin_driver.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L149">driver/kwin/kwin_driver.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -586,7 +600,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#setTimeout">setTimeout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L161">driver/kwin/kwin_driver.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L174">driver/kwin/kwin_driver.ts:174</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -625,7 +639,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/idriver_context.default.html">default</a>.<a href="../interfaces/idriver_context.default.html#showNotification">showNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/24d5573/src/driver/kwin/kwin_driver.ts#L165">driver/kwin/kwin_driver.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/33ae26a/src/driver/kwin/kwin_driver.ts#L178">driver/kwin/kwin_driver.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -660,6 +674,9 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="driver_kwin_kwin_driver.default.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="driver_kwin_kwin_driver.default.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="driver_kwin_kwin_driver.default.html#control" class="tsd-kind-icon">control</a>
