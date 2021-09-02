@@ -168,6 +168,3 @@ export default class KWinConfig implements IConfig {
     return "Config(" + JSON.stringify(this, undefined, 2) + ")";
   }
 }
-
-/* HACK: save casting */
-export let KWINCONFIG: KWinConfig;

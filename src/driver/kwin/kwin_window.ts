@@ -18,7 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-import { KWINCONFIG } from "./kwin_config";
 import IDriverWindow from "../../idriver_window";
 import ISurface from "../../isurface";
 import KWinSurface from "./kwin_surface";

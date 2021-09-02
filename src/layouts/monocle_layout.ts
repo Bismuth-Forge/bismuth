@@ -24,7 +24,6 @@ import KWinWindow from "../driver/kwin/kwin_window";
 import Window from "../engine/window";
 // import { CONFIG } from "../config";
 import { ILayout } from "../ilayout";
-import { KWINCONFIG } from "../driver/kwin/kwin_config";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";

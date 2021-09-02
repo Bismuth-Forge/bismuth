@@ -19,9 +19,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 import IConfig from "./iconfig";
+import KWinConfig from "./driver/kwin/kwin_config";
 
 declare global {
     var CONFIG: IConfig;
+    var KWINCONFIG: KWinConfig;
 }
-
-// export let CONFIG: IConfig;
