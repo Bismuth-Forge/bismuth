@@ -22,11 +22,11 @@ import EngineContext from "../engine/engine_context";
 import KWinDriver from "../driver/kwin/kwin_driver";
 import KWinWindow from "../driver/kwin/kwin_window";
 import Window from "../engine/window";
-// import { CONFIG } from "../config";
 import { ILayout } from "../ilayout";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
+import IConfig from "../config";
 
 export default class MonocleLayout implements ILayout {
   public static readonly id = "MonocleLayout";
@@ -34,10 +34,16 @@ export default class MonocleLayout implements ILayout {
 
   public readonly classID = MonocleLayout.id;
 
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
+  }
+
   public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
     /* Tile all tileables */
     tileables.forEach((tile) => {
-      tile.state = CONFIG.monocleMaximize
+      tile.state = this.config.monocleMaximize
         ? WindowState.Maximized
         : WindowState.Tiled;
       tile.geometry = area;
@@ -46,7 +52,7 @@ export default class MonocleLayout implements ILayout {
     /* KWin-specific `monocleMinimizeRest` option */
     if (
       ctx.backend === KWinDriver.backendName &&
-      KWINCONFIG.monocleMinimizeRest
+      this.config.monocleMinimizeRest
     ) {
       const tiles = [...tileables];
       ctx.setTimeout(() => {

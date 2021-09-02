@@ -22,9 +22,9 @@ import TilingEngine from "./tiling_engine";
 import IDriverContext from "../idriver_context";
 import Window from "./window";
 import { WindowState } from "./window";
-// import { CONFIG } from "../config";
 import { Shortcut } from "../shortcut";
 import { debugObj } from "../util/debug";
+import IConfig from "../config";
 
 /**
  * TilingController translates events to actions, implementing high-level
@@ -34,9 +34,11 @@ import { debugObj } from "../util/debug";
  */
 export default class TilingController {
   private engine: TilingEngine;
+  private config: IConfig;
 
-  public constructor(engine: TilingEngine) {
+  public constructor(engine: TilingEngine, config: IConfig) {
     this.engine = engine;
+    this.config = config;
   }
 
   public onSurfaceUpdate(ctx: IDriverContext, comment: string): void {
@@ -128,7 +130,7 @@ export default class TilingController {
 
   public onWindowResize(ctx: IDriverContext, window: Window): void {
     debugObj(() => ["onWindowResize", { window }]);
-    if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
+    if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
         this.engine.adjustLayout(window);
         this.engine.arrange(ctx);
@@ -138,10 +140,10 @@ export default class TilingController {
 
   public onWindowResizeOver(ctx: IDriverContext, window: Window): void {
     debugObj(() => ["onWindowResizeOver", { window }]);
-    if (CONFIG.adjustLayout && window.tiled) {
+    if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange(ctx);
-    } else if (!CONFIG.adjustLayout) this.engine.enforceSize(ctx, window);
+    } else if (!this.config.adjustLayout) this.engine.enforceSize(ctx, window);
   }
 
   public onWindowMaximizeChanged(
@@ -178,7 +180,7 @@ export default class TilingController {
   }
 
   public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
-    if (CONFIG.directionalKeyMode === "focus") {
+    if (this.config.directionalKeyMode === "focus") {
       switch (input) {
         case Shortcut.Up:
           input = Shortcut.FocusUp;

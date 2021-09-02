@@ -25,6 +25,7 @@ import Rect from "../../util/rect";
 import { toQRect, toRect } from "../../util/kwinutil";
 import { clip, matchWords } from "../../util/func";
 import { debugObj } from "../../util/debug";
+import IConfig from "../../config";
 
 export default class KWinWindow implements IDriverWindow {
   public static generateID(client: KWin.Client) {
@@ -49,10 +50,10 @@ export default class KWinWindow implements IDriverWindow {
     return (
       this.client.specialWindow ||
       resourceClass === "plasmashell" ||
-      KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0 ||
-      KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0 ||
-      matchWords(this.client.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-      KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0
+      this.config.ignoreClass.indexOf(resourceClass) >= 0 ||
+      this.config.ignoreClass.indexOf(resourceName) >= 0 ||
+      matchWords(this.client.caption, this.config.ignoreTitle) >= 0 ||
+      this.config.ignoreRole.indexOf(windowRole) >= 0
     );
   }
 
@@ -62,11 +63,11 @@ export default class KWinWindow implements IDriverWindow {
     return (
       this.client.modal ||
       !this.client.resizeable ||
-      (KWINCONFIG.floatUtility &&
+      (this.config.floatUtility &&
         (this.client.dialog || this.client.splash || this.client.utility)) ||
-      KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0 ||
-      KWINCONFIG.floatingClass.indexOf(resourceName) >= 0 ||
-      matchWords(this.client.caption, KWINCONFIG.floatingTitle) >= 0
+      this.config.floatingClass.indexOf(resourceClass) >= 0 ||
+      this.config.floatingClass.indexOf(resourceName) >= 0 ||
+      matchWords(this.client.caption, this.config.floatingTitle) >= 0
     );
   }
 
@@ -83,7 +84,7 @@ export default class KWinWindow implements IDriverWindow {
     const desktop =
       this.client.desktop >= 0 ? this.client.desktop : this.kwinApi.workspace.currentDesktop;
 
-    return new KWinSurface(this.client.screen, activity, desktop, this.qml.activityInfo, this.kwinApi);
+    return new KWinSurface(this.client.screen, activity, desktop, this.qml.activityInfo, this.kwinApi, this.config);
   }
 
   public set surface(srf: ISurface) {
@@ -99,8 +100,9 @@ export default class KWinWindow implements IDriverWindow {
   private noBorderOriginal: boolean;
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
+  private config: IConfig;
 
-  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api) {
+  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api, config: IConfig) {
     this.client = client;
     this.id = KWinWindow.generateID(client);
     this.maximized = false;
@@ -108,6 +110,7 @@ export default class KWinWindow implements IDriverWindow {
     this.noBorderOriginal = client.noBorder;
     this.qml = qml;
     this.kwinApi = kwinApi;
+    this.config = config;
   }
 
   public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
@@ -139,7 +142,7 @@ export default class KWinWindow implements IDriverWindow {
 
     if (geometry !== undefined) {
       geometry = this.adjustGeometry(geometry);
-      if (KWINCONFIG.preventProtrusion) {
+      if (this.config.preventProtrusion) {
         const area = toRect(
           this.kwinApi.workspace.clientArea(
             KWin.PlacementArea,

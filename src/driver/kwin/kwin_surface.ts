@@ -18,15 +18,16 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import IConfig from "../../config";
 import ISurface from "../../isurface";
 import { toRect } from "../../util/kwinutil";
 import Rect from "../../util/rect";
 
 export default class KWinSurface implements ISurface {
-  public static generateId(screen: number, activity: string, desktop: number) {
+  public static generateId(screen: number, activity: string, desktop: number, config: IConfig) {
     let path = String(screen);
-    if (KWINCONFIG.layoutPerActivity) path += "@" + activity;
-    if (KWINCONFIG.layoutPerDesktop) path += "#" + desktop;
+    if (config.layoutPerActivity) path += "@" + activity;
+    if (config.layoutPerDesktop) path += "#" + desktop;
     return path;
   }
 
@@ -40,17 +41,19 @@ export default class KWinSurface implements ISurface {
 
   private activityInfo: Plasma.TaskManager.ActivityInfo;
   private kwinApi: KWin.Api;
+  private config: IConfig;
 
-  constructor(screen: number, activity: string, desktop: number, activityInfo: Plasma.TaskManager.ActivityInfo, kwinApi: KWin.Api) {
+  constructor(screen: number, activity: string, desktop: number, activityInfo: Plasma.TaskManager.ActivityInfo, kwinApi: KWin.Api, config: IConfig) {
     const activityName = activityInfo.activityName(activity);
 
     this.activityInfo = activityInfo;
     this.kwinApi = kwinApi;
+    this.config = config;
 
-    this.id = KWinSurface.generateId(screen, activity, desktop);
+    this.id = KWinSurface.generateId(screen, activity, desktop, this.config);
     this.ignore =
-      KWINCONFIG.ignoreActivity.indexOf(activityName) >= 0 ||
-      KWINCONFIG.ignoreScreen.indexOf(screen) >= 0;
+      this.config.ignoreActivity.indexOf(activityName) >= 0 ||
+      this.config.ignoreScreen.indexOf(screen) >= 0;
     this.workingArea = toRect(
       this.kwinApi.workspace.clientArea(KWin.PlacementArea, screen, desktop)
     );
@@ -66,7 +69,7 @@ export default class KWinSurface implements ISurface {
       /* TODO: option to create additional desktop */
       return null;
 
-    return new KWinSurface(this.screen, this.activity, this.desktop + 1, this.activityInfo, this.kwinApi);
+    return new KWinSurface(this.screen, this.activity, this.desktop + 1, this.activityInfo, this.kwinApi, this.config);
   }
 
   public toString(): string {

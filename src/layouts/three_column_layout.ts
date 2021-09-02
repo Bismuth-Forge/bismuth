@@ -21,13 +21,13 @@
 import EngineContext from "../engine/engine_context";
 import { ILayout } from "../ilayout";
 import Window from "../engine/window";
-// import { CONFIG } from "../config";
 import LayoutUtils from "./layout_utils";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "../engine/window";
 import { partitionArrayBySizes, clip, slide } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
+import IConfig from "../config";
 
 export default class ThreeColumnLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -43,7 +43,10 @@ export default class ThreeColumnLayout implements ILayout {
   private masterRatio: number;
   private masterSize: number;
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
     this.masterRatio = 0.6;
     this.masterSize = 1;
   }
@@ -65,7 +68,7 @@ export default class ThreeColumnLayout implements ILayout {
       LayoutUtils.adjustAreaWeights(
         area,
         tiles.map((tile) => tile.weight),
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         tiles.indexOf(basis),
         delta
       ).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
@@ -76,7 +79,7 @@ export default class ThreeColumnLayout implements ILayout {
       this.masterRatio = LayoutUtils.adjustAreaHalfWeights(
         area,
         this.masterRatio,
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         basisIndex < this.masterSize ? 0 : 1,
         delta,
         true
@@ -88,7 +91,7 @@ export default class ThreeColumnLayout implements ILayout {
         LayoutUtils.adjustAreaWeights(
           area,
           masterTiles.map((tile) => tile.weight),
-          CONFIG.tileLayoutGap,
+          this.config.tileLayoutGap,
           basisIndex,
           delta
         ).forEach(
@@ -111,7 +114,7 @@ export default class ThreeColumnLayout implements ILayout {
       const newRatios = LayoutUtils.adjustAreaWeights(
         area,
         [stackRatio, this.masterRatio, stackRatio],
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         basisGroup,
         delta,
         true
@@ -128,7 +131,7 @@ export default class ThreeColumnLayout implements ILayout {
       LayoutUtils.adjustAreaWeights(
         area /* we only need height */,
         groupTiles.map((tile) => tile.weight),
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         groupTiles.indexOf(basis),
         delta
       ).forEach(
@@ -147,14 +150,14 @@ export default class ThreeColumnLayout implements ILayout {
       LayoutUtils.splitAreaWeighted(
         area,
         tiles.map((tile) => tile.weight),
-        CONFIG.tileLayoutGap
+        this.config.tileLayoutGap
       ).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
     } else if (tiles.length === this.masterSize + 1) {
       /* master & R-stack (only 1 window in stack) */
       const [masterArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(
         area,
         this.masterRatio,
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         true
       );
 
@@ -162,7 +165,7 @@ export default class ThreeColumnLayout implements ILayout {
       LayoutUtils.splitAreaWeighted(
         masterArea,
         masterTiles.map((tile) => tile.weight),
-        CONFIG.tileLayoutGap
+        this.config.tileLayoutGap
       ).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
 
       tiles[tiles.length - 1].geometry = stackArea;
@@ -174,7 +177,7 @@ export default class ThreeColumnLayout implements ILayout {
       const groupAreas = LayoutUtils.splitAreaWeighted(
         area,
         [stackRatio, this.masterRatio, stackRatio],
-        CONFIG.tileLayoutGap,
+        this.config.tileLayoutGap,
         true
       );
 
@@ -185,14 +188,14 @@ export default class ThreeColumnLayout implements ILayout {
         LayoutUtils.splitAreaWeighted(
           groupAreas[group],
           groupTiles.map((tile) => tile.weight),
-          CONFIG.tileLayoutGap
+          this.config.tileLayoutGap
         ).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
       });
     }
   }
 
   public clone(): ILayout {
-    const other = new ThreeColumnLayout();
+    const other = new ThreeColumnLayout(this.config);
     other.masterRatio = this.masterRatio;
     other.masterSize = this.masterSize;
     return other;

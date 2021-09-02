@@ -24,7 +24,6 @@ import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
-// import { CONFIG } from "../config";
 import IDriverContext from "../idriver_context";
 import ISurface from "../isurface";
 import { Shortcut } from "../shortcut";
@@ -33,6 +32,7 @@ import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 import { debug, debugObj } from "../util/debug";
 import { overlap, wrapIndex } from "../util/func";
+import IConfig from "../config";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -43,8 +43,11 @@ export default class TilingEngine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 
-  constructor() {
-    this.layouts = new LayoutStore();
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
+    this.layouts = new LayoutStore(this.config);
     this.windows = new WindowStore();
   }
 
@@ -61,10 +64,10 @@ export default class TilingEngine {
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
       const area = srf.workingArea.gap(
-        CONFIG.screenGapLeft,
-        CONFIG.screenGapRight,
-        CONFIG.screenGapTop,
-        CONFIG.screenGapBottom
+        this.config.screenGapLeft,
+        this.config.screenGapRight,
+        this.config.screenGapTop,
+        this.config.screenGapBottom
       );
       const tiles = this.windows.getVisibleTiles(srf);
       layout.adjust(area, tiles, basis, basis.geometryDelta);
@@ -165,10 +168,10 @@ export default class TilingEngine {
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
       const area = srf.workingArea.gap(
-        CONFIG.screenGapLeft,
-        CONFIG.screenGapRight,
-        CONFIG.screenGapTop,
-        CONFIG.screenGapBottom
+        this.config.screenGapLeft,
+        this.config.screenGapRight,
+        this.config.screenGapTop,
+        this.config.screenGapBottom
       );
       layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
     }
@@ -211,14 +214,14 @@ export default class TilingEngine {
     const workingArea = srf.workingArea;
 
     let tilingArea: Rect;
-    if (CONFIG.monocleMaximize && layout instanceof MonocleLayout)
+    if (this.config.monocleMaximize && layout instanceof MonocleLayout)
       tilingArea = workingArea;
     else
       tilingArea = workingArea.gap(
-        CONFIG.screenGapLeft,
-        CONFIG.screenGapRight,
-        CONFIG.screenGapTop,
-        CONFIG.screenGapBottom
+        this.config.screenGapLeft,
+        this.config.screenGapRight,
+        this.config.screenGapTop,
+        this.config.screenGapBottom
       );
 
     const visibles = this.windows.getVisibleWindows(srf);
@@ -239,15 +242,15 @@ export default class TilingEngine {
     });
 
     const tileables = this.windows.getVisibleTileables(srf);
-    if (CONFIG.maximizeSoleTile && tileables.length === 1) {
+    if (this.config.maximizeSoleTile && tileables.length === 1) {
       tileables[0].state = WindowState.Maximized;
       tileables[0].geometry = workingArea;
     } else if (tileables.length > 0)
       layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
 
-    if (CONFIG.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
+    if (this.config.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
       const maxWidth = Math.floor(
-        workingArea.height * CONFIG.limitTileWidthRatio
+        workingArea.height * this.config.limitTileWidthRatio
       );
       tileables
         .filter((tile) => tile.tiled && tile.geometry.width > maxWidth)
@@ -287,7 +290,7 @@ export default class TilingEngine {
     if (!window.shouldIgnore) {
       /* engine#arrange will update the state when required. */
       window.state = WindowState.Undecided;
-      if (CONFIG.newWindowAsMaster) this.windows.unshift(window);
+      if (this.config.newWindowAsMaster) this.windows.unshift(window);
       else this.windows.push(window);
     }
   }

@@ -22,7 +22,6 @@ import Window from "../../engine/window";
 import ISurface from "../../isurface";
 import Rect from "../../util/rect";
 import TestSurface from "./test_surface";
-// import { CONFIG } from "../../config";
 
 export default class TestDriver {
   public currentScreen: number;
@@ -66,9 +65,4 @@ export default class TestDriver {
   public setTimeout(func: () => void, timeout: number) {
     setTimeout(func, timeout);
   }
-}
-
-function setTestConfig(name: string, value: any) {
-  if (!CONFIG) CONFIG = {} as any;
-  (CONFIG as any)[name] = value;
 }

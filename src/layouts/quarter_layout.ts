@@ -25,7 +25,7 @@ import { WindowState } from "../engine/window";
 import { clip } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-// import { CONFIG } from "../config";
+import IConfig from "../config";
 
 export default class QuarterLayout implements ILayout {
   public static readonly MAX_PROPORTION = 0.8;
@@ -42,10 +42,14 @@ export default class QuarterLayout implements ILayout {
   private rhsplit: number;
   private vsplit: number;
 
-  public constructor() {
+  private config: IConfig;
+
+  public constructor(config: IConfig) {
     this.lhsplit = 0.5;
     this.rhsplit = 0.5;
     this.vsplit = 0.5;
+
+    this.config = config;
   }
 
   public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
@@ -101,7 +105,7 @@ export default class QuarterLayout implements ILayout {
   }
 
   public clone(): ILayout {
-    const other = new QuarterLayout();
+    const other = new QuarterLayout(this.config);
     other.lhsplit = this.lhsplit;
     other.rhsplit = this.rhsplit;
     other.vsplit = this.vsplit;
@@ -122,8 +126,8 @@ export default class QuarterLayout implements ILayout {
       return;
     }
 
-    const gap1 = Math.floor(CONFIG.tileLayoutGap / 2);
-    const gap2 = CONFIG.tileLayoutGap - gap1;
+    const gap1 = Math.floor(this.config.tileLayoutGap / 2);
+    const gap2 = this.config.tileLayoutGap - gap1;
 
     const leftWidth = Math.floor(area.width * this.vsplit);
     const rightWidth = area.width - leftWidth;

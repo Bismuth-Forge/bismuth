@@ -23,10 +23,11 @@ import { Shortcut } from "./shortcut";
 import Window from "./engine/window";
 import Rect from "./util/rect";
 import RectDelta from "./util/rectdelta";
+import IConfig from "./config";
 
 export interface ILayoutClass {
   readonly id: string;
-  new(): ILayout;
+  new(config: IConfig): ILayout;
 }
 
 export interface ILayout {

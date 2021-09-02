@@ -20,7 +20,6 @@
 
 import EngineContext from "../engine/engine_context";
 import { ILayout } from "../ilayout";
-// import { CONFIG } from "../config";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import { Shortcut } from "../shortcut";
@@ -29,6 +28,7 @@ import { RotateLayoutPart, HalfSplitLayoutPart, StackLayoutPart } from "./layout
 import { clip, slide } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
+import IConfig from "../config";
 
 export default class TileLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -61,11 +61,15 @@ export default class TileLayout implements ILayout {
     this.parts.inner.ratio = value;
   }
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
+
     this.parts = new RotateLayoutPart(
       new HalfSplitLayoutPart(
-        new RotateLayoutPart(new StackLayoutPart()),
-        new StackLayoutPart()
+        new RotateLayoutPart(new StackLayoutPart(this.config)),
+        new StackLayoutPart(this.config)
       )
     );
 
@@ -73,7 +77,7 @@ export default class TileLayout implements ILayout {
     masterPart.gap =
       masterPart.primary.inner.gap =
       masterPart.secondary.gap =
-      CONFIG.tileLayoutGap;
+      this.config.tileLayoutGap;
   }
 
   public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
@@ -89,7 +93,7 @@ export default class TileLayout implements ILayout {
   }
 
   public clone(): ILayout {
-    const other = new TileLayout();
+    const other = new TileLayout(this.config);
     other.masterRatio = this.masterRatio;
     other.numMaster = this.numMaster;
     return other;

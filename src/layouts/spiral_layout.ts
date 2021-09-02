@@ -22,11 +22,11 @@ import EngineContext from "../engine/engine_context";
 import { HalfSplitLayoutPart } from "./layout_part";
 import { FillLayoutPart } from "./layout_part";
 import { ILayout } from "../ilayout";
-// import { CONFIG } from "../config";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
+import IConfig from "../config";
 
 export type SpiralLayoutPart = HalfSplitLayoutPart<
   FillLayoutPart,
@@ -39,14 +39,18 @@ export default class SpiralLayout implements ILayout {
   private depth: number;
   private parts: SpiralLayoutPart;
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
+
     this.depth = 1;
     this.parts = new HalfSplitLayoutPart(
       new FillLayoutPart(),
       new FillLayoutPart()
     );
     this.parts.angle = 0;
-    this.parts.gap = CONFIG.tileLayoutGap;
+    this.parts.gap = this.config.tileLayoutGap;
   }
 
   public adjust(
@@ -87,7 +91,7 @@ export default class SpiralLayout implements ILayout {
     let npart: SpiralLayoutPart;
     while (i < depth - 1) {
       npart = new HalfSplitLayoutPart(new FillLayoutPart(), lastFillPart);
-      npart.gap = CONFIG.tileLayoutGap;
+      npart.gap = this.config.tileLayoutGap;
       switch ((i + 1) % 4) {
         case 0:
           npart.angle = 0;

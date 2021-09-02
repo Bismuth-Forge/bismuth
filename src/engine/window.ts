@@ -18,12 +18,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import IConfig from "../config";
 import IDriverWindow from "../idriver_window";
 import ISurface from "../isurface";
 import { debugObj } from "../util/debug";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-// import { CONFIG } from "../config";
 
 export enum WindowState {
   /* initial value */
@@ -153,7 +153,11 @@ export default class Window {
   private shouldCommitFloat: boolean;
   private weightMap: { [key: string]: number };
 
-  constructor(window: IDriverWindow) {
+  private config: IConfig;
+
+  constructor(window: IDriverWindow, config: IConfig) {
+    this.config = config;
+
     this.id = window.id;
     this.window = window;
 
@@ -180,7 +184,7 @@ export default class Window {
 
       case WindowState.Floating:
         if (!this.shouldCommitFloat) break;
-        this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+        this.window.commit(this.floatGeometry, false, this.config.keepFloatAbove);
         this.shouldCommitFloat = false;
         break;
 
@@ -189,12 +193,12 @@ export default class Window {
         break;
 
       case WindowState.Tiled:
-        this.window.commit(this.geometry, CONFIG.noTileBorder, false);
+        this.window.commit(this.geometry, this.config.noTileBorder, false);
         break;
 
       case WindowState.TiledAfloat:
         if (!this.shouldCommitFloat) break;
-        this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+        this.window.commit(this.floatGeometry, false, this.config.keepFloatAbove);
         this.shouldCommitFloat = false;
         break;
     }

@@ -18,6 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import IConfig from "../../config";
 import { KWinSetTimeout } from "./kwin_set_timeout";
 
 export default class KWinMousePoller {
@@ -36,11 +37,13 @@ export default class KWinMousePoller {
   private startCount: number;
   private cmdResult: string | null;
   private qml: Bismuth.Qml.Main;
+  private config: IConfig;
 
-  constructor(qml: Bismuth.Qml.Main) {
+  constructor(qml: Bismuth.Qml.Main, config: IConfig) {
     this.startCount = 0;
     this.cmdResult = null;
     this.qml = qml;
+    this.config = config;
 
     /* we will poll manually, because this interval value will be
      * aligned to intervalAlignment, which probably is 1000. */
@@ -59,7 +62,7 @@ export default class KWinMousePoller {
 
   public start() {
     this.startCount += 1;
-    if (KWINCONFIG.pollMouseXdotool)
+    if (this.config.pollMouseXdotool)
       this.qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
   }
 

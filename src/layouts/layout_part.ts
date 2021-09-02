@@ -18,10 +18,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+import IConfig from "../config";
 import Window from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-// import { CONFIG } from "../config";
 import LayoutUtils from "./layout_utils";
 
 export interface ILayoutPart {
@@ -182,7 +182,10 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
 export class StackLayoutPart implements ILayoutPart {
   public gap: number;
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
     this.gap = 0;
   }
 
@@ -195,7 +198,7 @@ export class StackLayoutPart implements ILayoutPart {
     const weights = LayoutUtils.adjustAreaWeights(
       area,
       tiles.map((tile) => tile.weight),
-      CONFIG.tileLayoutGap,
+      this.config.tileLayoutGap,
       tiles.indexOf(basis),
       delta,
       false

@@ -22,9 +22,9 @@ import MonocleLayout from "../layouts/monocle_layout";
 import FloatingLayout from "../layouts/floating_layout";
 
 import { ILayout } from "../ilayout";
-// import { CONFIG } from "../config";
 import ISurface from "../isurface";
 import { wrapIndex } from "../util/func";
+import IConfig from "../config";
 
 export class LayoutStoreEntry {
   public get currentLayout(): ILayout {
@@ -36,9 +36,12 @@ export class LayoutStoreEntry {
   private layouts: { [key: string]: ILayout };
   private previousID: string;
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
     this.currentIndex = 0;
-    this.currentID = CONFIG.layoutOrder[0];
+    this.currentID = this.config.layoutOrder[0];
     this.layouts = {};
     this.previousID = this.currentID;
 
@@ -49,9 +52,9 @@ export class LayoutStoreEntry {
     this.previousID = this.currentID;
     this.currentIndex =
       this.currentIndex !== null
-        ? wrapIndex(this.currentIndex + step, CONFIG.layoutOrder.length)
+        ? wrapIndex(this.currentIndex + step, this.config.layoutOrder.length)
         : 0;
-    this.currentID = CONFIG.layoutOrder[this.currentIndex];
+    this.currentID = this.config.layoutOrder[this.currentIndex];
     return this.loadLayout(this.currentID);
   }
 
@@ -74,13 +77,13 @@ export class LayoutStoreEntry {
   }
 
   private updateCurrentIndex(): void {
-    const idx = CONFIG.layoutOrder.indexOf(this.currentID);
+    const idx = this.config.layoutOrder.indexOf(this.currentID);
     this.currentIndex = idx === -1 ? null : idx;
   }
 
   private loadLayout(ID: string): ILayout {
     let layout = this.layouts[ID];
-    if (!layout) layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
+    if (!layout) layout = this.layouts[ID] = this.config.layoutFactories[ID]();
     return layout;
   }
 }
@@ -88,7 +91,10 @@ export class LayoutStoreEntry {
 export default class LayoutStore {
   private store: { [key: string]: LayoutStoreEntry };
 
-  constructor() {
+  private config: IConfig;
+
+  constructor(config: IConfig) {
+    this.config = config;
     this.store = {};
   }
 
@@ -109,7 +115,7 @@ export default class LayoutStore {
   }
 
   private getEntry(key: string): LayoutStoreEntry {
-    if (!this.store[key]) this.store[key] = new LayoutStoreEntry();
+    if (!this.store[key]) this.store[key] = new LayoutStoreEntry(this.config);
     return this.store[key];
   }
 }

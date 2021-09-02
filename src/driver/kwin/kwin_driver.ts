@@ -29,7 +29,6 @@ import QuarterLayout from "../../layouts/quarter_layout";
 
 import TilingEngine from "../../engine/tiling_engine";
 import TilingController from "../../engine/tiling_controler";
-import KWinConfig from "./kwin_config";
 import IDriverContext from "../../idriver_context";
 import ISurface from "../../isurface";
 import Window from "../../engine/window";
@@ -42,6 +41,7 @@ import { ILayoutClass } from "../../ilayout";
 import { WindowState } from "../../engine/window";
 import WrapperMap from "../../util/wrappermap";
 import { debug, debugObj } from "../../util/debug";
+import IConfig, { Config } from "../../config";
 // import { workspace } from "../../extern/global";
 
 /**
@@ -66,7 +66,8 @@ export default class KWinDriver implements IDriverContext {
       this.kwinApi.workspace.currentActivity,
       this.kwinApi.workspace.currentDesktop,
       this.qml.activityInfo,
-      this.kwinApi
+      this.kwinApi,
+      this.config
     );
   }
 
@@ -100,7 +101,8 @@ export default class KWinDriver implements IDriverContext {
           this.kwinApi.workspace.currentActivity,
           this.kwinApi.workspace.currentDesktop,
           this.qml.activityInfo,
-          this.kwinApi
+          this.kwinApi,
+          this.config
         )
       );
     return screens;
@@ -120,15 +122,23 @@ export default class KWinDriver implements IDriverContext {
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
 
-  constructor(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api) {
-    this.engine = new TilingEngine();
-    this.control = new TilingController(this.engine);
+  private config: IConfig;
+
+  constructor(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api, config?: IConfig) {
+    if (config) {
+      this.config = config;
+    } else {
+      this.config = new Config();
+    }
+
+    this.engine = new TilingEngine(this.config);
+    this.control = new TilingController(this.engine, this.config);
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
-      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi))
+      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi, this.config), this.config)
     );
     this.entered = false;
-    this.mousePoller = new KWinMousePoller(qmlObjects);
+    this.mousePoller = new KWinMousePoller(qmlObjects, this.config);
     this.qml = qmlObjects;
     this.kwinApi = kwinScriptingApi;
   }
@@ -139,21 +149,25 @@ export default class KWinDriver implements IDriverContext {
   public main() {
     console.log("Initiating systems!");
 
-    CONFIG = KWINCONFIG = new KWinConfig();
-    // debug(() => "Config: " + KWINCONFIG);
+    // DEBUG = {
+    //   enabled: false,
+    //   started: new Date().getTime(),
+    // };
 
-    // this.bindEvents();
-    // this.bindShortcut();
+    // debug(() => "Config: " + this.config);
 
-    // const clients = workspace.clientList();
-    // for (let i = 0; i < clients.length; i++) {
-    //   const window = this.windowMap.add(clients[i]);
-    //   this.engine.manage(window);
-    //   if (window.state !== WindowState.Unmanaged)
-    //     this.bindWindowEvents(window, clients[i]);
-    //   else this.windowMap.remove(clients[i]);
-    // }
-    // this.engine.arrange(this);
+    this.bindEvents();
+    this.bindShortcut();
+
+    const clients = this.kwinApi.workspace.clientList();
+    for (let i = 0; i < clients.length; i++) {
+      const window = this.windowMap.add(clients[i]);
+      this.engine.manage(window);
+      if (window.state !== WindowState.Unmanaged)
+        this.bindWindowEvents(window, clients[i]);
+      else this.windowMap.remove(clients[i]);
+    }
+    this.engine.arrange(this);
   }
 
   //#region implement methods of IDriverContext`
@@ -286,7 +300,8 @@ export default class KWinDriver implements IDriverContext {
         this.kwinApi.workspace.currentActivity,
         this.kwinApi.workspace.currentDesktop,
         this.qml.activityInfo,
-        this.kwinApi
+        this.kwinApi,
+        this.config
       );
       this.control.onSurfaceUpdate(this, "resized " + srf.toString());
     });
@@ -353,7 +368,7 @@ export default class KWinDriver implements IDriverContext {
     );
 
     this.connect(this.kwinApi.workspace.clientMinimized, (client: KWin.Client) => {
-      if (KWINCONFIG.preventMinimize) {
+      if (this.config.preventMinimize) {
         client.minimized = false;
         this.kwinApi.workspace.activeClient = client;
       } else
