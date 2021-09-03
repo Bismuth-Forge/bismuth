@@ -11,8 +11,8 @@ TODO
 
 Bismuth can be temporarily loaded without installing the script:
 
-    make run
-    make stop
+    npm run start
+    npm run stop
 
 Note that Bismuth can destroy itself completely once it is disabled, so no
 restart is required to deactivated it.

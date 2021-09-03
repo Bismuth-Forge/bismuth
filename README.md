@@ -25,8 +25,13 @@ Project goals are the following:
 
 ## 🔧 Installation
 
-    make install
-    make uninstall # to uninstall the script
+Install script via script:
+
+    npm run script-install
+
+To uninstall:
+
+    npm run script-uninstall
 
 ### Enabling User-Configuration
 
