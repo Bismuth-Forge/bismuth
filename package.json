@@ -31,6 +31,9 @@
     "prescript-install": "npm run package",
     "script-install": "bin/install.sh",
     "script-uninstall": "bin/uninstall.sh",
+    "preinstall-and-restart-kwin-x11": "npm run script-install",
+    "install-and-restart-kwin-x11": "kwin_x11 --replace",
+    "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
     "test": "mocha 'test/*.spec.js'"
   },
