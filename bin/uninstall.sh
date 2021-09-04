@@ -7,4 +7,4 @@
 
 set -e
 
-plasmapkg2 -t kwinscript -r $npm_package_name
+plasmapkg2 -t kwinscript -r "${npm_package_name:-Bismuth}"
