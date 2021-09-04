@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
+
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# 
+# SPDX-License-Identifier: MIT
+
 set -e
 
 KWINPKG_FILE="$npm_package_config_build_dir/${npm_package_name}-${npm_package_version}.kwinscript"

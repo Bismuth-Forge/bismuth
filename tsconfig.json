@@ -4,22 +4,13 @@
     "target": "es5",
     "noEmitOnError": false,
     "removeComments": true,
-    "lib": [
-      "es5",
-      "ES2015",
-      "ES2016"
-    ],
+    "lib": ["es5", "ES2015", "ES2016"],
     "alwaysStrict": true,
     "strict": true,
     "module": "ES6"
   },
   "typedocOptions": {
-    "entryPoints": [
-      "src"
-    ]
+    "entryPoints": ["src"]
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ]
+  "include": ["src/**/*", "test/**/*"]
 }
