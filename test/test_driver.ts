@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Window from "../../engine/window";
-import ISurface from "../../isurface";
-import Rect from "../../util/rect";
+import Window from "../src/engine/window";
+import ISurface from "../src/isurface";
+import Rect from "../src/util/rect";
 import TestSurface from "./test_surface";
 
 export default class TestDriver {

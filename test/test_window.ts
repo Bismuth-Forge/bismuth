@@ -3,10 +3,11 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IDriverWindow from "../../idriver_window";
+import IDriverWindow from "../src/idriver_window";
+import ISurface from "../src/isurface";
+import Rect from "../src/util/rect";
+
 import TestSurface from "./test_surface";
-import ISurface from "../../isurface";
-import Rect from "../../util/rect";
 
 export default class TestWindow implements IDriverWindow {
   private static windowCount: number = 0;
