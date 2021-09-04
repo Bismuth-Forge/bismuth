@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+#
+# SPDX-License-Identifier: MIT
+
+---
+name: Build and Test Script
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build:
+    name: Build Script
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Build 🔧
+        run: |
+          npm install
+          npm run build
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Test 🧪
+        run: |
+          npm install
+          npm test
