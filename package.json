@@ -16,6 +16,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "mocha": "^6.0.0",
     "prettier": "2.3.2",
     "typedoc": "^0.21.6",
@@ -53,6 +54,9 @@
   },
   "homepage": "https://github.com/gikari/bismuth#readme",
   "prettier": {},
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "eslintConfig": {
     "root": true,
     "ignorePatterns": [
