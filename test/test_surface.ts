@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "../../isurface";
-import Rect from "../../util/rect";
+import ISurface from "../src/isurface";
+import Rect from "../src/util/rect";
 import TestDriver from "./test_driver";
 
 export default class TestSurface implements ISurface {

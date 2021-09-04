@@ -11,14 +11,16 @@
     "build_dir": "build"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.2",
+    "jest": "^27.1.0",
     "lint-staged": "^11.1.2",
-    "mocha": "^6.0.0",
     "prettier": "2.3.2",
+    "ts-jest": "^27.0.5",
     "typedoc": "^0.21.6",
     "typescript": "^4.3.5"
   },
@@ -37,7 +39,7 @@
     "install-and-restart-kwin-x11": "kwin_x11 --replace",
     "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
-    "test": "mocha 'test/*.spec.js'",
+    "test": "jest",
     "prepare": "husky install"
   },
   "repository": {
@@ -53,6 +55,10 @@
     "url": "https://github.com/gikari/bismuth/issues"
   },
   "homepage": "https://github.com/gikari/bismuth#readme",
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "prettier": {},
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
