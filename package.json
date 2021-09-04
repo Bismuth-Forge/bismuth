@@ -15,6 +15,7 @@
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.2",
     "mocha": "^6.0.0",
     "prettier": "2.3.2",
     "typedoc": "^0.21.6",
@@ -35,7 +36,8 @@
     "install-and-restart-kwin-x11": "kwin_x11 --replace",
     "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
-    "test": "mocha 'test/*.spec.js'"
+    "test": "mocha 'test/*.spec.js'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
