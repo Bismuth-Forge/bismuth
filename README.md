@@ -1,3 +1,9 @@
+<!--
+  SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+  SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+  SPDX-License-Identifier: MIT
+-->
+
 # 🌈 Bismuth
 
 This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.

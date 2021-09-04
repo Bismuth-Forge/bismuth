@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+  <author>
+    SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+    SPDX-License-Identifier: MIT
+ </author>
  <class>KrohnkiteConfigForm</class>
  <widget class="QWidget" name="KrohnkiteConfigForm">
   <property name="geometry">

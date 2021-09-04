@@ -1,23 +1,7 @@
-// Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
+// SPDX-License-Identifier: MIT
 
 import MonocleLayout from "./layouts/monocle_layout";
 import TileLayout from "./layouts/tile_layout";
@@ -172,18 +156,33 @@ export class Config implements IConfig {
       this.layoutFactories[layoutClass.id] = () => new layoutClass(this);
     });
 
-    this.maximizeSoleTile = this.kwinApi.KWin.readConfig("maximizeSoleTile", false);
-    this.monocleMaximize = this.kwinApi.KWin.readConfig("monocleMaximize", true);
-    this.monocleMinimizeRest = this.kwinApi.KWin.readConfig("monocleMinimizeRest", false);
+    this.maximizeSoleTile = this.kwinApi.KWin.readConfig(
+      "maximizeSoleTile",
+      false
+    );
+    this.monocleMaximize = this.kwinApi.KWin.readConfig(
+      "monocleMaximize",
+      true
+    );
+    this.monocleMinimizeRest = this.kwinApi.KWin.readConfig(
+      "monocleMinimizeRest",
+      false
+    );
 
     this.adjustLayout = this.kwinApi.KWin.readConfig("adjustLayout", true);
-    this.adjustLayoutLive = this.kwinApi.KWin.readConfig("adjustLayoutLive", true);
+    this.adjustLayoutLive = this.kwinApi.KWin.readConfig(
+      "adjustLayoutLive",
+      true
+    );
     this.keepFloatAbove = this.kwinApi.KWin.readConfig("keepFloatAbove", true);
     this.noTileBorder = this.kwinApi.KWin.readConfig("noTileBorder", false);
 
     this.limitTileWidthRatio = 0;
     if (this.kwinApi.KWin.readConfig("limitTileWidth", false))
-      this.limitTileWidthRatio = this.kwinApi.KWin.readConfig("limitTileWidthRatio", 1.6);
+      this.limitTileWidthRatio = this.kwinApi.KWin.readConfig(
+        "limitTileWidthRatio",
+        1.6
+      );
 
     this.screenGapBottom = this.kwinApi.KWin.readConfig("screenGapBottom", 0);
     this.screenGapLeft = this.kwinApi.KWin.readConfig("screenGapLeft", 0);
@@ -191,31 +190,67 @@ export class Config implements IConfig {
     this.screenGapTop = this.kwinApi.KWin.readConfig("screenGapTop", 0);
     this.tileLayoutGap = this.kwinApi.KWin.readConfig("tileLayoutGap", 0);
 
-    const directionalKeyDwm = this.kwinApi.KWin.readConfig("directionalKeyDwm", true);
-    const directionalKeyFocus = this.kwinApi.KWin.readConfig("directionalKeyFocus", false);
+    const directionalKeyDwm = this.kwinApi.KWin.readConfig(
+      "directionalKeyDwm",
+      true
+    );
+    const directionalKeyFocus = this.kwinApi.KWin.readConfig(
+      "directionalKeyFocus",
+      false
+    );
     this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
-    this.newWindowAsMaster = this.kwinApi.KWin.readConfig("newWindowAsMaster", false);
+    this.newWindowAsMaster = this.kwinApi.KWin.readConfig(
+      "newWindowAsMaster",
+      false
+    );
 
-    this.layoutPerActivity = this.kwinApi.KWin.readConfig("layoutPerActivity", true);
-    this.layoutPerDesktop = this.kwinApi.KWin.readConfig("layoutPerDesktop", true);
+    this.layoutPerActivity = this.kwinApi.KWin.readConfig(
+      "layoutPerActivity",
+      true
+    );
+    this.layoutPerDesktop = this.kwinApi.KWin.readConfig(
+      "layoutPerDesktop",
+      true
+    );
     this.floatUtility = this.kwinApi.KWin.readConfig("floatUtility", true);
-    this.preventMinimize = this.kwinApi.KWin.readConfig("preventMinimize", false);
-    this.preventProtrusion = this.kwinApi.KWin.readConfig("preventProtrusion", true);
-    this.pollMouseXdotool = this.kwinApi.KWin.readConfig("pollMouseXdotool", false);
+    this.preventMinimize = this.kwinApi.KWin.readConfig(
+      "preventMinimize",
+      false
+    );
+    this.preventProtrusion = this.kwinApi.KWin.readConfig(
+      "preventProtrusion",
+      true
+    );
+    this.pollMouseXdotool = this.kwinApi.KWin.readConfig(
+      "pollMouseXdotool",
+      false
+    );
 
-    this.floatingClass = commaSeparate(this.kwinApi.KWin.readConfig("floatingClass", ""));
-    this.floatingTitle = commaSeparate(this.kwinApi.KWin.readConfig("floatingTitle", ""));
-    this.ignoreActivity = commaSeparate(this.kwinApi.KWin.readConfig("ignoreActivity", ""));
+    this.floatingClass = commaSeparate(
+      this.kwinApi.KWin.readConfig("floatingClass", "")
+    );
+    this.floatingTitle = commaSeparate(
+      this.kwinApi.KWin.readConfig("floatingTitle", "")
+    );
+    this.ignoreActivity = commaSeparate(
+      this.kwinApi.KWin.readConfig("ignoreActivity", "")
+    );
     this.ignoreClass = commaSeparate(
-      this.kwinApi.KWin.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5")
+      this.kwinApi.KWin.readConfig(
+        "ignoreClass",
+        "krunner,yakuake,spectacle,kded5"
+      )
     );
-    this.ignoreRole = commaSeparate(this.kwinApi.KWin.readConfig("ignoreRole", "quake"));
-
-    this.ignoreScreen = commaSeparate(this.kwinApi.KWin.readConfig("ignoreScreen", "")).map(
-      (str) => parseInt(str, 10)
+    this.ignoreRole = commaSeparate(
+      this.kwinApi.KWin.readConfig("ignoreRole", "quake")
     );
-    this.ignoreTitle = commaSeparate(this.kwinApi.KWin.readConfig("ignoreTitle", ""));
 
+    this.ignoreScreen = commaSeparate(
+      this.kwinApi.KWin.readConfig("ignoreScreen", "")
+    ).map((str) => parseInt(str, 10));
+    this.ignoreTitle = commaSeparate(
+      this.kwinApi.KWin.readConfig("ignoreTitle", "")
+    );
   }
 
   public toString(): string {

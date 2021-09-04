@@ -1,9 +1,16 @@
+<!--
+  SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+  SPDX-License-Identifier: MIT
+-->
+
 ---
+
 name: Bug report
 about: Create a report to help us improve
 title: ""
 labels: bug
 assignees: ""
+
 ---
 
 **Symptom**

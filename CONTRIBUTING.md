@@ -1,3 +1,8 @@
+<!--
+  SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+  SPDX-License-Identifier: MIT
+-->
+
 # Contributing
 
 TODO

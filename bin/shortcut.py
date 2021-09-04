@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+# 
+# SPDX-License-Identifier: MIT
+
 #
 # * Requirements:
 #   - pyside2

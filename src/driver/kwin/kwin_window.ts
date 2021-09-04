@@ -1,22 +1,7 @@
-// Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
+// SPDX-License-Identifier: MIT
 
 import IDriverWindow from "../../idriver_window";
 import ISurface from "../../isurface";
@@ -77,14 +62,26 @@ export default class KWinWindow implements IDriverWindow {
     let activity;
     if (this.client.activities.length === 0)
       activity = this.kwinApi.workspace.currentActivity;
-    else if (this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >= 0)
+    else if (
+      this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >=
+      0
+    )
       activity = this.kwinApi.workspace.currentActivity;
     else activity = this.client.activities[0];
 
     const desktop =
-      this.client.desktop >= 0 ? this.client.desktop : this.kwinApi.workspace.currentDesktop;
+      this.client.desktop >= 0
+        ? this.client.desktop
+        : this.kwinApi.workspace.currentDesktop;
 
-    return new KWinSurface(this.client.screen, activity, desktop, this.qml.activityInfo, this.kwinApi, this.config);
+    return new KWinSurface(
+      this.client.screen,
+      activity,
+      desktop,
+      this.qml.activityInfo,
+      this.kwinApi,
+      this.config
+    );
   }
 
   public set surface(srf: ISurface) {
@@ -103,7 +100,13 @@ export default class KWinWindow implements IDriverWindow {
   private config: IConfig;
   private debug: Debug;
 
-  constructor(client: KWin.Client, qml: Bismuth.Qml.Main, kwinApi: KWin.Api, config: IConfig, debug: Debug) {
+  constructor(
+    client: KWin.Client,
+    qml: Bismuth.Qml.Main,
+    kwinApi: KWin.Api,
+    config: IConfig,
+    debug: Debug
+  ) {
     this.client = client;
     this.id = KWinWindow.generateID(client);
     this.maximized = false;
@@ -116,7 +119,10 @@ export default class KWinWindow implements IDriverWindow {
   }
 
   public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
-    this.debug.debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
+    this.debug.debugObj(() => [
+      "KWinWindow#commit",
+      { geometry, noBorder, keepAbove },
+    ]);
 
     if (this.client.move || this.client.resize) return;
 

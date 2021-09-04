@@ -1,23 +1,7 @@
-// Copyright (c) 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// Copyright (c) 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
+// SPDX-License-Identifier: MIT
 
 import MonocleLayout from "../../layouts/monocle_layout";
 import TileLayout from "../../layouts/tile_layout";
@@ -61,7 +45,9 @@ export default class KWinDriver implements IDriverContext {
 
   public get currentSurface(): ISurface {
     return new KWinSurface(
-      this.kwinApi.workspace.activeClient ? this.kwinApi.workspace.activeClient.screen : 0,
+      this.kwinApi.workspace.activeClient
+        ? this.kwinApi.workspace.activeClient.screen
+        : 0,
       this.kwinApi.workspace.currentActivity,
       this.kwinApi.workspace.currentDesktop,
       this.qml.activityInfo,
@@ -88,7 +74,9 @@ export default class KWinDriver implements IDriverContext {
 
   public set currentWindow(window: Window | null) {
     if (window !== null)
-      this.kwinApi.workspace.activeClient = (window.window as KWinWindow).client;
+      this.kwinApi.workspace.activeClient = (
+        window.window as KWinWindow
+      ).client;
   }
 
   public get screens(): ISurface[] {
@@ -129,7 +117,11 @@ export default class KWinDriver implements IDriverContext {
    * @param kwinApi KWin scripting API. Required for interaction with KWin, as we cannot access globals.
    * @param config Bismuth configuration. If none is provided, the configuration is read from KConfig (in most cases from config file).
    */
-  constructor(qmlObjects: Bismuth.Qml.Main, kwinApi: KWin.Api, config?: IConfig) {
+  constructor(
+    qmlObjects: Bismuth.Qml.Main,
+    kwinApi: KWin.Api,
+    config?: IConfig
+  ) {
     if (config) {
       this.config = config;
     } else {
@@ -148,7 +140,18 @@ export default class KWinDriver implements IDriverContext {
     this.control = new TilingController(this.engine, this.config, this.debug);
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
-      (client: KWin.Client) => new Window(new KWinWindow(client, this.qml, this.kwinApi, this.config, this.debug), this.config, this.debug)
+      (client: KWin.Client) =>
+        new Window(
+          new KWinWindow(
+            client,
+            this.qml,
+            this.kwinApi,
+            this.config,
+            this.debug
+          ),
+          this.config,
+          this.debug
+        )
     );
     this.entered = false;
     this.mousePoller = new KWinMousePoller(qmlObjects, this.config, this.debug);
@@ -180,7 +183,12 @@ export default class KWinDriver implements IDriverContext {
 
   //#region implement methods of IDriverContext`
   public setTimeout(func: () => void, timeout: number) {
-    KWinSetTimeout(() => this.enter(func), timeout, this.qml.scriptRoot, this.debug);
+    KWinSetTimeout(
+      () => this.enter(func),
+      timeout,
+      this.qml.scriptRoot,
+      this.debug
+    );
   }
 
   public showNotification(text: string) {
@@ -264,7 +272,8 @@ export default class KWinDriver implements IDriverContext {
   private connect(signal: QSignal, handler: (..._: any[]) => void): () => void {
     const wrapper = (...args: any[]) => {
       /* HACK: `workspace` become undefined when the script is disabled. */
-      if (typeof this.kwinApi.workspace === "undefined") signal.disconnect(wrapper);
+      if (typeof this.kwinApi.workspace === "undefined")
+        signal.disconnect(wrapper);
       else this.enter(() => handler.apply(this, args));
     };
     signal.connect(wrapper);
@@ -314,8 +323,9 @@ export default class KWinDriver implements IDriverContext {
       this.control.onSurfaceUpdate(this, "resized " + srf.toString());
     });
 
-    this.connect(this.kwinApi.workspace.currentActivityChanged, (activity: string) =>
-      this.control.onCurrentSurfaceChanged(this)
+    this.connect(
+      this.kwinApi.workspace.currentActivityChanged,
+      (activity: string) => this.control.onCurrentSurfaceChanged(this)
     );
 
     this.connect(
@@ -345,13 +355,16 @@ export default class KWinDriver implements IDriverContext {
       this.setTimeout(handler, 50);
     });
 
-    this.connect(this.kwinApi.workspace.clientRemoved, (client: KWin.Client) => {
-      const window = this.windowMap.get(client);
-      if (window) {
-        this.control.onWindowRemoved(this, window);
-        this.windowMap.remove(client);
+    this.connect(
+      this.kwinApi.workspace.clientRemoved,
+      (client: KWin.Client) => {
+        const window = this.windowMap.get(client);
+        if (window) {
+          this.control.onWindowRemoved(this, window);
+          this.windowMap.remove(client);
+        }
       }
-    });
+    );
 
     this.connect(
       this.kwinApi.workspace.clientMaximizeSet,
@@ -375,24 +388,29 @@ export default class KWinDriver implements IDriverContext {
         )
     );
 
-    this.connect(this.kwinApi.workspace.clientMinimized, (client: KWin.Client) => {
-      if (this.config.preventMinimize) {
-        client.minimized = false;
-        this.kwinApi.workspace.activeClient = client;
-      } else
+    this.connect(
+      this.kwinApi.workspace.clientMinimized,
+      (client: KWin.Client) => {
+        if (this.config.preventMinimize) {
+          client.minimized = false;
+          this.kwinApi.workspace.activeClient = client;
+        } else
+          this.control.onWindowChanged(
+            this,
+            this.windowMap.get(client),
+            "minimized"
+          );
+      }
+    );
+
+    this.connect(
+      this.kwinApi.workspace.clientUnminimized,
+      (client: KWin.Client) =>
         this.control.onWindowChanged(
           this,
           this.windowMap.get(client),
-          "minimized"
-        );
-    });
-
-    this.connect(this.kwinApi.workspace.clientUnminimized, (client: KWin.Client) =>
-      this.control.onWindowChanged(
-        this,
-        this.windowMap.get(client),
-        "unminimized"
-      )
+          "unminimized"
+        )
     );
 
     // TODO: options.configChanged.connect(this.onConfigChanged);

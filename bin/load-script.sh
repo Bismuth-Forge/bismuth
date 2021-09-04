@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+# 
+# SPDX-License-Identifier: MIT
+
 #set -x
 
 file_path="$1"

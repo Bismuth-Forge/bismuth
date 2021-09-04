@@ -1,3 +1,9 @@
+<!--
+  SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+  SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+  SPDX-License-Identifier: MIT
+-->
+
 # Tweaks
 
 ## Setting Up for Multi-Screen
@@ -31,9 +37,9 @@ all windows:
 Changing the border color makes it easier to identify current window. This is
 convenient if title bars are removed.
 
-1. Open `~/.config/kdeglobals` with your favorite editor
-2. Scroll down and find `[WM]` section
-3. Append the followings to the section:
+1.  Open `~/.config/kdeglobals` with your favorite editor
+2.  Scroll down and find `[WM]` section
+3.  Append the followings to the section:
 
     - `frame=61,174,233`: set the border color of active window to _RGB(61,174,233)_
     - `inactiveFrame=239,240,241`: set the border color of inactive window to _RGB(239,240,241)_
@@ -43,7 +49,7 @@ convenient if title bars are removed.
          kwriteconfig5 --file ~/.config/kdeglobals --group WM --key frame 61,174,233
          kwriteconfig5 --file ~/.config/kdeglobals --group WM --key inactiveFrame  239,240,241
 
-4. You must **restart** your session to see changes. (i.e. re-login, reboot)
+4.  You must **restart** your session to see changes. (i.e. re-login, reboot)
 
 Note: the RGB values presented here are for the default Breeze theme
 

@@ -50,6 +50,7 @@
     "url": "https://github.com/gikari/bismuth/issues"
   },
   "homepage": "https://github.com/gikari/bismuth#readme",
+  "prettier": {},
   "eslintConfig": {
     "root": true,
     "ignorePatterns": [
