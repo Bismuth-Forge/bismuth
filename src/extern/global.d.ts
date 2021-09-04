@@ -18,6 +18,11 @@ declare namespace Bismuth {
   }
 }
 
-/* Common Javascript globals */
-declare let console: any;
-declare let setTimeout: any;
+// NOTICE: We can not declare the globals, since we use
+// Node.js when building tests. However, the globals we use
+// in production come from Qt JavaScript Envirinment and
+// not from Node.js and therefore they could mismatch.
+// Let's hope we will not run into one of these situations...
+//
+// declare let console: any;
+// declare let setTimeout: any;

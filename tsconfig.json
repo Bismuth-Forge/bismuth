@@ -7,10 +7,11 @@
     "lib": ["es5", "ES2015", "ES2016"],
     "alwaysStrict": true,
     "strict": true,
+    "moduleResolution": "node",
     "module": "ES6"
   },
   "typedocOptions": {
     "entryPoints": ["src"]
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*"]
 }
