@@ -9,6 +9,7 @@ TODO
 
 ## Development Requirement
 
+- `reuse` tool
 - NPM
 - p7zip (7z)
 

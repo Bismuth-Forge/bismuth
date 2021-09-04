@@ -1,5 +1,12 @@
 #!/bin/sh
+
+# SPDX-FileCopyrightText: none
+#
+# SPDX-License-Identifier: MIT
+
+
 . "$(dirname "$0")/_/husky.sh"
 
 npm test
 npx lint-staged
+reuse lint
