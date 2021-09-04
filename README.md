@@ -47,7 +47,7 @@ To enable configuration, you must perform the following in command-line:
 
 A configuration button will appear in `KWin Scripts` in `System Settings`.
 
-![config button shown](img/conf.png)
+![config button shown](img/scripts_kcm_item.png)
 
 To make changes effective, **the script must be reactivated**:
 
