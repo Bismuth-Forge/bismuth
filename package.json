@@ -57,7 +57,16 @@
   "homepage": "https://github.com/gikari/bismuth#readme",
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "ignoreCodes": [
+            "TS151001"
+          ]
+        }
+      }
+    }
   },
   "prettier": {},
   "lint-staged": {
