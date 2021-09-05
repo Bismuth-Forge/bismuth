@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 ---
-name: Build and Test Script
+name: Main Workflow
 on:
   push:
     branches: [master, main]
@@ -11,8 +11,29 @@ on:
     branches: [master, main]
 
 jobs:
+  lint:
+    name: Lint & Check Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      # Run Linter against code base #
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          JAVASCRIPT_DEFAULT_STYLE: prettier
+          VALIDATE_TYPESCRIPT_STANDARD: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
-    name: Build Script
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
