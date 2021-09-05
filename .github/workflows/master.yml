@@ -11,6 +11,17 @@ on:
     branches: [master, main]
 
 jobs:
+  reuse:
+    name: Check REUSE Compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v1
+
   lint:
     name: Lint & Check Formatting
     runs-on: ubuntu-latest
