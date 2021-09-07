@@ -9,7 +9,7 @@ import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
-import IDriverContext from "../idriver_context";
+import IDriverContext from "../driver/idriver_context";
 import ISurface from "../driver/isurface";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "./window";

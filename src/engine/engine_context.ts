@@ -5,7 +5,7 @@
 
 import TilingEngine from "./tiling_engine";
 import Window from "./window";
-import IDriverContext from "../idriver_context";
+import IDriverContext from "../driver/idriver_context";
 
 /**
  * Provides contextual information and operations to Layout layer.
