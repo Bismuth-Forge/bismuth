@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import TilingEngine from "./tiling_engine";
-import IDriverContext from "../idriver_context";
+import IDriverContext from "../driver/idriver_context";
 import Window from "./window";
 import { WindowState } from "./window";
 import { Shortcut } from "../shortcut";

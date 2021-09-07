@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "./driver/isurface";
-import Window from "./engine/window";
+import ISurface from "./isurface";
+import Window from "../engine/window";
 
 export default interface IDriverContext {
   readonly backend: string;
