@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Rect from "./util/rect";
+import Rect from "../util/rect";
 
 export default interface ISurface {
   readonly id: string;

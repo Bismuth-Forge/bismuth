@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import IConfig from "../config";
-import ISurface from "../isurface";
+import ISurface from "./isurface";
 import { toRect } from "../util/kwinutil";
 import Rect from "../util/rect";
 

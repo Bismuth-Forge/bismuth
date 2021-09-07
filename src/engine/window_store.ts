@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "../isurface";
+import ISurface from "../driver/isurface";
 import Window from "./window";
 
 export default class WindowStore {
