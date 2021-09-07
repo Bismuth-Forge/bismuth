@@ -14,7 +14,7 @@ import QuarterLayout from "../layouts/quarter_layout";
 import TilingEngine from "../engine/tiling_engine";
 import TilingController from "../engine/tiling_controler";
 import IDriverContext from "../idriver_context";
-import ISurface from "../isurface";
+import ISurface from "./isurface";
 import Window from "../engine/window";
 import KWinSurface from "./kwin_surface";
 import KWinWindow from "./kwin_window";

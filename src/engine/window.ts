@@ -5,7 +5,7 @@
 
 import IConfig from "../config";
 import IDriverWindow from "../idriver_window";
-import ISurface from "../isurface";
+import ISurface from "../driver/isurface";
 import Debug from "../util/debug";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
