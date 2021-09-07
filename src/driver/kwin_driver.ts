@@ -21,7 +21,7 @@ import KWinWindow from "./kwin_window";
 import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { KWinSetTimeout } from "./kwin_set_timeout";
-import { ILayoutClass } from "../ilayout";
+import { ILayoutClass } from "../layouts/ilayout";
 import { WindowState } from "../engine/window";
 import WrapperMap from "../util/wrappermap";
 import IConfig, { Config } from "../config";

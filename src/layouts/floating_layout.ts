@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import EngineContext from "../engine/engine_context";
-import { ILayout } from "../ilayout";
+import { ILayout } from "./ilayout";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";

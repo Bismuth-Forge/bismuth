@@ -6,7 +6,7 @@
 import MonocleLayout from "../layouts/monocle_layout";
 import FloatingLayout from "../layouts/floating_layout";
 
-import { ILayout } from "../ilayout";
+import { ILayout } from "../layouts/ilayout";
 import ISurface from "../isurface";
 import { wrapIndex } from "../util/func";
 import IConfig from "../config";

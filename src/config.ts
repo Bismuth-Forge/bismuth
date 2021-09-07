@@ -13,8 +13,8 @@ import FloatingLayout from "./layouts/floating_layout";
 import QuarterLayout from "./layouts/quarter_layout";
 import CascadeLayout from "./layouts/cascade_layout";
 
-import { ILayout } from "./ilayout";
-import { ILayoutClass } from "./ilayout";
+import { ILayout } from "./layouts/ilayout";
+import { ILayoutClass } from "./layouts/ilayout";
 
 export default interface IConfig {
   //#region Layout

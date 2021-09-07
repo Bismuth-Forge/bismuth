@@ -6,7 +6,7 @@
 import EngineContext from "../engine/engine_context";
 import { HalfSplitLayoutPart } from "./layout_part";
 import { FillLayoutPart } from "./layout_part";
-import { ILayout } from "../ilayout";
+import { ILayout } from "./ilayout";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
