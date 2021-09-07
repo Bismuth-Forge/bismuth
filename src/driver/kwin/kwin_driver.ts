@@ -31,7 +31,7 @@ import Debug from "../../util/debug";
  * Abstracts KDE implementation specific details.
  *
  * Driver is responsible for initializing the tiling logic, connecting
- * signals(Qt/KDE term for binding events), and providing specific utility
+ * signals (Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
 export default class KWinDriver implements IDriverContext {
@@ -160,16 +160,23 @@ export default class KWinDriver implements IDriverContext {
   }
 
   /**
-   * Entry point
+   * Script entry point
    */
   public main() {
-    console.log("Initiating systems!");
+    console.log("Let's get down to bismuth!");
 
     this.debug.debug(() => "Config: " + this.config);
 
     this.bindEvents();
     this.bindShortcut();
 
+    this.manageWindows();
+
+    // Arrange tiles
+    this.engine.arrange(this);
+  }
+
+  private manageWindows() {
     const clients = this.kwinApi.workspace.clientList();
     for (let i = 0; i < clients.length; i++) {
       const window = this.windowMap.add(clients[i]);
@@ -178,7 +185,6 @@ export default class KWinDriver implements IDriverContext {
         this.bindWindowEvents(window, clients[i]);
       else this.windowMap.remove(clients[i]);
     }
-    this.engine.arrange(this);
   }
 
   //#region implement methods of IDriverContext`
