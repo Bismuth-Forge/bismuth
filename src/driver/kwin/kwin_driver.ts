@@ -176,14 +176,32 @@ export default class KWinDriver implements IDriverContext {
     this.engine.arrange(this);
   }
 
+  /**
+   * Manage the windows
+   */
   private manageWindows() {
     const clients = this.kwinApi.workspace.clientList();
-    for (let i = 0; i < clients.length; i++) {
-      const window = this.windowMap.add(clients[i]);
-      this.engine.manage(window);
-      if (window.state !== WindowState.Unmanaged)
-        this.bindWindowEvents(window, clients[i]);
-      else this.windowMap.remove(clients[i]);
+    for (let client of clients) {
+      this.manageWindow(client);
+    }
+  }
+
+  /**
+   * Manage window with the particular KWin clientship
+   * @param client window client object specified by KWin
+   */
+  private manageWindow(client: KWin.Client) {
+    // Add window to our window map
+    const window = this.windowMap.add(client);
+
+    // Ask engine to manage window
+    this.engine.manage(window);
+
+    // If window is still unmanaged, remove it, otherwise bind to its events
+    if (window.state === WindowState.Unmanaged) {
+      this.windowMap.remove(client);
+    } else {
+      this.bindWindowEvents(window, client);
     }
   }
 
