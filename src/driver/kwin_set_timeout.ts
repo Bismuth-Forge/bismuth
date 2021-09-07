@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Debug from "../../util/debug";
+import Debug from "../util/debug";
 
 export default class KWinTimerPool {
   public static readonly instance = new KWinTimerPool();

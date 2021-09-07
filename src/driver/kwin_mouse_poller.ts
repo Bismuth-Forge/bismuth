@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../../config";
-import Debug from "../../util/debug";
+import IConfig from "../config";
+import Debug from "../util/debug";
 import { KWinSetTimeout } from "./kwin_set_timeout";
 
 export default class KWinMousePoller {

@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../../config";
-import ISurface from "../../isurface";
-import { toRect } from "../../util/kwinutil";
-import Rect from "../../util/rect";
+import IConfig from "../config";
+import ISurface from "../isurface";
+import { toRect } from "../util/kwinutil";
+import Rect from "../util/rect";
 
 export default class KWinSurface implements ISurface {
   public static generateId(

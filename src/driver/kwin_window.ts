@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IDriverWindow from "../../idriver_window";
-import ISurface from "../../isurface";
+import IDriverWindow from "../idriver_window";
+import ISurface from "../isurface";
 import KWinSurface from "./kwin_surface";
-import Rect from "../../util/rect";
-import { toQRect, toRect } from "../../util/kwinutil";
-import { clip, matchWords } from "../../util/func";
-import IConfig from "../../config";
-import Debug from "../../util/debug";
+import Rect from "../util/rect";
+import { toQRect, toRect } from "../util/kwinutil";
+import { clip, matchWords } from "../util/func";
+import IConfig from "../config";
+import Debug from "../util/debug";
 
 export default class KWinWindow implements IDriverWindow {
   public static generateID(client: KWin.Client) {
