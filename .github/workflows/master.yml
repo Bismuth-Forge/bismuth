@@ -43,7 +43,8 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           JAVASCRIPT_DEFAULT_STYLE: prettier
-          VALIDATE_TYPESCRIPT_STANDARD: false
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_JAVASCRIPT_ES: true
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
