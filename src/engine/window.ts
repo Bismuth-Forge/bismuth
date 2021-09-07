@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import IConfig from "../config";
-import IDriverWindow from "../idriver_window";
+import IDriverWindow from "../driver/idriver_window";
 import ISurface from "../driver/isurface";
 import Debug from "../util/debug";
 import Rect from "../util/rect";

@@ -3,8 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "./driver/isurface";
-import Rect from "./util/rect";
+import ISurface from "./isurface";
+import Rect from "../util/rect";
 
 export default interface IDriverWindow {
   readonly fullScreen: boolean;
