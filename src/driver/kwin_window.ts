@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IDriverWindow from "../idriver_window";
+import IDriverWindow from "./idriver_window";
 import ISurface from "./isurface";
 import KWinSurface from "./kwin_surface";
 import Rect from "../util/rect";
