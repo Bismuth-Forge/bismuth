@@ -3,29 +3,29 @@
 //
 // SPDX-License-Identifier: MIT
 
-import MonocleLayout from "../../layouts/monocle_layout";
-import TileLayout from "../../layouts/tile_layout";
-import ThreeColumnLayout from "../../layouts/three_column_layout";
-import StairLayout from "../../layouts/stair_layout";
-import SpreadLayout from "../../layouts/spread_layout";
-import FloatingLayout from "../../layouts/floating_layout";
-import QuarterLayout from "../../layouts/quarter_layout";
+import MonocleLayout from "../layouts/monocle_layout";
+import TileLayout from "../layouts/tile_layout";
+import ThreeColumnLayout from "../layouts/three_column_layout";
+import StairLayout from "../layouts/stair_layout";
+import SpreadLayout from "../layouts/spread_layout";
+import FloatingLayout from "../layouts/floating_layout";
+import QuarterLayout from "../layouts/quarter_layout";
 
-import TilingEngine from "../../engine/tiling_engine";
-import TilingController from "../../engine/tiling_controler";
-import IDriverContext from "../../idriver_context";
-import ISurface from "../../isurface";
-import Window from "../../engine/window";
+import TilingEngine from "../engine/tiling_engine";
+import TilingController from "../engine/tiling_controler";
+import IDriverContext from "../idriver_context";
+import ISurface from "../isurface";
+import Window from "../engine/window";
 import KWinSurface from "./kwin_surface";
 import KWinWindow from "./kwin_window";
-import { Shortcut } from "../../shortcut";
+import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { KWinSetTimeout } from "./kwin_set_timeout";
-import { ILayoutClass } from "../../ilayout";
-import { WindowState } from "../../engine/window";
-import WrapperMap from "../../util/wrappermap";
-import IConfig, { Config } from "../../config";
-import Debug from "../../util/debug";
+import { ILayoutClass } from "../ilayout";
+import { WindowState } from "../engine/window";
+import WrapperMap from "../util/wrappermap";
+import IConfig, { Config } from "../config";
+import Debug from "../util/debug";
 
 /**
  * Abstracts KDE implementation specific details.
