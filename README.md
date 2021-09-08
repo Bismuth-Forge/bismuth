@@ -6,6 +6,8 @@
 
 # 🌈 Bismuth
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.
 
 ## 🗺️ Goals
