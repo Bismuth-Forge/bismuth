@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "ignorePatterns": ["/build"],
+  "env": {
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "eslint-plugin-jsdoc",
+    "eslint-plugin-prefer-arrow"
+  ],
+  "rules": {
+    "curly": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["variable"],
+        "leadingUnderscore": "allow"
+      }
+    ],
+    "@typescript-eslint/prefer-for-of": "off",
+    "one-var": "error",
+    "max-classes-per-file": "off",
+    "no-cond-assign": "error"
+  }
+}
