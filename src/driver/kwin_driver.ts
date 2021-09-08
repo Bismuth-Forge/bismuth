@@ -201,11 +201,14 @@ export default class KWinDriver implements IDriverContext {
       this.controller.onSurfaceUpdate(this, "resized " + srf.toString());
     };
 
-    const onCurrentActivityChanged = (activity: string) => {
+    const onCurrentActivityChanged = (_activity: string) => {
       this.controller.onCurrentSurfaceChanged(this);
     };
 
-    const onCurrentDesktopChanged = (desktop: number, client: KWin.Client) => {
+    const onCurrentDesktopChanged = (
+      _desktop: number,
+      _client: KWin.Client
+    ) => {
       this.controller.onCurrentSurfaceChanged(this);
     };
 
@@ -219,9 +222,11 @@ export default class KWinDriver implements IDriverContext {
 
         const window = this.windowMap.add(client);
         this.controller.onWindowAdded(this, window);
-        if (window.state !== WindowState.Unmanaged)
+        if (window.state === WindowState.Unmanaged) {
+          this.windowMap.remove(client);
+        } else {
           this.bindWindowEvents(window, client);
-        else this.windowMap.remove(client);
+        }
 
         client.windowShown.disconnect(wrapper);
       };
