@@ -37,7 +37,6 @@ export default class KWinDriver implements IDriverContext {
   public static backendName: string = "kwin";
 
   // TODO: split context implementation
-  //#region implement properties of IDriverContext (except `setTimeout`)
   public get backend(): string {
     return KWinDriver.backendName;
   }
@@ -62,8 +61,9 @@ export default class KWinDriver implements IDriverContext {
     // TODO: fousing window on other screen?
     // TODO: find a way to change activity
 
-    if (this.kwinApi.workspace.currentDesktop !== ksrf.desktop)
+    if (this.kwinApi.workspace.currentDesktop !== ksrf.desktop) {
       this.kwinApi.workspace.currentDesktop = ksrf.desktop;
+    }
   }
 
   public get currentWindow(): Window | null {
@@ -72,15 +72,16 @@ export default class KWinDriver implements IDriverContext {
   }
 
   public set currentWindow(window: Window | null) {
-    if (window !== null)
+    if (window !== null) {
       this.kwinApi.workspace.activeClient = (
         window.window as KWinWindow
       ).client;
+    }
   }
 
   public get screens(): ISurface[] {
     const screens = [];
-    for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++)
+    for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
       screens.push(
         new KWinSurface(
           screen,
@@ -91,6 +92,7 @@ export default class KWinDriver implements IDriverContext {
           this.config
         )
       );
+    }
     return screens;
   }
 
@@ -98,13 +100,12 @@ export default class KWinDriver implements IDriverContext {
     return this.mousePoller.mousePosition;
   }
 
-  //#endregion
-
   private engine: TilingEngine;
-  private control: TilingController;
+  private controller: TilingController;
   private windowMap: WrapperMap<KWin.Client, Window>;
   private entered: boolean;
   private mousePoller: KWinMousePoller;
+
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
 
@@ -128,6 +129,7 @@ export default class KWinDriver implements IDriverContext {
     }
     this.debug = new Debug(this.config);
 
+    // TODO: find a better way to to this
     if (this.config.preventMinimize && this.config.monocleMinimizeRest) {
       this.debug.debug(
         () => "preventMinimize is disabled because of monocleMinimizeRest."
@@ -136,7 +138,11 @@ export default class KWinDriver implements IDriverContext {
     }
 
     this.engine = new TilingEngine(this.config, this.debug);
-    this.control = new TilingController(this.engine, this.config, this.debug);
+    this.controller = new TilingController(
+      this.engine,
+      this.config,
+      this.debug
+    );
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
       (client: KWin.Client) =>
@@ -167,12 +173,135 @@ export default class KWinDriver implements IDriverContext {
     this.debug.debug(() => "Config: " + this.config);
 
     this.bindEvents();
-    this.bindShortcut();
+    this.bindShortcuts();
 
     this.manageWindows();
 
     // Arrange tiles
     this.engine.arrange(this);
+  }
+
+  /**
+   * Bind script to the various KWin events
+   */
+  private bindEvents() {
+    this.connect(this.kwinApi.workspace.numberScreensChanged, (count: number) =>
+      this.controller.onSurfaceUpdate(this, "screens=" + count)
+    );
+
+    this.connect(this.kwinApi.workspace.screenResized, (screen: number) => {
+      const srf = new KWinSurface(
+        screen,
+        this.kwinApi.workspace.currentActivity,
+        this.kwinApi.workspace.currentDesktop,
+        this.qml.activityInfo,
+        this.kwinApi,
+        this.config
+      );
+      this.controller.onSurfaceUpdate(this, "resized " + srf.toString());
+    });
+
+    this.connect(
+      this.kwinApi.workspace.currentActivityChanged,
+      (activity: string) => this.controller.onCurrentSurfaceChanged(this)
+    );
+
+    this.connect(
+      this.kwinApi.workspace.currentDesktopChanged,
+      (desktop: number, client: KWin.Client) =>
+        this.controller.onCurrentSurfaceChanged(this)
+    );
+
+    this.connect(this.kwinApi.workspace.clientAdded, (client: KWin.Client) => {
+      // NOTE: windowShown can be fired in various situations.
+      // We need only the first one - when window is created.
+      let handled = false;
+      const handler = () => {
+        if (handled) return;
+        handled = true;
+
+        const window = this.windowMap.add(client);
+        this.controller.onWindowAdded(this, window);
+        if (window.state !== WindowState.Unmanaged)
+          this.bindWindowEvents(window, client);
+        else this.windowMap.remove(client);
+
+        client.windowShown.disconnect(wrapper);
+      };
+
+      const wrapper = this.connect(client.windowShown, handler);
+      this.setTimeout(handler, 50);
+    });
+
+    this.connect(
+      this.kwinApi.workspace.clientRemoved,
+      (client: KWin.Client) => {
+        const window = this.windowMap.get(client);
+        if (window) {
+          this.controller.onWindowRemoved(this, window);
+          this.windowMap.remove(client);
+        }
+      }
+    );
+
+    this.connect(
+      this.kwinApi.workspace.clientMaximizeSet,
+      (client: KWin.Client, h: boolean, v: boolean) => {
+        const maximized = h === true && v === true;
+        const window = this.windowMap.get(client);
+        if (window) {
+          (window.window as KWinWindow).maximized = maximized;
+          this.controller.onWindowMaximizeChanged(this, window, maximized);
+        }
+      }
+    );
+
+    this.connect(
+      this.kwinApi.workspace.clientFullScreenSet,
+      (client: KWin.Client, fullScreen: boolean, user: boolean) =>
+        this.controller.onWindowChanged(
+          this,
+          this.windowMap.get(client),
+          "fullscreen=" + fullScreen + " user=" + user
+        )
+    );
+
+    this.connect(
+      this.kwinApi.workspace.clientMinimized,
+      (client: KWin.Client) => {
+        if (this.config.preventMinimize) {
+          client.minimized = false;
+          this.kwinApi.workspace.activeClient = client;
+        } else
+          this.controller.onWindowChanged(
+            this,
+            this.windowMap.get(client),
+            "minimized"
+          );
+      }
+    );
+
+    this.connect(
+      this.kwinApi.workspace.clientUnminimized,
+      (client: KWin.Client) =>
+        this.controller.onWindowChanged(
+          this,
+          this.windowMap.get(client),
+          "unminimized"
+        )
+    );
+
+    // TODO: options.configChanged.connect(this.onConfigChanged);
+    /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
+     *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
+  }
+
+  /**
+   * Rigister Bismuth shortcuts
+   */
+  private bindShortcuts() {
+    this.bindMainShortcuts();
+    this.bindLayoutShortcuts();
   }
 
   /**
@@ -204,7 +333,6 @@ export default class KWinDriver implements IDriverContext {
     }
   }
 
-  //#region implement methods of IDriverContext`
   public setTimeout(func: () => void, timeout: number) {
     KWinSetTimeout(
       () => this.enter(func),
@@ -217,21 +345,13 @@ export default class KWinDriver implements IDriverContext {
   public showNotification(text: string) {
     this.qml.popupDialog.show(text);
   }
-  //#endregion
 
-  private bindShortcut() {
-    if (!this.kwinApi.KWin.registerShortcut) {
-      this.debug.debug(
-        () => "KWin.registerShortcut doesn't exist. Omitting shortcut binding."
-      );
-      return;
-    }
-
+  private bindMainShortcuts() {
     const bind = (seq: string, title: string, input: Shortcut) => {
-      title = "Krohnkite: " + title;
+      title = "Bismuth: " + title;
       seq = "Meta+" + seq;
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
-        this.enter(() => this.control.onShortcut(this, input));
+        this.enter(() => this.controller.onShortcut(this, input));
       });
     };
 
@@ -263,31 +383,28 @@ export default class KWinDriver implements IDriverContext {
     bind("Shift+R", "Rotate Part", Shortcut.RotatePart);
 
     bind("Return", "Set master", Shortcut.SetMaster);
+  }
 
-    const bindLayout = (
-      seq: string,
-      title: string,
-      layoutClass: ILayoutClass
-    ) => {
-      title = "Krohnkite: " + title + " Layout";
+  private bindLayoutShortcuts() {
+    const bind = (seq: string, title: string, layoutClass: ILayoutClass) => {
+      title = "Bismuth: " + title + " Layout";
       seq = seq !== "" ? "Meta+" + seq : "";
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
         this.enter(() =>
-          this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id)
+          this.controller.onShortcut(this, Shortcut.SetLayout, layoutClass.id)
         );
       });
     };
 
-    bindLayout("T", "Tile", TileLayout);
-    bindLayout("M", "Monocle", MonocleLayout);
-    bindLayout("", "Three Column", ThreeColumnLayout);
-    bindLayout("", "Spread", SpreadLayout);
-    bindLayout("", "Stair", StairLayout);
-    bindLayout("", "Floating", FloatingLayout);
-    bindLayout("", "Quarter", QuarterLayout);
+    bind("T", "Tile", TileLayout);
+    bind("M", "Monocle", MonocleLayout);
+    bind("", "Three Column", ThreeColumnLayout);
+    bind("", "Spread", SpreadLayout);
+    bind("", "Stair", StairLayout);
+    bind("", "Floating", FloatingLayout);
+    bind("", "Quarter", QuarterLayout);
   }
 
-  //#region Helper functions
   /**
    * Binds callback to the signal w/ extra fail-safe measures, like re-entry
    * prevention and auto-disconnect on termination.
@@ -327,119 +444,6 @@ export default class KWinDriver implements IDriverContext {
       this.entered = false;
     }
   }
-  //#endregion
-
-  private bindEvents() {
-    this.connect(this.kwinApi.workspace.numberScreensChanged, (count: number) =>
-      this.control.onSurfaceUpdate(this, "screens=" + count)
-    );
-
-    this.connect(this.kwinApi.workspace.screenResized, (screen: number) => {
-      const srf = new KWinSurface(
-        screen,
-        this.kwinApi.workspace.currentActivity,
-        this.kwinApi.workspace.currentDesktop,
-        this.qml.activityInfo,
-        this.kwinApi,
-        this.config
-      );
-      this.control.onSurfaceUpdate(this, "resized " + srf.toString());
-    });
-
-    this.connect(
-      this.kwinApi.workspace.currentActivityChanged,
-      (activity: string) => this.control.onCurrentSurfaceChanged(this)
-    );
-
-    this.connect(
-      this.kwinApi.workspace.currentDesktopChanged,
-      (desktop: number, client: KWin.Client) =>
-        this.control.onCurrentSurfaceChanged(this)
-    );
-
-    this.connect(this.kwinApi.workspace.clientAdded, (client: KWin.Client) => {
-      /* NOTE: windowShown can be fired in various situations.
-       *       We need only the first one - when window is created. */
-      let handled = false;
-      const handler = () => {
-        if (handled) return;
-        handled = true;
-
-        const window = this.windowMap.add(client);
-        this.control.onWindowAdded(this, window);
-        if (window.state !== WindowState.Unmanaged)
-          this.bindWindowEvents(window, client);
-        else this.windowMap.remove(client);
-
-        client.windowShown.disconnect(wrapper);
-      };
-
-      const wrapper = this.connect(client.windowShown, handler);
-      this.setTimeout(handler, 50);
-    });
-
-    this.connect(
-      this.kwinApi.workspace.clientRemoved,
-      (client: KWin.Client) => {
-        const window = this.windowMap.get(client);
-        if (window) {
-          this.control.onWindowRemoved(this, window);
-          this.windowMap.remove(client);
-        }
-      }
-    );
-
-    this.connect(
-      this.kwinApi.workspace.clientMaximizeSet,
-      (client: KWin.Client, h: boolean, v: boolean) => {
-        const maximized = h === true && v === true;
-        const window = this.windowMap.get(client);
-        if (window) {
-          (window.window as KWinWindow).maximized = maximized;
-          this.control.onWindowMaximizeChanged(this, window, maximized);
-        }
-      }
-    );
-
-    this.connect(
-      this.kwinApi.workspace.clientFullScreenSet,
-      (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-        this.control.onWindowChanged(
-          this,
-          this.windowMap.get(client),
-          "fullscreen=" + fullScreen + " user=" + user
-        )
-    );
-
-    this.connect(
-      this.kwinApi.workspace.clientMinimized,
-      (client: KWin.Client) => {
-        if (this.config.preventMinimize) {
-          client.minimized = false;
-          this.kwinApi.workspace.activeClient = client;
-        } else
-          this.control.onWindowChanged(
-            this,
-            this.windowMap.get(client),
-            "minimized"
-          );
-      }
-    );
-
-    this.connect(
-      this.kwinApi.workspace.clientUnminimized,
-      (client: KWin.Client) =>
-        this.control.onWindowChanged(
-          this,
-          this.windowMap.get(client),
-          "unminimized"
-        )
-    );
-
-    // TODO: options.configChanged.connect(this.onConfigChanged);
-    /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
-     *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
-  }
 
   private bindWindowEvents(window: Window, client: KWin.Client) {
     let moving = false;
@@ -454,38 +458,38 @@ export default class KWinDriver implements IDriverContext {
         moving = client.move;
         if (moving) {
           this.mousePoller.start();
-          this.control.onWindowMoveStart(window);
+          this.controller.onWindowMoveStart(window);
         } else {
-          this.control.onWindowMoveOver(this, window);
+          this.controller.onWindowMoveOver(this, window);
           this.mousePoller.stop();
         }
       }
       if (resizing !== client.resize) {
         resizing = client.resize;
-        if (resizing) this.control.onWindowResizeStart(window);
-        else this.control.onWindowResizeOver(this, window);
+        if (resizing) this.controller.onWindowResizeStart(window);
+        else this.controller.onWindowResizeOver(this, window);
       }
     });
 
     this.connect(client.geometryChanged, () => {
-      if (moving) this.control.onWindowMove(window);
-      else if (resizing) this.control.onWindowResize(this, window);
+      if (moving) this.controller.onWindowMove(window);
+      else if (resizing) this.controller.onWindowResize(this, window);
       else {
         if (!window.actualGeometry.equals(window.geometry))
-          this.control.onWindowGeometryChanged(this, window);
+          this.controller.onWindowGeometryChanged(this, window);
       }
     });
 
     this.connect(client.activeChanged, () => {
-      if (client.active) this.control.onWindowFocused(this, window);
+      if (client.active) this.controller.onWindowFocused(this, window);
     });
 
     this.connect(client.screenChanged, () =>
-      this.control.onWindowChanged(this, window, "screen=" + client.screen)
+      this.controller.onWindowChanged(this, window, "screen=" + client.screen)
     );
 
     this.connect(client.activitiesChanged, () =>
-      this.control.onWindowChanged(
+      this.controller.onWindowChanged(
         this,
         window,
         "activity=" + client.activities.join(",")
@@ -493,7 +497,7 @@ export default class KWinDriver implements IDriverContext {
     );
 
     this.connect(client.desktopChanged, () =>
-      this.control.onWindowChanged(this, window, "desktop=" + client.desktop)
+      this.controller.onWindowChanged(this, window, "desktop=" + client.desktop)
     );
   }
 
@@ -505,7 +509,7 @@ export default class KWinDriver implements IDriverContext {
 }
 
 /**
- * Window wrapper map
+ * Wrapper map type.
  */
 class WrapperMap<F, T> {
   private items: { [key: string]: T };
