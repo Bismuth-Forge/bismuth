@@ -69,11 +69,11 @@ export default class TilingController {
     this.engine.arrange(ctx);
   }
 
-  public onWindowMoveStart(window: Window): void {
+  public onWindowMoveStart(_window: Window): void {
     /* do nothing */
   }
 
-  public onWindowMove(window: Window): void {
+  public onWindowMove(_window: Window): void {
     /* do nothing */
   }
 
