@@ -43,6 +43,8 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           JAVASCRIPT_DEFAULT_STYLE: prettier
+          LINTER_RULES_PATH: /
+          JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.json
           VALIDATE_TYPESCRIPT_ES: true
           VALIDATE_JAVASCRIPT_ES: true
           DEFAULT_BRANCH: master
