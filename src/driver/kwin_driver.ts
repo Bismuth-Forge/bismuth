@@ -34,13 +34,6 @@ import Debug from "../util/debug";
  * functions.
  */
 export default class KWinDriver implements IDriverContext {
-  public static backendName: string = "kwin";
-
-  // TODO: split context implementation
-  public get backend(): string {
-    return KWinDriver.backendName;
-  }
-
   public get currentSurface(): ISurface {
     return new KWinSurface(
       this.kwinApi.workspace.activeClient

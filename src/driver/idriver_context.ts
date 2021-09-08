@@ -7,7 +7,6 @@ import ISurface from "./isurface";
 import Window from "../engine/window";
 
 export default interface IDriverContext {
-  readonly backend: string;
   readonly screens: ISurface[];
   readonly cursorPosition: [number, number] | null;
 
