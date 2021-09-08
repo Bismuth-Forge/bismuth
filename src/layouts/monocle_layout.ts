@@ -35,10 +35,7 @@ export default class MonocleLayout implements ILayout {
     });
 
     /* KWin-specific `monocleMinimizeRest` option */
-    if (
-      ctx.backend === KWinDriver.backendName &&
-      this.config.monocleMinimizeRest
-    ) {
+    if (this.config.monocleMinimizeRest) {
       const tiles = [...tileables];
       ctx.setTimeout(() => {
         const current = ctx.currentWindow;

@@ -14,10 +14,6 @@ import IDriverContext from "../driver/idriver_context";
  * not really a find-grained control mechanism, but is simple and concise.
  */
 export default class EngineContext {
-  public get backend(): string {
-    return this.drvctx.backend;
-  }
-
   public get currentWindow(): Window | null {
     return this.drvctx.currentWindow;
   }
