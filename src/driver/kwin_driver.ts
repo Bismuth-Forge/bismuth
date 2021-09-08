@@ -185,11 +185,11 @@ export default class KWinDriver implements IDriverContext {
    * Bind script to the various KWin events
    */
   private bindEvents() {
-    this.connect(this.kwinApi.workspace.numberScreensChanged, (count: number) =>
-      this.controller.onSurfaceUpdate(this, "screens=" + count)
-    );
+    const onNumberScreensChanged = (count: number) => {
+      this.controller.onSurfaceUpdate(this, "screens=" + count);
+    };
 
-    this.connect(this.kwinApi.workspace.screenResized, (screen: number) => {
+    const onScreenRezized = (screen: number) => {
       const srf = new KWinSurface(
         screen,
         this.kwinApi.workspace.currentActivity,
@@ -199,20 +199,17 @@ export default class KWinDriver implements IDriverContext {
         this.config
       );
       this.controller.onSurfaceUpdate(this, "resized " + srf.toString());
-    });
+    };
 
-    this.connect(
-      this.kwinApi.workspace.currentActivityChanged,
-      (activity: string) => this.controller.onCurrentSurfaceChanged(this)
-    );
+    const onCurrentActivityChanged = (activity: string) => {
+      this.controller.onCurrentSurfaceChanged(this);
+    };
 
-    this.connect(
-      this.kwinApi.workspace.currentDesktopChanged,
-      (desktop: number, client: KWin.Client) =>
-        this.controller.onCurrentSurfaceChanged(this)
-    );
+    const onCurrentDesktopChanged = (desktop: number, client: KWin.Client) => {
+      this.controller.onCurrentSurfaceChanged(this);
+    };
 
-    this.connect(this.kwinApi.workspace.clientAdded, (client: KWin.Client) => {
+    const onClientAdded = (client: KWin.Client) => {
       // NOTE: windowShown can be fired in various situations.
       // We need only the first one - when window is created.
       let handled = false;
@@ -231,65 +228,82 @@ export default class KWinDriver implements IDriverContext {
 
       const wrapper = this.connect(client.windowShown, handler);
       this.setTimeout(handler, 50);
-    });
+    };
+
+    const onClientRemoved = (client: KWin.Client) => {
+      const window = this.windowMap.get(client);
+      if (window) {
+        this.controller.onWindowRemoved(this, window);
+        this.windowMap.remove(client);
+      }
+    };
+
+    const onClientMaximizeSet = (
+      client: KWin.Client,
+      h: boolean,
+      v: boolean
+    ) => {
+      const maximized = h === true && v === true;
+      const window = this.windowMap.get(client);
+      if (window) {
+        (window.window as KWinWindow).maximized = maximized;
+        this.controller.onWindowMaximizeChanged(this, window, maximized);
+      }
+    };
+
+    const onClientFullScreenSet = (
+      client: KWin.Client,
+      fullScreen: boolean,
+      user: boolean
+    ) => {
+      this.controller.onWindowChanged(
+        this,
+        this.windowMap.get(client),
+        "fullscreen=" + fullScreen + " user=" + user
+      );
+    };
+
+    const onClientMinimized = (client: KWin.Client) => {
+      if (this.config.preventMinimize) {
+        client.minimized = false;
+        this.kwinApi.workspace.activeClient = client;
+      } else
+        this.controller.onWindowChanged(
+          this,
+          this.windowMap.get(client),
+          "minimized"
+        );
+    };
+
+    const onClientUnminimized = (client: KWin.Client) =>
+      this.controller.onWindowChanged(
+        this,
+        this.windowMap.get(client),
+        "unminimized"
+      );
 
     this.connect(
-      this.kwinApi.workspace.clientRemoved,
-      (client: KWin.Client) => {
-        const window = this.windowMap.get(client);
-        if (window) {
-          this.controller.onWindowRemoved(this, window);
-          this.windowMap.remove(client);
-        }
-      }
+      this.kwinApi.workspace.numberScreensChanged,
+      onNumberScreensChanged
     );
-
+    this.connect(this.kwinApi.workspace.screenResized, onScreenRezized);
     this.connect(
-      this.kwinApi.workspace.clientMaximizeSet,
-      (client: KWin.Client, h: boolean, v: boolean) => {
-        const maximized = h === true && v === true;
-        const window = this.windowMap.get(client);
-        if (window) {
-          (window.window as KWinWindow).maximized = maximized;
-          this.controller.onWindowMaximizeChanged(this, window, maximized);
-        }
-      }
+      this.kwinApi.workspace.currentActivityChanged,
+      onCurrentActivityChanged
     );
-
+    this.connect(
+      this.kwinApi.workspace.currentDesktopChanged,
+      onCurrentDesktopChanged
+    );
+    this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
+    this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);
+    this.connect(this.kwinApi.workspace.clientMaximizeSet, onClientMaximizeSet);
     this.connect(
       this.kwinApi.workspace.clientFullScreenSet,
-      (client: KWin.Client, fullScreen: boolean, user: boolean) =>
-        this.controller.onWindowChanged(
-          this,
-          this.windowMap.get(client),
-          "fullscreen=" + fullScreen + " user=" + user
-        )
+      onClientFullScreenSet
     );
-
-    this.connect(
-      this.kwinApi.workspace.clientMinimized,
-      (client: KWin.Client) => {
-        if (this.config.preventMinimize) {
-          client.minimized = false;
-          this.kwinApi.workspace.activeClient = client;
-        } else
-          this.controller.onWindowChanged(
-            this,
-            this.windowMap.get(client),
-            "minimized"
-          );
-      }
-    );
-
-    this.connect(
-      this.kwinApi.workspace.clientUnminimized,
-      (client: KWin.Client) =>
-        this.controller.onWindowChanged(
-          this,
-          this.windowMap.get(client),
-          "unminimized"
-        )
-    );
+    this.connect(this.kwinApi.workspace.clientMinimized, onClientMinimized);
+    this.connect(this.kwinApi.workspace.clientUnminimized, onClientUnminimized);
 
     // TODO: options.configChanged.connect(this.onConfigChanged);
     /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
