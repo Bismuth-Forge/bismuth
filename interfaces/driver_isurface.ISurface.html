@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ILayoutClass | bismuth</title>
+	<title>ISurface | bismuth</title>
 	<meta name="description" content="Documentation for bismuth">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">bismuth</a>
 				</li>
 				<li>
-					<a href="../modules/ilayout.html">ilayout</a>
+					<a href="../modules/driver_isurface.html">driver/isurface</a>
 				</li>
 				<li>
-					<a href="ilayout.ILayoutClass.html">ILayoutClass</a>
+					<a href="driver_isurface.ISurface.html">ISurface</a>
 				</li>
 			</ul>
-			<h1>Interface ILayoutClass</h1>
+			<h1>Interface ISurface</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +72,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ILayoutClass</span>
+						<span class="target">ISurface</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/driver_kwin_surface.KWinSurface.html" class="tsd-signature-type" data-tsd-kind="Class">KWinSurface</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -81,44 +87,20 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-interface"><a href="ilayout.ILayoutClass.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_isurface.ISurface.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_isurface.ISurface.html#ignore" class="tsd-kind-icon">ignore</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_isurface.ISurface.html#workingArea" class="tsd-kind-icon">working<wbr>Area</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ilayout.ILayoutClass.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver_isurface.ISurface.html#next" class="tsd-kind-icon">next</a></li>
 							</ul>
 						</section>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-interface">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">new ILayout<wbr>Class<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="config.IConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">IConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ilayout.ILayout.html" class="tsd-signature-type" data-tsd-kind="Interface">ILayout</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/085bdcb/src/ilayout.ts#L15">ilayout.ts:15</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>config: <a href="config.IConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">IConfig</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="ilayout.ILayout.html" class="tsd-signature-type" data-tsd-kind="Interface">ILayout</a></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -129,9 +111,49 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/085bdcb/src/ilayout.ts#L14">ilayout.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/7c5dbbc/src/driver/isurface.ts#L9">driver/isurface.ts:9</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="ignore" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> ignore</h3>
+					<div class="tsd-signature tsd-kind-icon">ignore<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/7c5dbbc/src/driver/isurface.ts#L10">driver/isurface.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="workingArea" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> working<wbr>Area</h3>
+					<div class="tsd-signature tsd-kind-icon">working<wbr>Area<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/util_rect.Rect.html" class="tsd-signature-type" data-tsd-kind="Class">Rect</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/7c5dbbc/src/driver/isurface.ts#L11">driver/isurface.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="next" class="tsd-anchor"></a>
+					<h3>next</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="driver_isurface.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/7c5dbbc/src/driver/isurface.ts#L13">driver/isurface.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="driver_isurface.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -142,25 +164,28 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/ilayout.html">ilayout</a>
+						<a href="../modules/driver_isurface.html">driver/isurface</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="ilayout.ILayout.html" class="tsd-kind-icon">ILayout</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="ilayout.ILayoutClass.html" class="tsd-kind-icon">ILayout<wbr>Class</a>
+						<a href="driver_isurface.ISurface.html" class="tsd-kind-icon">ISurface</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-interface">
-								<a href="ilayout.ILayoutClass.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_isurface.ISurface.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ilayout.ILayoutClass.html#id" class="tsd-kind-icon">id</a>
+								<a href="driver_isurface.ISurface.html#ignore" class="tsd-kind-icon">ignore</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_isurface.ISurface.html#workingArea" class="tsd-kind-icon">working<wbr>Area</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="driver_isurface.ISurface.html#next" class="tsd-kind-icon">next</a>
 							</li>
 						</ul>
 					</li>
@@ -183,8 +208,8 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
