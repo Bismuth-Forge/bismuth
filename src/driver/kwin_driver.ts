@@ -20,11 +20,12 @@ import KWinSurface from "./kwin_surface";
 import KWinWindow from "./kwin_window";
 import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
-import { KWinSetTimeout } from "./kwin_set_timeout";
 import { ILayoutClass } from "../layouts/ilayout";
 import { WindowState } from "../engine/window";
 import IConfig, { Config } from "../config";
 import Debug from "../util/debug";
+import { enter } from "../util/func";
+import qmlSetTimeout, { TimersPool } from "../util/timer";
 
 /**
  * Abstracts KDE implementation specific details.
@@ -96,7 +97,6 @@ export default class KWinDriver implements IDriverContext {
   private engine: TilingEngine;
   private controller: TilingController;
   private windowMap: WrapperMap<KWin.Client, Window>;
-  private entered: boolean;
   private mousePoller: KWinMousePoller;
 
   private qml: Bismuth.Qml.Main;
@@ -151,10 +151,12 @@ export default class KWinDriver implements IDriverContext {
           this.debug
         )
     );
-    this.entered = false;
     this.mousePoller = new KWinMousePoller(qmlObjects, this.config, this.debug);
     this.qml = qmlObjects;
     this.kwinApi = kwinApi;
+
+    // Init timers singleton, so that we can use qmlSetTimeout freely
+    TimersPool.instance(this.qml.scriptRoot, this.debug);
   }
 
   /**
@@ -225,7 +227,7 @@ export default class KWinDriver implements IDriverContext {
       };
 
       const wrapper = this.connect(client.windowShown, handler);
-      this.setTimeout(handler, 50);
+      qmlSetTimeout(handler, 50);
     };
 
     const onClientRemoved = (client: KWin.Client) => {
@@ -343,15 +345,6 @@ export default class KWinDriver implements IDriverContext {
     } else {
       this.bindWindowEvents(window, client);
     }
-  }
-
-  public setTimeout(func: () => void, timeout: number) {
-    KWinSetTimeout(
-      () => this.enter(func),
-      timeout,
-      this.qml.scriptRoot,
-      this.debug
-    );
   }
 
   public showNotification(text: string) {

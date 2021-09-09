@@ -18,6 +18,7 @@ import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
 import IConfig from "../config";
 import Debug from "../util/debug";
+import qmlSetTimeout from "../util/timer";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -268,7 +269,7 @@ export default class TilingEngine {
    */
   public enforceSize(ctx: IDriverContext, window: Window) {
     if (window.tiled && !window.actualGeometry.equals(window.geometry))
-      ctx.setTimeout(() => {
+      qmlSetTimeout(() => {
         if (window.tiled) window.commit();
       }, 10);
   }

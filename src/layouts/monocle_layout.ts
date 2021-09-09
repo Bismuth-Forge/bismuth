@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import EngineContext from "../engine/engine_context";
-import KWinDriver from "../driver/kwin_driver";
 import KWinWindow from "../driver/kwin_window";
 import Window from "../engine/window";
 import { ILayout } from "./ilayout";
@@ -12,6 +11,7 @@ import { Shortcut } from "../shortcut";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
 import IConfig from "../config";
+import qmlSetTimeout from "../util/timer";
 
 export default class MonocleLayout implements ILayout {
   public static readonly id = "MonocleLayout";
@@ -37,7 +37,7 @@ export default class MonocleLayout implements ILayout {
     /* KWin-specific `monocleMinimizeRest` option */
     if (this.config.monocleMinimizeRest) {
       const tiles = [...tileables];
-      ctx.setTimeout(() => {
+      qmlSetTimeout(() => {
         const current = ctx.currentWindow;
         if (current && current.tiled) {
           tiles.forEach((window) => {

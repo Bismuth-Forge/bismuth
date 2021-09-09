@@ -46,8 +46,4 @@ export default class TestDriver {
     const idx = this.windows.indexOf(window);
     if (idx !== -1) this.currentWindow = idx;
   }
-
-  public setTimeout(func: () => void, timeout: number) {
-    setTimeout(func, timeout);
-  }
 }
