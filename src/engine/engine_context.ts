@@ -24,10 +24,6 @@ export default class EngineContext {
 
   constructor(private drvctx: IDriverContext, private engine: TilingEngine) {}
 
-  public setTimeout(func: () => void, timeout: number): void {
-    this.drvctx.setTimeout(func, timeout);
-  }
-
   public cycleFocus(step: -1 | 1) {
     this.engine.focusOrder(this.drvctx, step);
   }

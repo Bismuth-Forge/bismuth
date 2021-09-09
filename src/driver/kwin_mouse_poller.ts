@@ -5,7 +5,7 @@
 
 import IConfig from "../config";
 import Debug from "../util/debug";
-import { KWinSetTimeout } from "./kwin_set_timeout";
+import qmlSetTimeout from "../util/timer";
 
 export default class KWinMousePoller {
   public static readonly COMMAND = "xdotool getmouselocation";
@@ -40,15 +40,10 @@ export default class KWinMousePoller {
       this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
       this.qml.mousePoller.disconnectSource(KWinMousePoller.COMMAND);
 
-      KWinSetTimeout(
-        () => {
-          if (this.started)
-            qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
-        },
-        KWinMousePoller.INTERVAL,
-        this.qml.scriptRoot,
-        debug
-      );
+      qmlSetTimeout(() => {
+        if (this.started)
+          qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
+      }, KWinMousePoller.INTERVAL);
     });
   }
 
