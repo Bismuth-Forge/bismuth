@@ -35,6 +35,7 @@ Project goals are the following:
 
 Install script via script:
 
+    npm install # Installs dependencies for building
     npm run script-install
 
 To uninstall:
