@@ -323,8 +323,9 @@ export default class KWinDriver implements IDriverContext {
    */
   private manageWindows() {
     const clients = this.kwinApi.workspace.clientList();
-    for (let client of clients) {
-      this.manageWindow(client);
+    // TODO: provide interface for using the "for of" cycle
+    for (let i = 0; i < clients.length; i++) {
+      this.manageWindow(clients[i]);
     }
   }
 
