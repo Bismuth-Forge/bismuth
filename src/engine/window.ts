@@ -94,17 +94,18 @@ export default class Window {
   }
 
   public set state(value: WindowState) {
-    const state = this.state;
+    const winState = this.state;
 
     /* cannot transit to the current state */
-    if (state === value) return;
+    if (winState === value) return;
 
     if (
-      (state === WindowState.Unmanaged || Window.isTileableState(state)) &&
+      (winState === WindowState.Unmanaged ||
+        Window.isTileableState(winState)) &&
       Window.isFloatingState(value)
     )
       this.shouldCommitFloat = true;
-    else if (Window.isFloatingState(state) && Window.isTileableState(value))
+    else if (Window.isFloatingState(winState) && Window.isTileableState(value))
       /* save the current geometry before leaving floating state */
       this.floatGeometry = this.actualGeometry;
 
@@ -121,12 +122,12 @@ export default class Window {
 
   public get weight(): number {
     const srfID = this.window.surface.id;
-    const weight: number | undefined = this.weightMap[srfID];
-    if (weight === undefined) {
+    const winWeight: number | undefined = this.weightMap[srfID];
+    if (winWeight === undefined) {
       this.weightMap[srfID] = 1.0;
       return 1.0;
     }
-    return weight;
+    return winWeight;
   }
 
   public set weight(value: number) {
