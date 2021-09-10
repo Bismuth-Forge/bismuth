@@ -2,7 +2,7 @@
   "name": "bismuth",
   "version": "0.9.0",
   "description": "A dynamic tiling extension for KWin",
-  "main": "bismuth.js",
+  "private": true,
   "directories": {
     "build": "build",
     "test": "test"
