@@ -74,9 +74,9 @@ export default class KWinDriver implements IDriverContext {
   }
 
   public get screens(): ISurface[] {
-    const screens = [];
+    const screensArr = [];
     for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
-      screens.push(
+      screensArr.push(
         new KWinSurface(
           screen,
           this.kwinApi.workspace.currentActivity,
@@ -87,7 +87,7 @@ export default class KWinDriver implements IDriverContext {
         )
       );
     }
-    return screens;
+    return screensArr;
   }
 
   public get cursorPosition(): [number, number] | null {
