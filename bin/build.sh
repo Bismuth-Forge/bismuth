@@ -11,7 +11,10 @@ mkdir -p "${npm_package_config_build_dir:=build}/contents/code"
 mkdir -p "$npm_package_config_build_dir/contents/config"
 mkdir -p "$npm_package_config_build_dir/contents/ui"
 
-echo "Compiling using esbuild..."
+echo "Checking using TS Compiler..."
+npx tsc --noEmit
+
+echo "Bundling using esbuild..."
 npx esbuild \
   --bundle src/index.ts \
   --outfile="$npm_package_config_build_dir/contents/code/index.mjs" \
