@@ -24,7 +24,6 @@ import { ILayoutClass } from "../layouts/ilayout";
 import { WindowState } from "../engine/window";
 import IConfig, { Config } from "../config";
 import Debug from "../util/debug";
-import { enter } from "../util/func";
 import qmlSetTimeout, { TimersPool } from "../util/timer";
 
 /**
@@ -97,6 +96,7 @@ export default class KWinDriver implements IDriverContext {
   private engine: TilingEngine;
   private controller: TilingController;
   private windowMap: WrapperMap<KWin.Client, Window>;
+  private entered: boolean;
   private mousePoller: KWinMousePoller;
 
   private qml: Bismuth.Qml.Main;
@@ -151,6 +151,7 @@ export default class KWinDriver implements IDriverContext {
           this.debug
         )
     );
+    this.entered = false;
     this.mousePoller = new KWinMousePoller(qmlObjects, this.config, this.debug);
     this.qml = qmlObjects;
     this.kwinApi = kwinApi;
