@@ -50,7 +50,7 @@ export default class TilingController {
 
     this.driver.manageWindows();
 
-    this.engine.arrange(this.driver);
+    this.engine.arrange();
   }
 
   public get screens(): DriverSurface[] {
@@ -79,7 +79,7 @@ export default class TilingController {
 
   public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
     this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public onCurrentSurfaceChanged(ctx: DriverContext): void {
@@ -87,7 +87,7 @@ export default class TilingController {
       "onCurrentSurfaceChanged",
       { srf: ctx.currentSurface },
     ]);
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public onWindowAdded(ctx: DriverContext, window: Window): void {
@@ -98,24 +98,24 @@ export default class TilingController {
     if (window.tileable) {
       const srf = ctx.currentSurface;
       const tiles = this.engine.windows.getVisibleTiles(srf);
-      const layoutCapcity = this.engine.layouts.getCurrentLayout(srf).capacity;
-      if (layoutCapcity !== undefined && tiles.length > layoutCapcity) {
-        const nsrf = ctx.currentSurface.next();
-        if (nsrf) {
-          // (window.window as KWinWindow).client.desktop = (nsrf as KWinSurface).desktop;
-          window.surface = nsrf;
-          ctx.currentSurface = nsrf;
+      const layoutCapacity = this.engine.layouts.getCurrentLayout(srf).capacity;
+      if (layoutCapacity !== undefined && tiles.length > layoutCapacity) {
+        const nextSurface = ctx.currentSurface.next();
+        if (nextSurface) {
+          // (window.window as KWinWindow).client.desktop = (nextSurface as KWinSurface).desktop;
+          window.surface = nextSurface;
+          ctx.currentSurface = nextSurface;
         }
       }
     }
 
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public onWindowRemoved(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowRemoved", { window }]);
     this.engine.unmanage(window);
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public onWindowMoveStart(_window: Window): void {
@@ -141,7 +141,7 @@ export default class TilingController {
 
       if (targets.length === 1) {
         this.engine.windows.swap(window, targets[0]);
-        this.engine.arrange(ctx);
+        this.engine.arrange();
         return;
       }
     }
@@ -154,7 +154,7 @@ export default class TilingController {
       if (distance > 30) {
         window.floatGeometry = window.actualGeometry;
         window.state = WindowState.Floating;
-        this.engine.arrange(ctx);
+        this.engine.arrange();
         return;
       }
     }
@@ -172,7 +172,7 @@ export default class TilingController {
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
         this.engine.adjustLayout(window);
-        this.engine.arrange(ctx);
+        this.engine.arrange();
       }
     }
   }
@@ -181,7 +181,7 @@ export default class TilingController {
     this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
-      this.engine.arrange(ctx);
+      this.engine.arrange();
     } else if (!this.config.adjustLayout) this.engine.enforceSize(window);
   }
 
@@ -190,7 +190,7 @@ export default class TilingController {
     window: Window,
     maximized: boolean
   ): void {
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public onWindowGeometryChanged(ctx: DriverContext, window: Window): void {
@@ -210,7 +210,7 @@ export default class TilingController {
 
       if (comment === "unminimized") ctx.currentWindow = window;
 
-      this.engine.arrange(ctx);
+      this.engine.arrange();
     }
   }
 
@@ -249,12 +249,12 @@ export default class TilingController {
       }
     }
 
-    if (this.engine.handleLayoutShortcut(ctx, input, data)) {
-      this.engine.arrange(ctx);
+    if (this.engine.handleLayoutShortcut(input, data)) {
+      this.engine.arrange();
       return;
     }
 
-    const window = ctx.currentWindow;
+    const window = this.currentWindow;
     switch (input) {
       case Shortcut.Up:
         this.engine.focusOrder(-1);
@@ -264,16 +264,16 @@ export default class TilingController {
         break;
 
       case Shortcut.FocusUp:
-        this.engine.focusDir(ctx, "up");
+        this.engine.focusDir("up");
         break;
       case Shortcut.FocusDown:
-        this.engine.focusDir(ctx, "down");
+        this.engine.focusDir("down");
         break;
       case Shortcut.FocusLeft:
-        this.engine.focusDir(ctx, "left");
+        this.engine.focusDir("left");
         break;
       case Shortcut.FocusRight:
-        this.engine.focusDir(ctx, "right");
+        this.engine.focusDir("right");
         break;
 
       case Shortcut.GrowWidth:
@@ -297,16 +297,16 @@ export default class TilingController {
         break;
 
       case Shortcut.SwapUp:
-        this.engine.swapDirOrMoveFloat(ctx, "up");
+        this.engine.swapDirOrMoveFloat("up");
         break;
       case Shortcut.SwapDown:
-        this.engine.swapDirOrMoveFloat(ctx, "down");
+        this.engine.swapDirOrMoveFloat("down");
         break;
       case Shortcut.SwapLeft:
-        this.engine.swapDirOrMoveFloat(ctx, "left");
+        this.engine.swapDirOrMoveFloat("left");
         break;
       case Shortcut.SwapRight:
-        this.engine.swapDirOrMoveFloat(ctx, "right");
+        this.engine.swapDirOrMoveFloat("right");
         break;
 
       case Shortcut.SetMaster:
@@ -316,21 +316,23 @@ export default class TilingController {
         if (window) this.engine.toggleFloat(window);
         break;
       case Shortcut.ToggleFloatAll:
-        this.engine.floatAll(ctx, ctx.currentSurface);
+        this.engine.floatAll(this.currentSurface);
         break;
 
       case Shortcut.NextLayout:
-        this.engine.cycleLayout(ctx, 1);
+        this.engine.cycleLayout(1);
         break;
       case Shortcut.PreviousLayout:
-        this.engine.cycleLayout(ctx, -1);
+        this.engine.cycleLayout(-1);
         break;
       case Shortcut.SetLayout:
-        if (typeof data === "string") this.engine.setLayout(ctx, data);
+        if (typeof data === "string") {
+          this.engine.setLayout(data);
+        }
         break;
     }
 
-    this.engine.arrange(ctx);
+    this.engine.arrange();
   }
 
   public manageWindow(win: Window): void {

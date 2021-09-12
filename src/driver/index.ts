@@ -11,7 +11,6 @@ import SpreadLayout from "../engine/layout/spread_layout";
 import FloatingLayout from "../engine/layout/floating_layout";
 import QuarterLayout from "../engine/layout/quarter_layout";
 
-import TilingEngine from "../engine";
 import TilingController from "../controller";
 import { DriverSurface } from "./surface";
 import Window from "../engine/window";
@@ -61,14 +60,14 @@ export class KWinDriver implements DriverContext {
   }
 
   public set currentSurface(value: DriverSurface) {
-    const ksrf = value as KWinSurface;
+    const kwinSurface = value as KWinSurface;
 
     /* NOTE: only supports switching desktops */
-    // TODO: fousing window on other screen?
+    // TODO: focusing window on other screen?
     // TODO: find a way to change activity
 
-    if (this.kwinApi.workspace.currentDesktop !== ksrf.desktop) {
-      this.kwinApi.workspace.currentDesktop = ksrf.desktop;
+    if (this.kwinApi.workspace.currentDesktop !== kwinSurface.desktop) {
+      this.kwinApi.workspace.currentDesktop = kwinSurface.desktop;
     }
   }
 
@@ -173,7 +172,7 @@ export class KWinDriver implements DriverContext {
       this.controller.onSurfaceUpdate(this, "screens=" + count);
     };
 
-    const onScreenRezized = (screen: number) => {
+    const onScreenResized = (screen: number) => {
       const srf = new KWinSurface(
         screen,
         this.kwinApi.workspace.currentActivity,
@@ -275,7 +274,7 @@ export class KWinDriver implements DriverContext {
       this.kwinApi.workspace.numberScreensChanged,
       onNumberScreensChanged
     );
-    this.connect(this.kwinApi.workspace.screenResized, onScreenRezized);
+    this.connect(this.kwinApi.workspace.screenResized, onScreenResized);
     this.connect(
       this.kwinApi.workspace.currentActivityChanged,
       onCurrentActivityChanged
