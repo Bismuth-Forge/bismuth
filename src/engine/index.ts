@@ -239,7 +239,7 @@ export default class TilingEngine {
       tileables[0].geometry = workingArea;
     } else if (tileables.length > 0)
       layout.apply(
-        new EngineContext(ctx, this.controller, this),
+        new EngineContext(this.controller, this),
         tileables,
         tilingArea
       );
@@ -304,30 +304,39 @@ export default class TilingEngine {
   /**
    * Focus the next or previous window.
    */
-  public focusOrder(ctx: DriverContext, step: -1 | 1) {
-    const window = ctx.currentWindow;
+  public focusOrder(step: -1 | 1) {
+    const window = this.controller.currentWindow;
 
     /* if no current window, select the first tile. */
     if (window === null) {
-      const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
-      if (tiles.length > 1) ctx.currentWindow = tiles[0];
+      const tiles = this.windows.getVisibleTiles(
+        this.controller.currentSurface
+      );
+      if (tiles.length > 1) {
+        this.controller.currentWindow = tiles[0];
+      }
       return;
     }
 
-    const visibles = this.windows.getVisibleWindows(ctx.currentSurface);
-    if (visibles.length === 0) /* nothing to focus */ return;
+    const visibles = this.windows.getVisibleWindows(
+      this.controller.currentSurface
+    );
+    if (visibles.length === 0) {
+      // Nothing to focus
+      return;
+    }
 
     const idx = visibles.indexOf(window);
     if (!window || idx < 0) {
       /* unmanaged window -> focus master */
-      ctx.currentWindow = visibles[0];
+      this.controller.currentWindow = visibles[0];
       return;
     }
 
     const num = visibles.length;
     const newIndex = (idx + (step % num) + num) % num;
 
-    ctx.currentWindow = visibles[newIndex];
+    this.controller.currentWindow = visibles[newIndex];
   }
 
   /**
@@ -497,7 +506,7 @@ export default class TilingEngine {
     const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
     if (layout.handleShortcut)
       return layout.handleShortcut(
-        new EngineContext(ctx, this.controller, this),
+        new EngineContext(this.controller, this),
         input,
         data
       );

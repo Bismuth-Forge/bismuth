@@ -65,6 +65,14 @@ export default class TilingController {
     this.driver.currentWindow = value;
   }
 
+  public get currentSurface(): DriverSurface {
+    return this.driver.currentSurface;
+  }
+
+  public set currentSurface(value: DriverSurface) {
+    this.driver.currentSurface = value;
+  }
+
   public showNotification(text: string): void {
     this.driver.showNotification(text);
   }
@@ -249,10 +257,10 @@ export default class TilingController {
     const window = ctx.currentWindow;
     switch (input) {
       case Shortcut.Up:
-        this.engine.focusOrder(ctx, -1);
+        this.engine.focusOrder(-1);
         break;
       case Shortcut.Down:
-        this.engine.focusOrder(ctx, +1);
+        this.engine.focusOrder(+1);
         break;
 
       case Shortcut.FocusUp:
