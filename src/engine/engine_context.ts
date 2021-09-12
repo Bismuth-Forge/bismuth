@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import TilingEngine from ".";
+import { Engine } from ".";
 import Window from "./window";
 import { DriverContext } from "../driver";
 import TilingController from "../controller";
@@ -23,10 +23,7 @@ export default class EngineContext {
     this.controller.currentWindow = window;
   }
 
-  constructor(
-    private controller: TilingController,
-    private engine: TilingEngine
-  ) {}
+  constructor(private controller: TilingController, private engine: Engine) {}
 
   public cycleFocus(step: -1 | 1) {
     this.engine.focusOrder(step);
