@@ -264,10 +264,10 @@ export default class TilingEngine {
    * Re-apply window geometry, computed by layout algorithm.
    *
    * Sometimes applications move or resize windows without user intervention,
-   * which is straigh against the purpose of tiling WM. This operation
+   * which is straight against the purpose of tiling WM. This operation
    * move/resize such windows back to where/how they should be.
    */
-  public enforceSize(ctx: DriverContext, window: Window) {
+  public enforceSize(window: Window) {
     if (window.tiled && !window.actualGeometry.equals(window.geometry))
       qmlSetTimeout(() => {
         if (window.tiled) window.commit();
