@@ -9,7 +9,7 @@ import FloatingLayout from "../layouts/floating_layout";
 import { ILayout } from "../layouts/ilayout";
 import { DriverSurface } from "../driver/surface";
 import { wrapIndex } from "../util/func";
-import IConfig from "../config";
+import Config from "../config";
 
 export class LayoutStoreEntry {
   public get currentLayout(): ILayout {
@@ -21,9 +21,9 @@ export class LayoutStoreEntry {
   private layouts: { [key: string]: ILayout };
   private previousID: string;
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
     this.currentIndex = 0;
     this.currentID = this.config.layoutOrder[0];
@@ -76,9 +76,9 @@ export class LayoutStoreEntry {
 export default class LayoutStore {
   private store: { [key: string]: LayoutStoreEntry };
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
     this.store = {};
   }

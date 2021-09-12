@@ -10,7 +10,7 @@ import { WindowState } from "../engine/window";
 import { clip } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import IConfig from "../config";
+import Config from "../config";
 
 export default class QuarterLayout implements ILayout {
   public static readonly MAX_PROPORTION = 0.8;
@@ -27,9 +27,9 @@ export default class QuarterLayout implements ILayout {
   private rhsplit: number;
   private vsplit: number;
 
-  private config: IConfig;
+  private config: Config;
 
-  public constructor(config: IConfig) {
+  public constructor(config: Config) {
     this.lhsplit = 0.5;
     this.rhsplit = 0.5;
     this.vsplit = 0.5;

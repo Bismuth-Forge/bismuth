@@ -10,7 +10,7 @@ import { ILayout } from "./ilayout";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
-import IConfig from "../config";
+import Config from "../config";
 import qmlSetTimeout from "../util/timer";
 
 export default class MonocleLayout implements ILayout {
@@ -19,9 +19,9 @@ export default class MonocleLayout implements ILayout {
 
   public readonly classID = MonocleLayout.id;
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
   }
 

@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../config";
+import Config from "../config";
 import { toRect } from "../util/kwinutil";
 import Rect from "../util/rect";
 
@@ -20,7 +20,7 @@ export class KWinSurface implements DriverSurface {
     screen: number,
     activity: string,
     desktop: number,
-    config: IConfig
+    config: Config
   ) {
     let path = String(screen);
     if (config.layoutPerActivity) path += "@" + activity;
@@ -38,14 +38,14 @@ export class KWinSurface implements DriverSurface {
 
   private activityInfo: Plasma.TaskManager.ActivityInfo;
   private kwinApi: KWin.Api;
-  private config: IConfig;
+  private config: Config;
   constructor(
     screen: number,
     activity: string,
     desktop: number,
     activityInfo: Plasma.TaskManager.ActivityInfo,
     kwinApi: KWin.Api,
-    config: IConfig
+    config: Config
   ) {
     const activityName = activityInfo.activityName(activity);
 

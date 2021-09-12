@@ -17,7 +17,7 @@ import {
 import { clip, slide } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import IConfig from "../config";
+import Config from "../config";
 
 export default class TileLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -50,9 +50,9 @@ export default class TileLayout implements ILayout {
     this.parts.inner.ratio = value;
   }
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
 
     this.parts = new RotateLayoutPart(

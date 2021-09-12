@@ -8,11 +8,11 @@ import { Shortcut } from "../shortcut";
 import Window from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import IConfig from "../config";
+import Config from "../config";
 
 export interface ILayoutClass {
   readonly id: string;
-  new (config: IConfig): ILayout;
+  new (config: Config): ILayout;
 }
 
 export interface ILayout {

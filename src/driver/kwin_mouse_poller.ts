@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../config";
+import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
 
@@ -23,9 +23,9 @@ export default class KWinMousePoller {
   private startCount: number;
   private cmdResult: string | null;
   private qml: Bismuth.Qml.Main;
-  private config: IConfig;
+  private config: Config;
 
-  constructor(qml: Bismuth.Qml.Main, config: IConfig, debug: Debug) {
+  constructor(qml: Bismuth.Qml.Main, config: Config, debug: Debug) {
     this.startCount = 0;
     this.cmdResult = null;
     this.qml = qml;

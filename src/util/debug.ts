@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../config";
+import Config from "../config";
 
 export default class Debug {
   private enabled: boolean;
   private started: number;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.enabled = config.debugEnabled;
     this.started = new Date().getTime();
   }

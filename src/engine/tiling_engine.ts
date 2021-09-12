@@ -16,7 +16,7 @@ import { WindowState } from "./window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
-import IConfig from "../config";
+import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
 
@@ -29,10 +29,10 @@ export default class TilingEngine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 
-  private config: IConfig;
+  private config: Config;
   private debug: Debug;
 
-  constructor(config: IConfig, debug: Debug) {
+  constructor(config: Config, debug: Debug) {
     this.config = config;
     this.debug = debug;
     this.layouts = new LayoutStore(this.config);
