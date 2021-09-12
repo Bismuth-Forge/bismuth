@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IDriverWindow from "./idriver_window";
 import { DriverSurface, KWinSurface } from "./surface";
 import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
@@ -11,7 +10,21 @@ import { clip, matchWords } from "../util/func";
 import IConfig from "../config";
 import Debug from "../util/debug";
 
-export default class KWinWindow implements IDriverWindow {
+export interface DriverWindow {
+  readonly fullScreen: boolean;
+  readonly geometry: Readonly<Rect>;
+  readonly id: string;
+  readonly maximized: boolean;
+  readonly shouldIgnore: boolean;
+  readonly shouldFloat: boolean;
+
+  surface: DriverSurface;
+
+  commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
+  visible(srf: DriverSurface): boolean;
+}
+
+export class KWinWindow implements DriverWindow {
   public static generateID(client: KWin.Client) {
     return String(client) + "/" + client.windowId;
   }

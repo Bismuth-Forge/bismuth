@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import IConfig from "../config";
-import IDriverWindow from "../driver/idriver_window";
+import { DriverWindow } from "../driver/window";
 import { DriverSurface } from "../driver/surface";
 import Debug from "../util/debug";
 import Rect from "../util/rect";
@@ -44,7 +44,7 @@ export default class Window {
   }
 
   public readonly id: string;
-  public readonly window: IDriverWindow;
+  public readonly window: DriverWindow;
 
   public get actualGeometry(): Readonly<Rect> {
     return this.window.geometry;
@@ -142,7 +142,7 @@ export default class Window {
   private config: IConfig;
   private debug: Debug;
 
-  constructor(window: IDriverWindow, config: IConfig, debug: Debug) {
+  constructor(window: DriverWindow, config: IConfig, debug: Debug) {
     this.config = config;
     this.debug = debug;
 

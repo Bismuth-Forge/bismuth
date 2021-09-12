@@ -16,7 +16,7 @@ import TilingController from "../engine/tiling_controler";
 import { DriverSurface } from "./surface";
 import Window from "../engine/window";
 import { KWinSurface } from "./surface";
-import KWinWindow from "./kwin_window";
+import { KWinWindow } from "./window";
 import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { ILayoutClass } from "../layouts/ilayout";

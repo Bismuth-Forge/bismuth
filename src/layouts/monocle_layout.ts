@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import EngineContext from "../engine/engine_context";
-import KWinWindow from "../driver/kwin_window";
+import { KWinWindow } from "../driver/window";
 import Window from "../engine/window";
 import { ILayout } from "./ilayout";
 import { Shortcut } from "../shortcut";
