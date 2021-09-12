@@ -102,7 +102,6 @@ export class KWinDriver implements DriverContext {
     return this.mousePoller.mousePosition;
   }
 
-  private engine: TilingEngine;
   private controller: TilingController;
   private windowMap: WrapperMap<KWin.Client, Window>;
   private entered: boolean;
@@ -122,7 +121,6 @@ export class KWinDriver implements DriverContext {
   constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    engine: TilingEngine,
     controller: TilingController,
     config: Config,
     debug: Debug
@@ -138,7 +136,6 @@ export class KWinDriver implements DriverContext {
       this.config.preventMinimize = false;
     }
 
-    this.engine = engine;
     this.controller = controller;
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
@@ -176,9 +173,6 @@ export class KWinDriver implements DriverContext {
     this.bindShortcuts();
 
     this.manageWindows();
-
-    // Arrange tiles
-    this.engine.arrange(this);
   }
 
   /**
@@ -342,15 +336,14 @@ export class KWinDriver implements DriverContext {
     // Add window to our window map
     const window = this.windowMap.add(client);
 
-    // Ask engine to manage window
-    this.engine.manage(window);
-
-    // If window is still unmanaged, remove it, otherwise bind to its events
-    if (window.state === WindowState.Unmanaged) {
+    if (window.shouldIgnore) {
       this.windowMap.remove(client);
-    } else {
-      this.bindWindowEvents(window, client);
+      return;
     }
+
+    this.bindWindowEvents(window, client);
+
+    this.controller.manageWindow(window);
   }
 
   public showNotification(text: string) {
