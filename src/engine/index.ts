@@ -22,21 +22,54 @@ import TilingController from "../controller";
 
 export type Direction = "up" | "down" | "left" | "right";
 
+export interface Engine {
+  layouts: LayoutStore;
+  windows: WindowStore;
+
+  arrange(): void;
+  manage(window: Window): void;
+  unmanage(window: Window): void;
+  adjustLayout(basis: Window): void;
+  resizeFloat(
+    window: Window,
+    dir: "east" | "west" | "south" | "north",
+    step: -1 | 1
+  ): void;
+  resizeTile(
+    basis: Window,
+    dir: "east" | "west" | "south" | "north",
+    step: -1 | 1
+  ): void;
+  resizeWindow(
+    window: Window,
+    dir: "east" | "west" | "south" | "north",
+    step: -1 | 1
+  ): void;
+  enforceSize(window: Window): void;
+  handleLayoutShortcut(input: Shortcut, data?: any): boolean;
+  focusOrder(step: -1 | 1): void;
+  focusDir(dir: Direction): void;
+  swapOrder(window: Window, step: -1 | 1): void;
+  swapDirOrMoveFloat(dir: Direction): void;
+  setMaster(window: Window): void;
+  toggleFloat(window: Window): void;
+  floatAll(srf: DriverSurface): void;
+  cycleLayout(step: 1 | -1): void;
+  setLayout(layoutClassID: string): void;
+}
+
 /**
  * Maintains tiling context and performs various tiling actions.
  */
-export default class TilingEngine {
+export class TilingEngine implements Engine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 
-  private controller: TilingController;
-  private config: Config;
-  private debug: Debug;
-
-  constructor(controller: TilingController, config: Config, debug: Debug) {
-    this.controller = controller;
-    this.config = config;
-    this.debug = debug;
+  constructor(
+    private controller: TilingController,
+    private config: Config,
+    private debug: Debug
+  ) {
     this.layouts = new LayoutStore(this.config);
     this.windows = new WindowStore();
   }

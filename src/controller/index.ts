@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import TilingEngine from "../engine";
+import { Engine, TilingEngine } from "../engine";
 import { DriverContext, KWinDriver } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
@@ -19,20 +19,15 @@ import { DriverSurface } from "../driver/surface";
  * In short, this class is just a bunch of event handling methods.
  */
 export default class TilingController {
-  private engine: TilingEngine;
+  private engine: Engine;
   private driver: DriverContext;
-  private config: Config;
-  private debug: Debug;
 
   public constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    config: Config,
-    debug: Debug
+    private config: Config,
+    private debug: Debug
   ) {
-    this.config = config;
-    this.debug = debug;
-
     this.engine = new TilingEngine(this, config, debug);
     this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
   }
