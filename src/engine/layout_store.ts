@@ -7,7 +7,7 @@ import MonocleLayout from "../layouts/monocle_layout";
 import FloatingLayout from "../layouts/floating_layout";
 
 import { ILayout } from "../layouts/ilayout";
-import ISurface from "../driver/isurface";
+import { DriverSurface } from "../driver/surface";
 import { wrapIndex } from "../util/func";
 import IConfig from "../config";
 
@@ -83,18 +83,18 @@ export default class LayoutStore {
     this.store = {};
   }
 
-  public getCurrentLayout(srf: ISurface): ILayout {
+  public getCurrentLayout(srf: DriverSurface): ILayout {
     return srf.ignore
       ? FloatingLayout.instance
       : this.getEntry(srf.id).currentLayout;
   }
 
-  public cycleLayout(srf: ISurface, step: 1 | -1): ILayout | null {
+  public cycleLayout(srf: DriverSurface, step: 1 | -1): ILayout | null {
     if (srf.ignore) return null;
     return this.getEntry(srf.id).cycleLayout(step);
   }
 
-  public setLayout(srf: ISurface, layoutClassID: string): ILayout | null {
+  public setLayout(srf: DriverSurface, layoutClassID: string): ILayout | null {
     if (srf.ignore) return null;
     return this.getEntry(srf.id).setLayout(layoutClassID);
   }

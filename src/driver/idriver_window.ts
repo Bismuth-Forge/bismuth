@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "./isurface";
+import { DriverSurface } from "./surface";
 import Rect from "../util/rect";
 
 export default interface IDriverWindow {
@@ -14,8 +14,8 @@ export default interface IDriverWindow {
   readonly shouldIgnore: boolean;
   readonly shouldFloat: boolean;
 
-  surface: ISurface;
+  surface: DriverSurface;
 
   commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
-  visible(srf: ISurface): boolean;
+  visible(srf: DriverSurface): boolean;
 }

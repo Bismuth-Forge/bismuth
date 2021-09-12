@@ -5,7 +5,7 @@
 
 import IConfig from "../config";
 import IDriverWindow from "../driver/idriver_window";
-import ISurface from "../driver/isurface";
+import { DriverSurface } from "../driver/surface";
 import Debug from "../util/debug";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
@@ -112,11 +112,11 @@ export default class Window {
     this.internalState = value;
   }
 
-  public get surface(): ISurface {
+  public get surface(): DriverSurface {
     return this.window.surface;
   }
 
-  public set surface(srf: ISurface) {
+  public set surface(srf: DriverSurface) {
     this.window.surface = srf;
   }
 
@@ -210,7 +210,7 @@ export default class Window {
     this.window.commit(geometry);
   }
 
-  public visible(srf: ISurface): boolean {
+  public visible(srf: DriverSurface): boolean {
     return this.window.visible(srf);
   }
 

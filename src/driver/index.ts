@@ -13,9 +13,9 @@ import QuarterLayout from "../layouts/quarter_layout";
 
 import TilingEngine from "../engine/tiling_engine";
 import TilingController from "../engine/tiling_controler";
-import ISurface from "./isurface";
+import { DriverSurface } from "./surface";
 import Window from "../engine/window";
-import KWinSurface from "./kwin_surface";
+import { KWinSurface } from "./surface";
 import KWinWindow from "./kwin_window";
 import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
@@ -26,10 +26,10 @@ import Debug from "../util/debug";
 import qmlSetTimeout, { TimersPool } from "../util/timer";
 
 export interface DriverContext {
-  readonly screens: ISurface[];
+  readonly screens: DriverSurface[];
   readonly cursorPosition: [number, number] | null;
 
-  currentSurface: ISurface;
+  currentSurface: DriverSurface;
   currentWindow: Window | null;
 
   showNotification(text: string): void;
@@ -43,7 +43,7 @@ export interface DriverContext {
  * functions.
  */
 export class KWinDriver implements DriverContext {
-  public get currentSurface(): ISurface {
+  public get currentSurface(): DriverSurface {
     return new KWinSurface(
       this.kwinApi.workspace.activeClient
         ? this.kwinApi.workspace.activeClient.screen
@@ -56,7 +56,7 @@ export class KWinDriver implements DriverContext {
     );
   }
 
-  public set currentSurface(value: ISurface) {
+  public set currentSurface(value: DriverSurface) {
     const ksrf = value as KWinSurface;
 
     /* NOTE: only supports switching desktops */
@@ -81,7 +81,7 @@ export class KWinDriver implements DriverContext {
     }
   }
 
-  public get screens(): ISurface[] {
+  public get screens(): DriverSurface[] {
     const screensArr = [];
     for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
       screensArr.push(

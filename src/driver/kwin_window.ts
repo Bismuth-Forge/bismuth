@@ -4,8 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import IDriverWindow from "./idriver_window";
-import ISurface from "./isurface";
-import KWinSurface from "./kwin_surface";
+import { DriverSurface, KWinSurface } from "./surface";
 import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";
@@ -58,7 +57,7 @@ export default class KWinWindow implements IDriverWindow {
 
   public maximized: boolean;
 
-  public get surface(): ISurface {
+  public get surface(): DriverSurface {
     let activity;
     if (this.client.activities.length === 0)
       activity = this.kwinApi.workspace.currentActivity;
@@ -84,7 +83,7 @@ export default class KWinWindow implements IDriverWindow {
     );
   }
 
-  public set surface(srf: ISurface) {
+  public set surface(srf: DriverSurface) {
     const ksrf = srf as KWinSurface;
 
     // TODO: setting activity?
@@ -181,7 +180,7 @@ export default class KWinWindow implements IDriverWindow {
     );
   }
 
-  public visible(srf: ISurface): boolean {
+  public visible(srf: DriverSurface): boolean {
     const ksrf = srf as KWinSurface;
     return (
       !this.client.minimized &&
