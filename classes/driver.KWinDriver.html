@@ -150,13 +150,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new KWin<wbr>Driver<span class="tsd-signature-symbol">(</span>qmlObjects<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a>, kwinApi<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a>, config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.IConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">IConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver.KWinDriver.html" class="tsd-signature-type" data-tsd-kind="Class">KWinDriver</a></li>
+						<li class="tsd-signature tsd-kind-icon">new KWin<wbr>Driver<span class="tsd-signature-symbol">(</span>qmlObjects<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a>, kwinApi<span class="tsd-signature-symbol">: </span><a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a>, engine<span class="tsd-signature-symbol">: </span><a href="engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a>, controller<span class="tsd-signature-symbol">: </span><a href="controller.TilingController.html" class="tsd-signature-type" data-tsd-kind="Class">TilingController</a>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a>, debug<span class="tsd-signature-symbol">: </span><a href="util_debug.Debug.html" class="tsd-signature-type" data-tsd-kind="Class">Debug</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver.KWinDriver.html" class="tsd-signature-type" data-tsd-kind="Class">KWinDriver</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L122">driver/index.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L122">driver/index.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -178,12 +178,21 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <a href="../interfaces/config.IConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">IConfig</a></h5>
+									<h5>engine: <a href="engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></h5>
+								</li>
+								<li>
+									<h5>controller: <a href="controller.TilingController.html" class="tsd-signature-type" data-tsd-kind="Class">TilingController</a></h5>
+								</li>
+								<li>
+									<h5>config: <a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Bismuth configuration. If none is provided, the configuration is read from KConfig (in most cases from config file).</p>
 										</div>
 									</div>
+								</li>
+								<li>
+									<h5>debug: <a href="util_debug.Debug.html" class="tsd-signature-type" data-tsd-kind="Class">Debug</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="driver.KWinDriver.html" class="tsd-signature-type" data-tsd-kind="Class">KWinDriver</a></h4>
@@ -196,20 +205,20 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="config" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
-					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.IConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">IConfig</a></div>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L114">driver/index.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L114">driver/index.ts:114</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="controller" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> controller</h3>
-					<div class="tsd-signature tsd-kind-icon">controller<span class="tsd-signature-symbol">:</span> <a href="engine_tiling_controler.TilingController.html" class="tsd-signature-type" data-tsd-kind="Class">TilingController</a></div>
+					<div class="tsd-signature tsd-kind-icon">controller<span class="tsd-signature-symbol">:</span> <a href="controller.TilingController.html" class="tsd-signature-type" data-tsd-kind="Class">TilingController</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L106">driver/index.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L106">driver/index.ts:106</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,17 +228,17 @@
 					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="util_debug.Debug.html" class="tsd-signature-type" data-tsd-kind="Class">Debug</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L115">driver/index.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L115">driver/index.ts:115</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="engine" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> engine</h3>
-					<div class="tsd-signature tsd-kind-icon">engine<span class="tsd-signature-symbol">:</span> <a href="engine_tiling_engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></div>
+					<div class="tsd-signature tsd-kind-icon">engine<span class="tsd-signature-symbol">:</span> <a href="engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L105">driver/index.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L105">driver/index.ts:105</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -239,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">entered<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L108">driver/index.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L108">driver/index.ts:108</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -249,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">kwin<wbr>Api<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_kwin.KWin.Api.html" class="tsd-signature-type" data-tsd-kind="Interface">Api</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L112">driver/index.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L112">driver/index.ts:112</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -259,7 +268,7 @@
 					<div class="tsd-signature tsd-kind-icon">mouse<wbr>Poller<span class="tsd-signature-symbol">:</span> <a href="driver_kwin_mouse_poller.KWinMousePoller.html" class="tsd-signature-type" data-tsd-kind="Class">KWinMousePoller</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L109">driver/index.ts:109</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L109">driver/index.ts:109</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -269,7 +278,7 @@
 					<div class="tsd-signature tsd-kind-icon">qml<span class="tsd-signature-symbol">:</span> <a href="../interfaces/extern_global.Bismuth.Qml.Main.html" class="tsd-signature-type" data-tsd-kind="Interface">Main</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L111">driver/index.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L111">driver/index.ts:111</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -279,7 +288,7 @@
 					<div class="tsd-signature tsd-kind-icon">window<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WrapperMap</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/extern_kwin.KWin.Client.html" class="tsd-signature-type" data-tsd-kind="Interface">Client</a><span class="tsd-signature-symbol">, </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L107">driver/index.ts:107</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L107">driver/index.ts:107</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -298,7 +307,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L46">driver/index.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L46">driver/index.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h4>
@@ -307,7 +316,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L59">driver/index.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L59">driver/index.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -332,7 +341,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L71">driver/index.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L71">driver/index.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h4>
@@ -341,7 +350,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L76">driver/index.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L76">driver/index.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -365,7 +374,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#cursorPosition">cursorPosition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L101">driver/index.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L101">driver/index.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4>
@@ -383,7 +392,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#screens">screens</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L84">driver/index.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L84">driver/index.ts:84</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -403,7 +412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L192">driver/index.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L187">driver/index.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -425,7 +434,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L404">driver/index.ts:404</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L399">driver/index.ts:399</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -442,7 +451,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L365">driver/index.ts:365</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L360">driver/index.ts:360</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -459,7 +468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L326">driver/index.ts:326</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L321">driver/index.ts:321</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -481,7 +490,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L464">driver/index.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L459">driver/index.ts:459</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -507,7 +516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L428">driver/index.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L423">driver/index.ts:423</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,7 +584,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L449">driver/index.ts:449</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L444">driver/index.ts:444</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -620,7 +629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L175">driver/index.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L170">driver/index.ts:170</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -642,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L346">driver/index.ts:346</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L341">driver/index.ts:341</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -673,7 +682,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L334">driver/index.ts:334</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L329">driver/index.ts:329</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -696,7 +705,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/driver.DriverContext.html">DriverContext</a>.<a href="../interfaces/driver.DriverContext.html#showNotification">showNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L361">driver/index.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9debfb4/src/driver/index.ts#L356">driver/index.ts:356</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
