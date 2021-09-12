@@ -7,7 +7,7 @@ import EngineContext from "../engine/engine_context";
 import { ILayout } from "./ilayout";
 import Window from "../engine/window";
 import LayoutUtils from "./layout_utils";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import { WindowState } from "../engine/window";
 import { partitionArrayBySizes, clip, slide } from "../util/func";
 import Rect from "../util/rect";

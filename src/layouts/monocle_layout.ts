@@ -7,7 +7,7 @@ import EngineContext from "../engine/engine_context";
 import { KWinWindow } from "../driver/window";
 import Window from "../engine/window";
 import { ILayout } from "./ilayout";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
 import Config from "../config";

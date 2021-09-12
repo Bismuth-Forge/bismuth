@@ -17,7 +17,7 @@ import { DriverSurface } from "./surface";
 import Window from "../engine/window";
 import { KWinSurface } from "./surface";
 import { KWinWindow } from "./window";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { ILayoutClass } from "../layouts/ilayout";
 import { WindowState } from "../engine/window";
