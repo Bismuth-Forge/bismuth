@@ -238,7 +238,11 @@ export default class TilingEngine {
       tileables[0].state = WindowState.Maximized;
       tileables[0].geometry = workingArea;
     } else if (tileables.length > 0)
-      layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
+      layout.apply(
+        new EngineContext(ctx, this.controller, this),
+        tileables,
+        tilingArea
+      );
 
     if (
       this.config.limitTileWidthRatio > 0 &&
@@ -492,7 +496,11 @@ export default class TilingEngine {
   ): boolean {
     const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
     if (layout.handleShortcut)
-      return layout.handleShortcut(new EngineContext(ctx, this), input, data);
+      return layout.handleShortcut(
+        new EngineContext(ctx, this.controller, this),
+        input,
+        data
+      );
     return false;
   }
 

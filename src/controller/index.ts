@@ -57,6 +57,18 @@ export default class TilingController {
     return this.driver.screens;
   }
 
+  public get currentWindow(): Window | null {
+    return this.driver.currentWindow;
+  }
+
+  public set currentWindow(value: Window | null) {
+    this.driver.currentWindow = value;
+  }
+
+  public showNotification(text: string): void {
+    this.driver.showNotification(text);
+  }
+
   public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
     this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
     this.engine.arrange(ctx);
