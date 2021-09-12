@@ -33,6 +33,10 @@ export interface DriverContext {
   currentWindow: Window | null;
 
   showNotification(text: string): void;
+
+  bindEvents(): void;
+  bindShortcuts(): void;
+  manageWindows(): void;
 }
 
 /**
@@ -162,23 +166,9 @@ export class KWinDriver implements DriverContext {
   }
 
   /**
-   * Script entry point
-   */
-  public main() {
-    console.log("Let's get down to bismuth!");
-
-    this.debug.debug(() => "Config: " + this.config);
-
-    this.bindEvents();
-    this.bindShortcuts();
-
-    this.manageWindows();
-  }
-
-  /**
    * Bind script to the various KWin events
    */
-  private bindEvents() {
+  public bindEvents(): void {
     const onNumberScreensChanged = (count: number) => {
       this.controller.onSurfaceUpdate(this, "screens=" + count);
     };
@@ -310,9 +300,9 @@ export class KWinDriver implements DriverContext {
   }
 
   /**
-   * Rigister Bismuth shortcuts
+   * Register Bismuth shortcuts
    */
-  private bindShortcuts() {
+  public bindShortcuts(): void {
     this.bindMainShortcuts();
     this.bindLayoutShortcuts();
   }
@@ -320,7 +310,7 @@ export class KWinDriver implements DriverContext {
   /**
    * Manage the windows
    */
-  private manageWindows() {
+  public manageWindows(): void {
     const clients = this.kwinApi.workspace.clientList();
     // TODO: provide interface for using the "for of" cycle
     for (let i = 0; i < clients.length; i++) {
