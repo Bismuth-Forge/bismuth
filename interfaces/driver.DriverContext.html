@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IDriverContext | bismuth</title>
+	<title>DriverContext | bismuth</title>
 	<meta name="description" content="Documentation for bismuth">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">bismuth</a>
 				</li>
 				<li>
-					<a href="../modules/driver_idriver_context.html">driver/idriver_context</a>
+					<a href="../modules/driver.html">driver</a>
 				</li>
 				<li>
-					<a href="driver_idriver_context.IDriverContext.html">IDriverContext</a>
+					<a href="driver.DriverContext.html">DriverContext</a>
 				</li>
 			</ul>
-			<h1>Interface IDriverContext</h1>
+			<h1>Interface DriverContext</h1>
 		</div>
 	</div>
 </header>
@@ -72,14 +72,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IDriverContext</span>
+						<span class="target">DriverContext</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/driver_kwin_driver.KWinDriver.html" class="tsd-signature-type" data-tsd-kind="Class">KWinDriver</a></li>
+					<li><a href="../classes/driver.KWinDriver.html" class="tsd-signature-type" data-tsd-kind="Class">KWinDriver</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -89,16 +89,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_idriver_context.IDriverContext.html#currentSurface" class="tsd-kind-icon">current<wbr>Surface</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_idriver_context.IDriverContext.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_idriver_context.IDriverContext.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_idriver_context.IDriverContext.html#screens" class="tsd-kind-icon">screens</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver.DriverContext.html#currentSurface" class="tsd-kind-icon">current<wbr>Surface</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver.DriverContext.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver.DriverContext.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver.DriverContext.html#screens" class="tsd-kind-icon">screens</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver_idriver_context.IDriverContext.html#showNotification" class="tsd-kind-icon">show<wbr>Notification</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver.DriverContext.html#showNotification" class="tsd-kind-icon">show<wbr>Notification</a></li>
 							</ul>
 						</section>
 					</div>
@@ -109,10 +109,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="currentSurface" class="tsd-anchor"></a>
 					<h3>current<wbr>Surface</h3>
-					<div class="tsd-signature tsd-kind-icon">current<wbr>Surface<span class="tsd-signature-symbol">:</span> <a href="driver_isurface.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a></div>
+					<div class="tsd-signature tsd-kind-icon">current<wbr>Surface<span class="tsd-signature-symbol">:</span> <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/e0e6269/src/driver/idriver_context.ts#L13">driver/idriver_context.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L32">driver/index.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -122,7 +122,7 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Window<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/e0e6269/src/driver/idriver_context.ts#L14">driver/idriver_context.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L33">driver/index.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -132,17 +132,17 @@
 					<div class="tsd-signature tsd-kind-icon">cursor<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/e0e6269/src/driver/idriver_context.ts#L11">driver/idriver_context.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L30">driver/index.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="screens" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> screens</h3>
-					<div class="tsd-signature tsd-kind-icon">screens<span class="tsd-signature-symbol">:</span> <a href="driver_isurface.ISurface.html" class="tsd-signature-type" data-tsd-kind="Interface">ISurface</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">screens<span class="tsd-signature-symbol">:</span> <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/e0e6269/src/driver/idriver_context.ts#L10">driver/idriver_context.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L29">driver/index.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,7 +159,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/e0e6269/src/driver/idriver_context.ts#L16">driver/idriver_context.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d342559/src/driver/index.ts#L35">driver/index.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -181,31 +181,34 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/driver_idriver_context.html">driver/idriver_<wbr>context</a>
+						<a href="../modules/driver.html">driver</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/driver.KWinDriver.html" class="tsd-kind-icon">KWin<wbr>Driver</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="driver_idriver_context.IDriverContext.html" class="tsd-kind-icon">IDriver<wbr>Context</a>
+						<a href="driver.DriverContext.html" class="tsd-kind-icon">Driver<wbr>Context</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="driver_idriver_context.IDriverContext.html#currentSurface" class="tsd-kind-icon">current<wbr>Surface</a>
+								<a href="driver.DriverContext.html#currentSurface" class="tsd-kind-icon">current<wbr>Surface</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="driver_idriver_context.IDriverContext.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a>
+								<a href="driver.DriverContext.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="driver_idriver_context.IDriverContext.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a>
+								<a href="driver.DriverContext.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="driver_idriver_context.IDriverContext.html#screens" class="tsd-kind-icon">screens</a>
+								<a href="driver.DriverContext.html#screens" class="tsd-kind-icon">screens</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="driver_idriver_context.IDriverContext.html#showNotification" class="tsd-kind-icon">show<wbr>Notification</a>
+								<a href="driver.DriverContext.html#showNotification" class="tsd-kind-icon">show<wbr>Notification</a>
 							</li>
 						</ul>
 					</li>
