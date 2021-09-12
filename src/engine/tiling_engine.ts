@@ -9,7 +9,7 @@ import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
-import IDriverContext from "../driver/idriver_context";
+import { DriverContext } from "../driver";
 import ISurface from "../driver/isurface";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "./window";
@@ -186,7 +186,7 @@ export default class TilingEngine {
   /**
    * Arrange tiles on all screens.
    */
-  public arrange(ctx: IDriverContext) {
+  public arrange(ctx: DriverContext) {
     this.debug.debug(() => "arrange");
     ctx.screens.forEach((srf: ISurface) => {
       this.arrangeScreen(ctx, srf);
@@ -196,7 +196,7 @@ export default class TilingEngine {
   /**
    * Arrange tiles on a screen.
    */
-  public arrangeScreen(ctx: IDriverContext, srf: ISurface) {
+  public arrangeScreen(ctx: DriverContext, srf: ISurface) {
     const layout = this.layouts.getCurrentLayout(srf);
 
     const workingArea = srf.workingArea;
@@ -267,7 +267,7 @@ export default class TilingEngine {
    * which is straigh against the purpose of tiling WM. This operation
    * move/resize such windows back to where/how they should be.
    */
-  public enforceSize(ctx: IDriverContext, window: Window) {
+  public enforceSize(ctx: DriverContext, window: Window) {
     if (window.tiled && !window.actualGeometry.equals(window.geometry))
       qmlSetTimeout(() => {
         if (window.tiled) window.commit();
@@ -296,7 +296,7 @@ export default class TilingEngine {
   /**
    * Focus the next or previous window.
    */
-  public focusOrder(ctx: IDriverContext, step: -1 | 1) {
+  public focusOrder(ctx: DriverContext, step: -1 | 1) {
     const window = ctx.currentWindow;
 
     /* if no current window, select the first tile. */
@@ -325,7 +325,7 @@ export default class TilingEngine {
   /**
    * Focus a neighbor at the given direction.
    */
-  public focusDir(ctx: IDriverContext, dir: Direction) {
+  public focusDir(ctx: DriverContext, dir: Direction) {
     const window = ctx.currentWindow;
 
     /* if no current window, select the first tile. */
@@ -357,7 +357,7 @@ export default class TilingEngine {
   /**
    * Swap the position of the current window with a neighbor at the given direction.
    */
-  public swapDirection(ctx: IDriverContext, dir: Direction) {
+  public swapDirection(ctx: DriverContext, dir: Direction) {
     const window = ctx.currentWindow;
     if (window === null) {
       /* if no current window, select the first tile. */
@@ -405,7 +405,7 @@ export default class TilingEngine {
     window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
   }
 
-  public swapDirOrMoveFloat(ctx: IDriverContext, dir: Direction) {
+  public swapDirOrMoveFloat(ctx: DriverContext, dir: Direction) {
     const window = ctx.currentWindow;
     if (!window) return;
 
@@ -428,7 +428,7 @@ export default class TilingEngine {
    * windows: windows will be tiled if more than half are floating, and will
    * be floated otherwise.
    */
-  public floatAll(ctx: IDriverContext, srf: ISurface) {
+  public floatAll(ctx: DriverContext, srf: ISurface) {
     const windows = this.windows.getVisibleWindows(srf);
     const numFloats = windows.reduce<number>((count, window) => {
       return window.state === WindowState.Floating ? count + 1 : count;
@@ -463,7 +463,7 @@ export default class TilingEngine {
   /**
    * Change the layout of the current surface to the next.
    */
-  public cycleLayout(ctx: IDriverContext, step: 1 | -1) {
+  public cycleLayout(ctx: DriverContext, step: 1 | -1) {
     const layout = this.layouts.cycleLayout(ctx.currentSurface, step);
     if (layout) ctx.showNotification(layout.description);
   }
@@ -471,7 +471,7 @@ export default class TilingEngine {
   /**
    * Set the layout of the current surface to the specified layout.
    */
-  public setLayout(ctx: IDriverContext, layoutClassID: string) {
+  public setLayout(ctx: DriverContext, layoutClassID: string) {
     const layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
     if (layout) ctx.showNotification(layout.description);
   }
@@ -482,7 +482,7 @@ export default class TilingEngine {
    * @returns True if the layout overrides the shortcut. False, otherwise.
    */
   public handleLayoutShortcut(
-    ctx: IDriverContext,
+    ctx: DriverContext,
     input: Shortcut,
     data?: any
   ): boolean {
@@ -493,7 +493,7 @@ export default class TilingEngine {
   }
 
   private getNeighborByDirection(
-    ctx: IDriverContext,
+    ctx: DriverContext,
     basis: Window,
     dir: Direction
   ): Window | null {

@@ -13,7 +13,6 @@ import QuarterLayout from "../layouts/quarter_layout";
 
 import TilingEngine from "../engine/tiling_engine";
 import TilingController from "../engine/tiling_controler";
-import IDriverContext from "./idriver_context";
 import ISurface from "./isurface";
 import Window from "../engine/window";
 import KWinSurface from "./kwin_surface";
@@ -26,6 +25,16 @@ import IConfig, { Config } from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout, { TimersPool } from "../util/timer";
 
+export interface DriverContext {
+  readonly screens: ISurface[];
+  readonly cursorPosition: [number, number] | null;
+
+  currentSurface: ISurface;
+  currentWindow: Window | null;
+
+  showNotification(text: string): void;
+}
+
 /**
  * Abstracts KDE implementation specific details.
  *
@@ -33,7 +42,7 @@ import qmlSetTimeout, { TimersPool } from "../util/timer";
  * signals (Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
-export default class KWinDriver implements IDriverContext {
+export class KWinDriver implements DriverContext {
   public get currentSurface(): ISurface {
     return new KWinSurface(
       this.kwinApi.workspace.activeClient

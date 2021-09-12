@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import KWinDriver from "./driver/kwin_driver";
+import { KWinDriver } from "./driver";
 
 /**
  * Script entry-point from QML side.

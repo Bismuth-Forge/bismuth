@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import TilingEngine from "./tiling_engine";
-import IDriverContext from "../driver/idriver_context";
+import { DriverContext } from "../driver";
 import Window from "./window";
 import { WindowState } from "./window";
 import { Shortcut } from "../shortcut";
@@ -28,12 +28,12 @@ export default class TilingController {
     this.debug = debug;
   }
 
-  public onSurfaceUpdate(ctx: IDriverContext, comment: string): void {
+  public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
     this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
     this.engine.arrange(ctx);
   }
 
-  public onCurrentSurfaceChanged(ctx: IDriverContext): void {
+  public onCurrentSurfaceChanged(ctx: DriverContext): void {
     this.debug.debugObj(() => [
       "onCurrentSurfaceChanged",
       { srf: ctx.currentSurface },
@@ -41,7 +41,7 @@ export default class TilingController {
     this.engine.arrange(ctx);
   }
 
-  public onWindowAdded(ctx: IDriverContext, window: Window): void {
+  public onWindowAdded(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowAdded", { window }]);
     this.engine.manage(window);
 
@@ -63,7 +63,7 @@ export default class TilingController {
     this.engine.arrange(ctx);
   }
 
-  public onWindowRemoved(ctx: IDriverContext, window: Window): void {
+  public onWindowRemoved(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowRemoved", { window }]);
     this.engine.unmanage(window);
     this.engine.arrange(ctx);
@@ -77,7 +77,7 @@ export default class TilingController {
     /* do nothing */
   }
 
-  public onWindowMoveOver(ctx: IDriverContext, window: Window): void {
+  public onWindowMoveOver(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowMoveOver", { window }]);
 
     /* swap window by dragging */
@@ -118,7 +118,7 @@ export default class TilingController {
     /* do nothing */
   }
 
-  public onWindowResize(ctx: IDriverContext, window: Window): void {
+  public onWindowResize(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowResize", { window }]);
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
@@ -128,7 +128,7 @@ export default class TilingController {
     }
   }
 
-  public onWindowResizeOver(ctx: IDriverContext, window: Window): void {
+  public onWindowResizeOver(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
@@ -137,14 +137,14 @@ export default class TilingController {
   }
 
   public onWindowMaximizeChanged(
-    ctx: IDriverContext,
+    ctx: DriverContext,
     window: Window,
     maximized: boolean
   ): void {
     this.engine.arrange(ctx);
   }
 
-  public onWindowGeometryChanged(ctx: IDriverContext, window: Window): void {
+  public onWindowGeometryChanged(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
     this.engine.enforceSize(ctx, window);
   }
@@ -152,7 +152,7 @@ export default class TilingController {
   // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
   // by itself anyway.
   public onWindowChanged(
-    ctx: IDriverContext,
+    ctx: DriverContext,
     window: Window | null,
     comment?: string
   ): void {
@@ -165,11 +165,11 @@ export default class TilingController {
     }
   }
 
-  public onWindowFocused(ctx: IDriverContext, window: Window) {
+  public onWindowFocused(ctx: DriverContext, window: Window) {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(ctx: IDriverContext, input: Shortcut, data?: any) {
+  public onShortcut(ctx: DriverContext, input: Shortcut, data?: any) {
     if (this.config.directionalKeyMode === "focus") {
       switch (input) {
         case Shortcut.Up:

@@ -5,7 +5,7 @@
 
 import TilingEngine from "./tiling_engine";
 import Window from "./window";
-import IDriverContext from "../driver/idriver_context";
+import { DriverContext } from "../driver";
 
 /**
  * Provides contextual information and operations to Layout layer.
@@ -22,7 +22,7 @@ export default class EngineContext {
     this.drvctx.currentWindow = window;
   }
 
-  constructor(private drvctx: IDriverContext, private engine: TilingEngine) {}
+  constructor(private drvctx: DriverContext, private engine: TilingEngine) {}
 
   public cycleFocus(step: -1 | 1) {
     this.engine.focusOrder(this.drvctx, step);
