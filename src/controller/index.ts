@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import TilingEngine from "../engine/tiling_engine";
+import TilingEngine from "../engine";
 import { DriverContext } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
