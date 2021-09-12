@@ -12,7 +12,7 @@ import { WindowState } from "../engine/window";
 import { partitionArrayBySizes, clip, slide } from "../util/func";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import IConfig from "../config";
+import Config from "../config";
 
 export default class ThreeColumnLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -28,9 +28,9 @@ export default class ThreeColumnLayout implements ILayout {
   private masterRatio: number;
   private masterSize: number;
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
     this.masterRatio = 0.6;
     this.masterSize = 1;

@@ -21,7 +21,7 @@ import { Shortcut } from "../shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { ILayoutClass } from "../layouts/ilayout";
 import { WindowState } from "../engine/window";
-import IConfig, { Config } from "../config";
+import Config, { ConfigImpl } from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout, { TimersPool } from "../util/timer";
 
@@ -111,7 +111,7 @@ export class KWinDriver implements DriverContext {
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
 
-  private config: IConfig;
+  private config: Config;
   private debug: Debug;
 
   /**
@@ -122,12 +122,12 @@ export class KWinDriver implements DriverContext {
   constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    config?: IConfig
+    config?: Config
   ) {
     if (config) {
       this.config = config;
     } else {
-      this.config = new Config(kwinApi);
+      this.config = new ConfigImpl(kwinApi);
     }
     this.debug = new Debug(this.config);
 

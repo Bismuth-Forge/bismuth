@@ -11,7 +11,7 @@ import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
-import IConfig from "../config";
+import Config from "../config";
 
 export type SpiralLayoutPart = HalfSplitLayoutPart<
   FillLayoutPart,
@@ -24,9 +24,9 @@ export default class SpiralLayout implements ILayout {
   private depth: number;
   private parts: SpiralLayoutPart;
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
 
     this.depth = 1;

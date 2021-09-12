@@ -16,7 +16,7 @@ import CascadeLayout from "./layouts/cascade_layout";
 import { ILayout } from "./layouts/ilayout";
 import { ILayoutClass } from "./layouts/ilayout";
 
-export default interface IConfig {
+export default interface Config {
   //#region Layout
   layoutOrder: string[];
   layoutFactories: { [key: string]: () => ILayout };
@@ -70,7 +70,7 @@ export default interface IConfig {
   debugEnabled: boolean;
 }
 
-export class Config implements IConfig {
+export class ConfigImpl implements Config {
   //#region Layout
   public layoutOrder: string[];
   public layoutFactories: { [key: string]: () => ILayout };

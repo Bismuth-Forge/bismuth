@@ -7,7 +7,7 @@ import { DriverSurface, KWinSurface } from "./surface";
 import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";
-import IConfig from "../config";
+import Config from "../config";
 import Debug from "../util/debug";
 
 export interface DriverWindow {
@@ -109,14 +109,14 @@ export class KWinWindow implements DriverWindow {
   private noBorderOriginal: boolean;
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
-  private config: IConfig;
+  private config: Config;
   private debug: Debug;
 
   constructor(
     client: KWin.Client,
     qml: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    config: IConfig,
+    config: Config,
     debug: Debug
   ) {
     this.client = client;

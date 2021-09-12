@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../config";
+import Config from "../config";
 import { DriverWindow } from "../driver/window";
 import { DriverSurface } from "../driver/surface";
 import Debug from "../util/debug";
@@ -139,10 +139,10 @@ export default class Window {
   private shouldCommitFloat: boolean;
   private weightMap: { [key: string]: number };
 
-  private config: IConfig;
+  private config: Config;
   private debug: Debug;
 
-  constructor(window: DriverWindow, config: IConfig, debug: Debug) {
+  constructor(window: DriverWindow, config: Config, debug: Debug) {
     this.config = config;
     this.debug = debug;
 

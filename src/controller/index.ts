@@ -8,7 +8,7 @@ import { DriverContext } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import { Shortcut } from "../shortcut";
-import IConfig from "../config";
+import Config from "../config";
 import Debug from "../util/debug";
 
 /**
@@ -19,10 +19,10 @@ import Debug from "../util/debug";
  */
 export default class TilingController {
   private engine: TilingEngine;
-  private config: IConfig;
+  private config: Config;
   private debug: Debug;
 
-  public constructor(engine: TilingEngine, config: IConfig, debug: Debug) {
+  public constructor(engine: TilingEngine, config: Config, debug: Debug) {
     this.engine = engine;
     this.config = config;
     this.debug = debug;

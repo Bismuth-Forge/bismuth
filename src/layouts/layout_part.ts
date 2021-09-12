@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import IConfig from "../config";
+import Config from "../config";
 import Window from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
@@ -168,9 +168,9 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
 export class StackLayoutPart implements ILayoutPart {
   public gap: number;
 
-  private config: IConfig;
+  private config: Config;
 
-  constructor(config: IConfig) {
+  constructor(config: Config) {
     this.config = config;
     this.gap = 0;
   }
