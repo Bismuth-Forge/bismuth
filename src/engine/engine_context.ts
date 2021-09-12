@@ -6,6 +6,7 @@
 import TilingEngine from ".";
 import Window from "./window";
 import { DriverContext } from "../driver";
+import TilingController from "../controller";
 
 /**
  * Provides contextual information and operations to Layout layer.
@@ -15,14 +16,18 @@ import { DriverContext } from "../driver";
  */
 export default class EngineContext {
   public get currentWindow(): Window | null {
-    return this.drvctx.currentWindow;
+    return this.controller.currentWindow;
   }
 
   public set currentWindow(window: Window | null) {
-    this.drvctx.currentWindow = window;
+    this.controller.currentWindow = window;
   }
 
-  constructor(private drvctx: DriverContext, private engine: TilingEngine) {}
+  constructor(
+    private drvctx: DriverContext,
+    private controller: TilingController,
+    private engine: TilingEngine
+  ) {}
 
   public cycleFocus(step: -1 | 1) {
     this.engine.focusOrder(this.drvctx, step);
@@ -33,6 +38,6 @@ export default class EngineContext {
   }
 
   public showNotification(text: string) {
-    this.drvctx.showNotification(text);
+    this.controller.showNotification(text);
   }
 }
