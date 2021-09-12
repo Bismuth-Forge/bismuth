@@ -9,7 +9,6 @@ import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
-import { DriverContext } from "../driver";
 import { DriverSurface } from "../driver/surface";
 import { Shortcut } from "../controller/shortcut";
 import { WindowState } from "./window";
@@ -150,7 +149,7 @@ export default class TilingEngine {
       case "south":
         delta = new RectDelta(0, 0, vStepSize * step, 0);
         break;
-      case "north": /* passthru */
+      case "north": // Pass through
       default:
         delta = new RectDelta(0, 0, 0, vStepSize * step);
         break;
@@ -189,18 +188,18 @@ export default class TilingEngine {
   /**
    * Arrange tiles on all screens.
    */
-  public arrange(ctx: DriverContext) {
+  public arrange() {
     this.debug.debug(() => "arrange");
 
     this.controller.screens.forEach((driverSurface: DriverSurface) => {
-      this.arrangeScreen(ctx, driverSurface);
+      this.arrangeScreen(driverSurface);
     });
   }
 
   /**
    * Arrange tiles on a screen.
    */
-  public arrangeScreen(ctx: DriverContext, srf: DriverSurface) {
+  public arrangeScreen(srf: DriverSurface) {
     const layout = this.layouts.getCurrentLayout(srf);
 
     const workingArea = srf.workingArea;
@@ -342,18 +341,24 @@ export default class TilingEngine {
   /**
    * Focus a neighbor at the given direction.
    */
-  public focusDir(ctx: DriverContext, dir: Direction) {
-    const window = ctx.currentWindow;
+  public focusDir(dir: Direction) {
+    const window = this.controller.currentWindow;
 
     /* if no current window, select the first tile. */
     if (window === null) {
-      const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
-      if (tiles.length > 1) ctx.currentWindow = tiles[0];
+      const tiles = this.windows.getVisibleTiles(
+        this.controller.currentSurface
+      );
+      if (tiles.length > 1) {
+        this.controller.currentWindow = tiles[0];
+      }
       return;
     }
 
-    const neighbor = this.getNeighborByDirection(ctx, window, dir);
-    if (neighbor) ctx.currentWindow = neighbor;
+    const neighbor = this.getNeighborByDirection(window, dir);
+    if (neighbor) {
+      this.controller.currentWindow = neighbor;
+    }
   }
 
   /**
@@ -374,16 +379,20 @@ export default class TilingEngine {
   /**
    * Swap the position of the current window with a neighbor at the given direction.
    */
-  public swapDirection(ctx: DriverContext, dir: Direction) {
-    const window = ctx.currentWindow;
+  public swapDirection(dir: Direction) {
+    const window = this.controller.currentWindow;
     if (window === null) {
       /* if no current window, select the first tile. */
-      const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
-      if (tiles.length > 1) ctx.currentWindow = tiles[0];
+      const tiles = this.windows.getVisibleTiles(
+        this.controller.currentSurface
+      );
+      if (tiles.length > 1) {
+        this.controller.currentWindow = tiles[0];
+      }
       return;
     }
 
-    const neighbor = this.getNeighborByDirection(ctx, window, dir);
+    const neighbor = this.getNeighborByDirection(window, dir);
     if (neighbor) this.windows.swap(window, neighbor);
   }
 
@@ -422,13 +431,13 @@ export default class TilingEngine {
     window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
   }
 
-  public swapDirOrMoveFloat(ctx: DriverContext, dir: Direction) {
-    const window = ctx.currentWindow;
+  public swapDirOrMoveFloat(dir: Direction) {
+    const window = this.controller.currentWindow;
     if (!window) return;
 
     const state = window.state;
     if (Window.isFloatingState(state)) this.moveFloat(window, dir);
-    else if (Window.isTiledState(state)) this.swapDirection(ctx, dir);
+    else if (Window.isTiledState(state)) this.swapDirection(dir);
   }
 
   /**
@@ -441,11 +450,11 @@ export default class TilingEngine {
   /**
    * Toggle float on all windows on the given surface.
    *
-   * The behaviours of this operation depends on the number of floating
+   * The behaviors of this operation depends on the number of floating
    * windows: windows will be tiled if more than half are floating, and will
    * be floated otherwise.
    */
-  public floatAll(ctx: DriverContext, srf: DriverSurface) {
+  public floatAll(srf: DriverSurface) {
     const windows = this.windows.getVisibleWindows(srf);
     const numFloats = windows.reduce<number>((count, window) => {
       return window.state === WindowState.Floating ? count + 1 : count;
@@ -457,12 +466,12 @@ export default class TilingEngine {
         window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
         window.state = WindowState.Floating;
       });
-      ctx.showNotification("Float All");
+      this.controller.showNotification("Float All");
     } else {
       windows.forEach((window) => {
         window.state = WindowState.Tiled;
       });
-      ctx.showNotification("Tile All");
+      this.controller.showNotification("Tile All");
     }
   }
 
@@ -480,17 +489,27 @@ export default class TilingEngine {
   /**
    * Change the layout of the current surface to the next.
    */
-  public cycleLayout(ctx: DriverContext, step: 1 | -1) {
-    const layout = this.layouts.cycleLayout(ctx.currentSurface, step);
-    if (layout) ctx.showNotification(layout.description);
+  public cycleLayout(step: 1 | -1) {
+    const layout = this.layouts.cycleLayout(
+      this.controller.currentSurface,
+      step
+    );
+    if (layout) {
+      this.controller.showNotification(layout.description);
+    }
   }
 
   /**
    * Set the layout of the current surface to the specified layout.
    */
-  public setLayout(ctx: DriverContext, layoutClassID: string) {
-    const layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
-    if (layout) ctx.showNotification(layout.description);
+  public setLayout(layoutClassID: string) {
+    const layout = this.layouts.setLayout(
+      this.controller.currentSurface,
+      layoutClassID
+    );
+    if (layout) {
+      this.controller.showNotification(layout.description);
+    }
   }
 
   /**
@@ -498,12 +517,10 @@ export default class TilingEngine {
    *
    * @returns True if the layout overrides the shortcut. False, otherwise.
    */
-  public handleLayoutShortcut(
-    ctx: DriverContext,
-    input: Shortcut,
-    data?: any
-  ): boolean {
-    const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
+  public handleLayoutShortcut(input: Shortcut, data?: any): boolean {
+    const layout = this.layouts.getCurrentLayout(
+      this.controller.currentSurface
+    );
     if (layout.handleShortcut)
       return layout.handleShortcut(
         new EngineContext(this.controller, this),
@@ -513,11 +530,7 @@ export default class TilingEngine {
     return false;
   }
 
-  private getNeighborByDirection(
-    ctx: DriverContext,
-    basis: Window,
-    dir: Direction
-  ): Window | null {
+  private getNeighborByDirection(basis: Window, dir: Direction): Window | null {
     let vertical: boolean;
     let sign: -1 | 1;
     switch (dir) {
@@ -542,7 +555,7 @@ export default class TilingEngine {
     }
 
     const candidates = this.windows
-      .getVisibleTiles(ctx.currentSurface)
+      .getVisibleTiles(this.controller.currentSurface)
       .filter(
         vertical
           ? (tile) => tile.geometry.y * sign > basis.geometry.y * sign
