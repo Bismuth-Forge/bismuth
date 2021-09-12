@@ -133,7 +133,7 @@ export default class TilingController {
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange(ctx);
-    } else if (!this.config.adjustLayout) this.engine.enforceSize(ctx, window);
+    } else if (!this.config.adjustLayout) this.engine.enforceSize(window);
   }
 
   public onWindowMaximizeChanged(
@@ -146,7 +146,7 @@ export default class TilingController {
 
   public onWindowGeometryChanged(ctx: DriverContext, window: Window): void {
     this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
-    this.engine.enforceSize(ctx, window);
+    this.engine.enforceSize(window);
   }
 
   // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
