@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import MonocleLayout from "../layouts/monocle_layout";
-import FloatingLayout from "../layouts/floating_layout";
+import MonocleLayout from "./layout/monocle_layout";
+import FloatingLayout from "./layout/floating_layout";
 
-import { ILayout } from "../layouts/ilayout";
+import { ILayout } from "./layout/ilayout";
 import { DriverSurface } from "../driver/surface";
 import { wrapIndex } from "../util/func";
 import Config from "../config";

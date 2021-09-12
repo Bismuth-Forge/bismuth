@@ -3,15 +3,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine/engine_context";
-import { KWinWindow } from "../driver/window";
-import Window from "../engine/window";
+import EngineContext from "../engine_context";
+import { KWinWindow } from "../../driver/window";
+import Window from "../window";
 import { ILayout } from "./ilayout";
-import { Shortcut } from "../controller/shortcut";
-import { WindowState } from "../engine/window";
-import Rect from "../util/rect";
-import Config from "../config";
-import qmlSetTimeout from "../util/timer";
+import { Shortcut } from "../../controller/shortcut";
+import { WindowState } from "../window";
+import Rect from "../../util/rect";
+import Config from "../../config";
+import qmlSetTimeout from "../../util/timer";
 
 export default class MonocleLayout implements ILayout {
   public static readonly id = "MonocleLayout";

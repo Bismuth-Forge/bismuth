@@ -3,21 +3,21 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine/engine_context";
+import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
-import Window from "../engine/window";
-import { WindowState } from "../engine/window";
-import { Shortcut } from "../controller/shortcut";
+import Window from "../window";
+import { WindowState } from "../window";
+import { Shortcut } from "../../controller/shortcut";
 
 import {
   RotateLayoutPart,
   HalfSplitLayoutPart,
   StackLayoutPart,
 } from "./layout_part";
-import { clip, slide } from "../util/func";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
-import Config from "../config";
+import { clip, slide } from "../../util/func";
+import Rect from "../../util/rect";
+import RectDelta from "../../util/rectdelta";
+import Config from "../../config";
 
 export default class TileLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;

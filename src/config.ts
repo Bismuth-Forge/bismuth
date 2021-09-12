@@ -3,18 +3,18 @@
 //
 // SPDX-License-Identifier: MIT
 
-import MonocleLayout from "./layouts/monocle_layout";
-import TileLayout from "./layouts/tile_layout";
-import ThreeColumnLayout from "./layouts/three_column_layout";
-import StairLayout from "./layouts/stair_layout";
-import SpiralLayout from "./layouts/spiral_layout";
-import SpreadLayout from "./layouts/spread_layout";
-import FloatingLayout from "./layouts/floating_layout";
-import QuarterLayout from "./layouts/quarter_layout";
-import CascadeLayout from "./layouts/cascade_layout";
+import MonocleLayout from "./engine/layout/monocle_layout";
+import TileLayout from "./engine/layout/tile_layout";
+import ThreeColumnLayout from "./engine/layout/three_column_layout";
+import StairLayout from "./engine/layout/stair_layout";
+import SpiralLayout from "./engine/layout/spiral_layout";
+import SpreadLayout from "./engine/layout/spread_layout";
+import FloatingLayout from "./engine/layout/floating_layout";
+import QuarterLayout from "./engine/layout/quarter_layout";
+import CascadeLayout from "./engine/layout/cascade_layout";
 
-import { ILayout } from "./layouts/ilayout";
-import { ILayoutClass } from "./layouts/ilayout";
+import { ILayout } from "./engine/layout/ilayout";
+import { ILayoutClass } from "./engine/layout/ilayout";
 
 export default interface Config {
   //#region Layout
