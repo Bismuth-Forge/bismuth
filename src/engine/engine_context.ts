@@ -24,13 +24,12 @@ export default class EngineContext {
   }
 
   constructor(
-    private drvctx: DriverContext,
     private controller: TilingController,
     private engine: TilingEngine
   ) {}
 
   public cycleFocus(step: -1 | 1) {
-    this.engine.focusOrder(this.drvctx, step);
+    this.engine.focusOrder(step);
   }
 
   public moveWindow(window: Window, target: Window, after?: boolean) {
