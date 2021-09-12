@@ -122,14 +122,13 @@ export class KWinDriver implements DriverContext {
   constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    config?: Config
+    engine: TilingEngine,
+    controller: TilingController,
+    config: Config,
+    debug: Debug
   ) {
-    if (config) {
-      this.config = config;
-    } else {
-      this.config = new ConfigImpl(kwinApi);
-    }
-    this.debug = new Debug(this.config);
+    this.config = config;
+    this.debug = debug;
 
     // TODO: find a better way to to this
     if (this.config.preventMinimize && this.config.monocleMinimizeRest) {
@@ -139,12 +138,8 @@ export class KWinDriver implements DriverContext {
       this.config.preventMinimize = false;
     }
 
-    this.engine = new TilingEngine(this.config, this.debug);
-    this.controller = new TilingController(
-      this.engine,
-      this.config,
-      this.debug
-    );
+    this.engine = engine;
+    this.controller = controller;
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
       (client: KWin.Client) =>
