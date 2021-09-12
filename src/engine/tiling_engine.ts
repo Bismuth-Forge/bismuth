@@ -10,7 +10,7 @@ import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
 import { DriverContext } from "../driver";
-import ISurface from "../driver/isurface";
+import { DriverSurface } from "../driver/surface";
 import { Shortcut } from "../shortcut";
 import { WindowState } from "./window";
 import Rect from "../util/rect";
@@ -188,7 +188,7 @@ export default class TilingEngine {
    */
   public arrange(ctx: DriverContext) {
     this.debug.debug(() => "arrange");
-    ctx.screens.forEach((srf: ISurface) => {
+    ctx.screens.forEach((srf: DriverSurface) => {
       this.arrangeScreen(ctx, srf);
     });
   }
@@ -196,7 +196,7 @@ export default class TilingEngine {
   /**
    * Arrange tiles on a screen.
    */
-  public arrangeScreen(ctx: DriverContext, srf: ISurface) {
+  public arrangeScreen(ctx: DriverContext, srf: DriverSurface) {
     const layout = this.layouts.getCurrentLayout(srf);
 
     const workingArea = srf.workingArea;
@@ -428,7 +428,7 @@ export default class TilingEngine {
    * windows: windows will be tiled if more than half are floating, and will
    * be floated otherwise.
    */
-  public floatAll(ctx: DriverContext, srf: ISurface) {
+  public floatAll(ctx: DriverContext, srf: DriverSurface) {
     const windows = this.windows.getVisibleWindows(srf);
     const numFloats = windows.reduce<number>((count, window) => {
       return window.state === WindowState.Floating ? count + 1 : count;

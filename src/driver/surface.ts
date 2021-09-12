@@ -4,11 +4,18 @@
 // SPDX-License-Identifier: MIT
 
 import IConfig from "../config";
-import ISurface from "./isurface";
 import { toRect } from "../util/kwinutil";
 import Rect from "../util/rect";
 
-export default class KWinSurface implements ISurface {
+export interface DriverSurface {
+  readonly id: string;
+  readonly ignore: boolean;
+  readonly workingArea: Readonly<Rect>;
+
+  next(): DriverSurface | null;
+}
+
+export class KWinSurface implements DriverSurface {
   public static generateId(
     screen: number,
     activity: string,
@@ -63,7 +70,7 @@ export default class KWinSurface implements ISurface {
     this.desktop = desktop;
   }
 
-  public next(): ISurface | null {
+  public next(): DriverSurface | null {
     if (this.desktop === this.kwinApi.workspace.desktops)
       /* this is the last virtual desktop */
       /* TODO: option to create additional desktop */

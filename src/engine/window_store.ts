@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import ISurface from "../driver/isurface";
+import { DriverSurface } from "../driver/surface";
 import Window from "./window";
 
 export default class WindowStore {
@@ -69,12 +69,12 @@ export default class WindowStore {
   //#region Querying Windows
 
   /** Returns all visible windows on the given surface. */
-  public getVisibleWindows(srf: ISurface): Window[] {
+  public getVisibleWindows(srf: DriverSurface): Window[] {
     return this.list.filter((win) => win.visible(srf));
   }
 
   /** Return all visible "Tile" windows on the given surface. */
-  public getVisibleTiles(srf: ISurface): Window[] {
+  public getVisibleTiles(srf: DriverSurface): Window[] {
     return this.list.filter((win) => win.tiled && win.visible(srf));
   }
 
@@ -82,7 +82,7 @@ export default class WindowStore {
    * Return all visible "tileable" windows on the given surface
    * @see Window#tileable
    */
-  public getVisibleTileables(srf: ISurface): Window[] {
+  public getVisibleTileables(srf: DriverSurface): Window[] {
     return this.list.filter((win) => win.tileable && win.visible(srf));
   }
 
