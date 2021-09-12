@@ -4,8 +4,6 @@
 
 import { ConfigImpl } from "./config";
 import TilingController from "./controller";
-import { KWinDriver } from "./driver";
-import TilingEngine from "./engine";
 import Debug from "./util/debug";
 
 /**
@@ -17,23 +15,12 @@ export function init(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api) {
   const config = new ConfigImpl(kwinScriptingApi);
   const debug = new Debug(config);
 
-  const engine = new TilingEngine(config, debug);
-  // TODO: remove driver and controller dependencies and use callbacks for conjunctions
-  // The order will be:
-  // Driver (no other dependencies. Evens are bind via callbacks)
-  // Controller (driver), callbacks are used for tiling engine
-  // Engine (controller)
-  const controller = new TilingController(engine, config, debug);
-  const driver = new KWinDriver(
+  const controller = new TilingController(
     qmlObjects,
     kwinScriptingApi,
-    controller,
     config,
     debug
   );
 
-  driver.main();
-
-  // HACK: Move to controller once decoupling is done
-  engine.arrange(driver);
+  controller.start();
 }

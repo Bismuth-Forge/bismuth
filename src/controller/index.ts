@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import TilingEngine from "../engine";
-import { DriverContext } from "../driver";
+import { DriverContext, KWinDriver } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 import { Shortcut } from "./shortcut";
@@ -19,13 +19,37 @@ import Debug from "../util/debug";
  */
 export default class TilingController {
   private engine: TilingEngine;
+  private driver: DriverContext;
   private config: Config;
   private debug: Debug;
 
-  public constructor(engine: TilingEngine, config: Config, debug: Debug) {
-    this.engine = engine;
+  public constructor(
+    qmlObjects: Bismuth.Qml.Main,
+    kwinApi: KWin.Api,
+    config: Config,
+    debug: Debug
+  ) {
     this.config = config;
     this.debug = debug;
+
+    this.engine = new TilingEngine(config, debug);
+    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
+  }
+
+  /**
+   * Entry point: start tiling window management
+   */
+  public start() {
+    console.log("Let's get down to bismuth!");
+
+    this.debug.debug(() => "Config: " + this.config);
+
+    this.driver.bindEvents();
+    this.driver.bindShortcuts();
+
+    this.driver.manageWindows();
+
+    this.engine.arrange(this.driver);
   }
 
   public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
