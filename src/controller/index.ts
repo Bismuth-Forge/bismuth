@@ -283,4 +283,8 @@ export default class TilingController {
 
     this.engine.arrange(ctx);
   }
+
+  public manageWindow(win: Window): void {
+    this.engine.manage(win);
+  }
 }

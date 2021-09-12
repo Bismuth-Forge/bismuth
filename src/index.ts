@@ -27,11 +27,13 @@ export function init(qmlObjects: Bismuth.Qml.Main, kwinScriptingApi: KWin.Api) {
   const driver = new KWinDriver(
     qmlObjects,
     kwinScriptingApi,
-    engine,
     controller,
     config,
     debug
   );
 
   driver.main();
+
+  // HACK: Move to controller once decoupling is done
+  engine.arrange(driver);
 }
