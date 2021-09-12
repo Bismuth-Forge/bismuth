@@ -3,12 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine/engine_context";
+import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
-import Window from "../engine/window";
-import { WindowState } from "../engine/window";
-import { Shortcut } from "../controller/shortcut";
-import Rect from "../util/rect";
+import Window from "../window";
+import { WindowState } from "../window";
+import { Shortcut } from "../../controller/shortcut";
+import Rect from "../../util/rect";
 
 export enum CascadeDirection {
   NorthWest = 0,

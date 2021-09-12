@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import MonocleLayout from "../layouts/monocle_layout";
-import TileLayout from "../layouts/tile_layout";
-import ThreeColumnLayout from "../layouts/three_column_layout";
-import StairLayout from "../layouts/stair_layout";
-import SpreadLayout from "../layouts/spread_layout";
-import FloatingLayout from "../layouts/floating_layout";
-import QuarterLayout from "../layouts/quarter_layout";
+import MonocleLayout from "../engine/layout/monocle_layout";
+import TileLayout from "../engine/layout/tile_layout";
+import ThreeColumnLayout from "../engine/layout/three_column_layout";
+import StairLayout from "../engine/layout/stair_layout";
+import SpreadLayout from "../engine/layout/spread_layout";
+import FloatingLayout from "../engine/layout/floating_layout";
+import QuarterLayout from "../engine/layout/quarter_layout";
 
 import TilingEngine from "../engine";
 import TilingController from "../controller";
@@ -19,7 +19,7 @@ import { KWinSurface } from "./surface";
 import { KWinWindow } from "./window";
 import { Shortcut } from "../controller/shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
-import { ILayoutClass } from "../layouts/ilayout";
+import { ILayoutClass } from "../engine/layout/ilayout";
 import { WindowState } from "../engine/window";
 import Config, { ConfigImpl } from "../config";
 import Debug from "../util/debug";

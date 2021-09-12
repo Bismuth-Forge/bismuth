@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import MonocleLayout from "../layouts/monocle_layout";
+import MonocleLayout from "./layout/monocle_layout";
 
 import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";

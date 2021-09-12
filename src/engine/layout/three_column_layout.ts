@@ -3,16 +3,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine/engine_context";
+import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
-import Window from "../engine/window";
+import Window from "../window";
 import LayoutUtils from "./layout_utils";
-import { Shortcut } from "../controller/shortcut";
-import { WindowState } from "../engine/window";
-import { partitionArrayBySizes, clip, slide } from "../util/func";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
-import Config from "../config";
+import { Shortcut } from "../../controller/shortcut";
+import { WindowState } from "../window";
+import { partitionArrayBySizes, clip, slide } from "../../util/func";
+import Rect from "../../util/rect";
+import RectDelta from "../../util/rectdelta";
+import Config from "../../config";
 
 export default class ThreeColumnLayout implements ILayout {
   public static readonly MIN_MASTER_RATIO = 0.2;

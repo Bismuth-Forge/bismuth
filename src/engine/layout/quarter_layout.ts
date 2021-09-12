@@ -3,14 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine/engine_context";
+import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
-import Window from "../engine/window";
-import { WindowState } from "../engine/window";
-import { clip } from "../util/func";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
-import Config from "../config";
+import Window from "../window";
+import { WindowState } from "../window";
+import { clip } from "../../util/func";
+import Rect from "../../util/rect";
+import RectDelta from "../../util/rectdelta";
+import Config from "../../config";
 
 export default class QuarterLayout implements ILayout {
   public static readonly MAX_PROPORTION = 0.8;

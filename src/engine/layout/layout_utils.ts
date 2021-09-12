@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { clip } from "../util/func";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
+import { clip } from "../../util/func";
+import Rect from "../../util/rect";
+import RectDelta from "../../util/rectdelta";
 
 export default class LayoutUtils {
   /**

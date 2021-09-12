@@ -3,10 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Config from "../config";
-import Window from "../engine/window";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
+import Config from "../../config";
+import Window from "../window";
+import Rect from "../../util/rect";
+import RectDelta from "../../util/rectdelta";
 import LayoutUtils from "./layout_utils";
 
 export interface ILayoutPart {
