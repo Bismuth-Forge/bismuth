@@ -19,6 +19,7 @@ import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
+import TilingController from "../controller";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -29,10 +30,12 @@ export default class TilingEngine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 
+  private controller: TilingController;
   private config: Config;
   private debug: Debug;
 
-  constructor(config: Config, debug: Debug) {
+  constructor(controller: TilingController, config: Config, debug: Debug) {
+    this.controller = controller;
     this.config = config;
     this.debug = debug;
     this.layouts = new LayoutStore(this.config);
@@ -188,8 +191,9 @@ export default class TilingEngine {
    */
   public arrange(ctx: DriverContext) {
     this.debug.debug(() => "arrange");
-    ctx.screens.forEach((srf: DriverSurface) => {
-      this.arrangeScreen(ctx, srf);
+
+    this.controller.screens.forEach((driverSurface: DriverSurface) => {
+      this.arrangeScreen(ctx, driverSurface);
     });
   }
 

@@ -10,6 +10,7 @@ import { WindowState } from "../engine/window";
 import { Shortcut } from "./shortcut";
 import Config from "../config";
 import Debug from "../util/debug";
+import { DriverSurface } from "../driver/surface";
 
 /**
  * TilingController translates events to actions, implementing high-level
@@ -32,7 +33,7 @@ export default class TilingController {
     this.config = config;
     this.debug = debug;
 
-    this.engine = new TilingEngine(config, debug);
+    this.engine = new TilingEngine(this, config, debug);
     this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
   }
 
@@ -50,6 +51,10 @@ export default class TilingController {
     this.driver.manageWindows();
 
     this.engine.arrange(this.driver);
+  }
+
+  public get screens(): DriverSurface[] {
+    return this.driver.screens;
   }
 
   public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
