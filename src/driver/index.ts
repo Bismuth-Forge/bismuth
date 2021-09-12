@@ -11,7 +11,7 @@ import SpreadLayout from "../layouts/spread_layout";
 import FloatingLayout from "../layouts/floating_layout";
 import QuarterLayout from "../layouts/quarter_layout";
 
-import TilingEngine from "../engine/tiling_engine";
+import TilingEngine from "../engine";
 import TilingController from "../controller";
 import { DriverSurface } from "./surface";
 import Window from "../engine/window";
