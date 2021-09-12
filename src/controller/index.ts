@@ -7,7 +7,7 @@ import TilingEngine from "../engine/tiling_engine";
 import { DriverContext } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "./shortcut";
 import Config from "../config";
 import Debug from "../util/debug";
 

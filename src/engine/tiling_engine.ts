@@ -11,7 +11,7 @@ import WindowStore from "./window_store";
 import Window from "./window";
 import { DriverContext } from "../driver";
 import { DriverSurface } from "../driver/surface";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import { WindowState } from "./window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";

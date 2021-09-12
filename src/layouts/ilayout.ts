@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import EngineContext from "../engine/engine_context";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import Window from "../engine/window";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";

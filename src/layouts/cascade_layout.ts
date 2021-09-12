@@ -7,7 +7,7 @@ import EngineContext from "../engine/engine_context";
 import { ILayout } from "./ilayout";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
-import { Shortcut } from "../shortcut";
+import { Shortcut } from "../controller/shortcut";
 import Rect from "../util/rect";
 
 export enum CascadeDirection {
