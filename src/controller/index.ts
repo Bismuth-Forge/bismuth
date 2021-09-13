@@ -14,36 +14,29 @@ import { DriverSurface } from "../driver/surface";
 
 export interface Controller {
   readonly screens: DriverSurface[];
+  readonly cursorPosition: [number, number] | null;
 
   currentWindow: Window | null;
   currentSurface: DriverSurface;
 
   showNotification(text: string): void;
 
-  onCurrentSurfaceChanged(ctx: DriverContext): void;
-  onSurfaceUpdate(ctx: DriverContext, comment: string): void;
-  onWindowGeometryChanged(ctx: DriverContext, window: Window): void;
-  onWindowResize(ctx: DriverContext, window: Window): void;
-  onWindowAdded(ctx: DriverContext, window: Window): void;
-  onWindowRemoved(ctx: DriverContext, window: Window): void;
-  onWindowMaximizeChanged(
-    ctx: DriverContext,
-    window: Window,
-    maximized: boolean
-  ): void;
-  onWindowChanged(
-    ctx: DriverContext,
-    window: Window | null,
-    comment?: string
-  ): void;
+  onCurrentSurfaceChanged(): void;
+  onSurfaceUpdate(comment: string): void;
+  onWindowGeometryChanged(window: Window): void;
+  onWindowResize(window: Window): void;
+  onWindowAdded(window: Window): void;
+  onWindowRemoved(window: Window): void;
+  onWindowMaximizeChanged(window: Window, maximized: boolean): void;
+  onWindowChanged(window: Window | null, comment?: string): void;
   onWindowMoveStart(window: Window): void;
-  onWindowMoveOver(ctx: DriverContext, window: Window): void;
+  onWindowMoveOver(window: Window): void;
   onWindowResizeStart(window: Window): void;
-  onWindowResizeOver(ctx: DriverContext, window: Window): void;
+  onWindowResizeOver(window: Window): void;
   onWindowMove(window: Window): void;
-  onWindowFocused(ctx: DriverContext, window: Window): void;
+  onWindowFocused(window: Window): void;
 
-  onShortcut(ctx: DriverContext, input: Shortcut, data?: any): void;
+  onShortcut(input: Shortcut, data?: any): void;
 
   manageWindow(win: Window): void;
 }
@@ -104,38 +97,42 @@ export class TilingController implements Controller {
     this.driver.currentSurface = value;
   }
 
+  public get cursorPosition(): [number, number] | null {
+    return this.driver.cursorPosition;
+  }
+
   public showNotification(text: string): void {
     this.driver.showNotification(text);
   }
 
-  public onSurfaceUpdate(ctx: DriverContext, comment: string): void {
+  public onSurfaceUpdate(comment: string): void {
     this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
     this.engine.arrange();
   }
 
-  public onCurrentSurfaceChanged(ctx: DriverContext): void {
+  public onCurrentSurfaceChanged(): void {
     this.debug.debugObj(() => [
       "onCurrentSurfaceChanged",
-      { srf: ctx.currentSurface },
+      { srf: this.currentSurface },
     ]);
     this.engine.arrange();
   }
 
-  public onWindowAdded(ctx: DriverContext, window: Window): void {
+  public onWindowAdded(window: Window): void {
     this.debug.debugObj(() => ["onWindowAdded", { window }]);
     this.engine.manage(window);
 
     /* move window to next surface if the current surface is "full" */
     if (window.tileable) {
-      const srf = ctx.currentSurface;
+      const srf = this.currentSurface;
       const tiles = this.engine.windows.getVisibleTiles(srf);
       const layoutCapacity = this.engine.layouts.getCurrentLayout(srf).capacity;
       if (layoutCapacity !== undefined && tiles.length > layoutCapacity) {
-        const nextSurface = ctx.currentSurface.next();
+        const nextSurface = this.currentSurface.next();
         if (nextSurface) {
           // (window.window as KWinWindow).client.desktop = (nextSurface as KWinSurface).desktop;
           window.surface = nextSurface;
-          ctx.currentSurface = nextSurface;
+          this.currentSurface = nextSurface;
         }
       }
     }
@@ -143,7 +140,7 @@ export class TilingController implements Controller {
     this.engine.arrange();
   }
 
-  public onWindowRemoved(ctx: DriverContext, window: Window): void {
+  public onWindowRemoved(window: Window): void {
     this.debug.debugObj(() => ["onWindowRemoved", { window }]);
     this.engine.unmanage(window);
     this.engine.arrange();
@@ -157,13 +154,13 @@ export class TilingController implements Controller {
     /* do nothing */
   }
 
-  public onWindowMoveOver(ctx: DriverContext, window: Window): void {
+  public onWindowMoveOver(window: Window): void {
     this.debug.debugObj(() => ["onWindowMoveOver", { window }]);
 
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
-      const tiles = this.engine.windows.getVisibleTiles(ctx.currentSurface);
-      const cursorPos = ctx.cursorPosition || window.actualGeometry.center;
+      const tiles = this.engine.windows.getVisibleTiles(this.currentSurface);
+      const cursorPos = this.cursorPosition || window.actualGeometry.center;
 
       const targets = tiles.filter(
         (tile) =>
@@ -198,7 +195,7 @@ export class TilingController implements Controller {
     /* do nothing */
   }
 
-  public onWindowResize(ctx: DriverContext, window: Window): void {
+  public onWindowResize(window: Window): void {
     this.debug.debugObj(() => ["onWindowResize", { window }]);
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
@@ -208,7 +205,7 @@ export class TilingController implements Controller {
     }
   }
 
-  public onWindowResizeOver(ctx: DriverContext, window: Window): void {
+  public onWindowResizeOver(window: Window): void {
     this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
@@ -216,40 +213,34 @@ export class TilingController implements Controller {
     } else if (!this.config.adjustLayout) this.engine.enforceSize(window);
   }
 
-  public onWindowMaximizeChanged(
-    ctx: DriverContext,
-    window: Window,
-    maximized: boolean
-  ): void {
+  public onWindowMaximizeChanged(_window: Window, _maximized: boolean): void {
     this.engine.arrange();
   }
 
-  public onWindowGeometryChanged(ctx: DriverContext, window: Window): void {
+  public onWindowGeometryChanged(window: Window): void {
     this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
     this.engine.enforceSize(window);
   }
 
   // NOTE: accepts `null` to simplify caller. This event is a catch-all hack
   // by itself anyway.
-  public onWindowChanged(
-    ctx: DriverContext,
-    window: Window | null,
-    comment?: string
-  ): void {
+  public onWindowChanged(window: Window | null, comment?: string): void {
     if (window) {
       this.debug.debugObj(() => ["onWindowChanged", { window, comment }]);
 
-      if (comment === "unminimized") ctx.currentWindow = window;
+      if (comment === "unminimized") {
+        this.currentWindow = window;
+      }
 
       this.engine.arrange();
     }
   }
 
-  public onWindowFocused(ctx: DriverContext, window: Window) {
+  public onWindowFocused(window: Window) {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(ctx: DriverContext, input: Shortcut, data?: any) {
+  public onShortcut(input: Shortcut, data?: any) {
     if (this.config.directionalKeyMode === "focus") {
       switch (input) {
         case Shortcut.Up:

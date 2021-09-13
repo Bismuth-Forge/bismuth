@@ -169,7 +169,7 @@ export class KWinDriver implements DriverContext {
    */
   public bindEvents(): void {
     const onNumberScreensChanged = (count: number) => {
-      this.controller.onSurfaceUpdate(this, "screens=" + count);
+      this.controller.onSurfaceUpdate("screens=" + count);
     };
 
     const onScreenResized = (screen: number) => {
@@ -181,18 +181,18 @@ export class KWinDriver implements DriverContext {
         this.kwinApi,
         this.config
       );
-      this.controller.onSurfaceUpdate(this, "resized " + srf.toString());
+      this.controller.onSurfaceUpdate("resized " + srf.toString());
     };
 
     const onCurrentActivityChanged = (_activity: string) => {
-      this.controller.onCurrentSurfaceChanged(this);
+      this.controller.onCurrentSurfaceChanged();
     };
 
     const onCurrentDesktopChanged = (
       _desktop: number,
       _client: KWin.Client
     ) => {
-      this.controller.onCurrentSurfaceChanged(this);
+      this.controller.onCurrentSurfaceChanged();
     };
 
     const onClientAdded = (client: KWin.Client) => {
@@ -204,7 +204,7 @@ export class KWinDriver implements DriverContext {
         handled = true;
 
         const window = this.windowMap.add(client);
-        this.controller.onWindowAdded(this, window);
+        this.controller.onWindowAdded(window);
         if (window.state === WindowState.Unmanaged) {
           this.windowMap.remove(client);
         } else {
@@ -221,7 +221,7 @@ export class KWinDriver implements DriverContext {
     const onClientRemoved = (client: KWin.Client) => {
       const window = this.windowMap.get(client);
       if (window) {
-        this.controller.onWindowRemoved(this, window);
+        this.controller.onWindowRemoved(window);
         this.windowMap.remove(client);
       }
     };
@@ -235,7 +235,7 @@ export class KWinDriver implements DriverContext {
       const window = this.windowMap.get(client);
       if (window) {
         (window.window as KWinWindow).maximized = maximized;
-        this.controller.onWindowMaximizeChanged(this, window, maximized);
+        this.controller.onWindowMaximizeChanged(window, maximized);
       }
     };
 
@@ -245,7 +245,6 @@ export class KWinDriver implements DriverContext {
       user: boolean
     ) => {
       this.controller.onWindowChanged(
-        this,
         this.windowMap.get(client),
         "fullscreen=" + fullScreen + " user=" + user
       );
@@ -257,7 +256,6 @@ export class KWinDriver implements DriverContext {
         this.kwinApi.workspace.activeClient = client;
       } else
         this.controller.onWindowChanged(
-          this,
           this.windowMap.get(client),
           "minimized"
         );
@@ -265,7 +263,6 @@ export class KWinDriver implements DriverContext {
 
     const onClientUnminimized = (client: KWin.Client) =>
       this.controller.onWindowChanged(
-        this,
         this.windowMap.get(client),
         "unminimized"
       );
@@ -344,7 +341,7 @@ export class KWinDriver implements DriverContext {
       title = "Bismuth: " + title;
       seq = "Meta+" + seq;
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
-        this.enter(() => this.controller.onShortcut(this, input));
+        this.enter(() => this.controller.onShortcut(input));
       });
     };
 
@@ -384,7 +381,7 @@ export class KWinDriver implements DriverContext {
       seq = seq !== "" ? "Meta+" + seq : "";
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
         this.enter(() =>
-          this.controller.onShortcut(this, Shortcut.SetLayout, layoutClass.id)
+          this.controller.onShortcut(Shortcut.SetLayout, layoutClass.id)
         );
       });
     };
@@ -453,44 +450,43 @@ export class KWinDriver implements DriverContext {
           this.mousePoller.start();
           this.controller.onWindowMoveStart(window);
         } else {
-          this.controller.onWindowMoveOver(this, window);
+          this.controller.onWindowMoveOver(window);
           this.mousePoller.stop();
         }
       }
       if (resizing !== client.resize) {
         resizing = client.resize;
         if (resizing) this.controller.onWindowResizeStart(window);
-        else this.controller.onWindowResizeOver(this, window);
+        else this.controller.onWindowResizeOver(window);
       }
     });
 
     this.connect(client.geometryChanged, () => {
       if (moving) this.controller.onWindowMove(window);
-      else if (resizing) this.controller.onWindowResize(this, window);
+      else if (resizing) this.controller.onWindowResize(window);
       else {
         if (!window.actualGeometry.equals(window.geometry))
-          this.controller.onWindowGeometryChanged(this, window);
+          this.controller.onWindowGeometryChanged(window);
       }
     });
 
     this.connect(client.activeChanged, () => {
-      if (client.active) this.controller.onWindowFocused(this, window);
+      if (client.active) this.controller.onWindowFocused(window);
     });
 
     this.connect(client.screenChanged, () =>
-      this.controller.onWindowChanged(this, window, "screen=" + client.screen)
+      this.controller.onWindowChanged(window, "screen=" + client.screen)
     );
 
     this.connect(client.activitiesChanged, () =>
       this.controller.onWindowChanged(
-        this,
         window,
         "activity=" + client.activities.join(",")
       )
     );
 
     this.connect(client.desktopChanged, () =>
-      this.controller.onWindowChanged(this, window, "desktop=" + client.desktop)
+      this.controller.onWindowChanged(window, "desktop=" + client.desktop)
     );
   }
 
