@@ -3,10 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 import LayoutUtils from "./layout_utils";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
@@ -16,6 +15,8 @@ import { partitionArrayBySizes, clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
+import { Controller } from "../../controller";
+import { Engine } from "..";
 
 export default class ThreeColumnLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -128,7 +129,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
     }
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     /* Tile all tileables */
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
     const tiles = tileables;
@@ -189,17 +190,13 @@ export default class ThreeColumnLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(
-    ctx: EngineContext,
-    input: Shortcut,
-    data?: any
-  ): boolean {
+  public handleShortcut(engine: Engine, input: Shortcut, data?: any): boolean {
     switch (input) {
       case Shortcut.Increase:
-        this.resizeMaster(ctx, +1);
+        this.resizeMaster(engine, +1);
         return true;
       case Shortcut.Decrease:
-        this.resizeMaster(ctx, -1);
+        this.resizeMaster(engine, -1);
         return true;
       case Shortcut.Left:
         this.masterRatio = clip(
@@ -224,8 +221,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
     return "ThreeColumnLayout(nmaster=" + this.masterSize + ")";
   }
 
-  private resizeMaster(ctx: EngineContext, step: -1 | 1): void {
+  private resizeMaster(engine: Engine, step: -1 | 1): void {
     this.masterSize = clip(this.masterSize + step, 1, 10);
-    ctx.showNotification(this.description);
+    engine.showNotification(this.description);
   }
 }

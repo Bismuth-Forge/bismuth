@@ -3,9 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
@@ -16,6 +15,8 @@ import { Shortcut } from "../../controller/shortcut";
 import Rect from "../../util/rect";
 import Config from "../../config";
 import qmlSetTimeout from "../../util/timer";
+import { Controller } from "../../controller";
+import { Engine } from "..";
 
 export default class MonocleLayout implements WindowsLayout {
   public static readonly id = "MonocleLayout";
@@ -29,7 +30,7 @@ export default class MonocleLayout implements WindowsLayout {
     this.config = config;
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(controller: Controller, tileables: Window[], area: Rect): void {
     /* Tile all tileables */
     tileables.forEach((tile) => {
       tile.state = this.config.monocleMaximize
@@ -42,7 +43,7 @@ export default class MonocleLayout implements WindowsLayout {
     if (this.config.monocleMinimizeRest) {
       const tiles = [...tileables];
       qmlSetTimeout(() => {
-        const current = ctx.currentWindow;
+        const current = controller.currentWindow;
         if (current && current.tiled) {
           tiles.forEach((window) => {
             if (window !== current)
@@ -58,23 +59,19 @@ export default class MonocleLayout implements WindowsLayout {
     return this;
   }
 
-  public handleShortcut(
-    ctx: EngineContext,
-    input: Shortcut,
-    data?: any
-  ): boolean {
+  public handleShortcut(engine: Engine, input: Shortcut, _data?: any): boolean {
     switch (input) {
       case Shortcut.Up:
       case Shortcut.FocusUp:
       case Shortcut.Left:
       case Shortcut.FocusLeft:
-        ctx.cycleFocus(-1);
+        engine.focusOrder(-1);
         return true;
       case Shortcut.Down:
       case Shortcut.FocusDown:
       case Shortcut.Right:
       case Shortcut.FocusRight:
-        ctx.cycleFocus(1);
+        engine.focusOrder(1);
         return true;
       default:
         return false;

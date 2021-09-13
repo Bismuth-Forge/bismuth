@@ -3,9 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine_context";
 import Window from "../window";
+import { Engine } from "..";
 
+import { Controller } from "../../controller";
 import { Shortcut } from "../../controller/shortcut";
 
 import Rect from "../../util/rect";
@@ -22,8 +23,8 @@ export interface WindowsLayout {
   readonly description: string;
 
   adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
-  apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
-  handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
+  apply(controller: Controller, tileables: Window[], area: Rect): void;
+  handleShortcut?(engine: Engine, input: Shortcut, data?: any): boolean;
 
   toString(): string;
 }

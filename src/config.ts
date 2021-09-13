@@ -13,8 +13,8 @@ import FloatingLayout from "./engine/layout/floating_layout";
 import QuarterLayout from "./engine/layout/quarter_layout";
 import CascadeLayout from "./engine/layout/cascade_layout";
 
-import { WindowsLayout } from "./engine/layout/ilayout";
-import { WindowsLayoutClass } from "./engine/layout/ilayout";
+import { WindowsLayout } from "./engine/layout";
+import { WindowsLayoutClass } from "./engine/layout";
 
 export default interface Config {
   //#region Layout

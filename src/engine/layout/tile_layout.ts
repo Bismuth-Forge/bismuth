@@ -3,14 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 import {
   RotateLayoutPart,
   HalfSplitLayoutPart,
   StackLayoutPart,
 } from "./layout_part";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
@@ -20,6 +19,8 @@ import { clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
+import { Controller } from "../../controller";
+import { Engine } from "..";
 
 export default class TileLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
@@ -75,7 +76,7 @@ export default class TileLayout implements WindowsLayout {
     this.parts.adjust(area, tiles, basis, delta);
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
 
     this.parts.apply(area, tileables).forEach((geometry, i) => {
@@ -90,7 +91,7 @@ export default class TileLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(ctx: EngineContext, input: Shortcut) {
+  public handleShortcut(engine: Engine, input: Shortcut) {
     switch (input) {
       case Shortcut.Left:
         this.masterRatio = clip(
@@ -109,11 +110,11 @@ export default class TileLayout implements WindowsLayout {
       case Shortcut.Increase:
         // TODO: define arbitrary constant
         if (this.numMaster < 10) this.numMaster += 1;
-        ctx.showNotification(this.description);
+        engine.showNotification(this.description);
         break;
       case Shortcut.Decrease:
         if (this.numMaster > 0) this.numMaster -= 1;
-        ctx.showNotification(this.description);
+        engine.showNotification(this.description);
         break;
       case Shortcut.Rotate:
         this.parts.rotate(90);

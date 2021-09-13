@@ -3,13 +3,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
 import Rect from "../../util/rect";
+import { Controller } from "../../controller";
 
 export default class FloatingLayout implements WindowsLayout {
   public static readonly id = "FloatingLayout ";
@@ -18,7 +18,11 @@ export default class FloatingLayout implements WindowsLayout {
   public readonly classID = FloatingLayout.id;
   public readonly description: string = "Floating";
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: Window[],
+    _area: Rect
+  ): void {
     tileables.forEach(
       (tileable: Window) => (tileable.state = WindowState.TiledAfloat)
     );
