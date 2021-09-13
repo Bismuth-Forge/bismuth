@@ -11,7 +11,7 @@ import SpreadLayout from "../engine/layout/spread_layout";
 import FloatingLayout from "../engine/layout/floating_layout";
 import QuarterLayout from "../engine/layout/quarter_layout";
 
-import TilingController from "../controller";
+import { Controller } from "../controller";
 import { DriverSurface } from "./surface";
 import Window from "../engine/window";
 import { KWinSurface } from "./surface";
@@ -105,7 +105,7 @@ export class KWinDriver implements DriverContext {
     return this.mousePoller.mousePosition;
   }
 
-  private controller: TilingController;
+  private controller: Controller;
   private windowMap: WrapperMap<KWin.Client, Window>;
   private entered: boolean;
   private mousePoller: KWinMousePoller;
@@ -124,7 +124,7 @@ export class KWinDriver implements DriverContext {
   constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    controller: TilingController,
+    controller: Controller,
     config: Config,
     debug: Debug
   ) {

@@ -5,8 +5,7 @@
 
 import { Engine } from ".";
 import Window from "./window";
-import { DriverContext } from "../driver";
-import TilingController from "../controller";
+import { Controller } from "../controller";
 
 /**
  * Provides contextual information and operations to Layout layer.
@@ -23,7 +22,7 @@ export default class EngineContext {
     this.controller.currentWindow = window;
   }
 
-  constructor(private controller: TilingController, private engine: Engine) {}
+  constructor(private controller: Controller, private engine: Engine) {}
 
   public cycleFocus(step: -1 | 1) {
     this.engine.focusOrder(step);
