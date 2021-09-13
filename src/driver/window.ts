@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import { DriverSurface, KWinSurface } from "./surface";
+
 import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";

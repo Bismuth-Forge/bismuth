@@ -3,9 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Config from "../config";
 import { DriverWindow } from "../driver/window";
 import { DriverSurface } from "../driver/surface";
+
+import Config from "../config";
 import Debug from "../util/debug";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";

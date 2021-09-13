@@ -9,16 +9,19 @@ import LayoutStore from "./layout_store";
 import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
-import { DriverSurface } from "../driver/surface";
-import { Shortcut } from "../controller/shortcut";
 import { WindowState } from "./window";
+
+import { Controller } from "../controller";
+import { Shortcut } from "../controller/shortcut";
+
+import { DriverSurface } from "../driver/surface";
+
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
-import { Controller } from "../controller";
 
 export type Direction = "up" | "down" | "left" | "right";
 

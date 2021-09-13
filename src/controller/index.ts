@@ -3,14 +3,17 @@
 //
 // SPDX-License-Identifier: MIT
 
+import { Shortcut } from "./shortcut";
+
 import { Engine, TilingEngine } from "../engine";
-import { DriverContext, KWinDriver } from "../driver";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
-import { Shortcut } from "./shortcut";
+
+import { DriverContext, KWinDriver } from "../driver";
+import { DriverSurface } from "../driver/surface";
+
 import Config from "../config";
 import Debug from "../util/debug";
-import { DriverSurface } from "../driver/surface";
 
 export interface Controller {
   readonly screens: DriverSurface[];

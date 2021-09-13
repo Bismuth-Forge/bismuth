@@ -3,12 +3,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine_context";
-import { KWinWindow } from "../../driver/window";
-import Window from "../window";
 import { ILayout } from "./ilayout";
-import { Shortcut } from "../../controller/shortcut";
+
+import EngineContext from "../engine_context";
+import Window from "../window";
 import { WindowState } from "../window";
+
+import { KWinWindow } from "../../driver/window";
+
+import { Shortcut } from "../../controller/shortcut";
+
 import Rect from "../../util/rect";
 import Config from "../../config";
 import qmlSetTimeout from "../../util/timer";

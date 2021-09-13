@@ -3,10 +3,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
+
+import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
+
 import { clip } from "../../util/func";
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
