@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -13,7 +13,7 @@ import { Shortcut } from "../../controller/shortcut";
 
 import Rect from "../../util/rect";
 
-export default class SpreadLayout implements ILayout {
+export default class SpreadLayout implements WindowsLayout {
   public static readonly id = "SpreadLayout";
 
   public readonly classID = SpreadLayout.id;
@@ -50,7 +50,7 @@ export default class SpreadLayout implements ILayout {
       );
   }
 
-  public clone(): ILayout {
+  public clone(): WindowsLayout {
     const other = new SpreadLayout();
     other.space = this.space;
     return other;

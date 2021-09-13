@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -11,7 +11,7 @@ import { WindowState } from "../window";
 
 import Rect from "../../util/rect";
 
-export default class FloatingLayout implements ILayout {
+export default class FloatingLayout implements WindowsLayout {
   public static readonly id = "FloatingLayout ";
   public static instance = new FloatingLayout();
 

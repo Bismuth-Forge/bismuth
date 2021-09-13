@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -14,7 +14,7 @@ import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
 
-export default class QuarterLayout implements ILayout {
+export default class QuarterLayout implements WindowsLayout {
   public static readonly MAX_PROPORTION = 0.8;
   public static readonly id = "QuarterLayout";
 
@@ -91,7 +91,7 @@ export default class QuarterLayout implements ILayout {
     );
   }
 
-  public clone(): ILayout {
+  public clone(): WindowsLayout {
     const other = new QuarterLayout(this.config);
     other.lhsplit = this.lhsplit;
     other.rhsplit = this.rhsplit;

@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -24,7 +24,7 @@ export enum CascadeDirection {
   West = 7,
 }
 
-export default class CascadeLayout implements ILayout {
+export default class CascadeLayout implements WindowsLayout {
   public static readonly id = "CascadeLayout";
 
   /** Decompose direction into vertical and horizontal steps */

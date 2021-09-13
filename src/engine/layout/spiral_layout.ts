@@ -5,7 +5,7 @@
 
 import { HalfSplitLayoutPart } from "./layout_part";
 import { FillLayoutPart } from "./layout_part";
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -20,7 +20,7 @@ export type SpiralLayoutPart = HalfSplitLayoutPart<
   SpiralLayoutPart | FillLayoutPart
 >;
 
-export default class SpiralLayout implements ILayout {
+export default class SpiralLayout implements WindowsLayout {
   public readonly description = "Spiral";
 
   private depth: number;
