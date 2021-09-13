@@ -3,8 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { DriverSurface } from "../driver/surface";
 import Window from "./window";
+
+import { DriverSurface } from "../driver/surface";
 
 export default class WindowStore {
   public list: Window[];

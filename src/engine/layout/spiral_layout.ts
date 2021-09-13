@@ -3,12 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine_context";
 import { HalfSplitLayoutPart } from "./layout_part";
 import { FillLayoutPart } from "./layout_part";
 import { ILayout } from "./ilayout";
+
+import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
+
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";

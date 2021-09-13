@@ -3,6 +3,19 @@
 //
 // SPDX-License-Identifier: MIT
 
+import { DriverSurface } from "./surface";
+import KWinMousePoller from "./kwin_mouse_poller";
+import { KWinSurface } from "./surface";
+import { KWinWindow } from "./window";
+
+import { Controller } from "../controller";
+import { Shortcut } from "../controller/shortcut";
+
+import Window from "../engine/window";
+
+import { ILayoutClass } from "../engine/layout/ilayout";
+import { WindowState } from "../engine/window";
+
 import MonocleLayout from "../engine/layout/monocle_layout";
 import TileLayout from "../engine/layout/tile_layout";
 import ThreeColumnLayout from "../engine/layout/three_column_layout";
@@ -11,15 +24,6 @@ import SpreadLayout from "../engine/layout/spread_layout";
 import FloatingLayout from "../engine/layout/floating_layout";
 import QuarterLayout from "../engine/layout/quarter_layout";
 
-import { Controller } from "../controller";
-import { DriverSurface } from "./surface";
-import Window from "../engine/window";
-import { KWinSurface } from "./surface";
-import { KWinWindow } from "./window";
-import { Shortcut } from "../controller/shortcut";
-import KWinMousePoller from "./kwin_mouse_poller";
-import { ILayoutClass } from "../engine/layout/ilayout";
-import { WindowState } from "../engine/window";
 import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout, { TimersPool } from "../util/timer";

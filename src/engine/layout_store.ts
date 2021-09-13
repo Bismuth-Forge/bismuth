@@ -7,7 +7,9 @@ import MonocleLayout from "./layout/monocle_layout";
 import FloatingLayout from "./layout/floating_layout";
 
 import { ILayout } from "./layout/ilayout";
+
 import { DriverSurface } from "../driver/surface";
+
 import { wrapIndex } from "../util/func";
 import Config from "../config";
 

@@ -3,17 +3,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-import EngineContext from "../engine_context";
 import { ILayout } from "./ilayout";
-import Window from "../window";
-import { WindowState } from "../window";
-import { Shortcut } from "../../controller/shortcut";
-
 import {
   RotateLayoutPart,
   HalfSplitLayoutPart,
   StackLayoutPart,
 } from "./layout_part";
+
+import EngineContext from "../engine_context";
+import Window from "../window";
+import { WindowState } from "../window";
+
+import { Shortcut } from "../../controller/shortcut";
+
 import { clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
