@@ -18,7 +18,7 @@ import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
-import TilingController from "../controller";
+import { Controller } from "../controller";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -66,7 +66,7 @@ export class TilingEngine implements Engine {
   public windows: WindowStore;
 
   constructor(
-    private controller: TilingController,
+    private controller: Controller,
     private config: Config,
     private debug: Debug
   ) {

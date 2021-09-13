@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { ConfigImpl } from "./config";
-import TilingController from "./controller";
+import { TilingController } from "./controller";
 import Debug from "./util/debug";
 
 /**

@@ -12,13 +12,49 @@ import Config from "../config";
 import Debug from "../util/debug";
 import { DriverSurface } from "../driver/surface";
 
+export interface Controller {
+  readonly screens: DriverSurface[];
+
+  currentWindow: Window | null;
+  currentSurface: DriverSurface;
+
+  showNotification(text: string): void;
+
+  onCurrentSurfaceChanged(ctx: DriverContext): void;
+  onSurfaceUpdate(ctx: DriverContext, comment: string): void;
+  onWindowGeometryChanged(ctx: DriverContext, window: Window): void;
+  onWindowResize(ctx: DriverContext, window: Window): void;
+  onWindowAdded(ctx: DriverContext, window: Window): void;
+  onWindowRemoved(ctx: DriverContext, window: Window): void;
+  onWindowMaximizeChanged(
+    ctx: DriverContext,
+    window: Window,
+    maximized: boolean
+  ): void;
+  onWindowChanged(
+    ctx: DriverContext,
+    window: Window | null,
+    comment?: string
+  ): void;
+  onWindowMoveStart(window: Window): void;
+  onWindowMoveOver(ctx: DriverContext, window: Window): void;
+  onWindowResizeStart(window: Window): void;
+  onWindowResizeOver(ctx: DriverContext, window: Window): void;
+  onWindowMove(window: Window): void;
+  onWindowFocused(ctx: DriverContext, window: Window): void;
+
+  onShortcut(ctx: DriverContext, input: Shortcut, data?: any): void;
+
+  manageWindow(win: Window): void;
+}
+
 /**
  * TilingController translates events to actions, implementing high-level
  * window management logic.
  *
  * In short, this class is just a bunch of event handling methods.
  */
-export default class TilingController {
+export class TilingController implements Controller {
   private engine: Engine;
   private driver: DriverContext;
 
@@ -158,7 +194,7 @@ export default class TilingController {
     window.commit();
   }
 
-  public onWindowResizeStart(window: Window): void {
+  public onWindowResizeStart(_window: Window): void {
     /* do nothing */
   }
 
