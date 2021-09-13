@@ -6,7 +6,6 @@
 import MonocleLayout from "./layout/monocle_layout";
 
 import LayoutStore from "./layout_store";
-import EngineContext from "./engine_context";
 import WindowStore from "./window_store";
 import Window from "./window";
 import { WindowState } from "./window";
@@ -59,6 +58,8 @@ export interface Engine {
   floatAll(srf: DriverSurface): void;
   cycleLayout(step: 1 | -1): void;
   setLayout(layoutClassID: string): void;
+
+  showNotification(text: string): void;
 }
 
 /**
@@ -273,11 +274,7 @@ export class TilingEngine implements Engine {
       tileables[0].state = WindowState.Maximized;
       tileables[0].geometry = workingArea;
     } else if (tileables.length > 0)
-      layout.apply(
-        new EngineContext(this.controller, this),
-        tileables,
-        tilingArea
-      );
+      layout.apply(this.controller, tileables, tilingArea);
 
     if (
       this.config.limitTileWidthRatio > 0 &&
@@ -557,12 +554,9 @@ export class TilingEngine implements Engine {
     const layout = this.layouts.getCurrentLayout(
       this.controller.currentSurface
     );
-    if (layout.handleShortcut)
-      return layout.handleShortcut(
-        new EngineContext(this.controller, this),
-        input,
-        data
-      );
+    if (layout.handleShortcut) {
+      return layout.handleShortcut(this, input, data);
+    }
     return false;
   }
 
@@ -633,5 +627,9 @@ export class TilingEngine implements Engine {
     );
 
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
+  }
+
+  public showNotification(text: string): void {
+    this.controller.showNotification(text);
   }
 }

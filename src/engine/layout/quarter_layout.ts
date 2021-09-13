@@ -3,9 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
@@ -13,6 +12,7 @@ import { clip } from "../../util/func";
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
+import { Controller } from "../../controller";
 
 export default class QuarterLayout implements WindowsLayout {
   public static readonly MAX_PROPORTION = 0.8;
@@ -99,7 +99,7 @@ export default class QuarterLayout implements WindowsLayout {
     return other;
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     for (let i = 0; i < 4 && i < tileables.length; i++)
       tileables[i].state = WindowState.Tiled;
 

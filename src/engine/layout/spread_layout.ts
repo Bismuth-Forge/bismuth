@@ -3,15 +3,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
 import { Shortcut } from "../../controller/shortcut";
 
 import Rect from "../../util/rect";
+import { Controller } from "../../controller";
+import { Engine } from "..";
 
 export default class SpreadLayout implements WindowsLayout {
   public static readonly id = "SpreadLayout";
@@ -25,7 +26,7 @@ export default class SpreadLayout implements WindowsLayout {
     this.space = 0.07;
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     /* Tile all tileables */
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
     const tiles = tileables;
@@ -56,7 +57,7 @@ export default class SpreadLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(ctx: EngineContext, input: Shortcut) {
+  public handleShortcut(_engine: Engine, input: Shortcut) {
     switch (input) {
       case Shortcut.Decrease:
         // TODO: define arbitrary constants

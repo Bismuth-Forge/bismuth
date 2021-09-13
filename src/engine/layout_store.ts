@@ -6,7 +6,7 @@
 import MonocleLayout from "./layout/monocle_layout";
 import FloatingLayout from "./layout/floating_layout";
 
-import { WindowsLayout } from "./layout/ilayout";
+import { WindowsLayout } from "./layout";
 
 import { DriverSurface } from "../driver/surface";
 

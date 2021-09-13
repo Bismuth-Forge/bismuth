@@ -3,13 +3,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
+import { Engine } from "..";
 import Window from "../window";
 import { WindowState } from "../window";
 
 import { Shortcut } from "../../controller/shortcut";
+import { Controller } from "../../controller";
 
 import Rect from "../../util/rect";
 
@@ -61,7 +62,7 @@ export default class CascadeLayout implements WindowsLayout {
     /* nothing */
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     const [vertStep, horzStep] = CascadeLayout.decomposeDirection(this.dir);
 
     // TODO: adjustable step size
@@ -94,19 +95,15 @@ export default class CascadeLayout implements WindowsLayout {
     return new CascadeLayout(this.dir);
   }
 
-  public handleShortcut(
-    ctx: EngineContext,
-    input: Shortcut,
-    data?: any
-  ): boolean {
+  public handleShortcut(engine: Engine, input: Shortcut, _data?: any): boolean {
     switch (input) {
       case Shortcut.Increase:
         this.dir = (this.dir + 1 + 8) % 8;
-        ctx.showNotification(this.description);
+        engine.showNotification(this.description);
         break;
       case Shortcut.Decrease:
         this.dir = (this.dir - 1 + 8) % 8;
-        ctx.showNotification(this.description);
+        engine.showNotification(this.description);
         break;
       default:
         return false;

@@ -5,15 +5,15 @@
 
 import { HalfSplitLayoutPart } from "./layout_part";
 import { FillLayoutPart } from "./layout_part";
-import { WindowsLayout } from "./ilayout";
+import { WindowsLayout } from ".";
 
-import EngineContext from "../engine_context";
 import Window from "../window";
 import { WindowState } from "../window";
 
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
+import { Controller } from "../../controller";
 
 export type SpiralLayoutPart = HalfSplitLayoutPart<
   FillLayoutPart,
@@ -49,7 +49,7 @@ export default class SpiralLayout implements WindowsLayout {
     this.parts.adjust(area, tiles, basis, delta);
   }
 
-  public apply(ctx: EngineContext, tileables: Window[], area: Rect): void {
+  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
 
     this.bore(tileables.length);

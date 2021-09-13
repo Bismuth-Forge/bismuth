@@ -13,7 +13,7 @@ import { Shortcut } from "../controller/shortcut";
 
 import Window from "../engine/window";
 
-import { WindowsLayoutClass } from "../engine/layout/ilayout";
+import { WindowsLayoutClass } from "../engine/layout";
 import { WindowState } from "../engine/window";
 
 import MonocleLayout from "../engine/layout/monocle_layout";
