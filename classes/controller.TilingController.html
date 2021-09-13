@@ -85,6 +85,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/controller.Controller.html" class="tsd-signature-type" data-tsd-kind="Interface">Controller</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -98,8 +104,6 @@
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="controller.TilingController.html#config" class="tsd-kind-icon">config</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="controller.TilingController.html#debug" class="tsd-kind-icon">debug</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="controller.TilingController.html#driver" class="tsd-kind-icon">driver</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="controller.TilingController.html#engine" class="tsd-kind-icon">engine</a></li>
 							</ul>
@@ -109,6 +113,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="controller.TilingController.html#currentSurface" class="tsd-kind-icon">current<wbr>Surface</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="controller.TilingController.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="controller.TilingController.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="controller.TilingController.html#screens" class="tsd-kind-icon">screens</a></li>
 							</ul>
 						</section>
@@ -150,7 +155,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L27">controller/index.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L54">controller/index.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -176,42 +181,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="config" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
-					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L24">controller/index.ts:24</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="debug" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> debug</h3>
-					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="util_debug.Debug.html" class="tsd-signature-type" data-tsd-kind="Class">Debug</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L25">controller/index.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="driver" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> driver</h3>
 					<div class="tsd-signature tsd-kind-icon">driver<span class="tsd-signature-symbol">:</span> <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L23">controller/index.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L52">controller/index.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="engine" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> engine</h3>
-					<div class="tsd-signature tsd-kind-icon">engine<span class="tsd-signature-symbol">:</span> <a href="engine.TilingEngine.html" class="tsd-signature-type" data-tsd-kind="Class">TilingEngine</a></div>
+					<div class="tsd-signature tsd-kind-icon">engine<span class="tsd-signature-symbol">:</span> <a href="../interfaces/engine.Engine.html" class="tsd-signature-type" data-tsd-kind="Interface">Engine</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L22">controller/index.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L51">controller/index.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,16 +213,18 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L68">controller/index.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L92">controller/index.ts:92</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#currentSurface">currentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L72">controller/index.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L96">controller/index.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -260,16 +247,18 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L60">controller/index.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L84">controller/index.ts:84</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L64">controller/index.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L88">controller/index.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -283,6 +272,24 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="cursorPosition" class="tsd-anchor"></a>
+					<h3>cursor<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> cursorPosition<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#cursorPosition">cursorPosition</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L100">controller/index.ts:100</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="screens" class="tsd-anchor"></a>
 					<h3>screens</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
@@ -291,8 +298,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#screens">screens</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L56">controller/index.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L80">controller/index.ts:80</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -311,8 +319,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#manageWindow">manageWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L338">controller/index.ts:338</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L360">controller/index.ts:360</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -329,21 +338,16 @@
 					<a name="onCurrentSurfaceChanged" class="tsd-anchor"></a>
 					<h3>on<wbr>Current<wbr>Surface<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Current<wbr>Surface<wbr>Changed<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Current<wbr>Surface<wbr>Changed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onCurrentSurfaceChanged">onCurrentSurfaceChanged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L85">controller/index.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L113">controller/index.ts:113</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -352,20 +356,18 @@
 					<a name="onShortcut" class="tsd-anchor"></a>
 					<h3>on<wbr>Shortcut</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Shortcut<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, input<span class="tsd-signature-symbol">: </span><a href="../enums/controller_shortcut.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Shortcut<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><a href="../enums/controller_shortcut.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onShortcut">onShortcut</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L221">controller/index.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L243">controller/index.ts:243</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>input: <a href="../enums/controller_shortcut.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a></h5>
 								</li>
@@ -381,20 +383,18 @@
 					<a name="onSurfaceUpdate" class="tsd-anchor"></a>
 					<h3>on<wbr>Surface<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Surface<wbr>Update<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, comment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Surface<wbr>Update<span class="tsd-signature-symbol">(</span>comment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onSurfaceUpdate">onSurfaceUpdate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L80">controller/index.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L108">controller/index.ts:108</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>comment: <span class="tsd-signature-type">string</span></h5>
 								</li>
@@ -407,20 +407,18 @@
 					<a name="onWindowAdded" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Added</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Added<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Added<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowAdded">onWindowAdded</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L93">controller/index.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L121">controller/index.ts:121</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -433,20 +431,18 @@
 					<a name="onWindowChanged" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Changed<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, comment<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Changed<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, comment<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowChanged">onWindowChanged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L203">controller/index.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L227">controller/index.ts:227</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -462,20 +458,18 @@
 					<a name="onWindowFocused" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Focused</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Focused<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Focused<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowFocused">onWindowFocused</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L217">controller/index.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L239">controller/index.ts:239</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -488,20 +482,18 @@
 					<a name="onWindowGeometryChanged" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Geometry<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Geometry<wbr>Changed<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Geometry<wbr>Changed<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowGeometryChanged">onWindowGeometryChanged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L196">controller/index.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L220">controller/index.ts:220</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -514,25 +506,23 @@
 					<a name="onWindowMaximizeChanged" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Maximize<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Maximize<wbr>Changed<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, maximized<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Maximize<wbr>Changed<span class="tsd-signature-symbol">(</span>_window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a>, _maximized<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowMaximizeChanged">onWindowMaximizeChanged</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L188">controller/index.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L216">controller/index.ts:216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
+									<h5>_window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
 								<li>
-									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
-								</li>
-								<li>
-									<h5>maximized: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>_maximized: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -548,8 +538,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowMove">onWindowMove</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L125">controller/index.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L153">controller/index.ts:153</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -566,20 +557,18 @@
 					<a name="onWindowMoveOver" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Move<wbr>Over</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Move<wbr>Over<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Move<wbr>Over<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowMoveOver">onWindowMoveOver</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L129">controller/index.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L157">controller/index.ts:157</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -597,8 +586,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowMoveStart">onWindowMoveStart</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L121">controller/index.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L149">controller/index.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -615,20 +605,18 @@
 					<a name="onWindowRemoved" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Removed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Removed<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Removed<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowRemoved">onWindowRemoved</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L115">controller/index.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L143">controller/index.ts:143</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -641,20 +629,18 @@
 					<a name="onWindowResize" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Resize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowResize">onWindowResize</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L170">controller/index.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L198">controller/index.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -667,20 +653,18 @@
 					<a name="onWindowResizeOver" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Resize<wbr>Over</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<wbr>Over<span class="tsd-signature-symbol">(</span>ctx<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a>, window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<wbr>Over<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowResizeOver">onWindowResizeOver</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L180">controller/index.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L208">controller/index.ts:208</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5>ctx: <a href="../interfaces/driver.DriverContext.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverContext</a></h5>
-								</li>
 								<li>
 									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
@@ -693,19 +677,20 @@
 					<a name="onWindowResizeStart" class="tsd-anchor"></a>
 					<h3>on<wbr>Window<wbr>Resize<wbr>Start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<wbr>Start<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Window<wbr>Resize<wbr>Start<span class="tsd-signature-symbol">(</span>_window<span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#onWindowResizeStart">onWindowResizeStart</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L166">controller/index.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L194">controller/index.ts:194</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<h5>_window: <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -721,8 +706,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/controller.Controller.html">Controller</a>.<a href="../interfaces/controller.Controller.html#showNotification">showNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L76">controller/index.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L104">controller/index.ts:104</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -745,7 +731,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/62e6382/src/controller/index.ts#L43">controller/index.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/354e6b4/src/controller/index.ts#L67">controller/index.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -781,12 +767,6 @@
 								<a href="controller.TilingController.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="controller.TilingController.html#config" class="tsd-kind-icon">config</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="controller.TilingController.html#debug" class="tsd-kind-icon">debug</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="controller.TilingController.html#driver" class="tsd-kind-icon">driver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
@@ -797,6 +777,9 @@
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="controller.TilingController.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="controller.TilingController.html#cursorPosition" class="tsd-kind-icon">cursor<wbr>Position</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="controller.TilingController.html#screens" class="tsd-kind-icon">screens</a>
@@ -859,6 +842,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/controller.Controller.html" class="tsd-kind-icon">Controller</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
