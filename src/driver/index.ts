@@ -20,7 +20,7 @@ import { Shortcut } from "../controller/shortcut";
 import KWinMousePoller from "./kwin_mouse_poller";
 import { ILayoutClass } from "../engine/layout/ilayout";
 import { WindowState } from "../engine/window";
-import Config, { ConfigImpl } from "../config";
+import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout, { TimersPool } from "../util/timer";
 
