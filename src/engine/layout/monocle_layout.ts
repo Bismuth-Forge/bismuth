@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -17,7 +17,7 @@ import Rect from "../../util/rect";
 import Config from "../../config";
 import qmlSetTimeout from "../../util/timer";
 
-export default class MonocleLayout implements ILayout {
+export default class MonocleLayout implements WindowsLayout {
   public static readonly id = "MonocleLayout";
   public readonly description: string = "Monocle";
 

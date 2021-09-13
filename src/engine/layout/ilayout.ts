@@ -12,17 +12,15 @@ import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
 
-export interface ILayoutClass {
+export interface WindowsLayoutClass {
   readonly id: string;
-  new (config: Config): ILayout;
+  new (config: Config): WindowsLayout;
 }
 
-export interface ILayout {
-  /* read-only */
+export interface WindowsLayout {
   readonly capacity?: number;
   readonly description: string;
 
-  /* methods */
   adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
   apply(ctx: EngineContext, tileables: Window[], area: Rect): void;
   handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;

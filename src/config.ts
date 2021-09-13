@@ -13,13 +13,13 @@ import FloatingLayout from "./engine/layout/floating_layout";
 import QuarterLayout from "./engine/layout/quarter_layout";
 import CascadeLayout from "./engine/layout/cascade_layout";
 
-import { ILayout } from "./engine/layout/ilayout";
-import { ILayoutClass } from "./engine/layout/ilayout";
+import { WindowsLayout } from "./engine/layout/ilayout";
+import { WindowsLayoutClass } from "./engine/layout/ilayout";
 
 export default interface Config {
   //#region Layout
   layoutOrder: string[];
-  layoutFactories: { [key: string]: () => ILayout };
+  layoutFactories: { [key: string]: () => WindowsLayout };
   monocleMaximize: boolean;
   maximizeSoleTile: boolean;
   monocleMinimizeRest: boolean; // KWin-specific
@@ -73,7 +73,7 @@ export default interface Config {
 export class ConfigImpl implements Config {
   //#region Layout
   public layoutOrder: string[];
-  public layoutFactories: { [key: string]: () => ILayout };
+  public layoutFactories: { [key: string]: () => WindowsLayout };
   public maximizeSoleTile: boolean;
   public monocleMaximize: boolean;
   public monocleMinimizeRest: boolean; // KWin-specific
@@ -148,7 +148,7 @@ export class ConfigImpl implements Config {
         ["enableQuarterLayout", false, QuarterLayout],
         ["enableFloatingLayout", false, FloatingLayout],
         ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
-      ] as Array<[string, boolean, ILayoutClass]>
+      ] as Array<[string, boolean, WindowsLayoutClass]>
     ).forEach(([configKey, defaultValue, layoutClass]) => {
       if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
         this.layoutOrder.push(layoutClass.id);

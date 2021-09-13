@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 import LayoutUtils from "./layout_utils";
 
 import EngineContext from "../engine_context";
@@ -17,7 +17,7 @@ import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
 
-export default class ThreeColumnLayout implements ILayout {
+export default class ThreeColumnLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.75;
   public static readonly id = "ThreeColumnLayout";
@@ -182,7 +182,7 @@ export default class ThreeColumnLayout implements ILayout {
     }
   }
 
-  public clone(): ILayout {
+  public clone(): WindowsLayout {
     const other = new ThreeColumnLayout(this.config);
     other.masterRatio = this.masterRatio;
     other.masterSize = this.masterSize;

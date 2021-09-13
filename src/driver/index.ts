@@ -13,7 +13,7 @@ import { Shortcut } from "../controller/shortcut";
 
 import Window from "../engine/window";
 
-import { ILayoutClass } from "../engine/layout/ilayout";
+import { WindowsLayoutClass } from "../engine/layout/ilayout";
 import { WindowState } from "../engine/window";
 
 import MonocleLayout from "../engine/layout/monocle_layout";
@@ -380,7 +380,11 @@ export class KWinDriver implements DriverContext {
   }
 
   private bindLayoutShortcuts() {
-    const bind = (seq: string, title: string, layoutClass: ILayoutClass) => {
+    const bind = (
+      seq: string,
+      title: string,
+      layoutClass: WindowsLayoutClass
+    ) => {
       title = "Bismuth: " + title + " Layout";
       seq = seq !== "" ? "Meta+" + seq : "";
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {

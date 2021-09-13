@@ -6,7 +6,7 @@
 import MonocleLayout from "./layout/monocle_layout";
 import FloatingLayout from "./layout/floating_layout";
 
-import { ILayout } from "./layout/ilayout";
+import { WindowsLayout } from "./layout/ilayout";
 
 import { DriverSurface } from "../driver/surface";
 
@@ -14,13 +14,13 @@ import { wrapIndex } from "../util/func";
 import Config from "../config";
 
 export class LayoutStoreEntry {
-  public get currentLayout(): ILayout {
+  public get currentLayout(): WindowsLayout {
     return this.loadLayout(this.currentID);
   }
 
   private currentIndex: number | null;
   private currentID: string;
-  private layouts: { [key: string]: ILayout };
+  private layouts: { [key: string]: WindowsLayout };
   private previousID: string;
 
   private config: Config;
@@ -35,7 +35,7 @@ export class LayoutStoreEntry {
     this.loadLayout(this.currentID);
   }
 
-  public cycleLayout(step: -1 | 1): ILayout {
+  public cycleLayout(step: -1 | 1): WindowsLayout {
     this.previousID = this.currentID;
     this.currentIndex =
       this.currentIndex !== null
@@ -45,7 +45,7 @@ export class LayoutStoreEntry {
     return this.loadLayout(this.currentID);
   }
 
-  public setLayout(targetID: string): ILayout {
+  public setLayout(targetID: string): WindowsLayout {
     const targetLayout = this.loadLayout(targetID);
     if (
       targetLayout instanceof MonocleLayout &&
@@ -68,7 +68,7 @@ export class LayoutStoreEntry {
     this.currentIndex = idx === -1 ? null : idx;
   }
 
-  private loadLayout(ID: string): ILayout {
+  private loadLayout(ID: string): WindowsLayout {
     let layout = this.layouts[ID];
     if (!layout) layout = this.layouts[ID] = this.config.layoutFactories[ID]();
     return layout;
@@ -85,18 +85,21 @@ export default class LayoutStore {
     this.store = {};
   }
 
-  public getCurrentLayout(srf: DriverSurface): ILayout {
+  public getCurrentLayout(srf: DriverSurface): WindowsLayout {
     return srf.ignore
       ? FloatingLayout.instance
       : this.getEntry(srf.id).currentLayout;
   }
 
-  public cycleLayout(srf: DriverSurface, step: 1 | -1): ILayout | null {
+  public cycleLayout(srf: DriverSurface, step: 1 | -1): WindowsLayout | null {
     if (srf.ignore) return null;
     return this.getEntry(srf.id).cycleLayout(step);
   }
 
-  public setLayout(srf: DriverSurface, layoutClassID: string): ILayout | null {
+  public setLayout(
+    srf: DriverSurface,
+    layoutClassID: string
+  ): WindowsLayout | null {
     if (srf.ignore) return null;
     return this.getEntry(srf.id).setLayout(layoutClassID);
   }

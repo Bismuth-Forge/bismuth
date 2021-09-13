@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 
 import EngineContext from "../engine_context";
 import Window from "../window";
@@ -13,7 +13,7 @@ import { Shortcut } from "../../controller/shortcut";
 
 import Rect from "../../util/rect";
 
-export default class StairLayout implements ILayout {
+export default class StairLayout implements WindowsLayout {
   public static readonly id = "StairLayout";
 
   public readonly classID = StairLayout.id;
@@ -47,7 +47,7 @@ export default class StairLayout implements ILayout {
     }
   }
 
-  public clone(): ILayout {
+  public clone(): WindowsLayout {
     const other = new StairLayout();
     other.space = this.space;
     return other;

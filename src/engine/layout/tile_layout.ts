@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ILayout } from "./ilayout";
+import { WindowsLayout } from "./ilayout";
 import {
   RotateLayoutPart,
   HalfSplitLayoutPart,
@@ -21,7 +21,7 @@ import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
 import Config from "../../config";
 
-export default class TileLayout implements ILayout {
+export default class TileLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.8;
   public static readonly id = "TileLayout";
@@ -83,7 +83,7 @@ export default class TileLayout implements ILayout {
     });
   }
 
-  public clone(): ILayout {
+  public clone(): WindowsLayout {
     const other = new TileLayout(this.config);
     other.masterRatio = this.masterRatio;
     other.numMaster = this.numMaster;
