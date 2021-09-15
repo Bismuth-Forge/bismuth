@@ -21,6 +21,7 @@ import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import Debug from "../util/debug";
 import qmlSetTimeout from "../util/timer";
+import { WindowsLayout } from "./layout";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -225,7 +226,7 @@ export class TilingEngine implements Engine {
   /**
    * Arrange tiles on all screens.
    */
-  public arrange() {
+  public arrange(): void {
     this.debug.debug(() => "arrange");
 
     this.controller.screens.forEach((driverSurface: DriverSurface) => {
@@ -234,48 +235,44 @@ export class TilingEngine implements Engine {
   }
 
   /**
-   * Arrange tiles on a screen.
+   * Arrange tiles on one screen
+   *
+   * @param screenSurface screen's surface, on which windows should be arranged
    */
-  public arrangeScreen(srf: DriverSurface) {
-    const layout = this.layouts.getCurrentLayout(srf);
+  public arrangeScreen(screenSurface: DriverSurface) {
+    const layout = this.layouts.getCurrentLayout(screenSurface);
 
-    const workingArea = srf.workingArea;
+    const workingArea = screenSurface.workingArea;
+    const tilingArea = this.getTilingArea(workingArea, layout);
 
-    let tilingArea: Rect;
-    if (this.config.monocleMaximize && layout instanceof MonocleLayout)
-      tilingArea = workingArea;
-    else
-      tilingArea = workingArea.gap(
-        this.config.screenGapLeft,
-        this.config.screenGapRight,
-        this.config.screenGapTop,
-        this.config.screenGapBottom
-      );
-
-    const visibles = this.windows.getVisibleWindows(srf);
+    const visibleWindows = this.windows.getVisibleWindows(screenSurface);
     this.debug.debugObj(() => [
       "arrangeScreen",
       {
         layout,
-        srf,
-        visibles: visibles.length,
+        screenSurface,
+        visibles: visibleWindows.length,
       },
     ]);
 
-    visibles.forEach((window) => {
-      if (window.state === WindowState.Undecided)
-        window.state = window.shouldFloat
-          ? WindowState.Floating
-          : WindowState.Tiled;
+    // Set correct window state for new windows
+    visibleWindows.forEach((win: Window) => {
+      if (win.state === WindowState.Undecided) {
+        win.state = win.shouldFloat ? WindowState.Floating : WindowState.Tiled;
+      }
     });
 
-    const tileables = this.windows.getVisibleTileables(srf);
-    if (this.config.maximizeSoleTile && tileables.length === 1) {
-      tileables[0].state = WindowState.Maximized;
-      tileables[0].geometry = workingArea;
-    } else if (tileables.length > 0)
-      layout.apply(this.controller, tileables, tilingArea);
+    const tileableWindows = this.windows.getVisibleTileables(screenSurface);
 
+    // Maximize sole tile if enabled or apply the current layout as expected
+    if (this.config.maximizeSoleTile && tileableWindows.length === 1) {
+      tileableWindows[0].state = WindowState.Maximized;
+      tileableWindows[0].geometry = workingArea;
+    } else if (tileableWindows.length > 0) {
+      layout.apply(this.controller, tileableWindows, tilingArea);
+    }
+
+    // If enabled, limit the windows' width
     if (
       this.config.limitTileWidthRatio > 0 &&
       !(layout instanceof MonocleLayout)
@@ -283,7 +280,7 @@ export class TilingEngine implements Engine {
       const maxWidth = Math.floor(
         workingArea.height * this.config.limitTileWidthRatio
       );
-      tileables
+      tileableWindows
         .filter((tile) => tile.tiled && tile.geometry.width > maxWidth)
         .forEach((tile) => {
           const g = tile.geometry;
@@ -296,8 +293,9 @@ export class TilingEngine implements Engine {
         });
     }
 
-    visibles.forEach((window) => window.commit());
-    this.debug.debugObj(() => ["arrangeScreen/finished", { srf }]);
+    // Commit window assigned properties
+    visibleWindows.forEach((win: Window) => win.commit());
+    this.debug.debugObj(() => ["arrangeScreen/finished", { screenSurface }]);
   }
 
   /**
@@ -631,5 +629,27 @@ export class TilingEngine implements Engine {
 
   public showNotification(text: string): void {
     this.controller.showNotification(text);
+  }
+
+  /**
+   * Returns the tiling area for the given working area and the windows layout.
+   *
+   * Tiling area is the area we are allowed to put windows in, not counting the inner gaps
+   * between them. I.e. working are without gaps.
+   *
+   * @param workingArea area in which we are allowed to work. @see DriverSurface#workingArea
+   * @param layout windows layout used
+   */
+  private getTilingArea(workingArea: Rect, layout: WindowsLayout): Rect {
+    if (this.config.monocleMaximize && layout instanceof MonocleLayout) {
+      return workingArea;
+    } else {
+      return workingArea.gap(
+        this.config.screenGapLeft,
+        this.config.screenGapRight,
+        this.config.screenGapTop,
+        this.config.screenGapBottom
+      );
+    }
   }
 }

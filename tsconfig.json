@@ -8,7 +8,13 @@
     "alwaysStrict": true,
     "strict": true,
     "moduleResolution": "node",
-    "module": "ES6"
+    "module": "ES6",
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
   },
   "typedocOptions": {
     "entryPoints": ["src"]
