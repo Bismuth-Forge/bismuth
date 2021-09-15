@@ -131,7 +131,11 @@ export class KWinWindow implements DriverWindow {
     this.debug = debug;
   }
 
-  public commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean) {
+  public commit(
+    geometry?: Rect,
+    noBorder?: boolean,
+    keepAbove?: boolean
+  ): void {
     this.debug.debugObj(() => [
       "KWinWindow#commit",
       { geometry, noBorder, keepAbove },

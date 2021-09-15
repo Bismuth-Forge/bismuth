@@ -159,7 +159,7 @@ export default class Window {
     this.weightMap = {};
   }
 
-  public commit() {
+  public commit(): void {
     const state = this.state;
     this.debug.debugObj(() => ["Window#commit", { state: WindowState[state] }]);
     switch (state) {
