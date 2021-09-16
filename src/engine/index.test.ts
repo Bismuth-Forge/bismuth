@@ -3,13 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import { createMock } from "ts-auto-mock";
-import { On, method } from "ts-auto-mock/extension";
 
 import { TilingEngine } from ".";
 import Config from "../config";
 import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
-import { DriverWindow } from "../driver/window";
 
 import Debug from "../util/debug";
 import Rect from "../util/rect";
@@ -20,6 +18,7 @@ import WindowStore from "./window_store";
 
 describe("arrange", () => {
   it("happens on all screens", () => {
+    // Arrange
     const screenMock = createMock<DriverSurface>();
     const fakeScreens = [screenMock, screenMock, screenMock, screenMock];
 
@@ -30,8 +29,10 @@ describe("arrange", () => {
 
     jest.spyOn(engine, "arrangeScreen").mockReturnValue();
 
+    // Act
     engine.arrange();
 
+    // Assert
     expect(engine.arrangeScreen).toBeCalledTimes(4);
   });
 });
@@ -54,18 +55,14 @@ describe("arrangeScreen", () => {
       state: WindowState.Undecided,
     });
 
-    const windowsStoreMock = createMock<WindowStore>({
+    engine.windows = createMock<WindowStore>({
       getVisibleWindows: () => [window1, window2],
       getVisibleTileables: () => [],
     });
 
-    engine.windows = windowsStoreMock;
-
-    const layoutStoreMock = createMock<LayoutStore>({
+    engine.layouts = createMock<LayoutStore>({
       getCurrentLayout: () => createMock<TileLayout>(),
     });
-    engine.layouts = layoutStoreMock;
-
     jest
       .spyOn(TilingEngine.prototype as any, "getTilingArea")
       .mockReturnValue(createMock<Rect>());
