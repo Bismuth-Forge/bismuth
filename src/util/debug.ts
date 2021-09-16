@@ -26,7 +26,9 @@ export default class Debug {
       const timestamp = (new Date().getTime() - this.started) / 1000;
       const [name, obj] = f();
       const buf = [];
-      for (const i in obj) buf.push(i + "=" + obj[i]);
+      for (const i in obj) {
+        buf.push(`${i}=${obj[i]}`);
+      }
 
       console.log(`[${timestamp}]`, `${name}: ${buf.join(" ")}`);
     }

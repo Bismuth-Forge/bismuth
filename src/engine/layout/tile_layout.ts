@@ -114,11 +114,15 @@ export default class TileLayout implements WindowsLayout {
         break;
       case Shortcut.Increase:
         // TODO: define arbitrary constant
-        if (this.numMaster < 10) this.numMaster += 1;
+        if (this.numMaster < 10) {
+          this.numMaster += 1;
+        }
         engine.showNotification(this.description);
         break;
       case Shortcut.Decrease:
-        if (this.numMaster > 0) this.numMaster -= 1;
+        if (this.numMaster > 0) {
+          this.numMaster -= 1;
+        }
         engine.showNotification(this.description);
         break;
       case Shortcut.Rotate:

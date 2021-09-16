@@ -203,8 +203,10 @@ export class KWinDriver implements DriverContext {
       // NOTE: windowShown can be fired in various situations.
       // We need only the first one - when window is created.
       let handled = false;
-      const handler = () => {
-        if (handled) return;
+      const handler = (): void => {
+        if (handled) {
+          return;
+        }
         handled = true;
 
         const window = this.windowMap.add(client);
@@ -258,11 +260,12 @@ export class KWinDriver implements DriverContext {
       if (this.config.preventMinimize) {
         client.minimized = false;
         this.kwinApi.workspace.activeClient = client;
-      } else
+      } else {
         this.controller.onWindowChanged(
           this.windowMap.get(client),
           "minimized"
         );
+      }
     };
 
     const onClientUnminimized = (client: KWin.Client): void =>
@@ -409,9 +412,12 @@ export class KWinDriver implements DriverContext {
    */
   private connect(signal: QSignal, handler: (..._: any[]) => void): () => void {
     const wrapper = (...args: any[]): void => {
-      /* HACK: `workspace` become undefined when the script is disabled. */
+      // HACK: `workspace` become undefined when the script is disabled.
+      // Idk why, but you can't just use brackets here
       if (typeof this.kwinApi.workspace === "undefined")
+        // eslint-disable-next-line curly
         signal.disconnect(wrapper);
+      // eslint-disable-next-line curly
       else this.enter(() => handler.apply(this, args));
     };
     signal.connect(wrapper);
@@ -429,7 +435,9 @@ export class KWinDriver implements DriverContext {
    * debugging.
    */
   private enter(callback: () => void) {
-    if (this.entered) return;
+    if (this.entered) {
+      return;
+    }
 
     this.entered = true;
     try {
@@ -464,22 +472,30 @@ export class KWinDriver implements DriverContext {
       }
       if (resizing !== client.resize) {
         resizing = client.resize;
-        if (resizing) this.controller.onWindowResizeStart(window);
-        else this.controller.onWindowResizeOver(window);
+        if (resizing) {
+          this.controller.onWindowResizeStart(window);
+        } else {
+          this.controller.onWindowResizeOver(window);
+        }
       }
     });
 
     this.connect(client.geometryChanged, () => {
-      if (moving) this.controller.onWindowMove(window);
-      else if (resizing) this.controller.onWindowResize(window);
-      else {
-        if (!window.actualGeometry.equals(window.geometry))
+      if (moving) {
+        this.controller.onWindowMove(window);
+      } else if (resizing) {
+        this.controller.onWindowResize(window);
+      } else {
+        if (!window.actualGeometry.equals(window.geometry)) {
           this.controller.onWindowGeometryChanged(window);
+        }
       }
     });
 
     this.connect(client.activeChanged, () => {
-      if (client.active) this.controller.onWindowFocused(window);
+      if (client.active) {
+        this.controller.onWindowFocused(window);
+      }
     });
 
     this.connect(client.screenChanged, () =>

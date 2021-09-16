@@ -88,8 +88,12 @@ export default class Window {
    */
   public get state(): WindowState {
     /* external states override the internal state. */
-    if (this.window.fullScreen) return WindowState.NativeFullscreen;
-    if (this.window.maximized) return WindowState.NativeMaximized;
+    if (this.window.fullScreen) {
+      return WindowState.NativeFullscreen;
+    }
+    if (this.window.maximized) {
+      return WindowState.NativeMaximized;
+    }
 
     return this.internalState;
   }
@@ -98,17 +102,23 @@ export default class Window {
     const winState = this.state;
 
     /* cannot transit to the current state */
-    if (winState === value) return;
+    if (winState === value) {
+      return;
+    }
 
     if (
       (winState === WindowState.Unmanaged ||
         Window.isTileableState(winState)) &&
       Window.isFloatingState(value)
-    )
+    ) {
       this.shouldCommitFloat = true;
-    else if (Window.isFloatingState(winState) && Window.isTileableState(value))
+    } else if (
+      Window.isFloatingState(winState) &&
+      Window.isTileableState(value)
+    ) {
       /* save the current geometry before leaving floating state */
       this.floatGeometry = this.actualGeometry;
+    }
 
     this.internalState = value;
   }
@@ -172,7 +182,9 @@ export default class Window {
         break;
 
       case WindowState.Floating:
-        if (!this.shouldCommitFloat) break;
+        if (!this.shouldCommitFloat) {
+          break;
+        }
         this.window.commit(
           this.floatGeometry,
           false,
@@ -190,7 +202,9 @@ export default class Window {
         break;
 
       case WindowState.TiledAfloat:
-        if (!this.shouldCommitFloat) break;
+        if (!this.shouldCommitFloat) {
+          break;
+        }
         this.window.commit(
           this.floatGeometry,
           false,

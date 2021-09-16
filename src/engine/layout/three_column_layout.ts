@@ -47,12 +47,14 @@ export default class ThreeColumnLayout implements WindowsLayout {
     delta: RectDelta
   ): void {
     const basisIndex = tiles.indexOf(basis);
-    if (basisIndex < 0) return;
+    if (basisIndex < 0) {
+      return;
+    }
 
-    if (tiles.length === 0)
+    if (tiles.length === 0) {
       /* no tiles */
       return;
-    else if (tiles.length <= this.masterSize) {
+    } else if (tiles.length <= this.masterSize) {
       /* one column */
       LayoutUtils.adjustAreaWeights(
         area,
@@ -91,12 +93,17 @@ export default class ThreeColumnLayout implements WindowsLayout {
     } else if (tiles.length > this.masterSize + 1) {
       /* three columns */
       let basisGroup;
-      if (basisIndex < this.masterSize) basisGroup = 1;
-      /* master */ else if (
+      if (basisIndex < this.masterSize) {
+        /* master */
+        basisGroup = 1;
+      } else if (
         basisIndex < Math.floor((this.masterSize + tiles.length) / 2)
-      )
+      ) {
+        /* R-stack */
         basisGroup = 2;
-      /* R-stack */ else basisGroup = 0; /* L-stack */
+      } else {
+        basisGroup = 0; /* L-stack */
+      }
 
       /* adjust master-stack ratio */
       const stackRatio = 1 - this.masterRatio;

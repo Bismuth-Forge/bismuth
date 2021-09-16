@@ -36,21 +36,22 @@ export default class KWinMousePoller {
     this.qml.mousePoller.interval = 0;
 
     this.qml.mousePoller.onNewData.connect((sourceName: string, data: any) => {
-      // tslint:disable-next-line:no-string-literal
       this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
       this.qml.mousePoller.disconnectSource(KWinMousePoller.COMMAND);
 
       qmlSetTimeout(() => {
-        if (this.started)
+        if (this.started) {
           qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
+        }
       }, KWinMousePoller.INTERVAL);
     });
   }
 
   public start(): void {
     this.startCount += 1;
-    if (this.config.pollMouseXdotool)
+    if (this.config.pollMouseXdotool) {
       this.qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
+    }
   }
 
   public stop(): void {
@@ -59,7 +60,9 @@ export default class KWinMousePoller {
 
   private parseResult(): [number, number] | null {
     // output example: x:1031 y:515 screen:0 window:90177537
-    if (!this.cmdResult) return null;
+    if (!this.cmdResult) {
+      return null;
+    }
 
     let x: number | null = null;
     let y: number | null = null;
@@ -68,11 +71,17 @@ export default class KWinMousePoller {
       .slice(0, 2)
       .forEach((part) => {
         const [key, value, _] = part.split(":");
-        if (key === "x") x = parseInt(value, 10);
-        if (key === "y") y = parseInt(value, 10);
+        if (key === "x") {
+          x = parseInt(value, 10);
+        }
+        if (key === "y") {
+          y = parseInt(value, 10);
+        }
       });
 
-    if (x === null || y === null) return null;
+    if (x === null || y === null) {
+      return null;
+    }
     return [x, y];
   }
 }

@@ -46,8 +46,9 @@ export default class MonocleLayout implements WindowsLayout {
         const current = controller.currentWindow;
         if (current && current.tiled) {
           tiles.forEach((window) => {
-            if (window !== current)
+            if (window !== current) {
               (window.window as KWinWindow).client.minimized = true;
+            }
           });
         }
       }, 50);

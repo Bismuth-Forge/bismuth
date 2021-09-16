@@ -42,13 +42,14 @@ export default class SpreadLayout implements WindowsLayout {
       numTiles -= 1;
     }
 
-    for (let i = 0; i < tiles.length; i++)
+    for (let i = 0; i < tiles.length; i++) {
       tiles[i].geometry = new Rect(
         area.x + (i < numTiles ? spaceWidth * (numTiles - i - 1) : 0),
         area.y,
         cardWidth,
         area.height
       );
+    }
   }
 
   public clone(): WindowsLayout {

@@ -213,7 +213,9 @@ export class TilingController implements Controller {
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange();
-    } else if (!this.config.adjustLayout) this.engine.enforceSize(window);
+    } else if (!this.config.adjustLayout) {
+      this.engine.enforceSize(window);
+    }
   }
 
   public onWindowMaximizeChanged(_window: Window, _maximized: boolean): void {
@@ -302,23 +304,35 @@ export class TilingController implements Controller {
         break;
 
       case Shortcut.GrowWidth:
-        if (window) this.engine.resizeWindow(window, "east", 1);
+        if (window) {
+          this.engine.resizeWindow(window, "east", 1);
+        }
         break;
       case Shortcut.ShrinkWidth:
-        if (window) this.engine.resizeWindow(window, "east", -1);
+        if (window) {
+          this.engine.resizeWindow(window, "east", -1);
+        }
         break;
       case Shortcut.GrowHeight:
-        if (window) this.engine.resizeWindow(window, "south", 1);
+        if (window) {
+          this.engine.resizeWindow(window, "south", 1);
+        }
         break;
       case Shortcut.ShrinkHeight:
-        if (window) this.engine.resizeWindow(window, "south", -1);
+        if (window) {
+          this.engine.resizeWindow(window, "south", -1);
+        }
         break;
 
       case Shortcut.ShiftUp:
-        if (window) this.engine.swapOrder(window, -1);
+        if (window) {
+          this.engine.swapOrder(window, -1);
+        }
         break;
       case Shortcut.ShiftDown:
-        if (window) this.engine.swapOrder(window, +1);
+        if (window) {
+          this.engine.swapOrder(window, +1);
+        }
         break;
 
       case Shortcut.SwapUp:
@@ -335,10 +349,14 @@ export class TilingController implements Controller {
         break;
 
       case Shortcut.SetMaster:
-        if (window) this.engine.setMaster(window);
+        if (window) {
+          this.engine.setMaster(window);
+        }
         break;
       case Shortcut.ToggleFloat:
-        if (window) this.engine.toggleFloat(window);
+        if (window) {
+          this.engine.toggleFloat(window);
+        }
         break;
       case Shortcut.ToggleFloatAll:
         this.engine.floatAll(this.currentSurface);

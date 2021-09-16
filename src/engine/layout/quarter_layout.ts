@@ -40,37 +40,46 @@ export default class QuarterLayout implements WindowsLayout {
   }
 
   public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
-    if (tiles.length <= 1 || tiles.length > 4) return;
+    if (tiles.length <= 1 || tiles.length > 4) {
+      return;
+    }
 
     const idx = tiles.indexOf(basis);
-    if (idx < 0) return;
+    if (idx < 0) {
+      return;
+    }
 
     /* vertical split */
-    if ((idx === 0 || idx === 3) && delta.east !== 0)
+    if ((idx === 0 || idx === 3) && delta.east !== 0) {
       this.vsplit =
         (Math.floor(area.width * this.vsplit) + delta.east) / area.width;
-    else if ((idx === 1 || idx === 2) && delta.west !== 0)
+    } else if ((idx === 2 || idx === 2) && delta.west !== 0) {
       this.vsplit =
         (Math.floor(area.width * this.vsplit) - delta.west) / area.width;
+    }
 
     /* left-side horizontal split */
     if (tiles.length === 4) {
-      if (idx === 0 && delta.south !== 0)
+      if (idx === 0 && delta.south !== 0) {
         this.lhsplit =
           (Math.floor(area.height * this.lhsplit) + delta.south) / area.height;
-      if (idx === 3 && delta.north !== 0)
+      }
+      if (idx === 3 && delta.north !== 0) {
         this.lhsplit =
           (Math.floor(area.height * this.lhsplit) - delta.north) / area.height;
+      }
     }
 
     /* right-side horizontal split */
     if (tiles.length >= 3) {
-      if (idx === 1 && delta.south !== 0)
+      if (idx === 1 && delta.south !== 0) {
         this.rhsplit =
           (Math.floor(area.height * this.rhsplit) + delta.south) / area.height;
-      if (idx === 2 && delta.north !== 0)
+      }
+      if (idx === 2 && delta.north !== 0) {
         this.rhsplit =
           (Math.floor(area.height * this.rhsplit) - delta.north) / area.height;
+      }
     }
 
     /* clipping */
@@ -100,13 +109,15 @@ export default class QuarterLayout implements WindowsLayout {
   }
 
   public apply(_controller: Controller, tileables: Window[], area: Rect): void {
-    for (let i = 0; i < 4 && i < tileables.length; i++)
+    for (let i = 0; i < 4 && i < tileables.length; i++) {
       tileables[i].state = WindowState.Tiled;
+    }
 
-    if (tileables.length > 4)
+    if (tileables.length > 4) {
       tileables
         .slice(4)
         .forEach((tile) => (tile.state = WindowState.TiledAfloat));
+    }
 
     if (tileables.length === 1) {
       tileables[0].geometry = area;

@@ -70,7 +70,9 @@ export class LayoutStoreEntry {
 
   private loadLayout(ID: string): WindowsLayout {
     let layout = this.layouts[ID];
-    if (!layout) layout = this.layouts[ID] = this.config.layoutFactories[ID]();
+    if (!layout) {
+      layout = this.layouts[ID] = this.config.layoutFactories[ID]();
+    }
     return layout;
   }
 }
@@ -92,7 +94,9 @@ export default class LayoutStore {
   }
 
   public cycleLayout(srf: DriverSurface, step: 1 | -1): WindowsLayout | null {
-    if (srf.ignore) return null;
+    if (srf.ignore) {
+      return null;
+    }
     return this.getEntry(srf.id).cycleLayout(step);
   }
 
@@ -100,12 +104,16 @@ export default class LayoutStore {
     srf: DriverSurface,
     layoutClassID: string
   ): WindowsLayout | null {
-    if (srf.ignore) return null;
+    if (srf.ignore) {
+      return null;
+    }
     return this.getEntry(srf.id).setLayout(layoutClassID);
   }
 
   private getEntry(key: string): LayoutStoreEntry {
-    if (!this.store[key]) this.store[key] = new LayoutStoreEntry(this.config);
+    if (!this.store[key]) {
+      this.store[key] = new LayoutStoreEntry(this.config);
+    }
     return this.store[key];
   }
 }
