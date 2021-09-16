@@ -87,7 +87,7 @@ export class TilingEngine implements Engine {
    *
    * Used when tile is resized using mouse.
    */
-  public adjustLayout(basis: Window) {
+  public adjustLayout(basis: Window): void {
     const srf = basis.surface;
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
@@ -111,7 +111,7 @@ export class TilingEngine implements Engine {
     window: Window,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
-  ) {
+  ): void {
     const srf = window.surface;
 
     // TODO: configurable step size?
@@ -150,7 +150,7 @@ export class TilingEngine implements Engine {
     basis: Window,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
-  ) {
+  ): void {
     const srf = basis.surface;
 
     if (dir === "east") {
@@ -217,7 +217,7 @@ export class TilingEngine implements Engine {
     window: Window,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
-  ) {
+  ): void {
     const state = window.state;
     if (Window.isFloatingState(state)) this.resizeFloat(window, dir, step);
     else if (Window.isTiledState(state)) this.resizeTile(window, dir, step);
@@ -239,7 +239,7 @@ export class TilingEngine implements Engine {
    *
    * @param screenSurface screen's surface, on which windows should be arranged
    */
-  public arrangeScreen(screenSurface: DriverSurface) {
+  public arrangeScreen(screenSurface: DriverSurface): void {
     const layout = this.layouts.getCurrentLayout(screenSurface);
 
     const workingArea = screenSurface.workingArea;
@@ -315,7 +315,7 @@ export class TilingEngine implements Engine {
   /**
    * Register the given window to WM.
    */
-  public manage(window: Window) {
+  public manage(window: Window): void {
     if (!window.shouldIgnore) {
       /* engine#arrange will update the state when required. */
       window.state = WindowState.Undecided;
@@ -327,14 +327,14 @@ export class TilingEngine implements Engine {
   /**
    * Unregister the given window from WM.
    */
-  public unmanage(window: Window) {
+  public unmanage(window: Window): void {
     this.windows.remove(window);
   }
 
   /**
    * Focus the next or previous window.
    */
-  public focusOrder(step: -1 | 1) {
+  public focusOrder(step: -1 | 1): void {
     const window = this.controller.currentWindow;
 
     /* if no current window, select the first tile. */
@@ -372,7 +372,7 @@ export class TilingEngine implements Engine {
   /**
    * Focus a neighbor at the given direction.
    */
-  public focusDir(dir: Direction) {
+  public focusDir(dir: Direction): void {
     const window = this.controller.currentWindow;
 
     /* if no current window, select the first tile. */
@@ -395,7 +395,7 @@ export class TilingEngine implements Engine {
   /**
    * Swap the position of the current window with the next or previous window.
    */
-  public swapOrder(window: Window, step: -1 | 1) {
+  public swapOrder(window: Window, step: -1 | 1): void {
     const srf = window.surface;
     const visibles = this.windows.getVisibleWindows(srf);
     if (visibles.length < 2) return;
@@ -410,7 +410,7 @@ export class TilingEngine implements Engine {
   /**
    * Swap the position of the current window with a neighbor at the given direction.
    */
-  public swapDirection(dir: Direction) {
+  public swapDirection(dir: Direction): void {
     const window = this.controller.currentWindow;
     if (window === null) {
       /* if no current window, select the first tile. */
@@ -432,7 +432,7 @@ export class TilingEngine implements Engine {
    * @param window a floating window
    * @param dir which direction
    */
-  public moveFloat(window: Window, dir: Direction) {
+  public moveFloat(window: Window, dir: Direction): void {
     const srf = window.surface;
 
     // TODO: configurable step size?
@@ -462,7 +462,7 @@ export class TilingEngine implements Engine {
     window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
   }
 
-  public swapDirOrMoveFloat(dir: Direction) {
+  public swapDirOrMoveFloat(dir: Direction): void {
     const window = this.controller.currentWindow;
     if (!window) return;
 
@@ -474,7 +474,7 @@ export class TilingEngine implements Engine {
   /**
    * Toggle float mode of window.
    */
-  public toggleFloat(window: Window) {
+  public toggleFloat(window: Window): void {
     window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
   }
 
@@ -485,7 +485,7 @@ export class TilingEngine implements Engine {
    * windows: windows will be tiled if more than half are floating, and will
    * be floated otherwise.
    */
-  public floatAll(srf: DriverSurface) {
+  public floatAll(srf: DriverSurface): void {
     const windows = this.windows.getVisibleWindows(srf);
     const numFloats = windows.reduce<number>((count, window) => {
       return window.state === WindowState.Floating ? count + 1 : count;
@@ -513,14 +513,14 @@ export class TilingEngine implements Engine {
    * Some layouts depend on this assumption, and will make such windows more
    * visible than others.
    */
-  public setMaster(window: Window) {
+  public setMaster(window: Window): void {
     this.windows.setMaster(window);
   }
 
   /**
    * Change the layout of the current surface to the next.
    */
-  public cycleLayout(step: 1 | -1) {
+  public cycleLayout(step: 1 | -1): void {
     const layout = this.layouts.cycleLayout(
       this.controller.currentSurface,
       step
@@ -533,7 +533,7 @@ export class TilingEngine implements Engine {
   /**
    * Set the layout of the current surface to the specified layout.
    */
-  public setLayout(layoutClassID: string) {
+  public setLayout(layoutClassID: string): void {
     const layout = this.layouts.setLayout(
       this.controller.currentSurface,
       layoutClassID
@@ -586,19 +586,19 @@ export class TilingEngine implements Engine {
       .getVisibleTiles(this.controller.currentSurface)
       .filter(
         vertical
-          ? (tile) => tile.geometry.y * sign > basis.geometry.y * sign
-          : (tile) => tile.geometry.x * sign > basis.geometry.x * sign
+          ? (tile): boolean => tile.geometry.y * sign > basis.geometry.y * sign
+          : (tile): boolean => tile.geometry.x * sign > basis.geometry.x * sign
       )
       .filter(
         vertical
-          ? (tile) =>
+          ? (tile): boolean =>
               overlap(
                 basis.geometry.x,
                 basis.geometry.maxX,
                 tile.geometry.x,
                 tile.geometry.maxX
               )
-          : (tile) =>
+          : (tile): boolean =>
               overlap(
                 basis.geometry.y,
                 basis.geometry.maxY,
@@ -620,8 +620,8 @@ export class TilingEngine implements Engine {
 
     const closest = candidates.filter(
       vertical
-        ? (tile) => tile.geometry.y === min
-        : (tile) => tile.geometry.x === min
+        ? (tile): boolean => tile.geometry.y === min
+        : (tile): boolean => tile.geometry.x === min
     );
 
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];

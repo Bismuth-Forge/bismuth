@@ -47,13 +47,13 @@ export default class KWinMousePoller {
     });
   }
 
-  public start() {
+  public start(): void {
     this.startCount += 1;
     if (this.config.pollMouseXdotool)
       this.qml.mousePoller.connectSource(KWinMousePoller.COMMAND);
   }
 
-  public stop() {
+  public stop(): void {
     this.startCount = Math.max(this.startCount - 1, 0);
   }
 

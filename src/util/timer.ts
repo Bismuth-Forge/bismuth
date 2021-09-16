@@ -22,7 +22,7 @@ export class TimersPool {
    * Get an instance of timer pool.
    * @param scriptRoot where to create QML Timers. Cannot be ommited in the first call.
    */
-  public static instance(scriptRoot?: object, debug?: Debug) {
+  public static instance(scriptRoot?: object, debug?: Debug): TimersPool {
     if (scriptRoot && debug) {
       if (TimersPool._instance) {
         return TimersPool._instance;
@@ -63,7 +63,7 @@ export class TimersPool {
     this.numTimers = 0;
   }
 
-  public setTimeout(func: () => void, timeout: number) {
+  public setTimeout(func: () => void, timeout: number): void {
     if (this.timers.length === 0) {
       this.numTimers++;
       this.debug.debugObj(() => [
@@ -76,7 +76,7 @@ export class TimersPool {
       this.timers.pop() ||
       Qt.createQmlObject("import QtQuick 2.0; Timer {}", this.scriptRoot);
 
-    const callback = () => {
+    const callback = (): void => {
       try {
         timer.triggered.disconnect(callback);
       } catch (e) {
@@ -100,6 +100,6 @@ export class TimersPool {
 /**
  * setTimeout from standard JS, but for Qt JS Runtime
  */
-export default function qmlSetTimeout(func: () => void, timeout: number) {
+export default function qmlSetTimeout(func: () => void, timeout: number): void {
   TimersPool.instance().setTimeout(func, timeout);
 }

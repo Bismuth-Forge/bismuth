@@ -67,7 +67,7 @@ export class TilingController implements Controller {
   /**
    * Entry point: start tiling window management
    */
-  public start() {
+  public start(): void {
     console.log("Let's get down to bismuth!");
 
     this.debug.debug(() => "Config: " + this.config);
@@ -239,11 +239,11 @@ export class TilingController implements Controller {
     }
   }
 
-  public onWindowFocused(window: Window) {
+  public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(input: Shortcut, data?: any) {
+  public onShortcut(input: Shortcut, data?: any): void {
     if (this.config.directionalKeyMode === "focus") {
       switch (input) {
         case Shortcut.Up:

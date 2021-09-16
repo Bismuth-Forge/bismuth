@@ -14,7 +14,7 @@ export default class WindowStore {
     this.list = windows || [];
   }
 
-  public move(srcWin: Window, destWin: Window, after?: boolean) {
+  public move(srcWin: Window, destWin: Window, after?: boolean): void {
     const srcIdx = this.list.indexOf(srcWin);
     const destIdx = this.list.indexOf(destWin);
     if (srcIdx === -1 || destIdx === -1) return;
@@ -23,14 +23,14 @@ export default class WindowStore {
     this.list.splice(after ? destIdx + 1 : destIdx, 0, srcWin);
   }
 
-  public setMaster(window: Window) {
+  public setMaster(window: Window): void {
     const idx = this.list.indexOf(window);
     if (idx === -1) return;
     this.list.splice(idx, 1);
     this.list.splice(0, 0, window);
   }
 
-  public swap(alpha: Window, beta: Window) {
+  public swap(alpha: Window, beta: Window): void {
     const alphaIndex = this.list.indexOf(alpha);
     const betaIndex = this.list.indexOf(beta);
     if (alphaIndex < 0 || betaIndex < 0) return;
@@ -45,24 +45,24 @@ export default class WindowStore {
     return this.list.length;
   }
 
-  public at(idx: number) {
+  public at(idx: number): Window {
     return this.list[idx];
   }
 
-  public indexOf(window: Window) {
+  public indexOf(window: Window): number {
     return this.list.indexOf(window);
   }
 
-  public push(window: Window) {
+  public push(window: Window): void {
     this.list.push(window);
   }
 
-  public remove(window: Window) {
+  public remove(window: Window): void {
     const idx = this.list.indexOf(window);
     if (idx >= 0) this.list.splice(idx, 1);
   }
 
-  public unshift(window: Window) {
+  public unshift(window: Window): void {
     this.list.unshift(window);
   }
   //#endregion

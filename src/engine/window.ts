@@ -207,7 +207,7 @@ export default class Window {
    * This method is a quick hack created for engine#resizeFloat, thus should
    * not be used in other places.
    */
-  public forceSetGeometry(geometry: Rect) {
+  public forceSetGeometry(geometry: Rect): void {
     this.window.commit(geometry);
   }
 

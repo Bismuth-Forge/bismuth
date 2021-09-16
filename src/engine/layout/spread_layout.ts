@@ -57,7 +57,7 @@ export default class SpreadLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(_engine: Engine, input: Shortcut) {
+  public handleShortcut(_engine: Engine, input: Shortcut): boolean {
     switch (input) {
       case Shortcut.Decrease:
         // TODO: define arbitrary constants

@@ -54,7 +54,7 @@ export default class CascadeLayout implements WindowsLayout {
 
   public readonly classID = CascadeLayout.id;
 
-  public get description() {
+  public get description(): string {
     return "Cascade [" + CascadeDirection[this.dir] + "]";
   }
 
