@@ -208,15 +208,15 @@ export default class LayoutUtils {
    * Calculates the weights of all parts, splitting a line.
    */
   public static calculateWeights(parts: Array<[number, number]>): number[] {
-    const totalLength = parts.reduce((acc, [base, length]) => acc + length, 0);
-    return parts.map(([base, length]) => length / totalLength);
+    const totalLength = parts.reduce((acc, [_base, length]) => acc + length, 0);
+    return parts.map(([_base, length]) => length / totalLength);
   }
 
   /**
    * Calculates the weights of all parts, splitting an area.
    */
   public static calculateAreaWeights(
-    area: Rect,
+    _area: Rect,
     geometries: Rect[],
     gap?: number,
     horizontal?: boolean
@@ -224,7 +224,7 @@ export default class LayoutUtils {
     gap = gap !== undefined ? gap : 0;
     horizontal = horizontal !== undefined ? horizontal : false;
 
-    const line = horizontal ? area.width : area.height;
+    // const line = horizontal ? area.width : area.height;
     const parts: Array<[number, number]> = horizontal
       ? geometries.map((geometry) => [geometry.x, geometry.width])
       : geometries.map((geometry) => [geometry.y, geometry.height]);

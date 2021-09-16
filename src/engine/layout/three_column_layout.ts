@@ -190,7 +190,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(engine: Engine, input: Shortcut, data?: any): boolean {
+  public handleShortcut(engine: Engine, input: Shortcut, _data?: any): boolean {
     switch (input) {
       case Shortcut.Increase:
         this.resizeMaster(engine, +1);
