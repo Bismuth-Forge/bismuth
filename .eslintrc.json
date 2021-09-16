@@ -32,7 +32,6 @@
       }
     ],
     "@typescript-eslint/prefer-for-of": "off",
-    "one-var": "error",
     "max-classes-per-file": "off",
     "no-cond-assign": "error"
   }
