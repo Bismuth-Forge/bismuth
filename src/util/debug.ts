@@ -17,7 +17,7 @@ export default class Debug {
   public debug(f: () => any): void {
     if (this.enabled) {
       const timestamp = (new Date().getTime() - this.started) / 1000;
-      console.log("[" + timestamp + "]", f()); // tslint:disable-line:no-console
+      console.log(`[${timestamp}]`, f());
     }
   }
 
@@ -28,7 +28,7 @@ export default class Debug {
       const buf = [];
       for (const i in obj) buf.push(i + "=" + obj[i]);
 
-      console.log("[" + timestamp + "]", name + ": " + buf.join(" ")); // tslint:disable-line:no-console
+      console.log(`[${timestamp}]`, `${name}: ${buf.join(" ")}`);
     }
   }
 }

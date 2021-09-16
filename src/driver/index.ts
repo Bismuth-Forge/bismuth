@@ -173,7 +173,7 @@ export class KWinDriver implements DriverContext {
    */
   public bindEvents(): void {
     const onNumberScreensChanged = (count: number): void => {
-      this.controller.onSurfaceUpdate("screens=" + count);
+      this.controller.onSurfaceUpdate(`screens=${count}`);
     };
 
     const onScreenResized = (screen: number): void => {
@@ -250,7 +250,7 @@ export class KWinDriver implements DriverContext {
     ): void => {
       this.controller.onWindowChanged(
         this.windowMap.get(client),
-        "fullscreen=" + fullScreen + " user=" + user
+        `fullscreen=${fullScreen} user=${user}`
       );
     };
 
@@ -483,7 +483,7 @@ export class KWinDriver implements DriverContext {
     });
 
     this.connect(client.screenChanged, () =>
-      this.controller.onWindowChanged(window, "screen=" + client.screen)
+      this.controller.onWindowChanged(window, `screen=${client.screen}`)
     );
 
     this.connect(client.activitiesChanged, () =>
@@ -494,7 +494,7 @@ export class KWinDriver implements DriverContext {
     );
 
     this.connect(client.desktopChanged, () =>
-      this.controller.onWindowChanged(window, "desktop=" + client.desktop)
+      this.controller.onWindowChanged(window, `desktop=${client.desktop}`)
     );
   }
 

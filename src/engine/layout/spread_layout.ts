@@ -74,6 +74,6 @@ export default class SpreadLayout implements WindowsLayout {
   }
 
   public toString(): string {
-    return "SpreadLayout(" + this.space + ")";
+    return `SpreadLayout(${this.space})`;
   }
 }

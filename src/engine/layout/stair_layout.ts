@@ -71,6 +71,6 @@ export default class StairLayout implements WindowsLayout {
   }
 
   public toString(): string {
-    return "StairLayout(" + this.space + ")";
+    return `StairLayout(${this.space})`;
   }
 }

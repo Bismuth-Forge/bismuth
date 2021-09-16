@@ -27,7 +27,7 @@ export interface DriverWindow {
 
 export class KWinWindow implements DriverWindow {
   public static generateID(client: KWin.Client): string {
-    return String(client) + "/" + client.windowId;
+    return `${String(client)}/${client.windowId}`;
   }
 
   public readonly client: KWin.Client;
@@ -188,14 +188,10 @@ export class KWinWindow implements DriverWindow {
   }
 
   public toString(): string {
-    /* using a shorthand name to keep debug message tidy */
-    return (
-      "KWin(" +
-      this.client.windowId.toString(16) +
-      "." +
-      this.client.resourceClass +
-      ")"
-    );
+    // Using a shorthand name to keep debug message tidy
+    return `KWin(${this.client.windowId.toString(16)}.${
+      this.client.resourceClass
+    })`;
   }
 
   public visible(srf: DriverSurface): boolean {

@@ -29,15 +29,6 @@ export default class RectDelta {
   ) {}
 
   public toString(): string {
-    return (
-      "WindowResizeDelta(" +
-      [
-        "east=" + this.east,
-        "west=" + this.west,
-        "north=" + this.north,
-        "south=" + this.south,
-      ].join(" ") +
-      ")"
-    );
+    return `WindowResizeDelta(east=${this.east} west=${this.west} north=${this.north} south=${this.south}}`;
   }
 }
