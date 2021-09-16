@@ -25,7 +25,7 @@ export default class KWinMousePoller {
   private qml: Bismuth.Qml.Main;
   private config: Config;
 
-  constructor(qml: Bismuth.Qml.Main, config: Config, debug: Debug) {
+  constructor(qml: Bismuth.Qml.Main, config: Config, _debug: Debug) {
     this.startCount = 0;
     this.cmdResult = null;
     this.qml = qml;
