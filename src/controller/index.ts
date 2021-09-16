@@ -70,7 +70,7 @@ export class TilingController implements Controller {
   public start(): void {
     console.log("Let's get down to bismuth!");
 
-    this.debug.debug(() => "Config: " + this.config);
+    this.debug.debug(() => `Config: ${this.config}`);
 
     this.driver.bindEvents();
     this.driver.bindShortcuts();

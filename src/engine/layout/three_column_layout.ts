@@ -26,7 +26,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
   public readonly classID = ThreeColumnLayout.id;
 
   public get description(): string {
-    return "Three-Column [" + this.masterSize + "]";
+    return `Three-Column [${this.masterSize}]`;
   }
 
   private masterRatio: number;
@@ -218,7 +218,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
   }
 
   public toString(): string {
-    return "ThreeColumnLayout(nmaster=" + this.masterSize + ")";
+    return `ThreeColumnLayout(nmaster=${this.masterSize})`;
   }
 
   private resizeMaster(engine: Engine, step: -1 | 1): void {

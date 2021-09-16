@@ -30,7 +30,7 @@ export default class TileLayout implements WindowsLayout {
   public readonly classID = TileLayout.id;
 
   public get description(): string {
-    return "Tile [" + this.numMaster + "]";
+    return `Tile [${this.numMaster}]`;
   }
 
   private parts: RotateLayoutPart<
@@ -134,12 +134,6 @@ export default class TileLayout implements WindowsLayout {
   }
 
   public toString(): string {
-    return (
-      "TileLayout(nmaster=" +
-      this.numMaster +
-      ", ratio=" +
-      this.masterRatio +
-      ")"
-    );
+    return `TileLayout(nmaster=${this.numMaster}, ratio=${this.masterRatio})`;
   }
 }
