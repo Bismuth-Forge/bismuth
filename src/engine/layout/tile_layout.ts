@@ -72,7 +72,12 @@ export default class TileLayout implements WindowsLayout {
         this.config.tileLayoutGap;
   }
 
-  public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
+  public adjust(
+    area: Rect,
+    tiles: Window[],
+    basis: Window,
+    delta: RectDelta
+  ): void {
     this.parts.adjust(area, tiles, basis, delta);
   }
 
@@ -91,7 +96,7 @@ export default class TileLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(engine: Engine, input: Shortcut) {
+  public handleShortcut(engine: Engine, input: Shortcut): boolean {
     switch (input) {
       case Shortcut.Left:
         this.masterRatio = clip(

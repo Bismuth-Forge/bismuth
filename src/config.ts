@@ -153,7 +153,8 @@ export class ConfigImpl implements Config {
       if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
         this.layoutOrder.push(layoutClass.id);
       // TODO: Refactor this: config should not create factories. It is not its responsibility
-      this.layoutFactories[layoutClass.id] = () => new layoutClass(this);
+      this.layoutFactories[layoutClass.id] = (): WindowsLayout =>
+        new layoutClass(this);
     });
 
     this.maximizeSoleTile = this.kwinApi.KWin.readConfig(

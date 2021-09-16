@@ -21,7 +21,7 @@ export class KWinSurface implements DriverSurface {
     activity: string,
     desktop: number,
     config: Config
-  ) {
+  ): string {
     let path = String(screen);
     if (config.layoutPerActivity) path += "@" + activity;
     if (config.layoutPerDesktop) path += "#" + desktop;

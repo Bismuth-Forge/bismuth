@@ -172,11 +172,11 @@ export class KWinDriver implements DriverContext {
    * Bind script to the various KWin events
    */
   public bindEvents(): void {
-    const onNumberScreensChanged = (count: number) => {
+    const onNumberScreensChanged = (count: number): void => {
       this.controller.onSurfaceUpdate("screens=" + count);
     };
 
-    const onScreenResized = (screen: number) => {
+    const onScreenResized = (screen: number): void => {
       const srf = new KWinSurface(
         screen,
         this.kwinApi.workspace.currentActivity,
@@ -188,18 +188,18 @@ export class KWinDriver implements DriverContext {
       this.controller.onSurfaceUpdate("resized " + srf.toString());
     };
 
-    const onCurrentActivityChanged = (_activity: string) => {
+    const onCurrentActivityChanged = (_activity: string): void => {
       this.controller.onCurrentSurfaceChanged();
     };
 
     const onCurrentDesktopChanged = (
       _desktop: number,
       _client: KWin.Client
-    ) => {
+    ): void => {
       this.controller.onCurrentSurfaceChanged();
     };
 
-    const onClientAdded = (client: KWin.Client) => {
+    const onClientAdded = (client: KWin.Client): void => {
       // NOTE: windowShown can be fired in various situations.
       // We need only the first one - when window is created.
       let handled = false;
@@ -222,7 +222,7 @@ export class KWinDriver implements DriverContext {
       qmlSetTimeout(handler, 50);
     };
 
-    const onClientRemoved = (client: KWin.Client) => {
+    const onClientRemoved = (client: KWin.Client): void => {
       const window = this.windowMap.get(client);
       if (window) {
         this.controller.onWindowRemoved(window);
@@ -234,7 +234,7 @@ export class KWinDriver implements DriverContext {
       client: KWin.Client,
       h: boolean,
       v: boolean
-    ) => {
+    ): void => {
       const maximized = h === true && v === true;
       const window = this.windowMap.get(client);
       if (window) {
@@ -247,14 +247,14 @@ export class KWinDriver implements DriverContext {
       client: KWin.Client,
       fullScreen: boolean,
       user: boolean
-    ) => {
+    ): void => {
       this.controller.onWindowChanged(
         this.windowMap.get(client),
         "fullscreen=" + fullScreen + " user=" + user
       );
     };
 
-    const onClientMinimized = (client: KWin.Client) => {
+    const onClientMinimized = (client: KWin.Client): void => {
       if (this.config.preventMinimize) {
         client.minimized = false;
         this.kwinApi.workspace.activeClient = client;
@@ -265,7 +265,7 @@ export class KWinDriver implements DriverContext {
         );
     };
 
-    const onClientUnminimized = (client: KWin.Client) =>
+    const onClientUnminimized = (client: KWin.Client): void =>
       this.controller.onWindowChanged(
         this.windowMap.get(client),
         "unminimized"
@@ -322,7 +322,7 @@ export class KWinDriver implements DriverContext {
    * Manage window with the particular KWin clientship
    * @param client window client object specified by KWin
    */
-  private manageWindow(client: KWin.Client) {
+  private manageWindow(client: KWin.Client): void {
     // Add window to our window map
     const window = this.windowMap.add(client);
 
@@ -336,12 +336,12 @@ export class KWinDriver implements DriverContext {
     this.controller.manageWindow(window);
   }
 
-  public showNotification(text: string) {
+  public showNotification(text: string): void {
     this.qml.popupDialog.show(text);
   }
 
-  private bindMainShortcuts() {
-    const bind = (seq: string, title: string, input: Shortcut) => {
+  private bindMainShortcuts(): void {
+    const bind = (seq: string, title: string, input: Shortcut): void => {
       title = "Bismuth: " + title;
       seq = "Meta+" + seq;
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
@@ -379,12 +379,12 @@ export class KWinDriver implements DriverContext {
     bind("Return", "Set master", Shortcut.SetMaster);
   }
 
-  private bindLayoutShortcuts() {
+  private bindLayoutShortcuts(): void {
     const bind = (
       seq: string,
       title: string,
       layoutClass: WindowsLayoutClass
-    ) => {
+    ): void => {
       title = "Bismuth: " + title + " Layout";
       seq = seq !== "" ? "Meta+" + seq : "";
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
@@ -408,7 +408,7 @@ export class KWinDriver implements DriverContext {
    * prevention and auto-disconnect on termination.
    */
   private connect(signal: QSignal, handler: (..._: any[]) => void): () => void {
-    const wrapper = (...args: any[]) => {
+    const wrapper = (...args: any[]): void => {
       /* HACK: `workspace` become undefined when the script is disabled. */
       if (typeof this.kwinApi.workspace === "undefined")
         signal.disconnect(wrapper);
@@ -443,7 +443,7 @@ export class KWinDriver implements DriverContext {
     }
   }
 
-  private bindWindowEvents(window: Window, client: KWin.Client) {
+  private bindWindowEvents(window: Window, client: KWin.Client): void {
     let moving = false;
     let resizing = false;
 

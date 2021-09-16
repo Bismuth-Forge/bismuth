@@ -26,7 +26,7 @@ export interface DriverWindow {
 }
 
 export class KWinWindow implements DriverWindow {
-  public static generateID(client: KWin.Client) {
+  public static generateID(client: KWin.Client): string {
     return String(client) + "/" + client.windowId;
   }
 
