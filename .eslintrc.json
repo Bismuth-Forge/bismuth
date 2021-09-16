@@ -23,6 +23,7 @@
   ],
   "rules": {
     "curly": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
