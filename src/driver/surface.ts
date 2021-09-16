@@ -23,8 +23,12 @@ export class KWinSurface implements DriverSurface {
     config: Config
   ): string {
     let path = String(screen);
-    if (config.layoutPerActivity) path += "@" + activity;
-    if (config.layoutPerDesktop) path += "#" + desktop;
+    if (config.layoutPerActivity) {
+      path += "@" + activity;
+    }
+    if (config.layoutPerDesktop) {
+      path += "#" + desktop;
+    }
     return path;
   }
 
@@ -71,10 +75,11 @@ export class KWinSurface implements DriverSurface {
   }
 
   public next(): DriverSurface | null {
-    if (this.desktop === this.kwinApi.workspace.desktops)
+    if (this.desktop === this.kwinApi.workspace.desktops) {
       /* this is the last virtual desktop */
       /* TODO: option to create additional desktop */
       return null;
+    }
 
     return new KWinSurface(
       this.screen,

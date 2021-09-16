@@ -17,7 +17,9 @@ export default class WindowStore {
   public move(srcWin: Window, destWin: Window, after?: boolean): void {
     const srcIdx = this.list.indexOf(srcWin);
     const destIdx = this.list.indexOf(destWin);
-    if (srcIdx === -1 || destIdx === -1) return;
+    if (srcIdx === -1 || destIdx === -1) {
+      return;
+    }
 
     this.list.splice(srcIdx, 1);
     this.list.splice(after ? destIdx + 1 : destIdx, 0, srcWin);
@@ -25,7 +27,9 @@ export default class WindowStore {
 
   public setMaster(window: Window): void {
     const idx = this.list.indexOf(window);
-    if (idx === -1) return;
+    if (idx === -1) {
+      return;
+    }
     this.list.splice(idx, 1);
     this.list.splice(0, 0, window);
   }
@@ -33,7 +37,9 @@ export default class WindowStore {
   public swap(alpha: Window, beta: Window): void {
     const alphaIndex = this.list.indexOf(alpha);
     const betaIndex = this.list.indexOf(beta);
-    if (alphaIndex < 0 || betaIndex < 0) return;
+    if (alphaIndex < 0 || betaIndex < 0) {
+      return;
+    }
 
     this.list[alphaIndex] = beta;
     this.list[betaIndex] = alpha;
@@ -59,7 +65,9 @@ export default class WindowStore {
 
   public remove(window: Window): void {
     const idx = this.list.indexOf(window);
-    if (idx >= 0) this.list.splice(idx, 1);
+    if (idx >= 0) {
+      this.list.splice(idx, 1);
+    }
   }
 
   public unshift(window: Window): void {

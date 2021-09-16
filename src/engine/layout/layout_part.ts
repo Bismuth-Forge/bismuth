@@ -79,7 +79,9 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
     delta: RectDelta
   ): RectDelta {
     const basisIndex = tiles.indexOf(basis);
-    if (basisIndex < 0) return delta;
+    if (basisIndex < 0) {
+      return delta;
+    }
 
     if (tiles.length <= this.primarySize) {
       /* primary only */
@@ -117,7 +119,9 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
         delta,
         this.horizontal
       );
-      if (this.reversed) this.ratio = 1 - this.ratio;
+      if (this.reversed) {
+        this.ratio = 1 - this.ratio;
+      }
 
       switch (this.angle * 10 + targetIndex + 1) {
         case 1: /*   0, Primary */
@@ -295,8 +299,11 @@ export class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
   public rotate(amount: -90 | 90): void {
     // -90 | 0 | 90 | 180 | 270 | 360
     let angle = this.angle + amount;
-    if (angle < 0) angle = 270;
-    else if (angle >= 360) angle = 0;
+    if (angle < 0) {
+      angle = 270;
+    } else if (angle >= 360) {
+      angle = 0;
+    }
 
     this.angle = angle as 0 | 90 | 180 | 270;
   }

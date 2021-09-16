@@ -219,8 +219,11 @@ export class TilingEngine implements Engine {
     step: -1 | 1
   ): void {
     const state = window.state;
-    if (Window.isFloatingState(state)) this.resizeFloat(window, dir, step);
-    else if (Window.isTiledState(state)) this.resizeTile(window, dir, step);
+    if (Window.isFloatingState(state)) {
+      this.resizeFloat(window, dir, step);
+    } else if (Window.isTiledState(state)) {
+      this.resizeTile(window, dir, step);
+    }
   }
 
   /**
@@ -306,10 +309,13 @@ export class TilingEngine implements Engine {
    * move/resize such windows back to where/how they should be.
    */
   public enforceSize(window: Window) {
-    if (window.tiled && !window.actualGeometry.equals(window.geometry))
+    if (window.tiled && !window.actualGeometry.equals(window.geometry)) {
       qmlSetTimeout(() => {
-        if (window.tiled) window.commit();
+        if (window.tiled) {
+          window.commit();
+        }
       }, 10);
+    }
   }
 
   /**
@@ -319,8 +325,11 @@ export class TilingEngine implements Engine {
     if (!window.shouldIgnore) {
       /* engine#arrange will update the state when required. */
       window.state = WindowState.Undecided;
-      if (this.config.newWindowAsMaster) this.windows.unshift(window);
-      else this.windows.push(window);
+      if (this.config.newWindowAsMaster) {
+        this.windows.unshift(window);
+      } else {
+        this.windows.push(window);
+      }
     }
   }
 
@@ -398,7 +407,9 @@ export class TilingEngine implements Engine {
   public swapOrder(window: Window, step: -1 | 1): void {
     const srf = window.surface;
     const visibles = this.windows.getVisibleWindows(srf);
-    if (visibles.length < 2) return;
+    if (visibles.length < 2) {
+      return;
+    }
 
     const vsrc = visibles.indexOf(window);
     const vdst = wrapIndex(vsrc + step, visibles.length);
@@ -424,7 +435,9 @@ export class TilingEngine implements Engine {
     }
 
     const neighbor = this.getNeighborByDirection(window, dir);
-    if (neighbor) this.windows.swap(window, neighbor);
+    if (neighbor) {
+      this.windows.swap(window, neighbor);
+    }
   }
 
   /**
@@ -464,11 +477,16 @@ export class TilingEngine implements Engine {
 
   public swapDirOrMoveFloat(dir: Direction): void {
     const window = this.controller.currentWindow;
-    if (!window) return;
+    if (!window) {
+      return;
+    }
 
     const state = window.state;
-    if (Window.isFloatingState(state)) this.moveFloat(window, dir);
-    else if (Window.isTiledState(state)) this.swapDirection(dir);
+    if (Window.isFloatingState(state)) {
+      this.moveFloat(window, dir);
+    } else if (Window.isTiledState(state)) {
+      this.swapDirection(dir);
+    }
   }
 
   /**
@@ -606,7 +624,9 @@ export class TilingEngine implements Engine {
                 tile.geometry.maxY
               )
       );
-    if (candidates.length === 0) return null;
+    if (candidates.length === 0) {
+      return null;
+    }
 
     const min =
       sign *

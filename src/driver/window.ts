@@ -73,14 +73,16 @@ export class KWinWindow implements DriverWindow {
 
   public get surface(): DriverSurface {
     let activity;
-    if (this.client.activities.length === 0)
+    if (this.client.activities.length === 0) {
       activity = this.kwinApi.workspace.currentActivity;
-    else if (
+    } else if (
       this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >=
       0
-    )
+    ) {
       activity = this.kwinApi.workspace.currentActivity;
-    else activity = this.client.activities[0];
+    } else {
+      activity = this.client.activities[0];
+    }
 
     const desktop =
       this.client.desktop >= 0
@@ -102,8 +104,9 @@ export class KWinWindow implements DriverWindow {
 
     // TODO: setting activity?
     // TODO: setting screen = move to the screen
-    if (this.client.desktop !== ksrf.desktop)
+    if (this.client.desktop !== ksrf.desktop) {
       this.client.desktop = ksrf.desktop;
+    }
   }
 
   private noBorderManaged: boolean;
@@ -141,29 +144,35 @@ export class KWinWindow implements DriverWindow {
       { geometry, noBorder, keepAbove },
     ]);
 
-    if (this.client.move || this.client.resize) return;
+    if (this.client.move || this.client.resize) {
+      return;
+    }
 
     if (noBorder !== undefined) {
-      if (!this.noBorderManaged && noBorder)
+      if (!this.noBorderManaged && noBorder) {
         /* Backup border state when transitioning from unmanaged to managed */
         this.noBorderOriginal = this.client.noBorder;
-      else if (this.noBorderManaged && !this.client.noBorder)
+      } else if (this.noBorderManaged && !this.client.noBorder) {
         /* If border is enabled while in managed mode, remember it.
          * Note that there's no way to know if border is re-disabled in managed mode. */
         this.noBorderOriginal = false;
+      }
 
-      if (noBorder)
+      if (noBorder) {
         /* (Re)entering managed mode: remove border. */
         this.client.noBorder = true;
-      else if (this.noBorderManaged)
+      } else if (this.noBorderManaged) {
         /* Exiting managed mode: restore original value. */
         this.client.noBorder = this.noBorderOriginal;
+      }
 
       /* update mode */
       this.noBorderManaged = noBorder;
     }
 
-    if (keepAbove !== undefined) this.client.keepAbove = keepAbove;
+    if (keepAbove !== undefined) {
+      this.client.keepAbove = keepAbove;
+    }
 
     if (geometry !== undefined) {
       geometry = this.adjustGeometry(geometry);
@@ -224,9 +233,10 @@ export class KWinWindow implements DriverWindow {
           this.client.basicUnit.width === 1 &&
           this.client.basicUnit.height === 1
         )
-      )
+      ) {
         /* NOT free-size */
         [width, height] = this.applyResizeIncrement(geometry);
+      }
 
       /* respect min/max size limit */
       width = clip(width, this.client.minSize.width, this.client.maxSize.width);

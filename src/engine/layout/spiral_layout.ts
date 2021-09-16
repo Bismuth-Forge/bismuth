@@ -66,7 +66,9 @@ export default class SpiralLayout implements WindowsLayout {
   }
 
   private bore(depth: number): void {
-    if (this.depth >= depth) return;
+    if (this.depth >= depth) {
+      return;
+    }
 
     let hpart = this.parts;
     let i;

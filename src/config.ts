@@ -73,10 +73,12 @@ export default interface Config {
   debugEnabled: boolean;
 }
 
+type LayoutFactories = { [key: string]: () => WindowsLayout };
+
 export class ConfigImpl implements Config {
   //#region Layout
   public layoutOrder: string[];
-  public layoutFactories: { [key: string]: () => WindowsLayout };
+  public layoutFactories: LayoutFactories;
   public maximizeSoleTile: boolean;
   public monocleMaximize: boolean;
   public monocleMinimizeRest: boolean; // KWin-specific
@@ -130,7 +132,9 @@ export class ConfigImpl implements Config {
 
   constructor(kwinApi: KWin.Api) {
     function commaSeparate(str: string): string[] {
-      if (!str || typeof str !== "string") return [];
+      if (!str || typeof str !== "string") {
+        return [];
+      }
       return str.split(",").map((part) => part.trim());
     }
 
@@ -138,6 +142,7 @@ export class ConfigImpl implements Config {
 
     this.debugEnabled = this.kwinApi.KWin.readConfig("debug", false);
 
+    // TODO: Refactor this: config should not create factories. It is not its responsibility
     this.layoutOrder = [];
     this.layoutFactories = {};
     (
@@ -153,9 +158,12 @@ export class ConfigImpl implements Config {
         ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
       ] as Array<[string, boolean, WindowsLayoutClass]>
     ).forEach(([configKey, defaultValue, layoutClass]) => {
+      // For some reason if we put the curly brackets here script breaks
+      // This will be dealt with, when this facility will be refactored out
       if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
+        // eslint-disable-next-line curly
         this.layoutOrder.push(layoutClass.id);
-      // TODO: Refactor this: config should not create factories. It is not its responsibility
+
       this.layoutFactories[layoutClass.id] = (): WindowsLayout =>
         new layoutClass(this);
     });
@@ -182,11 +190,12 @@ export class ConfigImpl implements Config {
     this.noTileBorder = this.kwinApi.KWin.readConfig("noTileBorder", false);
 
     this.limitTileWidthRatio = 0;
-    if (this.kwinApi.KWin.readConfig("limitTileWidth", false))
+    if (this.kwinApi.KWin.readConfig("limitTileWidth", false)) {
       this.limitTileWidthRatio = this.kwinApi.KWin.readConfig(
         "limitTileWidthRatio",
         1.6
       );
+    }
 
     this.screenGapBottom = this.kwinApi.KWin.readConfig("screenGapBottom", 0);
     this.screenGapLeft = this.kwinApi.KWin.readConfig("screenGapLeft", 0);
