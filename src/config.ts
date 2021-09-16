@@ -198,10 +198,10 @@ export class ConfigImpl implements Config {
       "directionalKeyDwm",
       true
     );
-    const directionalKeyFocus = this.kwinApi.KWin.readConfig(
-      "directionalKeyFocus",
-      false
-    );
+    // const directionalKeyFocus = this.kwinApi.KWin.readConfig(
+    //   "directionalKeyFocus",
+    //   false
+    // );
     this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
     this.newWindowAsMaster = this.kwinApi.KWin.readConfig(
       "newWindowAsMaster",
