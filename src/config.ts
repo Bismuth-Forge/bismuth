@@ -3,6 +3,9 @@
 //
 // SPDX-License-Identifier: MIT
 
+// Multi-line commenting style is mandatory here :)
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import MonocleLayout from "./engine/layout/monocle_layout";
 import TileLayout from "./engine/layout/tile_layout";
 import ThreeColumnLayout from "./engine/layout/three_column_layout";
