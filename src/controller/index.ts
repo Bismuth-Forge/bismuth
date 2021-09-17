@@ -15,41 +15,144 @@ import { DriverSurface } from "../driver/surface";
 import Config from "../config";
 import Debug from "../util/debug";
 
+/**
+ * Entry point of the script (apart from QML). Handles the user input (shortcuts)
+ * and the events from the Driver (in other words KWin, the window manager/compositor).
+ * Provides interface for the Engine to ask Driver about particular properties of the user
+ * interface.
+ *
+ * Basically an adapter type controller from MVA pattern.
+ */
 export interface Controller {
+  /**
+   * A bunch of surfaces, that represent the user's screens.
+   */
   readonly screens: DriverSurface[];
+
+  /**
+   * Current cursor position.
+   */
   readonly cursorPosition: [number, number] | null;
 
+  /**
+   * Current active window. In other words the window, that has focus.
+   */
   currentWindow: Window | null;
+
+  /**
+   * Current screen. In other words the screen, that has focus.
+   */
   currentSurface: DriverSurface;
 
+  /**
+   * Show a popup notification in the center of the screen.
+   * @param text notification text
+   */
   showNotification(text: string): void;
 
+  /**
+   * React to screen focus change
+   */
   onCurrentSurfaceChanged(): void;
+
+  /**
+   * React to screen update. For example, when the new screen has connected.
+   * @param comment the metadata string about the details of what has changed
+   */
   onSurfaceUpdate(comment: string): void;
+
+  /**
+   * React to window geometry update
+   * @param window the window whose geometry has changed
+   */
   onWindowGeometryChanged(window: Window): void;
+
+  /**
+   * React to window resizing
+   * @param window the window which is resized
+   */
   onWindowResize(window: Window): void;
-  onWindowAdded(window: Window): void;
-  onWindowRemoved(window: Window): void;
-  onWindowMaximizeChanged(window: Window, maximized: boolean): void;
-  onWindowChanged(window: Window | null, comment?: string): void;
-  onWindowMoveStart(window: Window): void;
-  onWindowMoveOver(window: Window): void;
+
+  /**
+   * React to window resize operation start. The window
+   * resize operation is started, when the users drags
+   * the window with the mouse by the window edges.
+   * @param window the window which is being resized
+   */
   onWindowResizeStart(window: Window): void;
+
+  /**
+   * React to window resize operation end. The window
+   * resize operation ends, when the users drops
+   * the window.
+   * @param window the window which was dropped
+   */
   onWindowResizeOver(window: Window): void;
+
+  /**
+   * React to window addition
+   * @param window new added window
+   */
+  onWindowAdded(window: Window): void;
+
+  /**
+   * React to window removal
+   * @param window the window which was removed
+   */
+  onWindowRemoved(window: Window): void;
+
+  /**
+   * React to window maximization state change
+   * @param window the window whose maximization state changed
+   * @param maximized new maximization state
+   */
+  onWindowMaximizeChanged(window: Window, maximized: boolean): void;
+
+  // TODO: add docs
+  onWindowChanged(window: Window | null, comment?: string): void;
+
+  /**
+   * React to window being moved.
+   * @param window the window, which it being moved.
+   */
   onWindowMove(window: Window): void;
+
+  /**
+   * React to window move operation start. The move operation starts
+   * when the user starts dragging the window with the mouse with
+   * the mouse's button being pressed
+   * @param window the window which is being dragged
+   */
+  onWindowMoveStart(window: Window): void;
+
+  /**
+   * React to window move operation over. The move operation ends
+   * when the user stops dragging the window with the mouse with
+   * the mouse's button being released.
+   * @param window the window which was being dragged
+   */
+  onWindowMoveOver(window: Window): void;
+
+  /**
+   * React to the window gaining focus, attention and love it deserves ❤️
+   * @param window the window which received the focus
+   */
   onWindowFocused(window: Window): void;
 
+  /**
+   * React to a particular keyboard shortcut action from the user.
+   * @param input the shortcut action. For example focus the next window, or change the layout.
+   * @param data the action optional data, that it could held. For example the layout name to which user want to change.
+   */
   onShortcut(input: Shortcut, data?: any): void;
 
+  /**
+   * Ask engine to manage the window
+   * @param win the window which needs to be managed.
+   */
   manageWindow(win: Window): void;
 }
 
-/**
- * TilingController translates events to actions, implementing high-level
- * window management logic.
- *
- * In short, this class is just a bunch of event handling methods.
- */
 export class TilingController implements Controller {
   private engine: Engine;
   private driver: DriverContext;

@@ -33,6 +33,7 @@ describe("arrange", () => {
     engine.arrange();
 
     // Assert
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(engine.arrangeScreen).toBeCalledTimes(4);
   });
 });
