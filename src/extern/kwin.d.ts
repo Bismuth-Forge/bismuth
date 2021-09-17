@@ -9,6 +9,9 @@
 // TODO: Register the rest of the API and document it according to KWin documentation.
 // Maybe it is even possible to generate this API. If so, this could be upstreamed.
 declare namespace KWin {
+  /**
+   * Wrapper for all available KWin API from various places.
+   */
   interface Api {
     workspace: KWin.WorkspaceWrapper;
     options: KWin.Options;
@@ -16,13 +19,24 @@ declare namespace KWin {
   }
 
   interface KWin {
+    /**
+     * Represents KWin::Script::readConfig
+     */
     readConfig(key: string, defaultValue?: any): any;
+
+    /**
+     * Represents KWin::Script::registerShortcut
+     */
     registerShortcut(
       title: string,
       text: string,
       keySequence: string,
       callback: any
     ): boolean;
+
+    /**
+     * Enum value of ClientAreaOption enum in KWin::JSEngineGlobalMethodsWrapper
+     */
     PlacementArea: number;
   }
 
