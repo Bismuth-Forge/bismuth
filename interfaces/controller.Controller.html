@@ -68,6 +68,17 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Entry point of the script (apart from QML). Handles the user input (shortcuts)
+							and the events from the Driver (in other words KWin, the window manager/compositor).
+							Provides interface for the Engine to ask Driver about particular properties of the user
+						interface.</p>
+					</div>
+					<p>Basically an adapter type controller from MVA pattern.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -128,9 +139,14 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Surface<span class="tsd-signature-symbol">:</span> <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L23">controller/index.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L45">controller/index.ts:45</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Current screen. In other words the screen, that has focus.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="currentWindow" class="tsd-anchor"></a>
@@ -138,9 +154,14 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Window<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L22">controller/index.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L40">controller/index.ts:40</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Current active window. In other words the window, that has focus.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="cursorPosition" class="tsd-anchor"></a>
@@ -148,9 +169,14 @@
 					<div class="tsd-signature tsd-kind-icon">cursor<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L20">controller/index.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L35">controller/index.ts:35</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Current cursor position.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="screens" class="tsd-anchor"></a>
@@ -158,9 +184,14 @@
 					<div class="tsd-signature tsd-kind-icon">screens<span class="tsd-signature-symbol">:</span> <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L19">controller/index.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L30">controller/index.ts:30</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A bunch of surfaces, that represent the user&#39;s screens.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -175,13 +206,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L44">controller/index.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L153">controller/index.ts:153</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Ask engine to manage the window</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>win: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which needs to be managed.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -198,9 +237,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L27">controller/index.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L56">controller/index.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to screen focus change</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -215,16 +259,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L42">controller/index.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L147">controller/index.ts:147</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to a particular keyboard shortcut action from the user.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>input: <a href="../enums/controller_shortcut.Shortcut.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Shortcut</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the shortcut action. For example focus the next window, or change the layout.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the action optional data, that it could held. For example the layout name to which user want to change.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -241,13 +296,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L28">controller/index.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L62">controller/index.ts:62</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to screen update. For example, when the new screen has connected.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>comment: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the metadata string about the details of what has changed</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -264,13 +327,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L31">controller/index.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L96">controller/index.ts:96</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window addition</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>new added window</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -287,7 +358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L34">controller/index.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L112">controller/index.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -313,13 +384,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L40">controller/index.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L140">controller/index.ts:140</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to the window gaining focus, attention and love it deserves ❤️</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which received the focus</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -336,13 +415,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L29">controller/index.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L68">controller/index.ts:68</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window geometry update</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window whose geometry has changed</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -359,16 +446,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L33">controller/index.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L109">controller/index.ts:109</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window maximization state change</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window whose maximization state changed</p>
+									</div>
 								</li>
 								<li>
 									<h5>maximized: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>new maximization state</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -385,13 +483,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L39">controller/index.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L118">controller/index.ts:118</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window being moved.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window, which it being moved.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -408,13 +514,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L36">controller/index.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L134">controller/index.ts:134</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window move operation over. The move operation ends
+										when the user stops dragging the window with the mouse with
+									the mouse&#39;s button being released.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which was being dragged</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -431,13 +547,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L35">controller/index.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L126">controller/index.ts:126</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window move operation start. The move operation starts
+										when the user starts dragging the window with the mouse with
+									the mouse&#39;s button being pressed</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which is being dragged</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -454,13 +580,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L32">controller/index.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L102">controller/index.ts:102</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window removal</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which was removed</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -477,13 +611,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L30">controller/index.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L74">controller/index.ts:74</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window resizing</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which is resized</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -500,13 +642,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L38">controller/index.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L90">controller/index.ts:90</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window resize operation end. The window
+										resize operation ends, when the users drops
+									the window.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which was dropped</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -523,13 +675,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L37">controller/index.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L82">controller/index.ts:82</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>React to window resize operation start. The window
+										resize operation is started, when the users drags
+									the window with the mouse by the window edges.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../classes/engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the window which is being resized</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -546,13 +708,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/940140d/src/controller/index.ts#L25">controller/index.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/9710c66/src/controller/index.ts#L51">controller/index.ts:51</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Show a popup notification in the center of the screen.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>notification text</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
