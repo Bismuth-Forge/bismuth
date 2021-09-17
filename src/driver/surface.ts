@@ -24,10 +24,10 @@ export class KWinSurface implements DriverSurface {
   ): string {
     let path = String(screen);
     if (config.layoutPerActivity) {
-      path += "@" + activity;
+      path += `@${activity}`;
     }
     if (config.layoutPerDesktop) {
-      path += "#" + desktop;
+      path += `"#${desktop}`;
     }
     return path;
   }

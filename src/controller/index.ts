@@ -348,7 +348,7 @@ export class TilingController implements Controller {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(input: Shortcut, data?: any): void {
+  public onShortcut(input: Shortcut, data?: string): void {
     if (this.config.directionalKeyMode === "focus") {
       switch (input) {
         case Shortcut.Up:

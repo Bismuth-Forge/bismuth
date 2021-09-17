@@ -95,7 +95,11 @@ export default class CascadeLayout implements WindowsLayout {
     return new CascadeLayout(this.dir);
   }
 
-  public handleShortcut(engine: Engine, input: Shortcut, _data?: any): boolean {
+  public handleShortcut(
+    engine: Engine,
+    input: Shortcut,
+    _data?: string
+  ): boolean {
     switch (input) {
       case Shortcut.Increase:
         this.dir = (this.dir + 1 + 8) % 8;
