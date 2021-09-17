@@ -36,6 +36,7 @@ export default class KWinMousePoller {
     this.qml.mousePoller.interval = 0;
 
     this.qml.mousePoller.onNewData.connect((sourceName: string, data: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
       this.qml.mousePoller.disconnectSource(KWinMousePoller.COMMAND);
 
