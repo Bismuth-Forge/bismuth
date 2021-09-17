@@ -434,7 +434,7 @@ export class KWinDriver implements DriverContext {
    * during event handling, resulting in performance degradation and harder
    * debugging.
    */
-  private enter(callback: () => void) {
+  private enter(callback: () => void): void {
     if (this.entered) {
       return;
     }
