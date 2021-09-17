@@ -39,7 +39,12 @@ export default class QuarterLayout implements WindowsLayout {
     this.config = config;
   }
 
-  public adjust(area: Rect, tiles: Window[], basis: Window, delta: RectDelta) {
+  public adjust(
+    area: Rect,
+    tiles: Window[],
+    basis: Window,
+    delta: RectDelta
+  ): void {
     if (tiles.length <= 1 || tiles.length > 4) {
       return;
     }
