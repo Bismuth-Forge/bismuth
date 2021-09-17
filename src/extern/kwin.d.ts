@@ -63,25 +63,88 @@ declare namespace KWin {
     configChanged: QSignal;
   }
 
+  /**
+   * See KWin docs for the explanation what Toplevel is. Basically it is a window. Represents KWin::Toplevel
+   */
   interface Toplevel {
     /* read-only */
+
+    /**
+     * On which activities the toplevel is present
+     */
     readonly activities: string[] /* Not exactly `Array` */;
+
+    /**
+     * Whether the window is a dialog window.
+     */
     readonly dialog: boolean;
+
+    /**
+     * TODO: ???
+     */
     readonly resourceClass: QByteArray;
+
+    /**
+     * TODO: ???
+     */
     readonly resourceName: QByteArray;
+
+    /**
+     * On which screen toplevel is
+     */
     readonly screen: number;
+
+    /**
+     * Whether the window is a splashscreen.
+     */
     readonly splash: boolean;
+
+    /**
+     * Whether the window is a utility window, such as a tool window.
+     */
     readonly utility: boolean;
+
+    /**
+     * Window id in KWin
+     */
     readonly windowId: number;
+
+    /**
+     * Window role property
+     */
     readonly windowRole: QByteArray;
 
+    /**
+     * Client position
+     */
     readonly clientPos: QPoint;
+
+    /**
+     * Client size
+     */
     readonly clientSize: QSize;
 
-    /* signal */
+    /**
+     * TODO: I could not find anything about signal in the KWin source.
+     * Probably it does not exist here. It exists in KWin::AbstractClient though.
+     */
     activitiesChanged: QSignal;
+
+    /**
+     * This signal is emitted when the Toplevel's frame geometry changes.
+     * @deprecated since 5.19, use frameGeometryChanged instead
+     */
     geometryChanged: QSignal;
+
+    /**
+     * Emitted whenever the Toplevel's screen changes. This can happen either in consequence to
+     * a screen being removed/added or if the Toplevel's geometry changes.
+     */
     screenChanged: QSignal;
+
+    /**
+     * Emitted when the toplevel is shown?
+     */
     windowShown: QSignal;
   }
 
