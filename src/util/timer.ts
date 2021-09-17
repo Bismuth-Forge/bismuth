@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable @typescript-eslint/ban-types */
+
 /**
  * @module
  * This module basically reimplements standard JS setTimeout function
@@ -72,6 +74,7 @@ export class TimersPool {
       ]);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const timer: QQmlTimer =
       this.timers.pop() ||
       Qt.createQmlObject("import QtQuick 2.0; Timer {}", this.scriptRoot);

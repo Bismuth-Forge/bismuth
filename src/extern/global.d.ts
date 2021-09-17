@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable @typescript-eslint/ban-types */
+
 declare namespace Bismuth {
   export namespace Qml {
     export interface Main {

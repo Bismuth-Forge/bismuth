@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable @typescript-eslint/ban-types */
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface QByteArray {
   /* keep it empty for now */
