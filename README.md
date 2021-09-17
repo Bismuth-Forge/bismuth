@@ -8,7 +8,13 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite) - a dynamic tiling extension for KWin.
+Arrange your windows automatically and switch between them using keyboard shortcuts. All of that with different layouts and
+without a complicated setup of classic tiling window managers (i3, dwm or XMonad). Just install the script on any
+KDE Plasma powered Linux distribution and enjoy your computing! 🦾
+
+![script demo](img/demo.gif)
+
+This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite). The fork was made, because the old project seems to be unmaintained.
 
 ## 🗺️ Goals
 
