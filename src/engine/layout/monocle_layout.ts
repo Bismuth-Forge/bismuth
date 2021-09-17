@@ -60,7 +60,11 @@ export default class MonocleLayout implements WindowsLayout {
     return this;
   }
 
-  public handleShortcut(engine: Engine, input: Shortcut, _data?: any): boolean {
+  public handleShortcut(
+    engine: Engine,
+    input: Shortcut,
+    _data?: string
+  ): boolean {
     switch (input) {
       case Shortcut.Up:
       case Shortcut.FocusUp:

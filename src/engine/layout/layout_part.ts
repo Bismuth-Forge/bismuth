@@ -33,7 +33,7 @@ export class FillLayoutPart implements ILayoutPart {
   }
 
   public apply(area: Rect, tiles: Window[]): Rect[] {
-    return tiles.map((tile) => {
+    return tiles.map((_tile) => {
       return area;
     });
   }
@@ -245,7 +245,7 @@ export class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
 
     switch (this.angle) {
       case 0:
-        delta = delta;
+        // No adjustment needed
         break;
       case 90:
         delta = new RectDelta(delta.south, delta.north, delta.east, delta.west);

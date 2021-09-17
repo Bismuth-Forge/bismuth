@@ -308,7 +308,7 @@ export class TilingEngine implements Engine {
    * which is straight against the purpose of tiling WM. This operation
    * move/resize such windows back to where/how they should be.
    */
-  public enforceSize(window: Window) {
+  public enforceSize(window: Window): void {
     if (window.tiled && !window.actualGeometry.equals(window.geometry)) {
       qmlSetTimeout(() => {
         if (window.tiled) {
@@ -566,7 +566,7 @@ export class TilingEngine implements Engine {
    *
    * @returns True if the layout overrides the shortcut. False, otherwise.
    */
-  public handleLayoutShortcut(input: Shortcut, data?: any): boolean {
+  public handleLayoutShortcut(input: Shortcut, data?: string): boolean {
     const layout = this.layouts.getCurrentLayout(
       this.controller.currentSurface
     );
