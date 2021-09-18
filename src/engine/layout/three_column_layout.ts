@@ -9,7 +9,7 @@ import LayoutUtils from "./layout_utils";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 
 import { partitionArrayBySizes, clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
@@ -199,24 +199,24 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
   public handleShortcut(
     engine: Engine,
-    input: Shortcut,
+    input: Action,
     _data?: string
   ): boolean {
     switch (input) {
-      case Shortcut.Increase:
+      case Action.Increase:
         this.resizeMaster(engine, +1);
         return true;
-      case Shortcut.Decrease:
+      case Action.Decrease:
         this.resizeMaster(engine, -1);
         return true;
-      case Shortcut.Left:
+      case Action.Left:
         this.masterRatio = clip(
           slide(this.masterRatio, -0.05),
           ThreeColumnLayout.MIN_MASTER_RATIO,
           ThreeColumnLayout.MAX_MASTER_RATIO
         );
         return true;
-      case Shortcut.Right:
+      case Action.Right:
         this.masterRatio = clip(
           slide(this.masterRatio, +0.05),
           ThreeColumnLayout.MIN_MASTER_RATIO,

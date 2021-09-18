@@ -9,7 +9,7 @@ import { Engine } from "..";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 import { Controller } from "../../controller";
 
 import Rect from "../../util/rect";
@@ -97,15 +97,15 @@ export default class CascadeLayout implements WindowsLayout {
 
   public handleShortcut(
     engine: Engine,
-    input: Shortcut,
+    input: Action,
     _data?: string
   ): boolean {
     switch (input) {
-      case Shortcut.Increase:
+      case Action.Increase:
         this.dir = (this.dir + 1 + 8) % 8;
         engine.showNotification(this.description);
         break;
-      case Shortcut.Decrease:
+      case Action.Decrease:
         this.dir = (this.dir - 1 + 8) % 8;
         engine.showNotification(this.description);
         break;

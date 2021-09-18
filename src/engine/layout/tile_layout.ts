@@ -13,7 +13,7 @@ import {
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 
 import { clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
@@ -96,39 +96,39 @@ export default class TileLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(engine: Engine, input: Shortcut): boolean {
+  public handleShortcut(engine: Engine, input: Action): boolean {
     switch (input) {
-      case Shortcut.Left:
+      case Action.Left:
         this.masterRatio = clip(
           slide(this.masterRatio, -0.05),
           TileLayout.MIN_MASTER_RATIO,
           TileLayout.MAX_MASTER_RATIO
         );
         break;
-      case Shortcut.Right:
+      case Action.Right:
         this.masterRatio = clip(
           slide(this.masterRatio, +0.05),
           TileLayout.MIN_MASTER_RATIO,
           TileLayout.MAX_MASTER_RATIO
         );
         break;
-      case Shortcut.Increase:
+      case Action.Increase:
         // TODO: define arbitrary constant
         if (this.numMaster < 10) {
           this.numMaster += 1;
         }
         engine.showNotification(this.description);
         break;
-      case Shortcut.Decrease:
+      case Action.Decrease:
         if (this.numMaster > 0) {
           this.numMaster -= 1;
         }
         engine.showNotification(this.description);
         break;
-      case Shortcut.Rotate:
+      case Action.Rotate:
         this.parts.rotate(90);
         break;
-      case Shortcut.RotatePart:
+      case Action.RotatePart:
         this.parts.inner.primary.rotate(90);
         break;
       default:

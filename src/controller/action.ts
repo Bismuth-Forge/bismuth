@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-export enum Shortcut {
+export enum Action {
   Left,
   Right,
   Up,

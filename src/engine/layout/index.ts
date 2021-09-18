@@ -7,7 +7,7 @@ import Window from "../window";
 import { Engine } from "..";
 
 import { Controller } from "../../controller";
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 
 import Rect from "../../util/rect";
 import RectDelta from "../../util/rectdelta";
@@ -24,7 +24,7 @@ export interface WindowsLayout {
 
   adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
   apply(controller: Controller, tileables: Window[], area: Rect): void;
-  handleShortcut?(engine: Engine, input: Shortcut, data?: any): boolean;
+  handleShortcut?(engine: Engine, input: Action, data?: any): boolean;
 
   toString(): string;
 }
