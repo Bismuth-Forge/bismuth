@@ -10,7 +10,7 @@ import { WindowState } from "../window";
 
 import { KWinWindow } from "../../driver/window";
 
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 
 import Rect from "../../util/rect";
 import Config from "../../config";
@@ -62,20 +62,20 @@ export default class MonocleLayout implements WindowsLayout {
 
   public handleShortcut(
     engine: Engine,
-    input: Shortcut,
+    input: Action,
     _data?: string
   ): boolean {
     switch (input) {
-      case Shortcut.Up:
-      case Shortcut.FocusUp:
-      case Shortcut.Left:
-      case Shortcut.FocusLeft:
+      case Action.Up:
+      case Action.FocusUp:
+      case Action.Left:
+      case Action.FocusLeft:
         engine.focusOrder(-1);
         return true;
-      case Shortcut.Down:
-      case Shortcut.FocusDown:
-      case Shortcut.Right:
-      case Shortcut.FocusRight:
+      case Action.Down:
+      case Action.FocusDown:
+      case Action.Right:
+      case Action.FocusRight:
         engine.focusOrder(1);
         return true;
       default:

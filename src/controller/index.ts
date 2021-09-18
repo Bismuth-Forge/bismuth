@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { Shortcut } from "./shortcut";
+import { Action } from "./action";
 
 import { Engine, TilingEngine } from "../engine";
 import Window from "../engine/window";
@@ -144,7 +144,7 @@ export interface Controller {
    * @param input the shortcut action. For example focus the next window, or change the layout.
    * @param data the action optional data, that it could held. For example the layout name to which user want to change.
    */
-  onShortcut(input: Shortcut, data?: any): void;
+  onShortcut(input: Action, data?: any): void;
 
   /**
    * Ask engine to manage the window
@@ -348,33 +348,33 @@ export class TilingController implements Controller {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(input: Shortcut, data?: string): void {
+  public onShortcut(input: Action, data?: string): void {
     if (this.config.directionalKeyMode === "focus") {
       switch (input) {
-        case Shortcut.Up:
-          input = Shortcut.FocusUp;
+        case Action.Up:
+          input = Action.FocusUp;
           break;
-        case Shortcut.Down:
-          input = Shortcut.FocusDown;
+        case Action.Down:
+          input = Action.FocusDown;
           break;
-        case Shortcut.Left:
-          input = Shortcut.FocusLeft;
+        case Action.Left:
+          input = Action.FocusLeft;
           break;
-        case Shortcut.Right:
-          input = Shortcut.FocusRight;
+        case Action.Right:
+          input = Action.FocusRight;
           break;
 
-        case Shortcut.ShiftUp:
-          input = Shortcut.SwapUp;
+        case Action.ShiftUp:
+          input = Action.SwapUp;
           break;
-        case Shortcut.ShiftDown:
-          input = Shortcut.SwapDown;
+        case Action.ShiftDown:
+          input = Action.SwapDown;
           break;
-        case Shortcut.ShiftLeft:
-          input = Shortcut.SwapLeft;
+        case Action.ShiftLeft:
+          input = Action.SwapLeft;
           break;
-        case Shortcut.ShiftRight:
-          input = Shortcut.SwapRight;
+        case Action.ShiftRight:
+          input = Action.SwapRight;
           break;
       }
     }
@@ -386,92 +386,92 @@ export class TilingController implements Controller {
 
     const window = this.currentWindow;
     switch (input) {
-      case Shortcut.Up:
+      case Action.Up:
         this.engine.focusOrder(-1);
         break;
-      case Shortcut.Down:
+      case Action.Down:
         this.engine.focusOrder(+1);
         break;
 
-      case Shortcut.FocusUp:
+      case Action.FocusUp:
         this.engine.focusDir("up");
         break;
-      case Shortcut.FocusDown:
+      case Action.FocusDown:
         this.engine.focusDir("down");
         break;
-      case Shortcut.FocusLeft:
+      case Action.FocusLeft:
         this.engine.focusDir("left");
         break;
-      case Shortcut.FocusRight:
+      case Action.FocusRight:
         this.engine.focusDir("right");
         break;
 
-      case Shortcut.GrowWidth:
+      case Action.GrowWidth:
         if (window) {
           this.engine.resizeWindow(window, "east", 1);
         }
         break;
-      case Shortcut.ShrinkWidth:
+      case Action.ShrinkWidth:
         if (window) {
           this.engine.resizeWindow(window, "east", -1);
         }
         break;
-      case Shortcut.GrowHeight:
+      case Action.GrowHeight:
         if (window) {
           this.engine.resizeWindow(window, "south", 1);
         }
         break;
-      case Shortcut.ShrinkHeight:
+      case Action.ShrinkHeight:
         if (window) {
           this.engine.resizeWindow(window, "south", -1);
         }
         break;
 
-      case Shortcut.ShiftUp:
+      case Action.ShiftUp:
         if (window) {
           this.engine.swapOrder(window, -1);
         }
         break;
-      case Shortcut.ShiftDown:
+      case Action.ShiftDown:
         if (window) {
           this.engine.swapOrder(window, +1);
         }
         break;
 
-      case Shortcut.SwapUp:
+      case Action.SwapUp:
         this.engine.swapDirOrMoveFloat("up");
         break;
-      case Shortcut.SwapDown:
+      case Action.SwapDown:
         this.engine.swapDirOrMoveFloat("down");
         break;
-      case Shortcut.SwapLeft:
+      case Action.SwapLeft:
         this.engine.swapDirOrMoveFloat("left");
         break;
-      case Shortcut.SwapRight:
+      case Action.SwapRight:
         this.engine.swapDirOrMoveFloat("right");
         break;
 
-      case Shortcut.SetMaster:
+      case Action.SetMaster:
         if (window) {
           this.engine.setMaster(window);
         }
         break;
-      case Shortcut.ToggleFloat:
+      case Action.ToggleFloat:
         if (window) {
           this.engine.toggleFloat(window);
         }
         break;
-      case Shortcut.ToggleFloatAll:
+      case Action.ToggleFloatAll:
         this.engine.floatAll(this.currentSurface);
         break;
 
-      case Shortcut.NextLayout:
+      case Action.NextLayout:
         this.engine.cycleLayout(1);
         break;
-      case Shortcut.PreviousLayout:
+      case Action.PreviousLayout:
         this.engine.cycleLayout(-1);
         break;
-      case Shortcut.SetLayout:
+      case Action.SetLayout:
         if (typeof data === "string") {
           this.engine.setLayout(data);
         }

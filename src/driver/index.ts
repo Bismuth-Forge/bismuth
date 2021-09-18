@@ -9,7 +9,7 @@ import { KWinSurface } from "./surface";
 import { KWinWindow } from "./window";
 
 import { Controller } from "../controller";
-import { Shortcut } from "../controller/shortcut";
+import { Action } from "../controller/action";
 
 import Window from "../engine/window";
 
@@ -344,42 +344,42 @@ export class KWinDriver implements DriverContext {
   }
 
   private bindMainShortcuts(): void {
-    const bind = (seq: string, title: string, input: Shortcut): void => {
+    const bind = (seq: string, title: string, action: Action): void => {
       title = "Bismuth: " + title;
       seq = "Meta+" + seq;
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
-        this.enter(() => this.controller.onShortcut(input));
+        this.enter(() => this.controller.onShortcut(action));
       });
     };
 
-    bind("J", "Down/Next", Shortcut.Down);
-    bind("K", "Up/Prev", Shortcut.Up);
-    bind("H", "Left", Shortcut.Left);
-    bind("L", "Right", Shortcut.Right);
+    bind("J", "Down/Next", Action.Down);
+    bind("K", "Up/Prev", Action.Up);
+    bind("H", "Left", Action.Left);
+    bind("L", "Right", Action.Right);
 
-    bind("Shift+J", "Move Down/Next", Shortcut.ShiftDown);
-    bind("Shift+K", "Move Up/Prev", Shortcut.ShiftUp);
-    bind("Shift+H", "Move Left", Shortcut.ShiftLeft);
-    bind("Shift+L", "Move Right", Shortcut.ShiftRight);
+    bind("Shift+J", "Move Down/Next", Action.ShiftDown);
+    bind("Shift+K", "Move Up/Prev", Action.ShiftUp);
+    bind("Shift+H", "Move Left", Action.ShiftLeft);
+    bind("Shift+L", "Move Right", Action.ShiftRight);
 
-    bind("Ctrl+J", "Grow Height", Shortcut.GrowHeight);
-    bind("Ctrl+K", "Shrink Height", Shortcut.ShrinkHeight);
-    bind("Ctrl+H", "Shrink Width", Shortcut.ShrinkWidth);
-    bind("Ctrl+L", "Grow Width", Shortcut.GrowWidth);
+    bind("Ctrl+J", "Grow Height", Action.GrowHeight);
+    bind("Ctrl+K", "Shrink Height", Action.ShrinkHeight);
+    bind("Ctrl+H", "Shrink Width", Action.ShrinkWidth);
+    bind("Ctrl+L", "Grow Width", Action.GrowWidth);
 
-    bind("I", "Increase", Shortcut.Increase);
-    bind("D", "Decrease", Shortcut.Decrease);
+    bind("I", "Increase", Action.Increase);
+    bind("D", "Decrease", Action.Decrease);
 
-    bind("F", "Float", Shortcut.ToggleFloat);
-    bind("Shift+F", "Float All", Shortcut.ToggleFloatAll);
-    bind("", "Cycle Layout", Shortcut.NextLayout); // TODO: remove this shortcut
-    bind("\\", "Next Layout", Shortcut.NextLayout);
-    bind("|", "Previous Layout", Shortcut.PreviousLayout);
+    bind("F", "Float", Action.ToggleFloat);
+    bind("Shift+F", "Float All", Action.ToggleFloatAll);
+    bind("", "Cycle Layout", Action.NextLayout); // TODO: remove this shortcut
+    bind("\\", "Next Layout", Action.NextLayout);
+    bind("|", "Previous Layout", Action.PreviousLayout);
 
-    bind("R", "Rotate", Shortcut.Rotate);
-    bind("Shift+R", "Rotate Part", Shortcut.RotatePart);
+    bind("R", "Rotate", Action.Rotate);
+    bind("Shift+R", "Rotate Part", Action.RotatePart);
 
-    bind("Return", "Set master", Shortcut.SetMaster);
+    bind("Return", "Set master", Action.SetMaster);
   }
 
   private bindLayoutShortcuts(): void {
@@ -392,7 +392,7 @@ export class KWinDriver implements DriverContext {
       seq = seq !== "" ? "Meta+" + seq : "";
       this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
         this.enter(() =>
-          this.controller.onShortcut(Shortcut.SetLayout, layoutClass.id)
+          this.controller.onShortcut(Action.SetLayout, layoutClass.id)
         );
       });
     };

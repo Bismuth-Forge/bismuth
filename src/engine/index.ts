@@ -11,7 +11,7 @@ import Window from "./window";
 import { WindowState } from "./window";
 
 import { Controller } from "../controller";
-import { Shortcut } from "../controller/shortcut";
+import { Action } from "../controller/action";
 
 import { DriverSurface } from "../driver/surface";
 
@@ -49,7 +49,7 @@ export interface Engine {
     step: -1 | 1
   ): void;
   enforceSize(window: Window): void;
-  handleLayoutShortcut(input: Shortcut, data?: any): boolean;
+  handleLayoutShortcut(input: Action, data?: any): boolean;
   focusOrder(step: -1 | 1): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
@@ -566,7 +566,7 @@ export class TilingEngine implements Engine {
    *
    * @returns True if the layout overrides the shortcut. False, otherwise.
    */
-  public handleLayoutShortcut(input: Shortcut, data?: string): boolean {
+  public handleLayoutShortcut(input: Action, data?: string): boolean {
     const layout = this.layouts.getCurrentLayout(
       this.controller.currentSurface
     );

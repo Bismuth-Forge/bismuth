@@ -8,7 +8,7 @@ import { WindowsLayout } from ".";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Shortcut } from "../../controller/shortcut";
+import { Action } from "../../controller/action";
 
 import Rect from "../../util/rect";
 import { Controller } from "../../controller";
@@ -54,13 +54,13 @@ export default class StairLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(_engine: Engine, input: Shortcut): boolean {
+  public handleShortcut(_engine: Engine, input: Action): boolean {
     switch (input) {
-      case Shortcut.Decrease:
+      case Action.Decrease:
         // TODO: define arbitrary constants
         this.space = Math.max(16, this.space - 8);
         break;
-      case Shortcut.Increase:
+      case Action.Increase:
         // TODO: define arbitrary constants
         this.space = Math.min(160, this.space + 8);
         break;
