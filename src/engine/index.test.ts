@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import { createMock } from "ts-auto-mock";
 
 import { TilingEngine } from ".";
@@ -33,7 +35,6 @@ describe("arrange", () => {
     engine.arrange();
 
     // Assert
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(engine.arrangeScreen).toBeCalledTimes(4);
   });
 });
