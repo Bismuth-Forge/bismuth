@@ -327,12 +327,12 @@ export class KWinDriver implements DriverContext {
   }
 
   public bindShortcut(action: Action): void {
-    const shortcutUITitle = `Bismuth: ${action.name}`;
-
-    console.log(`Registering ${shortcutUITitle}`);
+    console.log(
+      `Registering ${action.key} with the description ${action.description}`
+    );
     this.kwinApi.KWin.registerShortcut(
-      shortcutUITitle,
-      "",
+      action.key,
+      action.description,
       action.defaultKeybinding,
       (): void => {
         this.enter(() => action.execute());

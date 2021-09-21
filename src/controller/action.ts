@@ -10,17 +10,28 @@ import { Engine } from "../engine";
  */
 export interface Action {
   /**
-   * Action name. It will be displayed it the shortcuts configuration window
+   * Action key. It will be used as the key in the shortcuts configuration file.
+   * Better not use any special characters and spaces, but it is allowed.
+   * To keep things simple and not break any user shortcuts in the future -
+   * do not change this. It is only valuable to the computer and not the human.
+   * The human sees @see description
    */
-  readonly name: string;
+  readonly key: string;
+
+  /**
+   * Action user-friendly name. It will be displayed in the shortcuts configuration window.
+   */
+  readonly description: string;
 
   /**
    * The keybinding, that will be assigned to action by default.
+   * When binding, existing shortcut will be kept, to this can be changed
+   * freely.
    */
   readonly defaultKeybinding: string;
 
   /**
-   * Execute action. This is basically a Command Design Pattern.
+   * Execute action. This is basically a Command Design Pattern method.
    */
   execute(): void;
 
@@ -37,9 +48,13 @@ export interface Action {
 abstract class ActionImpl implements Action {
   constructor(
     protected engine: Engine,
-    public name: string,
+    public key: string,
+    public description: string,
     public defaultKeybinding: string
-  ) {}
+  ) {
+    this.key = `bismuth_${this.key}`;
+    this.description = `Bismuth: ${this.description}`;
+  }
 
   /**
    * Action execution pattern. Executes the action override optionally
@@ -47,7 +62,7 @@ abstract class ActionImpl implements Action {
    * behavior.
    */
   public execute(): void {
-    console.log(`Bismuth: Executing action ${this.name}`);
+    console.log(`Bismuth: Executing action: ${this.key}`);
 
     const currentLayout = this.engine.currentLayoutOnCurrentSurface();
     if (currentLayout.executeAction) {
@@ -68,7 +83,7 @@ abstract class ActionImpl implements Action {
 
 export class FocusNextWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Next Window", "");
+    super(engine, "focus_next_window", "Focus Next Window", "");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -78,7 +93,7 @@ export class FocusNextWindow extends ActionImpl implements Action {
 
 export class FocusPreviousWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Previous Window", "");
+    super(engine, "focus_prev_window", "Focus Previous Window", "");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -88,7 +103,7 @@ export class FocusPreviousWindow extends ActionImpl implements Action {
 
 export class FocusUpperWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Upper Window", "Meta+K");
+    super(engine, "focus_upper_window", "Focus Upper Window", "Meta+K");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -98,7 +113,7 @@ export class FocusUpperWindow extends ActionImpl implements Action {
 
 export class FocusBottomWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Bottom Window", "Meta+J");
+    super(engine, "focus_bottom_window", "Focus Bottom Window", "Meta+J");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -108,7 +123,7 @@ export class FocusBottomWindow extends ActionImpl implements Action {
 
 export class FocusLeftWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Left Window", "Meta+H");
+    super(engine, "focus_left_window", "Focus Left Window", "Meta+H");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -118,7 +133,7 @@ export class FocusLeftWindow extends ActionImpl implements Action {
 
 export class FocusRightWindow extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Focus Right Window", "Meta+L");
+    super(engine, "focus_right_window", "Focus Right Window", "Meta+L");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -131,7 +146,12 @@ export class MoveActiveWindowToNextPosition
   implements Action
 {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window to the Next Position", "");
+    super(
+      engine,
+      "move_window_to_next_pos",
+      "Move Window to the Next Position",
+      ""
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -147,7 +167,12 @@ export class MoveActiveWindowToPreviousPosition
   implements Action
 {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window to the Previous Position", "");
+    super(
+      engine,
+      "move_window_to_prev_pos",
+      "Move Window to the Previous Position",
+      ""
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -160,7 +185,7 @@ export class MoveActiveWindowToPreviousPosition
 
 export class MoveActiveWindowUp extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window Up", "Meta+Shift+K");
+    super(engine, "move_window_to_upper_pos", "Move Window Up", "Meta+Shift+K");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -170,7 +195,12 @@ export class MoveActiveWindowUp extends ActionImpl implements Action {
 
 export class MoveActiveWindowDown extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window Down", "Meta+Shift+J");
+    super(
+      engine,
+      "move_window_to_bottom_pos",
+      "Move Window Down",
+      "Meta+Shift+J"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -180,7 +210,12 @@ export class MoveActiveWindowDown extends ActionImpl implements Action {
 
 export class MoveActiveWindowLeft extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window Left", "Meta+Shift+H");
+    super(
+      engine,
+      "move_window_to_left_pos",
+      "Move Window Left",
+      "Meta+Shift+H"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -190,7 +225,12 @@ export class MoveActiveWindowLeft extends ActionImpl implements Action {
 
 export class MoveActiveWindowRight extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Move Window Right", "Meta+Shift+L");
+    super(
+      engine,
+      "move_window_to_right_pos",
+      "Move Window Right",
+      "Meta+Shift+L"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -200,7 +240,12 @@ export class MoveActiveWindowRight extends ActionImpl implements Action {
 
 export class IncreaseActiveWindowWidth extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Increase Window Width", "Meta+Ctrl+L");
+    super(
+      engine,
+      "increase_window_width",
+      "Increase Window Width",
+      "Meta+Ctrl+L"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -213,7 +258,12 @@ export class IncreaseActiveWindowWidth extends ActionImpl implements Action {
 
 export class IncreaseActiveWindowHeight extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Increase Window Height", "Meta+Ctrl+J");
+    super(
+      engine,
+      "increase_window_height",
+      "Increase Window Height",
+      "Meta+Ctrl+J"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -226,7 +276,12 @@ export class IncreaseActiveWindowHeight extends ActionImpl implements Action {
 
 export class DecreaseActiveWindowWidth extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Decrease Window Width", "Meta+Ctrl+H");
+    super(
+      engine,
+      "decrease_window_width",
+      "Decrease Window Width",
+      "Meta+Ctrl+H"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -239,7 +294,12 @@ export class DecreaseActiveWindowWidth extends ActionImpl implements Action {
 
 export class DecreaseActiveWindowHeight extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Decrease Window Height", "Meta+Ctrl+K");
+    super(
+      engine,
+      "decrease_window_height",
+      "Decrease Window Height",
+      "Meta+Ctrl+K"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -255,7 +315,12 @@ export class IncreaseMasterAreaWindowCount
   implements Action
 {
   constructor(protected engine: Engine) {
-    super(engine, "Increase Master Area Window Count", "Meta+I");
+    super(
+      engine,
+      "increase_master_win_count",
+      "Increase Master Area Window Count",
+      "Meta+I"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -268,7 +333,12 @@ export class DecreaseMasterAreaWindowCount
   implements Action
 {
   constructor(protected engine: Engine) {
-    super(engine, "Decrease Master Area Window Count", "Meta+D");
+    super(
+      engine,
+      "decrease_master_win_count",
+      "Decrease Master Area Window Count",
+      "Meta+D"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -278,7 +348,7 @@ export class DecreaseMasterAreaWindowCount
 
 export class IncreaseLayoutMasterAreaSize extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Increase Master Area Size", "");
+    super(engine, "increase_master_size", "Increase Master Area Size", "");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -288,7 +358,7 @@ export class IncreaseLayoutMasterAreaSize extends ActionImpl implements Action {
 
 export class DecreaseLayoutMasterAreaSize extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Decrease Master Area Size", "");
+    super(engine, "decrease_master_size", "Decrease Master Area Size", "");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -298,7 +368,12 @@ export class DecreaseLayoutMasterAreaSize extends ActionImpl implements Action {
 
 export class ToggleActiveWindowFloating extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Toggle Active Window Floating", "Meta+F");
+    super(
+      engine,
+      "toggle_window_floating",
+      "Toggle Active Window Floating",
+      "Meta+F"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -314,7 +389,12 @@ export class PushActiveWindowIntoMasterAreaFront
   implements Action
 {
   constructor(protected engine: Engine) {
-    super(engine, "Push Active Window to Master Area", "Meta+Return");
+    super(
+      engine,
+      "push_window_to_master",
+      "Push Active Window to Master Area",
+      "Meta+Return"
+    );
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -327,7 +407,7 @@ export class PushActiveWindowIntoMasterAreaFront
 
 export class SwitchToNextLayout extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Switch to the Next Layout", "Meta+\\");
+    super(engine, "next_layout", "Switch to the Next Layout", "Meta+\\");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -337,7 +417,7 @@ export class SwitchToNextLayout extends ActionImpl implements Action {
 
 export class SwitchToPreviousLayout extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Switch to the Previous Layout", "Meta+|");
+    super(engine, "prev_layout", "Switch to the Previous Layout", "Meta+|");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -347,7 +427,7 @@ export class SwitchToPreviousLayout extends ActionImpl implements Action {
 
 abstract class SetCurrentLayout extends ActionImpl implements Action {
   constructor(protected engine: Engine, protected layoutId: string) {
-    super(engine, "", "");
+    super(engine, "key", "desc", "shortcut");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -360,7 +440,8 @@ abstract class SetCurrentLayout extends ActionImpl implements Action {
 export class SetTileLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     super(engine, "TileLayout");
-    this.name = "Toggle Tile Layout";
+    this.key = "toggle_tile_layout";
+    this.description = "Toggle Tile Layout";
     this.defaultKeybinding = "Meta+T";
   }
 }
@@ -368,7 +449,8 @@ export class SetTileLayout extends SetCurrentLayout {
 export class SetMonocleLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     super(engine, "MonocleLayout");
-    this.name = "Toggle Monocle Layout";
+    this.key = "toggle_monocle_layout";
+    this.description = "Toggle Monocle Layout";
     this.defaultKeybinding = "Meta+M";
   }
 }
@@ -376,7 +458,8 @@ export class SetMonocleLayout extends SetCurrentLayout {
 export class SetThreeColumnLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     super(engine, "ThreeColumnLayout");
-    this.name = "Toggle Three Column Layout";
+    this.key = "toggle_three_column_layout";
+    this.description = "Toggle Three Column Layout";
     this.defaultKeybinding = "";
   }
 }
@@ -384,7 +467,8 @@ export class SetThreeColumnLayout extends SetCurrentLayout {
 export class SetSpreadLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     super(engine, "SpreadLayout");
-    this.name = "Toggle Spread Layout";
+    this.key = "toggle_spread_layout";
+    this.description = "Toggle Spread Layout";
     this.defaultKeybinding = "";
   }
 }
@@ -392,7 +476,8 @@ export class SetSpreadLayout extends SetCurrentLayout {
 export class SetStairLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     super(engine, "StairLayout");
-    this.name = "Toggle Stair Layout";
+    this.key = "toggle_stair_layout";
+    this.description = "Toggle Stair Layout";
     this.defaultKeybinding = "";
   }
 }
@@ -401,7 +486,8 @@ export class SetFloatingLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     // NOTE: space is intentional (Temporary)
     super(engine, "FloatingLayout ");
-    this.name = "Toggle Stair Layout";
+    this.key = "toggle_stair_layout";
+    this.description = "Toggle Stair Layout";
     this.defaultKeybinding = "Meta+Shift+F";
   }
 }
@@ -410,14 +496,15 @@ export class SetQuarterLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     // NOTE: space is intentional (Temporary)
     super(engine, "QuarterLayout ");
-    this.name = "Toggle Quarter Layout";
+    this.key = "toggle_quarter_layout";
+    this.description = "Toggle Quarter Layout";
     this.defaultKeybinding = "";
   }
 }
 
 export class Rotate extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Rotate", "Meta+R");
+    super(engine, "rotate", "Rotate", "Meta+R");
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -427,7 +514,7 @@ export class Rotate extends ActionImpl implements Action {
 
 export class RotatePart extends ActionImpl implements Action {
   constructor(protected engine: Engine) {
-    super(engine, "Rotate Part", "Meta+Shift+R");
+    super(engine, "rotate_part", "Rotate Part", "Meta+Shift+R");
   }
 
   public executeWithoutLayoutOverride(): void {
