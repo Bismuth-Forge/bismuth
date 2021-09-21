@@ -279,4 +279,81 @@ describe("action", () => {
       });
     });
   });
+
+  describe("toggle floating", () => {
+    it("executes correctly", () => {
+      const fakeCurrentWindow = createMock<Window>();
+      const fakeEngine = createMock<Engine>({
+        toggleFloat: jest.fn(),
+        currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
+      });
+
+      const action = new Action.ToggleActiveWindowFloating(fakeEngine);
+
+      action.execute();
+
+      expect(fakeEngine.toggleFloat).toBeCalledWith(fakeCurrentWindow);
+    });
+  });
+
+  describe("push window into master area", () => {
+    it("executes correctly", () => {
+      const fakeCurrentWindow = createMock<Window>();
+      const fakeEngine = createMock<Engine>({
+        setMaster: jest.fn(),
+        currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
+      });
+
+      const action = new Action.PushActiveWindowIntoMasterAreaFront(fakeEngine);
+
+      action.execute();
+
+      expect(fakeEngine.setMaster).toBeCalledWith(fakeCurrentWindow);
+    });
+  });
+
+  describe("layout switching", () => {
+    let fakeEngine: Engine;
+    let fakeCurrentWindow: Window;
+
+    beforeEach(() => {
+      fakeCurrentWindow = createMock<Window>();
+
+      fakeEngine = createMock<Engine>({
+        cycleLayout: jest.fn(),
+        setLayout: jest.fn(),
+        currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
+      });
+    });
+
+    describe("next layout", () => {
+      it("executes correctly", () => {
+        const action = new Action.SwitchToNextLayout(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.cycleLayout).toBeCalledWith(1);
+      });
+    });
+
+    describe("prev layout", () => {
+      it("executes correctly", () => {
+        const action = new Action.SwitchToPreviousLayout(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.cycleLayout).toBeCalledWith(-1);
+      });
+    });
+
+    describe("set layout", () => {
+      it("executes correctly when asking to set Monocle Layout", () => {
+        const action = new Action.SetMonocleLayout(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.setLayout).toBeCalledWith("MonocleLayout");
+      });
+    });
+  });
 });
