@@ -426,8 +426,14 @@ export class SwitchToPreviousLayout extends ActionImpl implements Action {
 }
 
 abstract class SetCurrentLayout extends ActionImpl implements Action {
-  constructor(protected engine: Engine, protected layoutId: string) {
-    super(engine, "key", "desc", "shortcut");
+  constructor(
+    protected engine: Engine,
+    protected layoutId: string,
+    key: string,
+    description: string,
+    defaultShortcut: string
+  ) {
+    super(engine, key, description, defaultShortcut);
   }
 
   public executeWithoutLayoutOverride(): void {
@@ -439,66 +445,87 @@ abstract class SetCurrentLayout extends ActionImpl implements Action {
 
 export class SetTileLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    super(engine, "TileLayout");
-    this.key = "toggle_tile_layout";
-    this.description = "Toggle Tile Layout";
-    this.defaultKeybinding = "Meta+T";
+    super(
+      engine,
+      "TileLayout",
+      "toggle_tile_layout",
+      "Toggle Tile Layout",
+      "Meta+T"
+    );
   }
 }
 
 export class SetMonocleLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    super(engine, "MonocleLayout");
-    this.key = "toggle_monocle_layout";
-    this.description = "Toggle Monocle Layout";
-    this.defaultKeybinding = "Meta+M";
+    super(
+      engine,
+      "MonocleLayout",
+      "toggle_monocle_layout",
+      "Toggle Monocle Layout",
+      "Meta+M"
+    );
   }
 }
 
 export class SetThreeColumnLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    super(engine, "ThreeColumnLayout");
-    this.key = "toggle_three_column_layout";
-    this.description = "Toggle Three Column Layout";
-    this.defaultKeybinding = "";
+    super(
+      engine,
+      "ThreeColumnLayout",
+      "toggle_three_column_layout",
+      "Toggle Three Column Layout",
+      ""
+    );
   }
 }
 
 export class SetSpreadLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    super(engine, "SpreadLayout");
-    this.key = "toggle_spread_layout";
-    this.description = "Toggle Spread Layout";
-    this.defaultKeybinding = "";
+    super(
+      engine,
+      "SpreadLayout",
+      "toggle_spread_layout",
+      "Toggle Spread Layout",
+      ""
+    );
   }
 }
 
 export class SetStairLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    super(engine, "StairLayout");
-    this.key = "toggle_stair_layout";
-    this.description = "Toggle Stair Layout";
-    this.defaultKeybinding = "";
+    super(
+      engine,
+      "StairLayout",
+      "toggle_stair_layout",
+      "Toggle Stair Layout",
+      ""
+    );
   }
 }
 
 export class SetFloatingLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     // NOTE: space is intentional (Temporary)
-    super(engine, "FloatingLayout ");
-    this.key = "toggle_stair_layout";
-    this.description = "Toggle Stair Layout";
-    this.defaultKeybinding = "Meta+Shift+F";
+    super(
+      engine,
+      "FloatingLayout ",
+      "toggle_stair_layout",
+      "Toggle Stair Layout",
+      "Meta+Shift+F"
+    );
   }
 }
 
 export class SetQuarterLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
     // NOTE: space is intentional (Temporary)
-    super(engine, "QuarterLayout ");
-    this.key = "toggle_quarter_layout";
-    this.description = "Toggle Quarter Layout";
-    this.defaultKeybinding = "";
+    super(
+      engine,
+      "QuarterLayout ",
+      "toggle_quarter_layout",
+      "Toggle Quarter Layout",
+      ""
+    );
   }
 }
 
