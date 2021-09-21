@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import { createMock } from "ts-auto-mock";
 import { Engine } from "../engine";
 import { FocusUpperWindow } from "./action";
@@ -18,7 +20,6 @@ describe("action", () => {
       action.execute();
 
       // Assert
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(fakeEngine.focusDir).toBeCalledWith("up");
     });
   });
