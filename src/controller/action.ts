@@ -508,7 +508,7 @@ export class Rotate extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.focusDir("left");
+    this.engine.showNotification("Rotation Not Applicable");
   }
 }
 
@@ -518,6 +518,6 @@ export class RotatePart extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.focusDir("left");
+    this.engine.showNotification("Rotation Not Applicable");
   }
 }
