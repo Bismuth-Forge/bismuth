@@ -24,7 +24,7 @@ export interface WindowsLayout {
 
   adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
   apply(controller: Controller, tileables: Window[], area: Rect): void;
-  handleShortcut?(engine: Engine, input: Action, data?: any): boolean;
+  executeAction?(engine: Engine, action: Action): void;
 
   toString(): string;
 }

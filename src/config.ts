@@ -45,7 +45,6 @@ export default interface Config {
   //#endregion
 
   //#region Behavior
-  directionalKeyMode: "dwm" | "focus";
   newWindowAsMaster: boolean;
   //#endregion
 
@@ -101,7 +100,6 @@ export class ConfigImpl implements Config {
   //#endregion
 
   //#region Behavior
-  public directionalKeyMode: "dwm" | "focus";
   public newWindowAsMaster: boolean;
   //#endregion
 
@@ -203,15 +201,6 @@ export class ConfigImpl implements Config {
     this.screenGapTop = this.kwinApi.KWin.readConfig("screenGapTop", 0);
     this.tileLayoutGap = this.kwinApi.KWin.readConfig("tileLayoutGap", 0);
 
-    const directionalKeyDwm = this.kwinApi.KWin.readConfig(
-      "directionalKeyDwm",
-      true
-    );
-    // const directionalKeyFocus = this.kwinApi.KWin.readConfig(
-    //   "directionalKeyFocus",
-    //   false
-    // );
-    this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
     this.newWindowAsMaster = this.kwinApi.KWin.readConfig(
       "newWindowAsMaster",
       false

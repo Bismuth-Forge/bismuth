@@ -49,7 +49,8 @@ export interface Engine {
     step: -1 | 1
   ): void;
   enforceSize(window: Window): void;
-  handleLayoutShortcut(input: Action, data?: any): boolean;
+  currentLayoutOnCurrentSurface(): WindowsLayout;
+  currentWindow(): Window | null;
   focusOrder(step: -1 | 1): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
@@ -299,6 +300,14 @@ export class TilingEngine implements Engine {
     // Commit window assigned properties
     visibleWindows.forEach((win: Window) => win.commit());
     this.debug.debugObj(() => ["arrangeScreen/finished", { screenSurface }]);
+  }
+
+  public currentLayoutOnCurrentSurface(): WindowsLayout {
+    return this.layouts.getCurrentLayout(this.controller.currentSurface);
+  }
+
+  public currentWindow(): Window | null {
+    return this.controller.currentWindow;
   }
 
   /**
@@ -559,21 +568,6 @@ export class TilingEngine implements Engine {
     if (layout) {
       this.controller.showNotification(layout.description);
     }
-  }
-
-  /**
-   * Let the current layout override shortcut.
-   *
-   * @returns True if the layout overrides the shortcut. False, otherwise.
-   */
-  public handleLayoutShortcut(input: Action, data?: string): boolean {
-    const layout = this.layouts.getCurrentLayout(
-      this.controller.currentSurface
-    );
-    if (layout.handleShortcut) {
-      return layout.handleShortcut(this, input, data);
-    }
-    return false;
   }
 
   private getNeighborByDirection(basis: Window, dir: Direction): Window | null {

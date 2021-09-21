@@ -8,7 +8,11 @@ import { WindowsLayout } from ".";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Action } from "../../controller/action";
+import {
+  Action,
+  DecreaseMasterAreaWindowCount,
+  IncreaseMasterAreaWindowCount,
+} from "../../controller/action";
 
 import Rect from "../../util/rect";
 import { Controller } from "../../controller";
@@ -58,20 +62,16 @@ export default class SpreadLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(_engine: Engine, input: Action): boolean {
-    switch (input) {
-      case Action.Decrease:
-        // TODO: define arbitrary constants
-        this.space = Math.max(0.04, this.space - 0.01);
-        break;
-      case Action.Increase:
-        // TODO: define arbitrary constants
-        this.space = Math.min(0.1, this.space + 0.01);
-        break;
-      default:
-        return false;
+  public executeAction(_engine: Engine, action: Action): void {
+    if (action instanceof DecreaseMasterAreaWindowCount) {
+      // TODO: define arbitrary constants
+      this.space = Math.max(0.04, this.space - 0.01);
+    } else if (action instanceof IncreaseMasterAreaWindowCount) {
+      // TODO: define arbitrary constants
+      this.space = Math.min(0.1, this.space + 0.01);
+    } else {
+      action.executeWithoutLayoutOverride();
     }
-    return true;
   }
 
   public toString(): string {

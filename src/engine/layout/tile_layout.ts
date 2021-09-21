@@ -13,7 +13,15 @@ import {
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Action } from "../../controller/action";
+import {
+  Action,
+  DecreaseLayoutMasterAreaSize,
+  DecreaseMasterAreaWindowCount,
+  IncreaseLayoutMasterAreaSize,
+  IncreaseMasterAreaWindowCount,
+  Rotate,
+  RotatePart,
+} from "../../controller/action";
 
 import { clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
@@ -96,45 +104,37 @@ export default class TileLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(engine: Engine, input: Action): boolean {
-    switch (input) {
-      case Action.Left:
-        this.masterRatio = clip(
-          slide(this.masterRatio, -0.05),
-          TileLayout.MIN_MASTER_RATIO,
-          TileLayout.MAX_MASTER_RATIO
-        );
-        break;
-      case Action.Right:
-        this.masterRatio = clip(
-          slide(this.masterRatio, +0.05),
-          TileLayout.MIN_MASTER_RATIO,
-          TileLayout.MAX_MASTER_RATIO
-        );
-        break;
-      case Action.Increase:
-        // TODO: define arbitrary constant
-        if (this.numMaster < 10) {
-          this.numMaster += 1;
-        }
-        engine.showNotification(this.description);
-        break;
-      case Action.Decrease:
-        if (this.numMaster > 0) {
-          this.numMaster -= 1;
-        }
-        engine.showNotification(this.description);
-        break;
-      case Action.Rotate:
-        this.parts.rotate(90);
-        break;
-      case Action.RotatePart:
-        this.parts.inner.primary.rotate(90);
-        break;
-      default:
-        return false;
+  public executeAction(engine: Engine, action: Action): void {
+    if (action instanceof DecreaseLayoutMasterAreaSize) {
+      this.masterRatio = clip(
+        slide(this.masterRatio, -0.05),
+        TileLayout.MIN_MASTER_RATIO,
+        TileLayout.MAX_MASTER_RATIO
+      );
+    } else if (action instanceof IncreaseLayoutMasterAreaSize) {
+      this.masterRatio = clip(
+        slide(this.masterRatio, +0.05),
+        TileLayout.MIN_MASTER_RATIO,
+        TileLayout.MAX_MASTER_RATIO
+      );
+    } else if (action instanceof IncreaseMasterAreaWindowCount) {
+      // TODO: define arbitrary constant
+      if (this.numMaster < 10) {
+        this.numMaster += 1;
+      }
+      engine.showNotification(this.description);
+    } else if (action instanceof DecreaseMasterAreaWindowCount) {
+      if (this.numMaster > 0) {
+        this.numMaster -= 1;
+      }
+      engine.showNotification(this.description);
+    } else if (action instanceof Rotate) {
+      this.parts.rotate(90);
+    } else if (action instanceof RotatePart) {
+      this.parts.inner.primary.rotate(90);
+    } else {
+      action.executeWithoutLayoutOverride();
     }
-    return true;
   }
 
   public toString(): string {

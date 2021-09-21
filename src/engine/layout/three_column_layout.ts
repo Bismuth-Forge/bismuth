@@ -9,7 +9,13 @@ import LayoutUtils from "./layout_utils";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Action } from "../../controller/action";
+import {
+  Action,
+  DecreaseLayoutMasterAreaSize,
+  DecreaseMasterAreaWindowCount,
+  IncreaseLayoutMasterAreaSize,
+  IncreaseMasterAreaWindowCount,
+} from "../../controller/action";
 
 import { partitionArrayBySizes, clip, slide } from "../../util/func";
 import Rect from "../../util/rect";
@@ -197,34 +203,25 @@ export default class ThreeColumnLayout implements WindowsLayout {
     return other;
   }
 
-  public handleShortcut(
-    engine: Engine,
-    input: Action,
-    _data?: string
-  ): boolean {
-    switch (input) {
-      case Action.Increase:
-        this.resizeMaster(engine, +1);
-        return true;
-      case Action.Decrease:
-        this.resizeMaster(engine, -1);
-        return true;
-      case Action.Left:
-        this.masterRatio = clip(
-          slide(this.masterRatio, -0.05),
-          ThreeColumnLayout.MIN_MASTER_RATIO,
-          ThreeColumnLayout.MAX_MASTER_RATIO
-        );
-        return true;
-      case Action.Right:
-        this.masterRatio = clip(
-          slide(this.masterRatio, +0.05),
-          ThreeColumnLayout.MIN_MASTER_RATIO,
-          ThreeColumnLayout.MAX_MASTER_RATIO
-        );
-        return true;
-      default:
-        return false;
+  public executeAction(engine: Engine, action: Action): void {
+    if (action instanceof IncreaseMasterAreaWindowCount) {
+      this.resizeMaster(engine, +1);
+    } else if (action instanceof DecreaseMasterAreaWindowCount) {
+      this.resizeMaster(engine, -1);
+    } else if (action instanceof DecreaseLayoutMasterAreaSize) {
+      this.masterRatio = clip(
+        slide(this.masterRatio, -0.05),
+        ThreeColumnLayout.MIN_MASTER_RATIO,
+        ThreeColumnLayout.MAX_MASTER_RATIO
+      );
+    } else if (action instanceof IncreaseLayoutMasterAreaSize) {
+      this.masterRatio = clip(
+        slide(this.masterRatio, +0.05),
+        ThreeColumnLayout.MIN_MASTER_RATIO,
+        ThreeColumnLayout.MAX_MASTER_RATIO
+      );
+    } else {
+      action.executeWithoutLayoutOverride();
     }
   }
 
