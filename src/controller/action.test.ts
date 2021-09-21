@@ -7,14 +7,8 @@
 import { createMock } from "ts-auto-mock";
 import { Engine } from "../engine";
 import { WindowsLayout } from "../engine/layout";
-import {
-  FocusBottomWindow,
-  FocusLeftWindow,
-  FocusNextWindow,
-  FocusPreviousWindow,
-  FocusRightWindow,
-  FocusUpperWindow,
-} from "./action";
+import Window from "../engine/window";
+import * as Action from "./action";
 
 describe("action", () => {
   describe("focus", () => {
@@ -31,7 +25,7 @@ describe("action", () => {
 
     describe("up", () => {
       it("correctly executes", () => {
-        const action = new FocusUpperWindow(fakeEngine);
+        const action = new Action.FocusUpperWindow(fakeEngine);
 
         action.execute();
 
@@ -41,7 +35,7 @@ describe("action", () => {
 
     describe("down", () => {
       it("correctly executes", () => {
-        const action = new FocusBottomWindow(fakeEngine);
+        const action = new Action.FocusBottomWindow(fakeEngine);
 
         action.execute();
 
@@ -51,7 +45,7 @@ describe("action", () => {
 
     describe("left", () => {
       it("correctly executes", () => {
-        const action = new FocusLeftWindow(fakeEngine);
+        const action = new Action.FocusLeftWindow(fakeEngine);
 
         action.execute();
 
@@ -61,7 +55,7 @@ describe("action", () => {
 
     describe("right", () => {
       it("correctly executes", () => {
-        const action = new FocusRightWindow(fakeEngine);
+        const action = new Action.FocusRightWindow(fakeEngine);
 
         action.execute();
 
@@ -71,7 +65,7 @@ describe("action", () => {
 
     describe("next", () => {
       it("correctly executes", () => {
-        const action = new FocusNextWindow(fakeEngine);
+        const action = new Action.FocusNextWindow(fakeEngine);
 
         action.execute();
 
@@ -81,11 +75,87 @@ describe("action", () => {
 
     describe("prev", () => {
       it("correctly executes", () => {
-        const action = new FocusPreviousWindow(fakeEngine);
+        const action = new Action.FocusPreviousWindow(fakeEngine);
 
         action.execute();
 
         expect(fakeEngine.focusOrder).toBeCalledWith(-1);
+      });
+    });
+  });
+
+  describe("move window", () => {
+    let fakeEngine: Engine;
+    let fakeCurrentWindow: Window;
+    beforeEach(() => {
+      fakeCurrentWindow = createMock<Window>();
+
+      fakeEngine = createMock<Engine>({
+        swapOrder: jest.fn(),
+        swapDirOrMoveFloat: jest.fn(),
+        currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
+      });
+    });
+
+    describe("up", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowUp(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.swapDirOrMoveFloat).toBeCalledWith("up");
+      });
+    });
+
+    describe("down", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowDown(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.swapDirOrMoveFloat).toBeCalledWith("down");
+      });
+    });
+
+    describe("left", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowLeft(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.swapDirOrMoveFloat).toBeCalledWith("left");
+      });
+    });
+
+    describe("right", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowRight(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.swapDirOrMoveFloat).toBeCalledWith("right");
+      });
+    });
+
+    describe("next", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowToNextPosition(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.swapOrder).toBeCalledWith(fakeCurrentWindow, 1);
+      });
+    });
+
+    describe("prev", () => {
+      it("correctly executes", () => {
+        const action = new Action.MoveActiveWindowToPreviousPosition(
+          fakeEngine
+        );
+
+        action.execute();
+
+        expect(fakeEngine.swapOrder).toBeCalledWith(fakeCurrentWindow, -1);
       });
     });
   });
