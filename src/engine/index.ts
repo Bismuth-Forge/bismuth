@@ -11,7 +11,6 @@ import Window from "./window";
 import { WindowState } from "./window";
 
 import { Controller } from "../controller";
-import { Action } from "../controller/action";
 
 import { DriverSurface } from "../driver/surface";
 
