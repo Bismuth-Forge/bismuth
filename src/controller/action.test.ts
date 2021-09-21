@@ -159,4 +159,74 @@ describe("action", () => {
       });
     });
   });
+
+  describe("window resize", () => {
+    let fakeEngine: Engine;
+    let fakeCurrentWindow: Window;
+
+    beforeEach(() => {
+      fakeCurrentWindow = createMock<Window>();
+
+      fakeEngine = createMock<Engine>({
+        resizeWindow: jest.fn(),
+        currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
+      });
+    });
+
+    describe("width increase", () => {
+      it("correctly executes", () => {
+        const action = new Action.IncreaseActiveWindowWidth(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.resizeWindow).toBeCalledWith(
+          fakeCurrentWindow,
+          "east",
+          1
+        );
+      });
+    });
+
+    describe("width decrease", () => {
+      it("correctly executes", () => {
+        const action = new Action.DecreaseActiveWindowWidth(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.resizeWindow).toBeCalledWith(
+          fakeCurrentWindow,
+          "east",
+          -1
+        );
+      });
+    });
+
+    describe("height increase", () => {
+      it("correctly executes", () => {
+        const action = new Action.IncreaseActiveWindowHeight(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.resizeWindow).toBeCalledWith(
+          fakeCurrentWindow,
+          "south",
+          1
+        );
+      });
+    });
+
+    describe("height decrease", () => {
+      it("correctly executes", () => {
+        const action = new Action.DecreaseActiveWindowHeight(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.resizeWindow).toBeCalledWith(
+          fakeCurrentWindow,
+          "south",
+          -1
+        );
+      });
+    });
+  });
 });
