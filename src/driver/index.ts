@@ -13,16 +13,7 @@ import { Action } from "../controller/action";
 
 import Window from "../engine/window";
 
-import { WindowsLayoutClass } from "../engine/layout";
 import { WindowState } from "../engine/window";
-
-import MonocleLayout from "../engine/layout/monocle_layout";
-import TileLayout from "../engine/layout/tile_layout";
-import ThreeColumnLayout from "../engine/layout/three_column_layout";
-import StairLayout from "../engine/layout/stair_layout";
-import SpreadLayout from "../engine/layout/spread_layout";
-import FloatingLayout from "../engine/layout/floating_layout";
-import QuarterLayout from "../engine/layout/quarter_layout";
 
 import Config from "../config";
 import Debug from "../util/debug";
@@ -38,7 +29,7 @@ export interface DriverContext {
   showNotification(text: string): void;
 
   bindEvents(): void;
-  bindShortcuts(): void;
+  bindShortcut(action: Action): void;
   manageWindows(): void;
 }
 
@@ -303,14 +294,6 @@ export class KWinDriver implements DriverContext {
   }
 
   /**
-   * Register Bismuth shortcuts
-   */
-  public bindShortcuts(): void {
-    this.bindMainShortcuts();
-    this.bindLayoutShortcuts();
-  }
-
-  /**
    * Manage the windows
    */
   public manageWindows(): void {
@@ -343,67 +326,18 @@ export class KWinDriver implements DriverContext {
     this.qml.popupDialog.show(text);
   }
 
-  private bindMainShortcuts(): void {
-    const bind = (seq: string, title: string, action: Action): void => {
-      title = "Bismuth: " + title;
-      seq = "Meta+" + seq;
-      this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
-        this.enter(() => this.controller.onShortcut(action));
-      });
-    };
+  public bindShortcut(action: Action): void {
+    const shortcutUITitle = `Bismuth: ${action.name}`;
 
-    bind("J", "Down/Next", Action.Down);
-    bind("K", "Up/Prev", Action.Up);
-    bind("H", "Left", Action.Left);
-    bind("L", "Right", Action.Right);
-
-    bind("Shift+J", "Move Down/Next", Action.ShiftDown);
-    bind("Shift+K", "Move Up/Prev", Action.ShiftUp);
-    bind("Shift+H", "Move Left", Action.ShiftLeft);
-    bind("Shift+L", "Move Right", Action.ShiftRight);
-
-    bind("Ctrl+J", "Grow Height", Action.GrowHeight);
-    bind("Ctrl+K", "Shrink Height", Action.ShrinkHeight);
-    bind("Ctrl+H", "Shrink Width", Action.ShrinkWidth);
-    bind("Ctrl+L", "Grow Width", Action.GrowWidth);
-
-    bind("I", "Increase", Action.Increase);
-    bind("D", "Decrease", Action.Decrease);
-
-    bind("F", "Float", Action.ToggleFloat);
-    bind("Shift+F", "Float All", Action.ToggleFloatAll);
-    bind("", "Cycle Layout", Action.NextLayout); // TODO: remove this shortcut
-    bind("\\", "Next Layout", Action.NextLayout);
-    bind("|", "Previous Layout", Action.PreviousLayout);
-
-    bind("R", "Rotate", Action.Rotate);
-    bind("Shift+R", "Rotate Part", Action.RotatePart);
-
-    bind("Return", "Set master", Action.SetMaster);
-  }
-
-  private bindLayoutShortcuts(): void {
-    const bind = (
-      seq: string,
-      title: string,
-      layoutClass: WindowsLayoutClass
-    ): void => {
-      title = "Bismuth: " + title + " Layout";
-      seq = seq !== "" ? "Meta+" + seq : "";
-      this.kwinApi.KWin.registerShortcut(title, "", seq, () => {
-        this.enter(() =>
-          this.controller.onShortcut(Action.SetLayout, layoutClass.id)
-        );
-      });
-    };
-
-    bind("T", "Tile", TileLayout);
-    bind("M", "Monocle", MonocleLayout);
-    bind("", "Three Column", ThreeColumnLayout);
-    bind("", "Spread", SpreadLayout);
-    bind("", "Stair", StairLayout);
-    bind("", "Floating", FloatingLayout);
-    bind("", "Quarter", QuarterLayout);
+    console.log(`Registering ${shortcutUITitle}`);
+    this.kwinApi.KWin.registerShortcut(
+      shortcutUITitle,
+      "",
+      action.defaultKeybinding,
+      (): void => {
+        this.enter(() => action.execute());
+      }
+    );
   }
 
   /**

@@ -9,7 +9,11 @@ import { Engine } from "..";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { Action } from "../../controller/action";
+import {
+  Action,
+  DecreaseMasterAreaWindowCount,
+  IncreaseMasterAreaWindowCount,
+} from "../../controller/action";
 import { Controller } from "../../controller";
 
 import Rect from "../../util/rect";
@@ -95,23 +99,15 @@ export default class CascadeLayout implements WindowsLayout {
     return new CascadeLayout(this.dir);
   }
 
-  public handleShortcut(
-    engine: Engine,
-    input: Action,
-    _data?: string
-  ): boolean {
-    switch (input) {
-      case Action.Increase:
-        this.dir = (this.dir + 1 + 8) % 8;
-        engine.showNotification(this.description);
-        break;
-      case Action.Decrease:
-        this.dir = (this.dir - 1 + 8) % 8;
-        engine.showNotification(this.description);
-        break;
-      default:
-        return false;
+  public executeAction(engine: Engine, action: Action): void {
+    if (action instanceof IncreaseMasterAreaWindowCount) {
+      this.dir = (this.dir + 1 + 8) % 8;
+      engine.showNotification(this.description);
+    } else if (action instanceof DecreaseMasterAreaWindowCount) {
+      this.dir = (this.dir - 1 + 8) % 8;
+      engine.showNotification(this.description);
+    } else {
+      action.executeWithoutLayoutOverride();
     }
-    return true;
   }
 }

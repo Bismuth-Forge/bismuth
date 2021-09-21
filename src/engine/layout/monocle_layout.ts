@@ -10,7 +10,15 @@ import { WindowState } from "../window";
 
 import { KWinWindow } from "../../driver/window";
 
-import { Action } from "../../controller/action";
+import {
+  Action,
+  FocusBottomWindow,
+  FocusLeftWindow,
+  FocusNextWindow,
+  FocusPreviousWindow,
+  FocusRightWindow,
+  FocusUpperWindow,
+} from "../../controller/action";
 
 import Rect from "../../util/rect";
 import Config from "../../config";
@@ -60,26 +68,22 @@ export default class MonocleLayout implements WindowsLayout {
     return this;
   }
 
-  public handleShortcut(
-    engine: Engine,
-    input: Action,
-    _data?: string
-  ): boolean {
-    switch (input) {
-      case Action.Up:
-      case Action.FocusUp:
-      case Action.Left:
-      case Action.FocusLeft:
-        engine.focusOrder(-1);
-        return true;
-      case Action.Down:
-      case Action.FocusDown:
-      case Action.Right:
-      case Action.FocusRight:
-        engine.focusOrder(1);
-        return true;
-      default:
-        return false;
+  public executeAction(engine: Engine, action: Action): void {
+    if (
+      action instanceof FocusUpperWindow ||
+      action instanceof FocusLeftWindow ||
+      action instanceof FocusPreviousWindow
+    ) {
+      engine.focusOrder(-1);
+    } else if (
+      action instanceof FocusBottomWindow ||
+      action instanceof FocusRightWindow ||
+      action instanceof FocusNextWindow
+    ) {
+      engine.focusOrder(1);
+    } else {
+      console.log("Executing from Monocle regular action!");
+      action.executeWithoutLayoutOverride();
     }
   }
 

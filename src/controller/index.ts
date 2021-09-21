@@ -3,8 +3,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { Action } from "./action";
-
 import { Engine, TilingEngine } from "../engine";
 import Window from "../engine/window";
 import { WindowState } from "../engine/window";
@@ -14,6 +12,8 @@ import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
 import Debug from "../util/debug";
+
+import * as Action from "./action";
 
 /**
  * Entry point of the script (apart from QML). Handles the user input (shortcuts)
@@ -140,13 +140,6 @@ export interface Controller {
   onWindowFocused(window: Window): void;
 
   /**
-   * React to a particular keyboard shortcut action from the user.
-   * @param input the shortcut action. For example focus the next window, or change the layout.
-   * @param data the action optional data, that it could held. For example the layout name to which user want to change.
-   */
-  onShortcut(input: Action, data?: any): void;
-
-  /**
    * Ask engine to manage the window
    * @param win the window which needs to be managed.
    */
@@ -176,7 +169,7 @@ export class TilingController implements Controller {
     this.debug.debug(() => `Config: ${this.config}`);
 
     this.driver.bindEvents();
-    this.driver.bindShortcuts();
+    this.bindShortcuts();
 
     this.driver.manageWindows();
 
@@ -348,140 +341,55 @@ export class TilingController implements Controller {
     window.timestamp = new Date().getTime();
   }
 
-  public onShortcut(input: Action, data?: string): void {
-    if (this.config.directionalKeyMode === "focus") {
-      switch (input) {
-        case Action.Up:
-          input = Action.FocusUp;
-          break;
-        case Action.Down:
-          input = Action.FocusDown;
-          break;
-        case Action.Left:
-          input = Action.FocusLeft;
-          break;
-        case Action.Right:
-          input = Action.FocusRight;
-          break;
-
-        case Action.ShiftUp:
-          input = Action.SwapUp;
-          break;
-        case Action.ShiftDown:
-          input = Action.SwapDown;
-          break;
-        case Action.ShiftLeft:
-          input = Action.SwapLeft;
-          break;
-        case Action.ShiftRight:
-          input = Action.SwapRight;
-          break;
-      }
-    }
-
-    if (this.engine.handleLayoutShortcut(input, data)) {
-      this.engine.arrange();
-      return;
-    }
-
-    const window = this.currentWindow;
-    switch (input) {
-      case Action.Up:
-        this.engine.focusOrder(-1);
-        break;
-      case Action.Down:
-        this.engine.focusOrder(+1);
-        break;
-
-      case Action.FocusUp:
-        this.engine.focusDir("up");
-        break;
-      case Action.FocusDown:
-        this.engine.focusDir("down");
-        break;
-      case Action.FocusLeft:
-        this.engine.focusDir("left");
-        break;
-      case Action.FocusRight:
-        this.engine.focusDir("right");
-        break;
-
-      case Action.GrowWidth:
-        if (window) {
-          this.engine.resizeWindow(window, "east", 1);
-        }
-        break;
-      case Action.ShrinkWidth:
-        if (window) {
-          this.engine.resizeWindow(window, "east", -1);
-        }
-        break;
-      case Action.GrowHeight:
-        if (window) {
-          this.engine.resizeWindow(window, "south", 1);
-        }
-        break;
-      case Action.ShrinkHeight:
-        if (window) {
-          this.engine.resizeWindow(window, "south", -1);
-        }
-        break;
-
-      case Action.ShiftUp:
-        if (window) {
-          this.engine.swapOrder(window, -1);
-        }
-        break;
-      case Action.ShiftDown:
-        if (window) {
-          this.engine.swapOrder(window, +1);
-        }
-        break;
-
-      case Action.SwapUp:
-        this.engine.swapDirOrMoveFloat("up");
-        break;
-      case Action.SwapDown:
-        this.engine.swapDirOrMoveFloat("down");
-        break;
-      case Action.SwapLeft:
-        this.engine.swapDirOrMoveFloat("left");
-        break;
-      case Action.SwapRight:
-        this.engine.swapDirOrMoveFloat("right");
-        break;
-
-      case Action.SetMaster:
-        if (window) {
-          this.engine.setMaster(window);
-        }
-        break;
-      case Action.ToggleFloat:
-        if (window) {
-          this.engine.toggleFloat(window);
-        }
-        break;
-      case Action.ToggleFloatAll:
-        this.engine.floatAll(this.currentSurface);
-        break;
-
-      case Action.NextLayout:
-        this.engine.cycleLayout(1);
-        break;
-      case Action.PreviousLayout:
-        this.engine.cycleLayout(-1);
-        break;
-      case Action.SetLayout:
-        if (typeof data === "string") {
-          this.engine.setLayout(data);
-        }
-        break;
-    }
-
-    this.engine.arrange();
-  }
-
   public manageWindow(win: Window): void {
     this.engine.manage(win);
+  }
+
+  private bindShortcuts(): void {
+    const allPossibleActions = [
+      new Action.FocusNextWindow(this.engine),
+      new Action.FocusPreviousWindow(this.engine),
+      new Action.FocusUpperWindow(this.engine),
+      new Action.FocusBottomWindow(this.engine),
+      new Action.FocusLeftWindow(this.engine),
+      new Action.FocusRightWindow(this.engine),
+      new Action.MoveActiveWindowToNextPosition(this.engine),
+
+      new Action.MoveActiveWindowToPreviousPosition(this.engine),
+      new Action.MoveActiveWindowUp(this.engine),
+      new Action.MoveActiveWindowDown(this.engine),
+      new Action.MoveActiveWindowLeft(this.engine),
+      new Action.MoveActiveWindowRight(this.engine),
+
+      new Action.IncreaseActiveWindowWidth(this.engine),
+      new Action.IncreaseActiveWindowHeight(this.engine),
+      new Action.DecreaseActiveWindowWidth(this.engine),
+      new Action.DecreaseActiveWindowHeight(this.engine),
+
+      new Action.IncreaseMasterAreaWindowCount(this.engine),
+      new Action.DecreaseMasterAreaWindowCount(this.engine),
+      new Action.IncreaseLayoutMasterAreaSize(this.engine),
+      new Action.DecreaseLayoutMasterAreaSize(this.engine),
+
+      new Action.ToggleActiveWindowFloating(this.engine),
+      new Action.PushActiveWindowIntoMasterAreaFront(this.engine),
+
+      new Action.SwitchToNextLayout(this.engine),
+      new Action.SwitchToPreviousLayout(this.engine),
+      new Action.SetTileLayout(this.engine),
+      new Action.SetMonocleLayout(this.engine),
+      new Action.SetThreeColumnLayout(this.engine),
+      new Action.SetStairLayout(this.engine),
+      new Action.SetSpreadLayout(this.engine),
+      new Action.SetFloatingLayout(this.engine),
+      new Action.SetQuarterLayout(this.engine),
+
+      new Action.Rotate(this.engine),
+      new Action.RotatePart(this.engine),
+    ];
+
+    for (const action of allPossibleActions) {
+      this.driver.bindShortcut(action);
+    }
   }
 }
