@@ -229,4 +229,54 @@ describe("action", () => {
       });
     });
   });
+
+  describe("master area", () => {
+    let fakeEngine: Engine;
+
+    beforeEach(() => {
+      fakeEngine = createMock<Engine>({
+        showNotification: jest.fn(),
+      });
+    });
+
+    describe("increase windows count", () => {
+      it("shows a note that there is no master area in general case", () => {
+        const action = new Action.IncreaseMasterAreaWindowCount(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.showNotification).toBeCalledWith("No Master Area");
+      });
+    });
+
+    describe("decrease windows count", () => {
+      it("shows a note that there is no master area in general case", () => {
+        const action = new Action.DecreaseMasterAreaWindowCount(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.showNotification).toBeCalledWith("No Master Area");
+      });
+    });
+
+    describe("increase size", () => {
+      it("shows a note that there is no master area in general case", () => {
+        const action = new Action.IncreaseLayoutMasterAreaSize(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.showNotification).toBeCalledWith("No Master Area");
+      });
+    });
+
+    describe("decrease size", () => {
+      it("shows a note that there is no master area in general case", () => {
+        const action = new Action.DecreaseLayoutMasterAreaSize(fakeEngine);
+
+        action.execute();
+
+        expect(fakeEngine.showNotification).toBeCalledWith("No Master Area");
+      });
+    });
+  });
 });
