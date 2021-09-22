@@ -374,8 +374,8 @@ export class TilingEngine implements Engine {
     }
 
     const idx = visibles.indexOf(window);
-    if (!window || idx < 0) {
-      /* unmanaged window -> focus master */
+    if (!window) {
+      /* this probably shouldn't happen since we already checked for null */
       this.controller.currentWindow = visibles[0];
       return;
     }
