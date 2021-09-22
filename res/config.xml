@@ -175,11 +175,6 @@
         <default>0</default>
     </entry>
 
-    <entry name="pollMouseXdotool" type="Bool">
-	    <label>Poll actual mouse position using xdotool (for tile swapping, for example)</label>
-        <default>false</default>
-    </entry>
-
     <entry name="limitTileWidth" type="Bool">
 	    <label>Limit the width of tiles</label>
         <default>false</default>
