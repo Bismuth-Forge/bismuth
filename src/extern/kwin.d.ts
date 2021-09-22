@@ -254,13 +254,6 @@ declare namespace KWin {
     onAllDesktops: boolean;
 
     /**
-     * By how much the window wishes to grow/shrink at least. Usually QSize(1,1).
-     * MAY BE DISOBEYED BY THE WM! It's only for information, do NOT rely on it at all.
-     * WARNING: X11 only. Needs to be replaced in Bismuth in order to support Wayland
-     */
-    basicUnit: QSize;
-
-    /**
      * @see active
      */
     activeChanged: QSignal;

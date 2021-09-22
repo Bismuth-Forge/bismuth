@@ -215,9 +215,11 @@ export class KWinWindow implements DriverWindow {
     );
   }
 
-  //#region Private Methods
-
-  /** apply various resize hints to the given geometry */
+  /**
+   * Apply various resize hints to the given geometry
+   * @param geometry
+   * @returns
+   */
   private adjustGeometry(geometry: Rect): Rect {
     let width = geometry.width;
     let height = geometry.height;
@@ -227,17 +229,6 @@ export class KWinWindow implements DriverWindow {
       width = this.client.geometry.width;
       height = this.client.geometry.height;
     } else {
-      /* respect resize increment */
-      if (
-        !(
-          this.client.basicUnit.width === 1 &&
-          this.client.basicUnit.height === 1
-        )
-      ) {
-        /* NOT free-size */
-        [width, height] = this.applyResizeIncrement(geometry);
-      }
-
       /* respect min/max size limit */
       width = clip(width, this.client.minSize.width, this.client.maxSize.width);
       height = clip(
@@ -249,34 +240,4 @@ export class KWinWindow implements DriverWindow {
 
     return new Rect(geometry.x, geometry.y, width, height);
   }
-
-  private applyResizeIncrement(geom: Rect): [number, number] {
-    const unit = this.client.basicUnit;
-    const base = this.client.minSize;
-
-    const padWidth = this.client.geometry.width - this.client.clientSize.width;
-    const padHeight =
-      this.client.geometry.height - this.client.clientSize.height;
-
-    const quotWidth = Math.floor(
-      (geom.width - base.width - padWidth) / unit.width
-    );
-    const quotHeight = Math.floor(
-      (geom.height - base.height - padHeight) / unit.height
-    );
-
-    const newWidth = base.width + unit.width * quotWidth + padWidth;
-    const newHeight = base.height + unit.height * quotHeight + padHeight;
-
-    // debugObj(() => ["applyResizeIncrement", {
-    //     // tslint:disable-next-line:object-literal-sort-keys
-    //     unit, base, geom,
-    //     pad: [padWidth, padHeight].join("x"),
-    //     size: [newWidth, newHeight].join("x"),
-    // }]);
-
-    return [newWidth, newHeight];
-  }
-
-  //#endregion
 }
