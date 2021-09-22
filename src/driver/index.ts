@@ -68,6 +68,7 @@ export class KWinDriver implements DriverContext {
 
   public get currentWindow(): Window | null {
     const client = this.kwinApi.workspace.activeClient;
+    console.log(`Active client: ${client}`);
     return client ? this.windowMap.get(client) : null;
   }
 
@@ -191,28 +192,19 @@ export class KWinDriver implements DriverContext {
     };
 
     const onClientAdded = (client: KWin.Client): void => {
-      // NOTE: windowShown can be fired in various situations.
-      // We need only the first one - when window is created.
-      let handled = false;
-      const handler = (): void => {
-        if (handled) {
-          return;
-        }
-        handled = true;
+      console.log(`Client added: ${client}`);
 
-        const window = this.windowMap.add(client);
-        this.controller.onWindowAdded(window);
-        if (window.state === WindowState.Unmanaged) {
-          this.windowMap.remove(client);
-        } else {
-          this.bindWindowEvents(window, client);
-        }
-
-        client.windowShown.disconnect(wrapper);
-      };
-
-      const wrapper = this.connect(client.windowShown, handler);
-      qmlSetTimeout(handler, 50);
+      const window = this.windowMap.add(client);
+      this.controller.onWindowAdded(window);
+      if (window.state === WindowState.Unmanaged) {
+        console.log(
+          `Window becomes unmanaged and gets removed :( The client was ${client}`
+        );
+        this.windowMap.remove(client);
+      } else {
+        console.log(`Client is ok, can manage. Bind events now...`);
+        this.bindWindowEvents(window, client);
+      }
     };
 
     const onClientRemoved = (client: KWin.Client): void => {
