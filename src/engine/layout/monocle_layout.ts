@@ -45,19 +45,6 @@ export default class MonocleLayout implements WindowsLayout {
         : WindowState.Tiled;
       tile.geometry = area;
     });
-
-    /* KWin-specific `monocleMinimizeRest` option */
-    if (this.config.monocleMinimizeRest) {
-      const tiles = [...tileables];
-      const current = controller.currentWindow;
-      if (current && current.tiled) {
-        tiles.forEach((window) => {
-          if (window !== current) {
-            (window.window as KWinWindow).client.minimized = true;
-          }
-        });
-      }
-    }
   }
 
   public clone(): this {
