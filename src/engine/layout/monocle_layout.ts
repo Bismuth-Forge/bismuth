@@ -22,7 +22,6 @@ import {
 
 import Rect from "../../util/rect";
 import Config from "../../config";
-import qmlSetTimeout from "../../util/timer";
 import { Controller } from "../../controller";
 import { Engine } from "..";
 
@@ -50,16 +49,14 @@ export default class MonocleLayout implements WindowsLayout {
     /* KWin-specific `monocleMinimizeRest` option */
     if (this.config.monocleMinimizeRest) {
       const tiles = [...tileables];
-      qmlSetTimeout(() => {
-        const current = controller.currentWindow;
-        if (current && current.tiled) {
-          tiles.forEach((window) => {
-            if (window !== current) {
-              (window.window as KWinWindow).client.minimized = true;
-            }
-          });
-        }
-      }, 50);
+      const current = controller.currentWindow;
+      if (current && current.tiled) {
+        tiles.forEach((window) => {
+          if (window !== current) {
+            (window.window as KWinWindow).client.minimized = true;
+          }
+        });
+      }
     }
   }
 

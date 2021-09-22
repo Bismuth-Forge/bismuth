@@ -16,7 +16,6 @@ import { WindowState } from "../engine/window";
 
 import Config from "../config";
 import Debug from "../util/debug";
-import { TimersPool } from "../util/timer";
 
 export interface DriverContext {
   readonly screens: DriverSurface[];
@@ -147,9 +146,6 @@ export class KWinDriver implements DriverContext {
     this.entered = false;
     this.qml = qmlObjects;
     this.kwinApi = kwinApi;
-
-    // Init timers singleton, so that we can use qmlSetTimeout freely
-    TimersPool.instance(this.qml.scriptRoot, this.debug);
   }
 
   /**
