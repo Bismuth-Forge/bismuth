@@ -10,7 +10,6 @@ declare namespace Bismuth {
     export interface Main {
       scriptRoot: object;
       activityInfo: Plasma.TaskManager.ActivityInfo;
-      mousePoller: Plasma.PlasmaCore.DataSource;
       popupDialog: PopupDialog;
     }
 
@@ -22,7 +21,7 @@ declare namespace Bismuth {
 
 // NOTICE: We can not declare the globals, since we use
 // Node.js when building tests. However, the globals we use
-// in production come from Qt JavaScript Envirinment and
+// in production come from Qt JavaScript Environment and
 // not from Node.js and therefore they could mismatch.
 // Let's hope we will not run into one of these situations...
 //

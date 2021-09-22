@@ -30,11 +30,6 @@ export interface Controller {
   readonly screens: DriverSurface[];
 
   /**
-   * Current cursor position.
-   */
-  readonly cursorPosition: [number, number] | null;
-
-  /**
    * Current active window. In other words the window, that has focus.
    */
   currentWindow: Window | null;
@@ -196,10 +191,6 @@ export class TilingController implements Controller {
     this.driver.currentSurface = value;
   }
 
-  public get cursorPosition(): [number, number] | null {
-    return this.driver.cursorPosition;
-  }
-
   public showNotification(text: string): void {
     this.driver.showNotification(text);
   }
@@ -219,6 +210,7 @@ export class TilingController implements Controller {
 
   public onWindowAdded(window: Window): void {
     this.debug.debugObj(() => ["onWindowAdded", { window }]);
+    console.log(`New window added: ${window}`);
     this.engine.manage(window);
 
     /* move window to next surface if the current surface is "full" */
@@ -241,6 +233,8 @@ export class TilingController implements Controller {
 
   public onWindowRemoved(window: Window): void {
     this.debug.debugObj(() => ["onWindowRemoved", { window }]);
+    console.log(`Window remove: ${window}`);
+
     this.engine.unmanage(window);
     this.engine.arrange();
   }
@@ -259,11 +253,11 @@ export class TilingController implements Controller {
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
       const tiles = this.engine.windows.getVisibleTiles(this.currentSurface);
-      const cursorPos = this.cursorPosition || window.actualGeometry.center;
+      const windowCenter = window.actualGeometry.center;
 
       const targets = tiles.filter(
         (tile) =>
-          tile !== window && tile.actualGeometry.includesPoint(cursorPos)
+          tile !== window && tile.actualGeometry.includesPoint(windowCenter)
       );
 
       if (targets.length === 1) {
@@ -306,6 +300,7 @@ export class TilingController implements Controller {
 
   public onWindowResizeOver(window: Window): void {
     this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
+    console.log(`Window resize is over: ${window}`);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange();

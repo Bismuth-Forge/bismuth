@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import { DriverSurface } from "./surface";
-import KWinMousePoller from "./kwin_mouse_poller";
 import { KWinSurface } from "./surface";
 import { KWinWindow } from "./window";
 
@@ -17,11 +16,10 @@ import { WindowState } from "../engine/window";
 
 import Config from "../config";
 import Debug from "../util/debug";
-import qmlSetTimeout, { TimersPool } from "../util/timer";
+import { TimersPool } from "../util/timer";
 
 export interface DriverContext {
   readonly screens: DriverSurface[];
-  readonly cursorPosition: [number, number] | null;
 
   currentSurface: DriverSurface;
   currentWindow: Window | null;
@@ -97,14 +95,9 @@ export class KWinDriver implements DriverContext {
     return screensArr;
   }
 
-  public get cursorPosition(): [number, number] | null {
-    return this.mousePoller.mousePosition;
-  }
-
   private controller: Controller;
   private windowMap: WrapperMap<KWin.Client, Window>;
   private entered: boolean;
-  private mousePoller: KWinMousePoller;
 
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
@@ -152,7 +145,6 @@ export class KWinDriver implements DriverContext {
         )
     );
     this.entered = false;
-    this.mousePoller = new KWinMousePoller(qmlObjects, this.config, this.debug);
     this.qml = qmlObjects;
     this.kwinApi = kwinApi;
 
@@ -389,11 +381,9 @@ export class KWinDriver implements DriverContext {
       if (moving !== client.move) {
         moving = client.move;
         if (moving) {
-          this.mousePoller.start();
           this.controller.onWindowMoveStart(window);
         } else {
           this.controller.onWindowMoveOver(window);
-          this.mousePoller.stop();
         }
       }
       if (resizing !== client.resize) {
