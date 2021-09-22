@@ -19,7 +19,6 @@ import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import Debug from "../util/debug";
-import qmlSetTimeout from "../util/timer";
 import { WindowsLayout } from "./layout";
 
 export type Direction = "up" | "down" | "left" | "right";
@@ -318,11 +317,7 @@ export class TilingEngine implements Engine {
    */
   public enforceSize(window: Window): void {
     if (window.tiled && !window.actualGeometry.equals(window.geometry)) {
-      qmlSetTimeout(() => {
-        if (window.tiled) {
-          window.commit();
-        }
-      }, 10);
+      window.commit();
     }
   }
 
