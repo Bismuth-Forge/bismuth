@@ -1,36 +1,45 @@
 <!--
-  SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
+  SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
   SPDX-License-Identifier: MIT
 -->
 
 ---
 
 name: Bug report
-about: Create a report to help us improve
-title: ""
+about: Create a report that something is not working as intended
+title: "[BUG]: "
 labels: bug
-assignees: ""
+assignees: ''
 
 ---
 
-**Symptom**
-A simple description of the problem you're experiencing.
+## Summary
 
-**How to Reproduce**
+Quick summary of the problem
 
-1. Launch '....'
-2. Press key '....'
-3. See error
+## To Reproduce
 
-**Expected behavior**
-A concise description of what you expected to happen.
+Steps to reproduce the behavior:
 
-**Environment**
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-- Distro: [e.g. Ubuntu 18.04, Debian 9.5, Archlinux]
-- KWin version: [e.g. 5.14.2]
-- Krohnkite version: [e.g. 0.1, git commit]
-- List of KWin scripts in use: [e.g. MinimizeAll, VideoWall]
+## Expected behavior
 
-**Notes**
-Anything that you want to tell developers about.
+A clear and concise description of what you expected to happen.
+
+## Screenshots
+
+If applicable, add screenshots to help explain your problem.
+
+## System info
+
+Platform: X11/Wayland
+Plasma Version: 5.23/master
+Bismuth version: 1.0/master (please add latest commit hash)
+
+## Additional context
+
+Add any other context about the problem here.
