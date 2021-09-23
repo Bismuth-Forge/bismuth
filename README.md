@@ -79,10 +79,10 @@ section](TWEAKS.md).
 | Decrease Window Width             | Meta + Ctrl + H  |
 | Decrease Window Height            | Meta + Ctrl + K  |
 |                                   |                  |
-| Increase Master Area Window Count | _None_           |
-| Decrease Master Area Window Count | _None_           |
-| Increase Master Area Size         | Meta + I         |
-| Decrease Master Area Size         | Meta + D         |
+| Increase Master Area Window Count | Meta + I         |
+| Decrease Master Area Window Count | Meta + D         |
+| Increase Master Area Size         | _None_           |
+| Decrease Master Area Size         | _None_           |
 | Push Window Into Master Area      | Meta + Return    |
 |                                   |                  |
 | Toggle Active Window Floating     | Meta + F         |
@@ -95,7 +95,7 @@ section](TWEAKS.md).
 | Set Three Column Layout           | _None_           |
 | Set Spread Layout                 | _None_           |
 | Set Stair Layout                  | _None_           |
-| Set Floating Layout               | _None_           |
+| Set Floating Layout               | Meta + Shift + F |
 | Set Quarter Layout                | _None_           |
 |                                   |                  |
 | Rotate                            | Meta + R         |
