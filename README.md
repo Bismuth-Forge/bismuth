@@ -6,7 +6,9 @@
 
 # 🌈 Bismuth
 
-[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier) [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git)](https://conventionalcommits.org)
+[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier) 
+[![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
 
 Arrange your windows automatically and switch between them using keyboard shortcuts. All of that with different layouts and
 without a complicated setup of classic tiling window managers (i3, dwm or XMonad). Just install the script on any
