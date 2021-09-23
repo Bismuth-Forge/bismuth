@@ -509,8 +509,8 @@ export class SetFloatingLayout extends SetCurrentLayout {
     super(
       engine,
       "FloatingLayout ",
-      "toggle_stair_layout",
-      "Toggle Stair Layout",
+      "toggle_float_layout",
+      "Toggle Floating Layout",
       "Meta+Shift+F"
     );
   }
