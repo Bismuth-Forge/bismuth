@@ -6,6 +6,30 @@
 
 # Tweaks
 
+## Enabling User-Configuration
+
+If you've installed the script from KDE Store, you need to enable configuration button via:
+
+    mkdir -p ~/.local/share/kservices5/
+    ln -s ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
+
+A configuration button will appear in `KWin Scripts` in `System Settings`.
+
+![config button shown](img/scripts_kcm_item.png)
+
+Track this issue [here](#56).
+
+## Making changes to configuration
+
+To make changes effective, **the script must be reactivated**:
+
+1. On `KWin Scripts` dialog, untick Bismuth
+2. Hit `Apply`
+3. Tick Bismuth
+4. Hit `Apply` again
+
+Track this issue [here](#22).
+
 ## Setting Up for Multi-Screen
 
 Bismuth supports multi-screen setup, but KWin has to be configured to unlock

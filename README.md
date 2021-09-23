@@ -41,7 +41,7 @@ Project goals are the following:
 
 ## 🔧 Installation
 
-Install script via script:
+Install script from source:
 
     npm install # Installs dependencies for building
     npm run script-install
@@ -50,34 +50,11 @@ To uninstall:
 
     npm run script-uninstall
 
-### Enabling User-Configuration
-
-<!-- TODO: This section should not exist in ideal world. -->
-
-[It is reported][kwinconf] that a manual step is required to enable user
-configuration of KWin scripts. This is a limitation of KWin scripting.
-
-To enable configuration, you must perform the following in command-line:
-
-    mkdir -p ~/.local/share/kservices5/
-    ln -s ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
-
-A configuration button will appear in `KWin Scripts` in `System Settings`.
-
-![config button shown](img/scripts_kcm_item.png)
-
-To make changes effective, **the script must be reactivated**:
-
-1. On `KWin Scripts` dialog, untick Bismuth
-2. `Apply`
-3. tick Bismuth
-4. `Apply`
-
-[kwinconf]: https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357
-
 ### Tweaks
 
-Proceed to the [TWEAKS section](TWEAKS.md).
+Note, that if you've installed the script from the KWin scripts installation
+dialog, you need to make a couple of manual fixes and tweaks. See [Tweaks
+section](TWEAKS.md).
 
 ## ⌨️ Actions and Default Keyboard Shortcuts
 
