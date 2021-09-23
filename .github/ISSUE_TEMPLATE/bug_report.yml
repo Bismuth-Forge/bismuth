@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: MIT
+---
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: [bug]
+# assignees:
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Quick summary of the problem
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+    validations:
+      required: false
+  - type: input
+    id: script-version
+    attributes:
+      label: Bismuth version
+    validations:
+      required: true
+  - type: input
+    id: plasma-version
+    attributes:
+      label: KDE Plasma version
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: The platform KWin is running on
+      options:
+        - Wayland
+        - X11
+    validations:
+      required: true
+  - type: textarea
+    id: misc
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false

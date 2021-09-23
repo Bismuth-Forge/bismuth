@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: MIT
+---
+name: Feature request
+description: Suggest an idea for a new feature
+title: "[FEATURE]: "
+labels: [enhancement]
+# assignees: ''
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Is your feature request related to a problem? Please describe.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: A clear and concise description of what you want to happen
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false
+  - type: textarea
+    id: misc
+    attributes:
+      label: Additional info
+    validations:
+      required: false
