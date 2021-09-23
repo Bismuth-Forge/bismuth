@@ -7,7 +7,7 @@
 # 🌈 Bismuth
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git)](https://conventionalcommits.org)
-[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier) 
+[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier)
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
 
 Arrange your windows automatically and switch between them using keyboard shortcuts. All of that with different layouts and
@@ -79,28 +79,47 @@ To make changes effective, **the script must be reactivated**:
 
 Proceed to the [TWEAKS section](TWEAKS.md).
 
-## ⌨️ Default Key Bindings
+## ⌨️ Actions and Default Keyboard Shortcuts
 
-| Key              | Action             |
-| ---------------- | ------------------ |
-| Meta + J         | Focus Down/Next    |
-| Meta + K         | Focus Up/Previous  |
-| Meta + H         | Left               |
-| Meta + L         | Right              |
-|                  |                    |
-| Meta + Shift + J | Move Down/Next     |
-| Meta + Shift + K | Move Up/Previous   |
-| Meta + Shift + H | Move Left          |
-| Meta + Shift + L | Move Right         |
-|                  |                    |
-| Meta + I         | Increase           |
-| Meta + D         | Decrease           |
-| Meta + F         | Toggle Floating    |
-| Meta + \         | Cycle Layout       |
-|                  |                    |
-| Meta + Return    | Set as Master      |
-|                  |                    |
-| Meta + T         | Use Tile Layout    |
-| Meta + M         | Use Monocle Layout |
-| _unbound_        | Use Spread Layout  |
-| _unbound_        | Use Stair Layout   |
+| Action                            | Key              |
+| --------------------------------- | ---------------- |
+| Focus Next Window                 | _None_           |
+| Focus Previous Window             | _None_           |
+| Focus Upper Window                | Meta + J         |
+| Focus Bottom Window               | Meta + K         |
+| Focus Left Window                 | Meta + H         |
+| Focus Right Window                | Meta + L         |
+|                                   |                  |
+| Move Window To Next Position      | _None_           |
+| Move Window To Previous Position  | _None_           |
+| Move Window Up                    | Meta + Shift + J |
+| Move Window Down                  | Meta + Shift + K |
+| Move Window Left                  | Meta + Shift + H |
+| Move Window Right                 | Meta + Shift + L |
+|                                   |                  |
+| Increase Window Width             | Meta + Ctrl + L  |
+| Increase Window Height            | Meta + Ctrl + J  |
+| Decrease Window Width             | Meta + Ctrl + H  |
+| Decrease Window Height            | Meta + Ctrl + K  |
+|                                   |                  |
+| Increase Master Area Window Count | _None_           |
+| Decrease Master Area Window Count | _None_           |
+| Increase Master Area Size         | Meta + I         |
+| Decrease Master Area Size         | Meta + D         |
+| Push Window Into Master Area      | Meta + Return    |
+|                                   |                  |
+| Toggle Active Window Floating     | Meta + F         |
+|                                   |                  |
+| Switch To Next Layout             | Meta + \         |
+| Switch To Previous Layout         | Meta + \|        |
+|                                   |                  |
+| Set Tile Layout                   | Meta + T         |
+| Set Monocle Layout                | Meta + M         |
+| Set Three Column Layout           | _None_           |
+| Set Spread Layout                 | _None_           |
+| Set Stair Layout                  | _None_           |
+| Set Floating Layout               | _None_           |
+| Set Quarter Layout                | _None_           |
+|                                   |                  |
+| Rotate                            | Meta + R         |
+| Rotate Part                       | Meta + Shift + R |
