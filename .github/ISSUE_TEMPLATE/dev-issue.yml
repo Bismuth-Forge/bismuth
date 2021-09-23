@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: MIT
+---
+name: Development Issue
+description: Non user-facing issue, e.g. refactoring, build or ci improvements
+title: "[DEV]: "
+labels: [dev]
+# assignees: ''
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Quick summary
+    validations:
+      required: true
+  - type: textarea
+    id: misc
+    attributes:
+      label: Additional info
+    validations:
+      required: false
