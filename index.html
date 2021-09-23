@@ -107,36 +107,19 @@
 				<a href="#🔧-installation" id="🔧-installation" style="color: inherit; text-decoration: none;">
 					<h2>🔧 Installation</h2>
 				</a>
-				<p>Install script via script:</p>
+				<p>Install script from source:</p>
 				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Installs</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">building</span>
 <span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">script</span><span style="color: #000000">-</span><span style="color: #001080">install</span>
 </code></pre>
 				<p>To uninstall:</p>
 				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">script</span><span style="color: #000000">-</span><span style="color: #001080">uninstall</span>
 </code></pre>
-				<a href="#enabling-user-configuration" id="enabling-user-configuration" style="color: inherit; text-decoration: none;">
-					<h3>Enabling User-Configuration</h3>
-				</a>
-				<!-- TODO: This section should not exist in ideal world. -->
-				<p><a href="https://github.com/faho/kwin-tiling/issues/79#issuecomment-311465357">It is reported</a> that a manual step is required to enable user
-				configuration of KWin scripts. This is a limitation of KWin scripting.</p>
-				<p>To enable configuration, you must perform the following in command-line:</p>
-				<pre><code><span style="color: #001080">mkdir</span><span style="color: #000000"> -</span><span style="color: #001080">p</span><span style="color: #000000"> ~/.</span><span style="color: #001080">local</span><span style="color: #000000">/</span><span style="color: #001080">share</span><span style="color: #000000">/</span><span style="color: #001080">kservices5</span><span style="color: #000000">/</span>
-<span style="color: #001080">ln</span><span style="color: #000000"> -</span><span style="color: #001080">s</span><span style="color: #000000"> ~/.</span><span style="color: #001080">local</span><span style="color: #000000">/</span><span style="color: #001080">share</span><span style="color: #000000">/</span><span style="color: #001080">kwin</span><span style="color: #000000">/</span><span style="color: #001080">scripts</span><span style="color: #000000">/</span><span style="color: #001080">bismuth</span><span style="color: #000000">/</span><span style="color: #001080">metadata</span><span style="color: #000000">.</span><span style="color: #001080">desktop</span><span style="color: #000000"> ~/.</span><span style="color: #001080">local</span><span style="color: #000000">/</span><span style="color: #001080">share</span><span style="color: #000000">/</span><span style="color: #001080">kservices5</span><span style="color: #000000">/</span><span style="color: #001080">bismuth</span><span style="color: #000000">.</span><span style="color: #001080">desktop</span>
-</code></pre>
-				<p>A configuration button will appear in <code>KWin Scripts</code> in <code>System Settings</code>.</p>
-				<p><img src="img/scripts_kcm_item.png" alt="config button shown"></p>
-				<p>To make changes effective, <strong>the script must be reactivated</strong>:</p>
-				<ol>
-					<li>On <code>KWin Scripts</code> dialog, untick Bismuth</li>
-					<li><code>Apply</code></li>
-					<li>tick Bismuth</li>
-					<li><code>Apply</code></li>
-				</ol>
 				<a href="#tweaks" id="tweaks" style="color: inherit; text-decoration: none;">
 					<h3>Tweaks</h3>
 				</a>
-				<p>Proceed to the <a href="TWEAKS.md">TWEAKS section</a>.</p>
+				<p>Note, that if you&#39;ve installed the script from the KWin scripts installation
+					dialog, you need to make a couple of manual fixes and tweaks. See <a href="TWEAKS.md">Tweaks
+				section</a>.</p>
 				<a href="#⌨️-actions-and-default-keyboard-shortcuts" id="⌨️-actions-and-default-keyboard-shortcuts" style="color: inherit; text-decoration: none;">
 					<h2>⌨️ Actions and Default Keyboard Shortcuts</h2>
 				</a>
