@@ -16,3 +16,7 @@ KWINPKG_FILE="${npm_package_config_build_dir:-build}/${npm_package_name:=Bismuth
 plasmapkg2 -u "$KWINPKG_FILE" || plasmapkg2 -i "$KWINPKG_FILE"
 plasmapkg2 -t kwinscript -s "$npm_package_name"
 
+# Enable user configuration dialog
+mkdir -p ~/.local/share/kservices5/
+ln -sf ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
+
