@@ -16,7 +16,10 @@ KDE Plasma powered Linux distribution and enjoy your computing! 🦾
 
 ![script demo](img/demo.gif)
 
-This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite). The fork was made, because the old project seems to be unmaintained.
+This is a fork of [Krohnkite](https://github.com/esjeon/krohnkite). The fork
+was made, because the old project seems to be unmaintained. If you want to
+import your old shortcuts from it, use the `contrib/import_krohnkite.sh`
+script.
 
 ## 🗺️ Goals
 
