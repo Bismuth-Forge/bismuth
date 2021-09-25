@@ -319,7 +319,7 @@ export class IncreaseMasterAreaWindowCount
       engine,
       "increase_master_win_count",
       "Increase Master Area Window Count",
-      "Meta+I"
+      "Meta+]"
     );
   }
 
@@ -337,7 +337,7 @@ export class DecreaseMasterAreaWindowCount
       engine,
       "decrease_master_win_count",
       "Decrease Master Area Window Count",
-      "Meta+D"
+      "Meta+["
     );
   }
 

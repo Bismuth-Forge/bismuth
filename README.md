@@ -82,8 +82,8 @@ section](TWEAKS.md).
 | Decrease Window Width             | Meta + Ctrl + H  |
 | Decrease Window Height            | Meta + Ctrl + K  |
 |                                   |                  |
-| Increase Master Area Window Count | Meta + I         |
-| Decrease Master Area Window Count | Meta + D         |
+| Increase Master Area Window Count | Meta + ]         |
+| Decrease Master Area Window Count | Meta + [         |
 | Increase Master Area Size         | _None_           |
 | Decrease Master Area Size         | _None_           |
 | Push Window Into Master Area      | Meta + Return    |
