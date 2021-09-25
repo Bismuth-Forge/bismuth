@@ -9,6 +9,8 @@ import { WindowState } from "../engine/window";
 
 import { DriverContext, KWinDriver } from "../driver";
 import { DriverSurface } from "../driver/surface";
+import { WindowsLayout } from "../engine/layout";
+import MonocleLayout from "../engine/layout/monocle_layout";
 
 import Config from "../config";
 import Debug from "../util/debug";
@@ -193,6 +195,10 @@ export class TilingController implements Controller {
 
   public showNotification(text: string): void {
     this.driver.showNotification(text);
+    const self = this;
+    if (self.currentWindow){
+      self.onWindowFocused(self.currentWindow);
+    }
   }
 
   public onSurfaceUpdate(comment: string): void {
@@ -334,6 +340,20 @@ export class TilingController implements Controller {
 
   public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
+    const self = this;
+    this.currentWindow = window;
+
+    if (this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout &&
+      this.config.monocleMinimizeRest) {
+      for (const tile of self.engine.windows.getVisibleTileables(window.surface)) {
+        if (tile.screen == window.screen && tile.id !== window.id
+          && self.engine.windows.getVisibleTileables(window.surface).includes(window)) {
+          tile.minimized = true;
+        } else {
+          tile.minimized = false;
+        }
+      }
+    };
   }
 
   public manageWindow(win: Window): void {

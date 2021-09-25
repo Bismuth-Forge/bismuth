@@ -19,7 +19,7 @@ export interface DriverWindow {
   readonly shouldIgnore: boolean;
   readonly shouldFloat: boolean;
   readonly screen: number;
-
+  readonly active: boolean;
   surface: DriverSurface;
   minimized: boolean;
 
@@ -41,6 +41,10 @@ export class KWinWindow implements DriverWindow {
 
   public get geometry(): Rect {
     return toRect(this.client.geometry);
+  }
+
+  public get active(): boolean {
+    return this.client.active;
   }
 
   public get shouldIgnore(): boolean {
