@@ -8,8 +8,6 @@ import { WindowsLayout } from ".";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { KWinWindow } from "../../driver/window";
-
 import {
   Action,
   FocusBottomWindow,
@@ -58,13 +56,13 @@ export default class MonocleLayout implements WindowsLayout {
       action instanceof FocusLeftWindow ||
       action instanceof FocusPreviousWindow
     ) {
-      engine.focusOrder(-1);
+      engine.focusOrder(-1, this.config.monocleMinimizeRest);
     } else if (
       action instanceof FocusBottomWindow ||
       action instanceof FocusRightWindow ||
       action instanceof FocusNextWindow
     ) {
-      engine.focusOrder(1);
+      engine.focusOrder(1, this.config.monocleMinimizeRest);
     } else {
       console.log("Executing from Monocle regular action!");
       action.executeWithoutLayoutOverride();

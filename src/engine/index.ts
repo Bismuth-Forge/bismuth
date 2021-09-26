@@ -49,7 +49,7 @@ export interface Engine {
   enforceSize(window: Window): void;
   currentLayoutOnCurrentSurface(): WindowsLayout;
   currentWindow(): Window | null;
-  focusOrder(step: -1 | 1): void;
+  focusOrder(step: -1 | 1, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
   swapDirOrMoveFloat(dir: Direction): void;
@@ -58,7 +58,7 @@ export interface Engine {
   floatAll(srf: DriverSurface): void;
   cycleLayout(step: 1 | -1): void;
   setLayout(layoutClassID: string): void;
-
+  minimizeOthers(window: Window): void;
   showNotification(text: string): void;
 }
 
@@ -346,39 +346,40 @@ export class TilingEngine implements Engine {
   /**
    * Focus the next or previous window.
    */
-  public focusOrder(step: -1 | 1): void {
+  public focusOrder(step: -1 | 1, includeHidden: boolean=false): void {
     const window = this.controller.currentWindow;
+    let windows;
 
-    /* if no current window, select the first tile. */
-    if (window === null) {
-      const tiles = this.windows.getVisibleTiles(
-        this.controller.currentSurface
-      );
-      if (tiles.length > 1) {
-        this.controller.currentWindow = tiles[0];
-      }
-      return;
+
+
+    if (includeHidden) {
+      windows = this.windows.getAllWindows(this.controller.currentSurface);
+    } else {
+      windows = this.windows.getVisibleWindows(this.controller.currentSurface);
     }
 
-    const visibles = this.windows.getVisibleWindows(
-      this.controller.currentSurface
-    );
-    if (visibles.length === 0) {
+    if (windows.length === 0) {
       // Nothing to focus
       return;
     }
 
-    const idx = visibles.indexOf(window);
-    if (!window || idx < 0) {
-      /* unmanaged window -> focus master */
-      this.controller.currentWindow = visibles[0];
+    /* if no current window, select the first tile. */
+    if (window === null) {
+      this.controller.currentWindow = windows[0];
       return;
     }
 
-    const num = visibles.length;
+    const idx = windows.indexOf(window);
+    if (!window || idx < 0) {
+      /* unmanaged window -> focus master */
+      this.controller.currentWindow = windows[0];
+      return;
+    }
+
+    const num = windows.length;
     const newIndex = (idx + (step % num) + num) % num;
 
-    this.controller.currentWindow = visibles[newIndex];
+    this.controller.currentWindow = windows[newIndex];
   }
 
   /**
@@ -548,6 +549,10 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+      if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
+        && this.config.monocleMinimizeRest && this.controller.currentWindow) {
+        this.minimizeOthers(this.controller.currentWindow);
+      }
     }
   }
 
@@ -561,6 +566,21 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+      if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
+        && this.config.monocleMinimizeRest && this.controller.currentWindow) {
+        this.minimizeOthers(this.controller.currentWindow);
+      }
+    }
+  }
+
+  public minimizeOthers(window: Window): void {
+    for (const tile of this.windows.getVisibleTiles(window.surface)) {
+      if (tile.screen == window.screen && tile.id !== window.id
+        && this.windows.getVisibleTiles(window.surface).includes(window)) {
+        tile.minimized = true;
+      } else {
+      tile.minimized = false;
+      }
     }
   }
 

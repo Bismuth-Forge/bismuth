@@ -87,7 +87,7 @@ export class FocusNextWindow extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.focusOrder(+1);
+    this.engine.focusOrder(+1, false);
   }
 }
 
@@ -97,7 +97,7 @@ export class FocusPreviousWindow extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.focusOrder(-1);
+    this.engine.focusOrder(-1, false);
   }
 }
 

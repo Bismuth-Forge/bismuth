@@ -95,5 +95,10 @@ export default class WindowStore {
     return this.list.filter((win) => win.tileable && win.visible(srf));
   }
 
+  /** Return all windows on this surface, including minimized windows */
+  public getAllWindows(srf: DriverSurface): Window[] {
+    return this.list.filter((win) => win.surface.id === srf.id);
+  }
+
   //#endregion
 }
