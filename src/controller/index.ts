@@ -207,6 +207,9 @@ export class TilingController implements Controller {
       { srf: this.currentSurface },
     ]);
     this.engine.arrange();
+    if (this.currentWindow) {
+      this.onWindowFocused(this.currentWindow);
+    }
   }
 
   public onWindowAdded(window: Window): void {
@@ -237,6 +240,10 @@ export class TilingController implements Controller {
     console.log(`Window remove: ${window}`);
 
     this.engine.unmanage(window);
+    if (this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
+      && this.config.monocleMinimizeRest) {
+      this.engine.focusOrder(1, true);
+    }
     this.engine.arrange();
   }
 
