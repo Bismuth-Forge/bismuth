@@ -353,7 +353,6 @@ export class TilingEngine implements Engine {
 
 
     if (includeHidden) {
-      this.controller.screens;
       windows = this.windows.getAllWindows(
         this.controller.currentSurface,
         this.controller.currentScreen);
