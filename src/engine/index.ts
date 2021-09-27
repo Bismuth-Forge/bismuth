@@ -365,7 +365,7 @@ export class TilingEngine implements Engine {
       return;
     }
 
-    /* if no current window, select the first tile. */
+    /* If no current window, select the first one. */
     if (window === null) {
       this.controller.currentWindow = windows[0];
       return;
@@ -373,7 +373,7 @@ export class TilingEngine implements Engine {
 
     const idx = windows.indexOf(window);
     if (!window || idx < 0) {
-      /* unmanaged window -> focus master */
+      /* This probably shouldn't happen, but just in case... */
       this.controller.currentWindow = windows[0];
       return;
     }
