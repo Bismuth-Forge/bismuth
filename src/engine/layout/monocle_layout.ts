@@ -41,6 +41,7 @@ export default class MonocleLayout implements WindowsLayout {
       tile.state = this.config.monocleMaximize
         ? WindowState.Maximized
         : WindowState.Tiled;
+
       tile.geometry = area;
     });
   }

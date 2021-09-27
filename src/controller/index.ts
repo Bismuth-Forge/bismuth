@@ -29,7 +29,7 @@ export interface Controller {
    * A bunch of surfaces, that represent the user's screens.
    */
   readonly screens: DriverSurface[];
-
+  readonly currentScreen: number;
   /**
    * Current active window. In other words the window, that has focus.
    */
@@ -145,7 +145,7 @@ export interface Controller {
 export class TilingController implements Controller {
   private engine: Engine;
   private driver: DriverContext;
-
+  private screen: number;
   public constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
@@ -154,6 +154,7 @@ export class TilingController implements Controller {
   ) {
     this.engine = new TilingEngine(this, config, debug);
     this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
+    this.screen = 0;
   }
 
   /**
@@ -192,6 +193,9 @@ export class TilingController implements Controller {
     this.driver.currentSurface = value;
   }
 
+  public get currentScreen(){
+    return this.screen;
+  }
   public showNotification(text: string): void {
     this.driver.showNotification(text);
   }
@@ -238,12 +242,16 @@ export class TilingController implements Controller {
   public onWindowRemoved(window: Window): void {
     this.debug.debugObj(() => ["onWindowRemoved", { window }]);
     console.log(`Window remove: ${window}`);
+    const active = window === this.currentWindow;
+    this.screen = window.screen;
 
-    this.engine.unmanage(window);
-    if (this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
+    if (active && this.currentWindow && this.screen == this.currentWindow.screen
+      && this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
       && this.config.monocleMinimizeRest) {
       this.engine.focusOrder(1, true);
-    }
+      }
+
+    this.engine.unmanage(window);
     this.engine.arrange();
   }
 
@@ -343,13 +351,13 @@ export class TilingController implements Controller {
   public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
     this.currentWindow = window;
-
+    this.screen = window.screen;
     if (this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
       && this.config.monocleMinimizeRest
       && this.engine.windows.getVisibleTiles(window.surface).includes(window)) {
       this.engine.currentLayoutOnCurrentSurface().apply(
         this,
-        this.engine.windows.getAllWindows(window.surface),
+        this.engine.windows.getAllTileables(window.surface, this.screen),
         window.surface.workingArea)
       this.engine.minimizeOthers(window);
     };
