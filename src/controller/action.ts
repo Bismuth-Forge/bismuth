@@ -518,10 +518,9 @@ export class SetFloatingLayout extends SetCurrentLayout {
 
 export class SetQuarterLayout extends SetCurrentLayout {
   constructor(protected engine: Engine) {
-    // NOTE: space is intentional (Temporary)
     super(
       engine,
-      "QuarterLayout ",
+      "QuarterLayout",
       "toggle_quarter_layout",
       "Toggle Quarter Layout",
       ""
