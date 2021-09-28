@@ -354,8 +354,7 @@ export class TilingEngine implements Engine {
 
     if (includeHidden) {
       windows = this.windows.getAllWindows(
-        this.controller.currentSurface,
-        this.controller.currentScreen);
+        this.controller.currentSurface);
     } else {
       windows = this.windows.getVisibleWindows(this.controller.currentSurface);
     }
@@ -551,6 +550,8 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+
+      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
       if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
         && this.config.monocleMinimizeRest && this.controller.currentWindow) {
         this.minimizeOthers(this.controller.currentWindow);
@@ -568,6 +569,8 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+
+      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
       if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
         && this.config.monocleMinimizeRest && this.controller.currentWindow) {
         this.minimizeOthers(this.controller.currentWindow);
@@ -575,6 +578,10 @@ export class TilingEngine implements Engine {
     }
   }
 
+  /**
+   * Minimize all windows on the surface except the given window.
+   * Used mainly in Monocle mode with config.monocleMinimizeRest
+   */
   public minimizeOthers(window: Window): void {
     for (const tile of this.windows.getVisibleTiles(window.surface)) {
       if (tile.screen == window.screen && tile.id !== window.id

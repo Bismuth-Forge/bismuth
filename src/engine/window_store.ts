@@ -98,16 +98,13 @@ export default class WindowStore {
   /**
    * Return all "tileable" windows on the given surface, including hidden
    */
-  public getAllTileables(srf: DriverSurface, screen: number): Window[] {
-    return this.list.filter((win) => win.tileable && win.screen === screen);
+  public getAllTileables(srf: DriverSurface): Window[] {
+    return this.list.filter((win) => win.tileable && win.surface.id === srf.id);
   }
 
   /** Return all windows on this surface, including minimized windows */
-  public getAllWindows(
-    srf: DriverSurface,
-    screen: number
-  ): Window[] {
-    return this.list.filter((win) => win.surface.id === srf.id && win.screen === screen);
+  public getAllWindows(srf: DriverSurface): Window[] {
+    return this.list.filter((win) => win.surface.id === srf.id);
   }
 
   //#endregion
