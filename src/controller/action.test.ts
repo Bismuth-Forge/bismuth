@@ -69,7 +69,7 @@ describe("action", () => {
 
         action.execute();
 
-        expect(fakeEngine.focusOrder).toBeCalledWith(1);
+        expect(fakeEngine.focusOrder).toBeCalledWith(1, false);
       });
     });
 
@@ -79,7 +79,7 @@ describe("action", () => {
 
         action.execute();
 
-        expect(fakeEngine.focusOrder).toBeCalledWith(-1);
+        expect(fakeEngine.focusOrder).toBeCalledWith(-1, false);
       });
     });
   });
