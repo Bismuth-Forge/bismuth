@@ -49,6 +49,7 @@ export interface Engine {
   enforceSize(window: Window): void;
   currentLayoutOnCurrentSurface(): WindowsLayout;
   currentWindow(): Window | null;
+
   focusOrder(step: -1 | 1, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
@@ -59,6 +60,7 @@ export interface Engine {
   cycleLayout(step: 1 | -1): void;
   setLayout(layoutClassID: string): void;
   minimizeOthers(window: Window): void;
+  isLayoutMonocleAndMinimizeRest(): boolean;
   showNotification(text: string): void;
 }
 
@@ -343,14 +345,13 @@ export class TilingEngine implements Engine {
     this.windows.remove(window);
   }
 
-  /**
-   * Focus the next or previous window.
+  /** Focus next or previous window
+   * @param step direction to step in (1 for forward, -1 for back)
+   * @param includeHidden whether to switch to or skip minimized windows
    */
-  public focusOrder(step: -1 | 1, includeHidden: boolean=false): void {
+  public focusOrder(step: -1 | 1, includeHidden=false): void {
     const window = this.controller.currentWindow;
     let windows;
-
-
 
     if (includeHidden) {
       windows = this.windows.getAllWindows(
@@ -552,8 +553,8 @@ export class TilingEngine implements Engine {
       this.controller.showNotification(layout.description);
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
-      if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
-        && this.config.monocleMinimizeRest && this.controller.currentWindow) {
+      if (this.isLayoutMonocleAndMinimizeRest()
+        && this.controller.currentWindow) {
         this.minimizeOthers(this.controller.currentWindow);
       }
     }
@@ -571,8 +572,7 @@ export class TilingEngine implements Engine {
       this.controller.showNotification(layout.description);
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
-      if (this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
-        && this.config.monocleMinimizeRest && this.controller.currentWindow) {
+      if (this.isLayoutMonocleAndMinimizeRest() && this.controller.currentWindow) {
         this.minimizeOthers(this.controller.currentWindow);
       }
     }
@@ -591,6 +591,11 @@ export class TilingEngine implements Engine {
       tile.minimized = false;
       }
     }
+  }
+
+  public isLayoutMonocleAndMinimizeRest(): boolean {
+    return this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
+    && this.config.monocleMinimizeRest;
   }
 
   private getNeighborByDirection(basis: Window, dir: Direction): Window | null {

@@ -205,6 +205,9 @@ export class TilingController implements Controller {
       { srf: this.currentSurface },
     ]);
     this.engine.arrange();
+    /* HACK: minimize others and change geometry with Monocle Layout and
+     * config.monocleMinimizeRest
+     */
     if (this.currentWindow) {
       this.onWindowFocused(this.currentWindow);
     }
@@ -242,13 +245,13 @@ export class TilingController implements Controller {
 
     // Switch to next window if monocle with config.monocleMinimizeRest
     if (!this.currentWindow
-      && this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
-      && this.config.monocleMinimizeRest) {
+      && this.engine.isLayoutMonocleAndMinimizeRest()) {
       this.engine.focusOrder(1, true);
-      // HACK: force window to maximize if it isn't already
+      /* HACK: force window to maximize if it isn't already
+       * This is ultimately to trigger onWindowFocused() at the right time
+       */
       this.engine.focusOrder(1, true);
       this.engine.focusOrder(-1, true);
-      this.engine.arrange();
     }
   }
 
@@ -349,13 +352,16 @@ export class TilingController implements Controller {
     window.timestamp = new Date().getTime();
     this.currentWindow = window;
     // Minimize other windows if Moncole and config.monocleMinimizeRest
-    if (this.engine.currentLayoutOnCurrentSurface() instanceof MonocleLayout
-      && this.config.monocleMinimizeRest
+    if (this.engine.isLayoutMonocleAndMinimizeRest()
       && this.engine.windows.getVisibleTiles(window.surface).includes(window)) {
+      /* If a window hasn't been foucsed in this layout yet, ensure its geometry
+       * gets maximized.
+       */
       this.engine.currentLayoutOnCurrentSurface().apply(
         this,
         this.engine.windows.getAllTileables(window.surface),
         window.surface.workingArea)
+
       this.engine.minimizeOthers(window);
     };
   }
