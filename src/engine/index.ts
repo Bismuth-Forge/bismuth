@@ -49,7 +49,13 @@ export interface Engine {
   enforceSize(window: Window): void;
   currentLayoutOnCurrentSurface(): WindowsLayout;
   currentWindow(): Window | null;
-  focusOrder(step: -1 | 1): void;
+
+  /**
+   * Focus next or previous window
+   * @param step Direction to step in (1=forward, -1=backward)
+   * @param includeHidden Whether to step through (true) or skip over (false) minimized windows
+   */
+  focusOrder(step: -1 | 1, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
   swapDirOrMoveFloat(dir: Direction): void;
@@ -58,7 +64,8 @@ export interface Engine {
   floatAll(srf: DriverSurface): void;
   cycleLayout(step: 1 | -1): void;
   setLayout(layoutClassID: string): void;
-
+  minimizeOthers(window: Window): void;
+  isLayoutMonocleAndMinimizeRest(): boolean;
   showNotification(text: string): void;
 }
 
@@ -343,42 +350,42 @@ export class TilingEngine implements Engine {
     this.windows.remove(window);
   }
 
-  /**
-   * Focus the next or previous window.
+  /** Focus next or previous window
+   * @param step direction to step in (1 for forward, -1 for back)
+   * @param includeHidden whether to switch to or skip minimized windows
    */
-  public focusOrder(step: -1 | 1): void {
+  public focusOrder(step: -1 | 1, includeHidden = false): void {
     const window = this.controller.currentWindow;
+    let windows;
 
-    /* if no current window, select the first tile. */
-    if (window === null) {
-      const tiles = this.windows.getVisibleTiles(
-        this.controller.currentSurface
-      );
-      if (tiles.length > 1) {
-        this.controller.currentWindow = tiles[0];
-      }
-      return;
+    if (includeHidden) {
+      windows = this.windows.getAllWindows(this.controller.currentSurface);
+    } else {
+      windows = this.windows.getVisibleWindows(this.controller.currentSurface);
     }
 
-    const visibles = this.windows.getVisibleWindows(
-      this.controller.currentSurface
-    );
-    if (visibles.length === 0) {
+    if (windows.length === 0) {
       // Nothing to focus
       return;
     }
 
-    const idx = visibles.indexOf(window);
-    if (!window || idx < 0) {
-      /* unmanaged window -> focus master */
-      this.controller.currentWindow = visibles[0];
+    /* If no current window, select the first one. */
+    if (window === null) {
+      this.controller.currentWindow = windows[0];
       return;
     }
 
-    const num = visibles.length;
+    const idx = windows.indexOf(window);
+    if (!window || idx < 0) {
+      /* This probably shouldn't happen, but just in case... */
+      this.controller.currentWindow = windows[0];
+      return;
+    }
+
+    const num = windows.length;
     const newIndex = (idx + (step % num) + num) % num;
 
-    this.controller.currentWindow = visibles[newIndex];
+    this.controller.currentWindow = windows[newIndex];
   }
 
   /**
@@ -548,6 +555,14 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+
+      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
+      if (
+        this.isLayoutMonocleAndMinimizeRest() &&
+        this.controller.currentWindow
+      ) {
+        this.minimizeOthers(this.controller.currentWindow);
+      }
     }
   }
 
@@ -561,7 +576,40 @@ export class TilingEngine implements Engine {
     );
     if (layout) {
       this.controller.showNotification(layout.description);
+
+      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
+      if (
+        this.isLayoutMonocleAndMinimizeRest() &&
+        this.controller.currentWindow
+      ) {
+        this.minimizeOthers(this.controller.currentWindow);
+      }
     }
+  }
+
+  /**
+   * Minimize all windows on the surface except the given window.
+   * Used mainly in Monocle mode with config.monocleMinimizeRest
+   */
+  public minimizeOthers(window: Window): void {
+    for (const tile of this.windows.getVisibleTiles(window.surface)) {
+      if (
+        tile.screen == window.screen &&
+        tile.id !== window.id &&
+        this.windows.getVisibleTiles(window.surface).includes(window)
+      ) {
+        tile.minimized = true;
+      } else {
+        tile.minimized = false;
+      }
+    }
+  }
+
+  public isLayoutMonocleAndMinimizeRest(): boolean {
+    return (
+      this.currentLayoutOnCurrentSurface() instanceof MonocleLayout &&
+      this.config.monocleMinimizeRest
+    );
   }
 
   private getNeighborByDirection(basis: Window, dir: Direction): Window | null {

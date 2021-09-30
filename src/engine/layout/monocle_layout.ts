@@ -8,8 +8,6 @@ import { WindowsLayout } from ".";
 import Window from "../window";
 import { WindowState } from "../window";
 
-import { KWinWindow } from "../../driver/window";
-
 import {
   Action,
   FocusBottomWindow,
@@ -43,21 +41,9 @@ export default class MonocleLayout implements WindowsLayout {
       tile.state = this.config.monocleMaximize
         ? WindowState.Maximized
         : WindowState.Tiled;
+
       tile.geometry = area;
     });
-
-    /* KWin-specific `monocleMinimizeRest` option */
-    if (this.config.monocleMinimizeRest) {
-      const tiles = [...tileables];
-      const current = controller.currentWindow;
-      if (current && current.tiled) {
-        tiles.forEach((window) => {
-          if (window !== current) {
-            (window.window as KWinWindow).client.minimized = true;
-          }
-        });
-      }
-    }
   }
 
   public clone(): this {
@@ -71,13 +57,13 @@ export default class MonocleLayout implements WindowsLayout {
       action instanceof FocusLeftWindow ||
       action instanceof FocusPreviousWindow
     ) {
-      engine.focusOrder(-1);
+      engine.focusOrder(-1, this.config.monocleMinimizeRest);
     } else if (
       action instanceof FocusBottomWindow ||
       action instanceof FocusRightWindow ||
       action instanceof FocusNextWindow
     ) {
-      engine.focusOrder(1);
+      engine.focusOrder(1, this.config.monocleMinimizeRest);
     } else {
       console.log("Executing from Monocle regular action!");
       action.executeWithoutLayoutOverride();

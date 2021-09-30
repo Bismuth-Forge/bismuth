@@ -18,8 +18,10 @@ export interface DriverWindow {
   readonly maximized: boolean;
   readonly shouldIgnore: boolean;
   readonly shouldFloat: boolean;
-
+  readonly screen: number;
+  readonly active: boolean;
   surface: DriverSurface;
+  minimized: boolean;
 
   commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
   visible(srf: DriverSurface): boolean;
@@ -39,6 +41,10 @@ export class KWinWindow implements DriverWindow {
 
   public get geometry(): Rect {
     return toRect(this.client.geometry);
+  }
+
+  public get active(): boolean {
+    return this.client.active;
   }
 
   public get shouldIgnore(): boolean {
@@ -67,6 +73,18 @@ export class KWinWindow implements DriverWindow {
       this.config.floatingClass.indexOf(resourceName) >= 0 ||
       matchWords(this.client.caption, this.config.floatingTitle) >= 0
     );
+  }
+
+  public get screen(): number {
+    return this.client.screen;
+  }
+
+  public get minimized(): boolean {
+    return this.client.minimized;
+  }
+
+  public set minimized(min: boolean) {
+    this.client.minimized = min;
   }
 
   public maximized: boolean;

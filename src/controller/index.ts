@@ -9,6 +9,7 @@ import { WindowState } from "../engine/window";
 
 import { DriverContext, KWinDriver } from "../driver";
 import { DriverSurface } from "../driver/surface";
+import MonocleLayout from "../engine/layout/monocle_layout";
 
 import Config from "../config";
 import Debug from "../util/debug";
@@ -28,7 +29,6 @@ export interface Controller {
    * A bunch of surfaces, that represent the user's screens.
    */
   readonly screens: DriverSurface[];
-
   /**
    * Current active window. In other words the window, that has focus.
    */
@@ -144,7 +144,6 @@ export interface Controller {
 export class TilingController implements Controller {
   private engine: Engine;
   private driver: DriverContext;
-
   public constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
@@ -206,6 +205,12 @@ export class TilingController implements Controller {
       { srf: this.currentSurface },
     ]);
     this.engine.arrange();
+    /* HACK: minimize others and change geometry with Monocle Layout and
+     * config.monocleMinimizeRest
+     */
+    if (this.currentWindow) {
+      this.onWindowFocused(this.currentWindow);
+    }
   }
 
   public onWindowAdded(window: Window): void {
@@ -237,6 +242,16 @@ export class TilingController implements Controller {
 
     this.engine.unmanage(window);
     this.engine.arrange();
+
+    // Switch to next window if monocle with config.monocleMinimizeRest
+    if (!this.currentWindow && this.engine.isLayoutMonocleAndMinimizeRest()) {
+      this.engine.focusOrder(1, true);
+      /* HACK: force window to maximize if it isn't already
+       * This is ultimately to trigger onWindowFocused() at the right time
+       */
+      this.engine.focusOrder(1, true);
+      this.engine.focusOrder(-1, true);
+    }
   }
 
   public onWindowMoveStart(_window: Window): void {
@@ -334,6 +349,25 @@ export class TilingController implements Controller {
 
   public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
+    this.currentWindow = window;
+    // Minimize other windows if Moncole and config.monocleMinimizeRest
+    if (
+      this.engine.isLayoutMonocleAndMinimizeRest() &&
+      this.engine.windows.getVisibleTiles(window.surface).includes(window)
+    ) {
+      /* If a window hasn't been foucsed in this layout yet, ensure its geometry
+       * gets maximized.
+       */
+      this.engine
+        .currentLayoutOnCurrentSurface()
+        .apply(
+          this,
+          this.engine.windows.getAllTileables(window.surface),
+          window.surface.workingArea
+        );
+
+      this.engine.minimizeOthers(window);
+    }
   }
 
   public manageWindow(win: Window): void {

@@ -57,6 +57,18 @@ export default class Window {
     return this.window.shouldIgnore;
   }
 
+  public get screen(): number {
+    return this.window.screen;
+  }
+
+  public get minimized(): boolean {
+    return this.window.minimized;
+  }
+
+  public set minimized(min: boolean) {
+    this.window.minimized = min;
+  }
+
   /** If this window ***can be*** tiled by layout. */
   public get tileable(): boolean {
     return Window.isTileableState(this.state);
