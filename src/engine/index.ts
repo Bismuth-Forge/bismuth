@@ -349,13 +349,12 @@ export class TilingEngine implements Engine {
    * @param step direction to step in (1 for forward, -1 for back)
    * @param includeHidden whether to switch to or skip minimized windows
    */
-  public focusOrder(step: -1 | 1, includeHidden=false): void {
+  public focusOrder(step: -1 | 1, includeHidden = false): void {
     const window = this.controller.currentWindow;
     let windows;
 
     if (includeHidden) {
-      windows = this.windows.getAllWindows(
-        this.controller.currentSurface);
+      windows = this.windows.getAllWindows(this.controller.currentSurface);
     } else {
       windows = this.windows.getVisibleWindows(this.controller.currentSurface);
     }
@@ -553,8 +552,10 @@ export class TilingEngine implements Engine {
       this.controller.showNotification(layout.description);
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
-      if (this.isLayoutMonocleAndMinimizeRest()
-        && this.controller.currentWindow) {
+      if (
+        this.isLayoutMonocleAndMinimizeRest() &&
+        this.controller.currentWindow
+      ) {
         this.minimizeOthers(this.controller.currentWindow);
       }
     }
@@ -572,7 +573,10 @@ export class TilingEngine implements Engine {
       this.controller.showNotification(layout.description);
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
-      if (this.isLayoutMonocleAndMinimizeRest() && this.controller.currentWindow) {
+      if (
+        this.isLayoutMonocleAndMinimizeRest() &&
+        this.controller.currentWindow
+      ) {
         this.minimizeOthers(this.controller.currentWindow);
       }
     }
@@ -584,18 +588,23 @@ export class TilingEngine implements Engine {
    */
   public minimizeOthers(window: Window): void {
     for (const tile of this.windows.getVisibleTiles(window.surface)) {
-      if (tile.screen == window.screen && tile.id !== window.id
-        && this.windows.getVisibleTiles(window.surface).includes(window)) {
+      if (
+        tile.screen == window.screen &&
+        tile.id !== window.id &&
+        this.windows.getVisibleTiles(window.surface).includes(window)
+      ) {
         tile.minimized = true;
       } else {
-      tile.minimized = false;
+        tile.minimized = false;
       }
     }
   }
 
   public isLayoutMonocleAndMinimizeRest(): boolean {
-    return this.currentLayoutOnCurrentSurface() instanceof MonocleLayout
-    && this.config.monocleMinimizeRest;
+    return (
+      this.currentLayoutOnCurrentSurface() instanceof MonocleLayout &&
+      this.config.monocleMinimizeRest
+    );
   }
 
   private getNeighborByDirection(basis: Window, dir: Direction): Window | null {

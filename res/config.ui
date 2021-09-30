@@ -115,7 +115,7 @@
                <item>
                 <widget class="QCheckBox" name="kcfg_monocleMinimizeRest">
                  <property name="text">
-                  <string>Minimize unfocused windows (WIP)</string>
+                  <string>Minimize unfocused windows</string>
                  </property>
                 </widget>
                </item>

@@ -244,8 +244,7 @@ export class TilingController implements Controller {
     this.engine.arrange();
 
     // Switch to next window if monocle with config.monocleMinimizeRest
-    if (!this.currentWindow
-      && this.engine.isLayoutMonocleAndMinimizeRest()) {
+    if (!this.currentWindow && this.engine.isLayoutMonocleAndMinimizeRest()) {
       this.engine.focusOrder(1, true);
       /* HACK: force window to maximize if it isn't already
        * This is ultimately to trigger onWindowFocused() at the right time
@@ -352,18 +351,23 @@ export class TilingController implements Controller {
     window.timestamp = new Date().getTime();
     this.currentWindow = window;
     // Minimize other windows if Moncole and config.monocleMinimizeRest
-    if (this.engine.isLayoutMonocleAndMinimizeRest()
-      && this.engine.windows.getVisibleTiles(window.surface).includes(window)) {
+    if (
+      this.engine.isLayoutMonocleAndMinimizeRest() &&
+      this.engine.windows.getVisibleTiles(window.surface).includes(window)
+    ) {
       /* If a window hasn't been foucsed in this layout yet, ensure its geometry
        * gets maximized.
        */
-      this.engine.currentLayoutOnCurrentSurface().apply(
-        this,
-        this.engine.windows.getAllTileables(window.surface),
-        window.surface.workingArea)
+      this.engine
+        .currentLayoutOnCurrentSurface()
+        .apply(
+          this,
+          this.engine.windows.getAllTileables(window.surface),
+          window.surface.workingArea
+        );
 
       this.engine.minimizeOthers(window);
-    };
+    }
   }
 
   public manageWindow(win: Window): void {
