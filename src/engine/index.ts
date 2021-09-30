@@ -50,6 +50,11 @@ export interface Engine {
   currentLayoutOnCurrentSurface(): WindowsLayout;
   currentWindow(): Window | null;
 
+  /**
+   * Focus next or previous window
+   * @param step Direction to step in (1=forward, -1=backward)
+   * @param includeHidden Whether to step through (true) or skip over (false) minimized windows
+   */
   focusOrder(step: -1 | 1, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
   swapOrder(window: Window, step: -1 | 1): void;
