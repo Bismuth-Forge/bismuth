@@ -44,6 +44,20 @@ Project goals are the following:
 
 ## 🔧 Installation
 
+## Simple
+
+Go to [releases](https://github.com/gikari/bismuth/releases), download the
+latest `bismuth.tar.gz` archive, unzip it and execute the installation script,
+that is inside.
+
+<!-- Paste the following script in the command line: -->
+
+<!--     cd /tmp; wget https://git.io/J2lG0; tar xf bismuth.tar.gz; cd -; cd /tmp/bismuth; ./install.sh; cd - -->
+
+<!-- This will download the latest release and execute an installation script. -->
+
+## From source
+
 Install script from source:
 
     npm install # Installs dependencies for building
