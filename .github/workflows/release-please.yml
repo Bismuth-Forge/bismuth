@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+#
+# SPDX-License-Identifier: MIT
+
+---
+name: release-please
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        with:
+          release-type: node
+          package-name: release-please-action
