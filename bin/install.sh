@@ -6,17 +6,16 @@
 
 set -e
 
-# Install icons
-APP_ICONS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor/scalable/apps"
-mkdir -p "$APP_ICONS_DIR"
-cp -v res/icons/bismuth.svg "$APP_ICONS_DIR/bismuth.svg"
+EXTRACT_DIR="${npm_package_config_build_dir:-build}/extracted-package"
 
-# Display info and upgrade/install script
-KWINPKG_FILE="${npm_package_config_build_dir:-build}/${npm_package_name:=Bismuth}-${npm_package_version:-1.0}.kwinscript"
-plasmapkg2 -u "$KWINPKG_FILE" || plasmapkg2 -i "$KWINPKG_FILE"
-plasmapkg2 -t kwinscript -s "$npm_package_name"
+# Make directory for extraction
+mkdir -p "$EXTRACT_DIR"
 
-# Enable user configuration dialog
-mkdir -p ~/.local/share/kservices5/
-ln -sf ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
+# Extract built package
+tar xf "${npm_package_config_build_dir:-build}/package/bismuth.tar.gz" --directory="$EXTRACT_DIR"
+
+# Run installation script
+cd "$EXTRACT_DIR"
+./install.sh
+cd - > /dev/null
 
