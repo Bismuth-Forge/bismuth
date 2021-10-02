@@ -6,10 +6,35 @@
 
 set -e
 
-KWINPKG_FILE="${npm_package_config_build_dir:=build}/${npm_package_name:-Bismuth}-${npm_package_version:-1.0}.kwinscript"
+KWINPKG_NAME="bismuth.kwinscript"
+FINAL_ARCHIVE_NAME="bismuth.tar.gz"
 
-# Remove old archive
-rm -f "$KWINPKG_FILE"
+# Temporary change directory for archive tools
+cd "./${npm_package_config_build_dir:-build}/script"
 
-# Create new installable package
-7z a -tzip "$KWINPKG_FILE" ./${npm_package_config_build_dir}/contents/ ./${npm_package_config_build_dir}/metadata.desktop
+# Remove old packages
+rm -f "$KWINPKG_NAME"
+
+# Create new .kwinscript package
+zip -qr "$KWINPKG_NAME" ./contents/ ./metadata.desktop
+
+# Get back to the original directory
+cd - > /dev/null
+
+# Create subdir for final package
+mkdir -p "./${npm_package_config_build_dir:-build}/package"
+cd "./${npm_package_config_build_dir:-build}/package"
+
+# Copy necessary files for package
+cp -v "../script/$KWINPKG_NAME" "$KWINPKG_NAME"
+cp -v "../../res/install.sh" install.sh
+mkdir -p icons/ && cp -v "../../res/icons/bismuth.svg" icons/bismuth.svg
+
+# Create installation archive for the end user
+tar -czf "$FINAL_ARCHIVE_NAME" \
+  "$KWINPKG_NAME" \
+  install.sh \
+  icons/bismuth.svg
+
+# Get back to the original directory
+cd - > /dev/null
