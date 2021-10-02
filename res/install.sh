@@ -24,3 +24,6 @@ echo "🔧 Enabling user configuration..."
 mkdir -p ~/.local/share/kservices5/
 ln -sf ~/.local/share/kwin/scripts/bismuth/metadata.desktop ~/.local/share/kservices5/bismuth.desktop
 
+echo "🎉 Installation finished."
+echo "💡 You can enable and configure Bismuth in the System Settings > Window Management > KWin Scripts."
+echo "🦾 Enjoy your tiling!"
