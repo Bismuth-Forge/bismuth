@@ -38,7 +38,7 @@ main ()
   bis_to_kro["bismuth_toggle_spread_layout"]="Krohnkite: Spread Layout"
   bis_to_kro["bismuth_toggle_stair_layout"]="Krohnkite: Stair Layout"
   bis_to_kro["bismuth_toggle_three_column_layout"]="Krohnkite: Three Column Layout"
-  bis_to_kro["bismuth_toggle_tile_layout"]="Krohnkite: Tile"
+  bis_to_kro["bismuth_toggle_tile_layout"]="Krohnkite: Tile Layout"
   bis_to_kro["bismuth_toggle_window_floating"]="Krohnkite: Float"
   bis_to_kro["bismuth_toggle_floating_layout"]="Krohnkite: Float All"
   
