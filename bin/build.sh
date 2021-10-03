@@ -10,7 +10,7 @@ set -e
 mkdir -p "${npm_package_config_build_dir:=build}/script/contents/code"
 
 echo "Checking using TS Compiler..."
-npx tsc --noEmit
+npx tsc --noEmit --incremental
 
 echo "Bundling using esbuild..."
 npx esbuild \

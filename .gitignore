@@ -5,10 +5,6 @@
 /build/
 /node_modules/
 
-/TODO.md
-/krohnkite.js
 /package-lock.json
 
-/*.qml
-*.kwinscript
-*.bak
+tsconfig.tsbuildinfo
