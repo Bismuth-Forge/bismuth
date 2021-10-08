@@ -240,7 +240,7 @@ export class ConfigImpl implements Config {
     this.ignoreClass = commaSeparate(
       this.kwinApi.KWin.readConfig(
         "ignoreClass",
-        "krunner,yakuake,spectacle,kded5"
+        "krunner,yakuake,spectacle,kded5,Conky"
       )
     );
     this.ignoreRole = commaSeparate(
