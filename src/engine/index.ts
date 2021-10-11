@@ -18,7 +18,7 @@ import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
-import Debug from "../util/debug";
+import Debug from "../util/log";
 import { WindowsLayout } from "./layout";
 
 export type Direction = "up" | "down" | "left" | "right";

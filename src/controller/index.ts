@@ -9,10 +9,9 @@ import { WindowState } from "../engine/window";
 
 import { DriverContext, KWinDriver } from "../driver";
 import { DriverSurface } from "../driver/surface";
-import MonocleLayout from "../engine/layout/monocle_layout";
 
 import Config from "../config";
-import Debug from "../util/debug";
+import Debug from "../util/log";
 
 import * as Action from "./action";
 

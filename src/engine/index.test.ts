@@ -11,7 +11,7 @@ import Config from "../config";
 import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
 
-import Debug from "../util/debug";
+import Debug from "../util/log";
 import Rect from "../util/rect";
 import TileLayout from "./layout/tile_layout";
 import LayoutStore from "./layout_store";

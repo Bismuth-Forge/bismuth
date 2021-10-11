@@ -4,7 +4,7 @@
 
 import { ConfigImpl } from "./config";
 import { TilingController } from "./controller";
-import Debug from "./util/debug";
+import Debug from "./util/log";
 
 /**
  * Script entry-point from QML side.

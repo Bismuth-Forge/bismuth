@@ -7,7 +7,7 @@ import { DriverWindow } from "../driver/window";
 import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
-import Debug from "../util/debug";
+import Debug from "../util/log";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 

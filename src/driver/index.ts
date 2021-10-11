@@ -15,7 +15,7 @@ import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 
 import Config from "../config";
-import Debug from "../util/debug";
+import Debug from "../util/log";
 
 export interface DriverContext {
   readonly screens: DriverSurface[];

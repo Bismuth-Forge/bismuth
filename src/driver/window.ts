@@ -9,7 +9,7 @@ import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";
 import Config from "../config";
-import Debug from "../util/debug";
+import Debug from "../util/log";
 
 export interface DriverWindow {
   readonly fullScreen: boolean;
