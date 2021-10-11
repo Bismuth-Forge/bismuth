@@ -7,7 +7,7 @@ import { DriverWindow } from "../driver/window";
 import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
-import Debug from "../util/log";
+import { Log } from "../util/log";
 import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 
@@ -163,11 +163,9 @@ export default class Window {
   private weightMap: { [key: string]: number };
 
   private config: Config;
-  private debug: Debug;
 
-  constructor(window: DriverWindow, config: Config, debug: Debug) {
+  constructor(window: DriverWindow, config: Config, private log: Log) {
     this.config = config;
-    this.debug = debug;
 
     this.id = window.id;
     this.window = window;
@@ -183,7 +181,7 @@ export default class Window {
 
   public commit(): void {
     const state = this.state;
-    this.debug.debugObj(() => ["Window#commit", { state: WindowState[state] }]);
+    this.log.log(["Window#commit", { state: WindowState[state] }]);
     switch (state) {
       case WindowState.NativeMaximized:
         this.window.commit(undefined, undefined, false);

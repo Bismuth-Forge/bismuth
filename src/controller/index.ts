@@ -11,7 +11,7 @@ import { DriverContext, KWinDriver } from "../driver";
 import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
-import Debug from "../util/log";
+import { Log } from "../util/log";
 
 import * as Action from "./action";
 
@@ -147,19 +147,18 @@ export class TilingController implements Controller {
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     private config: Config,
-    private debug: Debug
+    private log: Log
   ) {
-    this.engine = new TilingEngine(this, config, debug);
-    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
+    this.engine = new TilingEngine(this, config, log);
+    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, log);
   }
 
   /**
    * Entry point: start tiling window management
    */
   public start(): void {
-    console.log("Let's get down to bismuth!");
-
-    this.debug.debug(() => `Config: ${this.config}`);
+    this.log.log("Let's get down to bismuth!");
+    this.log.log(`Config: ${this.config}`);
 
     this.driver.bindEvents();
     this.bindShortcuts();
@@ -194,15 +193,12 @@ export class TilingController implements Controller {
   }
 
   public onSurfaceUpdate(comment: string): void {
-    this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
+    this.log.log(["onSurfaceUpdate", { comment }]);
     this.engine.arrange();
   }
 
   public onCurrentSurfaceChanged(): void {
-    this.debug.debugObj(() => [
-      "onCurrentSurfaceChanged",
-      { srf: this.currentSurface },
-    ]);
+    this.log.log(["onCurrentSurfaceChanged", { srf: this.currentSurface }]);
     this.engine.arrange();
     /* HACK: minimize others and change geometry with Monocle Layout and
      * config.monocleMinimizeRest
@@ -213,8 +209,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowAdded(window: Window): void {
-    this.debug.debugObj(() => ["onWindowAdded", { window }]);
-    console.log(`New window added: ${window}`);
+    this.log.log(["onWindowAdded", { window }]);
     this.engine.manage(window);
 
     /* move window to next surface if the current surface is "full" */
@@ -236,8 +231,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowRemoved(window: Window): void {
-    this.debug.debugObj(() => ["onWindowRemoved", { window }]);
-    console.log(`Window remove: ${window}`);
+    this.log.log(["onWindowRemoved", { window }]);
 
     this.engine.unmanage(window);
     this.engine.arrange();
@@ -262,7 +256,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowMoveOver(window: Window): void {
-    this.debug.debugObj(() => ["onWindowMoveOver", { window }]);
+    this.log.log(["onWindowMoveOver", { window }]);
 
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
@@ -303,7 +297,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowResize(window: Window): void {
-    this.debug.debugObj(() => ["onWindowResize", { window }]);
+    this.log.log(["onWindowResize", { window }]);
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
         this.engine.adjustLayout(window);
@@ -313,7 +307,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowResizeOver(window: Window): void {
-    this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
+    this.log.log(["onWindowResizeOver", { window }]);
     console.log(`Window resize is over: ${window}`);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
@@ -328,7 +322,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowGeometryChanged(window: Window): void {
-    this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
+    this.log.log(["onWindowGeometryChanged", { window }]);
     this.engine.enforceSize(window);
   }
 
@@ -336,7 +330,7 @@ export class TilingController implements Controller {
   // by itself anyway.
   public onWindowChanged(window: Window | null, comment?: string): void {
     if (window) {
-      this.debug.debugObj(() => ["onWindowChanged", { window, comment }]);
+      this.log.log(["onWindowChanged", { window, comment }]);
 
       if (comment === "unminimized") {
         this.currentWindow = window;
@@ -349,12 +343,12 @@ export class TilingController implements Controller {
   public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
     this.currentWindow = window;
-    // Minimize other windows if Moncole and config.monocleMinimizeRest
+    // Minimize other windows if Monocle and config.monocleMinimizeRest
     if (
       this.engine.isLayoutMonocleAndMinimizeRest() &&
       this.engine.windows.getVisibleTiles(window.surface).includes(window)
     ) {
-      /* If a window hasn't been foucsed in this layout yet, ensure its geometry
+      /* If a window hasn't been focused in this layout yet, ensure its geometry
        * gets maximized.
        */
       this.engine

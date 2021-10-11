@@ -15,7 +15,7 @@ import Window from "../engine/window";
 import { WindowState } from "../engine/window";
 
 import Config from "../config";
-import Debug from "../util/log";
+import { Log } from "../util/log";
 
 export interface DriverContext {
   readonly screens: DriverSurface[];
@@ -102,7 +102,6 @@ export class KWinDriver implements DriverContext {
   private kwinApi: KWin.Api;
 
   private config: Config;
-  private debug: Debug;
 
   /**
    * @param qmlObjects objects from QML gui. Required for the interaction with QML, as we cannot access globals.
@@ -114,16 +113,13 @@ export class KWinDriver implements DriverContext {
     kwinApi: KWin.Api,
     controller: Controller,
     config: Config,
-    debug: Debug
+    private log: Log
   ) {
     this.config = config;
-    this.debug = debug;
 
     // TODO: find a better way to to this
     if (this.config.preventMinimize && this.config.monocleMinimizeRest) {
-      this.debug.debug(
-        () => "preventMinimize is disabled because of monocleMinimizeRest."
-      );
+      log.log("preventMinimize is disabled because of monocleMinimizeRest");
       this.config.preventMinimize = false;
     }
 
@@ -132,15 +128,9 @@ export class KWinDriver implements DriverContext {
       (client: KWin.Client) => KWinWindow.generateID(client),
       (client: KWin.Client) =>
         new Window(
-          new KWinWindow(
-            client,
-            this.qml,
-            this.kwinApi,
-            this.config,
-            this.debug
-          ),
+          new KWinWindow(client, this.qml, this.kwinApi, this.config, this.log),
           this.config,
-          this.debug
+          this.log
         )
     );
     this.entered = false;
@@ -356,10 +346,8 @@ export class KWinDriver implements DriverContext {
     this.entered = true;
     try {
       callback();
-    } catch (e) {
-      // TODO: investigate why this line prevents compiling
-      // debug(() => "Error raised from line " + e.lineNumber);
-      this.debug.debug(() => e);
+    } catch (e: any) {
+      this.log.log(e);
     } finally {
       this.entered = false;
     }
@@ -370,7 +358,7 @@ export class KWinDriver implements DriverContext {
     let resizing = false;
 
     this.connect(client.moveResizedChanged, () => {
-      this.debug.debugObj(() => [
+      this.log.log([
         "moveResizedChanged",
         { window, move: client.move, resize: client.resize },
       ]);

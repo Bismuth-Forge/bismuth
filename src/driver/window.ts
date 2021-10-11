@@ -9,7 +9,7 @@ import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";
 import Config from "../config";
-import Debug from "../util/log";
+import { Log } from "../util/log";
 
 export interface DriverWindow {
   readonly fullScreen: boolean;
@@ -132,14 +132,13 @@ export class KWinWindow implements DriverWindow {
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
   private config: Config;
-  private debug: Debug;
 
   constructor(
     client: KWin.Client,
     qml: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     config: Config,
-    debug: Debug
+    private log: Log
   ) {
     this.client = client;
     this.id = KWinWindow.generateID(client);
@@ -149,7 +148,6 @@ export class KWinWindow implements DriverWindow {
     this.qml = qml;
     this.kwinApi = kwinApi;
     this.config = config;
-    this.debug = debug;
   }
 
   public commit(
@@ -157,10 +155,7 @@ export class KWinWindow implements DriverWindow {
     noBorder?: boolean,
     keepAbove?: boolean
   ): void {
-    this.debug.debugObj(() => [
-      "KWinWindow#commit",
-      { geometry, noBorder, keepAbove },
-    ]);
+    this.log.log(["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
 
     if (this.client.move || this.client.resize) {
       return;
