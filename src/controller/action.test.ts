@@ -8,9 +8,12 @@ import { createMock } from "ts-auto-mock";
 import { Engine } from "../engine";
 import { WindowsLayout } from "../engine/layout";
 import Window from "../engine/window";
+import { NullLog } from "../util/log";
 import * as Action from "./action";
 
 describe("action", () => {
+  const fakeLog = new NullLog();
+
   describe("focus", () => {
     let fakeEngine: Engine;
     beforeEach(() => {
@@ -25,7 +28,7 @@ describe("action", () => {
 
     describe("up", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusUpperWindow(fakeEngine);
+        const action = new Action.FocusUpperWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -35,7 +38,7 @@ describe("action", () => {
 
     describe("down", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusBottomWindow(fakeEngine);
+        const action = new Action.FocusBottomWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -45,7 +48,7 @@ describe("action", () => {
 
     describe("left", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusLeftWindow(fakeEngine);
+        const action = new Action.FocusLeftWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -55,7 +58,7 @@ describe("action", () => {
 
     describe("right", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusRightWindow(fakeEngine);
+        const action = new Action.FocusRightWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -65,7 +68,7 @@ describe("action", () => {
 
     describe("next", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusNextWindow(fakeEngine);
+        const action = new Action.FocusNextWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -75,7 +78,7 @@ describe("action", () => {
 
     describe("prev", () => {
       it("correctly executes", () => {
-        const action = new Action.FocusPreviousWindow(fakeEngine);
+        const action = new Action.FocusPreviousWindow(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -99,7 +102,7 @@ describe("action", () => {
 
     describe("up", () => {
       it("correctly executes", () => {
-        const action = new Action.MoveActiveWindowUp(fakeEngine);
+        const action = new Action.MoveActiveWindowUp(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -109,7 +112,7 @@ describe("action", () => {
 
     describe("down", () => {
       it("correctly executes", () => {
-        const action = new Action.MoveActiveWindowDown(fakeEngine);
+        const action = new Action.MoveActiveWindowDown(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -119,7 +122,7 @@ describe("action", () => {
 
     describe("left", () => {
       it("correctly executes", () => {
-        const action = new Action.MoveActiveWindowLeft(fakeEngine);
+        const action = new Action.MoveActiveWindowLeft(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -129,7 +132,7 @@ describe("action", () => {
 
     describe("right", () => {
       it("correctly executes", () => {
-        const action = new Action.MoveActiveWindowRight(fakeEngine);
+        const action = new Action.MoveActiveWindowRight(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -139,7 +142,10 @@ describe("action", () => {
 
     describe("next", () => {
       it("correctly executes", () => {
-        const action = new Action.MoveActiveWindowToNextPosition(fakeEngine);
+        const action = new Action.MoveActiveWindowToNextPosition(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -150,7 +156,8 @@ describe("action", () => {
     describe("prev", () => {
       it("correctly executes", () => {
         const action = new Action.MoveActiveWindowToPreviousPosition(
-          fakeEngine
+          fakeEngine,
+          fakeLog
         );
 
         action.execute();
@@ -175,7 +182,10 @@ describe("action", () => {
 
     describe("width increase", () => {
       it("correctly executes", () => {
-        const action = new Action.IncreaseActiveWindowWidth(fakeEngine);
+        const action = new Action.IncreaseActiveWindowWidth(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -189,7 +199,10 @@ describe("action", () => {
 
     describe("width decrease", () => {
       it("correctly executes", () => {
-        const action = new Action.DecreaseActiveWindowWidth(fakeEngine);
+        const action = new Action.DecreaseActiveWindowWidth(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -203,7 +216,10 @@ describe("action", () => {
 
     describe("height increase", () => {
       it("correctly executes", () => {
-        const action = new Action.IncreaseActiveWindowHeight(fakeEngine);
+        const action = new Action.IncreaseActiveWindowHeight(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -217,7 +233,10 @@ describe("action", () => {
 
     describe("height decrease", () => {
       it("correctly executes", () => {
-        const action = new Action.DecreaseActiveWindowHeight(fakeEngine);
+        const action = new Action.DecreaseActiveWindowHeight(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -241,7 +260,10 @@ describe("action", () => {
 
     describe("increase windows count", () => {
       it("shows a note that there is no master area in general case", () => {
-        const action = new Action.IncreaseMasterAreaWindowCount(fakeEngine);
+        const action = new Action.IncreaseMasterAreaWindowCount(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -251,7 +273,10 @@ describe("action", () => {
 
     describe("decrease windows count", () => {
       it("shows a note that there is no master area in general case", () => {
-        const action = new Action.DecreaseMasterAreaWindowCount(fakeEngine);
+        const action = new Action.DecreaseMasterAreaWindowCount(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -261,7 +286,10 @@ describe("action", () => {
 
     describe("increase size", () => {
       it("shows a note that there is no master area in general case", () => {
-        const action = new Action.IncreaseLayoutMasterAreaSize(fakeEngine);
+        const action = new Action.IncreaseLayoutMasterAreaSize(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -271,7 +299,10 @@ describe("action", () => {
 
     describe("decrease size", () => {
       it("shows a note that there is no master area in general case", () => {
-        const action = new Action.DecreaseLayoutMasterAreaSize(fakeEngine);
+        const action = new Action.DecreaseLayoutMasterAreaSize(
+          fakeEngine,
+          fakeLog
+        );
 
         action.execute();
 
@@ -288,7 +319,7 @@ describe("action", () => {
         currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
       });
 
-      const action = new Action.ToggleActiveWindowFloating(fakeEngine);
+      const action = new Action.ToggleActiveWindowFloating(fakeEngine, fakeLog);
 
       action.execute();
 
@@ -304,7 +335,10 @@ describe("action", () => {
         currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
       });
 
-      const action = new Action.PushActiveWindowIntoMasterAreaFront(fakeEngine);
+      const action = new Action.PushActiveWindowIntoMasterAreaFront(
+        fakeEngine,
+        fakeLog
+      );
 
       action.execute();
 
@@ -328,7 +362,7 @@ describe("action", () => {
 
     describe("next layout", () => {
       it("executes correctly", () => {
-        const action = new Action.SwitchToNextLayout(fakeEngine);
+        const action = new Action.SwitchToNextLayout(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -338,7 +372,7 @@ describe("action", () => {
 
     describe("prev layout", () => {
       it("executes correctly", () => {
-        const action = new Action.SwitchToPreviousLayout(fakeEngine);
+        const action = new Action.SwitchToPreviousLayout(fakeEngine, fakeLog);
 
         action.execute();
 
@@ -348,7 +382,7 @@ describe("action", () => {
 
     describe("set layout", () => {
       it("executes correctly when asking to set Monocle Layout", () => {
-        const action = new Action.SetMonocleLayout(fakeEngine);
+        const action = new Action.SetMonocleLayout(fakeEngine, fakeLog);
 
         action.execute();
 

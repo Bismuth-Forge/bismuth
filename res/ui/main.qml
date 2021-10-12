@@ -27,7 +27,7 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("Bismuth: Initiating the script");
+        console.log("[Bismuth] Initiating the script");
 
         const qmlObjects = {
             scriptRoot: scriptRoot,

@@ -308,7 +308,6 @@ export class TilingController implements Controller {
 
   public onWindowResizeOver(window: Window): void {
     this.log.log(["onWindowResizeOver", { window }]);
-    console.log(`Window resize is over: ${window}`);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange();
@@ -369,45 +368,45 @@ export class TilingController implements Controller {
 
   private bindShortcuts(): void {
     const allPossibleActions = [
-      new Action.FocusNextWindow(this.engine),
-      new Action.FocusPreviousWindow(this.engine),
-      new Action.FocusUpperWindow(this.engine),
-      new Action.FocusBottomWindow(this.engine),
-      new Action.FocusLeftWindow(this.engine),
-      new Action.FocusRightWindow(this.engine),
-      new Action.MoveActiveWindowToNextPosition(this.engine),
+      new Action.FocusNextWindow(this.engine, this.log),
+      new Action.FocusPreviousWindow(this.engine, this.log),
+      new Action.FocusUpperWindow(this.engine, this.log),
+      new Action.FocusBottomWindow(this.engine, this.log),
+      new Action.FocusLeftWindow(this.engine, this.log),
+      new Action.FocusRightWindow(this.engine, this.log),
+      new Action.MoveActiveWindowToNextPosition(this.engine, this.log),
 
-      new Action.MoveActiveWindowToPreviousPosition(this.engine),
-      new Action.MoveActiveWindowUp(this.engine),
-      new Action.MoveActiveWindowDown(this.engine),
-      new Action.MoveActiveWindowLeft(this.engine),
-      new Action.MoveActiveWindowRight(this.engine),
+      new Action.MoveActiveWindowToPreviousPosition(this.engine, this.log),
+      new Action.MoveActiveWindowUp(this.engine, this.log),
+      new Action.MoveActiveWindowDown(this.engine, this.log),
+      new Action.MoveActiveWindowLeft(this.engine, this.log),
+      new Action.MoveActiveWindowRight(this.engine, this.log),
 
-      new Action.IncreaseActiveWindowWidth(this.engine),
-      new Action.IncreaseActiveWindowHeight(this.engine),
-      new Action.DecreaseActiveWindowWidth(this.engine),
-      new Action.DecreaseActiveWindowHeight(this.engine),
+      new Action.IncreaseActiveWindowWidth(this.engine, this.log),
+      new Action.IncreaseActiveWindowHeight(this.engine, this.log),
+      new Action.DecreaseActiveWindowWidth(this.engine, this.log),
+      new Action.DecreaseActiveWindowHeight(this.engine, this.log),
 
-      new Action.IncreaseMasterAreaWindowCount(this.engine),
-      new Action.DecreaseMasterAreaWindowCount(this.engine),
-      new Action.IncreaseLayoutMasterAreaSize(this.engine),
-      new Action.DecreaseLayoutMasterAreaSize(this.engine),
+      new Action.IncreaseMasterAreaWindowCount(this.engine, this.log),
+      new Action.DecreaseMasterAreaWindowCount(this.engine, this.log),
+      new Action.IncreaseLayoutMasterAreaSize(this.engine, this.log),
+      new Action.DecreaseLayoutMasterAreaSize(this.engine, this.log),
 
-      new Action.ToggleActiveWindowFloating(this.engine),
-      new Action.PushActiveWindowIntoMasterAreaFront(this.engine),
+      new Action.ToggleActiveWindowFloating(this.engine, this.log),
+      new Action.PushActiveWindowIntoMasterAreaFront(this.engine, this.log),
 
-      new Action.SwitchToNextLayout(this.engine),
-      new Action.SwitchToPreviousLayout(this.engine),
-      new Action.SetTileLayout(this.engine),
-      new Action.SetMonocleLayout(this.engine),
-      new Action.SetThreeColumnLayout(this.engine),
-      new Action.SetStairLayout(this.engine),
-      new Action.SetSpreadLayout(this.engine),
-      new Action.SetFloatingLayout(this.engine),
-      new Action.SetQuarterLayout(this.engine),
+      new Action.SwitchToNextLayout(this.engine, this.log),
+      new Action.SwitchToPreviousLayout(this.engine, this.log),
+      new Action.SetTileLayout(this.engine, this.log),
+      new Action.SetMonocleLayout(this.engine, this.log),
+      new Action.SetThreeColumnLayout(this.engine, this.log),
+      new Action.SetStairLayout(this.engine, this.log),
+      new Action.SetSpreadLayout(this.engine, this.log),
+      new Action.SetFloatingLayout(this.engine, this.log),
+      new Action.SetQuarterLayout(this.engine, this.log),
 
-      new Action.Rotate(this.engine),
-      new Action.RotatePart(this.engine),
+      new Action.Rotate(this.engine, this.log),
+      new Action.RotatePart(this.engine, this.log),
     ];
 
     for (const action of allPossibleActions) {
