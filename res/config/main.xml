@@ -11,7 +11,7 @@
     <group name="">
 
     <entry name="debug" type="Bool">
-	    <label>Print debug messages</label>
+	    <label>Enable logging</label>
         <default>false</default>
     </entry>
 

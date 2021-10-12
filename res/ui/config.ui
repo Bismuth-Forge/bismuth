@@ -626,8 +626,7 @@
           <string>Use this option to debug the script or submit detailed bug report.</string>
          </property>
          <property name="text">
-          <string>Print debug messages
-(must run KWin from terminal)</string>
+          <string>Enable logging</string>
          </property>
         </widget>
        </item>

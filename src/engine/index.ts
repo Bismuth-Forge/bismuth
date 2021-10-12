@@ -18,7 +18,7 @@ import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
-import Debug from "../util/debug";
+import { Log } from "../util/log";
 import { WindowsLayout } from "./layout";
 
 export type Direction = "up" | "down" | "left" | "right";
@@ -79,7 +79,7 @@ export class TilingEngine implements Engine {
   constructor(
     private controller: Controller,
     private config: Config,
-    private debug: Debug
+    private log: Log
   ) {
     this.layouts = new LayoutStore(this.config);
     this.windows = new WindowStore();
@@ -236,7 +236,7 @@ export class TilingEngine implements Engine {
    * Arrange tiles on all screens.
    */
   public arrange(): void {
-    this.debug.debug(() => "arrange");
+    this.log.log("arrange");
 
     this.controller.screens.forEach((driverSurface: DriverSurface) => {
       this.arrangeScreen(driverSurface);
@@ -255,7 +255,7 @@ export class TilingEngine implements Engine {
     const tilingArea = this.getTilingArea(workingArea, layout);
 
     const visibleWindows = this.windows.getVisibleWindows(screenSurface);
-    this.debug.debugObj(() => [
+    this.log.log([
       "arrangeScreen",
       {
         layout,
@@ -304,7 +304,7 @@ export class TilingEngine implements Engine {
 
     // Commit window assigned properties
     visibleWindows.forEach((win: Window) => win.commit());
-    this.debug.debugObj(() => ["arrangeScreen/finished", { screenSurface }]);
+    this.log.log(["arrangeScreen/finished", { screenSurface }]);
   }
 
   public currentLayoutOnCurrentSurface(): WindowsLayout {

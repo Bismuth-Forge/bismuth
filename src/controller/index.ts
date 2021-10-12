@@ -9,10 +9,9 @@ import { WindowState } from "../engine/window";
 
 import { DriverContext, KWinDriver } from "../driver";
 import { DriverSurface } from "../driver/surface";
-import MonocleLayout from "../engine/layout/monocle_layout";
 
 import Config from "../config";
-import Debug from "../util/debug";
+import { Log } from "../util/log";
 
 import * as Action from "./action";
 
@@ -148,19 +147,18 @@ export class TilingController implements Controller {
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     private config: Config,
-    private debug: Debug
+    private log: Log
   ) {
-    this.engine = new TilingEngine(this, config, debug);
-    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, debug);
+    this.engine = new TilingEngine(this, config, log);
+    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, log);
   }
 
   /**
    * Entry point: start tiling window management
    */
   public start(): void {
-    console.log("Let's get down to bismuth!");
-
-    this.debug.debug(() => `Config: ${this.config}`);
+    this.log.log("Let's get down to bismuth!");
+    this.log.log(`Config: ${this.config}`);
 
     this.driver.bindEvents();
     this.bindShortcuts();
@@ -195,15 +193,12 @@ export class TilingController implements Controller {
   }
 
   public onSurfaceUpdate(comment: string): void {
-    this.debug.debugObj(() => ["onSurfaceUpdate", { comment }]);
+    this.log.log(["onSurfaceUpdate", { comment }]);
     this.engine.arrange();
   }
 
   public onCurrentSurfaceChanged(): void {
-    this.debug.debugObj(() => [
-      "onCurrentSurfaceChanged",
-      { srf: this.currentSurface },
-    ]);
+    this.log.log(["onCurrentSurfaceChanged", { srf: this.currentSurface }]);
     this.engine.arrange();
     /* HACK: minimize others and change geometry with Monocle Layout and
      * config.monocleMinimizeRest
@@ -214,8 +209,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowAdded(window: Window): void {
-    this.debug.debugObj(() => ["onWindowAdded", { window }]);
-    console.log(`New window added: ${window}`);
+    this.log.log(["onWindowAdded", { window }]);
     this.engine.manage(window);
 
     /* move window to next surface if the current surface is "full" */
@@ -237,8 +231,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowRemoved(window: Window): void {
-    this.debug.debugObj(() => ["onWindowRemoved", { window }]);
-    console.log(`Window remove: ${window}`);
+    this.log.log(["onWindowRemoved", { window }]);
 
     this.engine.unmanage(window);
     this.engine.arrange();
@@ -263,7 +256,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowMoveOver(window: Window): void {
-    this.debug.debugObj(() => ["onWindowMoveOver", { window }]);
+    this.log.log(["onWindowMoveOver", { window }]);
 
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
@@ -304,7 +297,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowResize(window: Window): void {
-    this.debug.debugObj(() => ["onWindowResize", { window }]);
+    this.log.log(["onWindowResize", { window }]);
     if (this.config.adjustLayout && this.config.adjustLayoutLive) {
       if (window.state === WindowState.Tiled) {
         this.engine.adjustLayout(window);
@@ -314,8 +307,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowResizeOver(window: Window): void {
-    this.debug.debugObj(() => ["onWindowResizeOver", { window }]);
-    console.log(`Window resize is over: ${window}`);
+    this.log.log(["onWindowResizeOver", { window }]);
     if (this.config.adjustLayout && window.tiled) {
       this.engine.adjustLayout(window);
       this.engine.arrange();
@@ -329,7 +321,7 @@ export class TilingController implements Controller {
   }
 
   public onWindowGeometryChanged(window: Window): void {
-    this.debug.debugObj(() => ["onWindowGeometryChanged", { window }]);
+    this.log.log(["onWindowGeometryChanged", { window }]);
     this.engine.enforceSize(window);
   }
 
@@ -337,7 +329,7 @@ export class TilingController implements Controller {
   // by itself anyway.
   public onWindowChanged(window: Window | null, comment?: string): void {
     if (window) {
-      this.debug.debugObj(() => ["onWindowChanged", { window, comment }]);
+      this.log.log(["onWindowChanged", { window, comment }]);
 
       if (comment === "unminimized") {
         this.currentWindow = window;
@@ -350,12 +342,12 @@ export class TilingController implements Controller {
   public onWindowFocused(window: Window): void {
     window.timestamp = new Date().getTime();
     this.currentWindow = window;
-    // Minimize other windows if Moncole and config.monocleMinimizeRest
+    // Minimize other windows if Monocle and config.monocleMinimizeRest
     if (
       this.engine.isLayoutMonocleAndMinimizeRest() &&
       this.engine.windows.getVisibleTiles(window.surface).includes(window)
     ) {
-      /* If a window hasn't been foucsed in this layout yet, ensure its geometry
+      /* If a window hasn't been focused in this layout yet, ensure its geometry
        * gets maximized.
        */
       this.engine
@@ -376,45 +368,45 @@ export class TilingController implements Controller {
 
   private bindShortcuts(): void {
     const allPossibleActions = [
-      new Action.FocusNextWindow(this.engine),
-      new Action.FocusPreviousWindow(this.engine),
-      new Action.FocusUpperWindow(this.engine),
-      new Action.FocusBottomWindow(this.engine),
-      new Action.FocusLeftWindow(this.engine),
-      new Action.FocusRightWindow(this.engine),
-      new Action.MoveActiveWindowToNextPosition(this.engine),
+      new Action.FocusNextWindow(this.engine, this.log),
+      new Action.FocusPreviousWindow(this.engine, this.log),
+      new Action.FocusUpperWindow(this.engine, this.log),
+      new Action.FocusBottomWindow(this.engine, this.log),
+      new Action.FocusLeftWindow(this.engine, this.log),
+      new Action.FocusRightWindow(this.engine, this.log),
+      new Action.MoveActiveWindowToNextPosition(this.engine, this.log),
 
-      new Action.MoveActiveWindowToPreviousPosition(this.engine),
-      new Action.MoveActiveWindowUp(this.engine),
-      new Action.MoveActiveWindowDown(this.engine),
-      new Action.MoveActiveWindowLeft(this.engine),
-      new Action.MoveActiveWindowRight(this.engine),
+      new Action.MoveActiveWindowToPreviousPosition(this.engine, this.log),
+      new Action.MoveActiveWindowUp(this.engine, this.log),
+      new Action.MoveActiveWindowDown(this.engine, this.log),
+      new Action.MoveActiveWindowLeft(this.engine, this.log),
+      new Action.MoveActiveWindowRight(this.engine, this.log),
 
-      new Action.IncreaseActiveWindowWidth(this.engine),
-      new Action.IncreaseActiveWindowHeight(this.engine),
-      new Action.DecreaseActiveWindowWidth(this.engine),
-      new Action.DecreaseActiveWindowHeight(this.engine),
+      new Action.IncreaseActiveWindowWidth(this.engine, this.log),
+      new Action.IncreaseActiveWindowHeight(this.engine, this.log),
+      new Action.DecreaseActiveWindowWidth(this.engine, this.log),
+      new Action.DecreaseActiveWindowHeight(this.engine, this.log),
 
-      new Action.IncreaseMasterAreaWindowCount(this.engine),
-      new Action.DecreaseMasterAreaWindowCount(this.engine),
-      new Action.IncreaseLayoutMasterAreaSize(this.engine),
-      new Action.DecreaseLayoutMasterAreaSize(this.engine),
+      new Action.IncreaseMasterAreaWindowCount(this.engine, this.log),
+      new Action.DecreaseMasterAreaWindowCount(this.engine, this.log),
+      new Action.IncreaseLayoutMasterAreaSize(this.engine, this.log),
+      new Action.DecreaseLayoutMasterAreaSize(this.engine, this.log),
 
-      new Action.ToggleActiveWindowFloating(this.engine),
-      new Action.PushActiveWindowIntoMasterAreaFront(this.engine),
+      new Action.ToggleActiveWindowFloating(this.engine, this.log),
+      new Action.PushActiveWindowIntoMasterAreaFront(this.engine, this.log),
 
-      new Action.SwitchToNextLayout(this.engine),
-      new Action.SwitchToPreviousLayout(this.engine),
-      new Action.SetTileLayout(this.engine),
-      new Action.SetMonocleLayout(this.engine),
-      new Action.SetThreeColumnLayout(this.engine),
-      new Action.SetStairLayout(this.engine),
-      new Action.SetSpreadLayout(this.engine),
-      new Action.SetFloatingLayout(this.engine),
-      new Action.SetQuarterLayout(this.engine),
+      new Action.SwitchToNextLayout(this.engine, this.log),
+      new Action.SwitchToPreviousLayout(this.engine, this.log),
+      new Action.SetTileLayout(this.engine, this.log),
+      new Action.SetMonocleLayout(this.engine, this.log),
+      new Action.SetThreeColumnLayout(this.engine, this.log),
+      new Action.SetStairLayout(this.engine, this.log),
+      new Action.SetSpreadLayout(this.engine, this.log),
+      new Action.SetFloatingLayout(this.engine, this.log),
+      new Action.SetQuarterLayout(this.engine, this.log),
 
-      new Action.Rotate(this.engine),
-      new Action.RotatePart(this.engine),
+      new Action.Rotate(this.engine, this.log),
+      new Action.RotatePart(this.engine, this.log),
     ];
 
     for (const action of allPossibleActions) {

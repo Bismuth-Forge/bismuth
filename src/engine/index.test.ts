@@ -11,7 +11,7 @@ import Config from "../config";
 import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
 
-import Debug from "../util/debug";
+import { Log } from "../util/log";
 import Rect from "../util/rect";
 import TileLayout from "./layout/tile_layout";
 import LayoutStore from "./layout_store";
@@ -25,9 +25,9 @@ describe("arrange", () => {
     const fakeScreens = [screenMock, screenMock, screenMock, screenMock];
 
     const controllerMock = createMock<Controller>({ screens: fakeScreens });
-    const debugMock = createMock<Debug>();
+    const logMock = createMock<Log>();
     const configMock = createMock<Config>();
-    const engine = new TilingEngine(controllerMock, configMock, debugMock);
+    const engine = new TilingEngine(controllerMock, configMock, logMock);
 
     jest.spyOn(engine, "arrangeScreen").mockReturnValue();
 
@@ -43,9 +43,9 @@ describe("arrangeScreen", () => {
   describe("window states are correctly changed", () => {
     // Arrange
     const controllerMock = createMock<Controller>();
-    const debugMock = createMock<Debug>();
+    const logMock = createMock<Log>();
     const configMock = createMock<Config>();
-    const engine = new TilingEngine(controllerMock, configMock, debugMock);
+    const engine = new TilingEngine(controllerMock, configMock, logMock);
 
     const window1 = createMock<Window>({
       shouldFloat: false,

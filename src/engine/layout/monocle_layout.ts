@@ -65,7 +65,6 @@ export default class MonocleLayout implements WindowsLayout {
     ) {
       engine.focusOrder(1, this.config.monocleMinimizeRest);
     } else {
-      console.log("Executing from Monocle regular action!");
       action.executeWithoutLayoutOverride();
     }
   }

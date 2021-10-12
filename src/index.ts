@@ -4,7 +4,7 @@
 
 import { ConfigImpl } from "./config";
 import { TilingController } from "./controller";
-import Debug from "./util/debug";
+import { LogImpl } from "./util/log";
 
 /**
  * Script entry-point from QML side.
@@ -16,13 +16,13 @@ export function init(
   kwinScriptingApi: KWin.Api
 ): void {
   const config = new ConfigImpl(kwinScriptingApi);
-  const debug = new Debug(config);
+  const logger = new LogImpl(config);
 
   const controller = new TilingController(
     qmlObjects,
     kwinScriptingApi,
     config,
-    debug
+    logger
   );
 
   controller.start();
