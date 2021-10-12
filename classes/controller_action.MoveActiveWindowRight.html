@@ -104,6 +104,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="controller_action.MoveActiveWindowRight.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="controller_action.MoveActiveWindowRight.html#engine" class="tsd-kind-icon">engine</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="controller_action.MoveActiveWindowRight.html#key" class="tsd-kind-icon">key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="controller_action.MoveActiveWindowRight.html#log" class="tsd-kind-icon">log</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -122,20 +123,23 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Move<wbr>Active<wbr>Window<wbr>Right<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><a href="../interfaces/engine.Engine.html" class="tsd-signature-type" data-tsd-kind="Interface">Engine</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="controller_action.MoveActiveWindowRight.html" class="tsd-signature-type" data-tsd-kind="Class">MoveActiveWindowRight</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Move<wbr>Active<wbr>Window<wbr>Right<span class="tsd-signature-symbol">(</span>engine<span class="tsd-signature-symbol">: </span><a href="../interfaces/engine.Engine.html" class="tsd-signature-type" data-tsd-kind="Interface">Engine</a>, log<span class="tsd-signature-symbol">: </span><a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="controller_action.MoveActiveWindowRight.html" class="tsd-signature-type" data-tsd-kind="Class">MoveActiveWindowRight</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides ActionImpl.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d989261/src/controller/action.ts#L227">controller/action.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/fadcaea/src/controller/action.ts#L239">controller/action.ts:239</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>engine: <a href="../interfaces/engine.Engine.html" class="tsd-signature-type" data-tsd-kind="Interface">Engine</a></h5>
+								</li>
+								<li>
+									<h5>log: <a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="controller_action.MoveActiveWindowRight.html" class="tsd-signature-type" data-tsd-kind="Class">MoveActiveWindowRight</a></h4>
@@ -201,6 +205,14 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="log" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> log</h3>
+					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from ActionImpl.log</p>
+					</aside>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
@@ -216,7 +228,7 @@
 								<p>Implementation of <a href="../interfaces/controller_action.Action.html">Action</a>.<a href="../interfaces/controller_action.Action.html#execute">execute</a></p>
 								<p>Inherited from ActionImpl.execute</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d989261/src/controller/action.ts#L64">controller/action.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/fadcaea/src/controller/action.ts#L66">controller/action.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -242,7 +254,7 @@
 								<p>Implementation of <a href="../interfaces/controller_action.Action.html">Action</a>.<a href="../interfaces/controller_action.Action.html#executeWithoutLayoutOverride">executeWithoutLayoutOverride</a></p>
 								<p>Overrides ActionImpl.executeWithoutLayoutOverride</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/d989261/src/controller/action.ts#L236">controller/action.ts:236</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/fadcaea/src/controller/action.ts#L249">controller/action.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,6 +348,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="controller_action.MoveActiveWindowRight.html#key" class="tsd-kind-icon">key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="controller_action.MoveActiveWindowRight.html#log" class="tsd-kind-icon">log</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="controller_action.MoveActiveWindowRight.html#execute" class="tsd-kind-icon">execute</a>
