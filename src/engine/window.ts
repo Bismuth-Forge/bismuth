@@ -86,6 +86,10 @@ export default class Window {
     return RectDelta.fromRects(this.geometry, this.actualGeometry);
   }
 
+  public get shaded(): boolean {
+    return this.window.shaded;
+  }
+
   public floatGeometry: Rect;
   public geometry: Rect;
   public timestamp: number;
@@ -112,6 +116,7 @@ export default class Window {
 
   public set state(value: WindowState) {
     const winState = this.state;
+    this.internalStatePreviouslyAskedToChangeTo = winState;
 
     /* cannot transit to the current state */
     if (winState === value) {
@@ -133,6 +138,10 @@ export default class Window {
     }
 
     this.internalState = value;
+  }
+
+  public get statePreviouslyAskedToChangeTo(): WindowState {
+    return this.internalStatePreviouslyAskedToChangeTo;
   }
 
   public get surface(): DriverSurface {
@@ -159,6 +168,7 @@ export default class Window {
   }
 
   private internalState: WindowState;
+  private internalStatePreviouslyAskedToChangeTo: WindowState;
   private shouldCommitFloat: boolean;
   private weightMap: { [key: string]: number };
 
@@ -169,6 +179,7 @@ export default class Window {
 
     this.id = window.id;
     this.window = window;
+    this.internalStatePreviouslyAskedToChangeTo = WindowState.Floating;
 
     this.floatGeometry = window.geometry;
     this.geometry = window.geometry;

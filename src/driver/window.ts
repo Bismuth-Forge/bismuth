@@ -22,6 +22,7 @@ export interface DriverWindow {
   readonly active: boolean;
   surface: DriverSurface;
   minimized: boolean;
+  shaded: boolean;
 
   commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
   visible(srf: DriverSurface): boolean;
@@ -85,6 +86,10 @@ export class KWinWindow implements DriverWindow {
 
   public set minimized(min: boolean) {
     this.client.minimized = min;
+  }
+
+  public get shaded(): boolean {
+    return this.client.shade;
   }
 
   public maximized: boolean;

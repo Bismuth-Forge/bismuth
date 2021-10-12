@@ -134,6 +134,12 @@ export interface Controller {
   onWindowFocused(window: Window): void;
 
   /**
+   * React to the window shade state change
+   * @param window the window whose state was changed
+   */
+  onWindowShadeChanged(window: Window): void;
+
+  /**
    * Ask engine to manage the window
    * @param win the window which needs to be managed.
    */
@@ -360,6 +366,21 @@ export class TilingController implements Controller {
 
       this.engine.minimizeOthers(window);
     }
+  }
+
+  public onWindowShadeChanged(win: Window): void {
+    this.log.log(`onWindowShadeChanged, window: ${win}`);
+
+    // NOTE: Float shaded windows and change their state back once unshaded
+    // For some reason shaded windows break our tiling geometry,
+    // once resized. To avoid that, we put them to floating state.
+    if (win.shaded) {
+      win.state = WindowState.Floating;
+    } else {
+      win.state = win.statePreviouslyAskedToChangeTo;
+    }
+
+    this.engine.arrange();
   }
 
   public manageWindow(win: Window): void {
