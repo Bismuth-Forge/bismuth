@@ -254,6 +254,16 @@ declare namespace KWin {
     onAllDesktops: boolean;
 
     /**
+     * Whether the Client is shaded.
+     */
+    shade: boolean;
+
+    /**
+     * Whether the window shading state changed
+     */
+    shadeChanged: QSignal;
+
+    /**
      * @see active
      */
     activeChanged: QSignal;

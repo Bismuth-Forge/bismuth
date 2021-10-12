@@ -408,6 +408,10 @@ export class KWinDriver implements DriverContext {
     this.connect(client.desktopChanged, () =>
       this.controller.onWindowChanged(window, `desktop=${client.desktop}`)
     );
+
+    this.connect(client.shadeChanged, () => {
+      this.controller.onWindowShadeChanged(window);
+    });
   }
 
   // TODO: private onConfigChanged = () => {
