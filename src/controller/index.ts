@@ -243,13 +243,19 @@ export class TilingController implements Controller {
     this.engine.arrange();
 
     // Switch to next window if monocle with config.monocleMinimizeRest
-    if (!this.currentWindow && this.engine.isLayoutMonocleAndMinimizeRest()) {
-      this.engine.focusOrder(1, true);
-      /* HACK: force window to maximize if it isn't already
-       * This is ultimately to trigger onWindowFocused() at the right time
-       */
-      this.engine.focusOrder(1, true);
-      this.engine.focusOrder(-1, true);
+    try {
+      if (!this.currentWindow && this.engine.isLayoutMonocleAndMinimizeRest()) {
+        this.engine.focusOrder(1, true);
+        /* HACK: force window to maximize if it isn't already
+         * This is ultimately to trigger onWindowFocused() at the right time
+         */
+        this.engine.focusOrder(1, true);
+        this.engine.focusOrder(-1, true);
+      }
+    } catch {
+      /* HACK for the HACK: transient modals cause an error with the above workaround,
+       * so if we catch it here and ignore it, all is well */
+      return;
     }
   }
 
