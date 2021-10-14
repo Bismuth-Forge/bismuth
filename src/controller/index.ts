@@ -206,12 +206,6 @@ export class TilingController implements Controller {
   public onCurrentSurfaceChanged(): void {
     this.log.log(["onCurrentSurfaceChanged", { srf: this.currentSurface }]);
     this.engine.arrange();
-    /* HACK: minimize others and change geometry with Monocle Layout and
-     * config.monocleMinimizeRest
-     */
-    if (this.currentWindow) {
-      this.onWindowFocused(this.currentWindow);
-    }
   }
 
   public onWindowAdded(window: Window): void {
