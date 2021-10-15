@@ -237,19 +237,17 @@ export class TilingController implements Controller {
     this.engine.arrange();
 
     // Switch to next window if monocle with config.monocleMinimizeRest
-    try {
-      if (!this.currentWindow && this.engine.isLayoutMonocleAndMinimizeRest()) {
-        this.engine.focusOrder(1, true);
-        /* HACK: force window to maximize if it isn't already
-         * This is ultimately to trigger onWindowFocused() at the right time
-         */
-        this.engine.focusOrder(1, true);
-        this.engine.focusOrder(-1, true);
-      }
-    } catch {
-      /* HACK for the HACK: transient modals cause an error with the above workaround,
-       * so if we catch it here and ignore it, all is well */
-      return;
+    if (
+      !window.window.isDialog &&
+      !this.currentWindow &&
+      this.engine.isLayoutMonocleAndMinimizeRest()
+    ) {
+      this.engine.focusOrder(1, true);
+      /* HACK: force window to maximize if it isn't already
+       * This is ultimately to trigger onWindowFocused() at the right time
+       */
+      this.engine.focusOrder(1, true);
+      this.engine.focusOrder(-1, true);
     }
   }
 
@@ -346,25 +344,29 @@ export class TilingController implements Controller {
   }
 
   public onWindowFocused(window: Window): void {
-    window.timestamp = new Date().getTime();
-    this.currentWindow = window;
-    // Minimize other windows if Monocle and config.monocleMinimizeRest
-    if (
-      this.engine.isLayoutMonocleAndMinimizeRest() &&
-      this.engine.windows.getVisibleTiles(window.surface).includes(window)
-    ) {
-      /* If a window hasn't been focused in this layout yet, ensure its geometry
-       * gets maximized.
-       */
-      this.engine
-        .currentLayoutOnCurrentSurface()
-        .apply(
-          this,
-          this.engine.windows.getAllTileables(window.surface),
-          window.surface.workingArea
-        );
+    try {
+      window.timestamp = new Date().getTime();
+      this.currentWindow = window;
+      // Minimize other windows if Monocle and config.monocleMinimizeRest
+      if (
+        this.engine.isLayoutMonocleAndMinimizeRest() &&
+        this.engine.windows.getVisibleTiles(window.surface).includes(window)
+      ) {
+        /* If a window hasn't been focused in this layout yet, ensure its geometry
+         * gets maximized.
+         */
+        this.engine
+          .currentLayoutOnCurrentSurface()
+          .apply(
+            this,
+            this.engine.windows.getAllTileables(window.surface),
+            window.surface.workingArea
+          );
 
-      this.engine.minimizeOthers(window);
+        this.engine.minimizeOthers(window);
+      }
+    } catch {
+      return;
     }
   }
 
