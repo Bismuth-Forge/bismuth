@@ -20,6 +20,7 @@ export interface DriverWindow {
   readonly shouldFloat: boolean;
   readonly screen: number;
   readonly active: boolean;
+  readonly isDialog: boolean;
   surface: DriverSurface;
   minimized: boolean;
   shaded: boolean;
@@ -260,5 +261,9 @@ export class KWinWindow implements DriverWindow {
     }
 
     return new Rect(geometry.x, geometry.y, width, height);
+  }
+
+  public get isDialog(): boolean {
+    return this.client.dialog;
   }
 }
