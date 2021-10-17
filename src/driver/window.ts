@@ -55,6 +55,9 @@ export class KWinWindow implements DriverWindow {
     return (
       this.client.specialWindow ||
       resourceClass === "plasmashell" ||
+      resourceClass === "org.kde.plasmashell" ||
+      resourceClass === "krunner" ||
+      resourceClass === "kded5" ||
       this.config.ignoreClass.indexOf(resourceClass) >= 0 ||
       this.config.ignoreClass.indexOf(resourceName) >= 0 ||
       matchWords(this.client.caption, this.config.ignoreTitle) >= 0 ||
