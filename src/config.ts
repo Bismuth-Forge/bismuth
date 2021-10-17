@@ -238,10 +238,7 @@ export class ConfigImpl implements Config {
       this.kwinApi.KWin.readConfig("ignoreActivity", "")
     );
     this.ignoreClass = commaSeparate(
-      this.kwinApi.KWin.readConfig(
-        "ignoreClass",
-        "krunner,yakuake,spectacle,kded5,Conky"
-      )
+      this.kwinApi.KWin.readConfig("ignoreClass", "yakuake,spectacle,Conky")
     );
     this.ignoreRole = commaSeparate(
       this.kwinApi.KWin.readConfig("ignoreRole", "quake")

@@ -62,7 +62,7 @@
 
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
-        <default>krunner,yakuake,spectacle,kded5,Conky</default>
+        <default>yakuake,spectacle,Conky</default>
     </entry>
 
     <entry name="ignoreRole" type="String">
