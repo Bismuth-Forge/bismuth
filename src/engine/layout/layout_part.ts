@@ -5,7 +5,7 @@
 
 import LayoutUtils from "./layout_utils";
 
-import Window from "../window";
+import { EngineWindow } from "../window";
 
 import Config from "../../config";
 import Rect from "../../util/rect";
@@ -14,25 +14,25 @@ import RectDelta from "../../util/rectdelta";
 export interface ILayoutPart {
   adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): RectDelta;
-  apply(area: Rect, tiles: Window[]): Rect[];
+  apply(area: Rect, tiles: EngineWindow[]): Rect[];
 }
 
 export class FillLayoutPart implements ILayoutPart {
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): RectDelta {
     /* do nothing */
     return delta;
   }
 
-  public apply(area: Rect, tiles: Window[]): Rect[] {
+  public apply(area: Rect, tiles: EngineWindow[]): Rect[] {
     return tiles.map((_tile) => {
       return area;
     });
@@ -74,8 +74,8 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): RectDelta {
     const basisIndex = tiles.indexOf(basis);
@@ -141,7 +141,7 @@ export class HalfSplitLayoutPart<L extends ILayoutPart, R extends ILayoutPart>
     }
   }
 
-  public apply(area: Rect, tiles: Window[]): Rect[] {
+  public apply(area: Rect, tiles: EngineWindow[]): Rect[] {
     if (tiles.length <= this.primarySize) {
       /* primary only */
       return this.primary.apply(area, tiles);
@@ -183,8 +183,8 @@ export class StackLayoutPart implements ILayoutPart {
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): RectDelta {
     const weights = LayoutUtils.adjustAreaWeights(
@@ -209,7 +209,7 @@ export class StackLayoutPart implements ILayoutPart {
     );
   }
 
-  public apply(area: Rect, tiles: Window[]): Rect[] {
+  public apply(area: Rect, tiles: EngineWindow[]): Rect[] {
     const weights = tiles.map((tile) => tile.weight);
     return LayoutUtils.splitAreaWeighted(area, weights, this.gap);
   }
@@ -220,8 +220,8 @@ export class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): RectDelta {
     // let area = area, delta = delta;
@@ -260,7 +260,7 @@ export class RotateLayoutPart<T extends ILayoutPart> implements ILayoutPart {
     return delta;
   }
 
-  public apply(area: Rect, tiles: Window[]): Rect[] {
+  public apply(area: Rect, tiles: EngineWindow[]): Rect[] {
     switch (this.angle) {
       case 0:
         break;

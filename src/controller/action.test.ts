@@ -7,7 +7,7 @@
 import { createMock } from "ts-auto-mock";
 import { Engine } from "../engine";
 import { WindowsLayout } from "../engine/layout";
-import Window from "../engine/window";
+import { EngineWindow } from "../engine/window";
 import { NullLog } from "../util/log";
 import * as Action from "./action";
 
@@ -89,9 +89,9 @@ describe("action", () => {
 
   describe("move window", () => {
     let fakeEngine: Engine;
-    let fakeCurrentWindow: Window;
+    let fakeCurrentWindow: EngineWindow;
     beforeEach(() => {
-      fakeCurrentWindow = createMock<Window>();
+      fakeCurrentWindow = createMock<EngineWindow>();
 
       fakeEngine = createMock<Engine>({
         swapOrder: jest.fn(),
@@ -169,10 +169,10 @@ describe("action", () => {
 
   describe("window resize", () => {
     let fakeEngine: Engine;
-    let fakeCurrentWindow: Window;
+    let fakeCurrentWindow: EngineWindow;
 
     beforeEach(() => {
-      fakeCurrentWindow = createMock<Window>();
+      fakeCurrentWindow = createMock<EngineWindow>();
 
       fakeEngine = createMock<Engine>({
         resizeWindow: jest.fn(),
@@ -313,7 +313,7 @@ describe("action", () => {
 
   describe("toggle floating", () => {
     it("executes correctly", () => {
-      const fakeCurrentWindow = createMock<Window>();
+      const fakeCurrentWindow = createMock<EngineWindow>();
       const fakeEngine = createMock<Engine>({
         toggleFloat: jest.fn(),
         currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
@@ -329,7 +329,7 @@ describe("action", () => {
 
   describe("push window into master area", () => {
     it("executes correctly", () => {
-      const fakeCurrentWindow = createMock<Window>();
+      const fakeCurrentWindow = createMock<EngineWindow>();
       const fakeEngine = createMock<Engine>({
         setMaster: jest.fn(),
         currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
@@ -348,10 +348,10 @@ describe("action", () => {
 
   describe("layout switching", () => {
     let fakeEngine: Engine;
-    let fakeCurrentWindow: Window;
+    let fakeCurrentWindow: EngineWindow;
 
     beforeEach(() => {
-      fakeCurrentWindow = createMock<Window>();
+      fakeCurrentWindow = createMock<EngineWindow>();
 
       fakeEngine = createMock<Engine>({
         cycleLayout: jest.fn(),

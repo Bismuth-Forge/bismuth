@@ -15,7 +15,7 @@ import { Log } from "../util/log";
 import Rect from "../util/rect";
 import TileLayout from "./layout/tile_layout";
 import LayoutStore from "./layout_store";
-import Window, { WindowState } from "./window";
+import { EngineWindow, WindowState } from "./window";
 import WindowStore from "./window_store";
 
 describe("arrange", () => {
@@ -47,12 +47,12 @@ describe("arrangeScreen", () => {
     const configMock = createMock<Config>();
     const engine = new TilingEngine(controllerMock, configMock, logMock);
 
-    const window1 = createMock<Window>({
+    const window1 = createMock<EngineWindow>({
       shouldFloat: false,
       state: WindowState.Undecided,
     });
 
-    const window2 = createMock<Window>({
+    const window2 = createMock<EngineWindow>({
       shouldFloat: true,
       state: WindowState.Undecided,
     });

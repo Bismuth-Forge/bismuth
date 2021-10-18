@@ -10,8 +10,7 @@ import {
   StackLayoutPart,
 } from "./layout_part";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import {
   Action,
@@ -82,14 +81,18 @@ export default class TileLayout implements WindowsLayout {
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): void {
     this.parts.adjust(area, tiles, basis, delta);
   }
 
-  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
 
     this.parts.apply(area, tileables).forEach((geometry, i) => {

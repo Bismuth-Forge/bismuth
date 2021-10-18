@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Window from "../window";
+import { EngineWindow } from "../window";
 import { Engine } from "..";
 
 import { Controller } from "../../controller";
@@ -22,8 +22,13 @@ export interface WindowsLayout {
   readonly capacity?: number;
   readonly description: string;
 
-  adjust?(area: Rect, tiles: Window[], basis: Window, delta: RectDelta): void;
-  apply(controller: Controller, tileables: Window[], area: Rect): void;
+  adjust?(
+    area: Rect,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
+    delta: RectDelta
+  ): void;
+  apply(controller: Controller, tileables: EngineWindow[], area: Rect): void;
   executeAction?(engine: Engine, action: Action): void;
 
   toString(): string;

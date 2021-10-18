@@ -12,14 +12,20 @@ import Rect from "../util/rect";
 import RectDelta from "../util/rectdelta";
 
 export enum WindowState {
-  /* initial value */
+  /**
+   * Initial value
+   */
   Unmanaged,
 
-  /* script-external state - overrides internal state */
+  /**
+   * Script-external state - overrides internal state
+   */
   NativeFullscreen,
   NativeMaximized,
 
-  /* script-internal state */
+  /**
+   * Script-internal state
+   */
   Floating,
   Maximized,
   Tiled,
@@ -27,7 +33,135 @@ export enum WindowState {
   Undecided,
 }
 
-export default class Window {
+/**
+ * Window with the convenient for the Engine Interface
+ */
+export interface EngineWindow {
+  /**
+   * Window unique id
+   */
+  readonly id: string;
+
+  /**
+   * If this window ***can be*** tiled by layout.
+   */
+  readonly tileable: boolean;
+
+  /**
+   * If this window is ***already*** tiled, thus a part of the current layout.
+   */
+  readonly tiled: boolean;
+
+  /**
+   * If this window is floating, thus its geometry is not tightly managed.
+   */
+  readonly floating: boolean;
+
+  /**
+   * Whether the window is shaded (collapsed to the title bar)
+   */
+  readonly shaded: boolean;
+
+  /**
+   * Low-level implementation, usable for Driver
+   */
+  readonly window: DriverWindow;
+
+  /**
+   * Difference between geometry and actual geometry
+   */
+  readonly geometryDelta: RectDelta;
+
+  /**
+   * Actual geometry
+   */
+  readonly actualGeometry: Readonly<Rect>;
+
+  /**
+   * Whether the window is a dialog window
+   */
+  readonly isDialog: boolean;
+
+  /**
+   * Whether the window should be set to floating state
+   */
+  readonly shouldFloat: boolean;
+
+  /**
+   * Whether the window should be ignored by the script
+   */
+  readonly shouldIgnore: boolean;
+
+  /**
+   * State to which the window was asked to be changed
+   * previously. This can be the same state, as the current
+   * one.
+   */
+  readonly statePreviouslyAskedToChangeTo: WindowState;
+
+  /**
+   * Screen number, on which the window is present
+   */
+  readonly screen: number;
+
+  /**
+   * Whether the window is minimized
+   */
+  minimized: boolean;
+
+  /**
+   * Geometry of a window, while in floated state
+   */
+  floatGeometry: Rect;
+
+  /**
+   * Window geometry
+   */
+  geometry: Rect;
+
+  /**
+   * Surface, the window is currently on
+   */
+  surface: DriverSurface;
+
+  /**
+   * General state of the window: floating, maximized, tiled etc.
+   */
+  state: WindowState;
+
+  /**
+   * The timestamp when the last time Window was focused.
+   */
+  timestamp: number;
+
+  /**
+   * Window weight.
+   * TODO: This needs a better explanation. This has something to do with ThreeColumnLayout.
+   */
+  weight: number;
+
+  /**
+   * Whether the window is visible on concrete surface
+   * @param surface the surface visibility on which is checked
+   */
+  visible(surface: DriverSurface): boolean;
+
+  /**
+   * Force apply the geometry *immediately*.
+   *
+   * This method is a quick hack created for engine#resizeFloat, thus should
+   * not be used in other places.
+   */
+  forceSetGeometry(geometry: Rect): void;
+
+  /**
+   * Update changed window properties on the KWin side.
+   * I.e. make the changes visible to the end user.
+   */
+  commit(): void;
+}
+
+export class EngineWindowImpl implements EngineWindow {
   public static isTileableState(state: WindowState): boolean {
     return (
       state === WindowState.Tiled ||
@@ -69,17 +203,16 @@ export default class Window {
     this.window.minimized = min;
   }
 
-  /** If this window ***can be*** tiled by layout. */
   public get tileable(): boolean {
-    return Window.isTileableState(this.state);
+    return EngineWindowImpl.isTileableState(this.state);
   }
-  /** If this window is ***already*** tiled, thus a part of the current layout. */
+
   public get tiled(): boolean {
-    return Window.isTiledState(this.state);
+    return EngineWindowImpl.isTiledState(this.state);
   }
-  /** If this window is floating, thus its geometry is not tightly managed. */
+
   public get floating(): boolean {
-    return Window.isFloatingState(this.state);
+    return EngineWindowImpl.isFloatingState(this.state);
   }
 
   public get geometryDelta(): RectDelta {
@@ -125,13 +258,13 @@ export default class Window {
 
     if (
       (winState === WindowState.Unmanaged ||
-        Window.isTileableState(winState)) &&
-      Window.isFloatingState(value)
+        EngineWindowImpl.isTileableState(winState)) &&
+      EngineWindowImpl.isFloatingState(value)
     ) {
       this.shouldCommitFloat = true;
     } else if (
-      Window.isFloatingState(winState) &&
-      Window.isTileableState(value)
+      EngineWindowImpl.isFloatingState(winState) &&
+      EngineWindowImpl.isTileableState(value)
     ) {
       /* save the current geometry before leaving floating state */
       this.floatGeometry = this.actualGeometry;
@@ -165,6 +298,10 @@ export default class Window {
   public set weight(value: number) {
     const srfID = this.window.surface.id;
     this.weightMap[srfID] = value;
+  }
+
+  public get isDialog(): boolean {
+    return this.window.isDialog;
   }
 
   private internalState: WindowState;
@@ -236,12 +373,6 @@ export default class Window {
     }
   }
 
-  /**
-   * Force apply the geometry *immediately*.
-   *
-   * This method is a quick hack created for engine#resizeFloat, thus should
-   * not be used in other places.
-   */
   public forceSetGeometry(geometry: Rect): void {
     this.window.commit(geometry);
   }

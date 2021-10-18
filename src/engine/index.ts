@@ -7,8 +7,7 @@ import MonocleLayout from "./layout/monocle_layout";
 
 import LayoutStore from "./layout_store";
 import WindowStore from "./window_store";
-import Window from "./window";
-import { WindowState } from "./window";
+import { EngineWindow, EngineWindowImpl, WindowState } from "./window";
 
 import { Controller } from "../controller";
 
@@ -28,27 +27,27 @@ export interface Engine {
   windows: WindowStore;
 
   arrange(): void;
-  manage(window: Window): void;
-  unmanage(window: Window): void;
-  adjustLayout(basis: Window): void;
+  manage(window: EngineWindow): void;
+  unmanage(window: EngineWindow): void;
+  adjustLayout(basis: EngineWindow): void;
   resizeFloat(
-    window: Window,
+    window: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void;
   resizeTile(
-    basis: Window,
+    basis: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void;
   resizeWindow(
-    window: Window,
+    window: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void;
-  enforceSize(window: Window): void;
+  enforceSize(window: EngineWindow): void;
   currentLayoutOnCurrentSurface(): WindowsLayout;
-  currentWindow(): Window | null;
+  currentWindow(): EngineWindow | null;
 
   /**
    * Focus next or previous window
@@ -57,14 +56,14 @@ export interface Engine {
    */
   focusOrder(step: -1 | 1, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
-  swapOrder(window: Window, step: -1 | 1): void;
+  swapOrder(window: EngineWindow, step: -1 | 1): void;
   swapDirOrMoveFloat(dir: Direction): void;
-  setMaster(window: Window): void;
-  toggleFloat(window: Window): void;
+  setMaster(window: EngineWindow): void;
+  toggleFloat(window: EngineWindow): void;
   floatAll(srf: DriverSurface): void;
   cycleLayout(step: 1 | -1): void;
   setLayout(layoutClassID: string): void;
-  minimizeOthers(window: Window): void;
+  minimizeOthers(window: EngineWindow): void;
   isLayoutMonocleAndMinimizeRest(): boolean;
   showNotification(text: string): void;
 }
@@ -93,7 +92,7 @@ export class TilingEngine implements Engine {
    *
    * Used when tile is resized using mouse.
    */
-  public adjustLayout(basis: Window): void {
+  public adjustLayout(basis: EngineWindow): void {
     const srf = basis.surface;
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
@@ -114,7 +113,7 @@ export class TilingEngine implements Engine {
    * @param window a floating window
    */
   public resizeFloat(
-    window: Window,
+    window: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void {
@@ -153,7 +152,7 @@ export class TilingEngine implements Engine {
    * Used by grow/shrink shortcuts.
    */
   public resizeTile(
-    basis: Window,
+    basis: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void {
@@ -220,14 +219,14 @@ export class TilingEngine implements Engine {
    * @param step which direction. 1 means outward, -1 means inward.
    */
   public resizeWindow(
-    window: Window,
+    window: EngineWindow,
     dir: "east" | "west" | "south" | "north",
     step: -1 | 1
   ): void {
     const state = window.state;
-    if (Window.isFloatingState(state)) {
+    if (EngineWindowImpl.isFloatingState(state)) {
       this.resizeFloat(window, dir, step);
-    } else if (Window.isTiledState(state)) {
+    } else if (EngineWindowImpl.isTiledState(state)) {
       this.resizeTile(window, dir, step);
     }
   }
@@ -265,7 +264,7 @@ export class TilingEngine implements Engine {
     ]);
 
     // Set correct window state for new windows
-    visibleWindows.forEach((win: Window) => {
+    visibleWindows.forEach((win: EngineWindow) => {
       if (win.state === WindowState.Undecided) {
         win.state = win.shouldFloat ? WindowState.Floating : WindowState.Tiled;
       }
@@ -303,7 +302,7 @@ export class TilingEngine implements Engine {
     }
 
     // Commit window assigned properties
-    visibleWindows.forEach((win: Window) => win.commit());
+    visibleWindows.forEach((win: EngineWindow) => win.commit());
     this.log.log(["arrangeScreen/finished", { screenSurface }]);
   }
 
@@ -311,7 +310,7 @@ export class TilingEngine implements Engine {
     return this.layouts.getCurrentLayout(this.controller.currentSurface);
   }
 
-  public currentWindow(): Window | null {
+  public currentWindow(): EngineWindow | null {
     return this.controller.currentWindow;
   }
 
@@ -322,7 +321,7 @@ export class TilingEngine implements Engine {
    * which is straight against the purpose of tiling WM. This operation
    * move/resize such windows back to where/how they should be.
    */
-  public enforceSize(window: Window): void {
+  public enforceSize(window: EngineWindow): void {
     if (window.tiled && !window.actualGeometry.equals(window.geometry)) {
       window.commit();
     }
@@ -331,7 +330,7 @@ export class TilingEngine implements Engine {
   /**
    * Register the given window to WM.
    */
-  public manage(window: Window): void {
+  public manage(window: EngineWindow): void {
     if (!window.shouldIgnore) {
       /* engine#arrange will update the state when required. */
       window.state = WindowState.Undecided;
@@ -346,7 +345,7 @@ export class TilingEngine implements Engine {
   /**
    * Unregister the given window from WM.
    */
-  public unmanage(window: Window): void {
+  public unmanage(window: EngineWindow): void {
     this.windows.remove(window);
   }
 
@@ -414,7 +413,7 @@ export class TilingEngine implements Engine {
   /**
    * Swap the position of the current window with the next or previous window.
    */
-  public swapOrder(window: Window, step: -1 | 1): void {
+  public swapOrder(window: EngineWindow, step: -1 | 1): void {
     const srf = window.surface;
     const visibles = this.windows.getVisibleWindows(srf);
     if (visibles.length < 2) {
@@ -455,7 +454,7 @@ export class TilingEngine implements Engine {
    * @param window a floating window
    * @param dir which direction
    */
-  public moveFloat(window: Window, dir: Direction): void {
+  public moveFloat(window: EngineWindow, dir: Direction): void {
     const srf = window.surface;
 
     // TODO: configurable step size?
@@ -492,9 +491,9 @@ export class TilingEngine implements Engine {
     }
 
     const state = window.state;
-    if (Window.isFloatingState(state)) {
+    if (EngineWindowImpl.isFloatingState(state)) {
       this.moveFloat(window, dir);
-    } else if (Window.isTiledState(state)) {
+    } else if (EngineWindowImpl.isTiledState(state)) {
       this.swapDirection(dir);
     }
   }
@@ -502,7 +501,7 @@ export class TilingEngine implements Engine {
   /**
    * Toggle float mode of window.
    */
-  public toggleFloat(window: Window): void {
+  public toggleFloat(window: EngineWindow): void {
     window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
   }
 
@@ -541,7 +540,7 @@ export class TilingEngine implements Engine {
    * Some layouts depend on this assumption, and will make such windows more
    * visible than others.
    */
-  public setMaster(window: Window): void {
+  public setMaster(window: EngineWindow): void {
     this.windows.setMaster(window);
   }
 
@@ -591,7 +590,7 @@ export class TilingEngine implements Engine {
    * Minimize all windows on the surface except the given window.
    * Used mainly in Monocle mode with config.monocleMinimizeRest
    */
-  public minimizeOthers(window: Window): void {
+  public minimizeOthers(window: EngineWindow): void {
     for (const tile of this.windows.getVisibleTiles(window.surface)) {
       if (
         tile.screen == window.screen &&
@@ -612,7 +611,10 @@ export class TilingEngine implements Engine {
     );
   }
 
-  private getNeighborByDirection(basis: Window, dir: Direction): Window | null {
+  private getNeighborByDirection(
+    basis: EngineWindow,
+    dir: Direction
+  ): EngineWindow | null {
     let vertical: boolean;
     let sign: -1 | 1;
     switch (dir) {
