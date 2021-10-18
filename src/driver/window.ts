@@ -6,7 +6,6 @@
 import { DriverSurface, DriverSurfaceImpl } from "./surface";
 
 import Rect from "../util/rect";
-import { toQRect, toRect } from "../util/kwinutil";
 import { clip, matchWords } from "../util/func";
 import Config from "../config";
 import { Log } from "../util/log";
@@ -42,7 +41,7 @@ export class DriverWindowImpl implements DriverWindow {
   }
 
   public get geometry(): Rect {
-    return toRect(this.client.geometry);
+    return Rect.fromQRect(this.client.geometry);
   }
 
   public get active(): boolean {
@@ -199,7 +198,7 @@ export class DriverWindowImpl implements DriverWindow {
     if (geometry !== undefined) {
       geometry = this.adjustGeometry(geometry);
       if (this.config.preventProtrusion) {
-        const area = toRect(
+        const area = Rect.fromQRect(
           this.kwinApi.workspace.clientArea(
             this.kwinApi.KWin.PlacementArea,
             this.client.screen,
@@ -214,7 +213,7 @@ export class DriverWindowImpl implements DriverWindow {
           geometry = this.adjustGeometry(geometry);
         }
       }
-      this.client.geometry = toQRect(geometry);
+      this.client.geometry = geometry.toQRect();
     }
   }
 
