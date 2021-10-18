@@ -6,8 +6,7 @@
 import { WindowsLayout } from ".";
 
 import { Engine } from "..";
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import {
   Action,
@@ -66,7 +65,11 @@ export default class CascadeLayout implements WindowsLayout {
     /* nothing */
   }
 
-  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     const [vertStep, horzStep] = CascadeLayout.decomposeDirection(this.dir);
 
     // TODO: adjustable step size

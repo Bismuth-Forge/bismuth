@@ -10,7 +10,7 @@ import { KWinWindow } from "./window";
 import { Controller } from "../controller";
 import { Action } from "../controller/action";
 
-import Window from "../engine/window";
+import { EngineWindow, EngineWindowImpl } from "../engine/window";
 
 import { WindowState } from "../engine/window";
 
@@ -21,7 +21,7 @@ export interface DriverContext {
   readonly screens: DriverSurface[];
 
   currentSurface: DriverSurface;
-  currentWindow: Window | null;
+  currentWindow: EngineWindow | null;
 
   showNotification(text: string): void;
 
@@ -63,12 +63,12 @@ export class KWinDriver implements DriverContext {
     }
   }
 
-  public get currentWindow(): Window | null {
+  public get currentWindow(): EngineWindow | null {
     const client = this.kwinApi.workspace.activeClient;
     return client ? this.windowMap.get(client) : null;
   }
 
-  public set currentWindow(window: Window | null) {
+  public set currentWindow(window: EngineWindow | null) {
     if (window !== null) {
       this.kwinApi.workspace.activeClient = (
         window.window as KWinWindow
@@ -94,7 +94,7 @@ export class KWinDriver implements DriverContext {
   }
 
   private controller: Controller;
-  private windowMap: WrapperMap<KWin.Client, Window>;
+  private windowMap: WrapperMap<KWin.Client, EngineWindow>;
   private entered: boolean;
 
   private qml: Bismuth.Qml.Main;
@@ -126,7 +126,7 @@ export class KWinDriver implements DriverContext {
     this.windowMap = new WrapperMap(
       (client: KWin.Client) => KWinWindow.generateID(client),
       (client: KWin.Client) =>
-        new Window(
+        new EngineWindowImpl(
           new KWinWindow(client, this.qml, this.kwinApi, this.config, this.log),
           this.config,
           this.log
@@ -349,7 +349,7 @@ export class KWinDriver implements DriverContext {
     }
   }
 
-  private bindWindowEvents(window: Window, client: KWin.Client): void {
+  private bindWindowEvents(window: EngineWindow, client: KWin.Client): void {
     let moving = false;
     let resizing = false;
 

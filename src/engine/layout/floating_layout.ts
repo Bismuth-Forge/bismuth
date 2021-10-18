@@ -5,8 +5,7 @@
 
 import { WindowsLayout } from ".";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import Rect from "../../util/rect";
 import { Controller } from "../../controller";
@@ -20,11 +19,11 @@ export default class FloatingLayout implements WindowsLayout {
 
   public apply(
     _controller: Controller,
-    tileables: Window[],
+    tileables: EngineWindow[],
     _area: Rect
   ): void {
     tileables.forEach(
-      (tileable: Window) => (tileable.state = WindowState.TiledAfloat)
+      (tileable: EngineWindow) => (tileable.state = WindowState.TiledAfloat)
     );
   }
 

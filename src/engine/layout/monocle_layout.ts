@@ -5,8 +5,7 @@
 
 import { WindowsLayout } from ".";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import {
   Action,
@@ -35,7 +34,11 @@ export default class MonocleLayout implements WindowsLayout {
     this.config = config;
   }
 
-  public apply(controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     /* Tile all tileables */
     tileables.forEach((tile) => {
       tile.state = this.config.monocleMaximize

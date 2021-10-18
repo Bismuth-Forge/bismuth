@@ -6,8 +6,7 @@
 import { WindowsLayout } from ".";
 import LayoutUtils from "./layout_utils";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import {
   Action,
@@ -48,8 +47,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): void {
     const basisIndex = tiles.indexOf(basis);
@@ -128,7 +127,10 @@ export default class ThreeColumnLayout implements WindowsLayout {
       /* adjust tile weight */
       const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
       const [masterTiles, rstackTiles, lstackTiles] =
-        partitionArrayBySizes<Window>(tiles, [this.masterSize, rstackNumTile]);
+        partitionArrayBySizes<EngineWindow>(tiles, [
+          this.masterSize,
+          rstackNumTile,
+        ]);
       const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
       LayoutUtils.adjustAreaWeights(
         area /* we only need height */,
@@ -142,7 +144,11 @@ export default class ThreeColumnLayout implements WindowsLayout {
     }
   }
 
-  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     /* Tile all tileables */
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
     const tiles = tileables;
@@ -185,7 +191,10 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
       const rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
       const [masterTiles, rstackTiles, lstackTiles] =
-        partitionArrayBySizes<Window>(tiles, [this.masterSize, rstackSize]);
+        partitionArrayBySizes<EngineWindow>(tiles, [
+          this.masterSize,
+          rstackSize,
+        ]);
       [lstackTiles, masterTiles, rstackTiles].forEach((groupTiles, group) => {
         LayoutUtils.splitAreaWeighted(
           groupAreas[group],

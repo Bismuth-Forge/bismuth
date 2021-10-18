@@ -5,8 +5,7 @@
 
 import { WindowsLayout } from ".";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import { clip } from "../../util/func";
 import Rect from "../../util/rect";
@@ -41,8 +40,8 @@ export default class QuarterLayout implements WindowsLayout {
 
   public adjust(
     area: Rect,
-    tiles: Window[],
-    basis: Window,
+    tiles: EngineWindow[],
+    basis: EngineWindow,
     delta: RectDelta
   ): void {
     if (tiles.length <= 1 || tiles.length > 4) {
@@ -113,7 +112,11 @@ export default class QuarterLayout implements WindowsLayout {
     return other;
   }
 
-  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     for (let i = 0; i < 4 && i < tileables.length; i++) {
       tileables[i].state = WindowState.Tiled;
     }

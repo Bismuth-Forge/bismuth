@@ -5,8 +5,7 @@
 
 import { WindowsLayout } from ".";
 
-import Window from "../window";
-import { WindowState } from "../window";
+import { WindowState, EngineWindow } from "../window";
 
 import {
   Action,
@@ -30,7 +29,11 @@ export default class SpreadLayout implements WindowsLayout {
     this.space = 0.07;
   }
 
-  public apply(_controller: Controller, tileables: Window[], area: Rect): void {
+  public apply(
+    _controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void {
     /* Tile all tileables */
     tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
     const tiles = tileables;
