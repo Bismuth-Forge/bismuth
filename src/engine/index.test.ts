@@ -6,7 +6,7 @@
 
 import { createMock } from "ts-auto-mock";
 
-import { TilingEngine } from ".";
+import { EngineImpl } from ".";
 import Config from "../config";
 import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
@@ -27,7 +27,7 @@ describe("arrange", () => {
     const controllerMock = createMock<Controller>({ screens: fakeScreens });
     const logMock = createMock<Log>();
     const configMock = createMock<Config>();
-    const engine = new TilingEngine(controllerMock, configMock, logMock);
+    const engine = new EngineImpl(controllerMock, configMock, logMock);
 
     jest.spyOn(engine, "arrangeScreen").mockReturnValue();
 
@@ -45,7 +45,7 @@ describe("arrangeScreen", () => {
     const controllerMock = createMock<Controller>();
     const logMock = createMock<Log>();
     const configMock = createMock<Config>();
-    const engine = new TilingEngine(controllerMock, configMock, logMock);
+    const engine = new EngineImpl(controllerMock, configMock, logMock);
 
     const window1 = createMock<EngineWindow>({
       shouldFloat: false,
@@ -66,7 +66,7 @@ describe("arrangeScreen", () => {
       getCurrentLayout: () => createMock<TileLayout>(),
     });
     jest
-      .spyOn(TilingEngine.prototype as any, "getTilingArea")
+      .spyOn(EngineImpl.prototype as any, "getTilingArea")
       .mockReturnValue(createMock<Rect>());
 
     const mockSurface = createMock<DriverSurface>();
