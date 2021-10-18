@@ -11,6 +11,10 @@ export default class Rect {
     public height: number
   ) {}
 
+  public static fromQRect(qRect: QRect): Rect {
+    return new Rect(qRect.x, qRect.y, qRect.width, qRect.height);
+  }
+
   public get maxX(): number {
     return this.x + this.width;
   }
@@ -80,6 +84,10 @@ export default class Rect {
       this.width - other.width,
       this.height - other.height
     );
+  }
+
+  public toQRect(): QRect {
+    return Qt.rect(this.x, this.y, this.width, this.height);
   }
 
   public toString(): string {

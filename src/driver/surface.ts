@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import Config from "../config";
-import { toRect } from "../util/kwinutil";
 import Rect from "../util/rect";
 
 export interface DriverSurface {
@@ -66,7 +65,7 @@ export class DriverSurfaceImpl implements DriverSurface {
     this.ignore =
       this.config.ignoreActivity.indexOf(activityName) >= 0 ||
       this.config.ignoreScreen.indexOf(screen) >= 0;
-    this.workingArea = toRect(
+    this.workingArea = Rect.fromQRect(
       this.kwinApi.workspace.clientArea(
         this.kwinApi.KWin.PlacementArea,
         screen,
