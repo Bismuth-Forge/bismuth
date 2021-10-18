@@ -178,21 +178,72 @@
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="KComboBox" name="kcfg_defaultLayout">
+            <item>
+             <property name="text">
+              <string>Tile Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Monocle Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Three Column Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Spiral Column Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Quarter Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Spread Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Stair Layout</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Floating Layout</string>
+             </property>
+            </item>
+           </widget>
+          </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -649,6 +700,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
