@@ -230,7 +230,7 @@ export class EngineWindowImpl implements EngineWindow {
   /**
    * The current state of the window.
    *
-   * This value affects what and how properties gets commited to the backend.
+   * This value affects what and how properties gets committed to the backend.
    *
    * Avoid comparing this value directly, and use `tileable`, `tiled`,
    * `floating` as much as possible.
