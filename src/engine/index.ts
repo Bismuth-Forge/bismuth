@@ -70,7 +70,7 @@ export interface Engine {
 /**
  * Maintains tiling context and performs various tiling actions.
  */
-export class TilingEngine implements Engine {
+export class EngineImpl implements Engine {
   public layouts: LayoutStore;
   public windows: WindowStore;
 

@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { Engine, TilingEngine } from "../engine";
+import { Engine, EngineImpl } from "../engine";
 import { EngineWindow } from "../engine/window";
 import { WindowState } from "../engine/window";
 
@@ -155,7 +155,7 @@ export class ControllerImpl implements Controller {
     private config: Config,
     private log: Log
   ) {
-    this.engine = new TilingEngine(this, config, log);
+    this.engine = new EngineImpl(this, config, log);
     this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, log);
   }
 
