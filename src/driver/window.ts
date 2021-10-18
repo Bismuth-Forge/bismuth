@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { DriverSurface, KWinSurface } from "./surface";
+import { DriverSurface, DriverSurfaceImpl } from "./surface";
 
 import Rect from "../util/rect";
 import { toQRect, toRect } from "../util/kwinutil";
@@ -116,7 +116,7 @@ export class KWinWindow implements DriverWindow {
         ? this.client.desktop
         : this.kwinApi.workspace.currentDesktop;
 
-    return new KWinSurface(
+    return new DriverSurfaceImpl(
       this.client.screen,
       activity,
       desktop,
@@ -127,7 +127,7 @@ export class KWinWindow implements DriverWindow {
   }
 
   public set surface(srf: DriverSurface) {
-    const ksrf = srf as KWinSurface;
+    const ksrf = srf as DriverSurfaceImpl;
 
     // TODO: setting activity?
     // TODO: setting screen = move to the screen
@@ -226,7 +226,7 @@ export class KWinWindow implements DriverWindow {
   }
 
   public visible(srf: DriverSurface): boolean {
-    const ksrf = srf as KWinSurface;
+    const ksrf = srf as DriverSurfaceImpl;
     return (
       !this.client.minimized &&
       (this.client.desktop === ksrf.desktop ||

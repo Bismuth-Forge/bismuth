@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import { DriverSurface } from "./surface";
-import { KWinSurface } from "./surface";
+import { DriverSurfaceImpl } from "./surface";
 import { KWinWindow } from "./window";
 
 import { Controller } from "../controller";
@@ -39,7 +39,7 @@ export interface DriverContext {
  */
 export class KWinDriver implements DriverContext {
   public get currentSurface(): DriverSurface {
-    return new KWinSurface(
+    return new DriverSurfaceImpl(
       this.kwinApi.workspace.activeClient
         ? this.kwinApi.workspace.activeClient.screen
         : 0,
@@ -52,7 +52,7 @@ export class KWinDriver implements DriverContext {
   }
 
   public set currentSurface(value: DriverSurface) {
-    const kwinSurface = value as KWinSurface;
+    const kwinSurface = value as DriverSurfaceImpl;
 
     /* NOTE: only supports switching desktops */
     // TODO: focusing window on other screen?
@@ -80,7 +80,7 @@ export class KWinDriver implements DriverContext {
     const screensArr = [];
     for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
       screensArr.push(
-        new KWinSurface(
+        new DriverSurfaceImpl(
           screen,
           this.kwinApi.workspace.currentActivity,
           this.kwinApi.workspace.currentDesktop,
@@ -146,7 +146,7 @@ export class KWinDriver implements DriverContext {
     };
 
     const onScreenResized = (screen: number): void => {
-      const srf = new KWinSurface(
+      const srf = new DriverSurfaceImpl(
         screen,
         this.kwinApi.workspace.currentActivity,
         this.kwinApi.workspace.currentDesktop,
