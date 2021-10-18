@@ -15,7 +15,7 @@ export interface DriverSurface {
   next(): DriverSurface | null;
 }
 
-export class KWinSurface implements DriverSurface {
+export class DriverSurfaceImpl implements DriverSurface {
   public static generateId(
     screen: number,
     activity: string,
@@ -57,7 +57,12 @@ export class KWinSurface implements DriverSurface {
     this.kwinApi = kwinApi;
     this.config = config;
 
-    this.id = KWinSurface.generateId(screen, activity, desktop, this.config);
+    this.id = DriverSurfaceImpl.generateId(
+      screen,
+      activity,
+      desktop,
+      this.config
+    );
     this.ignore =
       this.config.ignoreActivity.indexOf(activityName) >= 0 ||
       this.config.ignoreScreen.indexOf(screen) >= 0;
@@ -81,7 +86,7 @@ export class KWinSurface implements DriverSurface {
       return null;
     }
 
-    return new KWinSurface(
+    return new DriverSurfaceImpl(
       this.screen,
       this.activity,
       this.desktop + 1,
