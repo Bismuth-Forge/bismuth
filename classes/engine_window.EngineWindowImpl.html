@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Window | bismuth</title>
+	<title>EngineWindowImpl | bismuth</title>
 	<meta name="description" content="Documentation for bismuth">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/engine_window.html">engine/window</a>
 				</li>
 				<li>
-					<a href="engine_window.Window.html">Window</a>
+					<a href="engine_window.EngineWindowImpl.html">EngineWindowImpl</a>
 				</li>
 			</ul>
-			<h1>Class Window</h1>
+			<h1>Class EngineWindowImpl</h1>
 		</div>
 	</div>
 </header>
@@ -72,8 +72,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Window</span>
+						<span class="target">EngineWindowImpl</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/engine_window.EngineWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">EngineWindow</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -83,53 +89,54 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="engine_window.Window.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.Window.html#config" class="tsd-kind-icon">config</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.Window.html#floatGeometry" class="tsd-kind-icon">float<wbr>Geometry</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.Window.html#geometry" class="tsd-kind-icon">geometry</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.Window.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.Window.html#internalState" class="tsd-kind-icon">internal<wbr>State</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.Window.html#internalStatePreviouslyAskedToChangeTo" class="tsd-kind-icon">internal<wbr>State<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.Window.html#shouldCommitFloat" class="tsd-kind-icon">should<wbr>Commit<wbr>Float</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.Window.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.Window.html#weightMap" class="tsd-kind-icon">weight<wbr>Map</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.Window.html#window" class="tsd-kind-icon">window</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.EngineWindowImpl.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#floatGeometry" class="tsd-kind-icon">float<wbr>Geometry</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#geometry" class="tsd-kind-icon">geometry</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.EngineWindowImpl.html#internalState" class="tsd-kind-icon">internal<wbr>State</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.EngineWindowImpl.html#internalStatePreviouslyAskedToChangeTo" class="tsd-kind-icon">internal<wbr>State<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.EngineWindowImpl.html#shouldCommitFloat" class="tsd-kind-icon">should<wbr>Commit<wbr>Float</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="engine_window.EngineWindowImpl.html#weightMap" class="tsd-kind-icon">weight<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#window" class="tsd-kind-icon">window</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#actualGeometry" class="tsd-kind-icon">actual<wbr>Geometry</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#floating" class="tsd-kind-icon">floating</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#geometryDelta" class="tsd-kind-icon">geometry<wbr>Delta</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.Window.html#minimized" class="tsd-kind-icon">minimized</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#screen" class="tsd-kind-icon">screen</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#shaded" class="tsd-kind-icon">shaded</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#shouldFloat" class="tsd-kind-icon">should<wbr>Float</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#shouldIgnore" class="tsd-kind-icon">should<wbr>Ignore</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.Window.html#state" class="tsd-kind-icon">state</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#statePreviouslyAskedToChangeTo" class="tsd-kind-icon">state<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.Window.html#surface" class="tsd-kind-icon">surface</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#tileable" class="tsd-kind-icon">tileable</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.Window.html#tiled" class="tsd-kind-icon">tiled</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.Window.html#weight" class="tsd-kind-icon">weight</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#actualGeometry" class="tsd-kind-icon">actual<wbr>Geometry</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#floating" class="tsd-kind-icon">floating</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#geometryDelta" class="tsd-kind-icon">geometry<wbr>Delta</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#isDialog" class="tsd-kind-icon">is<wbr>Dialog</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#minimized" class="tsd-kind-icon">minimized</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#screen" class="tsd-kind-icon">screen</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#shaded" class="tsd-kind-icon">shaded</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#shouldFloat" class="tsd-kind-icon">should<wbr>Float</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#shouldIgnore" class="tsd-kind-icon">should<wbr>Ignore</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#state" class="tsd-kind-icon">state</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#statePreviouslyAskedToChangeTo" class="tsd-kind-icon">state<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#surface" class="tsd-kind-icon">surface</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#tileable" class="tsd-kind-icon">tileable</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#tiled" class="tsd-kind-icon">tiled</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#weight" class="tsd-kind-icon">weight</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.Window.html#commit" class="tsd-kind-icon">commit</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.Window.html#forceSetGeometry" class="tsd-kind-icon">force<wbr>Set<wbr>Geometry</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.Window.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.Window.html#visible" class="tsd-kind-icon">visible</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.Window.html#isFloatingState" class="tsd-kind-icon">is<wbr>Floating<wbr>State</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.Window.html#isTileableState" class="tsd-kind-icon">is<wbr>Tileable<wbr>State</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.Window.html#isTiledState" class="tsd-kind-icon">is<wbr>Tiled<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#commit" class="tsd-kind-icon">commit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#forceSetGeometry" class="tsd-kind-icon">force<wbr>Set<wbr>Geometry</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine_window.EngineWindowImpl.html#visible" class="tsd-kind-icon">visible</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.EngineWindowImpl.html#isFloatingState" class="tsd-kind-icon">is<wbr>Floating<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.EngineWindowImpl.html#isTileableState" class="tsd-kind-icon">is<wbr>Tileable<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="engine_window.EngineWindowImpl.html#isTiledState" class="tsd-kind-icon">is<wbr>Tiled<wbr>State</a></li>
 							</ul>
 						</section>
 					</div>
@@ -141,13 +148,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Window<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_window.DriverWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverWindow</a>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a>, log<span class="tsd-signature-symbol">: </span><a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Engine<wbr>Window<wbr>Impl<span class="tsd-signature-symbol">(</span>window<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_window.DriverWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverWindow</a>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a>, log<span class="tsd-signature-symbol">: </span><a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="engine_window.EngineWindowImpl.html" class="tsd-signature-type" data-tsd-kind="Class">EngineWindowImpl</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L177">engine/window.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L313">engine/window.ts:313</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -162,7 +169,7 @@
 									<h5>log: <a href="../interfaces/util_log.Log.html" class="tsd-signature-type" data-tsd-kind="Interface">Log</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="engine_window.Window.html" class="tsd-signature-type" data-tsd-kind="Class">Window</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="engine_window.EngineWindowImpl.html" class="tsd-signature-type" data-tsd-kind="Class">EngineWindowImpl</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -175,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/config.Config.html" class="tsd-signature-type" data-tsd-kind="Interface">Config</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L175">engine/window.ts:175</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L311">engine/window.ts:311</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,30 +191,48 @@
 					<h3>float<wbr>Geometry</h3>
 					<div class="tsd-signature tsd-kind-icon">float<wbr>Geometry<span class="tsd-signature-symbol">:</span> <a href="util_rect.Rect.html" class="tsd-signature-type" data-tsd-kind="Class">Rect</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#floatGeometry">floatGeometry</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L93">engine/window.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L225">engine/window.ts:225</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Geometry of a window, while in floated state</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="geometry" class="tsd-anchor"></a>
 					<h3>geometry</h3>
 					<div class="tsd-signature tsd-kind-icon">geometry<span class="tsd-signature-symbol">:</span> <a href="util_rect.Rect.html" class="tsd-signature-type" data-tsd-kind="Class">Rect</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#geometry">geometry</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L94">engine/window.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L226">engine/window.ts:226</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Window geometry</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="id" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L47">engine/window.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L180">engine/window.ts:180</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Window unique id</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="internalState" class="tsd-anchor"></a>
@@ -215,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>State<span class="tsd-signature-symbol">:</span> <a href="../enums/engine_window.WindowState.html" class="tsd-signature-type" data-tsd-kind="Enumeration">WindowState</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L170">engine/window.ts:170</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L306">engine/window.ts:306</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -225,7 +250,7 @@
 					<div class="tsd-signature tsd-kind-icon">internal<wbr>State<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To<span class="tsd-signature-symbol">:</span> <a href="../enums/engine_window.WindowState.html" class="tsd-signature-type" data-tsd-kind="Enumeration">WindowState</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L171">engine/window.ts:171</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L307">engine/window.ts:307</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -235,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">should<wbr>Commit<wbr>Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L172">engine/window.ts:172</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L308">engine/window.ts:308</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -244,10 +269,16 @@
 					<h3>timestamp</h3>
 					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L95">engine/window.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L227">engine/window.ts:227</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The timestamp when the last time Window was focused.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="weightMap" class="tsd-anchor"></a>
@@ -255,7 +286,7 @@
 					<div class="tsd-signature tsd-kind-icon">weight<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L173">engine/window.ts:173</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L309">engine/window.ts:309</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -272,10 +303,16 @@
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> window</h3>
 					<div class="tsd-signature tsd-kind-icon">window<span class="tsd-signature-symbol">:</span> <a href="../interfaces/driver_window.DriverWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverWindow</a></div>
 					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#window">window</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L48">engine/window.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L181">engine/window.ts:181</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Low-level implementation, usable for Driver</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -289,10 +326,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#actualGeometry">actualGeometry</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L50">engine/window.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L183">engine/window.ts:183</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Actual geometry</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="util_rect.Rect.html" class="tsd-signature-type" data-tsd-kind="Class">Rect</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -306,8 +349,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#floating">floating</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L81">engine/window.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L213">engine/window.ts:213</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -323,16 +367,45 @@
 					<a name="geometryDelta" class="tsd-anchor"></a>
 					<h3>geometry<wbr>Delta</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> geometryDelta<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="util_rectdelta.RectDelta.html" class="tsd-signature-type" data-tsd-kind="Class">RectDelta</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> geometryDelta<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="util_rect.RectDelta.html" class="tsd-signature-type" data-tsd-kind="Class">RectDelta</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#geometryDelta">geometryDelta</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L85">engine/window.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L217">engine/window.ts:217</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="util_rectdelta.RectDelta.html" class="tsd-signature-type" data-tsd-kind="Class">RectDelta</a></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Difference between geometry and actual geometry</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="util_rect.RectDelta.html" class="tsd-signature-type" data-tsd-kind="Class">RectDelta</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="isDialog" class="tsd-anchor"></a>
+					<h3>is<wbr>Dialog</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isDialog<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#isDialog">isDialog</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L302">engine/window.ts:302</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is a dialog window</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -346,18 +419,30 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#minimized">minimized</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L64">engine/window.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L197">engine/window.ts:197</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is minimized</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#minimized">minimized</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L68">engine/window.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L201">engine/window.ts:201</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is minimized</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -377,10 +462,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#screen">screen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L60">engine/window.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L193">engine/window.ts:193</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Screen number, on which the window is present</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -394,10 +485,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#shaded">shaded</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L89">engine/window.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L221">engine/window.ts:221</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is shaded (collapsed to the title bar)</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -411,10 +508,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#shouldFloat">shouldFloat</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L53">engine/window.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L186">engine/window.ts:186</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window should be set to floating state</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -428,10 +531,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#shouldIgnore">shouldIgnore</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L56">engine/window.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L189">engine/window.ts:189</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window should be ignored by the script</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -446,15 +555,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#state">state</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L105">engine/window.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L237">engine/window.ts:237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>The current state of the window.</p>
 								</div>
-								<p>This value affects what and how properties gets commited to the backend.</p>
+								<p>This value affects what and how properties gets committed to the backend.</p>
 								<p>Avoid comparing this value directly, and use <code>tileable</code>, <code>tiled</code>,
 								<code>floating</code> as much as possible.</p>
 							</div>
@@ -462,15 +572,16 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#state">state</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L117">engine/window.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L249">engine/window.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>The current state of the window.</p>
+									<p>General state of the window: floating, maximized, tiled etc.</p>
 								</div>
-								<p>This value affects what and how properties gets commited to the backend.</p>
+								<p>This value affects what and how properties gets committed to the backend.</p>
 								<p>Avoid comparing this value directly, and use <code>tileable</code>, <code>tiled</code>,
 								<code>floating</code> as much as possible.</p>
 							</div>
@@ -493,10 +604,18 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#statePreviouslyAskedToChangeTo">statePreviouslyAskedToChangeTo</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L143">engine/window.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L275">engine/window.ts:275</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>State to which the window was asked to be changed
+										previously. This can be the same state, as the current
+									one.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../enums/engine_window.WindowState.html" class="tsd-signature-type" data-tsd-kind="Enumeration">WindowState</a></h4>
 						</li>
 					</ul>
@@ -511,18 +630,30 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#surface">surface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L147">engine/window.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L279">engine/window.ts:279</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Surface, the window is currently on</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#surface">surface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L151">engine/window.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L283">engine/window.ts:283</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Surface, the window is currently on</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -542,8 +673,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#tileable">tileable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L73">engine/window.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L205">engine/window.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -564,8 +696,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#tiled">tiled</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L77">engine/window.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L209">engine/window.ts:209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -587,18 +720,32 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#weight">weight</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L155">engine/window.ts:155</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L287">engine/window.ts:287</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Window weight.
+									TODO: This needs a better explanation. This has something to do with ThreeColumnLayout.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#weight">weight</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L165">engine/window.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L297">engine/window.ts:297</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Window weight.
+									TODO: This needs a better explanation. This has something to do with ThreeColumnLayout.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -621,10 +768,17 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#commit">commit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L193">engine/window.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L329">engine/window.ts:329</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update changed window properties on the KWin side.
+									I.e. make the changes visible to the end user.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -638,8 +792,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#forceSetGeometry">forceSetGeometry</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L245">engine/window.ts:245</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L375">engine/window.ts:375</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -669,7 +824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L253">engine/window.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L383">engine/window.ts:383</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -685,10 +840,16 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/engine_window.EngineWindow.html">EngineWindow</a>.<a href="../interfaces/engine_window.EngineWindow.html#visible">visible</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L249">engine/window.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L379">engine/window.ts:379</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is visible on concrete surface</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -709,7 +870,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L43">engine/window.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L176">engine/window.ts:176</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -732,7 +893,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L31">engine/window.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L164">engine/window.ts:164</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -755,7 +916,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/502f812/src/engine/window.ts#L39">engine/window.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/window.ts#L172">engine/window.ts:172</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -789,108 +950,114 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="engine_window.Window.html" class="tsd-kind-icon">Window</a>
+						<a href="engine_window.EngineWindowImpl.html" class="tsd-kind-icon">Engine<wbr>Window<wbr>Impl</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="engine_window.Window.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="engine_window.EngineWindowImpl.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine_window.Window.html#config" class="tsd-kind-icon">config</a>
+								<a href="engine_window.EngineWindowImpl.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="engine_window.Window.html#floatGeometry" class="tsd-kind-icon">float<wbr>Geometry</a>
+								<a href="engine_window.EngineWindowImpl.html#floatGeometry" class="tsd-kind-icon">float<wbr>Geometry</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="engine_window.Window.html#geometry" class="tsd-kind-icon">geometry</a>
+								<a href="engine_window.EngineWindowImpl.html#geometry" class="tsd-kind-icon">geometry</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="engine_window.Window.html#id" class="tsd-kind-icon">id</a>
+								<a href="engine_window.EngineWindowImpl.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine_window.Window.html#internalState" class="tsd-kind-icon">internal<wbr>State</a>
+								<a href="engine_window.EngineWindowImpl.html#internalState" class="tsd-kind-icon">internal<wbr>State</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine_window.Window.html#internalStatePreviouslyAskedToChangeTo" class="tsd-kind-icon">internal<wbr>State<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a>
+								<a href="engine_window.EngineWindowImpl.html#internalStatePreviouslyAskedToChangeTo" class="tsd-kind-icon">internal<wbr>State<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine_window.Window.html#shouldCommitFloat" class="tsd-kind-icon">should<wbr>Commit<wbr>Float</a>
+								<a href="engine_window.EngineWindowImpl.html#shouldCommitFloat" class="tsd-kind-icon">should<wbr>Commit<wbr>Float</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="engine_window.Window.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="engine_window.EngineWindowImpl.html#timestamp" class="tsd-kind-icon">timestamp</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="engine_window.Window.html#weightMap" class="tsd-kind-icon">weight<wbr>Map</a>
+								<a href="engine_window.EngineWindowImpl.html#weightMap" class="tsd-kind-icon">weight<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="engine_window.Window.html#window" class="tsd-kind-icon">window</a>
+								<a href="engine_window.EngineWindowImpl.html#window" class="tsd-kind-icon">window</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#actualGeometry" class="tsd-kind-icon">actual<wbr>Geometry</a>
+								<a href="engine_window.EngineWindowImpl.html#actualGeometry" class="tsd-kind-icon">actual<wbr>Geometry</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#floating" class="tsd-kind-icon">floating</a>
+								<a href="engine_window.EngineWindowImpl.html#floating" class="tsd-kind-icon">floating</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#geometryDelta" class="tsd-kind-icon">geometry<wbr>Delta</a>
+								<a href="engine_window.EngineWindowImpl.html#geometryDelta" class="tsd-kind-icon">geometry<wbr>Delta</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="engine_window.EngineWindowImpl.html#isDialog" class="tsd-kind-icon">is<wbr>Dialog</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="engine_window.Window.html#minimized" class="tsd-kind-icon">minimized</a>
+								<a href="engine_window.EngineWindowImpl.html#minimized" class="tsd-kind-icon">minimized</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#screen" class="tsd-kind-icon">screen</a>
+								<a href="engine_window.EngineWindowImpl.html#screen" class="tsd-kind-icon">screen</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#shaded" class="tsd-kind-icon">shaded</a>
+								<a href="engine_window.EngineWindowImpl.html#shaded" class="tsd-kind-icon">shaded</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#shouldFloat" class="tsd-kind-icon">should<wbr>Float</a>
+								<a href="engine_window.EngineWindowImpl.html#shouldFloat" class="tsd-kind-icon">should<wbr>Float</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#shouldIgnore" class="tsd-kind-icon">should<wbr>Ignore</a>
+								<a href="engine_window.EngineWindowImpl.html#shouldIgnore" class="tsd-kind-icon">should<wbr>Ignore</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="engine_window.Window.html#state" class="tsd-kind-icon">state</a>
+								<a href="engine_window.EngineWindowImpl.html#state" class="tsd-kind-icon">state</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#statePreviouslyAskedToChangeTo" class="tsd-kind-icon">state<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a>
+								<a href="engine_window.EngineWindowImpl.html#statePreviouslyAskedToChangeTo" class="tsd-kind-icon">state<wbr>Previously<wbr>Asked<wbr>ToChange<wbr>To</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="engine_window.Window.html#surface" class="tsd-kind-icon">surface</a>
+								<a href="engine_window.EngineWindowImpl.html#surface" class="tsd-kind-icon">surface</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#tileable" class="tsd-kind-icon">tileable</a>
+								<a href="engine_window.EngineWindowImpl.html#tileable" class="tsd-kind-icon">tileable</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="engine_window.Window.html#tiled" class="tsd-kind-icon">tiled</a>
+								<a href="engine_window.EngineWindowImpl.html#tiled" class="tsd-kind-icon">tiled</a>
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="engine_window.Window.html#weight" class="tsd-kind-icon">weight</a>
+								<a href="engine_window.EngineWindowImpl.html#weight" class="tsd-kind-icon">weight</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="engine_window.Window.html#commit" class="tsd-kind-icon">commit</a>
+								<a href="engine_window.EngineWindowImpl.html#commit" class="tsd-kind-icon">commit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="engine_window.Window.html#forceSetGeometry" class="tsd-kind-icon">force<wbr>Set<wbr>Geometry</a>
+								<a href="engine_window.EngineWindowImpl.html#forceSetGeometry" class="tsd-kind-icon">force<wbr>Set<wbr>Geometry</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="engine_window.Window.html#toString" class="tsd-kind-icon">to<wbr>String</a>
+								<a href="engine_window.EngineWindowImpl.html#toString" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="engine_window.Window.html#visible" class="tsd-kind-icon">visible</a>
+								<a href="engine_window.EngineWindowImpl.html#visible" class="tsd-kind-icon">visible</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="engine_window.Window.html#isFloatingState" class="tsd-kind-icon">is<wbr>Floating<wbr>State</a>
+								<a href="engine_window.EngineWindowImpl.html#isFloatingState" class="tsd-kind-icon">is<wbr>Floating<wbr>State</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="engine_window.Window.html#isTileableState" class="tsd-kind-icon">is<wbr>Tileable<wbr>State</a>
+								<a href="engine_window.EngineWindowImpl.html#isTileableState" class="tsd-kind-icon">is<wbr>Tileable<wbr>State</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="engine_window.Window.html#isTiledState" class="tsd-kind-icon">is<wbr>Tiled<wbr>State</a>
+								<a href="engine_window.EngineWindowImpl.html#isTiledState" class="tsd-kind-icon">is<wbr>Tiled<wbr>State</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/engine_window.EngineWindow.html" class="tsd-kind-icon">Engine<wbr>Window</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
