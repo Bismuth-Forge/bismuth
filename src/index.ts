@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { ConfigImpl } from "./config";
-import { TilingController } from "./controller";
+import { ControllerImpl } from "./controller";
 import { LogImpl } from "./util/log";
 
 /**
@@ -18,7 +18,7 @@ export function init(
   const config = new ConfigImpl(kwinScriptingApi);
   const logger = new LogImpl(config);
 
-  const controller = new TilingController(
+  const controller = new ControllerImpl(
     qmlObjects,
     kwinScriptingApi,
     config,

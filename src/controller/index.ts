@@ -146,7 +146,7 @@ export interface Controller {
   manageWindow(win: EngineWindow): void;
 }
 
-export class TilingController implements Controller {
+export class ControllerImpl implements Controller {
   private engine: Engine;
   private driver: DriverContext;
   public constructor(
