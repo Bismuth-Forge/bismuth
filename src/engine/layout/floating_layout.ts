@@ -7,7 +7,7 @@ import { WindowsLayout } from ".";
 
 import { WindowState, EngineWindow } from "../window";
 
-import Rect from "../../util/rect";
+import { Rect } from "../../util/rect";
 import { Controller } from "../../controller";
 
 export default class FloatingLayout implements WindowsLayout {

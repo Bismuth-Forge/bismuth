@@ -9,8 +9,7 @@ import { Engine } from "..";
 import { Controller } from "../../controller";
 import { Action } from "../../controller/action";
 
-import Rect from "../../util/rect";
-import RectDelta from "../../util/rectdelta";
+import { Rect, RectDelta } from "../../util/rect";
 import Config from "../../config";
 
 export interface WindowsLayoutClass {

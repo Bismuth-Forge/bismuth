@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import Config from "../config";
-import Rect from "../util/rect";
+import { Rect } from "../util/rect";
 
 export interface DriverSurface {
   readonly id: string;

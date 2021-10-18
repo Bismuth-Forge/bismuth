@@ -8,8 +8,7 @@ import LayoutUtils from "./layout_utils";
 import { EngineWindow } from "../window";
 
 import Config from "../../config";
-import Rect from "../../util/rect";
-import RectDelta from "../../util/rectdelta";
+import { Rect, RectDelta } from "../../util/rect";
 
 export interface ILayoutPart {
   adjust(

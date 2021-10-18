@@ -15,7 +15,7 @@ import {
 } from "../../controller/action";
 import { Controller } from "../../controller";
 
-import Rect from "../../util/rect";
+import { Rect } from "../../util/rect";
 
 export enum CascadeDirection {
   NorthWest = 0,

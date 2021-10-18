@@ -8,8 +8,7 @@ import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
 import { Log } from "../util/log";
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
+import { Rect, RectDelta } from "../util/rect";
 
 export enum WindowState {
   /**

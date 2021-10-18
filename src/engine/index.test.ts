@@ -12,7 +12,7 @@ import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
 
 import { Log } from "../util/log";
-import Rect from "../util/rect";
+import { Rect } from "../util/rect";
 import TileLayout from "./layout/tile_layout";
 import LayoutStore from "./layout_store";
 import { EngineWindow, WindowState } from "./window";
