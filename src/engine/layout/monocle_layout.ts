@@ -17,7 +17,7 @@ import {
   FocusUpperWindow,
 } from "../../controller/action";
 
-import Rect from "../../util/rect";
+import { Rect } from "../../util/rect";
 import Config from "../../config";
 import { Controller } from "../../controller";
 import { Engine } from "..";

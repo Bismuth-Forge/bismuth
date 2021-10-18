@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-export default class Rect {
+export class Rect {
   constructor(
     public x: number,
     public y: number,
@@ -92,5 +92,33 @@ export default class Rect {
 
   public toString(): string {
     return "Rect(" + [this.x, this.y, this.width, this.height].join(", ") + ")";
+  }
+}
+
+/**
+ * Describes geometric changes of a rectangle, in terms of changes per edge.
+ * Outward changes are in positive, and inward changes are in negative.
+ */
+export class RectDelta {
+  /** Generate a delta that transforms basis to target. */
+  public static fromRects(basis: Rect, target: Rect): RectDelta {
+    const diff = target.subtract(basis);
+    return new RectDelta(
+      diff.width + diff.x,
+      -diff.x,
+      diff.height + diff.y,
+      -diff.y
+    );
+  }
+
+  constructor(
+    public readonly east: number,
+    public readonly west: number,
+    public readonly south: number,
+    public readonly north: number
+  ) {}
+
+  public toString(): string {
+    return `WindowResizeDelta(east=${this.east} west=${this.west} north=${this.north} south=${this.south}}`;
   }
 }

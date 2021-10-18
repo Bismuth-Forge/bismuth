@@ -23,8 +23,7 @@ import {
 } from "../../controller/action";
 
 import { clip, slide } from "../../util/func";
-import Rect from "../../util/rect";
-import RectDelta from "../../util/rectdelta";
+import { Rect, RectDelta } from "../../util/rect";
 import Config from "../../config";
 import { Controller } from "../../controller";
 import { Engine } from "..";

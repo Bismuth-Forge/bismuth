@@ -13,7 +13,7 @@ import {
   IncreaseMasterAreaWindowCount,
 } from "../../controller/action";
 
-import Rect from "../../util/rect";
+import { Rect } from "../../util/rect";
 import { Controller } from "../../controller";
 import { Engine } from "..";
 

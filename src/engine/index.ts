@@ -13,8 +13,7 @@ import { Controller } from "../controller";
 
 import { DriverSurface } from "../driver/surface";
 
-import Rect from "../util/rect";
-import RectDelta from "../util/rectdelta";
+import { Rect, RectDelta } from "../util/rect";
 import { overlap, wrapIndex } from "../util/func";
 import Config from "../config";
 import { Log } from "../util/log";
