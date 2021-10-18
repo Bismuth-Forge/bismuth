@@ -20,6 +20,8 @@ import { Log } from "../util/log";
 import { WindowsLayout } from "./layout";
 
 export type Direction = "up" | "down" | "left" | "right";
+export type CompassDirection = "east" | "west" | "south" | "north";
+export type Step = -1 | 1;
 
 export interface Engine {
   layouts: LayoutStore;
@@ -29,21 +31,9 @@ export interface Engine {
   manage(window: EngineWindow): void;
   unmanage(window: EngineWindow): void;
   adjustLayout(basis: EngineWindow): void;
-  resizeFloat(
-    window: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
-  ): void;
-  resizeTile(
-    basis: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
-  ): void;
-  resizeWindow(
-    window: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
-  ): void;
+  resizeFloat(window: EngineWindow, dir: CompassDirection, step: Step): void;
+  resizeTile(basis: EngineWindow, dir: CompassDirection, step: Step): void;
+  resizeWindow(window: EngineWindow, dir: CompassDirection, step: Step): void;
   enforceSize(window: EngineWindow): void;
   currentLayoutOnCurrentSurface(): WindowsLayout;
   currentWindow(): EngineWindow | null;
@@ -53,14 +43,14 @@ export interface Engine {
    * @param step Direction to step in (1=forward, -1=backward)
    * @param includeHidden Whether to step through (true) or skip over (false) minimized windows
    */
-  focusOrder(step: -1 | 1, includeHidden: boolean): void;
+  focusOrder(step: Step, includeHidden: boolean): void;
   focusDir(dir: Direction): void;
-  swapOrder(window: EngineWindow, step: -1 | 1): void;
+  swapOrder(window: EngineWindow, step: Step): void;
   swapDirOrMoveFloat(dir: Direction): void;
   setMaster(window: EngineWindow): void;
   toggleFloat(window: EngineWindow): void;
   floatAll(srf: DriverSurface): void;
-  cycleLayout(step: 1 | -1): void;
+  cycleLayout(step: Step): void;
   setLayout(layoutClassID: string): void;
   minimizeOthers(window: EngineWindow): void;
   isLayoutMonocleAndMinimizeRest(): boolean;
@@ -113,8 +103,8 @@ export class EngineImpl implements Engine {
    */
   public resizeFloat(
     window: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
+    dir: CompassDirection,
+    step: Step
   ): void {
     const srf = window.surface;
 
@@ -152,8 +142,8 @@ export class EngineImpl implements Engine {
    */
   public resizeTile(
     basis: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
+    dir: CompassDirection,
+    step: Step
   ): void {
     const srf = basis.surface;
 
@@ -219,8 +209,8 @@ export class EngineImpl implements Engine {
    */
   public resizeWindow(
     window: EngineWindow,
-    dir: "east" | "west" | "south" | "north",
-    step: -1 | 1
+    dir: CompassDirection,
+    step: Step
   ): void {
     const state = window.state;
     if (EngineWindowImpl.isFloatingState(state)) {
@@ -352,7 +342,7 @@ export class EngineImpl implements Engine {
    * @param step direction to step in (1 for forward, -1 for back)
    * @param includeHidden whether to switch to or skip minimized windows
    */
-  public focusOrder(step: -1 | 1, includeHidden = false): void {
+  public focusOrder(step: Step, includeHidden = false): void {
     const window = this.controller.currentWindow;
     let windows;
 
@@ -412,7 +402,7 @@ export class EngineImpl implements Engine {
   /**
    * Swap the position of the current window with the next or previous window.
    */
-  public swapOrder(window: EngineWindow, step: -1 | 1): void {
+  public swapOrder(window: EngineWindow, step: Step): void {
     const srf = window.surface;
     const visibles = this.windows.getVisibleWindows(srf);
     if (visibles.length < 2) {
@@ -546,7 +536,7 @@ export class EngineImpl implements Engine {
   /**
    * Change the layout of the current surface to the next.
    */
-  public cycleLayout(step: 1 | -1): void {
+  public cycleLayout(step: Step): void {
     const layout = this.layouts.cycleLayout(
       this.controller.currentSurface,
       step
