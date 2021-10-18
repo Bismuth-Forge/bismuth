@@ -29,7 +29,7 @@ export interface DriverWindow {
   visible(srf: DriverSurface): boolean;
 }
 
-export class KWinWindow implements DriverWindow {
+export class DriverWindowImpl implements DriverWindow {
   public static generateID(client: KWin.Client): string {
     return `${String(client)}/${client.windowId}`;
   }
@@ -150,7 +150,7 @@ export class KWinWindow implements DriverWindow {
     private log: Log
   ) {
     this.client = client;
-    this.id = KWinWindow.generateID(client);
+    this.id = DriverWindowImpl.generateID(client);
     this.maximized = false;
     this.noBorderManaged = false;
     this.noBorderOriginal = client.noBorder;

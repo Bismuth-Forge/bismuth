@@ -5,7 +5,7 @@
 
 import { DriverSurface } from "./surface";
 import { DriverSurfaceImpl } from "./surface";
-import { KWinWindow } from "./window";
+import { DriverWindowImpl } from "./window";
 
 import { Controller } from "../controller";
 import { Action } from "../controller/action";
@@ -71,7 +71,7 @@ export class KWinDriver implements DriverContext {
   public set currentWindow(window: EngineWindow | null) {
     if (window !== null) {
       this.kwinApi.workspace.activeClient = (
-        window.window as KWinWindow
+        window.window as DriverWindowImpl
       ).client;
     }
   }
@@ -124,10 +124,16 @@ export class KWinDriver implements DriverContext {
 
     this.controller = controller;
     this.windowMap = new WrapperMap(
-      (client: KWin.Client) => KWinWindow.generateID(client),
+      (client: KWin.Client) => DriverWindowImpl.generateID(client),
       (client: KWin.Client) =>
         new EngineWindowImpl(
-          new KWinWindow(client, this.qml, this.kwinApi, this.config, this.log),
+          new DriverWindowImpl(
+            client,
+            this.qml,
+            this.kwinApi,
+            this.config,
+            this.log
+          ),
           this.config,
           this.log
         )
@@ -200,7 +206,7 @@ export class KWinDriver implements DriverContext {
       const maximized = h === true && v === true;
       const window = this.windowMap.get(client);
       if (window) {
-        (window.window as KWinWindow).maximized = maximized;
+        (window.window as DriverWindowImpl).maximized = maximized;
         this.controller.onWindowMaximizeChanged(window, maximized);
       }
     };
