@@ -156,8 +156,8 @@ export class ConfigImpl implements Config {
       ["enableFloatingLayout", false, FloatingLayout],
       ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
     ] as Array<[string, boolean, WindowsLayoutClass]>;
-
-    layouts.unshift(layouts.splice(this.defaultLayout, 1)[0]);
+    
+    layouts.unshift(layouts.splice(this.defaultLayout, 1)[0]); // place the default layout at the top of the list
     layouts.forEach(([configKey, defaultValue, layoutClass]) => {
       // For some reason if we put the curly brackets here script breaks
       // This will be dealt with, when this facility will be refactored out
