@@ -57,7 +57,7 @@
 
     <entry name="defaultLayout" type="Int">
 	    <label>Change the default layout</label>
-        <default>Tile Layout</default>
+        <default></default>
     </entry>
 
     <entry name="ignoreActivity" type="String">
