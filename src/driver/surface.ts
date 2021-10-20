@@ -6,65 +6,53 @@
 import Config from "../config";
 import { Rect } from "../util/rect";
 
+/**
+ * Surface provided by KWin. Surface is essentially a screen space, but
+ * it can represent a surface, that is not currently displayed, e.g. a
+ * virtual desktop.
+ */
 export interface DriverSurface {
+  /**
+   * Surface unique id
+   */
   readonly id: string;
+
+  /**
+   * Should the surface be completely ignored by the script.
+   */
   readonly ignore: boolean;
+
+  /**
+   * The area in which windows are placed.
+   */
   readonly workingArea: Readonly<Rect>;
 
+  /**
+   * The next surface. The next surface is a virtual desktop, that comes after current one.
+   */
   next(): DriverSurface | null;
 }
 
 export class DriverSurfaceImpl implements DriverSurface {
-  public static generateId(
-    screen: number,
-    activity: string,
-    desktop: number,
-    config: Config
-  ): string {
-    let path = String(screen);
-    if (config.layoutPerActivity) {
-      path += `@${activity}`;
-    }
-    if (config.layoutPerDesktop) {
-      path += `"#${desktop}`;
-    }
-    return path;
-  }
-
   public readonly id: string;
   public readonly ignore: boolean;
   public readonly workingArea: Rect;
 
-  public readonly screen: number;
-  public readonly activity: string;
-  public readonly desktop: number;
-
-  private activityInfo: Plasma.TaskManager.ActivityInfo;
-  private kwinApi: KWin.Api;
-  private config: Config;
   constructor(
-    screen: number,
-    activity: string,
-    desktop: number,
-    activityInfo: Plasma.TaskManager.ActivityInfo,
-    kwinApi: KWin.Api,
-    config: Config
+    public readonly screen: number,
+    public readonly activity: string,
+    public readonly desktop: number,
+    private activityInfo: Plasma.TaskManager.ActivityInfo,
+    private kwinApi: KWin.Api,
+    private config: Config
   ) {
+    this.id = this.generateId();
+
     const activityName = activityInfo.activityName(activity);
-
-    this.activityInfo = activityInfo;
-    this.kwinApi = kwinApi;
-    this.config = config;
-
-    this.id = DriverSurfaceImpl.generateId(
-      screen,
-      activity,
-      desktop,
-      this.config
-    );
     this.ignore =
       this.config.ignoreActivity.indexOf(activityName) >= 0 ||
       this.config.ignoreScreen.indexOf(screen) >= 0;
+
     this.workingArea = Rect.fromQRect(
       this.kwinApi.workspace.clientArea(
         this.kwinApi.KWin.PlacementArea,
@@ -72,16 +60,11 @@ export class DriverSurfaceImpl implements DriverSurface {
         desktop
       )
     );
-
-    this.screen = screen;
-    this.activity = activity;
-    this.desktop = desktop;
   }
 
   public next(): DriverSurface | null {
+    // This is the last virtual desktop
     if (this.desktop === this.kwinApi.workspace.desktops) {
-      /* this is the last virtual desktop */
-      /* TODO: option to create additional desktop */
       return null;
     }
 
@@ -96,14 +79,18 @@ export class DriverSurfaceImpl implements DriverSurface {
   }
 
   public toString(): string {
-    return (
-      "KWinSurface(" +
-      [
-        this.screen,
-        this.activityInfo.activityName(this.activity),
-        this.desktop,
-      ].join(", ") +
-      ")"
-    );
+    const activityName = this.activityInfo.activityName(this.activity);
+    return `DriverSurface(${this.screen}, ${activityName}, ${this.desktop})`;
+  }
+
+  private generateId(): string {
+    let path = String(this.screen);
+    if (this.config.layoutPerActivity) {
+      path += `@${this.activity}`;
+    }
+    if (this.config.layoutPerDesktop) {
+      path += `"#${this.desktop}`;
+    }
+    return path;
   }
 }
