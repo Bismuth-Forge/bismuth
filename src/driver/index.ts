@@ -17,26 +17,49 @@ import { WindowState } from "../engine/window";
 import Config from "../config";
 import { Log } from "../util/log";
 
+/**
+ * Provides convenient interface to KWin functions.
+ * Hides all the bad and ugly things current KWin has.
+ */
 export interface Driver {
+  /**
+   * All the surfaces/screens currently possess by the KWin
+   */
   readonly screens: DriverSurface[];
 
+  /**
+   * Surface (screen) of the current window
+   */
   currentSurface: DriverSurface;
+
+  /**
+   * Currently active (i.e. focused) window
+   */
   currentWindow: EngineWindow | null;
 
+  /**
+   * Show notification to the user
+   * @param text notification text
+   */
   showNotification(text: string): void;
 
+  /**
+   * Bind script to the various KWin events
+   */
   bindEvents(): void;
+
+  /**
+   * Bind the shortcut for the action
+   * @param action
+   */
   bindShortcut(action: Action): void;
+
+  /**
+   * Manage the windows, that were active before script loading
+   */
   manageWindows(): void;
 }
 
-/**
- * Abstracts KDE implementation specific details.
- *
- * Driver is responsible for initializing the tiling logic, connecting
- * signals (Qt/KDE term for binding events), and providing specific utility
- * functions.
- */
 export class DriverImpl implements Driver {
   public get currentSurface(): DriverSurface {
     return new DriverSurfaceImpl(
@@ -143,9 +166,6 @@ export class DriverImpl implements Driver {
     this.kwinApi = kwinApi;
   }
 
-  /**
-   * Bind script to the various KWin events
-   */
   public bindEvents(): void {
     const onNumberScreensChanged = (count: number): void => {
       this.controller.onSurfaceUpdate(`screens=${count}`);
@@ -268,9 +288,6 @@ export class DriverImpl implements Driver {
      *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
   }
 
-  /**
-   * Manage the windows
-   */
   public manageWindows(): void {
     const clients = this.kwinApi.workspace.clientList();
     // TODO: provide interface for using the "for of" cycle
