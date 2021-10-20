@@ -7,7 +7,7 @@ import { Engine, EngineImpl } from "../engine";
 import { EngineWindow } from "../engine/window";
 import { WindowState } from "../engine/window";
 
-import { DriverContext, KWinDriver } from "../driver";
+import { Driver, DriverImpl } from "../driver";
 import { DriverSurface } from "../driver/surface";
 
 import Config from "../config";
@@ -148,7 +148,7 @@ export interface Controller {
 
 export class ControllerImpl implements Controller {
   private engine: Engine;
-  private driver: DriverContext;
+  private driver: Driver;
   public constructor(
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
@@ -156,7 +156,7 @@ export class ControllerImpl implements Controller {
     private log: Log
   ) {
     this.engine = new EngineImpl(this, config, log);
-    this.driver = new KWinDriver(qmlObjects, kwinApi, this, config, log);
+    this.driver = new DriverImpl(qmlObjects, kwinApi, this, config, log);
   }
 
   /**
