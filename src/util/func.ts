@@ -3,6 +3,10 @@
 //
 // SPDX-License-Identifier: MIT
 
+/**
+ * Return `value`, if it is in range of [`min`, `max`]. Otherwise return
+ * the the closest range ends to it.
+ */
 export function clip(value: number, min: number, max: number): number {
   if (value < min) {
     return min;
@@ -13,6 +17,9 @@ export function clip(value: number, min: number, max: number): number {
   return value;
 }
 
+/**
+ * Modify the value gradually, multiplying it by (step / (1 + step))
+ */
 export function slide(value: number, step: number): number {
   if (step === 0) {
     return value;
@@ -20,6 +27,12 @@ export function slide(value: number, step: number): number {
   return Math.floor(value / step + 1.000001) * step;
 }
 
+/**
+ * Find the words in the string.
+ * @param str the string to search words in
+ * @param words the words to be searched
+ * @returns index of a word, that was found in the string first. -1 if none of the words were found.
+ */
 export function matchWords(str: string, words: string[]): number {
   for (let i = 0; i < words.length; i++) {
     if (str.indexOf(words[i]) >= 0) {
