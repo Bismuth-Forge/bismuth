@@ -86,7 +86,7 @@ export interface DriverWindow {
    * Whether the window is visible on the specified surface
    * @param surf the surface to check against
    */
-  visible(surf: DriverSurface): boolean;
+  visibleOn(surf: DriverSurface): boolean;
 }
 
 export class DriverWindowImpl implements DriverWindow {
@@ -294,7 +294,7 @@ export class DriverWindowImpl implements DriverWindow {
     })`;
   }
 
-  public visible(surf: DriverSurface): boolean {
+  public visibleOn(surf: DriverSurface): boolean {
     const surfImpl = surf as DriverSurfaceImpl;
     return (
       !this.client.minimized &&

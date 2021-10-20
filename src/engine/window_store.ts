@@ -83,12 +83,12 @@ export default class WindowStore {
 
   /** Returns all visible windows on the given surface. */
   public getVisibleWindows(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.visible(srf));
+    return this.list.filter((win) => win.visibleOn(srf));
   }
 
   /** Return all visible "Tile" windows on the given surface. */
   public getVisibleTiles(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.tiled && win.visible(srf));
+    return this.list.filter((win) => win.tiled && win.visibleOn(srf));
   }
 
   /**
@@ -96,7 +96,7 @@ export default class WindowStore {
    * @see Window#tileable
    */
   public getVisibleTileables(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.tileable && win.visible(srf));
+    return this.list.filter((win) => win.tileable && win.visibleOn(srf));
   }
 
   /**

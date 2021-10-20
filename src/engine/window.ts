@@ -143,7 +143,7 @@ export interface EngineWindow {
    * Whether the window is visible on concrete surface
    * @param surface the surface visibility on which is checked
    */
-  visible(surface: DriverSurface): boolean;
+  visibleOn(surface: DriverSurface): boolean;
 
   /**
    * Force apply the geometry *immediately*.
@@ -376,8 +376,8 @@ export class EngineWindowImpl implements EngineWindow {
     this.window.commit(geometry);
   }
 
-  public visible(srf: DriverSurface): boolean {
-    return this.window.visible(srf);
+  public visibleOn(srf: DriverSurface): boolean {
+    return this.window.visibleOn(srf);
   }
 
   public toString(): string {
