@@ -139,15 +139,6 @@ export interface Engine {
   toggleFloat(window: EngineWindow): void;
 
   /**
-   * Toggle float on all windows on the given surface.
-   *
-   * The behaviors of this operation depends on the number of floating
-   * windows: windows will be tiled if more than half are floating, and will
-   * be floated otherwise.
-   */
-  floatAll(srf: DriverSurface): void;
-
-  /**
    * Change the layout of the current surface to the next.
    */
   cycleLayout(step: Step): void;
@@ -557,27 +548,6 @@ export class EngineImpl implements Engine {
 
   public toggleFloat(window: EngineWindow): void {
     window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
-  }
-
-  public floatAll(srf: DriverSurface): void {
-    const windows = this.windows.getVisibleWindows(srf);
-    const numFloats = windows.reduce<number>((count, window) => {
-      return window.state === WindowState.Floating ? count + 1 : count;
-    }, 0);
-
-    if (numFloats < windows.length / 2) {
-      windows.forEach((window) => {
-        /* TODO: do not use arbitrary constants */
-        window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
-        window.state = WindowState.Floating;
-      });
-      this.controller.showNotification("Float All");
-    } else {
-      windows.forEach((window) => {
-        window.state = WindowState.Tiled;
-      });
-      this.controller.showNotification("Tile All");
-    }
   }
 
   public setMaster(window: EngineWindow): void {
