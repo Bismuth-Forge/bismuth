@@ -49,8 +49,6 @@ export default class WindowStore {
     this.list[betaIndex] = alpha;
   }
 
-  //#region Storage Operation
-
   public get length(): number {
     return this.list.length;
   }
@@ -77,39 +75,42 @@ export default class WindowStore {
   public unshift(window: EngineWindow): void {
     this.list.unshift(window);
   }
-  //#endregion
 
-  //#region Querying Windows
-
-  /** Returns all visible windows on the given surface. */
-  public getVisibleWindows(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.visibleOn(srf));
+  /**
+   * Returns all visible windows on the given surface.
+   */
+  public visibleWindowsOn(surf: DriverSurface): EngineWindow[] {
+    return this.list.filter((win) => win.visibleOn(surf));
   }
 
-  /** Return all visible "Tile" windows on the given surface. */
-  public getVisibleTiles(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.tiled && win.visibleOn(srf));
+  /**
+   * Return all visible "Tile" windows on the given surface.
+   */
+  public visibleTiledWindowsOn(surf: DriverSurface): EngineWindow[] {
+    return this.list.filter((win) => win.tiled && win.visibleOn(surf));
   }
 
   /**
    * Return all visible "tileable" windows on the given surface
    * @see Window#tileable
    */
-  public getVisibleTileables(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.tileable && win.visibleOn(srf));
+  public visibleTileableWindowsOn(surf: DriverSurface): EngineWindow[] {
+    return this.list.filter((win) => win.tileable && win.visibleOn(surf));
   }
 
   /**
    * Return all "tileable" windows on the given surface, including hidden
    */
-  public getAllTileables(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.tileable && win.surface.id === srf.id);
+  public tileableWindowsOn(surf: DriverSurface): EngineWindow[] {
+    return this.list.filter(
+      (win) => win.tileable && win.surface.id === surf.id
+    );
   }
 
-  /** Return all windows on this surface, including minimized windows */
-  public getAllWindows(srf: DriverSurface): EngineWindow[] {
-    return this.list.filter((win) => win.surface.id === srf.id);
+  /**
+   * Return all windows on this surface, including minimized windows
+   */
+  public allWindowsOn(surf: DriverSurface): EngineWindow[] {
+    return this.list.filter((win) => win.surface.id === surf.id);
   }
-
-  //#endregion
 }

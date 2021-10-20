@@ -221,7 +221,7 @@ export class ControllerImpl implements Controller {
     /* move window to next surface if the current surface is "full" */
     if (window.tileable) {
       const srf = this.currentSurface;
-      const tiles = this.engine.windows.getVisibleTiles(srf);
+      const tiles = this.engine.windows.visibleTiledWindowsOn(srf);
       const layoutCapacity = this.engine.layouts.getCurrentLayout(srf).capacity;
       if (layoutCapacity !== undefined && tiles.length > layoutCapacity) {
         const nextSurface = this.currentSurface.next();
@@ -270,7 +270,9 @@ export class ControllerImpl implements Controller {
 
     /* swap window by dragging */
     if (window.state === WindowState.Tiled) {
-      const tiles = this.engine.windows.getVisibleTiles(this.currentSurface);
+      const tiles = this.engine.windows.visibleTiledWindowsOn(
+        this.currentSurface
+      );
       const windowCenter = window.actualGeometry.center;
 
       const targets = tiles.filter(
@@ -359,7 +361,9 @@ export class ControllerImpl implements Controller {
       // Minimize other windows if Monocle and config.monocleMinimizeRest
       if (
         this.engine.isLayoutMonocleAndMinimizeRest() &&
-        this.engine.windows.getVisibleTiles(window.surface).includes(window)
+        this.engine.windows
+          .visibleTiledWindowsOn(window.surface)
+          .includes(window)
       ) {
         /* If a window hasn't been focused in this layout yet, ensure its geometry
          * gets maximized.
@@ -368,7 +372,7 @@ export class ControllerImpl implements Controller {
           .currentLayoutOnCurrentSurface()
           .apply(
             this,
-            this.engine.windows.getAllTileables(window.surface),
+            this.engine.windows.tileableWindowsOn(window.surface),
             window.surface.workingArea
           );
 
