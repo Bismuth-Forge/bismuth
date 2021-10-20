@@ -17,7 +17,7 @@ import { WindowState } from "../engine/window";
 import Config from "../config";
 import { Log } from "../util/log";
 
-export interface DriverContext {
+export interface Driver {
   readonly screens: DriverSurface[];
 
   currentSurface: DriverSurface;
@@ -37,7 +37,7 @@ export interface DriverContext {
  * signals (Qt/KDE term for binding events), and providing specific utility
  * functions.
  */
-export class KWinDriver implements DriverContext {
+export class DriverImpl implements Driver {
   public get currentSurface(): DriverSurface {
     return new DriverSurfaceImpl(
       this.kwinApi.workspace.activeClient
