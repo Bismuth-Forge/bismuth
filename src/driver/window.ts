@@ -10,30 +10,86 @@ import { clip, matchWords } from "../util/func";
 import Config from "../config";
 import { Log } from "../util/log";
 
+/**
+ * KWin window representation.
+ */
 export interface DriverWindow {
+  /**
+   * Is the window is currently set to be fullscreen
+   */
   readonly fullScreen: boolean;
+
+  /**
+   * Window geometry: its coordinates, width and height
+   */
   readonly geometry: Readonly<Rect>;
+
+  /**
+   * Window unique id
+   */
   readonly id: string;
+
+  /**
+   * Whether it window is in maximized state
+   */
   readonly maximized: boolean;
+
+  /**
+   * Whether the window should be completely ignored by the script
+   */
   readonly shouldIgnore: boolean;
+
+  /**
+   * Whether the window should float according to the some predefined rules
+   */
   readonly shouldFloat: boolean;
+
+  /**
+   * The screen number the window is currently at
+   */
   readonly screen: number;
+
+  /**
+   * Whether the window is focused right now
+   */
   readonly active: boolean;
+
+  /**
+   * Whether the window is a dialog window
+   */
   readonly isDialog: boolean;
+
+  /**
+   * Window's current surface
+   */
   surface: DriverSurface;
+
+  /**
+   * Whether the window is minimized
+   */
   minimized: boolean;
+
+  /**
+   * Whether the window is shaded
+   */
   shaded: boolean;
 
+  /**
+   * Commit the window properties to the KWin, i.e. "show the results of our manipulations to the user"
+   * @param geometry
+   * @param noBorder
+   * @param keepAbove
+   */
   commit(geometry?: Rect, noBorder?: boolean, keepAbove?: boolean): void;
-  visible(srf: DriverSurface): boolean;
+
+  /**
+   * Whether the window is visible on the specified surface
+   * @param surf the surface to check against
+   */
+  visible(surf: DriverSurface): boolean;
 }
 
 export class DriverWindowImpl implements DriverWindow {
-  public static generateID(client: KWin.Client): string {
-    return `${String(client)}/${client.windowId}`;
-  }
-
-  public readonly client: KWin.Client;
   public readonly id: string;
 
   public get fullScreen(): boolean {
@@ -125,37 +181,43 @@ export class DriverWindowImpl implements DriverWindow {
     );
   }
 
-  public set surface(srf: DriverSurface) {
-    const ksrf = srf as DriverSurfaceImpl;
+  public set surface(surf: DriverSurface) {
+    const surfImpl = surf as DriverSurfaceImpl;
 
     // TODO: setting activity?
     // TODO: setting screen = move to the screen
-    if (this.client.desktop !== ksrf.desktop) {
-      this.client.desktop = ksrf.desktop;
+    if (this.client.desktop !== surfImpl.desktop) {
+      this.client.desktop = surfImpl.desktop;
     }
   }
 
   private noBorderManaged: boolean;
   private noBorderOriginal: boolean;
-  private qml: Bismuth.Qml.Main;
-  private kwinApi: KWin.Api;
-  private config: Config;
 
+  /**
+   * Create a window from the KWin client object
+   *
+   * @param client the client the window represents
+   * @param qml root qml object of the script
+   * @param kwinApi
+   * @param config
+   * @param log
+   */
   constructor(
-    client: KWin.Client,
-    qml: Bismuth.Qml.Main,
-    kwinApi: KWin.Api,
-    config: Config,
+    public readonly client: KWin.Client,
+    private qml: Bismuth.Qml.Main,
+    private kwinApi: KWin.Api,
+    private config: Config,
     private log: Log
   ) {
-    this.client = client;
     this.id = DriverWindowImpl.generateID(client);
     this.maximized = false;
     this.noBorderManaged = false;
     this.noBorderOriginal = client.noBorder;
-    this.qml = qml;
-    this.kwinApi = kwinApi;
-    this.config = config;
+  }
+
+  public static generateID(client: KWin.Client): string {
+    return `${String(client)}/${client.windowId}`;
   }
 
   public commit(
@@ -163,7 +225,15 @@ export class DriverWindowImpl implements DriverWindow {
     noBorder?: boolean,
     keepAbove?: boolean
   ): void {
-    this.log.log(["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
+    // TODO: Refactor this awful function
+    this.log.log(
+      `[DriverWindow#commit] Called with params: {
+         geometry: ${geometry},
+         noBorder: ${noBorder},
+         keepAbove: ${keepAbove}
+        } for window ${this} on the screen ${this.screen}
+      `
+    );
 
     if (this.client.move || this.client.resize) {
       return;
@@ -224,15 +294,15 @@ export class DriverWindowImpl implements DriverWindow {
     })`;
   }
 
-  public visible(srf: DriverSurface): boolean {
-    const ksrf = srf as DriverSurfaceImpl;
+  public visible(surf: DriverSurface): boolean {
+    const surfImpl = surf as DriverSurfaceImpl;
     return (
       !this.client.minimized &&
-      (this.client.desktop === ksrf.desktop ||
+      (this.client.desktop === surfImpl.desktop ||
         this.client.desktop === -1) /* on all desktop */ &&
       (this.client.activities.length === 0 /* on all activities */ ||
-        this.client.activities.indexOf(ksrf.activity) !== -1) &&
-      this.client.screen === ksrf.screen
+        this.client.activities.indexOf(surfImpl.activity) !== -1) &&
+      this.client.screen === surfImpl.screen
     );
   }
 
