@@ -23,19 +23,86 @@ export type Direction = "up" | "down" | "left" | "right";
 export type CompassDirection = "east" | "west" | "south" | "north";
 export type Step = -1 | 1;
 
+/**
+ * Maintains tiling context and performs various tiling actions.
+ */
 export interface Engine {
+  /**
+   * All the layouts currently available
+   */
   layouts: LayoutStore;
+
+  /**
+   * All the windows we are interested in
+   */
   windows: WindowStore;
 
+  /**
+   * Arrange all the windows on the visible surfaces according to the tiling rules
+   */
   arrange(): void;
+
+  /**
+   * Register the given window to WM.
+   */
   manage(window: EngineWindow): void;
+
+  /**
+   * Unregister the given window from WM.
+   */
   unmanage(window: EngineWindow): void;
+
+  /**
+   * Adjust layout based on the change in size of a tile.
+   *
+   * This operation is completely layout-dependent, and no general implementation is
+   * provided.
+   *
+   * Used when tile is resized using mouse.
+   */
   adjustLayout(basis: EngineWindow): void;
+
+  /**
+   * Resize the current floating window.
+   *
+   * @param window a floating window
+   */
   resizeFloat(window: EngineWindow, dir: CompassDirection, step: Step): void;
+
+  /**
+   * Resize the current tile by adjusting the layout.
+   *
+   * Used by grow/shrink shortcuts.
+   */
   resizeTile(basis: EngineWindow, dir: CompassDirection, step: Step): void;
+
+  /**
+   * Resize the given window, by moving border inward or outward.
+   *
+   * The actual behavior depends on the state of the given window.
+   *
+   * @param dir which border
+   * @param step which direction. 1 means outward, -1 means inward.
+   */
   resizeWindow(window: EngineWindow, dir: CompassDirection, step: Step): void;
+
+  /**
+   * Re-apply window geometry, computed by layout algorithm.
+   *
+   * Sometimes applications move or resize windows without user intervention,
+   * which is straight against the purpose of tiling WM. This operation
+   * move/resize such windows back to where/how they should be.
+   */
   enforceSize(window: EngineWindow): void;
+
+  /**
+   * @returns the layout we have on the surface of the active window
+   */
   currentLayoutOnCurrentSurface(): WindowsLayout;
+
+  /**
+   * @returns the active window
+   */
   currentWindow(): EngineWindow | null;
 
   /**
@@ -44,22 +111,71 @@ export interface Engine {
    * @param includeHidden Whether to step through (true) or skip over (false) minimized windows
    */
   focusOrder(step: Step, includeHidden: boolean): void;
+
+  /**
+   * Focus a neighbor at the given direction.
+   */
   focusDir(dir: Direction): void;
+
+  /**
+   * Swap the position of the current window with the next or previous window.
+   */
   swapOrder(window: EngineWindow, step: Step): void;
+
   swapDirOrMoveFloat(dir: Direction): void;
+
+  /**
+   * Set the current window as the "master".
+   *
+   * The "master" window is simply the first window in the window list.
+   * Some layouts depend on this assumption, and will make such windows more
+   * visible than others.
+   */
   setMaster(window: EngineWindow): void;
+
+  /**
+   * Toggle float mode of window.
+   */
   toggleFloat(window: EngineWindow): void;
+
+  /**
+   * Toggle float on all windows on the given surface.
+   *
+   * The behaviors of this operation depends on the number of floating
+   * windows: windows will be tiled if more than half are floating, and will
+   * be floated otherwise.
+   */
   floatAll(srf: DriverSurface): void;
+
+  /**
+   * Change the layout of the current surface to the next.
+   */
   cycleLayout(step: Step): void;
+
+  /**
+   * Set the layout of the current surface to the specified layout.
+   */
   setLayout(layoutClassID: string): void;
+
+  /**
+   * Minimize all windows on the surface except the given window.
+   * Used mainly in Monocle mode with config.monocleMinimizeRest
+   */
   minimizeOthers(window: EngineWindow): void;
+
+  /**
+   * @returns true if the current layout is monocle and the option
+   * to minimize other than active windows is enabled
+   */
   isLayoutMonocleAndMinimizeRest(): boolean;
+
+  /**
+   * Show the notification to the user
+   * @param text the text of the notification
+   */
   showNotification(text: string): void;
 }
 
-/**
- * Maintains tiling context and performs various tiling actions.
- */
 export class EngineImpl implements Engine {
   public layouts: LayoutStore;
   public windows: WindowStore;
@@ -73,14 +189,6 @@ export class EngineImpl implements Engine {
     this.windows = new WindowStore();
   }
 
-  /**
-   * Adjust layout based on the change in size of a tile.
-   *
-   * This operation is completely layout-dependent, and no general implementation is
-   * provided.
-   *
-   * Used when tile is resized using mouse.
-   */
   public adjustLayout(basis: EngineWindow): void {
     const srf = basis.surface;
     const layout = this.layouts.getCurrentLayout(srf);
@@ -96,11 +204,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Resize the current floating window.
-   *
-   * @param window a floating window
-   */
   public resizeFloat(
     window: EngineWindow,
     dir: CompassDirection,
@@ -135,11 +238,6 @@ export class EngineImpl implements Engine {
     window.forceSetGeometry(new Rect(geometry.x, geometry.y, width, height));
   }
 
-  /**
-   * Resize the current tile by adjusting the layout.
-   *
-   * Used by grow/shrink shortcuts.
-   */
   public resizeTile(
     basis: EngineWindow,
     dir: CompassDirection,
@@ -199,14 +297,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Resize the given window, by moving border inward or outward.
-   *
-   * The actual behavior depends on the state of the given window.
-   *
-   * @param dir which border
-   * @param step which direction. 1 means outward, -1 means inward.
-   */
   public resizeWindow(
     window: EngineWindow,
     dir: CompassDirection,
@@ -220,9 +310,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Arrange tiles on all screens.
-   */
   public arrange(): void {
     this.log.log("arrange");
 
@@ -303,22 +390,12 @@ export class EngineImpl implements Engine {
     return this.controller.currentWindow;
   }
 
-  /**
-   * Re-apply window geometry, computed by layout algorithm.
-   *
-   * Sometimes applications move or resize windows without user intervention,
-   * which is straight against the purpose of tiling WM. This operation
-   * move/resize such windows back to where/how they should be.
-   */
   public enforceSize(window: EngineWindow): void {
     if (window.tiled && !window.actualGeometry.equals(window.geometry)) {
       window.commit();
     }
   }
 
-  /**
-   * Register the given window to WM.
-   */
   public manage(window: EngineWindow): void {
     if (!window.shouldIgnore) {
       /* engine#arrange will update the state when required. */
@@ -331,9 +408,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Unregister the given window from WM.
-   */
   public unmanage(window: EngineWindow): void {
     this.windows.remove(window);
   }
@@ -376,9 +450,6 @@ export class EngineImpl implements Engine {
     this.controller.currentWindow = windows[newIndex];
   }
 
-  /**
-   * Focus a neighbor at the given direction.
-   */
   public focusDir(dir: Direction): void {
     const window = this.controller.currentWindow;
 
@@ -399,9 +470,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Swap the position of the current window with the next or previous window.
-   */
   public swapOrder(window: EngineWindow, step: Step): void {
     const srf = window.surface;
     const visibles = this.windows.getVisibleWindows(srf);
@@ -487,20 +555,10 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Toggle float mode of window.
-   */
   public toggleFloat(window: EngineWindow): void {
     window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
   }
 
-  /**
-   * Toggle float on all windows on the given surface.
-   *
-   * The behaviors of this operation depends on the number of floating
-   * windows: windows will be tiled if more than half are floating, and will
-   * be floated otherwise.
-   */
   public floatAll(srf: DriverSurface): void {
     const windows = this.windows.getVisibleWindows(srf);
     const numFloats = windows.reduce<number>((count, window) => {
@@ -522,20 +580,10 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Set the current window as the "master".
-   *
-   * The "master" window is simply the first window in the window list.
-   * Some layouts depend on this assumption, and will make such windows more
-   * visible than others.
-   */
   public setMaster(window: EngineWindow): void {
     this.windows.setMaster(window);
   }
 
-  /**
-   * Change the layout of the current surface to the next.
-   */
   public cycleLayout(step: Step): void {
     const layout = this.layouts.cycleLayout(
       this.controller.currentSurface,
@@ -554,9 +602,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Set the layout of the current surface to the specified layout.
-   */
   public setLayout(layoutClassID: string): void {
     const layout = this.layouts.setLayout(
       this.controller.currentSurface,
@@ -575,10 +620,6 @@ export class EngineImpl implements Engine {
     }
   }
 
-  /**
-   * Minimize all windows on the surface except the given window.
-   * Used mainly in Monocle mode with config.monocleMinimizeRest
-   */
   public minimizeOthers(window: EngineWindow): void {
     for (const tile of this.windows.getVisibleTiles(window.surface)) {
       if (
