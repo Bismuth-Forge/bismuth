@@ -190,7 +190,7 @@ export class EngineImpl implements Engine {
         this.config.screenGapTop,
         this.config.screenGapBottom
       );
-      const tiles = this.windows.getVisibleTiles(srf);
+      const tiles = this.windows.visibleTiledWindowsOn(srf);
       layout.adjust(area, tiles, basis, basis.geometryDelta);
     }
   }
@@ -239,7 +239,7 @@ export class EngineImpl implements Engine {
     if (dir === "east") {
       const maxX = basis.geometry.maxX;
       const easternNeighbor = this.windows
-        .getVisibleTiles(srf)
+        .visibleTiledWindowsOn(srf)
         .filter((tile) => tile.geometry.x >= maxX);
       if (easternNeighbor.length === 0) {
         dir = "west";
@@ -248,7 +248,7 @@ export class EngineImpl implements Engine {
     } else if (dir === "south") {
       const maxY = basis.geometry.maxY;
       const southernNeighbor = this.windows
-        .getVisibleTiles(srf)
+        .visibleTiledWindowsOn(srf)
         .filter((tile) => tile.geometry.y >= maxY);
       if (southernNeighbor.length === 0) {
         dir = "north";
@@ -284,7 +284,12 @@ export class EngineImpl implements Engine {
         this.config.screenGapTop,
         this.config.screenGapBottom
       );
-      layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
+      layout.adjust(
+        area,
+        this.windows.visibleTileableWindowsOn(srf),
+        basis,
+        delta
+      );
     }
   }
 
@@ -320,7 +325,7 @@ export class EngineImpl implements Engine {
     const workingArea = screenSurface.workingArea;
     const tilingArea = this.getTilingArea(workingArea, layout);
 
-    const visibleWindows = this.windows.getVisibleWindows(screenSurface);
+    const visibleWindows = this.windows.visibleWindowsOn(screenSurface);
     this.log.log([
       "arrangeScreen",
       {
@@ -337,7 +342,8 @@ export class EngineImpl implements Engine {
       }
     });
 
-    const tileableWindows = this.windows.getVisibleTileables(screenSurface);
+    const tileableWindows =
+      this.windows.visibleTileableWindowsOn(screenSurface);
 
     // Maximize sole tile if enabled or apply the current layout as expected
     if (this.config.maximizeSoleTile && tileableWindows.length === 1) {
@@ -412,9 +418,9 @@ export class EngineImpl implements Engine {
     let windows;
 
     if (includeHidden) {
-      windows = this.windows.getAllWindows(this.controller.currentSurface);
+      windows = this.windows.allWindowsOn(this.controller.currentSurface);
     } else {
-      windows = this.windows.getVisibleWindows(this.controller.currentSurface);
+      windows = this.windows.visibleWindowsOn(this.controller.currentSurface);
     }
 
     if (windows.length === 0) {
@@ -446,7 +452,7 @@ export class EngineImpl implements Engine {
 
     /* if no current window, select the first tile. */
     if (window === null) {
-      const tiles = this.windows.getVisibleTiles(
+      const tiles = this.windows.visibleTiledWindowsOn(
         this.controller.currentSurface
       );
       if (tiles.length > 1) {
@@ -463,7 +469,7 @@ export class EngineImpl implements Engine {
 
   public swapOrder(window: EngineWindow, step: Step): void {
     const srf = window.surface;
-    const visibles = this.windows.getVisibleWindows(srf);
+    const visibles = this.windows.visibleWindowsOn(srf);
     if (visibles.length < 2) {
       return;
     }
@@ -482,7 +488,7 @@ export class EngineImpl implements Engine {
     const window = this.controller.currentWindow;
     if (window === null) {
       /* if no current window, select the first tile. */
-      const tiles = this.windows.getVisibleTiles(
+      const tiles = this.windows.visibleTiledWindowsOn(
         this.controller.currentSurface
       );
       if (tiles.length > 1) {
@@ -591,11 +597,11 @@ export class EngineImpl implements Engine {
   }
 
   public minimizeOthers(window: EngineWindow): void {
-    for (const tile of this.windows.getVisibleTiles(window.surface)) {
+    for (const tile of this.windows.visibleTiledWindowsOn(window.surface)) {
       if (
         tile.screen == window.screen &&
         tile.id !== window.id &&
-        this.windows.getVisibleTiles(window.surface).includes(window)
+        this.windows.visibleTiledWindowsOn(window.surface).includes(window)
       ) {
         tile.minimized = true;
       } else {
@@ -639,7 +645,7 @@ export class EngineImpl implements Engine {
     }
 
     const candidates = this.windows
-      .getVisibleTiles(this.controller.currentSurface)
+      .visibleTiledWindowsOn(this.controller.currentSurface)
       .filter(
         vertical
           ? (tile): boolean => tile.geometry.y * sign > basis.geometry.y * sign

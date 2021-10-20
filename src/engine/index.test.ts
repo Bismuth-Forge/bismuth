@@ -58,8 +58,8 @@ describe("arrangeScreen", () => {
     });
 
     engine.windows = createMock<WindowStore>({
-      getVisibleWindows: () => [window1, window2],
-      getVisibleTileables: () => [],
+      visibleWindowsOn: () => [window1, window2],
+      visibleTileableWindowsOn: () => [],
     });
 
     engine.layouts = createMock<LayoutStore>({
