@@ -68,6 +68,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>KWin window representation.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -107,7 +114,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver_window.DriverWindow.html#commit" class="tsd-kind-icon">commit</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver_window.DriverWindow.html#visible" class="tsd-kind-icon">visible</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="driver_window.DriverWindow.html#visibleOn" class="tsd-kind-icon">visible<wbr>On</a></li>
 							</ul>
 						</section>
 					</div>
@@ -121,9 +128,14 @@
 					<div class="tsd-signature tsd-kind-icon">active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L21">driver/window.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L55">driver/window.ts:55</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window is focused right now</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="fullScreen" class="tsd-anchor"></a>
@@ -131,9 +143,14 @@
 					<div class="tsd-signature tsd-kind-icon">full<wbr>Screen<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L14">driver/window.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L20">driver/window.ts:20</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Is the window is currently set to be fullscreen</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="geometry" class="tsd-anchor"></a>
@@ -141,9 +158,14 @@
 					<div class="tsd-signature tsd-kind-icon">geometry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/util_rect.Rect.html" class="tsd-signature-type" data-tsd-kind="Class">Rect</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L15">driver/window.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L25">driver/window.ts:25</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Window geometry: its coordinates, width and height</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
@@ -151,9 +173,14 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L16">driver/window.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L30">driver/window.ts:30</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Window unique id</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isDialog" class="tsd-anchor"></a>
@@ -161,9 +188,14 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Dialog<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L22">driver/window.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L60">driver/window.ts:60</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window is a dialog window</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="maximized" class="tsd-anchor"></a>
@@ -171,9 +203,14 @@
 					<div class="tsd-signature tsd-kind-icon">maximized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L17">driver/window.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L35">driver/window.ts:35</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether it window is in maximized state</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="minimized" class="tsd-anchor"></a>
@@ -181,9 +218,14 @@
 					<div class="tsd-signature tsd-kind-icon">minimized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L24">driver/window.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L70">driver/window.ts:70</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window is minimized</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="screen" class="tsd-anchor"></a>
@@ -191,9 +233,14 @@
 					<div class="tsd-signature tsd-kind-icon">screen<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L20">driver/window.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L50">driver/window.ts:50</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The screen number the window is currently at</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="shaded" class="tsd-anchor"></a>
@@ -201,9 +248,14 @@
 					<div class="tsd-signature tsd-kind-icon">shaded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L25">driver/window.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L75">driver/window.ts:75</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window is shaded</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="shouldFloat" class="tsd-anchor"></a>
@@ -211,9 +263,14 @@
 					<div class="tsd-signature tsd-kind-icon">should<wbr>Float<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L19">driver/window.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L45">driver/window.ts:45</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window should float according to the some predefined rules</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="shouldIgnore" class="tsd-anchor"></a>
@@ -221,9 +278,14 @@
 					<div class="tsd-signature tsd-kind-icon">should<wbr>Ignore<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L18">driver/window.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L40">driver/window.ts:40</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the window should be completely ignored by the script</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="surface" class="tsd-anchor"></a>
@@ -231,9 +293,14 @@
 					<div class="tsd-signature tsd-kind-icon">surface<span class="tsd-signature-symbol">:</span> <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L23">driver/window.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L65">driver/window.ts:65</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Window&#39;s current surface</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -248,9 +315,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L27">driver/window.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L83">driver/window.ts:83</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Commit the window properties to the KWin, i.e. &quot;show the results of our manipulations to the user&quot;</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -261,6 +333,8 @@
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> keepAbove: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -268,22 +342,30 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="visible" class="tsd-anchor"></a>
-					<h3>visible</h3>
+					<a name="visibleOn" class="tsd-anchor"></a>
+					<h3>visible<wbr>On</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">visible<span class="tsd-signature-symbol">(</span>srf<span class="tsd-signature-symbol">: </span><a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">visible<wbr>On<span class="tsd-signature-symbol">(</span>surf<span class="tsd-signature-symbol">: </span><a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/driver/window.ts#L28">driver/window.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/driver/window.ts#L89">driver/window.ts:89</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether the window is visible on the specified surface</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>srf: <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h5>
+									<h5>surf: <a href="driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the surface to check against</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -353,7 +435,7 @@
 								<a href="driver_window.DriverWindow.html#commit" class="tsd-kind-icon">commit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="driver_window.DriverWindow.html#visible" class="tsd-kind-icon">visible</a>
+								<a href="driver_window.DriverWindow.html#visibleOn" class="tsd-kind-icon">visible<wbr>On</a>
 							</li>
 						</ul>
 					</li>

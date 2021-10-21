@@ -68,13 +68,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Maintains tiling context and performs various tiling actions.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -116,7 +109,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#currentWindow" class="tsd-kind-icon">current<wbr>Window</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#cycleLayout" class="tsd-kind-icon">cycle<wbr>Layout</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#enforceSize" class="tsd-kind-icon">enforce<wbr>Size</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#floatAll" class="tsd-kind-icon">float<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#focusDir" class="tsd-kind-icon">focus<wbr>Dir</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="engine.EngineImpl.html#focusOrder" class="tsd-kind-icon">focus<wbr>Order</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="engine.EngineImpl.html#getNeighborByDirection" class="tsd-kind-icon">get<wbr>Neighbor<wbr>ByDirection</a></li>
@@ -153,7 +145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L67">engine/index.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L174">engine/index.ts:174</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -182,20 +174,30 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#layouts">layouts</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L64">engine/index.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L171">engine/index.ts:171</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>All the layouts currently available</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="windows" class="tsd-anchor"></a>
 					<h3>windows</h3>
-					<div class="tsd-signature tsd-kind-icon">windows<span class="tsd-signature-symbol">:</span> <a href="engine_window_store.WindowStore.html" class="tsd-signature-type" data-tsd-kind="Class">WindowStore</a></div>
+					<div class="tsd-signature tsd-kind-icon">windows<span class="tsd-signature-symbol">:</span> <a href="../interfaces/engine_window_store.WindowStore.html" class="tsd-signature-type" data-tsd-kind="Interface">WindowStore</a></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#windows">windows</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L65">engine/index.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L172">engine/index.ts:172</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>All the windows we are interested in</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -211,7 +213,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#adjustLayout">adjustLayout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L84">engine/index.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L183">engine/index.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -243,12 +245,12 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#arrange">arrange</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L226">engine/index.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L309">engine/index.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Arrange tiles on all screens.</p>
+									<p>Arrange all the windows on the visible surfaces according to the tiling rules</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -265,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L239">engine/index.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L322">engine/index.ts:322</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -297,10 +299,11 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#currentLayoutOnCurrentSurface">currentLayoutOnCurrentSurface</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L298">engine/index.ts:298</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L382">engine/index.ts:382</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/engine_layout.WindowsLayout.html" class="tsd-signature-type" data-tsd-kind="Interface">WindowsLayout</a></h4>
+							<p>the layout we have on the surface of the active window</p>
 						</li>
 					</ul>
 				</section>
@@ -315,10 +318,11 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#currentWindow">currentWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L302">engine/index.ts:302</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L386">engine/index.ts:386</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/engine_window.EngineWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">EngineWindow</a></h4>
+							<p>the active window</p>
 						</li>
 					</ul>
 				</section>
@@ -333,7 +337,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#cycleLayout">cycleLayout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L539">engine/index.ts:539</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L563">engine/index.ts:563</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -362,7 +366,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#enforceSize">enforceSize</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L313">engine/index.ts:313</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L390">engine/index.ts:390</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -384,38 +388,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="floatAll" class="tsd-anchor"></a>
-					<h3>float<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">float<wbr>All<span class="tsd-signature-symbol">(</span>srf<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#floatAll">floatAll</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L504">engine/index.ts:504</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Toggle float on all windows on the given surface.</p>
-								</div>
-								<p>The behaviors of this operation depends on the number of floating
-									windows: windows will be tiled if more than half are floating, and will
-								be floated otherwise.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>srf: <a href="../interfaces/driver_surface.DriverSurface.html" class="tsd-signature-type" data-tsd-kind="Interface">DriverSurface</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="focusDir" class="tsd-anchor"></a>
 					<h3>focus<wbr>Dir</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -426,7 +398,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#focusDir">focusDir</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L382">engine/index.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L450">engine/index.ts:450</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -455,7 +427,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#focusOrder">focusOrder</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L345">engine/index.ts:345</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L416">engine/index.ts:416</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -492,7 +464,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L603">engine/index.ts:603</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L620">engine/index.ts:620</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -518,7 +490,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L690">engine/index.ts:690</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L707">engine/index.ts:707</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -558,10 +530,12 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#isLayoutMonocleAndMinimizeRest">isLayoutMonocleAndMinimizeRest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L596">engine/index.ts:596</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L613">engine/index.ts:613</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>true if the current layout is monocle and the option
+							to minimize other than active windows is enabled</p>
 						</li>
 					</ul>
 				</section>
@@ -576,7 +550,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#manage">manage</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L322">engine/index.ts:322</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L396">engine/index.ts:396</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -605,7 +579,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#minimizeOthers">minimizeOthers</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L582">engine/index.ts:582</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L599">engine/index.ts:599</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -634,7 +608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L446">engine/index.ts:446</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L511">engine/index.ts:511</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -672,7 +646,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#resizeFloat">resizeFloat</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L104">engine/index.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L198">engine/index.ts:198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -684,9 +658,6 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>window: <a href="../interfaces/engine_window.EngineWindow.html" class="tsd-signature-type" data-tsd-kind="Interface">EngineWindow</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>a floating window</p>
-									</div>
 								</li>
 								<li>
 									<h5>dir: <a href="../modules/engine.html#CompassDirection" class="tsd-signature-type" data-tsd-kind="Type alias">CompassDirection</a></h5>
@@ -710,7 +681,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#resizeTile">resizeTile</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L143">engine/index.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L232">engine/index.ts:232</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -746,7 +717,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#resizeWindow">resizeWindow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L210">engine/index.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L296">engine/index.ts:296</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -762,15 +733,9 @@
 								</li>
 								<li>
 									<h5>dir: <a href="../modules/engine.html#CompassDirection" class="tsd-signature-type" data-tsd-kind="Type alias">CompassDirection</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>which border</p>
-									</div>
 								</li>
 								<li>
 									<h5>step: <a href="../modules/engine.html#Step" class="tsd-signature-type" data-tsd-kind="Type alias">Step</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>which direction. 1 means outward, -1 means inward.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -788,7 +753,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#setLayout">setLayout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L560">engine/index.ts:560</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L581">engine/index.ts:581</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -817,7 +782,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#setMaster">setMaster</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L532">engine/index.ts:532</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L559">engine/index.ts:559</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -849,9 +814,14 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#showNotification">showNotification</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L677">engine/index.ts:677</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L694">engine/index.ts:694</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Show the notification to the user</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -873,7 +843,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#swapDirOrMoveFloat">swapDirOrMoveFloat</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L476">engine/index.ts:476</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L541">engine/index.ts:541</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -896,7 +866,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L422">engine/index.ts:422</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L487">engine/index.ts:487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -925,7 +895,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#swapOrder">swapOrder</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L405">engine/index.ts:405</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L470">engine/index.ts:470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -957,7 +927,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#toggleFloat">toggleFloat</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L493">engine/index.ts:493</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L555">engine/index.ts:555</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -986,7 +956,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/engine.Engine.html">Engine</a>.<a href="../interfaces/engine.Engine.html#unmanage">unmanage</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/dd6b9d8/src/engine/index.ts#L337">engine/index.ts:337</a></li>
+									<li>Defined in <a href="https://github.com/gikari/bismuth/blob/84223ce/src/engine/index.ts#L408">engine/index.ts:408</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1053,9 +1023,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="engine.EngineImpl.html#enforceSize" class="tsd-kind-icon">enforce<wbr>Size</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="engine.EngineImpl.html#floatAll" class="tsd-kind-icon">float<wbr>All</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="engine.EngineImpl.html#focusDir" class="tsd-kind-icon">focus<wbr>Dir</a>
