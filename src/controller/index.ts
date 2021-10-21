@@ -205,12 +205,6 @@ export class ControllerImpl implements Controller {
   public onCurrentSurfaceChanged(): void {
     this.log.log(["onCurrentSurfaceChanged", { srf: this.currentSurface }]);
     this.engine.arrange();
-    /* HACK: minimize others and change geometry with Monocle Layout and
-     * config.monocleMinimizeRest
-     */
-    if (this.currentWindow) {
-      this.onWindowFocused(this.currentWindow);
-    }
   }
 
   public onWindowAdded(window: EngineWindow): void {
@@ -236,24 +230,21 @@ export class ControllerImpl implements Controller {
   }
 
   public onWindowRemoved(window: EngineWindow): void {
-    this.log.log(["onWindowRemoved", { window }]);
+    this.log.log(`[Controller#onWindowRemoved] Window removed: ${window}`);
 
     this.engine.unmanage(window);
-    this.engine.arrange();
 
-    // Switch to next window if monocle with config.monocleMinimizeRest
-    if (
-      !window.isDialog &&
-      !this.currentWindow &&
-      this.engine.isLayoutMonocleAndMinimizeRest()
-    ) {
-      this.engine.focusOrder(1, true);
-      /* HACK: force window to maximize if it isn't already
-       * This is ultimately to trigger onWindowFocused() at the right time
-       */
-      this.engine.focusOrder(1, true);
-      this.engine.focusOrder(-1, true);
+    if (this.engine.isLayoutMonocleAndMinimizeRest()) {
+      // Switch to the next window if needed
+      if (!this.currentWindow) {
+        this.log.log(
+          `[Controller#onWindowRemoved] Switching to the minimized window`
+        );
+        this.engine.focusOrder(1, true);
+      }
     }
+
+    this.engine.arrange();
   }
 
   public onWindowMoveStart(_window: EngineWindow): void {
@@ -353,32 +344,12 @@ export class ControllerImpl implements Controller {
     }
   }
 
-  public onWindowFocused(window: EngineWindow): void {
-    try {
-      window.timestamp = new Date().getTime();
-      this.currentWindow = window;
-      // Minimize other windows if Monocle and config.monocleMinimizeRest
-      if (
-        this.engine.isLayoutMonocleAndMinimizeRest() &&
-        this.engine.windows
-          .visibleTiledWindowsOn(window.surface)
-          .includes(window)
-      ) {
-        /* If a window hasn't been focused in this layout yet, ensure its geometry
-         * gets maximized.
-         */
-        this.engine
-          .currentLayoutOnCurrentSurface()
-          .apply(
-            this,
-            this.engine.windows.tileableWindowsOn(window.surface),
-            window.surface.workingArea
-          );
+  public onWindowFocused(win: EngineWindow): void {
+    win.timestamp = new Date().getTime();
 
-        this.engine.minimizeOthers(window);
-      }
-    } catch {
-      return;
+    // Minimize other windows if Monocle and config.monocleMinimizeRest
+    if (this.engine.isLayoutMonocleAndMinimizeRest()) {
+      this.engine.minimizeOthers(win);
     }
   }
 
