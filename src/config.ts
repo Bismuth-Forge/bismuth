@@ -253,6 +253,6 @@ export class ConfigImpl implements Config {
   }
 
   public toString(): string {
-    return "Config(" + JSON.stringify(this, undefined, 2) + ")";
+    return "Config(" + JSON.stringify(this, null, 2) + ")";
   }
 }
