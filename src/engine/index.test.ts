@@ -16,7 +16,7 @@ import { Rect } from "../util/rect";
 import TileLayout from "./layout/tile_layout";
 import LayoutStore from "./layout_store";
 import { EngineWindow, WindowState } from "./window";
-import WindowStore from "./window_store";
+import { WindowStore } from "./window_store";
 
 describe("arrange", () => {
   it("happens on all screens", () => {

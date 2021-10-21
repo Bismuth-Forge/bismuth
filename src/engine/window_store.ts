@@ -7,12 +7,74 @@ import { EngineWindow } from "./window";
 
 import { DriverSurface } from "../driver/surface";
 
-export default class WindowStore {
-  public list: EngineWindow[];
+/**
+ * Window storage facility with convenient window filters built-in.
+ */
+export interface WindowStore {
+  /**
+   * Returns all visible windows on the given surface.
+   */
+  visibleWindowsOn(surf: DriverSurface): EngineWindow[];
 
-  constructor(windows?: EngineWindow[]) {
-    this.list = windows || [];
-  }
+  /**
+   * Return all visible "Tile" windows on the given surface.
+   */
+  visibleTiledWindowsOn(surf: DriverSurface): EngineWindow[];
+
+  /**
+   * Return all visible "tileable" windows on the given surface
+   * @see Window#tileable
+   */
+  visibleTileableWindowsOn(surf: DriverSurface): EngineWindow[];
+
+  /**
+   * Return all "tileable" windows on the given surface, including hidden
+   */
+  tileableWindowsOn(surf: DriverSurface): EngineWindow[];
+
+  /**
+   * Return all windows on this surface, including minimized windows
+   */
+  allWindowsOn(surf: DriverSurface): EngineWindow[];
+
+  /**
+   * Inserts the window at the beginning
+   */
+  unshift(window: EngineWindow): void;
+
+  /**
+   * Inserts the window at the end
+   */
+  push(window: EngineWindow): void;
+
+  /**
+   * Remove window from the store
+   */
+  remove(window: EngineWindow): void;
+
+  /**
+   * Move srcWin to the destWin position (before/after)
+   * @param after if true, srcWin is moved after the destWindow. If false - it is moved before.
+   */
+  move(srcWin: EngineWindow, destWin: EngineWindow, after?: boolean): void;
+
+  /**
+   * Swap windows positions
+   */
+  swap(alpha: EngineWindow, beta: EngineWindow): void;
+
+  /**
+   * Put the window into the master area.
+   * @param window window to put into the master area
+   */
+  putWindowToMaster(window: EngineWindow): void;
+}
+
+export class WindowStoreImpl implements WindowStore {
+  /**
+   * @param list window list to initialize from
+   */
+  constructor(public list: EngineWindow[] = []) {}
 
   public move(
     srcWin: EngineWindow,
@@ -25,11 +87,13 @@ export default class WindowStore {
       return;
     }
 
+    // Delete the source window
     this.list.splice(srcIdx, 1);
+    // Place the source window in before destination window or after it
     this.list.splice(after ? destIdx + 1 : destIdx, 0, srcWin);
   }
 
-  public setMaster(window: EngineWindow): void {
+  public putWindowToMaster(window: EngineWindow): void {
     const idx = this.list.indexOf(window);
     if (idx === -1) {
       return;
@@ -76,40 +140,24 @@ export default class WindowStore {
     this.list.unshift(window);
   }
 
-  /**
-   * Returns all visible windows on the given surface.
-   */
   public visibleWindowsOn(surf: DriverSurface): EngineWindow[] {
     return this.list.filter((win) => win.visibleOn(surf));
   }
 
-  /**
-   * Return all visible "Tile" windows on the given surface.
-   */
   public visibleTiledWindowsOn(surf: DriverSurface): EngineWindow[] {
     return this.list.filter((win) => win.tiled && win.visibleOn(surf));
   }
 
-  /**
-   * Return all visible "tileable" windows on the given surface
-   * @see Window#tileable
-   */
   public visibleTileableWindowsOn(surf: DriverSurface): EngineWindow[] {
     return this.list.filter((win) => win.tileable && win.visibleOn(surf));
   }
 
-  /**
-   * Return all "tileable" windows on the given surface, including hidden
-   */
   public tileableWindowsOn(surf: DriverSurface): EngineWindow[] {
     return this.list.filter(
       (win) => win.tileable && win.surface.id === surf.id
     );
   }
 
-  /**
-   * Return all windows on this surface, including minimized windows
-   */
   public allWindowsOn(surf: DriverSurface): EngineWindow[] {
     return this.list.filter((win) => win.surface.id === surf.id);
   }
