@@ -6,7 +6,7 @@
 import MonocleLayout from "./layout/monocle_layout";
 
 import LayoutStore from "./layout_store";
-import WindowStore from "./window_store";
+import { WindowStore, WindowStoreImpl } from "./window_store";
 import { EngineWindow, EngineWindowImpl, WindowState } from "./window";
 
 import { Controller } from "../controller";
@@ -177,7 +177,7 @@ export class EngineImpl implements Engine {
     private log: Log
   ) {
     this.layouts = new LayoutStore(this.config);
-    this.windows = new WindowStore();
+    this.windows = new WindowStoreImpl();
   }
 
   public adjustLayout(basis: EngineWindow): void {
@@ -557,7 +557,7 @@ export class EngineImpl implements Engine {
   }
 
   public setMaster(window: EngineWindow): void {
-    this.windows.setMaster(window);
+    this.windows.putWindowToMaster(window);
   }
 
   public cycleLayout(step: Step): void {
