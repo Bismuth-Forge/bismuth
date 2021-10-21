@@ -111,6 +111,7 @@ export class DriverWindowImpl implements DriverWindow {
     return (
       this.client.specialWindow ||
       resourceClass === "plasmashell" ||
+      resourceClass === "ksmserver" ||
       resourceClass === "org.kde.plasmashell" ||
       resourceClass === "krunner" ||
       resourceClass === "kded5" ||
