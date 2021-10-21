@@ -164,7 +164,6 @@ export class ControllerImpl implements Controller {
    */
   public start(): void {
     this.log.log("Let's get down to bismuth!");
-    this.log.log(`Config: ${this.config}`);
 
     this.driver.bindEvents();
     this.bindShortcuts();
