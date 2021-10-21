@@ -150,7 +150,6 @@ export interface Engine {
 
   /**
    * Minimize all windows on the surface except the given window.
-   * Used mainly in Monocle mode with config.monocleMinimizeRest
    */
   minimizeOthers(window: EngineWindow): void;
 
@@ -409,7 +408,8 @@ export class EngineImpl implements Engine {
     this.windows.remove(window);
   }
 
-  /** Focus next or previous window
+  /**
+   * Focus next or previous window
    * @param step direction to step in (1 for forward, -1 for back)
    * @param includeHidden whether to switch to or skip minimized windows
    */
