@@ -22,7 +22,7 @@ Item {
 
         function show(text) {
             var area = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
-            this.item.show(text, area, 1000);
+            this.item.show(text, area);
         }
     }
 
