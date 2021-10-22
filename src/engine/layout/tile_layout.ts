@@ -124,12 +124,12 @@ export default class TileLayout implements WindowsLayout {
       if (this.numMaster < 10) {
         this.numMaster += 1;
       }
-      engine.showNotification(this.description);
+      engine.showLayoutNotification();
     } else if (action instanceof DecreaseMasterAreaWindowCount) {
       if (this.numMaster > 0) {
         this.numMaster -= 1;
       }
-      engine.showNotification(this.description);
+      engine.showLayoutNotification();
     } else if (action instanceof Rotate) {
       this.parts.rotate(90);
     } else if (action instanceof RotatePart) {

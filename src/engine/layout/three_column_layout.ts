@@ -239,6 +239,6 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
   private resizeMaster(engine: Engine, step: -1 | 1): void {
     this.masterSize = clip(this.masterSize + step, 1, 10);
-    engine.showNotification(this.description);
+    engine.showLayoutNotification();
   }
 }
