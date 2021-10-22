@@ -8,6 +8,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.15
 import org.kde.plasma.core 2.0 as PlasmaCore;
 import org.kde.plasma.components 3.0 as PC3
+import org.kde.kwin 2.0;
 
 /* 
  * Component Documentation
@@ -23,6 +24,12 @@ PlasmaCore.Dialog {
     flags: Qt.Popup | Qt.WindowStaysOnTopHint
     location: PlasmaCore.Types.Floating
     outputOnly: true
+
+    property rect screenGeometry
+
+    // Spawn popup a little bit lower than the center of the screen for consistency
+    x: (screenGeometry.x + screenGeometry.width / 2) - width / 2;
+    y: (screenGeometry.y + screenGeometry.height * 2 / 3) - height / 2;
 
     visible: false
 
@@ -52,24 +59,20 @@ PlasmaCore.Dialog {
     }
 
     Component.onCompleted: {
-        // NOTE: IDK what this is, but this is necessary to keep the window working.
         KWin.registerWindow(this);
     }
 
-    function show(text, area) {
+    function show(text) {
         // Abort any previous timers
         hideTimer.stop();
+
+        // Update current screen information
+        this.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
 
         // Set the text for the popup
         messageLabel.text = text;
 
-        // Width and height are not computed before the popup is visible
-        // therefore we need to make is visible sooner
         this.visible = true;
-
-        // Spawn popup a little bit lower than the center of the screen for consistency
-        this.x = (area.x + area.width / 2) - this.width / 2;
-        this.y = (area.y + area.height * 2 / 3) - this.height / 2;
 
         // Start popup hide timer
         hideTimer.interval = 3000;
