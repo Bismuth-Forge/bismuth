@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: MIT
 
 import QtQuick 2.0
-import org.kde.plasma.components 2.0 as Plasma;
 import org.kde.kwin 2.0;
 import org.kde.taskmanager 0.1 as TaskManager
 import "../code/index.mjs" as Bismuth
