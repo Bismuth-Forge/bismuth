@@ -58,7 +58,7 @@ export default class CascadeLayout implements WindowsLayout {
   public readonly classID = CascadeLayout.id;
 
   public get description(): string {
-    return "Cascade [" + CascadeDirection[this.dir] + "]";
+    return `Cascade [${CascadeDirection[this.dir]}]`;
   }
 
   constructor(private dir: CascadeDirection = CascadeDirection.SouthEast) {
@@ -105,10 +105,10 @@ export default class CascadeLayout implements WindowsLayout {
   public executeAction(engine: Engine, action: Action): void {
     if (action instanceof IncreaseMasterAreaWindowCount) {
       this.dir = (this.dir + 1 + 8) % 8;
-      engine.showNotification(this.description);
+      engine.showLayoutNotification();
     } else if (action instanceof DecreaseMasterAreaWindowCount) {
       this.dir = (this.dir - 1 + 8) % 8;
-      engine.showNotification(this.description);
+      engine.showLayoutNotification();
     } else {
       action.executeWithoutLayoutOverride();
     }

@@ -164,6 +164,12 @@ export interface Engine {
    * @param text the text of the notification
    */
   showNotification(text: string): void;
+
+  /**
+   * Show the notification with the info
+   * about the current layout.
+   */
+  showLayoutNotification(): void;
 }
 
 export class EngineImpl implements Engine {
@@ -566,7 +572,7 @@ export class EngineImpl implements Engine {
       step
     );
     if (layout) {
-      this.controller.showNotification(layout.description);
+      this.showLayoutNotification();
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
       if (
@@ -584,7 +590,7 @@ export class EngineImpl implements Engine {
       layoutClassID
     );
     if (layout) {
-      this.controller.showNotification(layout.description);
+      this.showLayoutNotification();
 
       // Minimize inactive windows if Monocle and config.monocleMinimizeRest
       if (
@@ -693,6 +699,11 @@ export class EngineImpl implements Engine {
 
   public showNotification(text: string): void {
     this.controller.showNotification(text);
+  }
+
+  public showLayoutNotification(): void {
+    const currentLayout = this.currentLayoutOnCurrentSurface();
+    this.controller.showNotification(`Layout: ${currentLayout.description}`);
   }
 
   /**
