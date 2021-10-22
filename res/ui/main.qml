@@ -20,8 +20,7 @@ Item {
         source: "popup.qml"
 
         function show(text) {
-            var area = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
-            this.item.show(text, area);
+            this.item.show(text);
         }
     }
 
