@@ -1,6 +1,6 @@
 {
   "name": "bismuth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A dynamic tiling extension for KWin",
   "private": true,
   "directories": {
