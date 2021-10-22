@@ -34,7 +34,7 @@ PlasmaCore.Dialog {
 
         PC3.Label {
             id: messageLabel
-            anchors.fill: parent
+            Layout.alignment: Qt.AlignHCenter 
             // This font size matches the one from Pulse Audio OSD for consistency
             font.pointSize: PlasmaCore.Theme.defaultFont.pointSize * 1.2
             horizontalAlignment: Text.AlignHCenter
