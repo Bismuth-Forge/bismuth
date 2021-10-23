@@ -120,16 +120,6 @@
         <default>false</default>
     </entry>
 
-    <entry name="adjustLayout" type="Bool">
-	    <label>Adjust layout with mouse</label>
-        <default>true</default>
-    </entry>
-
-    <entry name="adjustLayoutLive" type="Bool">
-	    <label>Adjust as window is being resized</label>
-        <default>true</default>
-    </entry>
-
     <entry name="keepFloatAbove" type="Bool">
 	    <label>Keep tiled windows below floating windows</label>
         <default>true</default>

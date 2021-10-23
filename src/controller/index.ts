@@ -298,23 +298,23 @@ export class ControllerImpl implements Controller {
     /* do nothing */
   }
 
-  public onWindowResize(window: EngineWindow): void {
-    this.log.log(["onWindowResize", { window }]);
-    if (this.config.adjustLayout && this.config.adjustLayoutLive) {
-      if (window.state === WindowState.Tiled) {
-        this.engine.adjustLayout(window);
-        this.engine.arrange();
-      }
+  public onWindowResize(win: EngineWindow): void {
+    this.log.log(`[Controller#onWindowResize] Window is resizing: ${win}`);
+
+    if (win.state === WindowState.Tiled) {
+      this.engine.adjustLayout(win);
+      this.engine.arrange();
     }
   }
 
-  public onWindowResizeOver(window: EngineWindow): void {
-    this.log.log(["onWindowResizeOver", { window }]);
-    if (this.config.adjustLayout && window.tiled) {
-      this.engine.adjustLayout(window);
+  public onWindowResizeOver(win: EngineWindow): void {
+    this.log.log(
+      `[Controller#onWindowResizeOver] Window resize is over: ${win}`
+    );
+
+    if (win.tiled) {
+      this.engine.adjustLayout(win);
       this.engine.arrange();
-    } else if (!this.config.adjustLayout) {
-      this.engine.enforceSize(window);
     }
   }
 
