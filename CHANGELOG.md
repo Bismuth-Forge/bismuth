@@ -5,6 +5,21 @@
 
 # Changelog
 
+## [1.1.0](https://www.github.com/gikari/bismuth/compare/v1.0.2...v1.1.0) (2021-10-23)
+
+
+### Features
+
+* :lipstick: make the popup more consistent with the Plasma OSDs ([8d6a374](https://www.github.com/gikari/bismuth/commit/8d6a3747e640c4bd418e361b342f1cb0745a3ff0))
+* use better layout notifications ([8c013ac](https://www.github.com/gikari/bismuth/commit/8c013ac7bc8d293c81c1f14f03c2147d47d43703))
+
+
+### Bug Fixes
+
+* :ambulance: add executable flag to installation script ([360588a](https://www.github.com/gikari/bismuth/commit/360588ad216d364a81d518e020e5fe37b6365ccc))
+* improve popup geometry update ([1f02e47](https://www.github.com/gikari/bismuth/commit/1f02e47a37fa0771f10e31e6e7f2e5d2cb9419db))
+* **popup:** fix errors in popup.qml ([2862e56](https://www.github.com/gikari/bismuth/commit/2862e56194fc37308224caf5fe826c76a59e088c))
+
 ### [1.0.2](https://www.github.com/gikari/bismuth/compare/v1.0.1...v1.0.2) (2021-10-22)
 
 
