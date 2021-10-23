@@ -7,7 +7,7 @@ import { DriverSurface, DriverSurfaceImpl } from "./surface";
 
 import { Rect } from "../util/rect";
 import { clip, matchWords } from "../util/func";
-import Config from "../config";
+import { Config } from "../config";
 import { Log } from "../util/log";
 
 /**

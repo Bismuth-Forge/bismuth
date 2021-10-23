@@ -10,7 +10,7 @@ import { Controller } from "../../controller";
 import { Action } from "../../controller/action";
 
 import { Rect, RectDelta } from "../../util/rect";
-import Config from "../../config";
+import { Config } from "../../config";
 
 export interface WindowsLayoutClass {
   readonly id: string;

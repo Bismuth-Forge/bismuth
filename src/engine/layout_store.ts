@@ -11,7 +11,7 @@ import { WindowsLayout } from "./layout";
 import { DriverSurface } from "../driver/surface";
 
 import { wrapIndex } from "../util/func";
-import Config from "../config";
+import { Config } from "../config";
 
 export class LayoutStoreEntry {
   public get currentLayout(): WindowsLayout {

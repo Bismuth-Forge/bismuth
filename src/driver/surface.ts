@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import Config from "../config";
+import { Config } from "../config";
 import { Rect } from "../util/rect";
 
 /**

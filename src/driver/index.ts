@@ -14,7 +14,7 @@ import { EngineWindow, EngineWindowImpl } from "../engine/window";
 
 import { WindowState } from "../engine/window";
 
-import Config from "../config";
+import { Config } from "../config";
 import { Log } from "../util/log";
 
 /**

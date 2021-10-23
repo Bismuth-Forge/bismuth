@@ -15,7 +15,7 @@ import { DriverSurface } from "../driver/surface";
 
 import { Rect, RectDelta } from "../util/rect";
 import { overlap, wrapIndex } from "../util/func";
-import Config from "../config";
+import { Config } from "../config";
 import { Log } from "../util/log";
 import { WindowsLayout } from "./layout";
 

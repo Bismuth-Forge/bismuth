@@ -9,7 +9,7 @@ import { WindowState, EngineWindow } from "../window";
 
 import { clip } from "../../util/func";
 import { Rect, RectDelta } from "../../util/rect";
-import Config from "../../config";
+import { Config } from "../../config";
 import { Controller } from "../../controller";
 
 export default class QuarterLayout implements WindowsLayout {

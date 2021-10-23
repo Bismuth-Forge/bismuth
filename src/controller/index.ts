@@ -10,7 +10,7 @@ import { WindowState } from "../engine/window";
 import { Driver, DriverImpl } from "../driver";
 import { DriverSurface } from "../driver/surface";
 
-import Config from "../config";
+import { Config } from "../config";
 import { Log } from "../util/log";
 
 import * as Action from "./action";
