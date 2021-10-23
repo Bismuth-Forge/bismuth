@@ -19,7 +19,7 @@ import CascadeLayout from "./engine/layout/cascade_layout";
 import { WindowsLayout } from "./engine/layout";
 import { WindowsLayoutClass } from "./engine/layout";
 
-export default interface Config {
+export interface Config {
   //#region Layout
   layoutOrder: string[];
   layoutFactories: { [key: string]: () => WindowsLayout };

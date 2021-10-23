@@ -10,7 +10,7 @@ import { WindowsLayout } from ".";
 import { WindowState, EngineWindow } from "../window";
 
 import { Rect, RectDelta } from "../../util/rect";
-import Config from "../../config";
+import { Config } from "../../config";
 import { Controller } from "../../controller";
 
 export type SpiralLayoutPart = HalfSplitLayoutPart<

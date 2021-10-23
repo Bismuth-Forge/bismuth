@@ -7,7 +7,7 @@
 import { createMock } from "ts-auto-mock";
 
 import { EngineImpl } from ".";
-import Config from "../config";
+import { Config } from "../config";
 import { Controller } from "../controller";
 import { DriverSurface } from "../driver/surface";
 

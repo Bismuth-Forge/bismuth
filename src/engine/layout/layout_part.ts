@@ -7,7 +7,7 @@ import LayoutUtils from "./layout_utils";
 
 import { EngineWindow } from "../window";
 
-import Config from "../../config";
+import { Config } from "../../config";
 import { Rect, RectDelta } from "../../util/rect";
 
 export interface ILayoutPart {
