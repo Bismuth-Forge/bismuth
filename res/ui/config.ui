@@ -347,62 +347,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="behaviorTab">
-      <attribute name="title">
-       <string>Behavior</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <item>
-        <widget class="QGroupBox" name="groupBox_4">
-         <property name="title">
-          <string>Layout Adjustment</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item>
-           <widget class="QCheckBox" name="kcfg_adjustLayout">
-            <property name="toolTip">
-             <string>Resizing window will cause layout to be adjusted. The actual behaviour might differ based on layout in use.</string>
-            </property>
-            <property name="text">
-             <string>Adjust layout by resizing windows</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="kcfg_adjustLayoutLive">
-            <property name="toolTip">
-             <string>If enabled, resizing window will immediately adjust layout. If disabled, layout will be adjusted *after* window resizing is over.</string>
-            </property>
-            <property name="text">
-             <string>Adjust layout in realtime as window is being resized</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_newWindowAsMaster">
-         <property name="text">
-          <string>Put new window as master</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="rulesTab">
       <attribute name="title">
        <string>Rules</string>
@@ -558,11 +502,18 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="optionsTab">
+     <widget class="QWidget" name="behaviorTab">
       <attribute name="title">
-       <string>Options</string>
+       <string>Behavior</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="kcfg_newWindowAsMaster">
+         <property name="text">
+          <string>Put new window as master</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QCheckBox" name="kcfg_maximizeSoleTile">
          <property name="toolTip">

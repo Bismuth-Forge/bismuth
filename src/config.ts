@@ -29,8 +29,6 @@ export interface Config {
   //#endregion
 
   //#region Features
-  adjustLayout: boolean;
-  adjustLayoutLive: boolean;
   keepFloatAbove: boolean;
   noTileBorder: boolean;
   limitTileWidthRatio: number;
@@ -84,8 +82,6 @@ export class ConfigImpl implements Config {
   //#endregion
 
   //#region Features
-  public adjustLayout: boolean;
-  public adjustLayoutLive: boolean;
   public keepFloatAbove: boolean;
   public noTileBorder: boolean;
   public limitTileWidthRatio: number;
@@ -179,11 +175,6 @@ export class ConfigImpl implements Config {
       false
     );
 
-    this.adjustLayout = this.kwinApi.KWin.readConfig("adjustLayout", true);
-    this.adjustLayoutLive = this.kwinApi.KWin.readConfig(
-      "adjustLayoutLive",
-      true
-    );
     this.keepFloatAbove = this.kwinApi.KWin.readConfig("keepFloatAbove", true);
     this.noTileBorder = this.kwinApi.KWin.readConfig("noTileBorder", false);
 
