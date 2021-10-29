@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# SPDX-FileCopyrightText: 2021 Nicolas Vaughan <nivaca@fastmail.com>
+#
+# SPDX-License-Identifier: CC-BY-NC-4.0
+
 read -r -p "Do you want to remove Bitmuth's keyboard shortcuts? [Y/n] " response
 response=${response,,} # tolower
 if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
