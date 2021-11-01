@@ -35,3 +35,13 @@ METADATA_FILE="$KWINSCRIPT_BUILDDIR/metadata.desktop"
 cp "$KWINSCRIPT_SOURCEDIR/res/metadata.desktop" "$METADATA_FILE"
 sed -i "s/\$VER/${npm_package_version:-1.0}/" "$METADATA_FILE"
 
+
+echo "🏗️ Building KCM..."
+
+KCM_SOURCEDIR="src/kcm"
+KCM_BUILDDIR="build/kcm"
+
+cmake -S "$KCM_SOURCEDIR" -B "$KCM_BUILDDIR" -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+cmake --build "$KCM_BUILDDIR"
+ln -sf "$PWD/$KCM_BUILDDIR/compile_commands.json" "$KCM_SOURCEDIR/compile_commands.json" # For LSP
+
