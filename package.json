@@ -36,7 +36,8 @@
     "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "scripts/dep-install.sh"
   },
   "repository": {
     "type": "git",

@@ -10,9 +10,10 @@
 [![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier)
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
 
-Arrange your windows automatically and switch between them using keyboard shortcuts. All of that with different layouts and
-without a complicated setup of classic tiling window managers (i3, dwm or XMonad). Just install the script on any
-KDE Plasma powered Linux distribution and enjoy your computing! 🦾
+Arrange your windows automatically and switch between them using keyboard
+shortcuts. All of that with different layouts and without a complicated setup
+of classic tiling window managers (i3, dwm or XMonad). Just install the script
+on any KDE Plasma powered Linux distribution and enjoy your computing! 🦾
 
 ![script demo](img/demo.gif)
 
@@ -21,42 +22,20 @@ was made, because the old project seems to be unmaintained. If you want to
 import your old shortcuts from it, use the `contrib/import_krohnkite.sh`
 script.
 
-## 🗺️ Goals
+## 🌟 Features and Goals
 
-Project goals are the following:
-
-1. Provide full-fledged tiling window manager experience in KDE Plasma with minimal effort on user side
-2. Wayland support
-
-## 🌟 Features
-
-- Automatic window tiling
-  - Dynamically tile windows, rather than manually placing each.
-  - Floating windows
-- Fully integrates into KWin features, including:
-  - Multi-screen
-  - Activities & Virtual desktop
-  - Basic window management (minimize, fullscreen, switching, etc)
-- Multiple Layout Support
-  - Tiling layout
-  - Monocle layout
-  - Desktop-friendly layouts (Spread, Stair)
+- Full KDE Plasma integration
+  - Multiple Screens, Activities and Virtual desktops
+  - Built-in KWin features (minimize, full-screen and rules)
+  - Floating Dialog windows
+- Multiple Layouts
+  - Classic Tiling layout
+  - Monocle layout for focusing on one application
+  - Three-Column for wide monitors
+  - Floating layout for traditional experience
+- Works on Wayland Plasma session
 
 ## 🔧 Installation
-
-### Simple and Quick
-
-Paste the following script in the command line:
-
-    wget -q -O - https://git.io/J2gLk | sh
-
-This will download the latest release and execute the installation script.
-
-### Manual
-
-Alternatively, go to [releases](https://github.com/gikari/bismuth/releases), download the
-latest `bismuth.tar.gz` archive, unzip it and execute the installation script,
-that is inside.
 
 ### From Source
 
@@ -69,11 +48,18 @@ To uninstall:
 
     npm run bi-uninstall
 
+### I want a simple installation!
+
+Understandable. Bismuth is a complex extension to KDE Plasma and therefore it
+requires complex packaging for different Linux distributions, at least for main
+ones: Ubuntu-based, Fedora-based and Arch-based. This is a complex task, so if
+you're skillful, you're welcome to create a package for your distribution and
+share it with others via PR to Bismuth.
+
 ### Tweaks
 
-Note, that if you've installed the script from the KWin scripts installation
-dialog, you need to make a couple of manual fixes and tweaks. See [Tweaks
-section](TWEAKS.md).
+You may want to make a couple of manual fixes and tweaks, to improve your
+experience. See [Tweaks section](TWEAKS.md).
 
 ## ⌨️ Actions and Default Keyboard Shortcuts
 
