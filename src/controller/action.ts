@@ -452,7 +452,7 @@ export class SwitchToPreviousLayout extends ActionImpl implements Action {
   }
 }
 
-abstract class SetCurrentLayout extends ActionImpl implements Action {
+abstract class ToggleCurrentLayout extends ActionImpl implements Action {
   constructor(
     protected engine: Engine,
     protected layoutId: string,
@@ -465,11 +465,11 @@ abstract class SetCurrentLayout extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.setLayout(this.layoutId);
+    this.engine.toggleLayout(this.layoutId);
   }
 }
 
-export class SetTileLayout extends SetCurrentLayout {
+export class ToggleTileLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
@@ -482,7 +482,7 @@ export class SetTileLayout extends SetCurrentLayout {
   }
 }
 
-export class SetMonocleLayout extends SetCurrentLayout {
+export class ToggleMonocleLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
@@ -495,7 +495,7 @@ export class SetMonocleLayout extends SetCurrentLayout {
   }
 }
 
-export class SetThreeColumnLayout extends SetCurrentLayout {
+export class ToggleThreeColumnLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
@@ -508,7 +508,7 @@ export class SetThreeColumnLayout extends SetCurrentLayout {
   }
 }
 
-export class SetSpreadLayout extends SetCurrentLayout {
+export class ToggleSpreadLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
@@ -521,7 +521,7 @@ export class SetSpreadLayout extends SetCurrentLayout {
   }
 }
 
-export class SetStairLayout extends SetCurrentLayout {
+export class ToggleStairLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
@@ -534,7 +534,7 @@ export class SetStairLayout extends SetCurrentLayout {
   }
 }
 
-export class SetFloatingLayout extends SetCurrentLayout {
+export class ToggleFloatingLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     // NOTE: space is intentional (Temporary)
     super(
@@ -548,7 +548,7 @@ export class SetFloatingLayout extends SetCurrentLayout {
   }
 }
 
-export class SetQuarterLayout extends SetCurrentLayout {
+export class ToggleQuarterLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
     super(
       engine,
