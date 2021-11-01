@@ -5,8 +5,8 @@
 
 # 🤝 Contributing
 
-We glad, that you want to contribute to the project. To make things easier please read the
-following.
+We glad, that you want to contribute to the project. To make things easier
+please read the following.
 
 ## 🏗️ Development packages
 
@@ -14,6 +14,8 @@ To make sure you can develop the script install all the tools you need:
 
 - [REUSE tool](https://git.fsfe.org/reuse/tool#install)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [CMake](https://cmake.org/)
+- [Clang-format](https://clang.llvm.org/docs/ClangFormat.html)
 
 ## 👷 Prepare environment
 
@@ -21,18 +23,14 @@ To prepare environment, clone the project and execute the following:
 
 ```sh
 npm install # Install development dependencies
-npm run prepare # Install Git hooks
 ```
 
-This will install all the things you need, including TypeScript compiler, Unit Testing
-framework and so fore so on.
+This will install all the things you need, including TypeScript compiler, Unit
+Testing framework and so fore so on.
 
-The last command will install Git pre-commit hooks you will need, such as automatic
-REUSE validation and autoformatting.
+## 🔨 Compile Bismuth
 
-## 🔨 Compile the script
-
-To compile the script execute the following:
+To compile Bismuth execute the following:
 
 ```sh
 npm run build
@@ -41,19 +39,12 @@ npm run build
 This will compile the script via TypeScript and produce the JS output adapted to
 [QML Javascript Environment](https://doc.qt.io/qt-5/qtqml-javascript-hostenvironment.html).
 
-## 📦 Packaging and installation
+## 📦 Installation
 
-To create a package from the compiled output run:
-
-```sh
-npm run package
-```
-
-This will produce a `.kwinscript` package, useful for installation in KWin Scripts KCM.
-But you can actually automate the installation process via script:
+To install compiled package, execute:
 
 ```sh
-npm run script-install
+npm run bi-install
 ```
 
 Note however, that if you have the script already installed and enabled, you need to
@@ -108,18 +99,6 @@ steps.
 
 ## ❓ FAQ
 
-### I already installed Bismuth, but I don't want to replace it with development version
-
-Bismuth can be temporarily loaded via KWin DBus API without installing:
-
-```sh
-npm run start
-npm run stop
-```
-
-Note that Bismuth can destroy itself completely once it is disabled, so no
-restart is required to deactivated it.
-
 ### I am not a developer
 
 Do not worry, you can still contribute fixing the documentation or just opening
@@ -129,12 +108,13 @@ What the use of being a developer if you don't know what to fix or implement?
 
 ### What skills do I need to contribute as a developer?
 
-Bismuth is written in TypeScript, so you'll have to know some. To learn it, check out
-the [Handbook](https://www.typescriptlang.org/docs/handbook/). If you know JavaScript
-and have an experience in some strongly typed language, it will be easy, and even if
-it not, you're still doing a great job - you can do it!
+Bismuth is written in TypeScript, so you'll have to know some. To learn it,
+check out the [Handbook](https://www.typescriptlang.org/docs/handbook/). If you
+know JavaScript and have an experience in some strongly typed language, it will
+be easy, and even if it not, you're still doing a great job - you can do it!
 
-You'll also need to know something about KWin scripting and Qt JavaScript Environment.
-For KWin scripting there is [a tutorial on the KDE developer portal](https://develop.kde.org/docs/plasma/kwin/).
-And for Qt JavaScript things you can check out
-[the official documentation](https://doc.qt.io/qt-5/qtqml-javascript-hostenvironment.html).
+You'll also need to know something about KWin scripting and Qt JavaScript
+Environment. For KWin scripting there is [a tutorial on the KDE developer
+portal](https://develop.kde.org/docs/plasma/kwin/). And for Qt JavaScript
+things you can check out [the official
+documentation](https://doc.qt.io/qt-5/qtqml-javascript-hostenvironment.html).
