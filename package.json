@@ -54,9 +54,10 @@
     "type": "git",
     "url": "git+https://github.com/gikari/bismuth.git"
   },
-  "author": "Eon S. Jeon <esjeon@hyunmu.am>",
+  "author": "Mikhail Zolotukhin <mail@genda.life> (https://genda.life)",
   "contributors": [
-    "Mikhail Zolotukhin <mail@genda.life> (https://genda.life)"
+    "Mikhail Zolotukhin <mail@genda.life> (https://genda.life)",
+    "Eon S. Jeon <esjeon@hyunmu.am>"
   ],
   "license": "MIT",
   "bugs": {
