@@ -10,7 +10,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore;
 import org.kde.plasma.components 3.0 as PC3
 import org.kde.kwin 2.0;
 
-/* 
+/*
  * Component Documentation
  *  - PlasmaCore global `theme` object:
  *      https://api.kde.org/frameworks/plasma-framework/html/classPlasma_1_1Theme.html

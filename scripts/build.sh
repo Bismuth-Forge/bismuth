@@ -26,14 +26,25 @@ npx esbuild \
 
 # Copy resources to the build directory with correct paths
 echo "📑 Preparing UI and metadata files..."
-cp -r "$KWINSCRIPT_SOURCEDIR/res/ui" "$KWINSCRIPT_BUILDDIR/contents"
-cp -r "$KWINSCRIPT_SOURCEDIR/res/config" "$KWINSCRIPT_BUILDDIR/contents"
+cp -r "$KWINSCRIPT_SOURCEDIR/ui" "$KWINSCRIPT_BUILDDIR/contents"
 
 # Copy and update metadata
 METADATA_FILE="$KWINSCRIPT_BUILDDIR/metadata.desktop"
 
-cp "$KWINSCRIPT_SOURCEDIR/res/metadata.desktop" "$METADATA_FILE"
+cp "$KWINSCRIPT_SOURCEDIR/metadata.desktop" "$METADATA_FILE"
 sed -i "s/\$VER/${npm_package_version:-1.0}/" "$METADATA_FILE"
+
+echo "📦 Zipping KWin Script..."
+KWINPKG_NAME="bismuth.kwinscript"
+
+# Temporary change directory for archive tools
+cd "$KWINSCRIPT_BUILDDIR"
+# Remove old packages
+rm -f "$KWINPKG_NAME"
+# Create new .kwinscript package
+zip -qr "$KWINPKG_NAME" ./contents/ ./metadata.desktop
+# Get back to the original directory
+cd - > /dev/null
 
 
 echo "🏗️ Building KCM..."
