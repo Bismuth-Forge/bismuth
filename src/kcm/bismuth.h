@@ -21,6 +21,11 @@ public:
 
     Bismuth::Config *config() const;
 
+public Q_SLOTS:
+    void save() override;
+
 private:
+    void reloadKWinScript() const;
+
     Bismuth::Config *m_config;
 };
