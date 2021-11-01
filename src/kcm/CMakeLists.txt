@@ -15,6 +15,8 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
+include(ECMInstallIcons)
+
 find_package(
   Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
   Quick
@@ -56,3 +58,5 @@ install(TARGETS kcm_bismuth DESTINATION ${KDE_INSTALL_PLUGINDIR}/kcms)
 install(FILES package/metadata.desktop RENAME kcm_bismuth.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
 kpackage_install_package(package kcm_bismuth kcms)
+
+add_subdirectory(icons)

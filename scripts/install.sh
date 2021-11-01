@@ -16,3 +16,7 @@ echo "📦 Installing the KCM..."
 
 KCM_BUILDDIR="build/kcm"
 sudo cmake --install "$KCM_BUILDDIR"
+
+echo "🎉 Installation finished."
+echo "💡 You can configure Bismuth in the System Settings > Window Management > Window Tiling."
+echo "🦾 Enjoy your tiling!"
