@@ -19,6 +19,7 @@ include(ECMInstallIcons)
 
 find_package(
   Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+  DBus
   Quick
   Svg
 )
@@ -33,16 +34,20 @@ find_package(
 
 add_library(kcm_bismuth MODULE)
 
+qt_add_dbus_interface(kwin_dbus_srcs org.kde.KWin.xml kwin_interface)
+
 target_sources(
   kcm_bismuth
   PRIVATE
   bismuth.cpp
+  ${kwin_dbus_srcs}
 )
 
 target_link_libraries(
   kcm_bismuth
   PRIVATE
   Qt5::Core
+  Qt5::DBus
   KF5::CoreAddons
   KF5::I18n
   KF5::QuickAddons
