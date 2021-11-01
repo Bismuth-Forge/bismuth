@@ -61,6 +61,12 @@ share it with others via PR to Bismuth.
 You may want to make a couple of manual fixes and tweaks, to improve your
 experience. See [Tweaks section](TWEAKS.md).
 
+## ⚙️ Configuration
+
+You can configure Bismuth in the System Settings > Window Management > Window Tiling.
+
+![Bismuth Configuration Module](img/config.png)
+
 ## ⌨️ Actions and Default Keyboard Shortcuts
 
 | Action                            | Key              |
