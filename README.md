@@ -63,11 +63,11 @@ that is inside.
 Install script from source:
 
     npm install # Installs dependencies for building
-    npm run script-install
+    npm run bi-install # Installs all Bismuth components
 
 To uninstall:
 
-    npm run script-uninstall
+    npm run bi-uninstall
 
 ### Tweaks
 
