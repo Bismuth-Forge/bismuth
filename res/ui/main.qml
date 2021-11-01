@@ -6,10 +6,15 @@
 import QtQuick 2.0
 import org.kde.kwin 2.0;
 import org.kde.taskmanager 0.1 as TaskManager
+
 import "../code/index.mjs" as Bismuth
 
 Item {
     id: scriptRoot
+
+    TrayItem {
+      id: trayItem
+    }
 
     TaskManager.ActivityInfo {
         id: activityInfo
@@ -29,6 +34,7 @@ Item {
 
         const qmlObjects = {
             scriptRoot: scriptRoot,
+            trayItem: trayItem,
             activityInfo: activityInfo,
             popupDialog: popupDialog
         };
