@@ -3,22 +3,21 @@
 
 [Desktop Entry]
 Name=Bismuth
-Comment=Tiling extention that gets you down to bismuth
+Comment=Tiling extension that gets you down to bismuth
 Icon=bismuth
 
 X-Plasma-API=declarativescript
 X-Plasma-MainScript=ui/main.qml
 
-X-KDE-PluginInfo-Author=Eon S. Jeon
-X-KDE-PluginInfo-Email=esjeon@hyunmu.am
+X-KDE-PluginInfo-Author=Mikhail Zolotukhin
+X-KDE-PluginInfo-Email=mail@genda.life
 X-KDE-PluginInfo-Name=bismuth
 X-KDE-PluginInfo-Version=$VER
 
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=MIT
-X-KDE-ServiceTypes=KWin/Script,KCModule
+X-KDE-ServiceTypes=KWin/Script
 
-X-KDE-Library=kwin/effects/configs/kcm_kwin4_genericscripted
 X-KDE-PluginKeyword=bismuth
 X-KDE-ParentComponents=bismuth
 
