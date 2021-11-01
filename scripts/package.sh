@@ -23,5 +23,3 @@ zip -qr "$KWINPKG_NAME" ./contents/ ./metadata.desktop
 # Get back to the original directory
 cd - > /dev/null
 
-# TODO: Packaging for KCM
-
