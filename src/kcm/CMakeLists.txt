@@ -60,3 +60,4 @@ install(FILES package/metadata.desktop RENAME kcm_bismuth.desktop DESTINATION ${
 kpackage_install_package(package kcm_bismuth kcms)
 
 add_subdirectory(icons)
+add_subdirectory(kconf_update)
