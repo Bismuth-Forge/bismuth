@@ -28,7 +28,7 @@
   "scripts": {
     "clean": "scripts/clean.sh",
     "build": "scripts/build.sh",
-    "pre-bi-install": "npm run build",
+    "prebi-install": "npm run build",
     "bi-install": "scripts/install.sh",
     "bi-uninstall": "scripts/uninstall.sh",
     "preinstall-and-restart-kwin-x11": "npm run script-install",
