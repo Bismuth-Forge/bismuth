@@ -45,16 +45,14 @@ export class LayoutStoreEntry {
     return this.loadLayout(this.currentID);
   }
 
-  public setLayout(targetID: string): WindowsLayout {
+  public toggleLayout(targetID: string): WindowsLayout {
     const targetLayout = this.loadLayout(targetID);
-    if (
-      targetLayout instanceof MonocleLayout &&
-      this.currentLayout instanceof MonocleLayout
-    ) {
-      /* toggle Monocle "OFF" */
+
+    // Toggle if requested, set otherwise
+    if (this.currentID === targetID) {
       this.currentID = this.previousID;
       this.previousID = targetID;
-    } else if (this.currentID !== targetID) {
+    } else {
       this.previousID = this.currentID;
       this.currentID = targetID;
     }
@@ -80,10 +78,7 @@ export class LayoutStoreEntry {
 export default class LayoutStore {
   private store: { [key: string]: LayoutStoreEntry };
 
-  private config: Config;
-
-  constructor(config: Config) {
-    this.config = config;
+  constructor(private config: Config) {
     this.store = {};
   }
 
@@ -100,14 +95,14 @@ export default class LayoutStore {
     return this.getEntry(srf.id).cycleLayout(step);
   }
 
-  public setLayout(
-    srf: DriverSurface,
+  public toggleLayout(
+    surf: DriverSurface,
     layoutClassID: string
   ): WindowsLayout | null {
-    if (srf.ignore) {
+    if (surf.ignore) {
       return null;
     }
-    return this.getEntry(srf.id).setLayout(layoutClassID);
+    return this.getEntry(surf.id).toggleLayout(layoutClassID);
   }
 
   private getEntry(key: string): LayoutStoreEntry {

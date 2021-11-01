@@ -146,7 +146,7 @@ export interface Engine {
   /**
    * Set the layout of the current surface to the specified layout.
    */
-  setLayout(layoutClassID: string): void;
+  toggleLayout(layoutClassID: string): void;
 
   /**
    * Minimize all windows on the surface except the given window.
@@ -584,8 +584,8 @@ export class EngineImpl implements Engine {
     }
   }
 
-  public setLayout(layoutClassID: string): void {
-    const layout = this.layouts.setLayout(
+  public toggleLayout(layoutClassID: string): void {
+    const layout = this.layouts.toggleLayout(
       this.controller.currentSurface,
       layoutClassID
     );
