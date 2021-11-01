@@ -3,13 +3,6 @@
   "version": "1.1.0",
   "description": "A dynamic tiling extension for KWin",
   "private": true,
-  "directories": {
-    "build": "build",
-    "test": "test"
-  },
-  "config": {
-    "build_dir": "build"
-  },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
@@ -33,16 +26,14 @@
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "clean": "bin/clean.sh",
-    "build": "bin/build.sh",
+    "clean": "scripts/clean.sh",
+    "build": "scripts/build.sh",
     "prestart": "npm run build",
-    "start": "bin/start.sh",
-    "stop": "bin/stop.sh",
     "prepackage": "npm run build",
-    "package": "bin/package.sh",
+    "package": "scripts/package.sh",
     "prescript-install": "npm run package",
-    "script-install": "bin/install.sh",
-    "script-uninstall": "bin/uninstall.sh",
+    "script-install": "scripts/install.sh",
+    "script-uninstall": "scripts/uninstall.sh",
     "preinstall-and-restart-kwin-x11": "npm run script-install",
     "install-and-restart-kwin-x11": "kwin_x11 --replace",
     "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
