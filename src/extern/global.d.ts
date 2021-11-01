@@ -9,8 +9,17 @@ declare namespace Bismuth {
   export namespace Qml {
     export interface Main {
       scriptRoot: object;
+      trayItem: TrayItem;
       activityInfo: Plasma.TaskManager.ActivityInfo;
       popupDialog: PopupDialog;
+    }
+
+    export interface TrayItem {
+      menu: TrayMenu;
+    }
+
+    export interface TrayMenu {
+      onToggleTiling: () => void;
     }
 
     export interface PopupDialog {

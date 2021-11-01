@@ -150,7 +150,7 @@ export class ControllerImpl implements Controller {
   private engine: Engine;
   private driver: Driver;
   public constructor(
-    qmlObjects: Bismuth.Qml.Main,
+    private qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     private config: Config,
     private log: Log
@@ -166,6 +166,7 @@ export class ControllerImpl implements Controller {
     this.log.log("Let's get down to bismuth!");
 
     this.driver.bindEvents();
+    this.bindTrayActions();
     this.bindShortcuts();
 
     this.driver.manageWindows();
@@ -370,6 +371,16 @@ export class ControllerImpl implements Controller {
 
   public manageWindow(win: EngineWindow): void {
     this.engine.manage(win);
+  }
+
+  private bindTrayActions(): void {
+    // NOTE: Since the qml interface is very agile, it's seems
+    // to be unreasonable to make the bindings universal.
+    // However, this may be changed it the future.
+    this.qmlObjects.trayItem.menu.onToggleTiling = (): void => {
+      const action = new Action.ToggleFloatingLayout(this.engine, this.log);
+      action.execute();
+    };
   }
 
   private bindShortcuts(): void {
