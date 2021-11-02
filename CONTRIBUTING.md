@@ -23,6 +23,7 @@ To prepare environment, clone the project and execute the following:
 
 ```sh
 npm install # Install development dependencies
+npm run sysdep-install # Install system dependencies
 ```
 
 This will install all the things you need, including TypeScript compiler, Unit

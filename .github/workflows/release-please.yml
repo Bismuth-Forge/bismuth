@@ -20,21 +20,3 @@ jobs:
         with:
           release-type: node
           package-name: release-please-action
-
-      - uses: actions/checkout@v2
-        if: ${{ steps.release.outputs.release_created }}
-
-      - name: Package 📦
-        run: |
-          npm install
-          npm run package
-        if: ${{ steps.release.outputs.release_created }}
-
-      - name: Publish 🎉
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.release.outputs.tag_name }}
-          files: |
-            build/package/bismuth.tar.gz
-            build/package/bismuth.kwinscript
-        if: ${{ steps.release.outputs.release_created }}

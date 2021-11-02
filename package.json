@@ -28,6 +28,7 @@
   "scripts": {
     "clean": "scripts/clean.sh",
     "build": "scripts/build.sh",
+    "sysdep-install": "scripts/sysdep-install.sh",
     "prebi-install": "npm run build",
     "bi-install": "scripts/install.sh",
     "bi-uninstall": "scripts/uninstall.sh",
@@ -36,8 +37,7 @@
     "postinstall-and-restart-kwin-x11": "bash -ic \"kwin_x11 --replace & disown\"",
     "docs": "npx typedoc --out $npm_package_config_build_dir/docs",
     "test": "jest",
-    "prepare": "husky install",
-    "postinstall": "scripts/dep-install.sh"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",

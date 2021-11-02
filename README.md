@@ -42,6 +42,7 @@ script.
 Install script from source:
 
     npm install # Installs dependencies for building
+    npm run sysdep-install # Install system dependencies for building
     npm run bi-install # Installs all Bismuth components
 
 To uninstall:
