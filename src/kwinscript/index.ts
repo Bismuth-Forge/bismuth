@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { ConfigImpl } from "./config";
-import { ControllerImpl } from "./controller";
+import { Controller, ControllerImpl } from "./controller";
 import { LogImpl } from "./util/log";
 
 /**
@@ -14,7 +14,7 @@ import { LogImpl } from "./util/log";
 export function init(
   qmlObjects: Bismuth.Qml.Main,
   kwinScriptingApi: KWin.Api
-): void {
+): Controller {
   const config = new ConfigImpl(kwinScriptingApi);
   const logger = new LogImpl(config);
 
@@ -26,4 +26,6 @@ export function init(
   );
 
   controller.start();
+
+  return controller;
 }

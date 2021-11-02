@@ -11,6 +11,7 @@ import "../code/index.mjs" as Bismuth
 
 Item {
     id: scriptRoot
+    property var controller
 
     TrayItem {
       id: trayItem
@@ -45,6 +46,11 @@ Item {
             KWin: KWin
         };
 
-        Bismuth.init(qmlObjects, kwinScriptingAPI);
+        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI);
+    }
+
+    Component.onDestruction: {
+        console.log("[Bismuth] Everybody is dead");
+        scriptRoot.controller.drop();
     }
 }

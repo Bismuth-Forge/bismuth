@@ -144,6 +144,12 @@ export interface Controller {
    * @param win the window which needs to be managed.
    */
   manageWindow(win: EngineWindow): void;
+
+  /**
+   * The function is called when the script is destroyed.
+   * In particular, it's called by QML Component.onDestroyed
+   */
+  drop(): void;
 }
 
 export class ControllerImpl implements Controller {
@@ -371,6 +377,10 @@ export class ControllerImpl implements Controller {
 
   public manageWindow(win: EngineWindow): void {
     this.engine.manage(win);
+  }
+
+  public drop(): void {
+    this.driver.drop();
   }
 
   private bindTrayActions(): void {

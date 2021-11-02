@@ -58,6 +58,11 @@ export interface Driver {
    * Manage the windows, that were active before script loading
    */
   manageWindows(): void;
+
+  /**
+   * Destroy all callbacks and other non-GC resources
+   */
+  drop(): void;
 }
 
 export class DriverImpl implements Driver {
@@ -123,7 +128,7 @@ export class DriverImpl implements Driver {
   private qml: Bismuth.Qml.Main;
   private kwinApi: KWin.Api;
 
-  private config: Config;
+  private registeredConnections: SignalCallbackPair[];
 
   /**
    * @param qmlObjects objects from QML gui. Required for the interaction with QML, as we cannot access globals.
@@ -134,10 +139,10 @@ export class DriverImpl implements Driver {
     qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     controller: Controller,
-    config: Config,
+    private config: Config,
     private log: Log
   ) {
-    this.config = config;
+    this.registeredConnections = [];
 
     // TODO: find a better way to to this
     if (this.config.preventMinimize && this.config.monocleMinimizeRest) {
@@ -282,10 +287,6 @@ export class DriverImpl implements Driver {
     );
     this.connect(this.kwinApi.workspace.clientMinimized, onClientMinimized);
     this.connect(this.kwinApi.workspace.clientUnminimized, onClientUnminimized);
-
-    // TODO: options.configChanged.connect(this.onConfigChanged);
-    /* NOTE: How disappointing. This doesn't work at all. Even an official kwin script tries this.
-     *       https://github.com/KDE/kwin/blob/master/scripts/minimizeall/contents/code/main.js */
   }
 
   public manageWindows(): void {
@@ -329,23 +330,37 @@ export class DriverImpl implements Driver {
     );
   }
 
-  /**
-   * Binds callback to the signal w/ extra fail-safe measures, like re-entry
-   * prevention and auto-disconnect on termination.
-   */
-  private connect(signal: QSignal, handler: (..._: any[]) => void): () => void {
-    const wrapper = (...args: any[]): void => {
-      // HACK: `workspace` become undefined when the script is disabled.
-      // Idk why, but you can't just use brackets here
-      if (typeof this.kwinApi.workspace === "undefined")
-        // eslint-disable-next-line curly
-        signal.disconnect(wrapper);
-      // eslint-disable-next-line curly
-      else this.enter(() => handler.apply(this, args));
-    };
-    signal.connect(wrapper);
+  public drop(): void {
+    this.log.log(`Dropping all registered callbacks... Goodbye.`);
+    for (const pair of this.registeredConnections) {
+      try {
+        pair.signal.disconnect(pair.callback);
+      } catch (e: any) {
+        // Error is thrown, when the object is already deleted,
+        // ignore it then and delete other callbacks
+        this.log.log(`Callback was already deleted. Ignoring it.`);
+      }
+    }
+  }
 
-    return wrapper;
+  /**
+   * Binds callback to the signal with re-entry prevention.
+   * Also keeps track of all connections, so that they con be
+   * destroyed at script termination via Driver#drop.
+   */
+  private connect(signal: QSignal, handler: (..._: any[]) => void): void {
+    const unboundCallback = (...args: any[]): void => {
+      this.enter(() => handler.apply(this, args));
+    };
+
+    const pair = {
+      signal: signal,
+      callback: unboundCallback,
+    };
+
+    this.registeredConnections.push(pair);
+
+    signal.connect(pair.callback);
   }
 
   /**
@@ -436,12 +451,11 @@ export class DriverImpl implements Driver {
       this.controller.onWindowShadeChanged(window);
     });
   }
+}
 
-  // TODO: private onConfigChanged = () => {
-  //     this.loadConfig();
-  //     this.engine.arrange();
-  // }
-  /* NOTE: check `bindEvents` for details */
+interface SignalCallbackPair {
+  signal: QSignal;
+  callback: (...args: any[]) => void;
 }
 
 /**
