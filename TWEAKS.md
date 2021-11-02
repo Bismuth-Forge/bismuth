@@ -6,17 +6,6 @@
 
 # Tweaks
 
-## Making changes to configuration
-
-To make changes effective, **the script must be reactivated**:
-
-1. On `KWin Scripts` dialog, untick Bismuth
-2. Hit `Apply`
-3. Tick Bismuth
-4. Hit `Apply` again
-
-Track this issue [here](#22).
-
 ## Setting Up for Multi-Screen
 
 Bismuth supports multi-screen setup, but KWin has to be configured to unlock
