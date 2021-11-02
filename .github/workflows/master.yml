@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Code 🛎️
         uses: actions/checkout@v2
 
-      - name: REUSE Compliance Check
+      - name: REUSE Compliance Check 🏛️
         uses: fsfe/reuse-action@v1
 
   lint:
@@ -27,22 +27,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Code 🛎️
         uses: actions/checkout@v2
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      - name: Validate QML and JavaScript files
+      - name: Validate QML and JavaScript files 💚
         uses: liri-infra/qmllint-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Dev Dependencies for Linters
+      - name: Install Dev Dependencies for Linters ⚙️
         run: |
           npm install
 
-      - name: Lint via Super Linter
+      - name: Lint via Super Linter 🚨
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
@@ -57,23 +57,36 @@ jobs:
 
   build:
     name: Build
+    container: ubuntu:21.10
+    env:
+      DEBIAN_FRONTEND: noninteractive
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Code 🛎️
         uses: actions/checkout@v2
+
+      - name: Setup CI Utils ⚙️
+        run: .github/scripts/utils-install.sh
 
       - name: Build 🔧
         run: |
           npm install
+          .github/scripts/sysdep-install.sh
           npm run build
 
   test:
     name: Unit Tests
+    container: ubuntu:21.10
+    env:
+      DEBIAN_FRONTEND: noninteractive
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout Code 🛎️
         uses: actions/checkout@v2
+
+      - name: Setup CI Utils ⚙️
+        run: .github/scripts/utils-install.sh
 
       - name: Test 🧪
         run: |
