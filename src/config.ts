@@ -74,6 +74,7 @@ type LayoutFactories = { [key: string]: () => WindowsLayout };
 
 export class ConfigImpl implements Config {
   //#region Layout
+  public defaultLayout: number;
   public layoutOrder: string[];
   public layoutFactories: LayoutFactories;
   public maximizeSoleTile: boolean;
@@ -138,20 +139,22 @@ export class ConfigImpl implements Config {
 
     // TODO: Refactor this: config should not create factories. It is not its responsibility
     this.layoutOrder = [];
+    this.defaultLayout = this.kwinApi.KWin.readConfig("defaultLayout", 0);
     this.layoutFactories = {};
-    (
-      [
-        ["enableTileLayout", true, TileLayout],
-        ["enableMonocleLayout", true, MonocleLayout],
-        ["enableThreeColumnLayout", true, ThreeColumnLayout],
-        ["enableSpreadLayout", true, SpreadLayout],
-        ["enableStairLayout", true, StairLayout],
-        ["enableSpiralLayout", true, SpiralLayout],
-        ["enableQuarterLayout", false, QuarterLayout],
-        ["enableFloatingLayout", false, FloatingLayout],
-        ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
-      ] as Array<[string, boolean, WindowsLayoutClass]>
-    ).forEach(([configKey, defaultValue, layoutClass]) => {
+    const layouts = [
+      ["enableTileLayout", true, TileLayout],
+      ["enableMonocleLayout", true, MonocleLayout],
+      ["enableThreeColumnLayout", true, ThreeColumnLayout],
+      ["enableSpreadLayout", true, SpreadLayout],
+      ["enableStairLayout", true, StairLayout],
+      ["enableSpiralLayout", true, SpiralLayout],
+      ["enableQuarterLayout", false, QuarterLayout],
+      ["enableFloatingLayout", false, FloatingLayout],
+      ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
+    ] as Array<[string, boolean, WindowsLayoutClass]>;
+    
+    layouts.unshift(layouts.splice(this.defaultLayout, 1)[0]); // place the default layout at the top of the list
+    layouts.forEach(([configKey, defaultValue, layoutClass]) => {
       // For some reason if we put the curly brackets here script breaks
       // This will be dealt with, when this facility will be refactored out
       if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
