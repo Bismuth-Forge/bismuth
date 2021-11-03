@@ -69,76 +69,66 @@
 				<p><a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git" alt="Conventional Commits"></a>
 					<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier" alt="code style: prettier"></a>
 				<a href="https://community.kde.org/KWin/Wayland"><img src="https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde" alt="wayland: supported"></a></p>
-				<p>Arrange your windows automatically and switch between them using keyboard shortcuts. All of that with different layouts and
-					without a complicated setup of classic tiling window managers (i3, dwm or XMonad). Just install the script on any
-				KDE Plasma powered Linux distribution and enjoy your computing! 🦾</p>
+				<p>Arrange your windows automatically and switch between them using keyboard
+					shortcuts. All of that with different layouts and without a complicated setup
+					of classic tiling window managers (i3, dwm or XMonad). Just install Bismuth
+				on any KDE Plasma powered Linux distribution and you are ready to go! 🦾</p>
 				<p><img src="img/demo.gif" alt="script demo"></p>
 				<p>This is a fork of <a href="https://github.com/esjeon/krohnkite">Krohnkite</a>. The fork
 					was made, because the old project seems to be unmaintained. If you want to
 					import your old shortcuts from it, use the <code>contrib/import_krohnkite.sh</code>
 				script.</p>
-				<a href="#🗺️-goals" id="🗺️-goals" style="color: inherit; text-decoration: none;">
-					<h2>🗺️ Goals</h2>
-				</a>
-				<p>Project goals are the following:</p>
-				<ol>
-					<li>Provide full-fledged tiling window manager experience in KDE Plasma with minimal effort on user side</li>
-					<li>Wayland support</li>
-				</ol>
 				<a href="#🌟-features" id="🌟-features" style="color: inherit; text-decoration: none;">
 					<h2>🌟 Features</h2>
 				</a>
 				<ul>
-					<li>Automatic window tiling<ul>
-							<li>Dynamically tile windows, rather than manually placing each.</li>
-							<li>Floating windows</li>
+					<li>Full KDE Plasma integration<ul>
+							<li>Multiple Screens, Activities and Virtual desktops</li>
+							<li>Built-in KWin features (minimize, full-screen and rules)</li>
+							<li>Floating Dialog windows</li>
 						</ul>
 					</li>
-					<li>Fully integrates into KWin features, including:<ul>
-							<li>Multi-screen</li>
-							<li>Activities &amp; Virtual desktop</li>
-							<li>Basic window management (minimize, fullscreen, switching, etc)</li>
+					<li>Multiple Layouts<ul>
+							<li>Classic Tiling layout</li>
+							<li>Monocle layout for focusing on one application</li>
+							<li>Three-Column for wide monitors</li>
+							<li>Floating layout for traditional experience</li>
 						</ul>
 					</li>
-					<li>Multiple Layout Support<ul>
-							<li>Tiling layout</li>
-							<li>Monocle layout</li>
-							<li>Desktop-friendly layouts (Spread, Stair)</li>
-						</ul>
-					</li>
+					<li>Works on Wayland Plasma session</li>
 				</ul>
 				<a href="#🔧-installation" id="🔧-installation" style="color: inherit; text-decoration: none;">
 					<h2>🔧 Installation</h2>
 				</a>
-				<a href="#simple-and-quick" id="simple-and-quick" style="color: inherit; text-decoration: none;">
-					<h3>Simple and Quick</h3>
-				</a>
-				<p>Paste the following script in the command line:</p>
-				<pre><code><span style="color: #001080">wget</span><span style="color: #000000"> -</span><span style="color: #001080">q</span><span style="color: #000000"> -</span><span style="color: #0070C1">O</span><span style="color: #000000"> - https:</span><span style="color: #008000">//git.io/J2gLk | sh</span>
-</code></pre>
-				<p>This will download the latest release and execute the installation script.</p>
-				<a href="#manual" id="manual" style="color: inherit; text-decoration: none;">
-					<h3>Manual</h3>
-				</a>
-				<p>Alternatively, go to <a href="https://github.com/gikari/bismuth/releases">releases</a>, download the
-					latest <code>bismuth.tar.gz</code> archive, unzip it and execute the installation script,
-				that is inside.</p>
 				<a href="#from-source" id="from-source" style="color: inherit; text-decoration: none;">
 					<h3>From Source</h3>
 				</a>
 				<p>Install script from source:</p>
 				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Installs</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">building</span>
-<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">script</span><span style="color: #000000">-</span><span style="color: #001080">install</span>
+<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">sysdep</span><span style="color: #000000">-</span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Install</span><span style="color: #000000"> </span><span style="color: #001080">system</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">building</span>
+<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">bi</span><span style="color: #000000">-</span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Installs</span><span style="color: #000000"> </span><span style="color: #001080">all</span><span style="color: #000000"> </span><span style="color: #001080">Bismuth</span><span style="color: #000000"> </span><span style="color: #001080">components</span>
 </code></pre>
 				<p>To uninstall:</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">script</span><span style="color: #000000">-</span><span style="color: #001080">uninstall</span>
+				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">bi</span><span style="color: #000000">-</span><span style="color: #001080">uninstall</span>
 </code></pre>
+				<a href="#i-want-a-simple-installation" id="i-want-a-simple-installation" style="color: inherit; text-decoration: none;">
+					<h3>I want a simple installation!</h3>
+				</a>
+				<p>Understandable. Bismuth is a complex extension to KDE Plasma and therefore it
+					requires complex packaging for different Linux distributions, at least for main
+					ones: Ubuntu-based, Fedora-based and Arch-based. This is a complex task, so if
+					you&#39;re skillful, you&#39;re welcome to create a package for your distribution and
+				share it with others via PR to Bismuth.</p>
 				<a href="#tweaks" id="tweaks" style="color: inherit; text-decoration: none;">
 					<h3>Tweaks</h3>
 				</a>
-				<p>Note, that if you&#39;ve installed the script from the KWin scripts installation
-					dialog, you need to make a couple of manual fixes and tweaks. See <a href="TWEAKS.md">Tweaks
-				section</a>.</p>
+				<p>You may want to make a couple of manual fixes and tweaks, to improve your
+				experience. See <a href="TWEAKS.md">Tweaks section</a>.</p>
+				<a href="#⚙️-configuration" id="⚙️-configuration" style="color: inherit; text-decoration: none;">
+					<h2>⚙️ Configuration</h2>
+				</a>
+				<p>You can configure Bismuth in the System Settings &gt; Window Management &gt; Window Tiling.</p>
+				<p><img src="img/config.png" alt="Bismuth Configuration Module"></p>
 				<a href="#⌨️-actions-and-default-keyboard-shortcuts" id="⌨️-actions-and-default-keyboard-shortcuts" style="color: inherit; text-decoration: none;">
 					<h2>⌨️ Actions and Default Keyboard Shortcuts</h2>
 				</a>
