@@ -12,8 +12,8 @@
 
 Arrange your windows automatically and switch between them using keyboard
 shortcuts. All of that with different layouts and without a complicated setup
-of classic tiling window managers (i3, dwm or XMonad). Just install the script
-on any KDE Plasma powered Linux distribution and enjoy your computing! 🦾
+of classic tiling window managers (i3, dwm or XMonad). Just install Bismuth
+on any KDE Plasma powered Linux distribution and you are ready to go! 🦾
 
 ![script demo](img/demo.gif)
 
@@ -22,7 +22,7 @@ was made, because the old project seems to be unmaintained. If you want to
 import your old shortcuts from it, use the `contrib/import_krohnkite.sh`
 script.
 
-## 🌟 Features and Goals
+## 🌟 Features
 
 - Full KDE Plasma integration
   - Multiple Screens, Activities and Virtual desktops
