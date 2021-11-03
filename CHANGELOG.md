@@ -5,6 +5,25 @@
 
 # Changelog
 
+## [2.0.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v1.1.0...v2.0.0) (2021-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove old config button from KWin scripts page. This is no longer needed, as the user should use KCM.
+* removed adjust layout options. These options should be always enabled by default, because this is how all tiling window managers work: mouse resize always has feedback and resizing always affects the layout.
+
+### Features
+
+* add KCM for Bismuth configuration ([1c410cf](https://www.github.com/Bismuth-Forge/bismuth/commit/1c410cf1c759d707596a42214489dbe36bd52278))
+* introduce tray item, that lets you toggle floating mode ([ba689c5](https://www.github.com/Bismuth-Forge/bismuth/commit/ba689c5ff099c3263384395cfaa737a14e158b90))
+* make layouts togglable ([8ebffbe](https://www.github.com/Bismuth-Forge/bismuth/commit/8ebffbe639efcf1cfec5addad29e2777d1bbd5d2))
+* reload script after applying configuraton ([e73cbce](https://www.github.com/Bismuth-Forge/bismuth/commit/e73cbce4c8af5ab308634972409b4f7f87e95085))
+
+### Bug Fixes
+
+* correctly destroy callbacks after script unload ([aad9860](https://www.github.com/Bismuth-Forge/bismuth/commit/aad986096273bc9d66ef7098c1c32b725a120902))
+
 ## [1.1.0](https://www.github.com/gikari/bismuth/compare/v1.0.2...v1.1.0) (2021-10-23)
 
 
