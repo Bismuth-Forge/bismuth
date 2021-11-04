@@ -49,6 +49,12 @@ To uninstall:
 
     npm run bi-uninstall
 
+### Arch-based distros
+
+[![AUR version](https://img.shields.io/aur/version/kwin-bismuth)](https://aur.archlinux.org/packages/kwin-bismuth)
+
+Bismuth is available on AUR. Install the [`kwin-bismuth` package](https://aur.archlinux.org/packages/kwin-bismuth) with your favorite AUR helper.
+
 ### I want a simple installation!
 
 Understandable. Bismuth is a complex extension to KDE Plasma and therefore it
