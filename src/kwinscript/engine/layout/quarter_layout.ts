@@ -56,7 +56,7 @@ export default class QuarterLayout implements WindowsLayout {
     if ((idx === 0 || idx === 3) && delta.east !== 0) {
       this.vsplit =
         (Math.floor(area.width * this.vsplit) + delta.east) / area.width;
-    } else if ((idx === 2 || idx === 2) && delta.west !== 0) {
+    } else if ((idx === 1 || idx === 2) && delta.west !== 0) {
       this.vsplit =
         (Math.floor(area.width * this.vsplit) - delta.west) / area.width;
     }
