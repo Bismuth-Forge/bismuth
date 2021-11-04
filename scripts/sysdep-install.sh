@@ -40,6 +40,9 @@ if [ -f /etc/os-release ]; then
       sudo pacman -S --noconfirm --needed \
         cmake ninja extra-cmake-modules
       ;;
+    "void")
+      sudo xbps-install cmake ninja extra-cmake-modules kconfig-devel kconfigwidgets-devel ki18n-devel kcoreaddons-devel kdeclarative-devel kcmutils-devel qt5-svg-devel qt5-declarative-devel qt5-quickcontrols2-devel gettext-devel knotifications-devel kpackage-devel kservice-devel kiconthemes-devel kdoctools-devel kauth-devel kcrash-devel kjobwidgets-devel ksolid-devel kio-devel kwallet-devel kconfigwidgets-devel ktextwidgets-devel kglobalaccel-devel kdeclarative-devel kxmlgui-devel kcmutils-devel kbookmarks-devel
+      ;;
 
     *)
       echo "⚠ Your distribution is $PRETTY_NAME, but you have to install system dependencies manually."
