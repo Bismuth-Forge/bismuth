@@ -9,6 +9,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git)](https://conventionalcommits.org)
 [![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier)
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
+[![AUR version](https://img.shields.io/aur/version/kwin-bismuth?style=flat-square&logo=ArchLinux)](https://aur.archlinux.org/packages/kwin-bismuth)
 
 Arrange your windows automatically and switch between them using keyboard
 shortcuts. All of that with different layouts and without a complicated setup
@@ -49,13 +50,21 @@ To uninstall:
 
     npm run bi-uninstall
 
-### I want a simple installation!
+### From distribution packages
 
-Understandable. Bismuth is a complex extension to KDE Plasma and therefore it
-requires complex packaging for different Linux distributions, at least for main
-ones: Ubuntu-based, Fedora-based and Arch-based. This is a complex task, so if
-you're skillful, you're welcome to create a package for your distribution and
-share it with others via PR to Bismuth.
+> :warning: These packages are not affiliated with plugin developers. If you
+> encounter any issues, you should contact the package maintainer first.
+
+#### Arch-based distros
+
+Bismuth is available on AUR. Install the [`kwin-bismuth`
+package](https://aur.archlinux.org/packages/kwin-bismuth) with your favorite
+AUR helper.
+
+#### Other distributions
+
+If you are know a packaging solution for a distibution, that is not in this
+list, please provide a link to it via pull request.
 
 ### Tweaks
 
