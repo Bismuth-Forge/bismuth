@@ -9,6 +9,8 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git)](https://conventionalcommits.org)
 [![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier)
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde)](https://community.kde.org/KWin/Wayland)
+[![AUR version](https://img.shields.io/aur/version/kwin-bismuth)](https://aur.archlinux.org/packages/kwin-bismuth)
+[![Opensuse Openbuild](https://img.shields.io/badge/Openbuild-kwin--bismuth-blue)](https://build.opensuse.org/package/show/home:wstephenson:kwin/kwin-script-tiling-bismuth)
 
 Arrange your windows automatically and switch between them using keyboard
 shortcuts. All of that with different layouts and without a complicated setup
@@ -48,14 +50,19 @@ Install script from source:
 To uninstall:
 
     npm run bi-uninstall
+    
+### Arch-based distros
 
-### I want a simple installation!
+Bismuth is available on AUR. Install the [`kwin-bismuth` package](https://aur.archlinux.org/packages/kwin-bismuth) with your favorite AUR helper.
 
-Understandable. Bismuth is a complex extension to KDE Plasma and therefore it
-requires complex packaging for different Linux distributions, at least for main
-ones: Ubuntu-based, Fedora-based and Arch-based. This is a complex task, so if
-you're skillful, you're welcome to create a package for your distribution and
-share it with others via PR to Bismuth.
+### Other Distros
+
+Bismuth is available on opensuse's openbuild service. Install the [`kwin-bismuth` package](https://build.opensuse.org/package/show/home:wstephenson:kwin/kwin-script-tiling-bismuth).
+
+### When downloading from distribution packages
+
+- If the user is encountering a problem with the installation process when using the distribution packages, they should contact the package maintainer directly first.
+- Download the packages at your own risk, they are not distributed by the bismuth team and are entirely a community effort to simplify the installation process.
 
 ### Tweaks
 
