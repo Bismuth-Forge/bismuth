@@ -13,6 +13,9 @@ jobs:
   release-please:
     name: Release Please
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - name: Release Please 🔖
         uses: GoogleCloudPlatform/release-please-action@v2
@@ -20,3 +23,35 @@ jobs:
         with:
           release-type: node
           package-name: release-please-action
+
+  publish-artifacts:
+    name: Publish Artifacts
+    runs-on: ubuntu-latest
+    container: ubuntu:21.10
+    env:
+      DEBIAN_FRONTEND: noninteractive
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      - name: Checkout Code 🛎️
+        uses: actions/checkout@v2
+
+      - name: Setup CI Utils ⚙️
+        run: .github/scripts/utils-install.sh
+
+      - name: Build 🔧
+        run: |
+          npm install
+          .github/scripts/sysdep-install.sh
+          npm run build
+
+      - name: Package 📦
+        run: |
+          .github/scripts/tar-build.sh
+
+      - name: Publish 🎉
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.release-please.outputs.tag_name }}
+          files: |
+            build-artifacts.tar.gz
