@@ -129,7 +129,11 @@ export class ConfigImpl implements Config {
       if (!str || typeof str !== "string") {
         return [];
       }
-      return str.split(",").map((part) => part.trim());
+      // Split by commas, trim and remove empty strings
+      return str
+        .split(",")
+        .map((part) => part.trim())
+        .filter((i) => i);
     }
 
     this.kwinApi = kwinApi;
