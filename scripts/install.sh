@@ -5,17 +5,9 @@
 
 set -e
 
-echo "📦 Installing the KWin Script..."
+echo "📦 Installing Bismuth..."
 
-KWINSCRIPT_BUILDDIR="build/kwinscript"
-KWINPKG_FILE="bismuth.kwinscript"
-
-plasmapkg2 -u "$KWINSCRIPT_BUILDDIR/$KWINPKG_FILE" > /dev/null || plasmapkg2 -i "$KWINSCRIPT_BUILDDIR/$KWINPKG_FILE" > /dev/null
-
-echo "📦 Installing the KCM..."
-
-KCM_BUILDDIR="build/kcm"
-sudo cmake --install "$KCM_BUILDDIR"
+sudo cmake --install "build"
 
 echo "🎉 Installation finished."
 echo "💡 You can configure Bismuth in the System Settings > Window Management > Window Tiling."

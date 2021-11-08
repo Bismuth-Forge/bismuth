@@ -12,7 +12,7 @@ X-Plasma-MainScript=ui/main.qml
 X-KDE-PluginInfo-Author=Mikhail Zolotukhin
 X-KDE-PluginInfo-Email=mail@genda.life
 X-KDE-PluginInfo-Name=bismuth
-X-KDE-PluginInfo-Version=$VER
+X-KDE-PluginInfo-Version=@CMAKE_PROJECT_VERSION@
 
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=MIT
