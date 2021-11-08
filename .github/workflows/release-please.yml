@@ -43,15 +43,27 @@ jobs:
         run: |
           npm install
           .github/scripts/sysdep-install.sh
-          npm run build
+          cmake -S "." -B "build-debug" -G Ninja \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX="$PWD/binary-debug"
+          cmake --build "build-debug"
+          cmake --install "build-debug"
+
+          cmake -S "." -B "build-release" -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX="$PWD/binary-release"
+          cmake --build "build-release"
+          cmake --install "build-release"
 
       - name: Package 📦
         run: |
-          .github/scripts/tar-build.sh
+          tar czf binary-debug.tar.gz --directory=binary-debug .
+          tar czf binary-release.tar.gz --directory=binary-release .
 
       - name: Publish 🎉
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.release-please.outputs.tag_name }}
           files: |
-            build-artifacts.tar.gz
+            binary-debug.tar.gz
+            binary-release.tar.gz
