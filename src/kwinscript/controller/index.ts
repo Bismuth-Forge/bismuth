@@ -433,6 +433,7 @@ export class ControllerImpl implements Controller {
       new Action.ToggleQuarterLayout(this.engine, this.log),
 
       new Action.Rotate(this.engine, this.log),
+      new Action.RotateReverse(this.engine, this.log),
       new Action.RotatePart(this.engine, this.log),
     ];
 

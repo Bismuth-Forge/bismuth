@@ -571,6 +571,16 @@ export class Rotate extends ActionImpl implements Action {
   }
 }
 
+export class RotateReverse extends ActionImpl implements Action {
+  constructor(protected engine: Engine, protected log: Log) {
+    super(engine, "rotate_reverse", "Rotate (Reverse)", "", log);
+  }
+
+  public executeWithoutLayoutOverride(): void {
+    this.engine.showNotification("Rotation Not Applicable");
+  }
+}
+
 export class RotatePart extends ActionImpl implements Action {
   constructor(protected engine: Engine, protected log: Log) {
     super(engine, "rotate_part", "Rotate Part", "Meta+Shift+R", log);

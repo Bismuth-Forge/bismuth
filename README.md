@@ -62,6 +62,7 @@ package](https://aur.archlinux.org/packages/kwin-bismuth) with your favorite
 AUR helper.
 
 #### Gentoo
+
 Updated ebuilds provided in [viperML-overlay](https://github.com/viperML/viperML-overlay/).
 
 #### Other distributions
@@ -123,4 +124,5 @@ You can configure Bismuth in the System Settings > Window Management > Window Ti
 | Set Quarter Layout                | _None_           |
 |                                   |                  |
 | Rotate                            | Meta + R         |
+| Rotate (Reverse)                  | _None_           |
 | Rotate Part                       | Meta + Shift + R |
