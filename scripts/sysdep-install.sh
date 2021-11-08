@@ -14,7 +14,7 @@ if [ -f /etc/os-release ]; then
 
     "ubuntu" | "pop" | "debian")
       sudo apt-get install -y \
-        zip cmake ninja-build extra-cmake-modules kirigami2-dev \
+        cmake ninja-build extra-cmake-modules kirigami2-dev \
         libkf5config-dev libkf5configwidgets-dev libkf5coreaddons-dev \
         libkf5declarative-dev libkf5i18n-dev libkf5kcmutils-dev \
         libqt5svg5-dev qml-module-qtquick* qtbase5-dev \
@@ -42,7 +42,14 @@ if [ -f /etc/os-release ]; then
       ;;
 
     "void")
-      sudo xbps-install gcc git nodejs cmake ninja extra-cmake-modules kconfig-devel kconfigwidgets-devel ki18n-devel kcoreaddons-devel kdeclarative-devel kcmutils-devel qt5-svg-devel qt5-declarative-devel qt5-quickcontrols2-devel gettext-devel knotifications-devel kpackage-devel kservice-devel kiconthemes-devel kdoctools-devel kauth-devel kcrash-devel kjobwidgets-devel ksolid-devel kio-devel kwallet-devel kconfigwidgets-devel ktextwidgets-devel kglobalaccel-devel kdeclarative-devel kxmlgui-devel kcmutils-devel kbookmarks-devel
+      sudo xbps-install gcc git nodejs cmake ninja extra-cmake-modules \
+        kconfig-devel kconfigwidgets-devel ki18n-devel kcoreaddons-devel \
+        kdeclarative-devel kcmutils-devel qt5-svg-devel qt5-declarative-devel \
+        qt5-quickcontrols2-devel gettext-devel knotifications-devel \
+        kpackage-devel kservice-devel kiconthemes-devel kdoctools-devel \
+        kauth-devel kcrash-devel kjobwidgets-devel ksolid-devel kio-devel \
+        kwallet-devel kconfigwidgets-devel ktextwidgets-devel kglobalaccel-devel \
+        kdeclarative-devel kxmlgui-devel kcmutils-devel kbookmarks-devel
       ;;
 
     *)

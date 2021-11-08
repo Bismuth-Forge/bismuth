@@ -6,11 +6,6 @@
 
 set -e
 
-echo "🔥 Uninstalling KWin Script..."
-plasmapkg2 -t kwinscript -r "${npm_package_name:-Bismuth}"
-
-echo "🔥 Uninstalling KCM..."
-KCM_BUILDDIR="build/kcm"
-
-sudo xargs rm < "$KCM_BUILDDIR/install_manifest.txt"
+echo "🔥 Uninstalling Bismuth..."
+sudo xargs rm < "build/install_manifest.txt"
 
