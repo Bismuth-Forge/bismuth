@@ -5,6 +5,14 @@
 
 # Changelog
 
+### [2.0.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.0.0...v2.0.1) (2021-11-08)
+
+
+### Bug Fixes
+
+* do not ignore second windows when resize ([165008b](https://www.github.com/Bismuth-Forge/bismuth/commit/165008b9ac755bf312096ea45ac2ef303fb42e3a))
+* prevent broken tiling, by not including empty stings into rules ([9a5cbe4](https://www.github.com/Bismuth-Forge/bismuth/commit/9a5cbe498cfc32e7ae1612cabce0e173e9e55c28))
+
 ## [2.0.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v1.1.0...v2.0.0) (2021-11-03)
 
 
