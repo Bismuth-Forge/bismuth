@@ -61,6 +61,9 @@ Bismuth is available on AUR. Install the [`kwin-bismuth`
 package](https://aur.archlinux.org/packages/kwin-bismuth) with your favorite
 AUR helper.
 
+#### Gentoo
+Updated ebuilds provided in [viperML-overlay](https://github.com/viperML/viperML-overlay/).
+
 #### Other distributions
 
 If you are know a packaging solution for a distibution, that is not in this
