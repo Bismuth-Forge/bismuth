@@ -19,6 +19,7 @@ import {
   IncreaseLayoutMasterAreaSize,
   IncreaseMasterAreaWindowCount,
   Rotate,
+  RotateReverse,
   RotatePart,
 } from "../../controller/action";
 
@@ -132,6 +133,8 @@ export default class TileLayout implements WindowsLayout {
       engine.showLayoutNotification();
     } else if (action instanceof Rotate) {
       this.parts.rotate(90);
+    } else if (action instanceof RotateReverse) {
+      this.parts.rotate(-90);
     } else if (action instanceof RotatePart) {
       this.parts.inner.primary.rotate(90);
     } else {
