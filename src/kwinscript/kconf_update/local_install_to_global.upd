@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-License-Identifier: MIT
+
+Version=5
+
+Id=bismuth-local-install-to-global
+Script=local_install_to_global.sh,bash
