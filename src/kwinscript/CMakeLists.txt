@@ -29,7 +29,7 @@ add_custom_target(
 
 add_custom_command(
   OUTPUT "bismuth/contents/code/index.mjs"
-  COMMAND "npx" "esbuild"
+  COMMAND "esbuild"
   "--bundle" "${CMAKE_CURRENT_SOURCE_DIR}/index.ts"
   "--outfile=${CMAKE_CURRENT_BINARY_DIR}/bismuth/contents/code/index.mjs"
   "--format=esm"
@@ -40,7 +40,7 @@ add_custom_command(
 
 add_custom_target(
   LintViaTSC
-  COMMAND "npx" "tsc" "--noEmit" "--incremental"
+  COMMAND "tsc" "--noEmit" "--incremental"
   COMMENT "👮 Checking sources using TS Compiler..."
 )
 
