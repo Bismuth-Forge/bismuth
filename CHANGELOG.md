@@ -5,6 +5,14 @@
 
 # Changelog
 
+## [2.1.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.0.1...v2.1.0) (2021-11-09)
+
+
+### Features
+
+* add a shortcut for the reverse rotation action ([a027e54](https://www.github.com/Bismuth-Forge/bismuth/commit/a027e5467f870e6f8b6b046d4d8e3477ea6dca8d))
+* make script installation directory global ([b82e0b2](https://www.github.com/Bismuth-Forge/bismuth/commit/b82e0b270698539a510a617c3736d60d1450359f))
+
 ### [2.0.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.0.0...v2.0.1) (2021-11-08)
 
 
