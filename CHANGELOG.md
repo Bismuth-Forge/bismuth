@@ -5,6 +5,14 @@
 
 # Changelog
 
+### [2.1.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.1.0...v2.1.1) (2021-11-10)
+
+
+### Bug Fixes
+
+* behaviour tab is now first ([ae0a594](https://www.github.com/Bismuth-Forge/bismuth/commit/ae0a594bb89e3d253dbd3f6bf5be88c09167e689))
+* provide an "enable tiling" option ([c285446](https://www.github.com/Bismuth-Forge/bismuth/commit/c2854466cca76067c036dd523c327d254f801cc8))
+
 ## [2.1.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.0.1...v2.1.0) (2021-11-09)
 
 
