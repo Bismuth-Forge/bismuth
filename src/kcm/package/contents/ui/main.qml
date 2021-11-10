@@ -31,11 +31,11 @@ KCM.SimpleKCM {
             Layout.bottomMargin: -1
 
             QQC2.TabButton {
-                text: i18n("Appearance")
+                text: i18n("Behavior")
             }
 
             QQC2.TabButton {
-                text: i18n("Behavior")
+                text: i18n("Appearance")
             }
 
         }
@@ -51,12 +51,12 @@ KCM.SimpleKCM {
                 // but necessary for adequate padding
                 anchors.topMargin: Kirigami.Units.gridUnit * -0.5
 
-                Appearance {
-                }
-
                 // For some reason QML is very British and
                 // refuses to load the Behavior.qml (without "u")
                 Behaviour {
+                }
+
+                Appearance {
                 }
 
             }
