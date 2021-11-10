@@ -10,5 +10,5 @@ echo "📦 Installing Bismuth..."
 sudo cmake --install "build"
 
 echo "🎉 Installation finished."
-echo "💡 You can configure Bismuth in the System Settings > Window Management > Window Tiling."
-echo "🦾 Enjoy your tiling!"
+echo "💡 You can enable and configure window tiling in the System Settings > Window Management > Window Tiling."
+echo "🦾 Don't forget to enable window tiling. We hope you will enjoy it!"

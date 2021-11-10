@@ -14,6 +14,16 @@ Kirigami.FormLayout {
 
     Item {
         Kirigami.FormData.isSection: true
+        Kirigami.FormData.label: i18n("General")
+    }
+
+    BIC.ConfigCheckBox {
+        settingName: "bismuthEnabled"
+        text: i18n("Enable window tiling")
+    }
+
+    Item {
+        Kirigami.FormData.isSection: true
         Kirigami.FormData.label: i18n("Layouts")
     }
 

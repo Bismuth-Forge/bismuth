@@ -180,5 +180,13 @@
       <default>false</default>
     </entry>
   </group>
+
+  <group name="Plugins">
+    <entry name="bismuthEnabled" type="Bool">
+      <label>Enable Bismuth KWin Script component</label>
+      <!-- This is KWin default, we could not change that -->
+      <default>false</default>
+    </entry>
+  </group>
 </kcfg>
 
