@@ -1,0 +1,19 @@
+<!--
+SPDX-FileCopyrightText: 2021 Ignacy Kajdan <git@verahawk.com>
+SPDX-License-Identifier: CC-BY-4.0
+-->
+<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <style id="current-color-scheme" type="text/css">
+  .ColorScheme-Text { color:#eff0f1; }
+ </style>
+ <g class="ColorScheme-Text" transform="matrix(.73333 0 0 .83333 2 2.6667)" fill="currentColor">
+  <rect x="1.3636" y="5.2" width="30" height="21.6" stroke-width="1.354"/>
+  <rect x="32.727" y="5.2" width="1.3643" height="21.6" stroke-width=".43311"/>
+  <rect x="-2.7273" y="1.6" width="43.636" height="1.2"/>
+  <rect x="-2.7273" y="1.6" width="43.636" height="1.2"/>
+  <rect x="-2.7273" y="29.2" width="43.636" height="1.2"/>
+  <rect x="39.545" y="1.6" width="1.3636" height="28.8"/>
+  <rect x="-2.7273" y="1.6" width="1.3636" height="28.8"/>
+  <rect x="35.455" y="5.2" width="1.3643" height="21.6" stroke-width=".43311"/>
+ </g>
+</svg>
