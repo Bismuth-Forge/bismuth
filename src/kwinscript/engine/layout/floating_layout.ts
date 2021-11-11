@@ -13,9 +13,8 @@ import { Controller } from "../../controller";
 export default class FloatingLayout implements WindowsLayout {
   public static readonly id = "FloatingLayout ";
   public static instance = new FloatingLayout();
-
   public readonly classID = FloatingLayout.id;
-  public readonly description: string = "Floating";
+  public readonly name = "Floating Layout";
 
   public apply(
     _controller: Controller,

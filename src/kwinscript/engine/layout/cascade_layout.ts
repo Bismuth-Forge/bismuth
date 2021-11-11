@@ -30,6 +30,8 @@ export enum CascadeDirection {
 
 export default class CascadeLayout implements WindowsLayout {
   public static readonly id = "CascadeLayout";
+  public readonly classID = CascadeLayout.id;
+  public readonly name = "Cascade Layout";
 
   /** Decompose direction into vertical and horizontal steps */
   public static decomposeDirection(
@@ -55,10 +57,8 @@ export default class CascadeLayout implements WindowsLayout {
     }
   }
 
-  public readonly classID = CascadeLayout.id;
-
-  public get description(): string {
-    return `Cascade [${CascadeDirection[this.dir]}]`;
+  public get hint(): string {
+    return String(CascadeDirection[this.dir]);
   }
 
   constructor(private dir: CascadeDirection = CascadeDirection.SouthEast) {

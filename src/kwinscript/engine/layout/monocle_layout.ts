@@ -24,9 +24,8 @@ import { Engine } from "..";
 
 export default class MonocleLayout implements WindowsLayout {
   public static readonly id = "MonocleLayout";
-  public readonly description: string = "Monocle";
-
   public readonly classID = MonocleLayout.id;
+  public readonly name = "Monocle Layout";
 
   private config: Config;
 

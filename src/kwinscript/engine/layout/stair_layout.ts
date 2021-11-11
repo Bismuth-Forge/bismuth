@@ -19,9 +19,8 @@ import { Engine } from "..";
 
 export default class StairLayout implements WindowsLayout {
   public static readonly id = "StairLayout";
-
   public readonly classID = StairLayout.id;
-  public readonly description = "Stair";
+  public readonly name = "Stair Layout";
 
   private space: number; /* in PIXELS */
 

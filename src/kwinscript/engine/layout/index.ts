@@ -19,7 +19,8 @@ export interface WindowsLayoutClass {
 
 export interface WindowsLayout {
   readonly capacity?: number;
-  readonly description: string;
+  readonly name: string;
+  readonly hint?: string;
 
   adjust?(
     area: Rect,

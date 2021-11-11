@@ -703,7 +703,13 @@ export class EngineImpl implements Engine {
 
   public showLayoutNotification(): void {
     const currentLayout = this.currentLayoutOnCurrentSurface();
-    this.controller.showNotification(`Layout: ${currentLayout.description}`);
+    if (currentLayout.hint) {
+      this.controller.showNotification(
+        currentLayout.name + " [" + currentLayout.hint + "]"
+      );
+    } else {
+      this.controller.showNotification(currentLayout.name);
+    }
   }
 
   /**

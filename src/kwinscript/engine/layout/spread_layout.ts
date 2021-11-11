@@ -19,9 +19,8 @@ import { Engine } from "..";
 
 export default class SpreadLayout implements WindowsLayout {
   public static readonly id = "SpreadLayout";
-
   public readonly classID = SpreadLayout.id;
-  public readonly description = "Spread";
+  public readonly name = "Spread Layout";
 
   private space: number; /* in ratio */
 
