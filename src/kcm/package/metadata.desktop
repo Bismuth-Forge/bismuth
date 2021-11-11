@@ -4,10 +4,10 @@
 
 [Desktop Entry]
 Name=Window Tiling
-Comment=Configure Window Tiling specific options
+Comment=Configure window tiling appearance and behavior
 Encoding=UTF-8
 Type=Service
-Icon=bismuth
+Icon=bismuth-kcm
 X-KDE-Library=kcm_bismuth
 X-KDE-ServiceTypes=KCModule
 X-KDE-FormFactors=desktop,handset,tablet,mediacenter
