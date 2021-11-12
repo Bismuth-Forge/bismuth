@@ -19,6 +19,8 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 
+include(ECMInstallIcons)
+
 add_custom_target(
   KWinScript ALL
   COMMENT "🏗️ Building KWin Script..."
@@ -57,3 +59,5 @@ install(
   DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bismuth"
   DESTINATION "${KDE_INSTALL_DATAROOTDIR}/kwin/scripts"
 )
+
+add_subdirectory(icons)
