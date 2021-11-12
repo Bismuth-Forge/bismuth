@@ -21,6 +21,7 @@ export default class SpreadLayout implements WindowsLayout {
   public static readonly id = "SpreadLayout";
   public readonly classID = SpreadLayout.id;
   public readonly name = "Spread Layout";
+  public readonly icon = "bismuth-spread";
 
   private space: number; /* in ratio */
 

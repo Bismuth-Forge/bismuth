@@ -28,6 +28,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
   public static readonly id = "ThreeColumnLayout";
   public readonly classID = ThreeColumnLayout.id;
   public readonly name = "Three-Column Layout";
+  public readonly icon = "bismuth-column";
 
   public get hint(): string {
     return String(this.masterSize);

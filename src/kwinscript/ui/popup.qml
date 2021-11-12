@@ -14,13 +14,25 @@ PlasmaCore.Dialog {
 
     property rect screenGeometry
 
-    function show(text) {
+    function show(text, text2, icon) {
         // Abort any previous timers
         hideTimer.stop();
         // Update current screen information
         this.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
-        // Set the text for the popup
+        // Set the text
         messageLabel.text = text;
+        // Set the hint text
+        if (typeof text2 !== 'undefined') {
+            messageLabel2.text = text2;
+        } else {
+            messageLabel2.text = "";
+        }
+        // Set the icon
+        if (typeof icon !== 'undefined') {
+            messageIcon.source = icon;
+        } else {
+            messageIcon.source = "bismuth";
+        }
         this.visible = true;
         // Start popup hide timer
         hideTimer.interval = 3000;
@@ -46,9 +58,29 @@ PlasmaCore.Dialog {
         Layout.minimumWidth: Math.max(messageLabel.implicitWidth, PlasmaCore.Units.gridUnit * 15)
         Layout.minimumHeight: PlasmaCore.Units.gridUnit * 1.35
 
+        PlasmaCore.IconItem {
+            id: messageIcon
+
+            Layout.leftMargin: PlasmaCore.Units.smallSpacing
+            Layout.preferredWidth: PlasmaCore.Units.iconSizes.medium
+            Layout.preferredHeight: PlasmaCore.Units.iconSizes.medium
+            Layout.alignment: Qt.AlignVCenter
+        }
+
         PC3.Label {
             id: messageLabel
 
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            // This font size matches the one from Pulse Audio OSD for consistency
+            font.pointSize: PlasmaCore.Theme.defaultFont.pointSize * 1.2
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        PC3.Label {
+            id: messageLabel2
+
+            Layout.rightMargin: PlasmaCore.Units.smallSpacing * 2
             Layout.alignment: Qt.AlignHCenter
             // This font size matches the one from Pulse Audio OSD for consistency
             font.pointSize: PlasmaCore.Theme.defaultFont.pointSize * 1.2

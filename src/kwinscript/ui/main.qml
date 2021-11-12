@@ -43,8 +43,8 @@ Item {
     Loader {
         id: popupDialog
 
-        function show(text) {
-            this.item.show(text);
+        function show(text, text2, icon) {
+            this.item.show(text, text2, icon);
         }
 
         source: "popup.qml"

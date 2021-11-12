@@ -32,6 +32,7 @@ export default class CascadeLayout implements WindowsLayout {
   public static readonly id = "CascadeLayout";
   public readonly classID = CascadeLayout.id;
   public readonly name = "Cascade Layout";
+  public readonly icon = "bismuth-cascade";
 
   /** Decompose direction into vertical and horizontal steps */
   public static decomposeDirection(

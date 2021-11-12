@@ -17,6 +17,7 @@ export default class QuarterLayout implements WindowsLayout {
   public static readonly id = "QuarterLayout";
   public readonly classID = QuarterLayout.id;
   public readonly name = "Quarter Layout";
+  public readonly icon = "bismuth-quarter";
 
   public get capacity(): number {
     return 4;

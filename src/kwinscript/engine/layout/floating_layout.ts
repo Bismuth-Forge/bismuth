@@ -15,6 +15,7 @@ export default class FloatingLayout implements WindowsLayout {
   public static instance = new FloatingLayout();
   public readonly classID = FloatingLayout.id;
   public readonly name = "Floating Layout";
+  public readonly icon = "bismuth-floating";
 
   public apply(
     _controller: Controller,

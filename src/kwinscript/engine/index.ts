@@ -161,9 +161,11 @@ export interface Engine {
 
   /**
    * Show the notification to the user
-   * @param text the text of the notification
+   * @param text the text of the notification.
+   * @param text2 optional string displayed to the right of the main text.
+   * @param icon optional name of the icon to display in the popup.
    */
-  showNotification(text: string): void;
+  showNotification(text: string, text2?: string, icon?: string): void;
 
   /**
    * Show the notification with the info
@@ -697,19 +699,17 @@ export class EngineImpl implements Engine {
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
   }
 
-  public showNotification(text: string): void {
-    this.controller.showNotification(text);
+  public showNotification(text: string, text2?: string, icon?: string): void {
+    this.controller.showNotification(text, text2, icon);
   }
 
   public showLayoutNotification(): void {
     const currentLayout = this.currentLayoutOnCurrentSurface();
-    if (currentLayout.hint) {
-      this.controller.showNotification(
-        currentLayout.name + " [" + currentLayout.hint + "]"
-      );
-    } else {
-      this.controller.showNotification(currentLayout.name);
-    }
+    this.controller.showNotification(
+      currentLayout.name,
+      currentLayout.hint,
+      currentLayout.icon
+    );
   }
 
   /**

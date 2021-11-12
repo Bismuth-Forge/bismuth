@@ -35,6 +35,7 @@ export default class TileLayout implements WindowsLayout {
   public static readonly id = "TileLayout";
   public readonly classID = TileLayout.id;
   public readonly name = "Tile Layout";
+  public readonly icon = "bismuth-tile";
 
   public get hint(): string {
     return String(this.numMaster);

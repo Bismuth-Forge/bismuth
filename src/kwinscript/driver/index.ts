@@ -39,9 +39,11 @@ export interface Driver {
 
   /**
    * Show notification to the user
-   * @param text notification text
+   * @param text the text of the notification.
+   * @param text2 optional string displayed to the right of the main text.
+   * @param icon optional name of the icon to display in the popup.
    */
-  showNotification(text: string): void;
+  showNotification(text: string, text2?: string, icon?: string): void;
 
   /**
    * Bind script to the various KWin events
@@ -315,8 +317,8 @@ export class DriverImpl implements Driver {
     this.controller.manageWindow(window);
   }
 
-  public showNotification(text: string): void {
-    this.qml.popupDialog.show(text);
+  public showNotification(text: string, text2?: string, icon?: string): void {
+    this.qml.popupDialog.show(text, text2, icon);
   }
 
   public bindShortcut(action: Action): void {

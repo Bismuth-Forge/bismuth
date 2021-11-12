@@ -21,6 +21,7 @@ export default class StairLayout implements WindowsLayout {
   public static readonly id = "StairLayout";
   public readonly classID = StairLayout.id;
   public readonly name = "Stair Layout";
+  public readonly icon = "bismuth-stair";
 
   private space: number; /* in PIXELS */
 
