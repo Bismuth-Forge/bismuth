@@ -22,17 +22,9 @@ PlasmaCore.Dialog {
         // Set the text
         messageLabel.text = text;
         // Set the hint text
-        if (typeof text2 !== 'undefined') {
-            messageLabel2.text = text2;
-        } else {
-            messageLabel2.text = "";
-        }
+        messageLabel2.text = text2 || ""; // Fallback to empty string when undefined
         // Set the icon
-        if (typeof icon !== 'undefined') {
-            messageIcon.source = icon;
-        } else {
-            messageIcon.source = "bismuth";
-        }
+        messageIcon.source = icon || "bismuth"; // Fallback icon when undefined
         this.visible = true;
         // Start popup hide timer
         hideTimer.interval = 3000;
