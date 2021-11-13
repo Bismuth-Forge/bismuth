@@ -15,9 +15,9 @@ import { Controller } from "../../controller";
 export default class QuarterLayout implements WindowsLayout {
   public static readonly MAX_PROPORTION = 0.8;
   public static readonly id = "QuarterLayout";
-
   public readonly classID = QuarterLayout.id;
-  public readonly description = "Quarter";
+  public readonly name = "Quarter Layout";
+  public readonly icon = "bismuth-quarter";
 
   public get capacity(): number {
     return 4;

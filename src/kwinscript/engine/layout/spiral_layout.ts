@@ -19,7 +19,8 @@ export type SpiralLayoutPart = HalfSplitLayoutPart<
 >;
 
 export default class SpiralLayout implements WindowsLayout {
-  public readonly description = "Spiral";
+  public readonly name = "Spiral Layout";
+  public readonly icon = "bismuth-spiral";
 
   private depth: number;
   private parts: SpiralLayoutPart;

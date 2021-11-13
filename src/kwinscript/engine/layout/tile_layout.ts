@@ -33,11 +33,12 @@ export default class TileLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.8;
   public static readonly id = "TileLayout";
-
   public readonly classID = TileLayout.id;
+  public readonly name = "Tile Layout";
+  public readonly icon = "bismuth-tile";
 
-  public get description(): string {
-    return `Tile [${this.numMaster}]`;
+  public get hint(): string {
+    return String(this.numMaster);
   }
 
   private parts: RotateLayoutPart<

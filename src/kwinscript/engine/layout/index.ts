@@ -18,8 +18,28 @@ export interface WindowsLayoutClass {
 }
 
 export interface WindowsLayout {
+  /* read-only */
+
+  /**
+   * Human-readable name of the layout.
+   */
+  readonly name: string;
+
+  /**
+   * The icon name of the layout.
+   */
+  readonly icon: string;
+
+  /**
+   * A string that can be used to show layout specific properties in the pop-up,
+   * e.g. the number of master windows.
+   */
+  readonly hint?: string;
+
+  /**
+   * The maximum number of windows, that the layout can contain.
+   */
   readonly capacity?: number;
-  readonly description: string;
 
   adjust?(
     area: Rect,

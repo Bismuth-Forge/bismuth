@@ -160,10 +160,12 @@ export interface Engine {
   isLayoutMonocleAndMinimizeRest(): boolean;
 
   /**
-   * Show the notification to the user
-   * @param text the text of the notification
+   * Show a popup notification in the center of the screen.
+   * @param text the main text of the notification.
+   * @param icon an optional name of the icon to display in the pop-up.
+   * @param hint an optional string displayed beside the main text.
    */
-  showNotification(text: string): void;
+  showNotification(text: string, icon?: string, hint?: string): void;
 
   /**
    * Show the notification with the info
@@ -697,13 +699,17 @@ export class EngineImpl implements Engine {
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
   }
 
-  public showNotification(text: string): void {
-    this.controller.showNotification(text);
+  public showNotification(text: string, icon?: string, hint?: string): void {
+    this.controller.showNotification(text, icon, hint);
   }
 
   public showLayoutNotification(): void {
     const currentLayout = this.currentLayoutOnCurrentSurface();
-    this.controller.showNotification(`Layout: ${currentLayout.description}`);
+    this.controller.showNotification(
+      currentLayout.name,
+      currentLayout.icon,
+      currentLayout.hint
+    );
   }
 
   /**

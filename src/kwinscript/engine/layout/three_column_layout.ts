@@ -26,11 +26,12 @@ export default class ThreeColumnLayout implements WindowsLayout {
   public static readonly MIN_MASTER_RATIO = 0.2;
   public static readonly MAX_MASTER_RATIO = 0.75;
   public static readonly id = "ThreeColumnLayout";
-
   public readonly classID = ThreeColumnLayout.id;
+  public readonly name = "Three-Column Layout";
+  public readonly icon = "bismuth-column";
 
-  public get description(): string {
-    return `Three-Column [${this.masterSize}]`;
+  public get hint(): string {
+    return String(this.masterSize);
   }
 
   private masterRatio: number;
