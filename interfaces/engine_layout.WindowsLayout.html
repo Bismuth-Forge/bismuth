@@ -98,7 +98,9 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="engine_layout.WindowsLayout.html#capacity" class="tsd-kind-icon">capacity</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="engine_layout.WindowsLayout.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="engine_layout.WindowsLayout.html#hint" class="tsd-kind-icon">hint</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="engine_layout.WindowsLayout.html#icon" class="tsd-kind-icon">icon</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="engine_layout.WindowsLayout.html#name" class="tsd-kind-icon">name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -121,19 +123,60 @@
 					<div class="tsd-signature tsd-kind-icon">capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L21">engine/layout/index.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L42">engine/layout/index.ts:42</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The maximum number of windows, that the layout can contain.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="description" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> description</h3>
-					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="hint" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> hint</h3>
+					<div class="tsd-signature tsd-kind-icon">hint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L22">engine/layout/index.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L37">engine/layout/index.ts:37</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A string that can be used to show layout specific properties in the pop-up,
+							e.g. the number of master windows.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="icon" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> icon</h3>
+					<div class="tsd-signature tsd-kind-icon">icon<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L31">engine/layout/index.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The icon name of the layout.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L26">engine/layout/index.ts:26</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Human-readable name of the layout.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -148,7 +191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L24">engine/layout/index.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L44">engine/layout/index.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -180,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L30">engine/layout/index.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L50">engine/layout/index.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -209,7 +252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L31">engine/layout/index.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L51">engine/layout/index.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/3d1233e/src/kwinscript/engine/layout/index.ts#L33">engine/layout/index.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/Bismuth-Forge/bismuth/blob/b049197/src/kwinscript/engine/layout/index.ts#L53">engine/layout/index.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -266,7 +309,13 @@
 								<a href="engine_layout.WindowsLayout.html#capacity" class="tsd-kind-icon">capacity</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="engine_layout.WindowsLayout.html#description" class="tsd-kind-icon">description</a>
+								<a href="engine_layout.WindowsLayout.html#hint" class="tsd-kind-icon">hint</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="engine_layout.WindowsLayout.html#icon" class="tsd-kind-icon">icon</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="engine_layout.WindowsLayout.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="engine_layout.WindowsLayout.html#adjust" class="tsd-kind-icon">adjust</a>
