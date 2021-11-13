@@ -40,11 +40,11 @@ export interface Controller {
 
   /**
    * Show a popup notification in the center of the screen.
-   * @param text the text of the notification.
-   * @param text2 optional string displayed to the right of the main text.
-   * @param icon optional name of the icon to display in the popup.
+   * @param text the main text of the notification.
+   * @param icon an optional name of the icon to display in the pop-up.
+   * @param hint an optional string displayed beside the main text.
    */
-  showNotification(text: string, text2?: string, icon?: string): void;
+  showNotification(text: string, icon?: string, hint?: string): void;
 
   /**
    * React to screen focus change
@@ -202,8 +202,8 @@ export class ControllerImpl implements Controller {
     this.driver.currentSurface = value;
   }
 
-  public showNotification(text: string, text2?: string, icon?: string): void {
-    this.driver.showNotification(text, text2, icon);
+  public showNotification(text: string, icon?: string, hint?: string): void {
+    this.driver.showNotification(text, icon, hint);
   }
 
   public onSurfaceUpdate(comment: string): void {

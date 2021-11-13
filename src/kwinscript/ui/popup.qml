@@ -14,17 +14,16 @@ PlasmaCore.Dialog {
 
     property rect screenGeometry
 
-    function show(text, text2, icon) {
+    function show(text, icon, hint) {
         // Abort any previous timers
         hideTimer.stop();
         // Update current screen information
         this.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
-        // Set the text
-        messageLabel.text = text;
-        // Set the hint text
-        messageLabel2.text = text2 || ""; // Fallback to empty string when undefined
-        // Set the icon
-        messageIcon.source = icon || "bismuth"; // Fallback icon when undefined
+        // Set the icon and text
+        messageText.text = text;
+        messageIcon.source = icon || "bismuth"; // Fallback to the default icon when undefined
+        messageHint.text = hint || ""; // Fallback to the empty string when undefined
+        // Show the popup
         this.visible = true;
         // Start popup hide timer
         hideTimer.interval = 3000;
@@ -47,7 +46,7 @@ PlasmaCore.Dialog {
         id: main
 
         // Make popup size consistent with the other Plasma OSD (e.g. PulseAudio one)
-        Layout.minimumWidth: Math.max(messageLabel.implicitWidth, PlasmaCore.Units.gridUnit * 15)
+        Layout.minimumWidth: Math.max(messageText.implicitWidth, PlasmaCore.Units.gridUnit * 15)
         Layout.minimumHeight: PlasmaCore.Units.gridUnit * 1.35
 
         PlasmaCore.IconItem {
@@ -60,7 +59,7 @@ PlasmaCore.Dialog {
         }
 
         PC3.Label {
-            id: messageLabel
+            id: messageText
 
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
@@ -70,7 +69,7 @@ PlasmaCore.Dialog {
         }
 
         PC3.Label {
-            id: messageLabel2
+            id: messageHint
 
             Layout.rightMargin: PlasmaCore.Units.smallSpacing * 2
             Layout.alignment: Qt.AlignHCenter
