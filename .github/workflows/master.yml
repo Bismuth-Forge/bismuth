@@ -43,7 +43,7 @@ jobs:
           npm install
 
       - name: Lint via Super Linter 🚨
-        uses: github/super-linter@v4
+        uses: github/super-linter@v4.8.2
         env:
           VALIDATE_ALL_CODEBASE: false
           JAVASCRIPT_DEFAULT_STYLE: prettier
