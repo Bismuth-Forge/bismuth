@@ -29,6 +29,8 @@ add_custom_target(
   "bismuth/contents/ui"
 )
 
+file(GLOB_RECURSE TYPESCRIPT_SOURCES CONFIGURE_DEPENDS "*.ts")
+
 add_custom_command(
   OUTPUT "bismuth/contents/code/index.mjs"
   COMMAND "npx" "esbuild"
@@ -36,7 +38,9 @@ add_custom_command(
   "--outfile=${CMAKE_CURRENT_BINARY_DIR}/bismuth/contents/code/index.mjs"
   "--format=esm"
   "--platform=neutral"
-  DEPENDS LintViaTSC
+  DEPENDS
+  LintViaTSC
+  ${TYPESCRIPT_SOURCES}
   COMMENT "🎁 Bundling using esbuild..."
 )
 
@@ -44,6 +48,7 @@ add_custom_target(
   LintViaTSC
   COMMAND "npx" "tsc" "--noEmit" "--incremental"
   COMMENT "👮 Checking sources using TS Compiler..."
+  DEPENDS ${TYPESCRIPT_SOURCES}
 )
 
 add_custom_command(
