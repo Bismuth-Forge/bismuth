@@ -18,16 +18,27 @@ export interface WindowsLayoutClass {
 }
 
 export interface WindowsLayout {
+  /* read-only */
+
   /**
-   * Windows layout
-   * @param name human readable name of the layout.
-   * @param icon the name of the icon of the layout.
-   * @param hint an optional string that can be used to indicate the number of master windows in the layout.
-   * @param capacity an optional maximum number of windows that the layout can contain.
+   * Human-readable name of the layout.
    */
   readonly name: string;
+
+  /**
+   * The icon name of the layout.
+   */
   readonly icon: string;
+
+  /**
+   * A string that can be used to show layout specific properties in the pop-up,
+   * e.g. the number of master windows.
+   */
   readonly hint?: string;
+
+  /**
+   * The maximum number of windows, that the layout can contain.
+   */
   readonly capacity?: number;
 
   adjust?(
