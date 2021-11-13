@@ -6,19 +6,21 @@ Name=Bismuth
 Comment=Tiling extension that gets you down to bismuth
 Icon=bismuth
 
+Type=Service
+Encoding=UTF-8
+
 X-Plasma-API=declarativescript
 X-Plasma-MainScript=ui/main.qml
 
-X-KDE-PluginInfo-Author=Mikhail Zolotukhin
-X-KDE-PluginInfo-Email=mail@genda.life
-X-KDE-PluginInfo-Name=bismuth
-X-KDE-PluginInfo-Version=@CMAKE_PROJECT_VERSION@
-
-X-KDE-PluginInfo-Depends=
-X-KDE-PluginInfo-License=MIT
 X-KDE-ServiceTypes=KWin/Script
-
 X-KDE-PluginKeyword=bismuth
 X-KDE-ParentComponents=bismuth
 
-Type=Service
+X-KDE-PluginInfo-Name=bismuth
+X-KDE-PluginInfo-Version=@CMAKE_PROJECT_VERSION@
+X-KDE-PluginInfo-Author=Mikhail Zolotukhin
+X-KDE-PluginInfo-Email=mail@genda.life
+X-KDE-PluginInfo-Website=github.com/Bismuth-Forge/bismuth
+X-KDE-PluginInfo-License=MIT
+
+X-KWin-Exclude-Listing=true
