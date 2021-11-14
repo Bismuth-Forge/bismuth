@@ -74,7 +74,10 @@ see in unit-tests and the global environment you see in the script, while it is
 running in KWin scripting environment, are not the same. Because of this we
 minimize the usage of global object in the code, and you should do the same.
 
-## 📑 API Documentation generation
+## 📑 API Documentation
+
+> ☝️ To view the current API documentation please go
+> [here](https://bismuth-forge.github.io/bismuth/).
 
 To generate API docs, run the following:
 
