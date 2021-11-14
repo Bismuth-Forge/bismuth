@@ -72,6 +72,9 @@ list, please provide a link to it via pull request.
 
 ### Tweaks
 
+> ☝️ Don't forget to enable window tiling in the new settings module: System
+> Settings > Window Management > Window Tiling.
+
 You may want to make a couple of manual fixes and tweaks, to improve your
 experience. See [Tweaks section](TWEAKS.md).
 
