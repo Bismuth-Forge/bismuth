@@ -36,6 +36,8 @@ script.
   - Floating layout for traditional experience
 - Works on Wayland Plasma session
 
+Project vision and road map can be found [here](ROADMAP.md).
+
 ## 🔧 Installation
 
 ### From Source
