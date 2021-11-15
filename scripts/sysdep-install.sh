@@ -12,7 +12,7 @@ if [ -f /etc/os-release ]; then
 
   case $ID in
 
-    "ubuntu" | "pop" | "debian")
+    "ubuntu" | "pop" | "debian" | "neon" )
       sudo apt-get install -y \
         cmake ninja-build extra-cmake-modules kirigami2-dev \
         libkf5config-dev libkf5configwidgets-dev libkf5coreaddons-dev \
