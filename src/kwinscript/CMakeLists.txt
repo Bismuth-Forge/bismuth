@@ -13,14 +13,6 @@ execute_process(COMMAND "git" "describe" "--tags" "--abbrev=0" OUTPUT_VARIABLE C
 string(REPLACE "\n" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
 string(REPLACE "v" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
 
-find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
-
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-
-include(ECMInstallIcons)
-
 add_custom_target(
   KWinScript ALL
   COMMENT "🏗️ Building KWin Script..."
