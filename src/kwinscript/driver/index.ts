@@ -16,6 +16,7 @@ import { WindowState } from "../engine/window";
 
 import { Config } from "../config";
 import { Log } from "../util/log";
+import { Request } from "../controller/request";
 
 /**
  * Provides convenient interface to KWin functions.
@@ -55,6 +56,12 @@ export interface Driver {
    * @param action
    */
   bindShortcut(action: Action): void;
+
+  /**
+   * Bind the request to the DBus service
+   * @param request, that will be bound
+   */
+  bindExternalRequest(request: Request): void;
 
   /**
    * Manage the windows, that were active before script loading
@@ -332,6 +339,11 @@ export class DriverImpl implements Driver {
     );
   }
 
+  public bindExternalRequest(request: Request): void {
+    this.qml.dbusService[`${request.dbusName}_handler`] =
+      request.execute.bind(request);
+  }
+
   public drop(): void {
     this.log.log(`Dropping all registered callbacks... Goodbye.`);
     for (const pair of this.registeredConnections) {
@@ -383,7 +395,10 @@ export class DriverImpl implements Driver {
     try {
       callback();
     } catch (e: any) {
-      this.log.log(e);
+      this.log.log(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        `An error occured: ${e.name}. ${e.message}. \n Stack: ${e.stack}`
+      );
     } finally {
       this.entered = false;
     }

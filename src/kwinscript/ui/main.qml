@@ -19,6 +19,7 @@ Item {
             "scriptRoot": scriptRoot,
             "trayItem": trayItem,
             "activityInfo": activityInfo,
+            "dbusService": dbusService,
             "popupDialog": popupDialog
         };
         const kwinScriptingAPI = {
