@@ -11,6 +11,7 @@ declare namespace Bismuth {
       scriptRoot: object;
       trayItem: TrayItem;
       activityInfo: Plasma.TaskManager.ActivityInfo;
+      dbusService: DBusService;
       popupDialog: PopupDialog;
     }
 
@@ -20,6 +21,11 @@ declare namespace Bismuth {
 
     export interface TrayMenu {
       onToggleTiling: () => void;
+    }
+
+    export interface DBusService {
+      // Request handlers, where the key is "${requestName}_handler"
+      [key: string]: (...args: any[]) => any;
     }
 
     export interface PopupDialog {

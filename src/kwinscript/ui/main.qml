@@ -4,6 +4,7 @@
 
 import "../code/index.mjs" as Bismuth
 import QtQuick 2.0
+import org.kde.bismuth.dbus 1.0 as BID
 import org.kde.kwin 2.0
 import org.kde.taskmanager 0.1 as TaskManager
 
@@ -18,6 +19,7 @@ Item {
             "scriptRoot": scriptRoot,
             "trayItem": trayItem,
             "activityInfo": activityInfo,
+            "dbusService": dbusService,
             "popupDialog": popupDialog
         };
         const kwinScriptingAPI = {
@@ -30,6 +32,14 @@ Item {
     Component.onDestruction: {
         console.log("[Bismuth] Everybody is dead");
         scriptRoot.controller.drop();
+    }
+
+    /**
+     * You can view all available handlers in:
+     * src/dbus-plugin/dbus-service.h
+     */
+    BID.DBusService {
+        id: dbusService
     }
 
     TrayItem {

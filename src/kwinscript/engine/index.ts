@@ -172,6 +172,11 @@ export interface Engine {
    * about the current layout.
    */
   showLayoutNotification(): void;
+
+  /**
+   * Return the list of currently enabled layouts
+   */
+  enabledLayouts(): string[];
 }
 
 export class EngineImpl implements Engine {
@@ -738,6 +743,13 @@ export class EngineImpl implements Engine {
       currentLayout.icon,
       currentLayout.hint
     );
+  }
+
+  public enabledLayouts(): string[] {
+    // Remove empty entries and remove the Layout word
+    return this.config.layoutOrder
+      .filter((i) => i)
+      .map((i) => i.replace("Layout", "").trim());
   }
 
   /**

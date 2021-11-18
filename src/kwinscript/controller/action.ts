@@ -7,7 +7,7 @@ import { Engine } from "../engine";
 import { Log } from "../util/log";
 
 /**
- * Action that is requested by the user.
+ * Action that is triggered with the keyboard shortcut
  */
 export interface Action {
   /**

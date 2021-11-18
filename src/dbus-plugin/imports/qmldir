@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-License-Identifier: MIT
+
+module org.kde.bismuth.dbus
+
+# Plugin name is the name of the library in the CMakeLists.txt
+plugin dbus_bismuth_plugin
+classname DBusPlugin

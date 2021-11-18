@@ -14,6 +14,7 @@ import { Config } from "../config";
 import { Log } from "../util/log";
 
 import * as Action from "./action";
+import * as Request from "./request";
 
 /**
  * Entry point of the script (apart from QML). Handles the user input (shortcuts)
@@ -160,7 +161,7 @@ export class ControllerImpl implements Controller {
   public constructor(
     private qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
-    private config: Config,
+    config: Config,
     private log: Log
   ) {
     this.engine = new EngineImpl(this, config, log);
@@ -176,6 +177,7 @@ export class ControllerImpl implements Controller {
     this.driver.bindEvents();
     this.bindTrayActions();
     this.bindShortcuts();
+    this.registerExternalRequests();
 
     this.driver.manageWindows();
 
@@ -442,6 +444,16 @@ export class ControllerImpl implements Controller {
 
     for (const action of allPossibleActions) {
       this.driver.bindShortcut(action);
+    }
+  }
+
+  private registerExternalRequests(): void {
+    const allPossibleRequests = [
+      new Request.EnabledLayouts(this.engine, this.log),
+    ];
+
+    for (const request of allPossibleRequests) {
+      this.driver.bindExternalRequest(request);
     }
   }
 }
