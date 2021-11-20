@@ -5,6 +5,15 @@ cmake_minimum_required(VERSION 3.16)
 
 project(bismuth)
 
+option(
+  USE_TSC
+  "Use TypeScript Compler to check the code before bundling \
+  using esbuild. This could be useful, if you know, that the \
+  code is correct and you want to speed up building times. \
+  For example - you are a packager."
+  ON
+)
+
 set(QT_MIN_VERSION "5.15.0")
 set(KF5_MIN_VERSION "5.80.0")
 
