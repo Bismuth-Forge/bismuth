@@ -653,47 +653,105 @@ export class EngineImpl implements Engine {
     }
 
     const candidates = this.windows
-      .visibleTiledWindowsOn(this.controller.currentSurface)
-      .filter(
-        vertical
-          ? (tile): boolean => tile.geometry.y * sign > basis.geometry.y * sign
-          : (tile): boolean => tile.geometry.x * sign > basis.geometry.x * sign
-      )
+      .visibleWindowsOn(this.controller.currentSurface)
       .filter(
         vertical
           ? (tile): boolean =>
-              overlap(
-                basis.geometry.x,
-                basis.geometry.maxX,
-                tile.geometry.x,
-                tile.geometry.maxX
-              )
+              tile.actualGeometry.center[1] * sign >
+              basis.actualGeometry.center[1] * sign
           : (tile): boolean =>
-              overlap(
-                basis.geometry.y,
-                basis.geometry.maxY,
-                tile.geometry.y,
-                tile.geometry.maxY
-              )
+              tile.actualGeometry.center[0] * sign >
+              basis.actualGeometry.center[0] * sign
       );
+
     if (candidates.length === 0) {
       return null;
     }
 
+    let selection: EngineWindow[] = candidates.filter((tile): boolean => {
+      // use smaller target area for floating windows to improve navigation around them
+      // 2: full window width/height
+      // 3: 2/3 of window size
+      const basisSizeFactor = basis.floating ? 3 : 2;
+      const tileSizeFactor = tile.floating ? 3 : 2;
+      if (vertical) {
+        return overlap(
+          basis.actualGeometry.center[0] -
+            Math.floor(basis.actualGeometry.width / basisSizeFactor),
+          basis.actualGeometry.center[0] +
+            Math.floor(basis.actualGeometry.width / basisSizeFactor),
+          tile.actualGeometry.center[0] -
+            Math.floor(tile.actualGeometry.width / tileSizeFactor),
+          tile.actualGeometry.center[0] +
+            Math.floor(tile.actualGeometry.width / tileSizeFactor)
+        );
+      } else {
+        return overlap(
+          basis.actualGeometry.center[1] -
+            Math.floor(basis.actualGeometry.height / basisSizeFactor),
+          basis.actualGeometry.center[1] +
+            Math.floor(basis.actualGeometry.height / basisSizeFactor),
+          tile.actualGeometry.center[1] -
+            Math.floor(tile.actualGeometry.height / tileSizeFactor),
+          tile.actualGeometry.center[1] +
+            Math.floor(tile.actualGeometry.height / tileSizeFactor)
+        );
+      }
+    });
+
+    if (selection.length === 0) {
+      if (basis.floating) {
+        // randomly floating windows, pick any candidate
+        selection = candidates;
+      } else {
+        return null;
+      }
+    } else if (selection.length > 1 && basis.floating) {
+      // find windows that additionally overlap with the last focused window
+      // this will avoid switching sides of the screen when walking through floating windows
+      // and should prevent getting locked out from certain windows in some layouts
+      const lastFocusedWindow = this.windows
+        .visibleWindowsOn(this.controller.currentSurface)
+        .sort((a, b) => b.timestamp - a.timestamp)[1];
+
+      const narrowSelection = selection.filter(
+        vertical
+          ? (tile): boolean =>
+              overlap(
+                lastFocusedWindow.actualGeometry.x,
+                lastFocusedWindow.actualGeometry.maxX,
+                tile.actualGeometry.x,
+                tile.actualGeometry.maxX
+              )
+          : (tile): boolean =>
+              overlap(
+                lastFocusedWindow.actualGeometry.y,
+                lastFocusedWindow.actualGeometry.maxY,
+                tile.actualGeometry.y,
+                tile.actualGeometry.maxY
+              )
+      );
+
+      if (narrowSelection.length !== 0) {
+        selection = narrowSelection;
+      }
+    }
+
     const min =
       sign *
-      candidates.reduce(
+      selection.reduce(
         vertical
-          ? (prevMin, tile): number => Math.min(tile.geometry.y * sign, prevMin)
+          ? (prevMin, tile): number =>
+              Math.min(tile.actualGeometry.y * sign, prevMin)
           : (prevMin, tile): number =>
-              Math.min(tile.geometry.x * sign, prevMin),
+              Math.min(tile.actualGeometry.x * sign, prevMin),
         Infinity
       );
 
-    const closest = candidates.filter(
+    const closest = selection.filter(
       vertical
-        ? (tile): boolean => tile.geometry.y === min
-        : (tile): boolean => tile.geometry.x === min
+        ? (tile): boolean => tile.actualGeometry.y === min
+        : (tile): boolean => tile.actualGeometry.x === min
     );
 
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
