@@ -458,12 +458,12 @@ export class EngineImpl implements Engine {
   public focusDir(dir: Direction): void {
     const window = this.controller.currentWindow;
 
-    /* if no current window, select the first tile. */
+    /* if no current window, select the first window. */
     if (window === null) {
-      const tiles = this.windows.visibleTiledWindowsOn(
+      const tiles = this.windows.visibleWindowsOn(
         this.controller.currentSurface
       );
-      if (tiles.length > 1) {
+      if (tiles.length > 0) {
         this.controller.currentWindow = tiles[0];
       }
       return;
