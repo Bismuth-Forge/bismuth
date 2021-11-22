@@ -630,22 +630,27 @@ export class EngineImpl implements Engine {
     dir: Direction
   ): EngineWindow | null {
     let vertical: boolean;
+    let downOrRight: boolean;
     let sign: -1 | 1;
     switch (dir) {
       case "up":
         vertical = true;
+        downOrRight = false;
         sign = -1;
         break;
       case "down":
         vertical = true;
+        downOrRight = true;
         sign = 1;
         break;
       case "left":
         vertical = false;
+        downOrRight = false;
         sign = -1;
         break;
       case "right":
         vertical = false;
+        downOrRight = true;
         sign = 1;
         break;
       default:
@@ -680,21 +685,34 @@ export class EngineImpl implements Engine {
       return null;
     }
 
+    // When moving downOrRight, check the top-left corner for closest window
+    // When moving not downOrRight, check the bottom-right corner for closest window
     const min =
       sign *
-      candidates.reduce(
-        vertical
-          ? (prevMin, tile): number => Math.min(tile.geometry.y * sign, prevMin)
-          : (prevMin, tile): number =>
-              Math.min(tile.geometry.x * sign, prevMin),
-        Infinity
-      );
+      candidates.reduce((prevMin, tile): number => {
+        if (vertical) {
+          return downOrRight
+            ? Math.min(tile.geometry.y * sign, prevMin)
+            : Math.min(tile.geometry.maxY * sign, prevMin);
+        } else {
+          return downOrRight
+            ? Math.min(tile.geometry.x * sign, prevMin)
+            : Math.min(tile.geometry.maxX * sign, prevMin);
+        }
+      }, Infinity);
 
-    const closest = candidates.filter(
-      vertical
-        ? (tile): boolean => tile.geometry.y === min
-        : (tile): boolean => tile.geometry.x === min
-    );
+    const closest = candidates.filter((tile): boolean => {
+      // adjust min for potential pixel wide misalignment of tiles
+      if (vertical) {
+        return downOrRight
+          ? tile.geometry.y < min + 5
+          : tile.geometry.maxY > min - 5;
+      } else {
+        return downOrRight
+          ? tile.geometry.x < min + 5
+          : tile.geometry.maxX > min - 5;
+      }
+    });
 
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
   }
