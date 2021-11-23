@@ -331,7 +331,11 @@ export class EngineWindowImpl implements EngineWindow {
     this.log.log(["Window#commit", { state: WindowState[state] }]);
     switch (state) {
       case WindowState.NativeMaximized:
-        this.window.commit(undefined, undefined, false);
+        this.window.commit(
+          this.window.surface.workingArea,
+          undefined,
+          undefined
+        );
         break;
 
       case WindowState.NativeFullscreen:
