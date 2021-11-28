@@ -5,14 +5,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(bismuth-kwinscript)
 
-# HACK: Use git to get the recent version
-# We could explicitly set the version via project declaration
-# But this would conflict with package.json and would
-# Require automatic change via Release Please time CI
-execute_process(COMMAND "git" "describe" "--tags" "--abbrev=0" OUTPUT_VARIABLE CMAKE_PROJECT_VERSION)
-string(REPLACE "\n" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
-string(REPLACE "v" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
-
 add_custom_target(
   KWinScript ALL
   COMMENT "🏗️ Building KWin Script..."
