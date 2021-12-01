@@ -17,7 +17,7 @@
     ]
   },
   "typedocOptions": {
-    "entryPoints": ["src"]
+    "entryPoints": ["src/kwinscript"]
   },
   "include": ["src/**/*"]
 }
