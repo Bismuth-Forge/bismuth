@@ -1,463 +1,277 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>bismuth</title>
-	<meta name="description" content="Documentation for bismuth">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">bismuth</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>bismuth</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<!--
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>bismuth</title><meta name="description" content="Documentation for bismuth"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">bismuth</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>bismuth</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><!--
   SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
   SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
   SPDX-License-Identifier: MIT
 -->
-				<a href="#🌈-bismuth" id="🌈-bismuth" style="color: inherit; text-decoration: none;">
-					<h1>🌈 Bismuth</h1>
-				</a>
-				<p><a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git" alt="Conventional Commits"></a>
-					<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier" alt="code style: prettier"></a>
-					<a href="https://community.kde.org/KWin/Wayland"><img src="https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde" alt="wayland: supported"></a>
-				<a href="https://aur.archlinux.org/packages/kwin-bismuth"><img src="https://img.shields.io/aur/version/kwin-bismuth?style=flat-square&logo=ArchLinux" alt="AUR version"></a></p>
-				<p>Arrange your windows automatically and switch between them using keyboard
-					shortcuts. All of that with different layouts and without a complicated setup
-					of classic tiling window managers (i3, dwm or XMonad). Just install Bismuth
-				on any KDE Plasma powered Linux distribution and you are ready to go! 🦾</p>
-				<p><img src="img/demo.gif" alt="script demo"></p>
-				<p>This is a fork of <a href="https://github.com/esjeon/krohnkite">Krohnkite</a>. The fork
-					was made, because the old project seems to be unmaintained. If you want to
-					import your old shortcuts from it, use the <code>contrib/import_krohnkite.sh</code>
-				script.</p>
-				<a href="#🌟-features" id="🌟-features" style="color: inherit; text-decoration: none;">
-					<h2>🌟 Features</h2>
-				</a>
-				<ul>
-					<li>Full KDE Plasma integration<ul>
-							<li>Multiple Screens, Activities and Virtual desktops</li>
-							<li>Built-in KWin features (minimize, full-screen and rules)</li>
-							<li>Floating Dialog windows</li>
-						</ul>
-					</li>
-					<li>Multiple Layouts<ul>
-							<li>Classic Tiling layout</li>
-							<li>Monocle layout for focusing on one application</li>
-							<li>Three-Column for wide monitors</li>
-							<li>Floating layout for traditional experience</li>
-						</ul>
-					</li>
-					<li>Works on Wayland Plasma session</li>
-				</ul>
-				<p>Project vision and road map can be found <a href="ROADMAP.md">here</a>.</p>
-				<a href="#🔧-installation" id="🔧-installation" style="color: inherit; text-decoration: none;">
-					<h2>🔧 Installation</h2>
-				</a>
-				<a href="#from-source" id="from-source" style="color: inherit; text-decoration: none;">
-					<h3>From Source</h3>
-				</a>
-				<p>Install script from source:</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Installs</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">building</span>
-<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">sysdep</span><span style="color: #000000">-</span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Install</span><span style="color: #000000"> </span><span style="color: #001080">system</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">building</span>
-<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">bi</span><span style="color: #000000">-</span><span style="color: #001080">install</span><span style="color: #000000"> # </span><span style="color: #001080">Installs</span><span style="color: #000000"> </span><span style="color: #001080">all</span><span style="color: #000000"> </span><span style="color: #001080">Bismuth</span><span style="color: #000000"> </span><span style="color: #001080">components</span>
+
+
+<a href="#🌈-bismuth" id="🌈-bismuth" style="color: inherit; text-decoration: none;">
+  <h1>🌈 Bismuth</h1>
+</a>
+<p><a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git" alt="Conventional Commits"></a>
+<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier" alt="code style: prettier"></a>
+<a href="https://community.kde.org/KWin/Wayland"><img src="https://img.shields.io/badge/Wayland-Ready-blue?style=flat-square&logo=kde" alt="wayland: supported"></a>
+<a href="https://aur.archlinux.org/packages/kwin-bismuth"><img src="https://img.shields.io/aur/version/kwin-bismuth?style=flat-square&logo=ArchLinux" alt="AUR version"></a></p>
+<p>Arrange your windows automatically and switch between them using keyboard
+shortcuts. All of that with different layouts and without a complicated setup
+of classic tiling window managers (i3, dwm or XMonad). Just install Bismuth
+on any KDE Plasma powered Linux distribution and you are ready to go! 🦾</p>
+<p><img src="img/demo.gif" alt="script demo"></p>
+<p>This is a fork of <a href="https://github.com/esjeon/krohnkite">Krohnkite</a>. The fork
+was made, because the old project seems to be unmaintained. If you want to
+import your old shortcuts from it, use the <code>contrib/import_krohnkite.sh</code>
+script.</p>
+
+<a href="#🌟-features" id="🌟-features" style="color: inherit; text-decoration: none;">
+  <h2>🌟 Features</h2>
+</a>
+<ul>
+<li>Full KDE Plasma integration<ul>
+<li>Multiple Screens, Activities and Virtual desktops</li>
+<li>Built-in KWin features (minimize, full-screen and rules)</li>
+<li>Floating Dialog windows</li>
+</ul>
+</li>
+<li>Multiple Layouts<ul>
+<li>Classic Tiling layout</li>
+<li>Monocle layout for focusing on one application</li>
+<li>Three-Column for wide monitors</li>
+<li>Floating layout for traditional experience</li>
+</ul>
+</li>
+<li>Works on Wayland Plasma session</li>
+</ul>
+<p>Project vision and road map can be found <a href="ROADMAP.md">here</a>.</p>
+
+<a href="#🔧-installation" id="🔧-installation" style="color: inherit; text-decoration: none;">
+  <h2>🔧 Installation</h2>
+</a>
+
+<a href="#from-source" id="from-source" style="color: inherit; text-decoration: none;">
+  <h3>From Source</h3>
+</a>
+<p>Install script from source:</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> # </span><span class="hl-0">Installs</span><span class="hl-1"> </span><span class="hl-0">dependencies</span><span class="hl-1"> </span><span class="hl-0">for</span><span class="hl-1"> </span><span class="hl-0">building</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">sysdep</span><span class="hl-1">-</span><span class="hl-0">install</span><span class="hl-1"> # </span><span class="hl-0">Install</span><span class="hl-1"> </span><span class="hl-0">system</span><span class="hl-1"> </span><span class="hl-0">dependencies</span><span class="hl-1"> </span><span class="hl-0">for</span><span class="hl-1"> </span><span class="hl-0">building</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">bi</span><span class="hl-1">-</span><span class="hl-0">install</span><span class="hl-1"> # </span><span class="hl-0">Installs</span><span class="hl-1"> </span><span class="hl-0">all</span><span class="hl-1"> </span><span class="hl-0">Bismuth</span><span class="hl-1"> </span><span class="hl-0">components</span>
 </code></pre>
-				<p>To uninstall:</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">bi</span><span style="color: #000000">-</span><span style="color: #001080">uninstall</span>
+<p>To uninstall:</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">bi</span><span class="hl-1">-</span><span class="hl-0">uninstall</span>
 </code></pre>
-				<a href="#from-distribution-packages" id="from-distribution-packages" style="color: inherit; text-decoration: none;">
-					<h3>From distribution packages</h3>
-				</a>
-				<blockquote>
-					<p>:warning: These packages are not affiliated with plugin developers. If you
-					encounter any issues, you should contact the package maintainer first.</p>
-				</blockquote>
-				<a href="#arch-based-distros" id="arch-based-distros" style="color: inherit; text-decoration: none;">
-					<h4>Arch-based distros</h4>
-				</a>
-				<p>Bismuth is available on AUR. Install the <a href="https://aur.archlinux.org/packages/kwin-bismuth"><code>kwin-bismuth</code>
-					package</a> with your favorite
-				AUR helper.</p>
-				<a href="#gentoo" id="gentoo" style="color: inherit; text-decoration: none;">
-					<h4>Gentoo</h4>
-				</a>
-				<p>Updated ebuilds provided in <a href="https://github.com/viperML/viperML-overlay/">viperML-overlay</a>.</p>
-				<a href="#other-distributions" id="other-distributions" style="color: inherit; text-decoration: none;">
-					<h4>Other distributions</h4>
-				</a>
-				<p>If you are know a packaging solution for a distibution, that is not in this
-				list, please provide a link to it via pull request.</p>
-				<a href="#tweaks" id="tweaks" style="color: inherit; text-decoration: none;">
-					<h3>Tweaks</h3>
-				</a>
-				<blockquote>
-					<p>☝️ Don&#39;t forget to enable window tiling in the new settings module: System
-					Settings &gt; Window Management &gt; Window Tiling.</p>
-				</blockquote>
-				<p>You may want to make a couple of manual fixes and tweaks, to improve your
-				experience. See <a href="TWEAKS.md">Tweaks section</a>.</p>
-				<a href="#⚙️-configuration" id="⚙️-configuration" style="color: inherit; text-decoration: none;">
-					<h2>⚙️ Configuration</h2>
-				</a>
-				<p>You can configure Bismuth in the System Settings &gt; Window Management &gt; Window Tiling.</p>
-				<p><img src="img/config.png" alt="Bismuth Configuration Module"></p>
-				<a href="#⌨️-actions-and-default-keyboard-shortcuts" id="⌨️-actions-and-default-keyboard-shortcuts" style="color: inherit; text-decoration: none;">
-					<h2>⌨️ Actions and Default Keyboard Shortcuts</h2>
-				</a>
-				<table>
-					<thead>
-						<tr>
-							<th>Action</th>
-							<th>Key</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td>Focus Next Window</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Focus Previous Window</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Focus Upper Window</td>
-							<td>Meta + J</td>
-						</tr>
-						<tr>
-							<td>Focus Bottom Window</td>
-							<td>Meta + K</td>
-						</tr>
-						<tr>
-							<td>Focus Left Window</td>
-							<td>Meta + H</td>
-						</tr>
-						<tr>
-							<td>Focus Right Window</td>
-							<td>Meta + L</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Move Window To Next Position</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Move Window To Previous Position</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Move Window Up</td>
-							<td>Meta + Shift + J</td>
-						</tr>
-						<tr>
-							<td>Move Window Down</td>
-							<td>Meta + Shift + K</td>
-						</tr>
-						<tr>
-							<td>Move Window Left</td>
-							<td>Meta + Shift + H</td>
-						</tr>
-						<tr>
-							<td>Move Window Right</td>
-							<td>Meta + Shift + L</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Increase Window Width</td>
-							<td>Meta + Ctrl + L</td>
-						</tr>
-						<tr>
-							<td>Increase Window Height</td>
-							<td>Meta + Ctrl + J</td>
-						</tr>
-						<tr>
-							<td>Decrease Window Width</td>
-							<td>Meta + Ctrl + H</td>
-						</tr>
-						<tr>
-							<td>Decrease Window Height</td>
-							<td>Meta + Ctrl + K</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Increase Master Area Window Count</td>
-							<td>Meta + ]</td>
-						</tr>
-						<tr>
-							<td>Decrease Master Area Window Count</td>
-							<td>Meta + [</td>
-						</tr>
-						<tr>
-							<td>Increase Master Area Size</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Decrease Master Area Size</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Push Window Into Master Area</td>
-							<td>Meta + Return</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Toggle Active Window Floating</td>
-							<td>Meta + F</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Switch To Next Layout</td>
-							<td>Meta + \</td>
-						</tr>
-						<tr>
-							<td>Switch To Previous Layout</td>
-							<td>Meta + |</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Set Tile Layout</td>
-							<td>Meta + T</td>
-						</tr>
-						<tr>
-							<td>Set Monocle Layout</td>
-							<td>Meta + M</td>
-						</tr>
-						<tr>
-							<td>Set Three Column Layout</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Set Spread Layout</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Set Stair Layout</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Set Floating Layout</td>
-							<td>Meta + Shift + F</td>
-						</tr>
-						<tr>
-							<td>Set Quarter Layout</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Rotate</td>
-							<td>Meta + R</td>
-						</tr>
-						<tr>
-							<td>Rotate (Reverse)</td>
-							<td><em>None</em></td>
-						</tr>
-						<tr>
-							<td>Rotate Part</td>
-							<td>Meta + Shift + R</td>
-						</tr>
-				</tbody></table>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/config.html">config</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/controller.html">controller</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/controller_action.html">controller/action</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver.html">driver</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_surface.html">driver/surface</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_window.html">driver/window</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine.html">engine</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout.html">engine/layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_cascade_layout.html">engine/layout/cascade_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_floating_layout.html">engine/layout/floating_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_layout_part.html">engine/layout/layout_<wbr>part</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_layout_utils.html">engine/layout/layout_<wbr>utils</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_monocle_layout.html">engine/layout/monocle_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_quarter_layout.html">engine/layout/quarter_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_spiral_layout.html">engine/layout/spiral_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_spread_layout.html">engine/layout/spread_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_stair_layout.html">engine/layout/stair_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_three_column_layout.html">engine/layout/three_<wbr>column_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_tile_layout.html">engine/layout/tile_<wbr>layout</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_layout_store.html">engine/layout_<wbr>store</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_window.html">engine/window</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/engine_window_store.html">engine/window_<wbr>store</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/extern_global.html">extern/global</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/extern_kwin.html">extern/kwin</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/extern_plasma.html">extern/plasma</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/extern_qt.html">extern/qt</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_func.html">util/func</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_log.html">util/log</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_rect.html">util/rect</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+
+<a href="#from-distribution-packages" id="from-distribution-packages" style="color: inherit; text-decoration: none;">
+  <h3>From distribution packages</h3>
+</a>
+<blockquote>
+<p>:warning: These packages are not affiliated with plugin developers. If you
+encounter any issues, you should contact the package maintainer first.</p>
+</blockquote>
+
+<a href="#arch-based-distros" id="arch-based-distros" style="color: inherit; text-decoration: none;">
+  <h4>Arch-based distros</h4>
+</a>
+<p>Bismuth is available on AUR. Install the <a href="https://aur.archlinux.org/packages/kwin-bismuth"><code>kwin-bismuth</code>
+package</a> with your favorite
+AUR helper.</p>
+
+<a href="#gentoo" id="gentoo" style="color: inherit; text-decoration: none;">
+  <h4>Gentoo</h4>
+</a>
+<p>Updated ebuilds provided in <a href="https://github.com/viperML/viperML-overlay/">viperML-overlay</a>.</p>
+
+<a href="#other-distributions" id="other-distributions" style="color: inherit; text-decoration: none;">
+  <h4>Other distributions</h4>
+</a>
+<p>If you are know a packaging solution for a distibution, that is not in this
+list, please provide a link to it via pull request.</p>
+
+<a href="#tweaks" id="tweaks" style="color: inherit; text-decoration: none;">
+  <h3>Tweaks</h3>
+</a>
+<blockquote>
+<p>☝️ Don&#39;t forget to enable window tiling in the new settings module: System
+Settings &gt; Window Management &gt; Window Tiling.</p>
+</blockquote>
+<p>You may want to make a couple of manual fixes and tweaks, to improve your
+experience. See <a href="TWEAKS.md">Tweaks section</a>.</p>
+
+<a href="#⚙️-configuration" id="⚙️-configuration" style="color: inherit; text-decoration: none;">
+  <h2>⚙️ Configuration</h2>
+</a>
+<p>You can configure Bismuth in the System Settings &gt; Window Management &gt; Window Tiling.</p>
+<p><img src="img/config.png" alt="Bismuth Configuration Module"></p>
+
+<a href="#⌨️-actions-and-default-keyboard-shortcuts" id="⌨️-actions-and-default-keyboard-shortcuts" style="color: inherit; text-decoration: none;">
+  <h2>⌨️ Actions and Default Keyboard Shortcuts</h2>
+</a>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Focus Next Window</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Focus Previous Window</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Focus Upper Window</td>
+<td>Meta + J</td>
+</tr>
+<tr>
+<td>Focus Bottom Window</td>
+<td>Meta + K</td>
+</tr>
+<tr>
+<td>Focus Left Window</td>
+<td>Meta + H</td>
+</tr>
+<tr>
+<td>Focus Right Window</td>
+<td>Meta + L</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Move Window To Next Position</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Move Window To Previous Position</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Move Window Up</td>
+<td>Meta + Shift + J</td>
+</tr>
+<tr>
+<td>Move Window Down</td>
+<td>Meta + Shift + K</td>
+</tr>
+<tr>
+<td>Move Window Left</td>
+<td>Meta + Shift + H</td>
+</tr>
+<tr>
+<td>Move Window Right</td>
+<td>Meta + Shift + L</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Increase Window Width</td>
+<td>Meta + Ctrl + L</td>
+</tr>
+<tr>
+<td>Increase Window Height</td>
+<td>Meta + Ctrl + J</td>
+</tr>
+<tr>
+<td>Decrease Window Width</td>
+<td>Meta + Ctrl + H</td>
+</tr>
+<tr>
+<td>Decrease Window Height</td>
+<td>Meta + Ctrl + K</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Increase Master Area Window Count</td>
+<td>Meta + ]</td>
+</tr>
+<tr>
+<td>Decrease Master Area Window Count</td>
+<td>Meta + [</td>
+</tr>
+<tr>
+<td>Increase Master Area Size</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Decrease Master Area Size</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Push Window Into Master Area</td>
+<td>Meta + Return</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Toggle Active Window Floating</td>
+<td>Meta + F</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Switch To Next Layout</td>
+<td>Meta + \</td>
+</tr>
+<tr>
+<td>Switch To Previous Layout</td>
+<td>Meta + |</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Set Tile Layout</td>
+<td>Meta + T</td>
+</tr>
+<tr>
+<td>Set Monocle Layout</td>
+<td>Meta + M</td>
+</tr>
+<tr>
+<td>Set Three Column Layout</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Set Spread Layout</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Set Stair Layout</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Set Floating Layout</td>
+<td>Meta + Shift + F</td>
+</tr>
+<tr>
+<td>Set Quarter Layout</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Rotate</td>
+<td>Meta + R</td>
+</tr>
+<tr>
+<td>Rotate (Reverse)</td>
+<td><em>None</em></td>
+</tr>
+<tr>
+<td>Rotate Part</td>
+<td>Meta + Shift + R</td>
+</tr>
+</tbody></table>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/_internal_.html">&lt;internal&gt;</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-function"><a href="modules.html#init" class="tsd-kind-icon">init</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
