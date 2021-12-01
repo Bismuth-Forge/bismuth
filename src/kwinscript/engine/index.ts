@@ -629,43 +629,22 @@ export class EngineImpl implements Engine {
     basis: EngineWindow,
     dir: Direction
   ): EngineWindow | null {
-    let vertical: boolean;
-    let downOrRight: boolean;
-    let sign: -1 | 1;
-    switch (dir) {
-      case "up":
-        vertical = true;
-        downOrRight = false;
-        sign = -1;
-        break;
-      case "down":
-        vertical = true;
-        downOrRight = true;
-        sign = 1;
-        break;
-      case "left":
-        vertical = false;
-        downOrRight = false;
-        sign = -1;
-        break;
-      case "right":
-        vertical = false;
-        downOrRight = true;
-        sign = 1;
-        break;
-      default:
-        return null;
-    }
+    const dirIsVertical = dir === "down" || dir === "up";
+    const dirIsDownOrRight = dir === "down" || dir === "right";
+    // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
+    const dirSign = dirIsDownOrRight ? 1 : -1;
 
     const candidates = this.windows
       .visibleTiledWindowsOn(this.controller.currentSurface)
       .filter(
-        vertical
-          ? (tile): boolean => tile.geometry.y * sign > basis.geometry.y * sign
-          : (tile): boolean => tile.geometry.x * sign > basis.geometry.x * sign
+        dirIsVertical
+          ? (tile): boolean =>
+              tile.geometry.y * dirSign > basis.geometry.y * dirSign
+          : (tile): boolean =>
+              tile.geometry.x * dirSign > basis.geometry.x * dirSign
       )
       .filter(
-        vertical
+        dirIsVertical
           ? (tile): boolean =>
               overlap(
                 basis.geometry.x,
@@ -681,39 +660,41 @@ export class EngineImpl implements Engine {
                 tile.geometry.maxY
               )
       );
+
     if (candidates.length === 0) {
       return null;
     }
 
-    // When moving downOrRight, check the top-left corner for closest window
-    // When moving not downOrRight, check the bottom-right corner for closest window
+    // When moving down or right, check the top-left corner for closest window
+    // When moving not down or right, check the bottom-right corner for closest window
     const min =
-      sign *
+      dirSign *
       candidates.reduce((prevMin, tile): number => {
-        if (vertical) {
-          return downOrRight
-            ? Math.min(tile.geometry.y * sign, prevMin)
-            : Math.min(tile.geometry.maxY * sign, prevMin);
+        if (dirIsVertical) {
+          return dirIsDownOrRight
+            ? Math.min(tile.geometry.y * dirSign, prevMin)
+            : Math.min(tile.geometry.maxY * dirSign, prevMin);
         } else {
-          return downOrRight
-            ? Math.min(tile.geometry.x * sign, prevMin)
-            : Math.min(tile.geometry.maxX * sign, prevMin);
+          return dirIsDownOrRight
+            ? Math.min(tile.geometry.x * dirSign, prevMin)
+            : Math.min(tile.geometry.maxX * dirSign, prevMin);
         }
       }, Infinity);
 
     const closest = candidates.filter((tile): boolean => {
       // adjust min for potential pixel wide misalignment of tiles
-      if (vertical) {
-        return downOrRight
+      if (dirIsVertical) {
+        return dirIsDownOrRight
           ? tile.geometry.y < min + 5
           : tile.geometry.maxY > min - 5;
       } else {
-        return downOrRight
+        return dirIsDownOrRight
           ? tile.geometry.x < min + 5
           : tile.geometry.maxX > min - 5;
       }
     });
 
+    // Return the most recently used window
     return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
   }
 
