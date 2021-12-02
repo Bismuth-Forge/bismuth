@@ -5,6 +5,24 @@
 
 # Changelog
 
+## [2.2.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.1.0...v2.2.0) (2021-12-02)
+
+
+### Features
+
+* display layout icons in the OSD popup ([b049197](https://www.github.com/Bismuth-Forge/bismuth/commit/b0491978fdd3bca83a8a7fe0f393965a76d378cc))
+* new KCM icon ([c2bea95](https://www.github.com/Bismuth-Forge/bismuth/commit/c2bea9547e1bcb223efd48a581c6f257b98783eb))
+
+
+### Bug Fixes
+
+* behaviour tab is now first ([ae0a594](https://www.github.com/Bismuth-Forge/bismuth/commit/ae0a594bb89e3d253dbd3f6bf5be88c09167e689))
+* focus lone window with move focus shortcut ([4c3b17d](https://www.github.com/Bismuth-Forge/bismuth/commit/4c3b17d492a787e84ec823fdd8d472c82536c641))
+* hide the script entry in the system settings ([883d798](https://www.github.com/Bismuth-Forge/bismuth/commit/883d79858f44322ae52e8943fb369943772784b6))
+* properly maximize windows via window decoration buttons ([3d9c874](https://www.github.com/Bismuth-Forge/bismuth/commit/3d9c874439fd0d28a63f71d5410a53547735840e))
+* provide an "enable tiling" option ([c285446](https://www.github.com/Bismuth-Forge/bismuth/commit/c2854466cca76067c036dd523c327d254f801cc8))
+* select last used window when moving focus up or to the left ([969cf96](https://www.github.com/Bismuth-Forge/bismuth/commit/969cf96e8da5828a2fd2789faec324271225da7e))
+
 ## [2.1.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.0.1...v2.1.0) (2021-11-09)
 
 
