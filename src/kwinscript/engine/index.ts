@@ -625,77 +625,103 @@ export class EngineImpl implements Engine {
     );
   }
 
+  private getNeighborCandidates(
+    basis: EngineWindow,
+    dir: Direction
+  ): EngineWindow[] {
+    const visibleWindowsOnCurrentSurface = this.windows.visibleTiledWindowsOn(
+      this.controller.currentSurface
+    );
+
+    // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
+    const sign = dir === "down" || dir === "right" ? 1 : -1;
+
+    if (dir === "up" || dir === "down") {
+      return visibleWindowsOnCurrentSurface.filter(
+        (window): boolean =>
+          window.geometry.y * sign > basis.geometry.y * sign &&
+          overlap(
+            basis.geometry.x,
+            basis.geometry.maxX,
+            window.geometry.x,
+            window.geometry.maxX
+          )
+      );
+    } else {
+      return visibleWindowsOnCurrentSurface.filter(
+        (window): boolean =>
+          window.geometry.x * sign > basis.geometry.x * sign &&
+          overlap(
+            basis.geometry.y,
+            basis.geometry.maxY,
+            window.geometry.y,
+            window.geometry.maxY
+          )
+      );
+    }
+  }
+
+  private getClosestRelativWindowCorner(
+    windowArray: EngineWindow[],
+    dir: Direction
+  ): number {
+    return windowArray.reduce((prevValue, window): number => {
+      switch (dir) {
+        case "up":
+          return Math.min(window.geometry.maxY, prevValue);
+        case "down":
+          return Math.max(window.geometry.y, prevValue);
+        case "left":
+          return Math.min(window.geometry.maxX, prevValue);
+        case "right":
+          return Math.max(window.geometry.x, prevValue);
+      }
+    }, Infinity);
+  }
+
+  private getClosestRelativeWindow(
+    windowArray: EngineWindow[],
+    dir: Direction,
+    closestPoint: number
+  ): EngineWindow[] {
+    return windowArray.filter((window): boolean => {
+      // adjust closestPoint for potential misalignment of tiled windows
+      switch (dir) {
+        case "up":
+          return window.geometry.maxY > closestPoint - 5;
+        case "down":
+          return window.geometry.y < closestPoint + 5;
+        case "left":
+          return window.geometry.maxX > closestPoint - 5;
+        case "right":
+          return window.geometry.x < closestPoint + 5;
+      }
+    });
+  }
+
   private getNeighborByDirection(
     basis: EngineWindow,
     dir: Direction
   ): EngineWindow | null {
-    const dirIsVertical = dir === "down" || dir === "up";
-    const dirIsDownOrRight = dir === "down" || dir === "right";
-    // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
-    const dirSign = dirIsDownOrRight ? 1 : -1;
+    const neighborCandidates = this.getNeighborCandidates(basis, dir);
 
-    const candidates = this.windows
-      .visibleTiledWindowsOn(this.controller.currentSurface)
-      .filter(
-        dirIsVertical
-          ? (tile): boolean =>
-              tile.geometry.y * dirSign > basis.geometry.y * dirSign
-          : (tile): boolean =>
-              tile.geometry.x * dirSign > basis.geometry.x * dirSign
-      )
-      .filter(
-        dirIsVertical
-          ? (tile): boolean =>
-              overlap(
-                basis.geometry.x,
-                basis.geometry.maxX,
-                tile.geometry.x,
-                tile.geometry.maxX
-              )
-          : (tile): boolean =>
-              overlap(
-                basis.geometry.y,
-                basis.geometry.maxY,
-                tile.geometry.y,
-                tile.geometry.maxY
-              )
-      );
-
-    if (candidates.length === 0) {
+    if (neighborCandidates.length === 0) {
       return null;
     }
 
-    // When moving down or right, check the top-left corner for closest window
-    // When moving not down or right, check the bottom-right corner for closest window
-    const min =
-      dirSign *
-      candidates.reduce((prevMin, tile): number => {
-        if (dirIsVertical) {
-          return dirIsDownOrRight
-            ? Math.min(tile.geometry.y * dirSign, prevMin)
-            : Math.min(tile.geometry.maxY * dirSign, prevMin);
-        } else {
-          return dirIsDownOrRight
-            ? Math.min(tile.geometry.x * dirSign, prevMin)
-            : Math.min(tile.geometry.maxX * dirSign, prevMin);
-        }
-      }, Infinity);
+    const closestWindowCorner = this.getClosestRelativWindowCorner(
+      neighborCandidates,
+      dir
+    );
 
-    const closest = candidates.filter((tile): boolean => {
-      // adjust min for potential pixel wide misalignment of tiles
-      if (dirIsVertical) {
-        return dirIsDownOrRight
-          ? tile.geometry.y < min + 5
-          : tile.geometry.maxY > min - 5;
-      } else {
-        return dirIsDownOrRight
-          ? tile.geometry.x < min + 5
-          : tile.geometry.maxX > min - 5;
-      }
-    });
+    const closestWindows = this.getClosestRelativeWindow(
+      neighborCandidates,
+      dir,
+      closestWindowCorner
+    );
 
     // Return the most recently used window
-    return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
+    return closestWindows.sort((a, b) => b.timestamp - a.timestamp)[0];
   }
 
   public showNotification(text: string, icon?: string, hint?: string): void {
