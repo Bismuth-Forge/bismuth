@@ -665,18 +665,21 @@ export class EngineImpl implements Engine {
     windowArray: EngineWindow[],
     dir: Direction
   ): number {
-    return windowArray.reduce((prevValue, window): number => {
-      switch (dir) {
-        case "up":
-          return Math.min(window.geometry.maxY, prevValue);
-        case "down":
-          return Math.max(window.geometry.y, prevValue);
-        case "left":
-          return Math.min(window.geometry.maxX, prevValue);
-        case "right":
-          return Math.max(window.geometry.x, prevValue);
-      }
-    }, Infinity);
+    return windowArray.reduce(
+      (prevValue, window): number => {
+        switch (dir) {
+          case "up":
+            return Math.max(window.geometry.maxY, prevValue);
+          case "down":
+            return Math.min(window.geometry.y, prevValue);
+          case "left":
+            return Math.max(window.geometry.maxX, prevValue);
+          case "right":
+            return Math.min(window.geometry.x, prevValue);
+        }
+      },
+      dir === "up" || dir === "left" ? 0 : Infinity
+    );
   }
 
   private getClosestRelativeWindow(
