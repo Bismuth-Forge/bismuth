@@ -67,6 +67,10 @@ AUR helper.
 
 Updated ebuilds provided in [viperML-overlay](https://github.com/viperML/viperML-overlay/).
 
+#### Fedora
+
+Bismuth is available on the [Copr](https://copr.fedorainfracloud.org/coprs/capucho/bismuth)
+
 #### Other distributions
 
 If you are know a packaging solution for a distibution, that is not in this
