@@ -625,37 +625,11 @@ export class EngineImpl implements Engine {
     );
   }
 
-  private getNeighborCandidates(
+  private narrowDownCandidates(
     basis: EngineWindow,
-    dir: Direction
-  ): EngineWindow[] | null {
-    const visibleWindowsOnCurrentSurface = this.windows.visibleWindowsOn(
-      this.controller.currentSurface
-    );
-
-    // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
-    const sign = dir === "down" || dir === "right" ? 1 : -1;
-
-    const candidates = visibleWindowsOnCurrentSurface.filter(
-      (window): boolean => {
-        if (dir === "up" || dir === "down") {
-          return (
-            window.actualGeometry.center[1] * sign >
-            basis.actualGeometry.center[1] * sign
-          );
-        } else {
-          return (
-            window.actualGeometry.center[0] * sign >
-            basis.actualGeometry.center[0] * sign
-          );
-        }
-      }
-    );
-
-    if (candidates.length === 0) {
-      return null;
-    }
-
+    dir: Direction,
+    candidates: EngineWindow[]
+  ): EngineWindow[] {
     let selection: EngineWindow[] = candidates.filter((window): boolean => {
       // use smaller target area for floating windows to improve navigation around them
       // 2: full window width/height
@@ -687,14 +661,12 @@ export class EngineImpl implements Engine {
       }
     });
 
-    if (selection.length === 0) {
-      if (basis.floating) {
+    if (basis.floating) {
+      if (selection.length === 0) {
         // randomly floating windows, pick any candidate
-        selection = candidates;
-      } else {
-        return null;
+        return candidates;
       }
-    } else if (selection.length > 1 && basis.floating) {
+
       // find windows that additionally overlap with the last focused window
       // this will avoid switching sides of the screen when walking through floating windows
       // and should prevent getting locked out from certain windows in some layouts
@@ -724,12 +696,41 @@ export class EngineImpl implements Engine {
         selection = narrowSelection;
       }
     }
+    return selection;
+  }
 
-    if (selection.length > 0) {
-      return selection;
-    } else {
-      return null;
+  private getNeighborCandidates(
+    basis: EngineWindow,
+    dir: Direction
+  ): EngineWindow[] {
+    const visibleWindowsOnCurrentSurface = this.windows.visibleWindowsOn(
+      this.controller.currentSurface
+    );
+
+    // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
+    const sign = dir === "down" || dir === "right" ? 1 : -1;
+
+    const candidates = visibleWindowsOnCurrentSurface.filter(
+      (window): boolean => {
+        if (dir === "up" || dir === "down") {
+          return (
+            window.actualGeometry.center[1] * sign >
+            basis.actualGeometry.center[1] * sign
+          );
+        } else {
+          return (
+            window.actualGeometry.center[0] * sign >
+            basis.actualGeometry.center[0] * sign
+          );
+        }
+      }
+    );
+
+    if (candidates.length === 0) {
+      return candidates;
     }
+
+    return this.narrowDownCandidates(basis, dir, candidates);
   }
 
   private getClosestRelativWindowCorner(
@@ -779,7 +780,7 @@ export class EngineImpl implements Engine {
   ): EngineWindow | null {
     const neighborCandidates = this.getNeighborCandidates(basis, dir);
 
-    if (neighborCandidates === null) {
+    if (neighborCandidates.length === 0) {
       return null;
     }
 
