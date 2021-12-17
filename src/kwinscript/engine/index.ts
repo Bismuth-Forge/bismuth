@@ -667,30 +667,34 @@ export class EngineImpl implements Engine {
         return candidates;
       }
 
-      // find windows that additionally overlap with the last focused window
+      // find windows that additionally overlap with the last focused tiled window
       // this will avoid switching sides of the screen when walking through floating windows
       // and should prevent getting locked out from certain windows in some layouts
       const lastFocusedWindow = this.windows
         .visibleWindowsOn(this.controller.currentSurface)
-        .sort((a, b) => b.timestamp - a.timestamp)[1];
+        .filter((window) => window.tiled)
+        .sort((a, b) => b.timestamp - a.timestamp)[0];
 
-      const narrowSelection = selection.filter((window): boolean => {
-        if (dir === "up" || dir === "down") {
-          return overlap(
-            lastFocusedWindow.actualGeometry.x,
-            lastFocusedWindow.actualGeometry.maxX,
-            window.actualGeometry.x,
-            window.actualGeometry.maxX
-          );
-        } else {
-          return overlap(
-            lastFocusedWindow.actualGeometry.y,
-            lastFocusedWindow.actualGeometry.maxY,
-            window.actualGeometry.y,
-            window.actualGeometry.maxY
-          );
-        }
-      });
+      let narrowSelection: EngineWindow[] = [];
+      if (lastFocusedWindow !== undefined) {
+        narrowSelection = selection.filter((window): boolean => {
+          if (dir === "up" || dir === "down") {
+            return overlap(
+              lastFocusedWindow.actualGeometry.x,
+              lastFocusedWindow.actualGeometry.maxX,
+              window.actualGeometry.x,
+              window.actualGeometry.maxX
+            );
+          } else {
+            return overlap(
+              lastFocusedWindow.actualGeometry.y,
+              lastFocusedWindow.actualGeometry.maxY,
+              window.actualGeometry.y,
+              window.actualGeometry.maxY
+            );
+          }
+        });
+      }
 
       if (narrowSelection.length !== 0) {
         selection = narrowSelection;
