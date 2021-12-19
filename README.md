@@ -69,7 +69,11 @@ Updated ebuilds provided in [viperML-overlay](https://github.com/viperML/viperML
 
 #### Fedora
 
-Bismuth is available on the [Copr](https://copr.fedorainfracloud.org/coprs/capucho/bismuth)
+Bismuth is available on the [Copr](https://copr.fedorainfracloud.org/coprs/capucho/bismuth).
+
+#### Debian/Ubuntu
+
+Bismuth is available in the [Volian Repo](https://volian.org/bismuth/).
 
 #### Other distributions
 
