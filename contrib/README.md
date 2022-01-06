@@ -4,7 +4,7 @@
   SPDX-License-Identifier: MIT
 -->
 
-# Tweaks
+# 🔧 Tweaks after installation
 
 ## Setting Up for Multi-Screen
 
