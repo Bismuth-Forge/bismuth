@@ -8,3 +8,13 @@ Source: https://github.com/gikari/bismuth
 # Files: src/*
 # Copyright: $YEAR $NAME <$CONTACT>
 # License: ...
+
+# Images
+Files: img/*
+Copyright: none
+License: CC-BY-4.0 
+
+# Json configs
+Files: *.json
+Copyright: none
+License: MIT
