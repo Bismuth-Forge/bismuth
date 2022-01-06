@@ -5,6 +5,9 @@
 
 # 🤝 Contributing
 
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-red?style=flat-square&logo=Git)](https://conventionalcommits.org)
+[![code style: prettier](https://img.shields.io/badge/Code_Style-Prettier-yellow?style=flat-square&logo=Prettier)](https://github.com/prettier/prettier)
+
 We glad, that you want to contribute to the project. To make things easier
 please read the following.
 
@@ -59,6 +62,12 @@ npm run install-and-restart-kwin-x11
 This will run the previous steps for you and restart KWin, if you're using X11 session.
 After you quit the restarted KWin, it will automatically restart in the background, so
 that you working session remains in tact.
+
+You can uninstall the package using the following command:
+
+```sh
+npm run bi-uninstall
+```
 
 ## 🧪 Unit testing
 
