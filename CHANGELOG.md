@@ -5,6 +5,13 @@
 
 # Changelog
 
+### [2.2.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.2.0...v2.2.1) (2022-01-07)
+
+
+### Bug Fixes
+
+* use correct min/max func and start val for finding closest window ([2548aa5](https://www.github.com/Bismuth-Forge/bismuth/commit/2548aa5dbd0ebc6bdc7118cc8b301dc0b8d13cb3))
+
 ## [2.2.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.1.0...v2.2.0) (2021-12-02)
 
 
