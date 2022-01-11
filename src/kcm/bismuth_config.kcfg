@@ -47,7 +47,7 @@
 
     <entry name="enableQuarterLayout" type="Bool">
 	    <label>Enable/disable Quarter layout</label>
-      <default>false</default>
+      <default>true</default>
     </entry>
 
     <entry name="enableFloatingLayout" type="Bool">
