@@ -81,6 +81,10 @@ contact the package maintainer first.
 
 - [Capucho Copr](https://copr.fedorainfracloud.org/coprs/capucho/bismuth)
 
+#### OpenSUSE Tumbleweed
+
+- [home:rxmd OBS Repository](https://build.opensuse.org/package/show/home:rxmd/kwin-script-tiling-bismuth)
+
 #### Gentoo
 
 - [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
