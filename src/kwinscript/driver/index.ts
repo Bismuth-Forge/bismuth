@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@genda.life>
 //
 // SPDX-License-Identifier: MIT
 
@@ -27,6 +27,11 @@ export interface Driver {
    * All the surfaces/screens currently possess by the KWin
    */
   readonly screens: DriverSurface[];
+
+  /**
+   * Current user activity
+   */
+  readonly currentActivity: string;
 
   /**
    * Surface (screen) of the current window
@@ -72,6 +77,16 @@ export interface Driver {
    * Destroy all callbacks and other non-GC resources
    */
   drop(): void;
+
+  /**
+   * Get the surface mathing the parameters. If no surface is found,
+   * null is returened.
+   */
+  surfaceOn(
+    screen: number,
+    desktop: number,
+    activity: string
+  ): DriverSurface | null;
 }
 
 export class DriverImpl implements Driver {
@@ -98,6 +113,10 @@ export class DriverImpl implements Driver {
     if (this.kwinApi.workspace.currentDesktop !== kwinSurface.desktop) {
       this.kwinApi.workspace.currentDesktop = kwinSurface.desktop;
     }
+  }
+
+  public get currentActivity(): string {
+    return this.kwinApi.workspace.currentActivity;
   }
 
   public get currentWindow(): EngineWindow | null {
@@ -467,6 +486,21 @@ export class DriverImpl implements Driver {
     this.connect(client.shadeChanged, () => {
       this.controller.onWindowShadeChanged(window);
     });
+  }
+
+  public surfaceOn(
+    screen: number,
+    desktop: number,
+    activity: string
+  ): DriverSurface | null {
+    return new DriverSurfaceImpl(
+      screen,
+      activity,
+      desktop,
+      this.qml.activityInfo,
+      this.kwinApi,
+      this.config
+    );
   }
 }
 

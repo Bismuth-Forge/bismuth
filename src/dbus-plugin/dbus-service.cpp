@@ -32,6 +32,6 @@ EXTERNAL_REQUEST_MAPPER(QStringList, enabledLayouts, (), { //
     return QJSValueList{};
 })
 
-// EXTERNAL_REQUEST_MAPPER(QString, activeLayout, (), { //
-//     return QJSValueList{};
-// })
+EXTERNAL_REQUEST_MAPPER(QString, layoutOn, (int screen, int desktop, const QString &activity), { //
+    return QJSValueList{screen, desktop, activity};
+})
