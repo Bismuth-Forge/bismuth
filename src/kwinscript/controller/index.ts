@@ -153,6 +153,15 @@ export interface Controller {
    * In particular, it's called by QML Component.onDestroyed
    */
   drop(): void;
+
+  /**
+   * Return the surface matching the parameters. If none is found, null is returned
+   */
+  surfaceOn(
+    screen: number,
+    desktop: number,
+    activity: string
+  ): DriverSurface | null;
 }
 
 export class ControllerImpl implements Controller {
@@ -387,6 +396,22 @@ export class ControllerImpl implements Controller {
     this.driver.drop();
   }
 
+  public surfaceOn(
+    screen: number,
+    desktop: number,
+    activity: string
+  ): DriverSurface | null {
+    if (screen < 0 || desktop < 1) {
+      return null;
+    }
+
+    if (activity === "") {
+      activity = this.driver.currentActivity;
+    }
+
+    return this.driver.surfaceOn(screen, desktop, activity);
+  }
+
   private bindTrayActions(): void {
     // NOTE: Since the qml interface is very agile, it's seems
     // to be unreasonable to make the bindings universal.
@@ -450,6 +475,7 @@ export class ControllerImpl implements Controller {
   private registerExternalRequests(): void {
     const allPossibleRequests = [
       new Request.EnabledLayouts(this.engine, this.log),
+      new Request.LayoutOn(this.engine, this.log),
     ];
 
     for (const request of allPossibleRequests) {

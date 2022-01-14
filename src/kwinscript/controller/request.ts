@@ -23,7 +23,7 @@ export interface Request {
   /**
    * Executes the request and returns the appropriate response.
    */
-  execute(args: DBusArg[]): ResponseType;
+  execute(...args: DBusArg[]): ResponseType;
 }
 
 abstract class RequestImpl implements Request {
@@ -33,7 +33,7 @@ abstract class RequestImpl implements Request {
     protected log: Log
   ) {}
 
-  abstract execute(args: DBusArg[]): ResponseType;
+  abstract execute(...args: DBusArg[]): ResponseType;
 }
 
 export class EnabledLayouts extends RequestImpl {
@@ -44,5 +44,18 @@ export class EnabledLayouts extends RequestImpl {
   public execute(): string[] {
     const enabledLayouts = this.engine.enabledLayouts();
     return enabledLayouts;
+  }
+}
+
+export class LayoutOn extends RequestImpl {
+  constructor(engine: Engine, log: Log) {
+    super("layoutOn", engine, log);
+  }
+
+  public execute(...args: DBusArg[]): string {
+    const screen = args[0] as number;
+    const desktop = args[1] as number;
+    const activity = args[2] as string;
+    return this.engine.layoutOn(screen, desktop, activity);
   }
 }

@@ -14,7 +14,7 @@ class DBusService : public QQuickItem
     QML_ELEMENT
 
     EXTERNAL_REQUEST(QStringList, enabledLayouts, ())
-    // EXTERNAL_REQUEST(QString, activeLayout, ())
+    EXTERNAL_REQUEST(QString, layoutOn, (int screen, int desktop, const QString &activity))
 
 public:
     DBusService(QQuickItem *parent = nullptr);

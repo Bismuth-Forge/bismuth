@@ -177,6 +177,11 @@ export interface Engine {
    * Return the list of currently enabled layouts
    */
   enabledLayouts(): string[];
+
+  /**
+   * Return the laouut on a surface specified by the parameters
+   */
+  layoutOn(screen: number, desktop: number, activity: string): string;
 }
 
 export class EngineImpl implements Engine {
@@ -750,6 +755,22 @@ export class EngineImpl implements Engine {
     return this.config.layoutOrder
       .filter((i) => i)
       .map((i) => i.replace("Layout", "").trim());
+  }
+
+  public layoutOn(screen: number, desktop: number, activity: string): string {
+    const matchingSurface = this.controller.surfaceOn(
+      screen,
+      desktop,
+      activity
+    );
+
+    if (matchingSurface == null) {
+      return "";
+    }
+
+    const layoutOnSurface = this.layouts.getCurrentLayout(matchingSurface);
+
+    return layoutOnSurface.name;
   }
 
   /**
