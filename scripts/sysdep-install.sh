@@ -14,7 +14,7 @@ if [ -f /etc/os-release ]; then
 
     "ubuntu" | "pop" | "debian" | "neon" )
       sudo apt-get install -y \
-        cmake ninja-build extra-cmake-modules kirigami2-dev \
+        g++ cmake ninja-build extra-cmake-modules kirigami2-dev \
         libkf5config-dev libkf5configwidgets-dev libkf5coreaddons-dev \
         libkf5declarative-dev libkf5i18n-dev libkf5kcmutils-dev \
         libqt5svg5-dev qml-module-qtquick* qtbase5-dev \
@@ -38,7 +38,7 @@ if [ -f /etc/os-release ]; then
 
     "arch" | "manjaro")
       sudo pacman -S --noconfirm --needed \
-        cmake ninja extra-cmake-modules
+        gcc cmake ninja extra-cmake-modules
       ;;
 
     "void")
