@@ -12,6 +12,7 @@
 
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=for-the-badge&logo=kde)](https://community.kde.org/KWin/Wayland)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Bismuth-Forge/bismuth?color=red&logo=github&style=for-the-badge)](https://github.com/Bismuth-Forge/bismuth/releases/latest)
+[![Matrix](https://img.shields.io/matrix/bi:kde.org?label=Chat&server_fqdn=kde.modular.im&logo=matrix&style=for-the-badge)](https://matrix.to/#/#bi:kde.org)
 
 ![demo](img/rice.png)
 
