@@ -57,7 +57,7 @@ add_custom_command(
   COMMAND ${TSC_COMMAND}
   COMMAND ${ESBUILD_COMMAND}
   COMMAND DEPENDS ${TYPESCRIPT_SOURCES}
-  COMMENT "🏗️ Compiling and bundling TypeScirpt sources..."
+  COMMENT "🏗️ Compiling and bundling TypeScript sources..."
 )
 
 add_custom_command(
