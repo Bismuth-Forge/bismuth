@@ -536,10 +536,9 @@ export class ToggleStairLayout extends ToggleCurrentLayout {
 
 export class ToggleFloatingLayout extends ToggleCurrentLayout {
   constructor(protected engine: Engine, protected log: Log) {
-    // NOTE: space is intentional (Temporary)
     super(
       engine,
-      "FloatingLayout ",
+      "FloatingLayout",
       "toggle_float_layout",
       "Toggle Floating Layout",
       "Meta+Shift+F",

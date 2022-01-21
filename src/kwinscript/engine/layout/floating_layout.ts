@@ -11,7 +11,7 @@ import { Rect } from "../../util/rect";
 import { Controller } from "../../controller";
 
 export default class FloatingLayout implements WindowsLayout {
-  public static readonly id = "FloatingLayout ";
+  public static readonly id = "FloatingLayout";
   public static instance = new FloatingLayout();
   public readonly classID = FloatingLayout.id;
   public readonly name = "Floating Layout";
