@@ -49,12 +49,19 @@ convenient if title bars are removed.
          kwriteconfig5 --file ~/.config/kdeglobals --group WM --key frame 61,174,233
          kwriteconfig5 --file ~/.config/kdeglobals --group WM --key inactiveFrame  239,240,241
 
-4.  You must **restart** your session to see changes. (i.e. re-login, reboot)
+4.  Create a new color scheme in `System Settings` > `Appearance` > `Colors`.
+5.  Open the color scheme file in
+    `~/.local/share/color-schemes/<color-sheme-name>.colorscheme` and remove
+    all the `[XXX:Header]` groups, then save the file and exit.
+6.  Select the edited color scheme in `System Settings`
+7.  You must **restart** your session to see changes. (i.e. re-login, reboot)
 
 Note: the RGB values presented here are for the default Breeze theme
 
-Note: You might also need to set the border size larger than the theme's default:
-`System Settings` > `Application Style` > `Window Decorations`: Untick `Use theme's default window border size` and adjust the size (right from the checkbox).
+Note: You might also need to set the border size larger than the theme's
+default: `System Settings` > `Application Style` > `Window Decorations`: Uncheck
+`Use theme's default window border size` and adjust the size (right from the
+checkbox).
 
 ## Setting Minimum Geometry Size
 
