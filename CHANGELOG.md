@@ -5,6 +5,18 @@
 
 # Changelog
 
+## [2.3.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.2.0...v2.3.0) (2022-01-26)
+
+
+### Features
+
+* add keyboard shortcut entry for Spiral Layout ([dde0c49](https://www.github.com/Bismuth-Forge/bismuth/commit/dde0c499ab6d556ef1f68a8493bd5072392a1a68))
+
+
+### Bug Fixes
+
+* use correct min/max func and start val for finding closest window ([2548aa5](https://www.github.com/Bismuth-Forge/bismuth/commit/2548aa5dbd0ebc6bdc7118cc8b301dc0b8d13cb3))
+
 ## [2.2.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.1.0...v2.2.0) (2021-12-02)
 
 
