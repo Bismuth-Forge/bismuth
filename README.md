@@ -106,7 +106,7 @@ Window Tiling.
 ⌨️ You can view the shortcuts in System Settings > Shortcuts > KWin. (The
 shortcuts, introduced by the project, will have the `Bismuth:` prefix). If you
 used Krohnkite before, you can import some of its shortcuts using [the bash
-script](cotrib/import_krohnkite.sh).
+script](contrib/import_krohnkite.sh).
 
 🔧 If you want, you may also make a couple of manual fixes and tweaks to
 improve your experience with window tiling. See [Tweaks
