@@ -4,6 +4,7 @@
 
 import "../code/index.mjs" as Bismuth
 import QtQuick 2.0
+import org.kde.bismuth.core 1.0 as BiCore
 import org.kde.kwin 2.0
 import org.kde.taskmanager 0.1 as TaskManager
 
@@ -26,10 +27,18 @@ Item {
             "KWin": KWin
         };
         scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI);
+        // Init core
+        core.kwinApi = kwinScriptingAPI;
+        core.qmlElements = qmlObjects;
+        core.start();
     }
     Component.onDestruction: {
         console.log("[Bismuth] Everybody is dead");
         scriptRoot.controller.drop();
+    }
+
+    BiCore.Core {
+        id: core
     }
 
     TrayItem {
