@@ -146,7 +146,7 @@ export interface Engine {
   /**
    * Set the layout of the current surface to the specified layout.
    */
-  toggleLayout(layoutClassID: string): void;
+  toggleLayoutOnCurrentSurface(layoutClassID: string): void;
 
   /**
    * Minimize all windows on the surface except the given window.
@@ -182,6 +182,16 @@ export interface Engine {
    * Return the laouut on a surface specified by the parameters
    */
   layoutOn(screen: number, desktop: number, activity: string): string;
+
+  /**
+   * Toggles the layout on the particular surface, identified by 3 params
+   */
+  toggleLayoutOn(
+    layoutId: string,
+    screen: number,
+    desktop: number,
+    activity: string
+  ): boolean;
 }
 
 export class EngineImpl implements Engine {
@@ -596,22 +606,8 @@ export class EngineImpl implements Engine {
     }
   }
 
-  public toggleLayout(layoutClassID: string): void {
-    const layout = this.layouts.toggleLayout(
-      this.controller.currentSurface,
-      layoutClassID
-    );
-    if (layout) {
-      this.showLayoutNotification();
-
-      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
-      if (
-        this.isLayoutMonocleAndMinimizeRest() &&
-        this.controller.currentWindow
-      ) {
-        this.minimizeOthers(this.controller.currentWindow);
-      }
-    }
+  public toggleLayoutOnCurrentSurface(layoutClassID: string): void {
+    this.toggleLayoutOnSurface(layoutClassID, this.controller.currentSurface);
   }
 
   public minimizeOthers(window: EngineWindow): void {
@@ -771,6 +767,40 @@ export class EngineImpl implements Engine {
     const layoutOnSurface = this.layouts.getCurrentLayout(matchingSurface);
 
     return layoutOnSurface.name;
+  }
+
+  public toggleLayoutOn(
+    layoutId: string,
+    screen: number,
+    desktop: number,
+    activity: string
+  ): boolean {
+    const surface = this.controller.surfaceOn(screen, desktop, activity);
+
+    if (!surface) {
+      return false;
+    }
+
+    this.toggleLayoutOnSurface(layoutId, surface);
+    return true;
+  }
+
+  private toggleLayoutOnSurface(
+    layoutId: string,
+    surface: DriverSurface
+  ): void {
+    const layout = this.layouts.toggleLayout(surface, layoutId);
+    if (layout) {
+      this.showLayoutNotification();
+
+      // Minimize inactive windows if Monocle and config.monocleMinimizeRest
+      if (
+        this.isLayoutMonocleAndMinimizeRest() &&
+        this.controller.currentWindow
+      ) {
+        this.minimizeOthers(this.controller.currentWindow);
+      }
+    }
   }
 
   /**

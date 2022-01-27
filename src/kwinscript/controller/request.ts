@@ -5,7 +5,7 @@
 import { Engine } from "../engine";
 import { Log } from "../util/log";
 
-export type ResponseType = string | string[];
+export type ResponseType = string | string[] | boolean;
 export type DBusArg = boolean | number | string | string[];
 
 /**
@@ -57,5 +57,19 @@ export class LayoutOn extends RequestImpl {
     const desktop = args[1] as number;
     const activity = args[2] as string;
     return this.engine.layoutOn(screen, desktop, activity);
+  }
+}
+
+export class ToggleTilingOn extends RequestImpl {
+  constructor(engine: Engine, log: Log) {
+    super("toggleLayoutOn", engine, log);
+  }
+
+  public execute(...args: DBusArg[]): boolean {
+    const layoutId = args[0] as string;
+    const screen = args[1] as number;
+    const desktop = args[2] as number;
+    const activity = args[3] as string;
+    return this.engine.toggleLayoutOn(layoutId, screen, desktop, activity);
   }
 }

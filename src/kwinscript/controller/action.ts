@@ -465,7 +465,7 @@ abstract class ToggleCurrentLayout extends ActionImpl implements Action {
   }
 
   public executeWithoutLayoutOverride(): void {
-    this.engine.toggleLayout(this.layoutId);
+    this.engine.toggleLayoutOnCurrentSurface(this.layoutId);
   }
 }
 

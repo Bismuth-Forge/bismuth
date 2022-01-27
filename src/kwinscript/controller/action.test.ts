@@ -355,7 +355,7 @@ describe("action", () => {
 
       fakeEngine = createMock<Engine>({
         cycleLayout: jest.fn(),
-        toggleLayout: jest.fn(),
+        toggleLayoutOnCurrentSurface: jest.fn(),
         currentWindow: jest.fn().mockReturnValue(fakeCurrentWindow),
       });
     });
@@ -386,7 +386,9 @@ describe("action", () => {
 
         action.execute();
 
-        expect(fakeEngine.toggleLayout).toBeCalledWith("MonocleLayout");
+        expect(fakeEngine.toggleLayoutOnCurrentSurface).toBeCalledWith(
+          "MonocleLayout"
+        );
       });
     });
   });

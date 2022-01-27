@@ -13,6 +13,7 @@ class DBusService : public QQuickItem
     Q_CLASSINFO("D-Bus Interface", "org.kde.bismuth.dbus")
     QML_ELEMENT
 
+    EXTERNAL_REQUEST(bool, toggleLayoutOn, (const QString &layoutId, int screen, int desktop, const QString &activity))
     EXTERNAL_REQUEST(QStringList, enabledLayouts, ())
     EXTERNAL_REQUEST(QString, layoutOn, (int screen, int desktop, const QString &activity))
 
