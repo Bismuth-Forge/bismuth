@@ -28,6 +28,10 @@ DBusService::~DBusService()
     bus.unregisterObject("/bismuth");
 }
 
+EXTERNAL_REQUEST_MAPPER(bool, toggleLayoutOn, (const QString &layoutId, int screen, int desktop, const QString &activity), { //
+    return QJSValueList{layoutId, screen, desktop, activity};
+})
+
 EXTERNAL_REQUEST_MAPPER(QStringList, enabledLayouts, (), { //
     return QJSValueList{};
 })
