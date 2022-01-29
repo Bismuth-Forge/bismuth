@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 # See: https://api.kde.org/frameworks/kconfig/html/kconfig_compiler.html
-File=bismuth_config.kcfg
+File=../config/bismuth_config.kcfg
 NameSpace=Bismuth
 ClassName=Config
 Mutators=true
