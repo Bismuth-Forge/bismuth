@@ -3,6 +3,10 @@
 
 #include "qml-plugin.hpp"
 
+#include <memory>
+
+#include "config.hpp"
+
 void CorePlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String("org.kde.bismuth.core"));
@@ -15,7 +19,7 @@ Core::Core(QQuickItem *parent)
     : QQuickItem(parent)
     , m_kwinApi()
     , m_qmlElements()
-    , m_config()
+    , m_config(std::make_unique<Bismuth::Config>())
 {
 }
 
