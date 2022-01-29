@@ -28,10 +28,9 @@ target_link_libraries(
   KF5::ConfigGui
 )
 
-kconfig_add_kcfg_files(kcm_bismuth GENERATE_MOC bismuth_config.kcfgc)
+kconfig_add_kcfg_files(kcm_bismuth GENERATE_MOC "bismuth_config.kcfgc")
 kcoreaddons_desktop_to_json(kcm_bismuth "package/metadata.desktop")
 
-install(FILES "bismuth_config.kcfg" DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(TARGETS kcm_bismuth DESTINATION ${KDE_INSTALL_PLUGINDIR}/kcms)
 install(FILES package/metadata.desktop RENAME kcm_bismuth.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 
