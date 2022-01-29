@@ -5,7 +5,7 @@
 
 void CorePlugin::registerTypes(const char *uri)
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.bismuth.core"));
+    Q_ASSERT(qstrcmp(uri, "org.kde.bismuth.core") == 0);
     qmlRegisterModule(uri, 1, 0);
 
     qmlRegisterType<Core>(uri, 1, 0, "Core");
