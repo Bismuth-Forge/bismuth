@@ -17,7 +17,6 @@ import QuarterLayout from "./engine/layout/quarter_layout";
 import CascadeLayout from "./engine/layout/cascade_layout";
 
 import { WindowsLayout } from "./engine/layout";
-import { WindowsLayoutClass } from "./engine/layout";
 
 export interface Config {
   //#region Layout
@@ -154,7 +153,7 @@ export class ConfigImpl implements Config {
         ["enableQuarterLayout", false, QuarterLayout],
         ["enableFloatingLayout", false, FloatingLayout],
         ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
-      ] as Array<[string, boolean, WindowsLayoutClass]>
+      ] as Array<[string, boolean, any]>
     ).forEach(([configKey, defaultValue, layoutClass]) => {
       // For some reason if we put the curly brackets here script breaks
       // This will be dealt with, when this facility will be refactored out
