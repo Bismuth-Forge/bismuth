@@ -31,7 +31,16 @@ class Core : public QQuickItem
 public:
     Core(QQuickItem *parent = nullptr);
 
-    Q_INVOKABLE void start();
+    /**
+     * Initializes the Core. Acts like a constructor, but bypasses the
+     * limitations of one.
+     */
+    Q_INVOKABLE void init();
+
+    /**
+     * Returns the config usable in the legacy TypeScript logic
+     */
+    Q_INVOKABLE QJSValue jsConfig();
 
     QJSValue kwinApi();
     void setKwinApi(const QJSValue &);
@@ -42,6 +51,8 @@ public:
 private:
     QJSValue m_kwinApi;
     QJSValue m_qmlElements;
+
+    QQmlEngine *m_engine; ///< Pointer to the engine, that is currently using the Core element
 
     std::unique_ptr<Bismuth::Config> m_config;
 };

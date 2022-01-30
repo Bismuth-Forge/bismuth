@@ -26,11 +26,12 @@ Item {
             "options": options,
             "KWin": KWin
         };
-        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI);
         // Init core
         core.kwinApi = kwinScriptingAPI;
         core.qmlElements = qmlObjects;
-        core.start();
+        core.init();
+        // Init legacy JS backend
+        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.jsConfig());
     }
     Component.onDestruction: {
         console.log("[Bismuth] Everybody is dead");

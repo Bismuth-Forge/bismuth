@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { ConfigImpl } from "./config";
+import { Config } from "./config";
 import { Controller, ControllerImpl } from "./controller";
 import { LogImpl } from "./util/log";
 
@@ -13,10 +13,13 @@ import { LogImpl } from "./util/log";
  */
 export function init(
   qmlObjects: Bismuth.Qml.Main,
-  kwinScriptingApi: KWin.Api
+  kwinScriptingApi: KWin.Api,
+  config: Config
 ): Controller {
-  const config = new ConfigImpl(kwinScriptingApi);
   const logger = new LogImpl(config);
+
+  logger.log(`Configuration object, ignore screen: ${config.ignoreScreen}`);
+  logger.log(`Configuration object, floatingClass: ${config.floatingClass}`);
 
   const controller = new ControllerImpl(
     qmlObjects,
