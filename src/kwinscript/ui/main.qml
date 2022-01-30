@@ -26,11 +26,22 @@ Item {
             "options": options,
             "KWin": KWin
         };
-        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI);
         // Init core
         core.kwinApi = kwinScriptingAPI;
         core.qmlElements = qmlObjects;
         core.start();
+        // Init legacy JS backend
+        const config = {
+            "layoutOrder": [],
+            "floatingClass": [],
+            "floatingTitle": [],
+            "ignoreClass": [],
+            "ignoreTitle": [],
+            "ignoreRole": [],
+            "ignoreActivity": [],
+            "ignoreScreen": []
+        };
+        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.jsCompatibleConfig(config));
     }
     Component.onDestruction: {
         console.log("[Bismuth] Everybody is dead");

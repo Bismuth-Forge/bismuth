@@ -227,14 +227,14 @@ export class DriverWindowImpl implements DriverWindow {
     keepAbove?: boolean
   ): void {
     // TODO: Refactor this awful function
-    this.log.log(
-      `[DriverWindow#commit] Called with params: {
-         geometry: ${geometry},
-         noBorder: ${noBorder},
-         keepAbove: ${keepAbove}
-        } for window ${this} on the screen ${this.screen}
-      `
-    );
+    // this.log.log(
+    //   `[DriverWindow#commit] Called with params: {
+    //      geometry: ${geometry},
+    //      noBorder: ${noBorder},
+    //      keepAbove: ${keepAbove}
+    //     } for window ${this} on the screen ${this.screen}
+    //   `
+    // );
 
     if (this.client.move || this.client.resize) {
       return;

@@ -32,6 +32,7 @@ public:
     Core(QQuickItem *parent = nullptr);
 
     Q_INVOKABLE void start();
+    Q_INVOKABLE QJSValue jsCompatibleConfig(QJSValue emptyObject);
 
     QJSValue kwinApi();
     void setKwinApi(const QJSValue &);
