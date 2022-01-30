@@ -11,6 +11,14 @@ import { DriverSurface } from "../driver/surface";
 
 import { wrapIndex } from "../util/func";
 import { Config } from "../config";
+import MonocleLayout from "./layout/monocle_layout";
+import TileLayout from "./layout/tile_layout";
+import CascadeLayout from "./layout/cascade_layout";
+import QuarterLayout from "./layout/quarter_layout";
+import SpiralLayout from "./layout/spiral_layout";
+import SpreadLayout from "./layout/spread_layout";
+import StairLayout from "./layout/stair_layout";
+import ThreeColumnLayout from "./layout/three_column_layout";
 
 export class LayoutStoreEntry {
   public get currentLayout(): WindowsLayout {
@@ -68,9 +76,29 @@ export class LayoutStoreEntry {
   private loadLayout(ID: string): WindowsLayout {
     let layout = this.layouts[ID];
     if (!layout) {
-      layout = this.layouts[ID] = this.config.layoutFactories[ID]();
+      layout = this.layouts[ID] = this.createLayoutFromId(ID);
     }
     return layout;
+  }
+
+  private createLayoutFromId(id: string): WindowsLayout {
+    if (id == MonocleLayout.id) {
+      return new MonocleLayout(this.config);
+    } else if (id == QuarterLayout.id) {
+      return new QuarterLayout(this.config);
+    } else if (id == SpiralLayout.id) {
+      return new SpiralLayout(this.config);
+    } else if (id == SpreadLayout.id) {
+      return new SpreadLayout();
+    } else if (id == StairLayout.id) {
+      return new StairLayout();
+    } else if (id == ThreeColumnLayout.id) {
+      return new ThreeColumnLayout(this.config);
+    } else if (id == TileLayout.id) {
+      return new TileLayout(this.config);
+    } else {
+      return new FloatingLayout();
+    }
   }
 }
 

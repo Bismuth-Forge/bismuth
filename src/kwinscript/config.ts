@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
 // SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
 //
 // SPDX-License-Identifier: MIT
-
-// Multi-line commenting style is mandatory here :)
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import MonocleLayout from "./engine/layout/monocle_layout";
 import TileLayout from "./engine/layout/tile_layout";
@@ -16,12 +16,9 @@ import FloatingLayout from "./engine/layout/floating_layout";
 import QuarterLayout from "./engine/layout/quarter_layout";
 import CascadeLayout from "./engine/layout/cascade_layout";
 
-import { WindowsLayout } from "./engine/layout";
-
 export interface Config {
   //#region Layout
   layoutOrder: string[];
-  layoutFactories: { [key: string]: () => WindowsLayout };
   monocleMaximize: boolean;
   maximizeSoleTile: boolean;
   monocleMinimizeRest: boolean; // KWin-specific
@@ -69,12 +66,9 @@ export interface Config {
   debugEnabled: boolean;
 }
 
-type LayoutFactories = { [key: string]: () => WindowsLayout };
-
 export class ConfigImpl implements Config {
   //#region Layout
   public layoutOrder: string[];
-  public layoutFactories: LayoutFactories;
   public maximizeSoleTile: boolean;
   public monocleMaximize: boolean;
   public monocleMinimizeRest: boolean; // KWin-specific
@@ -139,31 +133,8 @@ export class ConfigImpl implements Config {
 
     this.debugEnabled = this.kwinApi.KWin.readConfig("debug", false);
 
-    // TODO: Refactor this: config should not create factories. It is not its responsibility
     this.layoutOrder = [];
-    this.layoutFactories = {};
-    (
-      [
-        ["enableTileLayout", true, TileLayout],
-        ["enableMonocleLayout", true, MonocleLayout],
-        ["enableThreeColumnLayout", true, ThreeColumnLayout],
-        ["enableSpreadLayout", true, SpreadLayout],
-        ["enableStairLayout", true, StairLayout],
-        ["enableSpiralLayout", true, SpiralLayout],
-        ["enableQuarterLayout", false, QuarterLayout],
-        ["enableFloatingLayout", false, FloatingLayout],
-        ["enableCascadeLayout", false, CascadeLayout], // TODO: add config
-      ] as Array<[string, boolean, any]>
-    ).forEach(([configKey, defaultValue, layoutClass]) => {
-      // For some reason if we put the curly brackets here script breaks
-      // This will be dealt with, when this facility will be refactored out
-      if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
-        // eslint-disable-next-line curly
-        this.layoutOrder.push(layoutClass.id);
-
-      this.layoutFactories[layoutClass.id] = (): WindowsLayout =>
-        new layoutClass(this);
-    });
+    this.initLayoutOrder();
 
     this.maximizeSoleTile = this.kwinApi.KWin.readConfig(
       "maximizeSoleTile",
@@ -248,5 +219,27 @@ export class ConfigImpl implements Config {
 
   public toString(): string {
     return "Config(" + JSON.stringify(this, null, 2) + ")";
+  }
+
+  private initLayoutOrder(): void {
+    const addL = (
+      configKey: string,
+      defaultValue: boolean,
+      id: string
+    ): void => {
+      if (this.kwinApi.KWin.readConfig(configKey, defaultValue))
+        // eslint-disable-next-line curly
+        this.layoutOrder.push(id);
+    };
+
+    addL("enableTileLayout", true, TileLayout.id);
+    addL("enableMonocleLayout", true, MonocleLayout.id);
+    addL("enableThreeColumnLayout", true, ThreeColumnLayout.id);
+    addL("enableSpreadLayout", true, SpreadLayout.id);
+    addL("enableStairLayout", true, StairLayout.id);
+    addL("enableSpiralLayout", true, SpiralLayout.id);
+    addL("enableQuarterLayout", false, QuarterLayout.id);
+    addL("enableFloatingLayout", false, FloatingLayout.id);
+    addL("enableCascadeLayout", false, CascadeLayout.id);
   }
 }
