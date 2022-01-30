@@ -10,25 +10,21 @@ import { Controller } from "../../controller";
 import { Action } from "../../controller/action";
 
 import { Rect, RectDelta } from "../../util/rect";
-import { Config } from "../../config";
 
-export interface WindowsLayoutClass {
-  readonly id: string;
-  new (config: Config): WindowsLayout;
-}
-
-export interface WindowsLayout {
+export abstract class WindowsLayout {
   /* read-only */
+
+  static readonly id: string;
 
   /**
    * Human-readable name of the layout.
    */
-  readonly name: string;
+  abstract readonly name: string;
 
   /**
    * The icon name of the layout.
    */
-  readonly icon: string;
+  abstract readonly icon: string;
 
   /**
    * A string that can be used to show layout specific properties in the pop-up,
@@ -47,8 +43,14 @@ export interface WindowsLayout {
     basis: EngineWindow,
     delta: RectDelta
   ): void;
-  apply(controller: Controller, tileables: EngineWindow[], area: Rect): void;
+
+  abstract apply(
+    controller: Controller,
+    tileables: EngineWindow[],
+    area: Rect
+  ): void;
+
   executeAction?(engine: Engine, action: Action): void;
 
-  toString(): string;
+  abstract toString(): string;
 }
