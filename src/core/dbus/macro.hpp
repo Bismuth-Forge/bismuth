@@ -15,7 +15,7 @@
  *        Must contain only the types, that could be converted to the DBus types.
  */
 #define EXTERNAL_REQUEST(RETURN_TYPE, REQUEST_NAME, INPUT_PARAMS)                                                                                              \
-    Q_PROPERTY(QJSValue REQUEST_NAME##_handler READ REQUEST_NAME##_handler WRITE set##REQUEST_NAME##_handler);                                                 \
+    Q_PROPERTY(QJSValue REQUEST_NAME##_handler READ REQUEST_NAME##_handler WRITE set##REQUEST_NAME##_handler)                                                  \
                                                                                                                                                                \
     QJSValue m_##REQUEST_NAME##_handler;                                                                                                                       \
                                                                                                                                                                \

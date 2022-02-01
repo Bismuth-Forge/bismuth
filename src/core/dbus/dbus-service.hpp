@@ -5,7 +5,7 @@
 #include <QQuickItem>
 #include <QString>
 
-#include "macro.h"
+#include "macro.hpp"
 
 class DBusService : public QQuickItem
 {

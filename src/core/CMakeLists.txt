@@ -5,6 +5,8 @@ project(bismuth-core)
 
 add_library(bismuth_core SHARED)
 
+add_subdirectory(dbus)
+
 target_sources(
   bismuth_core
   PRIVATE
@@ -20,6 +22,7 @@ target_link_libraries(
   Qt5::Qml
   KF5::ConfigCore
   KF5::ConfigGui
+  Qt5::DBus
 )
 
 kconfig_add_kcfg_files(bismuth_core GENERATE_MOC "config.kcfgc")
