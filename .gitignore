@@ -15,3 +15,6 @@ src/kcm/CMakeUserPresets.json
 .clang-format
 compile_commands.json
 
+
+# IDE Stuff
+/.idea/
