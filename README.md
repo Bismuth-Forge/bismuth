@@ -91,6 +91,10 @@ contact the package maintainer first.
 
 - [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
 
+#### Solus
+
+- [Solus](https://dev.getsol.us/source/bismuth)
+
 #### From Source
 
 - [See Dev Docs](CONTRIBUTING.md)
