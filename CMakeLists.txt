@@ -24,7 +24,7 @@ option(
 )
 
 set(QT_MIN_VERSION "5.15.0")
-set(KF5_MIN_VERSION "5.80.0")
+set(KF5_MIN_VERSION "5.85.0")
 
 # HACK: Use git to get the recent version
 # We could explicitly set the version via project declaration
@@ -50,6 +50,10 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEClangFormat)
 include(ECMInstallIcons)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(
   Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
