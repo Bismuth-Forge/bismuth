@@ -4,7 +4,6 @@
   "description": "A dynamic tiling extension for KWin",
   "private": true,
   "devDependencies": {
-    "@types/jest": "26.0.14",
     "@typescript-eslint/eslint-plugin": "5.5.0",
     "@typescript-eslint/parser": "5.5.0",
     "esbuild": "0.14.1",
@@ -15,12 +14,8 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "7.0.4",
-    "jest": "26.6.3",
-    "jest-ts-auto-mock": "2.0.0",
     "lint-staged": "12.1.2",
     "prettier": "2.5.0",
-    "ts-auto-mock": "3.5.0",
-    "ts-jest": "26.5.6",
     "ttypescript": "1.5.13",
     "typedoc": "0.22.10",
     "typedoc-plugin-missing-exports": "0.22.6",
@@ -60,26 +55,6 @@
     "url": "https://github.com/gikari/bismuth/issues"
   },
   "homepage": "https://github.com/gikari/bismuth#readme",
-  "jest": {
-    "preset": "ts-jest",
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
-    "testEnvironment": "node",
-    "globals": {
-      "ts-jest": {
-        "compiler": "ttypescript",
-        "setupFiles": [
-          "<rootDir>config.ts"
-        ],
-        "diagnostics": {
-          "ignoreCodes": [
-            "TS151001"
-          ]
-        }
-      }
-    }
-  },
   "prettier": {},
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
