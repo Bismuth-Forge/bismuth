@@ -4,6 +4,9 @@
 project(bismuth-core)
 
 add_library(bismuth_core SHARED)
+add_Library(Bismuth::Core ALIAS bismuth_core)
+
+add_subdirectory(plasma-api)
 
 target_sources(
   bismuth_core

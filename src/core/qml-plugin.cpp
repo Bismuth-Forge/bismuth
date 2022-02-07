@@ -3,12 +3,14 @@
 
 #include "qml-plugin.hpp"
 
+#include <QJSValue>
 #include <QString>
 #include <QtQml>
 
 #include <memory>
 
 #include "config.hpp"
+#include "plasma-api/plasma-api.hpp"
 
 void CorePlugin::registerTypes(const char *uri)
 {
@@ -20,9 +22,8 @@ void CorePlugin::registerTypes(const char *uri)
 
 Core::Core(QQuickItem *parent)
     : QQuickItem(parent)
-    , m_kwinApi()
-    , m_qmlElements()
     , m_engine() // We cannot get engine from the pointer in the constructor
+    , m_plasmaApi()
     , m_config(std::make_unique<Bismuth::Config>())
 {
 }
@@ -33,6 +34,7 @@ void Core::init()
     if (m_config->debug()) {
         qDebug() << "[Bismuth] Core QmlEngine ptr: " << m_engine;
     }
+    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
 }
 
 QJSValue Core::jsConfig()
@@ -123,23 +125,3 @@ QJSValue Core::jsConfig()
 
     return configJSObject;
 }
-
-QJSValue Core::kwinApi()
-{
-    return m_kwinApi;
-};
-
-void Core::setKwinApi(const QJSValue &kwinApi)
-{
-    m_kwinApi = kwinApi;
-};
-
-QJSValue Core::qmlElements()
-{
-    return m_kwinApi;
-}
-
-void Core::setQmlElements(const QJSValue &qmlElements)
-{
-    m_qmlElements = qmlElements;
-};

@@ -27,8 +27,6 @@ Item {
             "KWin": KWin
         };
         // Init core
-        core.kwinApi = kwinScriptingAPI;
-        core.qmlElements = qmlObjects;
         core.init();
         // Init legacy JS backend
         scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.jsConfig());
