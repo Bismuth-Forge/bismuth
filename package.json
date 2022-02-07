@@ -38,7 +38,7 @@
     "install-and-restart": "npm run bi-install",
     "postinstall-and-restart": "npm run restart-kwin-x11 && npm run restart-plasma",
     "docs": "npx typedoc --out build/docs",
-    "test": "jest",
+    "test": "scripts/test.sh",
     "prepare": "husky install"
   },
   "repository": {

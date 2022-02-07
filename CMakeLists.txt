@@ -44,7 +44,7 @@ string(REPLACE "v" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
 # unset(PACKAGE_JSON)
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/")
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -60,6 +60,7 @@ find_package(
   DBus
   Quick
   Svg
+  Test
 )
 
 find_package(
@@ -70,4 +71,14 @@ find_package(
   Config
 )
 
+include_directories("${PROJECT_SOURCE_DIR}/external")
+
+if (NOT BUILD_TESTING)
+  add_compile_definitions(DOCTEST_CONFIG_DISABLE=1)
+endif()
+
 add_subdirectory(src)
+
+if (BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
