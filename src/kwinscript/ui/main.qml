@@ -29,7 +29,7 @@ Item {
         // Init core
         core.init();
         // Init legacy JS backend
-        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.jsConfig());
+        scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.proxy);
     }
     Component.onDestruction: {
         console.log("[Bismuth] Everybody is dead");
