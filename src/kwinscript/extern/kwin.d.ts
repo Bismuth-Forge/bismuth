@@ -214,6 +214,12 @@ declare namespace KWin {
     readonly specialWindow: boolean;
 
     /**
+     * Whether the windows is transient to an other windows, i.e. it is a sub window belonging to
+     * a main window
+     */
+    readonly transient: boolean;
+
+    /**
      * The desktop this window is on. If the window is on all desktops the property has value -1.
      */
     desktop: number;
