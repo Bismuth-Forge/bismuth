@@ -6,7 +6,6 @@
 #include <QJSValue>
 #include <QQmlEngine>
 
-
 namespace PlasmaApi
 {
 struct Workspace {
@@ -14,11 +13,23 @@ struct Workspace {
 
     int currentDesktop();
 
-
-
 private:
     QJSValue m_jsRepr;
     QQmlEngine *m_engine;
 };
+
+namespace Test
+{
+class MockWorkspaceJS : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(int currentDesktop READ currentDesktop)
+public:
+    int currentDesktop()
+    {
+        return 42;
+    }
+};
+}
 
 }

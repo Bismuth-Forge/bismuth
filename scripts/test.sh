@@ -5,10 +5,16 @@
 
 set -e
 
-SCRIPTS_DIR=$(dirname "$0")
-$SCRIPTS_DIR/build.sh
+echo "🏗️ Building Bismuth Testing Build..."
+
+cmake -S "." -B "build/testing" -G Ninja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DBUILD_TESTING=true
+
+cmake --build "build/testing"
 
 echo "🧪 Testing Bismuth..."
 
-build/bin/test_runner
+build/testing/bin/test_runner
 
