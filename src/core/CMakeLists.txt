@@ -23,6 +23,7 @@ target_link_libraries(
   Qt5::Qml
   KF5::ConfigCore
   KF5::ConfigGui
+  KF5::GlobalAccel
 )
 
 target_compile_definitions(

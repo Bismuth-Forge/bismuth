@@ -6,6 +6,10 @@ import { Config } from "./config";
 import { Controller, ControllerImpl } from "./controller";
 import { LogImpl } from "./util/log";
 
+interface TSProxy {
+  jsConfig(): Config;
+}
+
 /**
  * Script entry-point from QML side.
  * @param qmlObjects objects from QML gui. Required for the interaction with QML, as we cannot access globals.
@@ -14,8 +18,9 @@ import { LogImpl } from "./util/log";
 export function init(
   qmlObjects: Bismuth.Qml.Main,
   kwinScriptingApi: KWin.Api,
-  config: Config
+  proxy: TSProxy
 ): Controller {
+  const config = proxy.jsConfig();
   const logger = new LogImpl(config);
 
   logger.log(`Configuration object, ignore screen: ${config.ignoreScreen}`);
