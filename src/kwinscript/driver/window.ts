@@ -129,7 +129,10 @@ export class DriverWindowImpl implements DriverWindow {
       this.client.modal ||
       !this.client.resizeable ||
       (this.config.floatUtility &&
-        (this.client.dialog || this.client.splash || this.client.utility || this.client.transient)) ||
+        (this.client.dialog ||
+         this.client.splash ||
+         this.client.utility ||
+         this.client.transient)) ||
       this.config.floatingClass.indexOf(resourceClass) >= 0 ||
       this.config.floatingClass.indexOf(resourceName) >= 0 ||
       matchWords(this.client.caption, this.config.floatingTitle) >= 0
