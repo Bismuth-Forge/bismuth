@@ -17,7 +17,6 @@ target_link_libraries(test_runner
   Qt5::Qml
   Qt5::Test
   Bismuth::Core
-  doctest::doctest
 )
 
 doctest_discover_tests(test_runner)
