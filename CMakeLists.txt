@@ -74,7 +74,7 @@ find_package(
 include_directories("${PROJECT_SOURCE_DIR}/external")
 
 if (NOT BUILD_TESTING)
-  add_compile_definitions(DOCTEST_CONFIG_DISABLE=1)
+  add_compile_definitions(DOCTEST_CONFIG_DISABLE)
 endif()
 
 add_subdirectory(src)
