@@ -91,4 +91,5 @@ jobs:
       - name: Test 🧪
         run: |
           npm install
+          .github/scripts/sysdep-install.sh
           npm test
