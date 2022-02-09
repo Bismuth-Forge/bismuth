@@ -24,7 +24,7 @@ option(
 )
 
 set(QT_MIN_VERSION "5.15.0")
-set(KF5_MIN_VERSION "5.85.0")
+set(KF5_MIN_VERSION "5.78.0")
 
 # HACK: Use git to get the recent version
 # We could explicitly set the version via project declaration
