@@ -10,4 +10,3 @@ echo "🏗️ Building Bismuth..."
 cmake -S "." -B "build" -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=false
 cmake --build "build"
 ln -sf "$PWD/build/compile_commands.json" "./compile_commands.json" # For LSP
-

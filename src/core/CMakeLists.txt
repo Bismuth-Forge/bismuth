@@ -47,4 +47,3 @@ install(
   TARGETS bismuth_core
   DESTINATION "${KDE_INSTALL_QMLDIR}/org/kde/bismuth/core"
 )
-

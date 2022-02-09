@@ -19,12 +19,14 @@ To make sure you can develop the script install all the tools you need:
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [CMake](https://cmake.org/)
 - [Clang-format](https://clang.llvm.org/docs/ClangFormat.html)
+- [Pre Commit](https://pre-commit.com/)
 
 ## 👷 Prepare environment
 
 To prepare environment, clone the project and execute the following:
 
 ```sh
+pre-commit install
 npm install # Install development dependencies
 npm run sysdep-install # Install system dependencies
 ```

@@ -12,7 +12,7 @@ Source: https://github.com/gikari/bismuth
 # Images
 Files: img/*
 Copyright: none
-License: CC-BY-4.0 
+License: CC-BY-4.0
 
 # Json configs
 Files: *.json

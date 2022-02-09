@@ -17,4 +17,3 @@ cmake --build "build/testing"
 echo "🧪 Testing Bismuth..."
 
 build/testing/bin/test_runner
-
