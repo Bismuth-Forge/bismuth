@@ -2,11 +2,18 @@
 // SPDX-License-Identifier: MIT
 
 #include "ts-proxy.hpp"
+#include "controller.hpp"
 
-TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Config &config)
+#include <KGlobalAccel>
+#include <KLocalizedString>
+#include <QAction>
+#include <QKeySequence>
+
+TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, Bismuth::Config &config)
     : QObject()
     , m_engine(engine)
     , m_config(config)
+    , m_controller(controller)
 {
 }
 
@@ -97,4 +104,20 @@ QJSValue TSProxy::jsConfig()
     setProp("debugEnabled", m_config.debug());
 
     return configJSObject;
+}
+
+void TSProxy::registerShortcut(const QJSValue &tsAction)
+{
+    auto id = tsAction.property("key").toString();
+    auto desk = tsAction.property("description").toString();
+    auto keybinding = tsAction.property("defaultKeybinding").toString();
+
+    qDebug() << "[Bismuth] SK: { id:" << id << ", description:" << desk << ", keybind:" << keybinding << "};";
+
+    // NOTE: Lambda MUST capture by copy, otherwise it is an undefined behavior
+    m_controller.registerAction({id, desk, keybinding, [=]() {
+                                     auto callback = tsAction.property("execute");
+                                     qDebug() << "Shortcut triggered! Id:" << id;
+                                     callback.callWithInstance(tsAction);
+                                 }});
 }
