@@ -8,6 +8,7 @@
 #include <QQmlEngine>
 
 #include "config.hpp"
+#include "controller.hpp"
 
 /**
  * Proxy object for the legacy TS backend.
@@ -16,14 +17,21 @@ class TSProxy : public QObject
 {
     Q_OBJECT
 public:
-    explicit TSProxy(QQmlEngine *, Bismuth::Config &);
+    explicit TSProxy(QQmlEngine *, Bismuth::Controller &, Bismuth::Config &);
 
     /**
      * Returns the config usable in the legacy TypeScript logic
      */
     Q_INVOKABLE QJSValue jsConfig();
 
+    /**
+     * Register the actions from the legacy backend
+     * @param tsaction
+     */
+    Q_INVOKABLE void registerShortcut(const QJSValue &);
+
 private:
     QQmlEngine *m_engine;
     Bismuth::Config &m_config;
+    Bismuth::Controller &m_controller;
 };

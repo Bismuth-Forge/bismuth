@@ -2,13 +2,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-import { Config } from "./config";
 import { Controller, ControllerImpl } from "./controller";
+import { TSProxy } from "./extern/proxy";
 import { LogImpl } from "./util/log";
-
-interface TSProxy {
-  jsConfig(): Config;
-}
 
 /**
  * Script entry-point from QML side.
@@ -30,7 +26,8 @@ export function init(
     qmlObjects,
     kwinScriptingApi,
     config,
-    logger
+    logger,
+    proxy
   );
 
   controller.start();

@@ -68,6 +68,7 @@ find_package(
   I18n
   KCMUtils
   Declarative
+  GlobalAccel
   Config
 )
 

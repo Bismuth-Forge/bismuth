@@ -14,6 +14,7 @@ import { Config } from "../config";
 import { Log } from "../util/log";
 
 import * as Action from "./action";
+import { TSProxy } from "../extern/proxy";
 
 /**
  * Entry point of the script (apart from QML). Handles the user input (shortcuts)
@@ -161,7 +162,8 @@ export class ControllerImpl implements Controller {
     private qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     private config: Config,
-    private log: Log
+    private log: Log,
+    private proxy: TSProxy
   ) {
     this.engine = new EngineImpl(this, config, log);
     this.driver = new DriverImpl(qmlObjects, kwinApi, this, config, log);
@@ -441,7 +443,7 @@ export class ControllerImpl implements Controller {
     ];
 
     for (const action of allPossibleActions) {
-      this.driver.bindShortcut(action);
+      this.proxy.registerShortcut(action);
     }
   }
 }

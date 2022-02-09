@@ -53,10 +53,7 @@ abstract class ActionImpl implements Action {
     public description: string,
     public defaultKeybinding: string,
     protected log: Log
-  ) {
-    this.key = `bismuth_${this.key}`;
-    this.description = `Bismuth: ${this.description}`;
-  }
+  ) {}
 
   /**
    * Action execution pattern. Executes the action override optionally

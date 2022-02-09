@@ -12,6 +12,8 @@ target_sources(
   bismuth_core
   PRIVATE
   qml-plugin.cpp
+  ts-proxy.cpp
+  controller.cpp
   qmldir
 )
 
@@ -24,6 +26,7 @@ target_link_libraries(
   KF5::ConfigCore
   KF5::ConfigGui
   KF5::GlobalAccel
+  KF5::I18n
 )
 
 target_compile_definitions(

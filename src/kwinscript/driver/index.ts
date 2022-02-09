@@ -8,7 +8,6 @@ import { DriverSurfaceImpl } from "./surface";
 import { DriverWindowImpl } from "./window";
 
 import { Controller } from "../controller";
-import { Action } from "../controller/action";
 
 import { EngineWindow, EngineWindowImpl } from "../engine/window";
 
@@ -49,12 +48,6 @@ export interface Driver {
    * Bind script to the various KWin events
    */
   bindEvents(): void;
-
-  /**
-   * Bind the shortcut for the action
-   * @param action
-   */
-  bindShortcut(action: Action): void;
 
   /**
    * Manage the windows, that were active before script loading
@@ -319,17 +312,6 @@ export class DriverImpl implements Driver {
 
   public showNotification(text: string, icon?: string, hint?: string): void {
     this.qml.popupDialog.show(text, icon, hint);
-  }
-
-  public bindShortcut(action: Action): void {
-    this.kwinApi.KWin.registerShortcut(
-      action.key,
-      action.description,
-      action.defaultKeybinding,
-      (): void => {
-        this.enter(() => action.execute());
-      }
-    );
   }
 
   public drop(): void {
