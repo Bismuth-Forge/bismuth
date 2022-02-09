@@ -1,5 +1,4 @@
 # SPDX-FileCopyrightText: none
-# 
 # SPDX-License-Identifier: MIT
 
 /build/
@@ -15,6 +14,6 @@ src/kcm/CMakeUserPresets.json
 .clang-format
 compile_commands.json
 
-
 # IDE Stuff
 /.idea/
+/.vscode/
