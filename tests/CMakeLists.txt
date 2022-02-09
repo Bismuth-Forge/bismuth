@@ -4,4 +4,3 @@
 include(doctest)
 
 add_subdirectory(core)
-

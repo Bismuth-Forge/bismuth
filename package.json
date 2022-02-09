@@ -13,8 +13,6 @@
     "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-prettier": "4.0.0",
-    "husky": "7.0.4",
-    "lint-staged": "12.1.2",
     "prettier": "2.5.0",
     "ttypescript": "1.5.13",
     "typedoc": "0.22.10",
@@ -38,8 +36,7 @@
     "install-and-restart": "npm run bi-install",
     "postinstall-and-restart": "npm run restart-kwin-x11 && npm run restart-plasma",
     "docs": "npx typedoc --out build/docs",
-    "test": "scripts/test.sh",
-    "prepare": "husky install"
+    "test": "scripts/test.sh"
   },
   "repository": {
     "type": "git",
@@ -55,9 +52,5 @@
     "url": "https://github.com/gikari/bismuth/issues"
   },
   "homepage": "https://github.com/gikari/bismuth#readme",
-  "prettier": {},
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "**/*.qml": "qmlformat"
-  }
+  "prettier": {}
 }

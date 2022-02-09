@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: MIT
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v0.14.0
+    hooks:
+      - id: reuse
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.5.1
+    hooks:
+      - id: prettier
+        exclude: "CHANGELOG.md"
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.5
+    hooks:
+      - id: clang-format
+        exclude: "^.*external/.*$"
+  - repo: local
+    hooks:
+      - id: qmlformat
+        name: qmlformat
+        entry: qmlformat
+        language: system
+        types: [text]
+        files: ^.*\.qml$

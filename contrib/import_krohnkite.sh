@@ -40,7 +40,7 @@ main ()
   bis_to_kro["toggle_tile_layout"]="Krohnkite: Tile Layout"
   bis_to_kro["toggle_window_floating"]="Krohnkite: Float"
   bis_to_kro["toggle_floating_layout"]="Krohnkite: Float All"
-  
+
   config_file_path=${1:-"~/.config/kglobalshortcutsrc"}
 
   echo "Config file path: ${config_file_path}"
@@ -55,7 +55,7 @@ main ()
 
     IFS=',' read -ra bis_val_arr <<< "$bis_val"
     IFS=',' read -ra kro_val_arr <<< "$kro_val"
-    
+
     bis_primary_shortcut="${bis_val_arr[0]}"
     bis_secondary_shortcut="${bis_val_arr[1]}"
     bis_description="${bis_val_arr[2]}"
@@ -69,7 +69,7 @@ main ()
   done
 
   # Reload shortcuts configuration
-  systemctl --user restart plasma-kglobalaccel 
+  systemctl --user restart plasma-kglobalaccel
 }
 
 main $1

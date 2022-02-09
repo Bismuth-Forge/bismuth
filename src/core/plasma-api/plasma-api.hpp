@@ -7,7 +7,6 @@
 
 #include "workspace.hpp"
 
-
 namespace PlasmaApi
 {
 

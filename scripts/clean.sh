@@ -9,4 +9,3 @@ set -e
 rm -vrf "build"
 rm -vf package-lock.json
 rm -vrf node_modules/
-

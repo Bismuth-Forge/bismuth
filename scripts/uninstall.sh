@@ -8,4 +8,3 @@ set -e
 
 echo "🔥 Uninstalling Bismuth..."
 sudo xargs rm < "build/install_manifest.txt"
-
