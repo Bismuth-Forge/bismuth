@@ -365,6 +365,7 @@ export class DriverImpl implements Driver {
     try {
       callback();
     } catch (e: any) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.log.log(e);
     } finally {
       this.entered = false;
