@@ -10,11 +10,6 @@
   <!-- Use group name provided by the KWin Scripting -->
   <group name="Script-bismuth">
     <!-- This is basically copy-paste from the old configuration file -->
-    <entry name="debug" type="Bool">
-      <label>Enable logging</label>
-      <default>false</default>
-    </entry>
-
     <entry name="enableTileLayout" type="Bool">
 	    <label>Enable/disable Tile layout</label>
       <default>true</default>
