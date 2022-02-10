@@ -103,8 +103,6 @@ QJSValue TSProxy::jsConfig()
     setStrArrayProp("ignoreActivity", m_config.ignoreActivity());
     setStrArrayProp("ignoreScreen", m_config.ignoreScreen(), true);
 
-    setProp("debugEnabled", m_config.debug());
-
     return configJSObject;
 }
 

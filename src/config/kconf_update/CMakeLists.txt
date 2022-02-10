@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 install(
-  FILES old_conf_ui.upd shortcuts_category.upd
+  FILES old_conf_ui.upd shortcuts_category.upd new_logger.upd
   DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR}
 )
 install(

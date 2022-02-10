@@ -49,6 +49,4 @@ export interface Config {
   ignoreActivity: string[];
   ignoreScreen: number[];
   //#endregion
-
-  debugEnabled: boolean;
 }
