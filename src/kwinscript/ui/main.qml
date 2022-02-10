@@ -14,7 +14,9 @@ Item {
     property var controller
 
     Component.onCompleted: {
-        console.log("[Bismuth] Initiating the script");
+        // Init core
+        core.init();
+        core.proxy.log("Initiating Bismuth: Plasma Tiling Window script!");
         const qmlObjects = {
             "scriptRoot": scriptRoot,
             "trayItem": trayItem,
@@ -26,13 +28,11 @@ Item {
             "options": options,
             "KWin": KWin
         };
-        // Init core
-        core.init();
         // Init legacy JS backend
         scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.proxy);
     }
     Component.onDestruction: {
-        console.log("[Bismuth] Everybody is dead");
+        core.proxy.log("Calling event hooks destructors... Goodbye.");
         scriptRoot.controller.drop();
     }
 

@@ -6,6 +6,15 @@ project(bismuth-core)
 add_library(bismuth_core SHARED)
 add_Library(Bismuth::Core ALIAS bismuth_core)
 
+ecm_qt_declare_logging_category(BISMUTH_LOG
+  HEADER logger.hpp
+  IDENTIFIER Bi
+  CATEGORY_NAME org.kde.bismuth
+  DEFAULT_SEVERITY Debug
+  EXPORT Bismuth
+  DESCRIPTION "Bismuth Plasma Tiling Extension"
+)
+
 add_subdirectory(plasma-api)
 
 target_sources(
@@ -15,6 +24,7 @@ target_sources(
   ts-proxy.cpp
   controller.cpp
   qmldir
+  ${BISMUTH_LOG}
 )
 
 target_link_libraries(
@@ -37,6 +47,12 @@ target_compile_definitions(
 )
 
 kconfig_add_kcfg_files(bismuth_core GENERATE_MOC "config.kcfgc")
+
+ecm_qt_install_logging_categories(
+  EXPORT Bismuth
+  FILE bismuth.categories
+  DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
 
 install(
   FILES "qmldir"
