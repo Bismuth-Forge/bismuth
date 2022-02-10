@@ -7,4 +7,5 @@ import { Action } from "../controller/action";
 export interface TSProxy {
   jsConfig(): Config;
   registerShortcut(data: Action): void;
+  log(value: any): void;
 }

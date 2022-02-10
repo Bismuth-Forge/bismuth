@@ -17,10 +17,7 @@ export function init(
   proxy: TSProxy
 ): Controller {
   const config = proxy.jsConfig();
-  const logger = new LogImpl(config);
-
-  logger.log(`Configuration object, ignore screen: ${config.ignoreScreen}`);
-  logger.log(`Configuration object, floatingClass: ${config.floatingClass}`);
+  const logger = new LogImpl(proxy);
 
   const controller = new ControllerImpl(
     qmlObjects,

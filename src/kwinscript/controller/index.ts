@@ -173,8 +173,6 @@ export class ControllerImpl implements Controller {
    * Entry point: start tiling window management
    */
   public start(): void {
-    this.log.log("Let's get down to bismuth!");
-
     this.driver.bindEvents();
     this.bindTrayActions();
     this.bindShortcuts();

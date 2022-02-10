@@ -30,6 +30,11 @@ public:
      */
     Q_INVOKABLE void registerShortcut(const QJSValue &);
 
+    /**
+     * Log the value to the default logging category
+     */
+    Q_INVOKABLE void log(const QJSValue &);
+
 private:
     QQmlEngine *m_engine;
     Bismuth::Config &m_config;

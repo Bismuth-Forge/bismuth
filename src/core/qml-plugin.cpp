@@ -11,6 +11,7 @@
 
 #include "config.hpp"
 #include "controller.hpp"
+#include "logger.hpp"
 #include "plasma-api/plasma-api.hpp"
 #include "ts-proxy.hpp"
 
@@ -35,9 +36,7 @@ Core::Core(QQuickItem *parent)
 void Core::init()
 {
     m_engine = qmlEngine(this);
-    if (m_config->debug()) {
-        qDebug() << "[Bismuth] Core QmlEngine ptr: " << m_engine;
-    }
+    qDebug(Bi) << "Core QmlEngine ptr: " << m_engine;
     m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
     m_controller = std::make_unique<Bismuth::Controller>();
     m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_config);
