@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+# SPDX-FileCopyrightText: 2022 Ignacy Kajdan <git@verahawk.com>
+# SPDX-License-Identifier: MIT
 
 # Exit immediately on error
 set -eu
