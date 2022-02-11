@@ -28,17 +28,18 @@ Core::Core(QQuickItem *parent)
     , m_engine() // We cannot get engine from the pointer in the constructor
     , m_controller()
     , m_tsProxy()
-    , m_config(std::make_unique<Bismuth::Config>())
+    , m_config()
     , m_plasmaApi()
 {
 }
 
 void Core::init()
 {
+    m_config = std::make_unique<Bismuth::Config>();
     m_engine = qmlEngine(this);
     qDebug(Bi) << "Core QmlEngine ptr: " << m_engine;
-    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
     m_controller = std::make_unique<Bismuth::Controller>();
+    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
     m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_config);
 }
 
