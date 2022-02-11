@@ -3,18 +3,12 @@ SPDX-FileCopyrightText: 2021 Ignacy Kajdan <git@verahawk.com>
 SPDX-License-Identifier: CC-BY-4.0
 -->
 <svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <style id="current-color-scheme" type="text/css">
-  .ColorScheme-Text { color:#eff0f1; }
- </style>
- <g class="ColorScheme-Text" transform="matrix(.73333 0 0 .83333 2 2.6667)" fill="currentColor">
-  <rect x="1.3636" y="5.2" width="16.364" height="21.6"/>
-  <rect x="20.455" y="5.2" width="16.364" height="9.6"/>
-  <rect x="20.455" y="17.2" width="6.8179" height="9.6" stroke-width=".64547"/>
-  <rect x="-2.7273" y="1.6" width="43.636" height="1.2"/>
-  <rect x="-2.7273" y="1.6" width="43.636" height="1.2"/>
-  <rect x="-2.7273" y="29.2" width="43.636" height="1.2"/>
-  <rect x="39.545" y="1.6" width="1.3636" height="28.8"/>
-  <rect x="-2.7273" y="1.6" width="1.3636" height="28.8"/>
-  <rect x="30" y="17.2" width="6.8189" height="9.6" stroke-width=".64552"/>
- </g>
+  <style id="current-color-scheme" type="text/css">.ColorScheme-Text { color:#eff0f1; }</style>
+  <g class="ColorScheme-Text" fill="currentColor">
+    <rect x="17" y="17" width="5" height="8"/>
+    <rect x="17" y="7" width="12" height="8"/>
+    <rect x="3" y="7" width="12" height="18"/>
+    <rect x="24" y="17" width="5" height="8"/>
+    <path d="m0 4v24h32v-24zm1 1h30v22h-30z"/>
+  </g>
 </svg>

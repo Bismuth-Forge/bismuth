@@ -1,0 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2022 Ignacy Kajdan <git@verahawk.com>
+SPDX-License-Identifier: CC-BY-4.0
+-->
+<svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <style id="current-color-scheme" type="text/css">.ColorScheme-Text { color:#eff0f1; }</style>
+  <g class="ColorScheme-Text" transform="scale(.5)" fill="currentColor">
+    <rect x="4" y="14" width="14" height="12"/>
+    <path d="m0 2v28h32v-28zm2 2h28v24h-28z"/>
+    <path d="m14 6v6h6v6h8v-12z"/>
+  </g>
+</svg>
