@@ -174,7 +174,6 @@ export class ControllerImpl implements Controller {
    */
   public start(): void {
     this.driver.bindEvents();
-    this.bindTrayActions();
     this.bindShortcuts();
 
     this.driver.manageWindows();
@@ -383,16 +382,6 @@ export class ControllerImpl implements Controller {
 
   public drop(): void {
     this.driver.drop();
-  }
-
-  private bindTrayActions(): void {
-    // NOTE: Since the qml interface is very agile, it's seems
-    // to be unreasonable to make the bindings universal.
-    // However, this may be changed it the future.
-    this.qmlObjects.trayItem.menu.onToggleTiling = (): void => {
-      const action = new Action.ToggleFloatingLayout(this.engine, this.log);
-      action.execute();
-    };
   }
 
   private bindShortcuts(): void {

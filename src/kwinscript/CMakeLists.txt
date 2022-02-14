@@ -66,7 +66,6 @@ add_custom_command(
   "${CMAKE_CURRENT_SOURCE_DIR}/ui" "${CMAKE_CURRENT_BINARY_DIR}/bismuth/contents/ui"
   DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/ui/main.qml"
-  "${CMAKE_CURRENT_SOURCE_DIR}/ui/TrayItem.qml"
   "${CMAKE_CURRENT_SOURCE_DIR}/ui/popup.qml"
   COMMENT "📑 Preparing UI and metadata files..."
 )
