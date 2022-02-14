@@ -3,6 +3,8 @@
 
 #include "qml-plugin.hpp"
 
+#include <KSharedConfig>
+
 #include <QJSValue>
 #include <QString>
 #include <QtQml>
@@ -31,6 +33,9 @@ Core::Core(QQuickItem *parent)
     , m_config()
     , m_plasmaApi()
 {
+    // Force check for the config changes
+    auto kcfg = KSharedConfig::openConfig("kglobalshortcutsrc");
+    kcfg->checkUpdate(QStringLiteral("bismuth-shortcuts-category"), QStringLiteral("bismuth_shortcuts_category.upd"));
 }
 
 void Core::init()
