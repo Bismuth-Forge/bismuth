@@ -19,7 +19,6 @@ Item {
         core.proxy.log("Initiating Bismuth: Plasma Tiling Window script!");
         const qmlObjects = {
             "scriptRoot": scriptRoot,
-            "trayItem": trayItem,
             "activityInfo": activityInfo,
             "popupDialog": popupDialog
         };
@@ -38,10 +37,6 @@ Item {
 
     BiCore.Core {
         id: core
-    }
-
-    TrayItem {
-        id: trayItem
     }
 
     TaskManager.ActivityInfo {
