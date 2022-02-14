@@ -4,3 +4,4 @@
 add_subdirectory(core)
 add_subdirectory(kcm)
 add_subdirectory(kwinscript)
+add_subdirectory(config)
