@@ -18,7 +18,12 @@ Workspace::Workspace(QQmlEngine *engine)
 
 int Workspace::currentDesktop()
 {
-    return m_kwinImpl->property("currentDesktop").toInt();
+    return m_kwinImpl->property("currentDesktop").value<int>();
+}
+
+void Workspace::setCurrentDesktop(int desktop)
+{
+    m_kwinImpl->setProperty("currentDesktop", QVariant::fromValue(desktop));
 }
 
 namespace Test
@@ -41,6 +46,26 @@ TEST_CASE("Workspace Properties Read")
         CHECK(result == 42);
     }
 }
+
+TEST_CASE("Workspace Properties Write")
+{
+    auto engine = QQmlEngine();
+    auto mockWorkspace = MockWorkspaceJS();
+
+    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
+
+    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
+    auto workspace = plasmaApi.workspace();
+
+    workspace.setCurrentDesktop(67);
+
+    SUBCASE("currentDesktop")
+    {
+        auto result = workspace.currentDesktop();
+        CHECK(result == 67);
+    }
+}
+
 }
 
 }
