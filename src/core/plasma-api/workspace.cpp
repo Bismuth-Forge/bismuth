@@ -3,18 +3,44 @@
 
 #include "workspace.hpp"
 
-#include <doctest/doctest.h>
-
+#include "logger.hpp"
+#include "plasma-api/client.hpp"
 #include "plasma-api/plasma-api.hpp"
 
 namespace PlasmaApi
 {
 
 Workspace::Workspace(QQmlEngine *engine)
-    : m_engine(engine)
+    : QObject()
+    , m_engine(engine)
     , m_kwinImpl(engine->globalObject().property("workspace").toQObject())
 {
+    wrapSignals();
 }
+
+Workspace::Workspace(const Workspace &rhs)
+    : QObject()
+    , m_engine(rhs.m_engine)
+    , m_kwinImpl(rhs.m_kwinImpl)
+{
+    wrapSignals();
+};
+
+void Workspace::wrapSignals()
+{
+    auto wrapSimpleSignal = [this](const char *signalSignature) {
+        auto signalsSignature = QMetaObject::normalizedSignature(signalSignature);
+        connect(m_kwinImpl, signalsSignature, this, signalsSignature);
+    };
+
+    auto wrapComplexSignal = [this](const char *implSignalSignature, const char *thisSignalSignature) {
+        auto implNormSignature = QMetaObject::normalizedSignature(implSignalSignature);
+        auto thisNormSignature = QMetaObject::normalizedSignature(thisSignalSignature);
+        connect(m_kwinImpl, implNormSignature, this, thisNormSignature);
+    };
+
+    wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
+};
 
 int Workspace::currentDesktop()
 {
@@ -26,46 +52,11 @@ void Workspace::setCurrentDesktop(int desktop)
     m_kwinImpl->setProperty("currentDesktop", QVariant::fromValue(desktop));
 }
 
-namespace Test
+void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient)
 {
-
-TEST_CASE("Workspace Properties Read")
-{
-    auto engine = QQmlEngine();
-    auto mockWorkspace = MockWorkspaceJS();
-    mockWorkspace.setCurrentDesktop(42);
-
-    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
-
-    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
-    auto workspace = plasmaApi.workspace();
-
-    SUBCASE("currentDesktop")
-    {
-        auto result = workspace.currentDesktop();
-        CHECK(result == 42);
-    }
-}
-
-TEST_CASE("Workspace Properties Write")
-{
-    auto engine = QQmlEngine();
-    auto mockWorkspace = MockWorkspaceJS();
-
-    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
-
-    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
-    auto workspace = plasmaApi.workspace();
-
-    workspace.setCurrentDesktop(67);
-
-    SUBCASE("currentDesktop")
-    {
-        auto result = workspace.currentDesktop();
-        CHECK(result == 67);
-    }
-}
-
-}
+    // Since we don't know the KWin internal implementation we have to use reinterpret_cast
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT currentDesktopChanged(desktop, clientWrapper);
+};
 
 }

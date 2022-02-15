@@ -6,38 +6,37 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include "plasma-api/client.hpp"
+
+// Forward declare KWin Classes
+namespace KWin
+{
+class AbstractClient;
+}
+
 namespace PlasmaApi
 {
-struct Workspace {
+class Workspace : public QObject
+{
+    Q_OBJECT
+public:
     Workspace(QQmlEngine *engine);
+    Workspace(const Workspace &);
 
     int currentDesktop();
     void setCurrentDesktop(int desktop);
 
+public Q_SLOTS:
+    void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
+
+Q_SIGNALS:
+    void currentDesktopChanged(int desktop, PlasmaApi::Client kwinClient);
+
 private:
+    void wrapSignals();
+
     QQmlEngine *m_engine;
     QObject *m_kwinImpl;
 };
-
-namespace Test
-{
-class MockWorkspaceJS : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(int currentDesktop READ currentDesktop WRITE setCurrentDesktop)
-public:
-    int currentDesktop()
-    {
-        return m_currentDesktop;
-    }
-
-    void setCurrentDesktop(int desktop)
-    {
-        m_currentDesktop = desktop;
-    }
-
-    int m_currentDesktop{};
-};
-}
 
 }
