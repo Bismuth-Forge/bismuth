@@ -10,16 +10,15 @@
 namespace PlasmaApi
 {
 
-Workspace::Workspace(const QJSValue &jsRepr, QQmlEngine *engine)
-    : m_jsRepr(jsRepr)
-    , m_engine(engine)
+Workspace::Workspace(QQmlEngine *engine)
+    : m_engine(engine)
+    , m_kwinImpl(engine->globalObject().property("workspace").toQObject())
 {
 }
 
 int Workspace::currentDesktop()
 {
-    auto jsResult = m_jsRepr.property("currentDesktop");
-    return jsResult.toInt();
+    return m_kwinImpl->property("currentDesktop").toInt();
 }
 
 namespace Test
@@ -29,6 +28,7 @@ TEST_CASE("Workspace Properties Read")
 {
     auto engine = QQmlEngine();
     auto mockWorkspace = MockWorkspaceJS();
+    mockWorkspace.setCurrentDesktop(42);
 
     engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
 
