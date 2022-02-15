@@ -12,6 +12,7 @@ struct Workspace {
     Workspace(QQmlEngine *engine);
 
     int currentDesktop();
+    void setCurrentDesktop(int desktop);
 
 private:
     QQmlEngine *m_engine;
