@@ -3,6 +3,8 @@
 
 #include "workspace.hpp"
 
+#include <QQmlContext>
+
 #include "logger.hpp"
 #include "plasma-api/client.hpp"
 #include "plasma-api/plasma-api.hpp"
@@ -13,7 +15,7 @@ namespace PlasmaApi
 Workspace::Workspace(QQmlEngine *engine)
     : QObject()
     , m_engine(engine)
-    , m_kwinImpl(engine->globalObject().property("workspace").toQObject())
+    , m_kwinImpl(m_engine->rootContext()->contextProperty(QStringLiteral("workspace")).value<QObject *>())
 {
     wrapSignals();
 }
