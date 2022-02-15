@@ -16,10 +16,11 @@ namespace PlasmaApi
 struct PlasmaApi {
     explicit PlasmaApi(QQmlEngine *engine);
 
-    Workspace workspace();
+    Workspace &workspace();
 
 private:
     QQmlEngine *m_engine;
+    Workspace m_workspace;
 };
 
 }

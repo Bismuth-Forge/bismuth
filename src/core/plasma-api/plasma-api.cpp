@@ -11,12 +11,12 @@ namespace PlasmaApi
 {
 
 PlasmaApi::PlasmaApi(QQmlEngine *engine)
-    : m_engine(engine){};
+    : m_engine(engine)
+    , m_workspace(engine){};
 
-Workspace PlasmaApi::workspace()
+Workspace &PlasmaApi::workspace()
 {
-    auto evalResult = m_engine->globalObject().property("workspace");
-    return Workspace(evalResult, m_engine);
+    return m_workspace;
 }
 
 }
