@@ -44,16 +44,6 @@ void Workspace::wrapSignals()
     wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
 };
 
-int Workspace::currentDesktop()
-{
-    return m_kwinImpl->property("currentDesktop").value<int>();
-}
-
-void Workspace::setCurrentDesktop(int desktop)
-{
-    m_kwinImpl->setProperty("currentDesktop", QVariant::fromValue(desktop));
-}
-
 void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient)
 {
     // Since we don't know the KWin internal implementation we have to use reinterpret_cast
