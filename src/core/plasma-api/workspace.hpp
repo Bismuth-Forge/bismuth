@@ -8,6 +8,8 @@
 
 #include "plasma-api/client.hpp"
 
+#include "utils.hpp"
+
 // Forward declare KWin Classes
 namespace KWin
 {
@@ -23,8 +25,7 @@ public:
     Workspace(QQmlEngine *engine);
     Workspace(const Workspace &);
 
-    int currentDesktop();
-    void setCurrentDesktop(int desktop);
+    BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
 
 public Q_SLOTS:
     void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
