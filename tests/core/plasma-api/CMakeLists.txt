@@ -1,11 +1,7 @@
 # SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
 # SPDX-License-Identifier: MIT
 
-target_sources(
-  bismuth_core
+target_sources(test_runner
   PRIVATE
-  plasma-api.cpp
-  client.cpp
-  toplevel.cpp
   workspace.cpp
 )

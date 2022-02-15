@@ -8,6 +8,8 @@ target_sources(test_runner
   main.cpp
 )
 
+add_subdirectory(plasma-api)
+
 target_link_libraries(test_runner
   PRIVATE
   Qt5::Core

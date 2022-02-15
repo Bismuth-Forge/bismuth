@@ -39,13 +39,6 @@ target_link_libraries(
   KF5::I18n
 )
 
-target_compile_definitions(
-  bismuth_core
-  PRIVATE
-  # Make all Doctest symbols exported
-  DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
-)
-
 kconfig_add_kcfg_files(bismuth_core GENERATE_MOC "config.kcfgc")
 
 ecm_qt_install_logging_categories(

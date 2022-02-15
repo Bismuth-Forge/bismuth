@@ -7,13 +7,13 @@ set -e
 
 echo "🏗️ Building Bismuth Testing Build..."
 
-cmake -S "." -B "build/testing" -G Ninja \
+cmake -S "." -B "build" -G Ninja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DBUILD_TESTING=true
 
-cmake --build "build/testing"
+cmake --build "build"
 
 echo "🧪 Testing Bismuth..."
 
-build/testing/bin/test_runner
+build/bin/test_runner

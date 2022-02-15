@@ -12,7 +12,10 @@ namespace PlasmaApi
 
 PlasmaApi::PlasmaApi(QQmlEngine *engine)
     : m_engine(engine)
-    , m_workspace(engine){};
+    , m_workspace(engine)
+{
+    qRegisterMetaType<Client>();
+};
 
 Workspace &PlasmaApi::workspace()
 {
