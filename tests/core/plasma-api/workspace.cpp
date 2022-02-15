@@ -4,6 +4,7 @@
 #include <doctest/doctest.h>
 
 #include <QObject>
+#include <QQmlContext>
 #include <QQmlEngine>
 #include <QSignalSpy>
 
@@ -49,7 +50,7 @@ TEST_CASE("Workspace Properties Read")
     auto mockWorkspace = MockWorkspaceJS();
     mockWorkspace.setCurrentDesktop(42);
 
-    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
+    engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
     auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
     auto workspace = plasmaApi.workspace();
@@ -66,7 +67,7 @@ TEST_CASE("Workspace Properties Write")
     auto engine = QQmlEngine();
     auto mockWorkspace = MockWorkspaceJS();
 
-    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
+    engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
     auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
     auto workspace = plasmaApi.workspace();
@@ -85,7 +86,7 @@ TEST_CASE("Workspace Properties Signals")
     auto engine = QQmlEngine();
     auto mockWorkspace = MockWorkspaceJS();
 
-    engine.globalObject().setProperty(QStringLiteral("workspace"), engine.newQObject(&mockWorkspace));
+    engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
     auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
     auto workspace = plasmaApi.workspace();
