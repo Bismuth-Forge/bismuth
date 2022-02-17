@@ -9,6 +9,7 @@ export interface Config {
   monocleMaximize: boolean;
   maximizeSoleTile: boolean;
   monocleMinimizeRest: boolean; // KWin-specific
+  untileByDragging: boolean;
   //#endregion
 
   //#region Features

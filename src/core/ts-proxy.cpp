@@ -51,6 +51,7 @@ QJSValue TSProxy::jsConfig()
     setProp("monocleMaximize", m_config.monocleMaximize());
     setProp("maximizeSoleTile", m_config.maximizeSoleTile());
     setProp("monocleMinimizeRest", m_config.monocleMinimizeRest());
+    setProp("untileByDragging", m_config.untileByDragging());
 
     setProp("keepFloatAbove", m_config.keepFloatAbove());
     setProp("noTileBorder", m_config.noTileBorder());

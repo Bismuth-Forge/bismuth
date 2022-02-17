@@ -59,6 +59,11 @@ Kirigami.FormLayout {
     }
 
     BIC.ConfigCheckBox {
+        text: i18n("Untile windows by dragging")
+        settingName: "untileByDragging"
+    }
+
+    BIC.ConfigCheckBox {
         text: i18n("Floating windows always on top")
         settingName: "keepFloatAbove"
     }
