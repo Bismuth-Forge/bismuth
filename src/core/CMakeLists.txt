@@ -1,12 +1,13 @@
-# SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
 project(bismuth-core)
 
 add_library(bismuth_core SHARED)
-add_Library(Bismuth::Core ALIAS bismuth_core)
+add_library(Bismuth::Core ALIAS bismuth_core)
 
-ecm_qt_declare_logging_category(BISMUTH_LOG
+ecm_qt_declare_logging_category(
+  BISMUTH_LOG
   HEADER logger.hpp
   IDENTIFIER Bi
   CATEGORY_NAME org.kde.bismuth

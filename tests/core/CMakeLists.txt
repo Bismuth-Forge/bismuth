@@ -1,16 +1,18 @@
-# SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
 add_executable(test_runner)
 
-target_sources(test_runner
+target_sources(
+  test_runner
   PRIVATE
   main.cpp
 )
 
 add_subdirectory(plasma-api)
 
-target_link_libraries(test_runner
+target_link_libraries(
+  test_runner
   PRIVATE
   Qt5::Core
   Qt5::Quick

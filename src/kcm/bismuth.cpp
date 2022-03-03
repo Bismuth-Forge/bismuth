@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+ * SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
  *
  * SPDX-License-Identifier: MIT
  */
@@ -27,7 +27,7 @@ BismuthSettings::BismuthSettings(QObject *parent, const QVariantList &args)
                                            QStringLiteral("1.0"),
                                            QStringLiteral(""),
                                            KAboutLicense::LicenseKey::Custom,
-                                           i18nc("@info:credit", "Copyright 2021 Mikhail Zolotukhin <mail@genda.life>"));
+                                           i18nc("@info:credit", "Copyright 2021 Mikhail Zolotukhin <mail@gikari.com>"));
 
     aboutData->addAuthor(i18nc("@info:credit", "Author"), i18nc("@info:credit", "Author"), QStringLiteral("author@domain.com"));
 

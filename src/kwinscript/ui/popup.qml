@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 import QtQuick 2.15
@@ -81,10 +81,10 @@ PlasmaCore.Dialog {
         // Get the width of a two-digit number so we can size the hint
         // to the maximum width to avoid the main text moving around
         TextMetrics {
-          id: widestHintSize
+            id: widestHintSize
 
-          text: i18n("10")
-          font: messageHint.font
+            text: i18n("10")
+            font: messageHint.font
         }
 
         // Hides the popup window when triggered
