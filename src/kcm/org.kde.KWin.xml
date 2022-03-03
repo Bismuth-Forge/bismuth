@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<!-- SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life> -->
+<!-- SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com> -->
 <!-- SPDX-License-Identifier: MIT -->
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <interface name="org.kde.kwin.Scripting">
     <method name="unloadScript">
-      <arg name="pluginName" type="s" direction="in"/>
+      <arg name="pluginName" type="s" direction="in" />
     </method>
-    <method name="start"/>
+    <method name="start" />
   </interface>
 </node>

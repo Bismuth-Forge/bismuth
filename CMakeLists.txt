@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
 cmake_minimum_required(VERSION 3.16)
@@ -75,12 +75,12 @@ find_package(
 
 include_directories("${PROJECT_SOURCE_DIR}/external")
 
-if (NOT BUILD_TESTING)
+if(NOT BUILD_TESTING)
   add_compile_definitions(DOCTEST_CONFIG_DISABLE)
 endif()
 
 add_subdirectory(src)
 
-if (BUILD_TESTING)
+if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()

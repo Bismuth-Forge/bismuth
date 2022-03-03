@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
 # Remove symlink for legacy config ui

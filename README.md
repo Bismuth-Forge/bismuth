@@ -1,5 +1,5 @@
 <!--
-  SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@genda.life>
+  SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@gikari.com>
   SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
   SPDX-License-Identifier: MIT
 -->
