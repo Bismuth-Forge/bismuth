@@ -11,8 +11,7 @@ option(
   using esbuild. This could be useful, if you know, that the \
   code is correct and you want to speed up building times. \
   For example - you are a packager."
-  ON
-)
+  ON)
 
 option(
   USE_NPM
@@ -20,27 +19,25 @@ option(
   want to disable this option, if you want to use natively \
   installed tools. In particular build systems won't use \
   \"npx\" prefix before commands."
-  ON
-)
+  ON)
 
 set(QT_MIN_VERSION "5.15.0")
 set(KF5_MIN_VERSION "5.78.0")
 
-# HACK: Use git to get the recent version
-# We could explicitly set the version via project declaration
-# But this would conflict with package.json and would
+# HACK: Use git to get the recent version We could explicitly set the version
+# via project declaration But this would conflict with package.json and would
 # Require automatic change via Release Please time CI
-execute_process(COMMAND "git" "describe" "--tags" "--abbrev=0" OUTPUT_VARIABLE CMAKE_PROJECT_VERSION)
+execute_process(COMMAND "git" "describe" "--tags" "--abbrev=0"
+                OUTPUT_VARIABLE CMAKE_PROJECT_VERSION)
 string(REPLACE "\n" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
 string(REPLACE "v" "" CMAKE_PROJECT_VERSION "${CMAKE_PROJECT_VERSION}")
 
-# TODO: Less hacky solution, however it requires CMake 3.19
-# which is not so common across distros as of now.
-# Uncomment when cmake_minimum_required >= 3.19.
+# TODO: Less hacky solution, however it requires CMake 3.19 which is not so
+# common across distros as of now. Uncomment when cmake_minimum_required >=
+# 3.19.
 #
-# # Set the project version
-# file(READ ${CMAKE_CURRENT_SOURCE_DIR}/package.json PACKAGE_JSON)
-# string(JSON CMAKE_PROJECT_VERSION GET ${PACKAGE_JSON} version)
+# # Set the project version file(READ ${CMAKE_CURRENT_SOURCE_DIR}/package.json
+# PACKAGE_JSON) string(JSON CMAKE_PROJECT_VERSION GET ${PACKAGE_JSON} version)
 # unset(PACKAGE_JSON)
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
@@ -56,22 +53,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(
-  Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
-  DBus
-  Quick
-  Svg
-  Test
-)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS DBus Quick Svg
+                                                              Test)
 
-find_package(
-  KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-  I18n
-  KCMUtils
-  Declarative
-  GlobalAccel
-  Config
-)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
+             COMPONENTS I18n KCMUtils Declarative GlobalAccel Config)
 
 include_directories("${PROJECT_SOURCE_DIR}/external")
 
