@@ -11,5 +11,5 @@ ecm_install_icons(
   32-status-bismuth-spread.svg
   32-status-bismuth-stair.svg
   32-status-bismuth-tile.svg
-  DESTINATION ${KDE_INSTALL_ICONDIR}
-)
+  DESTINATION
+  ${KDE_INSTALL_ICONDIR})
