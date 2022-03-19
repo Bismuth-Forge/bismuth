@@ -56,8 +56,20 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS DBus Quick Svg
                                                               Test)
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
-             COMPONENTS I18n KCMUtils Declarative GlobalAccel Config)
+find_package(
+  KF5 ${KF5_MIN_VERSION} REQUIRED
+  COMPONENTS Config
+             ConfigWidgets
+             CoreAddons
+             Declarative
+             GlobalAccel
+             GuiAddons
+             IconThemes
+             KCMUtils
+             WindowSystem
+             I18n)
+
+find_package(KDecoration2 REQUIRED)
 
 include_directories("${PROJECT_SOURCE_DIR}/external")
 
