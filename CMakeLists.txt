@@ -63,10 +63,7 @@ find_package(
              CoreAddons
              Declarative
              GlobalAccel
-             GuiAddons
-             IconThemes
              KCMUtils
-             WindowSystem
              I18n)
 
 find_package(KDecoration2 REQUIRED)
