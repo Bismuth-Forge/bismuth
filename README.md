@@ -105,7 +105,10 @@ list, please open a pull request.
 ### Usage
 
 🎉 To start using Bismuth enable it in System Settings > Window Management >
-Window Tiling.
+Window Tiling. Additionally, you can decorate your windows in a tiling window
+manager style (border-only windows) using the window decoration, that comes
+with Bismuth. To do so, go to System Settings > Appearance > Window Decorations
+and select the Bismuth decoration.
 
 ⌨️ You can view the shortcuts in System Settings > Shortcuts > Window Tiling. If
 you used Krohnkite before, you can import some of its shortcuts using [the bash
