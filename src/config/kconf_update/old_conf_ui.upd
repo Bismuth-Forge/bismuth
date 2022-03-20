@@ -1,7 +1,0 @@
-# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
-# SPDX-License-Identifier: MIT
-
-Version=5
-
-Id=bismuth-old-conf-ui
-Script=old_conf_ui.sh,bash

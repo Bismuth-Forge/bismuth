@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
+# SPDX-License-Identifier: MIT
+
+# Deletes the enable debug flag
+Version=5
+Id=bismuth-new-logger
+File=kwinrc
+Group=Script-bismuth
+RemoveKey=debug

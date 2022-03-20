@@ -1,5 +1,5 @@
 <!--
-  SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@genda.life>
+  SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@gikari.com>
   SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
   SPDX-License-Identifier: MIT
 -->
@@ -13,7 +13,7 @@
 [![wayland: supported](https://img.shields.io/badge/Wayland-Ready-blue?style=for-the-badge&logo=kde)](https://community.kde.org/KWin/Wayland)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Bismuth-Forge/bismuth?color=red&logo=github&style=for-the-badge)](https://github.com/Bismuth-Forge/bismuth/releases/latest)
 [![Matrix](https://img.shields.io/matrix/bi:kde.org?label=Chat&server_fqdn=kde.modular.im&logo=matrix&style=for-the-badge)](https://matrix.to/#/#bi:kde.org)
-[![Donate](https://img.shields.io/liberapay/patrons/bismuth.svg?logo=liberapay&style=for-the-badge)](https://liberapay.com/bismuth/donate)
+[![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/bismuth?label=Donators&logo=opencollective&style=for-the-badge)](https://opencollective.com/bismuth)
 
 ![demo](img/rice.png)
 
@@ -77,6 +77,12 @@ contact the package maintainer first.
 
 #### Ubuntu
 
+- [Official Repo](https://launchpad.net/ubuntu/+source/bismuth):
+
+  ```bash
+  sudo apt install bismuth
+  ```
+
 - [Volian Repository](https://volian.org/bismuth/)
 
 #### Fedora
@@ -105,7 +111,10 @@ list, please open a pull request.
 ### Usage
 
 🎉 To start using Bismuth enable it in System Settings > Window Management >
-Window Tiling.
+Window Tiling. Additionally, you can decorate your windows in a tiling window
+manager style (border-only windows) using the window decoration, that comes
+with Bismuth. To do so, go to System Settings > Appearance > Window Decorations
+and select the Bismuth decoration.
 
 ⌨️ You can view the shortcuts in System Settings > Shortcuts > Window Tiling. If
 you used Krohnkite before, you can import some of its shortcuts using [the bash

@@ -1,7 +1,9 @@
-// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 #include "qml-plugin.hpp"
+
+#include <KSharedConfig>
 
 #include <QJSValue>
 #include <QString>
@@ -11,6 +13,7 @@
 
 #include "config.hpp"
 #include "controller.hpp"
+#include "logger.hpp"
 #include "plasma-api/plasma-api.hpp"
 #include "ts-proxy.hpp"
 
@@ -27,19 +30,21 @@ Core::Core(QQuickItem *parent)
     , m_engine() // We cannot get engine from the pointer in the constructor
     , m_controller()
     , m_tsProxy()
-    , m_config(std::make_unique<Bismuth::Config>())
+    , m_config()
     , m_plasmaApi()
 {
+    // Force check for the config changes
+    auto kcfg = KSharedConfig::openConfig("kglobalshortcutsrc");
+    kcfg->checkUpdate(QStringLiteral("bismuth-shortcuts-category"), QStringLiteral("bismuth_shortcuts_category.upd"));
 }
 
 void Core::init()
 {
+    m_config = std::make_unique<Bismuth::Config>();
     m_engine = qmlEngine(this);
-    if (m_config->debug()) {
-        qDebug() << "[Bismuth] Core QmlEngine ptr: " << m_engine;
-    }
-    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
+    qDebug(Bi) << "Core QmlEngine ptr: " << m_engine;
     m_controller = std::make_unique<Bismuth::Controller>();
+    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
     m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_config);
 }
 

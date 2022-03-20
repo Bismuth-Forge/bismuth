@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 import "../code/index.mjs" as Bismuth
@@ -14,10 +14,11 @@ Item {
     property var controller
 
     Component.onCompleted: {
-        console.log("[Bismuth] Initiating the script");
+        // Init core
+        core.init();
+        core.proxy.log("Initiating Bismuth: Plasma Tiling Window script!");
         const qmlObjects = {
             "scriptRoot": scriptRoot,
-            "trayItem": trayItem,
             "activityInfo": activityInfo,
             "popupDialog": popupDialog
         };
@@ -26,22 +27,16 @@ Item {
             "options": options,
             "KWin": KWin
         };
-        // Init core
-        core.init();
         // Init legacy JS backend
         scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.proxy);
     }
     Component.onDestruction: {
-        console.log("[Bismuth] Everybody is dead");
+        core.proxy.log("Calling event hooks destructors... Goodbye.");
         scriptRoot.controller.drop();
     }
 
     BiCore.Core {
         id: core
-    }
-
-    TrayItem {
-        id: trayItem
     }
 
     TaskManager.ActivityInfo {

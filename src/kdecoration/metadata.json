@@ -1,0 +1,13 @@
+{
+  "KPlugin": {
+    "Id": "org.kde.bismuth.decoration",
+    "Description": "Window decoration, that integrates with Bismuth Tiling Window extension for the Plasma Desktop",
+    "Name": "Bismuth",
+    "ServiceTypes": ["org.kde.kdecoration2"]
+  },
+  "org.kde.kdecoration2": {
+    "blur": false,
+    "kcmodule": false,
+    "recommendedBorderSize": "Normal"
+  }
+}

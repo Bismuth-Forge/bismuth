@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
+# SPDX-License-Identifier: MIT
+
+# Deletes the kwin script configuration symlink
+Version=5
+Id=bismuth-old-conf-ui
+Script=bismuth_old_conf_ui.sh,bash

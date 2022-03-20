@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 #pragma once
@@ -29,6 +29,11 @@ public:
      * @param tsaction
      */
     Q_INVOKABLE void registerShortcut(const QJSValue &);
+
+    /**
+     * Log the value to the default logging category
+     */
+    Q_INVOKABLE void log(const QJSValue &);
 
 private:
     QQmlEngine *m_engine;

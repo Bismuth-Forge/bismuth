@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+# SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
 set -e
@@ -17,7 +17,7 @@ if [ -f /etc/os-release ]; then
         g++ cmake ninja-build extra-cmake-modules kirigami2-dev \
         libkf5config-dev libkf5configwidgets-dev libkf5coreaddons-dev \
         libkf5declarative-dev libkf5i18n-dev libkf5kcmutils-dev \
-        libqt5svg5-dev qml-module-qtquick* qtbase5-dev \
+        libkdecorations2-dev libqt5svg5-dev qml-module-qtquick* qtbase5-dev \
         qtdeclarative5-dev qtquickcontrols2-5-dev g++
       ;;
 
@@ -26,19 +26,20 @@ if [ -f /etc/os-release ]; then
         kf5-kconfigwidgets-devel qt5-qtbase-devel qt5-qtbase-private-devel \
         qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel qt5-qtsvg-devel \
         qt5-qtfeedback-devel cmake ninja-build extra-cmake-modules \
-        kf5-kcmutils-devel kf5-ki18n-devel kf5-kdeclarative-devel
+        kf5-kcmutils-devel kf5-ki18n-devel kf5-kdeclarative-devel \
+        kdecoration-devel
       ;;
 
     "opensuse-tumbleweed" | "opensuse-leap")
       sudo zypper --non-interactive install --recommends -t pattern devel_qt5 devel_C_C++
       sudo zypper --non-interactive in -y \
         ninja extra-cmake-modules kconfig-devel kcmutils-devel kdeclarative-devel \
-        ki18n-devel
+        ki18n-devel libkdecoration2-devel
       ;;
 
     "arch" | "manjaro")
       sudo pacman -S --noconfirm --needed \
-        gcc cmake ninja extra-cmake-modules
+        gcc cmake ninja extra-cmake-modules kdecoration
       ;;
 
     "void")
@@ -49,7 +50,8 @@ if [ -f /etc/os-release ]; then
         kpackage-devel kservice-devel kiconthemes-devel kdoctools-devel \
         kauth-devel kcrash-devel kjobwidgets-devel ksolid-devel kio-devel \
         kwallet-devel kconfigwidgets-devel ktextwidgets-devel kglobalaccel-devel \
-        kdeclarative-devel kxmlgui-devel kcmutils-devel kbookmarks-devel
+        kdeclarative-devel kxmlgui-devel kcmutils-devel kbookmarks-devel \
+        kdecoration-devel
       ;;
 
     *)

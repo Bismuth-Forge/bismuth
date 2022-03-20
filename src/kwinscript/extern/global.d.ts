@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 //
 // SPDX-License-Identifier: MIT
 
@@ -9,17 +9,8 @@ declare namespace Bismuth {
   export namespace Qml {
     export interface Main {
       scriptRoot: object;
-      trayItem: TrayItem;
       activityInfo: Plasma.TaskManager.ActivityInfo;
       popupDialog: PopupDialog;
-    }
-
-    export interface TrayItem {
-      menu: TrayMenu;
-    }
-
-    export interface TrayMenu {
-      onToggleTiling: () => void;
     }
 
     export interface PopupDialog {

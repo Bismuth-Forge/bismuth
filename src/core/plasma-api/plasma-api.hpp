@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 #pragma once
@@ -16,10 +16,11 @@ namespace PlasmaApi
 struct PlasmaApi {
     explicit PlasmaApi(QQmlEngine *engine);
 
-    Workspace workspace();
+    Workspace &workspace();
 
 private:
     QQmlEngine *m_engine;
+    Workspace m_workspace;
 };
 
 }

@@ -2,9 +2,9 @@
 SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life>
 SPDX-License-Identifier: CC-BY-4.0
 -->
-<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M204 220.5L93 220.5L93 74L103 74L103 210.5L204 210.5L204 220.5Z" fill="#76A694"/>
-<path d="M204 220.5L93 220.5L93 64L78 64L78 235.5L221 235.5L221 156.5L148.5 156.5L148.5 171.5L204 171.5L204 220.5Z" fill="#879B57"/>
-<path d="M241 255.5L58 255.5L58 44L78 44L78 235.5L221 235.5L221 156.5L148.209 156.5L148.209 171.5L128.209 171.5L128 136.5L241 136.5L241 255.5Z" fill="#FFF36B"/>
-<path d="M266 111.5L266 280.5L33 280.5L33 19L58 19L58 255.5L241 255.5L241 136.5L128 136.5L128 210.5L103 210.5L103 111.5L266 111.5Z" fill="#A63F3F"/>
+<svg version="1.1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <path d="m204 220.5h-111v-146.5h10v136.5h101v10z" fill="#76A694"/>
+  <path d="m204 220.5h-111v-156.5h-15v171.5h143v-79h-72.5v15h55.5v49z" fill="#879B57"/>
+  <path d="m241 255.5h-183v-211.5h20v191.5h143v-79h-72.791v15h-20l-0.209-35h113v119z" fill="#FFF36B"/>
+  <path d="m266 111.5v169h-233v-261.5h25v236.5h183v-119h-113v74h-25v-99h163z" fill="#A63F3F"/>
 </svg>

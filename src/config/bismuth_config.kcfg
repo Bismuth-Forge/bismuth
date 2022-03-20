@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@genda.life> -->
+<!-- SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com> -->
 <!-- SPDX-License-Identifier: MIT -->
-<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <!-- Use configuration provided by KWin Scripting -->
-  <kcfgfile name="kwinrc"/>
+  <kcfgfile name="kwinrc" />
   <!-- Use group name provided by the KWin Scripting -->
   <group name="Script-bismuth">
     <!-- This is basically copy-paste from the old configuration file -->
-    <entry name="debug" type="Bool">
-      <label>Enable logging</label>
-      <default>false</default>
-    </entry>
-
     <entry name="enableTileLayout" type="Bool">
       <label>Enable/disable Tile layout</label>
       <default>true</default>
@@ -62,7 +55,7 @@
 
     <entry name="ignoreClass" type="String">
       <label>Ignore windows with certain classes(comma-separated list)</label>
-      <default>yakuake,spectacle,Conky</default>
+      <default>yakuake,spectacle,Conky,zoom</default>
     </entry>
 
     <entry name="ignoreRole" type="String">

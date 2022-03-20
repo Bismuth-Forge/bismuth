@@ -1,35 +1,42 @@
-// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@genda.life>
+// SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 #pragma once
 
-#include <QJSValue>
+#include <QObject>
 #include <QQmlEngine>
+
+#include "plasma-api/client.hpp"
+
+// Forward declare KWin Classes
+namespace KWin
+{
+class AbstractClient;
+}
 
 namespace PlasmaApi
 {
-struct Workspace {
-    Workspace(const QJSValue &jsRepr, QQmlEngine *engine);
-
-    int currentDesktop();
-
-private:
-    QJSValue m_jsRepr;
-    QQmlEngine *m_engine;
-};
-
-namespace Test
-{
-class MockWorkspaceJS : public QObject
+class Workspace : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int currentDesktop READ currentDesktop)
 public:
-    int currentDesktop()
-    {
-        return 42;
-    }
+    Workspace(QQmlEngine *engine);
+    Workspace(const Workspace &);
+
+    int currentDesktop();
+    void setCurrentDesktop(int desktop);
+
+public Q_SLOTS:
+    void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
+
+Q_SIGNALS:
+    void currentDesktopChanged(int desktop, PlasmaApi::Client kwinClient);
+
+private:
+    void wrapSignals();
+
+    QQmlEngine *m_engine;
+    QObject *m_kwinImpl;
 };
-}
 
 }
