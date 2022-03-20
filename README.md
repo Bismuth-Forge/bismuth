@@ -122,7 +122,7 @@ script](contrib/import_krohnkite.sh).
 
 🔧 If you want, you may also make a couple of manual fixes and tweaks to
 improve your experience with window tiling. See [Tweaks
-section](contrib/README.md).
+section](docs/TWEAKS.md).
 
 ### Configuration
 
