@@ -1,5 +1,5 @@
 <!--
-  SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
+  SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@gikari.com>
   SPDX-License-Identifier: MIT
 -->
 
@@ -72,58 +72,54 @@ on time and don't want to install and mess around with the different desktop
 environment?
 
 Pop Shell does not help you with any of that, but, honestly speaking, it is a
-very user-friendly and well made solution, that is very polished, so it's a
+very user-friendly and well-made solution, that is very polished, so it's a
 good example for Bismuth as the mid-to-end goal.
 
 #### What's the problem with the existing KWin Scripts?
 
-KWin Scripts is a powerful extension of KDE Plasma functionality, but only in
-case, where you're trying to use the full potential of it. The existing
-solutions are not trying to do it, either because [the current maintainer is
-absent](https://github.com/esjeon/krohnkite) or because the desired
-functionality [is not as rich as it could
-be](https://github.com/kwin-scripts/kwin-tiling).
+KWin Scripts are powerful extensions of KDE Plasma functionality, but they have
+technical limitations that make them not so nice to use.
 
-Bismuth actually has a KWin Script as its component, so as you may guess it's
-trying to use its capabilities to its full potential! And currently we are
-bumping the ceiling, so in addition to KWin Script we also introduced other
-powerful Plasma extensions, such as standalone configuration module.
+For example, the configuration is done in a non-user-friendly manner, where the
+user has to make a symbolic link to some `.desktop` file, that enables some
+dialog window, where settings are not applied without the script restart.
+Furthermore, the settings window is ugly and does not match [KDE
+HIG](https://develop.kde.org/hig/). KWin Script also cannot use dynamic Plasma
+Applet or Window Decoration, which limits its functionality. Not to mention,
+KWin Scripting API does not let you register shortcuts in a user-friendly
+manner with the separate shortcuts' category in the System Settings.
+
+The list of technical limitations could go on and on, but I think the reader
+would understand, that KDE Plasma needs more, than a KWin Script to compete
+with standalone tiling window managers and Pop Shell.
+
+### So, what is Bismuth, then?
+
+Bismuth is a KDE Plasma tiling extension, which means that it combines all the
+types of KDE Plasma add-ons, that would make the User Experience better. All of
+those add-ons are able to communicate together and with KDE Plasma, to that the
+resulting solution feels integrated by itself and with the desktop, as if it
+was baked into KDE Plasma natively.
 
 ### What Bismuth is not?
 
-A couple of points should be also added to clarify what Bismuth is not:
+There should be a notice about what the Bismuth is not going to have as a part
+of its lifetime.
 
-1. Bismuth **is not** a piece of software, that aims to replicate every feature
-   of every tiling window manager in existence. Only a reasonable subset of the
-   features will be implemented. But despite that, Bismuth tries to cover most
-   of the use cases, so if you think it's beneficial for Bismuth to have a
-   particular feature from any of the competitors, you are welcome to propose
-   it to the bug tracker!
-2. Bismuth is not going to compete with KWin for functionality, that is useful
-   both for tiling window manager users, and the floating window manager users.
-   In particular:
-   1. Bismuth is not going to implement the window tabbing feature, that can be
-      seen in window managers like i3 or Sway. This requires too many hacks
-      from our side, while the native KWin implementation would benefit
-      everyone.
-   2. Bismuth is not going to implement the workspaces feature (a.k.a. "different
-      virtual desktops for different displays"), that can be seen in tiling
-      window managers. KWin has Virtual Desktops, which are mutually exclusive
-      to it, so only KWin has the power to implement this well by making the
-      users chose what particular implementation they want to leverage.
+First, Bismuth **is not** a piece of software, that aims to replicate every
+feature of every tiling window manager in existence. Only a reasonable subset
+of the features will be implemented. This might be a technical limitation or
+UI/UX limitation.
+
+And second, Bismuth won't be able to have a particular functionality
+implemented that heavily depends on the upstream technologies, such as KWin.
+This might include, for example, a "workspaces" feature (a.k.a. "different
+virtual desktops for different displays"). This is a technical limitation.
 
 ## 🧭 Current road map
 
-This list is describing the major features and milestones, that are planned for
-the near major releases. The order is approximate. The list does not mean, that
-bug fixes and minor improvements have the least priority.
+Here are some notable features, that are planned in the future:
 
-1. Plasma Applet, that integrates with the system tray and looks good and
-   consistent with other Plasma applets. (planned for version 3.0)
-2. Customizable Layouts via layout editor, that will let people customize
-   initial master area size and rotation of the existing layouts, change their
-   order or optionally include a manual layout, where there are literally no rules
-   on how you place your tiles. (planned for version 4.0)
-3. Porting the features, that are not already present in Bismuth, from Pop
-   Shell. (any version)
-4. General Stability and UI/UX improvements. (any version)
+1. Plasma Applet, that lets you interact with the window placement.
+2. More freedom in the automatic window placement.
+3. Window decoration, that is aware of the window tiling.
