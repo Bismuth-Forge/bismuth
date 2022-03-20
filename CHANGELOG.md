@@ -5,6 +5,13 @@
 
 # Changelog
 
+### [3.0.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.0.0...v3.0.1) (2022-03-20)
+
+
+### Bug Fixes
+
+* add zoom windows to the default ignore list ([d563c40](https://www.github.com/Bismuth-Forge/bismuth/commit/d563c4045eeb6e8cc30d2e2d29f635888cdbbd79))
+
 ## [3.0.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.3.0...v3.0.0) (2022-03-20)
 
 
