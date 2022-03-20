@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com> -->
 <!-- SPDX-License-Identifier: MIT -->
-<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <!-- Use configuration provided by KWin Scripting -->
-  <kcfgfile name="kwinrc"/>
+  <kcfgfile name="kwinrc" />
   <!-- Use group name provided by the KWin Scripting -->
   <group name="Script-bismuth">
     <!-- This is basically copy-paste from the old configuration file -->
     <entry name="enableTileLayout" type="Bool">
-	    <label>Enable/disable Tile layout</label>
+      <label>Enable/disable Tile layout</label>
       <default>true</default>
     </entry>
 
     <entry name="enableMonocleLayout" type="Bool">
-	    <label>Enable/disable Monocle layout</label>
+      <label>Enable/disable Monocle layout</label>
       <default>true</default>
     </entry>
 
     <entry name="enableThreeColumnLayout" type="Bool">
-	    <label>Enable/disable Three Column layout</label>
+      <label>Enable/disable Three Column layout</label>
       <default>true</default>
     </entry>
 
@@ -31,62 +29,62 @@
     </entry>
 
     <entry name="enableSpreadLayout" type="Bool">
-	    <label>Enable/disable Spread layout</label>
+      <label>Enable/disable Spread layout</label>
       <default>true</default>
     </entry>
 
     <entry name="enableStairLayout" type="Bool">
-	    <label>Enable/disable Stair layout</label>
+      <label>Enable/disable Stair layout</label>
       <default>true</default>
     </entry>
 
     <entry name="enableQuarterLayout" type="Bool">
-	    <label>Enable/disable Quarter layout</label>
+      <label>Enable/disable Quarter layout</label>
       <default>false</default>
     </entry>
 
     <entry name="enableFloatingLayout" type="Bool">
-	    <label>Enable/disable Floating layout</label>
+      <label>Enable/disable Floating layout</label>
       <default>false</default>
     </entry>
 
     <entry name="ignoreActivity" type="String">
-	    <label>Do not apply tiling on some activities(comma-separated list of activity names)</label>
+      <label>Do not apply tiling on some activities(comma-separated list of activity names)</label>
       <default></default>
     </entry>
 
     <entry name="ignoreClass" type="String">
-	    <label>Ignore windows with certain classes(comma-separated list)</label>
+      <label>Ignore windows with certain classes(comma-separated list)</label>
       <default>yakuake,spectacle,Conky,zoom</default>
     </entry>
 
     <entry name="ignoreRole" type="String">
-	    <label>Ignore windows with specific role(comma-separated list)</label>
+      <label>Ignore windows with specific role(comma-separated list)</label>
       <default>quake</default>
     </entry>
 
     <entry name="ignoreScreen" type="String">
-	    <label>Do not apply tiling on some screens(comma-separated list of screen number)</label>
+      <label>Do not apply tiling on some screens(comma-separated list of screen number)</label>
       <default></default>
     </entry>
 
     <entry name="ignoreTitle" type="String">
-	    <label>Ignore windows with certain string in title(comma-separated list)</label>
+      <label>Ignore windows with certain string in title(comma-separated list)</label>
       <default></default>
     </entry>
 
     <entry name="floatingClass" type="String">
-	    <label>Float windows with certain classes(comma-separated list)</label>
+      <label>Float windows with certain classes(comma-separated list)</label>
       <default></default>
     </entry>
 
     <entry name="floatingTitle" type="String">
-	    <label>Float windows with certain string in title(comma-separated list)</label>
+      <label>Float windows with certain string in title(comma-separated list)</label>
       <default></default>
     </entry>
 
     <entry name="floatUtility" type="Bool">
-	    <label>Automatically float utility windows (Dialog, Splash, Utility)</label>
+      <label>Automatically float utility windows (Dialog, Splash, Utility)</label>
       <default>true</default>
     </entry>
 
@@ -101,22 +99,22 @@
     </entry>
 
     <entry name="maximizeSoleTile" type="Bool">
-	    <label>If there is only one tile on the screen, remove screen gap and its borde, making it appear almost fullscreen.</label>
+      <label>If there is only one tile on the screen, remove screen gap and its borde, making it appear almost fullscreen.</label>
       <default>false</default>
     </entry>
 
     <entry name="monocleMaximize" type="Bool">
-	    <label>Always maximize windows in Monocle layout</label>
+      <label>Always maximize windows in Monocle layout</label>
       <default>true</default>
     </entry>
 
     <entry name="monocleMinimizeRest" type="Bool">
-	    <label>Minimize other tiles than the current one in Monocle layout</label>
+      <label>Minimize other tiles than the current one in Monocle layout</label>
       <default>false</default>
     </entry>
 
     <entry name="keepFloatAbove" type="Bool">
-	    <label>Keep tiled windows below floating windows</label>
+      <label>Keep tiled windows below floating windows</label>
       <default>true</default>
     </entry>
 
@@ -161,12 +159,12 @@
     </entry>
 
     <entry name="limitTileWidth" type="Bool">
-	    <label>Limit the width of tiles</label>
+      <label>Limit the width of tiles</label>
       <default>false</default>
     </entry>
 
     <entry name="limitTileWidthRatio" type="Double">
-	    <label>Ratio of maximum tile width to the height of screen</label>
+      <label>Ratio of maximum tile width to the height of screen</label>
       <default>1.6</default>
     </entry>
 
