@@ -5,6 +5,35 @@
 
 # Changelog
 
+## [3.0.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.3.0...v3.0.0) (2022-03-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove legacy tray applet
+* remove debug option
+* register shortcuts in the separate category in the System Settings
+* force c++17 to the project
+* remove KDECompilerSettings
+
+### Features
+
+* add window decoration that integrates with tiling ([517281e](https://www.github.com/Bismuth-Forge/bismuth/commit/517281e1587692d70cf0093c9901d192cd776f1d))
+* register shortcuts in the separate category in the System Settings ([1a49257](https://www.github.com/Bismuth-Forge/bismuth/commit/1a4925718040b3d0f7bff96bfdae0f63041f1f12))
+* remove legacy tray applet ([78eff10](https://www.github.com/Bismuth-Forge/bismuth/commit/78eff105122b968e298c918a79976a4d280104a8))
+
+
+### Bug Fixes
+
+* float some utility windows on wayland ([2030767](https://www.github.com/Bismuth-Forge/bismuth/commit/2030767dd03518a1296376890ad03bbb85d3ffdb))
+
+
+### Miscellaneous Chores
+
+* force c++17 to the project ([0d1796b](https://www.github.com/Bismuth-Forge/bismuth/commit/0d1796b1d836191e6b9f2df703b660c02f076a3c))
+* remove debug option ([c30e837](https://www.github.com/Bismuth-Forge/bismuth/commit/c30e8377b9524e84347b2e1875f4b0fafb1fab0d))
+* remove KDECompilerSettings ([9f3c341](https://www.github.com/Bismuth-Forge/bismuth/commit/9f3c341f2cbc090a6581f83553bc5f1f8934d679))
+
 ## [2.3.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.2.0...v2.3.0) (2022-01-26)
 
 
