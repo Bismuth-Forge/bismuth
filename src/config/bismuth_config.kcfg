@@ -103,6 +103,11 @@
       <default>false</default>
     </entry>
 
+    <entry name="untileByDragging" type="Bool">
+      <label>Float windows by dragging them out of a layout.</label>
+      <default>true</default>
+    </entry>
+
     <entry name="monocleMaximize" type="Bool">
       <label>Always maximize windows in Monocle layout</label>
       <default>true</default>

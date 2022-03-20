@@ -285,16 +285,19 @@ export class ControllerImpl implements Controller {
       }
     }
 
-    /* ... or float window by dragging */
-    if (window.state === WindowState.Tiled) {
-      const diff = window.actualGeometry.subtract(window.geometry);
-      const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
-      // TODO: arbitrary constant
-      if (distance > 30) {
-        window.floatGeometry = window.actualGeometry;
-        window.state = WindowState.Floating;
-        this.engine.arrange();
-        return;
+    /* ... or float window */
+    if (this.config.untileByDragging) {
+      if (window.state === WindowState.Tiled) {
+        const diff = window.actualGeometry.subtract(window.geometry);
+        const distance = Math.sqrt(diff.x ** 2 + diff.y ** 2);
+        // TODO: arbitrary constant
+        if (distance > 30) {
+          window.floatGeometry = window.actualGeometry;
+          window.state = WindowState.Floating;
+          this.engine.arrange();
+          this.engine.showNotification("Window Untiled");
+          return;
+        }
       }
     }
 
