@@ -57,7 +57,7 @@
 
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
-      <default>yakuake,spectacle,Conky</default>
+      <default>yakuake,spectacle,Conky,zoom</default>
     </entry>
 
     <entry name="ignoreRole" type="String">
