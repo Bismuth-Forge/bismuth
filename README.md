@@ -77,6 +77,12 @@ contact the package maintainer first.
 
 #### Ubuntu
 
+- [Official Repo](https://launchpad.net/ubuntu/+source/bismuth):
+
+  ```bash
+  sudo apt install bismuth
+  ```
+
 - [Volian Repository](https://volian.org/bismuth/)
 
 #### Fedora
