@@ -15,6 +15,7 @@ import { WindowState } from "../engine/window";
 
 import { Config } from "../config";
 import { Log } from "../util/log";
+import { TSProxy } from "../extern/proxy";
 
 /**
  * Provides convenient interface to KWin functions.
@@ -70,7 +71,8 @@ export class DriverImpl implements Driver {
       this.kwinApi.workspace.currentDesktop,
       this.qml.activityInfo,
       this.kwinApi,
-      this.config
+      this.config,
+      this.proxy
     );
   }
 
@@ -109,7 +111,8 @@ export class DriverImpl implements Driver {
           this.kwinApi.workspace.currentDesktop,
           this.qml.activityInfo,
           this.kwinApi,
-          this.config
+          this.config,
+          this.proxy
         )
       );
     }
@@ -135,7 +138,8 @@ export class DriverImpl implements Driver {
     kwinApi: KWin.Api,
     controller: Controller,
     private config: Config,
-    private log: Log
+    private log: Log,
+    private proxy: TSProxy
   ) {
     this.registeredConnections = [];
 
@@ -155,7 +159,8 @@ export class DriverImpl implements Driver {
             this.qml,
             this.kwinApi,
             this.config,
-            this.log
+            this.log,
+            this.proxy
           ),
           this.config,
           this.log
@@ -178,7 +183,8 @@ export class DriverImpl implements Driver {
         this.kwinApi.workspace.currentDesktop,
         this.qml.activityInfo,
         this.kwinApi,
-        this.config
+        this.config,
+        this.proxy
       );
       this.controller.onSurfaceUpdate("resized " + srf.toString());
     };
@@ -365,8 +371,8 @@ export class DriverImpl implements Driver {
     try {
       callback();
     } catch (e: any) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      this.log.log(e);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      this.log.log(`Oops! ${e.name}: ${e.message}. `);
     } finally {
       this.entered = false;
     }

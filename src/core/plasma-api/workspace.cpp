@@ -44,6 +44,11 @@ void Workspace::wrapSignals()
     wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
 };
 
+QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
+{
+    BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
+};
+
 void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient)
 {
     // Since we don't know the KWin internal implementation we have to use reinterpret_cast

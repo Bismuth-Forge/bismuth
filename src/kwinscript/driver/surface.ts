@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: MIT
 
 import { Config } from "../config";
+import { TSProxy } from "../extern/proxy";
 import { Rect } from "../util/rect";
 
 /**
@@ -44,7 +45,8 @@ export class DriverSurfaceImpl implements DriverSurface {
     public readonly desktop: number,
     private activityInfo: Plasma.TaskManager.ActivityInfo,
     private kwinApi: KWin.Api,
-    private config: Config
+    private config: Config,
+    private proxy: TSProxy
   ) {
     this.id = this.generateId();
 
@@ -54,11 +56,9 @@ export class DriverSurfaceImpl implements DriverSurface {
       this.config.ignoreScreen.indexOf(screen) >= 0;
 
     this.workingArea = Rect.fromQRect(
-      this.kwinApi.workspace.clientArea(
-        this.kwinApi.KWin.PlacementArea,
-        screen,
-        desktop
-      )
+      this.proxy
+        .workspace()
+        .clientArea(this.kwinApi.KWin.PlacementArea, screen, desktop)
     );
   }
 
@@ -74,7 +74,8 @@ export class DriverSurfaceImpl implements DriverSurface {
       this.desktop + 1,
       this.activityInfo,
       this.kwinApi,
-      this.config
+      this.config,
+      this.proxy
     );
   }
 

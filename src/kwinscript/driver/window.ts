@@ -9,6 +9,7 @@ import { Rect } from "../util/rect";
 import { clip, matchWords } from "../util/func";
 import { Config } from "../config";
 import { Log } from "../util/log";
+import { TSProxy } from "../extern/proxy";
 
 /**
  * KWin window representation.
@@ -181,7 +182,8 @@ export class DriverWindowImpl implements DriverWindow {
       desktop,
       this.qml.activityInfo,
       this.kwinApi,
-      this.config
+      this.config,
+      this.proxy
     );
   }
 
@@ -212,7 +214,8 @@ export class DriverWindowImpl implements DriverWindow {
     private qml: Bismuth.Qml.Main,
     private kwinApi: KWin.Api,
     private config: Config,
-    private log: Log
+    private log: Log,
+    private proxy: TSProxy
   ) {
     this.id = DriverWindowImpl.generateID(client);
     this.maximized = false;
@@ -273,11 +276,13 @@ export class DriverWindowImpl implements DriverWindow {
       geometry = this.adjustGeometry(geometry);
       if (this.config.preventProtrusion) {
         const area = Rect.fromQRect(
-          this.kwinApi.workspace.clientArea(
-            this.kwinApi.KWin.PlacementArea,
-            this.client.screen,
-            this.kwinApi.workspace.currentDesktop
-          )
+          this.proxy
+            .workspace()
+            .clientArea(
+              this.kwinApi.KWin.PlacementArea,
+              this.client.screen,
+              this.kwinApi.workspace.currentDesktop
+            )
         );
         if (!area.includes(geometry)) {
           /* assume windows will extrude only through right and bottom edges */
