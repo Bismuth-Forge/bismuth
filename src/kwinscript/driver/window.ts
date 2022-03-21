@@ -174,7 +174,7 @@ export class DriverWindowImpl implements DriverWindow {
     const desktop =
       this.client.desktop >= 0
         ? this.client.desktop
-        : this.kwinApi.workspace.currentDesktop;
+        : this.proxy.workspace().currentDesktop;
 
     return new DriverSurfaceImpl(
       this.client.screen,
@@ -281,7 +281,7 @@ export class DriverWindowImpl implements DriverWindow {
             .clientArea(
               this.kwinApi.KWin.PlacementArea,
               this.client.screen,
-              this.kwinApi.workspace.currentDesktop
+              this.proxy.workspace().currentDesktop
             )
         );
         if (!area.includes(geometry)) {

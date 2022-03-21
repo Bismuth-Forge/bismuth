@@ -68,7 +68,7 @@ export class DriverImpl implements Driver {
         ? this.kwinApi.workspace.activeClient.screen
         : 0,
       this.kwinApi.workspace.currentActivity,
-      this.kwinApi.workspace.currentDesktop,
+      this.proxy.workspace().currentDesktop,
       this.qml.activityInfo,
       this.kwinApi,
       this.config,
@@ -83,8 +83,8 @@ export class DriverImpl implements Driver {
     // TODO: focusing window on other screen?
     // TODO: find a way to change activity
 
-    if (this.kwinApi.workspace.currentDesktop !== kwinSurface.desktop) {
-      this.kwinApi.workspace.currentDesktop = kwinSurface.desktop;
+    if (this.proxy.workspace().currentDesktop !== kwinSurface.desktop) {
+      this.proxy.workspace().currentDesktop = kwinSurface.desktop;
     }
   }
 
@@ -108,7 +108,7 @@ export class DriverImpl implements Driver {
         new DriverSurfaceImpl(
           screen,
           this.kwinApi.workspace.currentActivity,
-          this.kwinApi.workspace.currentDesktop,
+          this.proxy.workspace().currentDesktop,
           this.qml.activityInfo,
           this.kwinApi,
           this.config,
@@ -180,7 +180,7 @@ export class DriverImpl implements Driver {
       const srf = new DriverSurfaceImpl(
         screen,
         this.kwinApi.workspace.currentActivity,
-        this.kwinApi.workspace.currentDesktop,
+        this.proxy.workspace().currentDesktop,
         this.qml.activityInfo,
         this.kwinApi,
         this.config,
@@ -276,7 +276,7 @@ export class DriverImpl implements Driver {
       onCurrentActivityChanged
     );
     this.connect(
-      this.kwinApi.workspace.currentDesktopChanged,
+      this.proxy.workspace().currentDesktopChanged,
       onCurrentDesktopChanged
     );
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);

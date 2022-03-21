@@ -3,14 +3,15 @@
 
 #pragma once
 
-#define BI_READ_ONLY_PROPERTY(TYPE, NAME)                                                                                                                      \
+#include <QObject>
+
+#define BI_PROPERTY(TYPE, NAME, SETTER_NAME)                                                                                                                   \
+    Q_PROPERTY(TYPE NAME READ NAME WRITE SETTER_NAME);                                                                                                         \
+                                                                                                                                                               \
     TYPE NAME() const                                                                                                                                          \
     {                                                                                                                                                          \
         return m_kwinImpl->property(#NAME).value<TYPE>();                                                                                                      \
-    }
-
-#define BI_PROPERTY(TYPE, NAME, SETTER_NAME)                                                                                                                   \
-    BI_READ_ONLY_PROPERTY(TYPE, NAME)                                                                                                                          \
+    }                                                                                                                                                          \
                                                                                                                                                                \
     void SETTER_NAME(const TYPE &value)                                                                                                                        \
     {                                                                                                                                                          \
