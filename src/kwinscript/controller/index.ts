@@ -159,14 +159,14 @@ export class ControllerImpl implements Controller {
   private engine: Engine;
   private driver: Driver;
   public constructor(
-    private qmlObjects: Bismuth.Qml.Main,
+    qmlObjects: Bismuth.Qml.Main,
     kwinApi: KWin.Api,
     private config: Config,
     private log: Log,
     private proxy: TSProxy
   ) {
     this.engine = new EngineImpl(this, config, log);
-    this.driver = new DriverImpl(qmlObjects, kwinApi, this, config, log);
+    this.driver = new DriverImpl(qmlObjects, kwinApi, this, config, log, proxy);
   }
 
   /**

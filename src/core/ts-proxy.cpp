@@ -10,12 +10,14 @@
 
 #include "controller.hpp"
 #include "logger.hpp"
+#include "plasma-api/plasma-api.hpp"
 
-TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, Bismuth::Config &config)
+TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, PlasmaApi::PlasmaApi &plasmaApi, Bismuth::Config &config)
     : QObject()
     , m_engine(engine)
     , m_config(config)
     , m_controller(controller)
+    , m_plasmaApi(plasmaApi)
 {
 }
 
@@ -105,6 +107,14 @@ QJSValue TSProxy::jsConfig()
     setStrArrayProp("ignoreScreen", m_config.ignoreScreen(), true);
 
     return configJSObject;
+}
+
+QJSValue TSProxy::workspace()
+{
+    auto &workspace = m_plasmaApi.workspace();
+    auto jsValue = m_engine->newQObject(&workspace);
+    QQmlEngine::setObjectOwnership(&workspace, QQmlEngine::CppOwnership);
+    return jsValue;
 }
 
 void TSProxy::registerShortcut(const QJSValue &tsAction)
