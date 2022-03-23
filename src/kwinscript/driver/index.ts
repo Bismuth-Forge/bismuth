@@ -67,7 +67,7 @@ export class DriverImpl implements Driver {
       this.kwinApi.workspace.activeClient
         ? this.kwinApi.workspace.activeClient.screen
         : 0,
-      this.kwinApi.workspace.currentActivity,
+      this.proxy.workspace().currentActivity,
       this.proxy.workspace().currentDesktop,
       this.qml.activityInfo,
       this.kwinApi,
@@ -107,7 +107,7 @@ export class DriverImpl implements Driver {
       screensArr.push(
         new DriverSurfaceImpl(
           screen,
-          this.kwinApi.workspace.currentActivity,
+          this.proxy.workspace().currentActivity,
           this.proxy.workspace().currentDesktop,
           this.qml.activityInfo,
           this.kwinApi,
@@ -179,7 +179,7 @@ export class DriverImpl implements Driver {
     const onScreenResized = (screen: number): void => {
       const srf = new DriverSurfaceImpl(
         screen,
-        this.kwinApi.workspace.currentActivity,
+        this.proxy.workspace().currentActivity,
         this.proxy.workspace().currentDesktop,
         this.qml.activityInfo,
         this.kwinApi,

@@ -38,6 +38,7 @@ public:
     Workspace(const Workspace &);
 
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
+    BI_PROPERTY(QString, currentActivity, setCurrentActivity);
 
     /**
      * Returns the geometry a Client can use with the specified option.
@@ -56,6 +57,12 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void currentDesktopChanged(int desktop, PlasmaApi::Client kwinClient);
+
+    /**
+     * Signal emitted whenever the current activity changed.
+     * @param id id of the new activity
+     */
+    void currentActivityChanged(const QString &id);
 
 private:
     void wrapSignals();

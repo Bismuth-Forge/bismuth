@@ -42,6 +42,7 @@ void Workspace::wrapSignals()
     };
 
     wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
+    wrapSimpleSignal(SIGNAL(currentActivityChanged(const QString &)));
 };
 
 QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
