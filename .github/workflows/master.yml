@@ -73,7 +73,7 @@ jobs:
         run: |
           npm install
           .github/scripts/sysdep-install.sh
-          npm run build
+          make build
 
   test:
     name: Unit Tests
@@ -92,4 +92,4 @@ jobs:
         run: |
           npm install
           .github/scripts/sysdep-install.sh
-          npm test
+          make test

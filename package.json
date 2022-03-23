@@ -20,24 +20,6 @@
     "typedoc-plugin-rename-defaults": "0.4.0",
     "typescript": "4.5.2"
   },
-  "scripts": {
-    "clean": "scripts/clean.sh",
-    "build": "scripts/build.sh",
-    "sysdep-install": "scripts/sysdep-install.sh",
-    "prebi-install": "npm run build",
-    "bi-install": "scripts/install.sh",
-    "bi-uninstall": "scripts/uninstall.sh",
-    "restart-kwin-x11": "kwin_x11 --replace & disown",
-    "restart-plasma": "plasmashell --replace & disown",
-    "install-and-restart-kwin-x11": "npm run bi-install",
-    "postinstall-and-restart-kwin-x11": "npm run restart-kwin-x11",
-    "install-and-restart-plasma": "npm run bi-install",
-    "postinstall-and-restart-plasma": "npm run restart-plasma",
-    "install-and-restart": "npm run bi-install",
-    "postinstall-and-restart": "npm run restart-kwin-x11 && npm run restart-plasma",
-    "docs": "npx typedoc --out build/docs",
-    "test": "scripts/test.sh"
-  },
   "license": "MIT",
   "prettier": {}
 }
