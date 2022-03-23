@@ -161,12 +161,12 @@ export class DriverWindowImpl implements DriverWindow {
   public get surface(): DriverSurface {
     let activity;
     if (this.client.activities.length === 0) {
-      activity = this.kwinApi.workspace.currentActivity;
+      activity = this.proxy.workspace().currentActivity;
     } else if (
-      this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >=
+      this.client.activities.indexOf(this.proxy.workspace().currentActivity) >=
       0
     ) {
-      activity = this.kwinApi.workspace.currentActivity;
+      activity = this.proxy.workspace().currentActivity;
     } else {
       activity = this.client.activities[0];
     }
