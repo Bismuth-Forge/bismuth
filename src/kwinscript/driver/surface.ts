@@ -44,7 +44,6 @@ export class DriverSurfaceImpl implements DriverSurface {
     public readonly activity: string,
     public readonly desktop: number,
     private activityInfo: Plasma.TaskManager.ActivityInfo,
-    private kwinApi: KWin.Api,
     private config: Config,
     private proxy: TSProxy
   ) {
@@ -66,7 +65,7 @@ export class DriverSurfaceImpl implements DriverSurface {
 
   public next(): DriverSurface | null {
     // This is the last virtual desktop
-    if (this.desktop === this.kwinApi.workspace.desktops) {
+    if (this.desktop === this.proxy.workspace().desktops) {
       return null;
     }
 
@@ -75,7 +74,6 @@ export class DriverSurfaceImpl implements DriverSurface {
       this.activity,
       this.desktop + 1,
       this.activityInfo,
-      this.kwinApi,
       this.config,
       this.proxy
     );
