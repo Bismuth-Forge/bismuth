@@ -56,9 +56,11 @@ export class DriverSurfaceImpl implements DriverSurface {
       this.config.ignoreScreen.indexOf(screen) >= 0;
 
     this.workingArea = Rect.fromQRect(
-      this.proxy
-        .workspace()
-        .clientArea(this.kwinApi.KWin.PlacementArea, screen, desktop)
+      this.proxy.workspace().clientArea(
+        0, // This is PlacementArea
+        screen,
+        desktop
+      )
     );
   }
 
