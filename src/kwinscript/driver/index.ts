@@ -70,7 +70,6 @@ export class DriverImpl implements Driver {
       this.proxy.workspace().currentActivity,
       this.proxy.workspace().currentDesktop,
       this.qml.activityInfo,
-      this.kwinApi,
       this.config,
       this.proxy
     );
@@ -110,7 +109,6 @@ export class DriverImpl implements Driver {
           this.proxy.workspace().currentActivity,
           this.proxy.workspace().currentDesktop,
           this.qml.activityInfo,
-          this.kwinApi,
           this.config,
           this.proxy
         )
@@ -157,7 +155,6 @@ export class DriverImpl implements Driver {
           new DriverWindowImpl(
             client,
             this.qml,
-            this.kwinApi,
             this.config,
             this.log,
             this.proxy
@@ -182,7 +179,6 @@ export class DriverImpl implements Driver {
         this.proxy.workspace().currentActivity,
         this.proxy.workspace().currentDesktop,
         this.qml.activityInfo,
-        this.kwinApi,
         this.config,
         this.proxy
       );

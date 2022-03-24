@@ -181,7 +181,6 @@ export class DriverWindowImpl implements DriverWindow {
       activity,
       desktop,
       this.qml.activityInfo,
-      this.kwinApi,
       this.config,
       this.proxy
     );
@@ -205,14 +204,12 @@ export class DriverWindowImpl implements DriverWindow {
    *
    * @param client the client the window represents
    * @param qml root qml object of the script
-   * @param kwinApi
    * @param config
    * @param log
    */
   constructor(
     public readonly client: KWin.Client,
     private qml: Bismuth.Qml.Main,
-    private kwinApi: KWin.Api,
     private config: Config,
     private log: Log,
     private proxy: TSProxy
