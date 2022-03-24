@@ -276,13 +276,11 @@ export class DriverWindowImpl implements DriverWindow {
       geometry = this.adjustGeometry(geometry);
       if (this.config.preventProtrusion) {
         const area = Rect.fromQRect(
-          this.proxy
-            .workspace()
-            .clientArea(
-              this.kwinApi.KWin.PlacementArea,
-              this.client.screen,
-              this.proxy.workspace().currentDesktop
-            )
+          this.proxy.workspace().clientArea(
+            0, // This is placement area
+            this.client.screen,
+            this.proxy.workspace().currentDesktop
+          )
         );
         if (!area.includes(geometry)) {
           /* assume windows will extrude only through right and bottom edges */
