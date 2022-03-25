@@ -98,7 +98,7 @@ export class DriverWindowImpl implements DriverWindow {
   }
 
   public get geometry(): Rect {
-    return Rect.fromQRect(this.client.geometry);
+    return Rect.fromQRect(this.client.frameGeometry);
   }
 
   public get active(): boolean {
@@ -287,7 +287,7 @@ export class DriverWindowImpl implements DriverWindow {
           geometry = this.adjustGeometry(geometry);
         }
       }
-      this.client.geometry = geometry.toQRect();
+      this.client.frameGeometry = geometry.toQRect();
     }
   }
 
@@ -321,8 +321,8 @@ export class DriverWindowImpl implements DriverWindow {
 
     /* do not resize fixed-size windows */
     if (!this.client.resizeable) {
-      width = this.client.geometry.width;
-      height = this.client.geometry.height;
+      width = this.client.frameGeometry.width;
+      height = this.client.frameGeometry.height;
     } else {
       /* respect min/max size limit */
       width = clip(width, this.client.minSize.width, this.client.maxSize.width);

@@ -146,9 +146,8 @@ declare namespace KWin {
 
     /**
      * This signal is emitted when the Toplevel's frame geometry changes.
-     * @deprecated since 5.19, use frameGeometryChanged instead
      */
-    geometryChanged: QSignal;
+    frameGeometryChanged: QSignal;
 
     /**
      * Emitted whenever the Toplevel's screen changes. This can happen either in consequence to
@@ -157,7 +156,7 @@ declare namespace KWin {
     screenChanged: QSignal;
 
     /**
-     * Emitted when the toplevel is shown?
+     * Emitted when the Toplevel is shown?
      */
     windowShown: QSignal;
   }
@@ -230,9 +229,10 @@ declare namespace KWin {
     fullScreen: boolean;
 
     /**
-     * Window geometry
+     * This property holds the geometry of the Toplevel, excluding invisible
+     * portions, e.g. server-side and client-side drop-shadows, etc.
      */
-    geometry: QRect;
+    frameGeometry: QRect;
 
     /**
      * Whether the window is set to be above all
