@@ -14,7 +14,7 @@
 #include "config.hpp"
 #include "controller.hpp"
 #include "logger.hpp"
-#include "plasma-api/plasma-api.hpp"
+#include "plasma-api/api.hpp"
 #include "ts-proxy.hpp"
 
 void CorePlugin::registerTypes(const char *uri)
@@ -42,8 +42,8 @@ void Core::init()
 {
     m_config = std::make_unique<Bismuth::Config>();
     m_engine = qmlEngine(this);
-    m_controller = std::make_unique<Bismuth::Controller>();
-    m_plasmaApi = std::make_unique<PlasmaApi::PlasmaApi>(m_engine);
+    m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_engine);
+    m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi);
     m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_plasmaApi, *m_config);
 }
 

@@ -8,8 +8,8 @@
 #include <QQmlEngine>
 #include <QSignalSpy>
 
+#include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
-#include "plasma-api/plasma-api.hpp"
 #include "plasma-api/workspace.hpp"
 
 // Mock KWin Objects. This is for tests only.
@@ -52,7 +52,7 @@ TEST_CASE("Workspace Properties Read")
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
-    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
+    auto plasmaApi = ::PlasmaApi::Api(&engine);
     auto workspace = plasmaApi.workspace();
 
     SUBCASE("currentDesktop")
@@ -69,7 +69,7 @@ TEST_CASE("Workspace Properties Write")
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
-    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
+    auto plasmaApi = ::PlasmaApi::Api(&engine);
     auto workspace = plasmaApi.workspace();
 
     workspace.setCurrentDesktop(67);
@@ -88,7 +88,7 @@ TEST_CASE("Workspace Properties Signals")
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
-    auto plasmaApi = ::PlasmaApi::PlasmaApi(&engine);
+    auto plasmaApi = ::PlasmaApi::Api(&engine);
     auto workspace = plasmaApi.workspace();
 
     SUBCASE("currentDesktop")

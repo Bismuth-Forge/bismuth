@@ -10,9 +10,9 @@
 
 #include "controller.hpp"
 #include "logger.hpp"
-#include "plasma-api/plasma-api.hpp"
+#include "plasma-api/api.hpp"
 
-TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, PlasmaApi::PlasmaApi &plasmaApi, Bismuth::Config &config)
+TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, PlasmaApi::Api &plasmaApi, Bismuth::Config &config)
     : QObject()
     , m_engine(engine)
     , m_config(config)
