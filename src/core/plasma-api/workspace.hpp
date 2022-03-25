@@ -57,15 +57,44 @@ public:
 
 private Q_SLOTS:
     void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
+    void clientAddedTransformer(KWin::AbstractClient *);
+    void clientRemovedTransformer(KWin::AbstractClient *);
+    void clientMinimizedTransformer(KWin::AbstractClient *);
+    void clientUnminimizedTransformer(KWin::AbstractClient *);
+    void clientMaximizeSetTransformer(KWin::AbstractClient *, bool h, bool v);
 
 Q_SIGNALS:
     void currentDesktopChanged(int desktop, PlasmaApi::Client kwinClient);
+
+    /**
+     * Signal emitted when the number of screens changes.
+     * @param count The new number of screens
+     */
+    void numberScreensChanged(int count);
+
+    /**
+     * This signal is emitted when the size of @p screen changes.
+     * Don't forget to fetch an updated client area.
+     *
+     * @deprecated Use QScreen::geometryChanged signal instead.
+     */
+    void screenResized(int screen);
 
     /**
      * Signal emitted whenever the current activity changed.
      * @param id id of the new activity
      */
     void currentActivityChanged(const QString &id);
+
+    void clientAdded(PlasmaApi::Client client);
+
+    void clientRemoved(PlasmaApi::Client client);
+
+    void clientMinimized(PlasmaApi::Client client);
+
+    void clientUnminimized(PlasmaApi::Client client);
+
+    void clientMaximizeSet(PlasmaApi::Client client, bool h, bool v);
 
 private:
     void wrapSignals();
