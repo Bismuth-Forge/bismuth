@@ -41,8 +41,17 @@ void Workspace::wrapSignals()
         connect(m_kwinImpl, implNormSignature, this, thisNormSignature);
     };
 
-    wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
+    wrapSimpleSignal(SIGNAL(numberScreensChanged(int count)));
+    wrapSimpleSignal(SIGNAL(screenResized(int screen)));
     wrapSimpleSignal(SIGNAL(currentActivityChanged(const QString &)));
+
+    wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
+    wrapComplexSignal(SIGNAL(clientAdded(KWin::AbstractClient *)), SLOT(clientAddedTransformer(KWin::AbstractClient *)));
+    wrapComplexSignal(SIGNAL(clientRemoved(KWin::AbstractClient *)), SLOT(clientRemovedTransformer(KWin::AbstractClient *)));
+    wrapComplexSignal(SIGNAL(clientMinimized(KWin::AbstractClient *)), SLOT(clientMinimizedTransformer(KWin::AbstractClient *)));
+    wrapComplexSignal(SIGNAL(clientUnminimized(KWin::AbstractClient *)), SLOT(clientUnminimizedTransformer(KWin::AbstractClient *)));
+    wrapComplexSignal(SIGNAL(clientMaximizeSet(KWin::AbstractClient *, bool h, bool v)),
+                      SLOT(clientMaximizeSetTransformer(KWin::AbstractClient *, bool h, bool v)));
 };
 
 QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
@@ -56,5 +65,35 @@ void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClie
     auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT currentDesktopChanged(desktop, clientWrapper);
 };
+
+void Workspace::clientAddedTransformer(KWin::AbstractClient *kwinClient)
+{
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT clientAdded(clientWrapper);
+}
+
+void Workspace::clientRemovedTransformer(KWin::AbstractClient *kwinClient)
+{
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT clientRemoved(clientWrapper);
+}
+
+void Workspace::clientMinimizedTransformer(KWin::AbstractClient *kwinClient)
+{
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT clientMinimized(clientWrapper);
+}
+
+void Workspace::clientUnminimizedTransformer(KWin::AbstractClient *kwinClient)
+{
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT clientUnminimized(clientWrapper);
+}
+
+void Workspace::clientMaximizeSetTransformer(KWin::AbstractClient *kwinClient, bool h, bool v)
+{
+    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    Q_EMIT clientMaximizeSet(clientWrapper, h, v);
+}
 
 }
