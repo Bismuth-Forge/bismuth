@@ -6,8 +6,8 @@
 #include <QQmlContext>
 
 #include "logger.hpp"
+#include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
-#include "plasma-api/plasma-api.hpp"
 
 namespace PlasmaApi
 {

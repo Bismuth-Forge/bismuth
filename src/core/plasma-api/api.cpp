@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
-#include "plasma-api.hpp"
+#include "api.hpp"
 
 #include <QQmlContext>
 
@@ -10,14 +10,14 @@
 namespace PlasmaApi
 {
 
-PlasmaApi::PlasmaApi(QQmlEngine *engine)
+Api::Api(QQmlEngine *engine)
     : m_engine(engine)
     , m_workspace(engine)
 {
     qRegisterMetaType<Client>();
 };
 
-Workspace &PlasmaApi::workspace()
+Workspace &Api::workspace()
 {
     return m_workspace;
 }

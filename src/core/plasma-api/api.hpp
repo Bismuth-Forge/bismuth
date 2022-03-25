@@ -13,8 +13,10 @@ namespace PlasmaApi
 /**
  * QML API Wrapper for KWin and Plasma
  */
-struct PlasmaApi {
-    explicit PlasmaApi(QQmlEngine *engine);
+class Api
+{
+public:
+    explicit Api(QQmlEngine *engine);
 
     Workspace &workspace();
 

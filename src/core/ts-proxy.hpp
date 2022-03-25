@@ -9,7 +9,7 @@
 
 #include "config.hpp"
 #include "controller.hpp"
-#include "plasma-api/plasma-api.hpp"
+#include "plasma-api/api.hpp"
 
 /**
  * Proxy object for the legacy TS backend.
@@ -18,7 +18,7 @@ class TSProxy : public QObject
 {
     Q_OBJECT
 public:
-    TSProxy(QQmlEngine *, Bismuth::Controller &, PlasmaApi::PlasmaApi &, Bismuth::Config &);
+    TSProxy(QQmlEngine *, Bismuth::Controller &, PlasmaApi::Api &, Bismuth::Config &);
 
     /**
      * Returns the config usable in the legacy TypeScript logic
@@ -45,5 +45,5 @@ private:
     QQmlEngine *m_engine;
     Bismuth::Config &m_config;
     Bismuth::Controller &m_controller;
-    PlasmaApi::PlasmaApi &m_plasmaApi;
+    PlasmaApi::Api &m_plasmaApi;
 };
