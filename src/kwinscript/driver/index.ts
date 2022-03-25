@@ -64,9 +64,7 @@ export interface Driver {
 export class DriverImpl implements Driver {
   public get currentSurface(): DriverSurface {
     return new DriverSurfaceImpl(
-      this.kwinApi.workspace.activeClient
-        ? this.kwinApi.workspace.activeClient.screen
-        : 0,
+      this.proxy.workspace().activeScreen,
       this.proxy.workspace().currentActivity,
       this.proxy.workspace().currentDesktop,
       this.qml.activityInfo,
