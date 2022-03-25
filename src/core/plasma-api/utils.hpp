@@ -18,6 +18,14 @@
         m_kwinImpl->setProperty(#NAME, QVariant::fromValue(value));                                                                                            \
     }
 
+#define BI_READONLY_PROPERTY(TYPE, NAME)                                                                                                                       \
+    Q_PROPERTY(TYPE NAME READ NAME);                                                                                                                           \
+                                                                                                                                                               \
+    TYPE NAME() const                                                                                                                                          \
+    {                                                                                                                                                          \
+        return m_kwinImpl->property(#NAME).value<TYPE>();                                                                                                      \
+    }
+
 /**
  * Wrap QML API method
  *
