@@ -37,10 +37,11 @@ public:
     Workspace(QQmlEngine *engine);
     Workspace(const Workspace &);
 
+    BI_READONLY_PROPERTY(int, numScreens);
+    BI_READONLY_PROPERTY(int, activeScreen);
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
-    BI_READONLY_PROPERTY(int, numScreens);
 
     /**
      * Returns the geometry a Client can use with the specified option.
