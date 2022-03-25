@@ -13,8 +13,25 @@
 
 #include <memory>
 
+#include "logger.hpp"
+#include "plasma-api/client.hpp"
+#include "plasma-api/workspace.hpp"
+#include "ts-proxy.hpp"
+
 namespace Bismuth
 {
+Controller::Controller(PlasmaApi::Api &api)
+    : m_plasmaApi(api)
+    , m_proxy()
+{
+    bindEvents();
+}
+
+void Controller::bindEvents()
+{
+    auto &workspace = m_plasmaApi.workspace();
+    connect(&workspace, &PlasmaApi::Workspace::currentDesktopChanged, this, &Controller::onCurrentSurfaceChanged);
+}
 
 void Controller::registerAction(const Action &data)
 {
@@ -38,6 +55,20 @@ void Controller::registerAction(const Action &data)
 
     m_registeredShortcuts.push_back(action);
 };
+
+void Controller::onCurrentSurfaceChanged()
+{
+    if (m_proxy) {
+        auto ctl = m_proxy->jsController();
+        auto func = ctl.property("onCurrentSurfaceChanged");
+        func.callWithInstance(ctl);
+    }
+}
+
+void Controller::setProxy(TSProxy *proxy)
+{
+    m_proxy = proxy;
+}
 
 Action::Action(const QString &id, const QString &description, const QString &defaultKeybinding, std::function<void()> callback)
 {

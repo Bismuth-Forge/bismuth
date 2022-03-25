@@ -11,6 +11,10 @@
 #include <memory>
 #include <vector>
 
+#include "plasma-api/api.hpp"
+
+class TSProxy;
+
 namespace Bismuth
 {
 
@@ -27,10 +31,21 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
+    Controller(PlasmaApi::Api &);
+
+    void bindEvents();
     void registerAction(const Action &);
+
+    void setProxy(TSProxy *);
+
+public Q_SLOTS:
+    void onCurrentSurfaceChanged();
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};
+
+    PlasmaApi::Api &m_plasmaApi;
+    TSProxy *m_proxy;
 };
 
 }
