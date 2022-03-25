@@ -399,7 +399,7 @@ export class DriverImpl implements Driver {
       }
     });
 
-    this.connect(client.geometryChanged, () => {
+    this.connect(client.frameGeometryChanged, () => {
       if (moving) {
         this.controller.onWindowMove(window);
       } else if (resizing) {
