@@ -187,13 +187,6 @@ export class DriverImpl implements Driver {
       this.controller.onCurrentSurfaceChanged();
     };
 
-    const onCurrentDesktopChanged = (
-      _desktop: number,
-      _client: KWin.Client
-    ): void => {
-      this.controller.onCurrentSurfaceChanged();
-    };
-
     const onClientAdded = (client: KWin.Client): void => {
       this.log.log(`Client added: ${client}`);
 
@@ -257,10 +250,6 @@ export class DriverImpl implements Driver {
     this.connect(
       this.kwinApi.workspace.currentActivityChanged,
       onCurrentActivityChanged
-    );
-    this.connect(
-      this.proxy.workspace().currentDesktopChanged,
-      onCurrentDesktopChanged
     );
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
     this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);

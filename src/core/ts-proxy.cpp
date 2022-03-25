@@ -131,8 +131,18 @@ void TSProxy::registerShortcut(const QJSValue &tsAction)
                                  }});
 }
 
-Q_INVOKABLE void TSProxy::log(const QJSValue &value)
+void TSProxy::log(const QJSValue &value)
 {
     auto valAsString = value.toString();
     qDebug(Bi).noquote() << valAsString;
 };
+
+void TSProxy::setJsController(const QJSValue &value)
+{
+    m_jsController = value;
+}
+
+QJSValue TSProxy::jsController()
+{
+    return m_jsController;
+}

@@ -41,9 +41,13 @@ public:
      */
     Q_INVOKABLE void log(const QJSValue &);
 
+    Q_INVOKABLE void setJsController(const QJSValue &);
+    QJSValue jsController();
+
 private:
     QQmlEngine *m_engine;
     Bismuth::Config &m_config;
     Bismuth::Controller &m_controller;
     PlasmaApi::Api &m_plasmaApi;
+    QJSValue m_jsController;
 };

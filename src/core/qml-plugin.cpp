@@ -45,6 +45,7 @@ void Core::init()
     m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_engine);
     m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi);
     m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_plasmaApi, *m_config);
+    m_controller->setProxy(m_tsProxy.get());
 }
 
 TSProxy *Core::tsProxy() const
