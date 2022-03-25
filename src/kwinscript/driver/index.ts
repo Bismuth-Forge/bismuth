@@ -231,17 +231,6 @@ export class DriverImpl implements Driver {
       }
     };
 
-    const onClientFullScreenSet = (
-      client: KWin.Client,
-      fullScreen: boolean,
-      user: boolean
-    ): void => {
-      this.controller.onWindowChanged(
-        this.windowMap.get(client),
-        `fullscreen=${fullScreen} user=${user}`
-      );
-    };
-
     const onClientMinimized = (client: KWin.Client): void => {
       if (this.config.preventMinimize) {
         client.minimized = false;
@@ -276,10 +265,6 @@ export class DriverImpl implements Driver {
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
     this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);
     this.connect(this.kwinApi.workspace.clientMaximizeSet, onClientMaximizeSet);
-    this.connect(
-      this.kwinApi.workspace.clientFullScreenSet,
-      onClientFullScreenSet
-    );
     this.connect(this.kwinApi.workspace.clientMinimized, onClientMinimized);
     this.connect(this.kwinApi.workspace.clientUnminimized, onClientUnminimized);
   }

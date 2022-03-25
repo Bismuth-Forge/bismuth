@@ -56,7 +56,6 @@ declare namespace KWin {
     activityAdded: QSignal;
     activityRemoved: QSignal;
     clientAdded: QSignal;
-    clientFullScreenSet: QSignal;
     clientMaximizeSet: QSignal;
     clientMinimized: QSignal;
     clientRemoved: QSignal;
