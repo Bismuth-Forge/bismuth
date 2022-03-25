@@ -102,7 +102,7 @@ export class DriverImpl implements Driver {
 
   public get screens(): DriverSurface[] {
     const screensArr = [];
-    for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
+    for (let screen = 0; screen < this.proxy.workspace().numScreens; screen++) {
       screensArr.push(
         new DriverSurfaceImpl(
           screen,

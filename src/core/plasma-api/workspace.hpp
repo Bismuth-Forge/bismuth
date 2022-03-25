@@ -40,6 +40,7 @@ public:
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
+    BI_READONLY_PROPERTY(int, numScreens);
 
     /**
      * Returns the geometry a Client can use with the specified option.
