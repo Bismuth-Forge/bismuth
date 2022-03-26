@@ -39,6 +39,15 @@ public:
 
 Q_SIGNALS:
     void currentDesktopChanged(int desktop, KWin::AbstractClient *client);
+    // Not all signals are used, some of them declared to avoid warnings
+    void numberScreensChanged(int);
+    void screenResized(int);
+    void currentActivityChanged(const QString &);
+    void clientAdded(KWin::AbstractClient *);
+    void clientRemoved(KWin::AbstractClient *);
+    void clientMinimized(KWin::AbstractClient *);
+    void clientUnminimized(KWin::AbstractClient *);
+    void clientMaximizeSet(KWin::AbstractClient *, bool, bool);
 
 private:
     int m_currentDesktop{};
