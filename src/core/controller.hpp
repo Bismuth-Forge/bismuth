@@ -40,6 +40,7 @@ public:
 
 public Q_SLOTS:
     void onCurrentSurfaceChanged();
+    void onSurfaceUpdate();
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};

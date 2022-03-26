@@ -41,8 +41,8 @@ void Workspace::wrapSignals()
         connect(m_kwinImpl, implNormSignature, this, thisNormSignature);
     };
 
-    wrapSimpleSignal(SIGNAL(numberScreensChanged(int count)));
-    wrapSimpleSignal(SIGNAL(screenResized(int screen)));
+    wrapSimpleSignal(SIGNAL(numberScreensChanged(int)));
+    wrapSimpleSignal(SIGNAL(screenResized(int)));
     wrapSimpleSignal(SIGNAL(currentActivityChanged(const QString &)));
 
     wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
@@ -50,8 +50,7 @@ void Workspace::wrapSignals()
     wrapComplexSignal(SIGNAL(clientRemoved(KWin::AbstractClient *)), SLOT(clientRemovedTransformer(KWin::AbstractClient *)));
     wrapComplexSignal(SIGNAL(clientMinimized(KWin::AbstractClient *)), SLOT(clientMinimizedTransformer(KWin::AbstractClient *)));
     wrapComplexSignal(SIGNAL(clientUnminimized(KWin::AbstractClient *)), SLOT(clientUnminimizedTransformer(KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientMaximizeSet(KWin::AbstractClient *, bool h, bool v)),
-                      SLOT(clientMaximizeSetTransformer(KWin::AbstractClient *, bool h, bool v)));
+    wrapComplexSignal(SIGNAL(clientMaximizeSet(KWin::AbstractClient *, bool, bool)), SLOT(clientMaximizeSetTransformer(KWin::AbstractClient *, bool, bool)));
 };
 
 QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
