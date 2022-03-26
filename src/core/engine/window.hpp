@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "engine/surface.hpp"
 #include "plasma-api/client.hpp"
 
 namespace Bismuth
@@ -24,6 +25,8 @@ public:
 
     void setMode(Mode);
     Mode mode() const;
+
+    bool visibleOn(const Surface &surface);
 
 private:
     PlasmaApi::Client m_client;

@@ -9,10 +9,11 @@
 #include <QString>
 
 #include "toplevel.hpp"
+#include "utils.hpp"
 
 namespace PlasmaApi
 {
-class Client : TopLevel
+class Client : public TopLevel
 {
     Q_OBJECT
 
@@ -27,9 +28,8 @@ public:
     /**
      * The activities this client is on. If it's on all activities the property is empty.
      */
-    // Q_PROPERTY(QStringList activities READ activities)
-    // QSTRINGLIST_PRIMITIVE_SETGET(activities)
-    //
+    BI_READONLY_PROPERTY(QStringList, activities)
+
     // /**
     //  * Whether the window is active.
     //  */
@@ -85,13 +85,12 @@ public:
     //  */
     // Q_PROPERTY(bool specialWindow READ specialWindow)
     // BOOL_PRIMITIVE_GET(specialWindow)
-    //
-    // /**
-    //  * The desktop this window is on. If the window is on all desktops the property has value -1.
-    //  */
-    // Q_PROPERTY(int desktop READ desktop WRITE set_desktop)
-    // INT_PRIMITIVE_SETGET(desktop)
-    //
+
+    /**
+     * The desktop this window is on. If the window is on all desktops the property has value -1.
+     */
+    BI_PROPERTY(int, desktop, setDesktop)
+
     // /**
     //  * Whether the window is fullscreen
     //  */
@@ -109,25 +108,23 @@ public:
     //  */
     // Q_PROPERTY(bool keepBelow READ keepBelow WRITE set_keepBelow)
     // BOOL_PRIMITIVE_SETGET(keepBelow)
-    //
-    // /**
-    //  * Whether the window is minimized
-    //  */
-    // Q_PROPERTY(bool minimized READ minimized WRITE set_minimized)
-    // BOOL_PRIMITIVE_SETGET(minimized)
-    //
+
+    /**
+     * Whether the window is minimized
+     */
+    BI_PROPERTY(bool, minimized, setMinimized);
+
     // /**
     //  * Whether the window has borders (window decorations)
     //  */
     // Q_PROPERTY(bool noBorder READ noBorder WRITE set_noBorder)
     // BOOL_PRIMITIVE_SETGET(noBorder)
-    //
-    // /**
-    //  * Whether the window is set to be on all desktops
-    //  */
-    // Q_PROPERTY(bool onAllDesktops READ onAllDesktops WRITE set_onAllDesktops)
-    // BOOL_PRIMITIVE_SETGET(onAllDesktops)
-    //
+
+    /**
+     * Whether the window is set to be on all desktops
+     */
+    BI_PROPERTY(bool, onAllDesktops, setOnAllDesktops)
+
     // /**
     //  * Whether the Client is shaded.
     //  */

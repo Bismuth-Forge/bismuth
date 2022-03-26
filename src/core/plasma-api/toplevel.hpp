@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+#include "utils.hpp"
+
 namespace PlasmaApi
 {
 
@@ -43,13 +45,12 @@ public:
     //  */
     // Q_PROPERTY(QByteArray resourceName READ resourceName)
     // QBYTEARRAY_PRIMITIVE_GET(resourceName)
-    //
-    // /**
-    //  * On which screen toplevel is
-    //  */
-    // Q_PROPERTY(int screen READ screen)
-    // INT_PRIMITIVE_GET(screen)
-    //
+
+    /**
+     * On which screen toplevel is
+     */
+    BI_READONLY_PROPERTY(int, screen)
+
     // /**
     //  * Whether the window is a splashscreen.
     //  */
