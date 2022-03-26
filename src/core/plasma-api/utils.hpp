@@ -4,6 +4,7 @@
 #pragma once
 
 #include <QObject>
+#include <QVariant>
 
 #define BI_PROPERTY(TYPE, NAME, SETTER_NAME)                                                                                                                   \
     Q_PROPERTY(TYPE NAME READ NAME WRITE SETTER_NAME);                                                                                                         \

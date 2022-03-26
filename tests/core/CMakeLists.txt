@@ -6,6 +6,7 @@ add_executable(test_runner)
 target_sources(test_runner PRIVATE main.cpp)
 
 add_subdirectory(plasma-api)
+add_subdirectory(engine)
 
 target_link_libraries(test_runner PRIVATE Qt5::Core Qt5::Quick Qt5::Qml
                                           Qt5::Test Bismuth::Core)

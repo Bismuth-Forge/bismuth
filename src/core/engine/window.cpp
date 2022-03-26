@@ -26,4 +26,29 @@ Window::Mode Window::mode() const
     return m_mode;
 }
 
+bool Window::visibleOn(const Surface &surface)
+{
+    // All minimized windows are invisible by definition
+    if (m_client.minimized()) {
+        return false;
+    }
+
+    // The window must be on the surface's desktop (or be on all desktops)
+    if (!m_client.onAllDesktops() && m_client.desktop() != surface.desktop()) {
+        return false;
+    }
+
+    // The window must be on the surface's screen
+    if (m_client.screen() != surface.screen()) {
+        return false;
+    }
+
+    // The window must be on the surface's activity or on all activities
+    if (m_client.activities().size() != 0 && !m_client.activities().contains(surface.activity())) {
+        return false;
+    }
+
+    return true;
+}
+
 }
