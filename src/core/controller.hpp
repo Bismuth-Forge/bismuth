@@ -36,6 +36,7 @@ public:
     Controller(PlasmaApi::Api &, Engine &);
 
     void bindEvents();
+    void loadExistingWindows();
     void registerAction(const Action &);
 
     void setProxy(TSProxy *);
@@ -44,6 +45,11 @@ public Q_SLOTS:
     void onCurrentSurfaceChanged();
     void onSurfaceUpdate();
     void onClientAdded(PlasmaApi::Client);
+    void onClientRemoved(PlasmaApi::Client);
+    void onClientMaximized(PlasmaApi::Client);
+    void onClientUnmaximized(PlasmaApi::Client);
+    void onClientMinimized(PlasmaApi::Client);
+    void onClientUnminimized(PlasmaApi::Client);
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};

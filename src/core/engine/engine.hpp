@@ -14,6 +14,12 @@ public:
     Engine();
 
     void addWindow(PlasmaApi::Client);
+    void removeWindow(PlasmaApi::Client);
+
+    /**
+     * Arrange the windows on all visible surfaces
+     */
+    void arrange();
 
 private:
     WindowsList m_windows{};
