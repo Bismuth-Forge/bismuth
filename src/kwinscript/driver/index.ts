@@ -167,22 +167,6 @@ export class DriverImpl implements Driver {
   }
 
   public bindEvents(): void {
-    const onScreenResized = (screen: number): void => {
-      const srf = new DriverSurfaceImpl(
-        screen,
-        this.proxy.workspace().currentActivity,
-        this.proxy.workspace().currentDesktop,
-        this.qml.activityInfo,
-        this.config,
-        this.proxy
-      );
-      this.controller.onSurfaceUpdate();
-    };
-
-    const onCurrentActivityChanged = (_activity: string): void => {
-      this.controller.onCurrentSurfaceChanged();
-    };
-
     const onClientAdded = (client: KWin.Client): void => {
       this.log.log(`Client added: ${client}`);
 
@@ -238,11 +222,6 @@ export class DriverImpl implements Driver {
         "unminimized"
       );
 
-    this.connect(this.kwinApi.workspace.screenResized, onScreenResized);
-    this.connect(
-      this.kwinApi.workspace.currentActivityChanged,
-      onCurrentActivityChanged
-    );
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
     this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);
     this.connect(this.kwinApi.workspace.clientMaximizeSet, onClientMaximizeSet);
