@@ -27,6 +27,11 @@ Controller::Controller(PlasmaApi::Api &api, Engine &engine)
     , m_engine(engine)
 {
     bindEvents();
+    // TODO: Bind shortcuts
+
+    loadExistingWindows();
+
+    m_engine.arrange();
 }
 
 void Controller::bindEvents()
@@ -37,6 +42,25 @@ void Controller::bindEvents()
     connect(&workspace, &PlasmaApi::Workspace::screenResized, this, &Controller::onSurfaceUpdate);
     connect(&workspace, &PlasmaApi::Workspace::currentActivityChanged, this, &Controller::onCurrentSurfaceChanged);
     connect(&workspace, &PlasmaApi::Workspace::clientAdded, this, &Controller::onClientAdded);
+    connect(&workspace, &PlasmaApi::Workspace::clientRemoved, this, &Controller::onClientRemoved);
+    connect(&workspace, &PlasmaApi::Workspace::clientMaximizeSet, this, [this](PlasmaApi::Client client, bool h, bool v) {
+        if (h == true && v == true) {
+            onClientMaximized(client);
+        } else if (h == false && v == false) {
+            onClientUnmaximized(client);
+        }
+    });
+    connect(&workspace, &PlasmaApi::Workspace::clientMinimized, this, &Controller::onClientMinimized);
+    connect(&workspace, &PlasmaApi::Workspace::clientUnminimized, this, &Controller::onClientUnminimized);
+}
+
+void Controller::loadExistingWindows()
+{
+    auto clients = m_plasmaApi.workspace().clientList();
+
+    for (auto client : clients) {
+        m_engine.addWindow(client);
+    }
 }
 
 void Controller::registerAction(const Action &data)
@@ -83,6 +107,26 @@ void Controller::onSurfaceUpdate()
 void Controller::onClientAdded(PlasmaApi::Client client)
 {
     m_engine.addWindow(client);
+}
+
+void Controller::onClientRemoved(PlasmaApi::Client)
+{
+}
+
+void Controller::onClientMaximized(PlasmaApi::Client)
+{
+}
+
+void Controller::onClientUnmaximized(PlasmaApi::Client)
+{
+}
+
+void Controller::onClientMinimized(PlasmaApi::Client)
+{
+}
+
+void Controller::onClientUnminimized(PlasmaApi::Client)
+{
 }
 
 void Controller::setProxy(TSProxy *proxy)

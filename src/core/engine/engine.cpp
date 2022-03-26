@@ -14,4 +14,12 @@ void Engine::addWindow(PlasmaApi::Client client)
     m_windows.add(client);
     // Bind events of this window
 }
+
+void Engine::removeWindow(PlasmaApi::Client client)
+{
+}
+
+void Engine::arrange()
+{
+}
 }
