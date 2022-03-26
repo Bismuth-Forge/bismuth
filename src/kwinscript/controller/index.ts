@@ -54,9 +54,8 @@ export interface Controller {
 
   /**
    * React to screen update. For example, when the new screen has connected.
-   * @param comment the metadata string about the details of what has changed
    */
-  onSurfaceUpdate(comment: string): void;
+  onSurfaceUpdate(): void;
 
   /**
    * React to window geometry update
@@ -205,8 +204,7 @@ export class ControllerImpl implements Controller {
     this.driver.showNotification(text, icon, hint);
   }
 
-  public onSurfaceUpdate(comment: string): void {
-    this.log.log(["onSurfaceUpdate", { comment }]);
+  public onSurfaceUpdate(): void {
     this.engine.arrange();
   }
 

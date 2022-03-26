@@ -167,10 +167,6 @@ export class DriverImpl implements Driver {
   }
 
   public bindEvents(): void {
-    const onNumberScreensChanged = (count: number): void => {
-      this.controller.onSurfaceUpdate(`screens=${count}`);
-    };
-
     const onScreenResized = (screen: number): void => {
       const srf = new DriverSurfaceImpl(
         screen,
@@ -180,7 +176,7 @@ export class DriverImpl implements Driver {
         this.config,
         this.proxy
       );
-      this.controller.onSurfaceUpdate("resized " + srf.toString());
+      this.controller.onSurfaceUpdate();
     };
 
     const onCurrentActivityChanged = (_activity: string): void => {
@@ -242,10 +238,6 @@ export class DriverImpl implements Driver {
         "unminimized"
       );
 
-    this.connect(
-      this.kwinApi.workspace.numberScreensChanged,
-      onNumberScreensChanged
-    );
     this.connect(this.kwinApi.workspace.screenResized, onScreenResized);
     this.connect(
       this.kwinApi.workspace.currentActivityChanged,

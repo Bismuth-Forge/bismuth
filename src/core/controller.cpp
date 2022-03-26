@@ -31,6 +31,7 @@ void Controller::bindEvents()
 {
     auto &workspace = m_plasmaApi.workspace();
     connect(&workspace, &PlasmaApi::Workspace::currentDesktopChanged, this, &Controller::onCurrentSurfaceChanged);
+    connect(&workspace, &PlasmaApi::Workspace::numberScreensChanged, this, &Controller::onSurfaceUpdate);
 }
 
 void Controller::registerAction(const Action &data)
@@ -61,6 +62,15 @@ void Controller::onCurrentSurfaceChanged()
     if (m_proxy) {
         auto ctl = m_proxy->jsController();
         auto func = ctl.property("onCurrentSurfaceChanged");
+        func.callWithInstance(ctl);
+    }
+}
+
+void Controller::onSurfaceUpdate()
+{
+    if (m_proxy) {
+        auto ctl = m_proxy->jsController();
+        auto func = ctl.property("onSurfaceUpdate");
         func.callWithInstance(ctl);
     }
 }
