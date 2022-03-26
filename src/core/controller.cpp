@@ -32,6 +32,8 @@ void Controller::bindEvents()
     auto &workspace = m_plasmaApi.workspace();
     connect(&workspace, &PlasmaApi::Workspace::currentDesktopChanged, this, &Controller::onCurrentSurfaceChanged);
     connect(&workspace, &PlasmaApi::Workspace::numberScreensChanged, this, &Controller::onSurfaceUpdate);
+    connect(&workspace, &PlasmaApi::Workspace::screenResized, this, &Controller::onSurfaceUpdate);
+    connect(&workspace, &PlasmaApi::Workspace::currentActivityChanged, this, &Controller::onCurrentSurfaceChanged);
 }
 
 void Controller::registerAction(const Action &data)
