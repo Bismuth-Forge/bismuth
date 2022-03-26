@@ -7,8 +7,13 @@
 namespace Bismuth
 {
 
-void WindowsList::add(PlasmaApi::Client)
+void WindowsList::add(PlasmaApi::Client client)
 {
-    qDebug(Bi) << "Adding window... (CXX)";
+    m_windowMap.insert_or_assign(client, Window(client));
+}
+
+void WindowsList::remove(PlasmaApi::Client client)
+{
+    m_windowMap.erase(client);
 }
 }

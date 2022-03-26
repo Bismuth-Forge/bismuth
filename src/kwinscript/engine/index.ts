@@ -333,14 +333,6 @@ export class EngineImpl implements Engine {
     const tilingArea = this.getTilingArea(workingArea, layout);
 
     const visibleWindows = this.windows.visibleWindowsOn(screenSurface);
-    this.log.log([
-      "arrangeScreen",
-      {
-        layout,
-        screenSurface,
-        visibles: visibleWindows.length,
-      },
-    ]);
 
     // Set correct window state for new windows
     visibleWindows.forEach((win: EngineWindow) => {

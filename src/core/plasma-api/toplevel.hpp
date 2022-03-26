@@ -13,9 +13,12 @@ class TopLevel : public QObject
     Q_OBJECT
 public:
     TopLevel() = default;
+    virtual ~TopLevel() = default;
     explicit TopLevel(QObject *kwinImplPtr);
     TopLevel(const TopLevel &);
-    virtual ~TopLevel() = default;
+    TopLevel(TopLevel &&);
+    TopLevel &operator=(const TopLevel &);
+    TopLevel &operator=(TopLevel &&);
 
     /**
      * Whether the window is a dialog window.
