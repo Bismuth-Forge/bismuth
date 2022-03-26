@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "engine/surface.hpp"
+#include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
 #include "windows_list.hpp"
 
@@ -11,7 +13,7 @@ namespace Bismuth
 class Engine
 {
 public:
-    Engine();
+    Engine(PlasmaApi::Api &);
 
     void addWindow(PlasmaApi::Client);
     void removeWindow(PlasmaApi::Client);
@@ -22,6 +24,9 @@ public:
     void arrange();
 
 private:
+    void arrangeWindowsOnSurface(const Surface &);
+
     WindowsList m_windows{};
+    PlasmaApi::Api &m_plasmaApi;
 };
 }

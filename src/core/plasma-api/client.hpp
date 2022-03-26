@@ -22,6 +22,8 @@ public:
     Client(const Client &);
     virtual ~Client() = default;
 
+    bool operator<(const Client &rhs) const;
+
     /**
      * The activities this client is on. If it's on all activities the property is empty.
      */

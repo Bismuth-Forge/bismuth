@@ -12,6 +12,7 @@ class WindowsList
 {
 public:
     void add(PlasmaApi::Client);
+    void remove(PlasmaApi::Client);
 
 private:
     std::map<PlasmaApi::Client, Window> m_windowMap{};
