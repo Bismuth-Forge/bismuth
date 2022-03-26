@@ -22,6 +22,7 @@ ecm_qt_declare_logging_category(
   "Bismuth Plasma Tiling Extension")
 
 add_subdirectory(plasma-api)
+add_subdirectory(engine)
 
 target_sources(bismuth_core PRIVATE qml-plugin.cpp ts-proxy.cpp controller.cpp
                                     qmldir ${BISMUTH_LOG})

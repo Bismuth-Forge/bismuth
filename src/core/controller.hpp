@@ -11,7 +11,9 @@
 #include <memory>
 #include <vector>
 
+#include "engine/engine.hpp"
 #include "plasma-api/api.hpp"
+#include "plasma-api/client.hpp"
 
 class TSProxy;
 
@@ -31,7 +33,7 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(PlasmaApi::Api &);
+    Controller(PlasmaApi::Api &, Engine &);
 
     void bindEvents();
     void registerAction(const Action &);
@@ -41,12 +43,14 @@ public:
 public Q_SLOTS:
     void onCurrentSurfaceChanged();
     void onSurfaceUpdate();
+    void onClientAdded(PlasmaApi::Client);
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};
 
     PlasmaApi::Api &m_plasmaApi;
     TSProxy *m_proxy;
+    Engine &m_engine;
 };
 
 }
