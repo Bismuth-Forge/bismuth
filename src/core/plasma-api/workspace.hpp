@@ -55,6 +55,8 @@ public:
      */
     Q_INVOKABLE QRect clientArea(ClientAreaOption, int screen, int desktop);
 
+    Q_INVOKABLE std::vector<PlasmaApi::Client> clientList() const;
+
 private Q_SLOTS:
     void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
     void clientAddedTransformer(KWin::AbstractClient *);

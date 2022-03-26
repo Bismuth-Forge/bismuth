@@ -58,6 +58,22 @@ QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
     BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
 };
 
+std::vector<PlasmaApi::Client> Workspace::clientList() const
+{
+    auto apiCall = [&]() -> QList<KWin::AbstractClient *> {
+        BI_METHOD_IMPL_WRAP(QList<KWin::AbstractClient *>, "clientList()", QGenericArgument(nullptr));
+    };
+
+    auto apiCallRes = apiCall();
+
+    auto result = std::vector<PlasmaApi::Client>(apiCallRes.size());
+    for (auto clientPtr : apiCallRes) {
+        result.push_back(Client(reinterpret_cast<QObject *>(clientPtr)));
+    }
+
+    return result;
+}
+
 void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient)
 {
     // Since we don't know the KWin internal implementation we have to use reinterpret_cast
