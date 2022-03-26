@@ -13,6 +13,7 @@
 
 #include <memory>
 
+#include "engine/engine.hpp"
 #include "logger.hpp"
 #include "plasma-api/client.hpp"
 #include "plasma-api/workspace.hpp"
@@ -20,9 +21,10 @@
 
 namespace Bismuth
 {
-Controller::Controller(PlasmaApi::Api &api)
+Controller::Controller(PlasmaApi::Api &api, Engine &engine)
     : m_plasmaApi(api)
     , m_proxy()
+    , m_engine(engine)
 {
     bindEvents();
 }
@@ -34,6 +36,7 @@ void Controller::bindEvents()
     connect(&workspace, &PlasmaApi::Workspace::numberScreensChanged, this, &Controller::onSurfaceUpdate);
     connect(&workspace, &PlasmaApi::Workspace::screenResized, this, &Controller::onSurfaceUpdate);
     connect(&workspace, &PlasmaApi::Workspace::currentActivityChanged, this, &Controller::onCurrentSurfaceChanged);
+    connect(&workspace, &PlasmaApi::Workspace::clientAdded, this, &Controller::onClientAdded);
 }
 
 void Controller::registerAction(const Action &data)
@@ -75,6 +78,11 @@ void Controller::onSurfaceUpdate()
         auto func = ctl.property("onSurfaceUpdate");
         func.callWithInstance(ctl);
     }
+}
+
+void Controller::onClientAdded(PlasmaApi::Client client)
+{
+    m_engine.addWindow(client);
 }
 
 void Controller::setProxy(TSProxy *proxy)

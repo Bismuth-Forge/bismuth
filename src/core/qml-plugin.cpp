@@ -13,6 +13,7 @@
 
 #include "config.hpp"
 #include "controller.hpp"
+#include "engine/engine.hpp"
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 #include "ts-proxy.hpp"
@@ -27,7 +28,7 @@ void CorePlugin::registerTypes(const char *uri)
 
 Core::Core(QQuickItem *parent)
     : QQuickItem(parent)
-    , m_engine() // We cannot get engine from the pointer in the constructor
+    , m_qmlEngine() // We cannot get engine from the pointer in the constructor
     , m_controller()
     , m_tsProxy()
     , m_config()
@@ -41,10 +42,11 @@ Core::Core(QQuickItem *parent)
 void Core::init()
 {
     m_config = std::make_unique<Bismuth::Config>();
-    m_engine = qmlEngine(this);
-    m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_engine);
-    m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi);
-    m_tsProxy = std::make_unique<TSProxy>(m_engine, *m_controller, *m_plasmaApi, *m_config);
+    m_qmlEngine = qmlEngine(this);
+    m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_qmlEngine);
+    m_engine = std::make_unique<Bismuth::Engine>();
+    m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi, *m_engine);
+    m_tsProxy = std::make_unique<TSProxy>(m_qmlEngine, *m_controller, *m_plasmaApi, *m_config);
     m_controller->setProxy(m_tsProxy.get());
 }
 
