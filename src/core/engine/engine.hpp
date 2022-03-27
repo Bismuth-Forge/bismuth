@@ -22,10 +22,13 @@ public:
     /**
      * Arrange the windows on all visible surfaces
      */
-    void arrange();
+    void arrangeWindowsOnVisibleSurfaces();
+
+    void arrangeWindowsOnSurfaces(const std::vector<Surface> &);
 
 private:
     void arrangeWindowsOnSurface(const Surface &);
+    QRect workingArea(const Surface &surface) const;
 
     WindowsList m_windows{};
     LayoutList m_activeLayouts{};

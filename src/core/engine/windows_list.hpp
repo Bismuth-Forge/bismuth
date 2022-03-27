@@ -15,7 +15,7 @@ public:
     void add(PlasmaApi::Client);
     void remove(PlasmaApi::Client);
 
-    std::vector<Window> visibleWindowsOn(const Surface &surface);
+    std::vector<Window> visibleWindowsOn(const Surface &surface) const;
 
 private:
     std::map<PlasmaApi::Client, Window> m_windowMap{};

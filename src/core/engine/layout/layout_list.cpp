@@ -2,22 +2,27 @@
 // SPDX-License-Identifier: MIT
 
 #include "layout_list.hpp"
-#include "engine/layout/stacked.hpp"
+
+#include <functional>
 #include <memory>
+
+#include "engine/layout/layout.hpp"
+#include "engine/layout/monocle.hpp"
+#include "engine/layout/stacked.hpp"
+#include "engine/surface.hpp"
 
 namespace Bismuth
 {
 
-const Layout &LayoutList::layoutOnSurface(const Surface &surface) const
+const Layout &LayoutList::layoutOnSurface(const Surface &surface)
 {
-    auto &layout = m_layouts.at(surface);
+    auto it = m_layouts.find(surface);
 
-    if (layout) {
-        return *layout;
-    } else {
-        // m_layouts.emplace(Surface(surface), std::make_unique<Stacked>());
-        return *m_layouts.at(surface);
+    if (it == m_layouts.end()) {
+        auto [it2, _] = m_layouts.insert_or_assign(surface, std::make_unique<Monocle>());
+        it = it2;
     }
-}
 
+    return *it->second;
+}
 }

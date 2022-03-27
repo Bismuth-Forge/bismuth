@@ -23,45 +23,45 @@ void Engine::removeWindow(PlasmaApi::Client client)
     m_windows.remove(client);
 }
 
-void Engine::arrange()
+void Engine::arrangeWindowsOnVisibleSurfaces()
 {
-    // auto screenSurfaces = [this]() -> std::vector<Surface> {
-    //     auto currentDesktop = m_plasmaApi.workspace().currentDesktop();
-    //     auto currentActivity = m_plasmaApi.workspace().currentActivity();
-    //     auto result = std::vector<Surface>(1, Surface(currentDesktop, 0, currentActivity));
-    //
-    //     // Add from additional screens
-    //     for (auto screen = 1; screen < m_plasmaApi.workspace().numScreens(); screen++) {
-    //         result.push_back(Surface(currentDesktop, screen, currentActivity));
-    //     }
-    //
-    //     return result;
-    // };
-    //
-    // for (auto &surface : screenSurfaces()) {
-    //     arrangeWindowsOnSurface(surface);
-    // }
+    auto screenSurfaces = [this]() -> std::vector<Surface> {
+        auto currentDesktop = m_plasmaApi.workspace().currentDesktop();
+        auto currentActivity = m_plasmaApi.workspace().currentActivity();
+        auto result = std::vector<Surface>(1, Surface(currentDesktop, 0, currentActivity));
+
+        // Add from additional screens
+        for (auto screen = 1; screen < m_plasmaApi.workspace().numScreens(); screen++) {
+            result.push_back(Surface(currentDesktop, screen, currentActivity));
+        }
+
+        return result;
+    };
+
+    arrangeWindowsOnSurfaces(screenSurfaces());
+}
+
+void Engine::arrangeWindowsOnSurfaces(const std::vector<Surface> &surfaces)
+{
+    for (auto &surface : surfaces) {
+        arrangeWindowsOnSurface(surface);
+    }
 }
 
 void Engine::arrangeWindowsOnSurface(const Surface &surface)
 {
-    // auto &layout = m_activeLayouts.layoutOnSurface(surface);
-    auto workingArea = QRect();
-    auto tilingArea = QRect();
+    auto &layout = m_activeLayouts.layoutOnSurface(surface);
+    auto tilingArea = layout.tilingArea(workingArea(surface));
 
     auto visibleWindows = m_windows.visibleWindowsOn(surface);
+    auto windowsThatCanBeTiled = visibleWindows; // TODO: Filter windows
 
-    // auto windowsThatCanBeTiled = std::vector<Window>();
+    layout.apply(tilingArea, windowsThatCanBeTiled);
+}
 
-    // Maximize sole tile if enabled or apply the current layout as expected
-    // ...
-    // Or
-    // Apply layout to windows
-
-    // If enabled, limit the windows' width
-
-    // Commit window assigned properties
-    // visibleWindows.forEach((win : EngineWindow) = > win.commit());
+QRect Engine::workingArea(const Surface &surface) const
+{
+    return m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, surface.screen(), surface.desktop());
 }
 
 }

@@ -31,7 +31,7 @@ Controller::Controller(PlasmaApi::Api &api, Engine &engine)
 
     loadExistingWindows();
 
-    m_engine.arrange();
+    m_engine.arrangeWindowsOnVisibleSurfaces();
 }
 
 void Controller::bindEvents()

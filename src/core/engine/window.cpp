@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "window.hpp"
+#include "logger.hpp"
 
 namespace Bismuth
 {
