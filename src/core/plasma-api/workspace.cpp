@@ -66,9 +66,12 @@ std::vector<PlasmaApi::Client> Workspace::clientList() const
 
     auto apiCallRes = apiCall();
 
-    auto result = std::vector<PlasmaApi::Client>(apiCallRes.size());
+    auto result = std::vector<PlasmaApi::Client>();
+    result.reserve(apiCallRes.size());
     for (auto clientPtr : apiCallRes) {
-        result.push_back(Client(reinterpret_cast<QObject *>(clientPtr)));
+        if (clientPtr) {
+            result.push_back(Client(reinterpret_cast<QObject *>(clientPtr)));
+        }
     }
 
     return result;
