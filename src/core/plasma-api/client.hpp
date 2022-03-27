@@ -30,6 +30,12 @@ public:
      */
     BI_READONLY_PROPERTY(QStringList, activities)
 
+    /**
+     * The geometry of this Client. Be aware that depending on resize mode the frameGeometryChanged
+     * signal might be emitted at each resize step or only at the end of the resize operation.
+     */
+    BI_PROPERTY(QRect, frameGeometry, setFrameGeometry)
+
     // /**
     //  * Whether the window is active.
     //  */

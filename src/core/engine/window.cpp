@@ -16,6 +16,16 @@ bool Window::operator<(const Window &rhs) const
     return m_client < m_client;
 }
 
+QRect Window::geometry() const
+{
+    return m_client.frameGeometry();
+}
+
+void Window::setGeometry(QRect newGeometry)
+{
+    m_client.setFrameGeometry(newGeometry);
+}
+
 void Window::setMode(Mode value)
 {
     m_mode = value;

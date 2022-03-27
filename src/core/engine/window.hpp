@@ -23,6 +23,9 @@ public:
 
     bool operator<(const Window &rhs) const;
 
+    QRect geometry() const;
+    void setGeometry(QRect);
+
     void setMode(Mode);
     Mode mode() const;
 
