@@ -10,6 +10,8 @@ namespace Bismuth
 struct Surface {
     Surface(int desktop, int screen, const QString &activity);
 
+    bool operator<(const Surface &) const;
+
     int desktop() const;
     int screen() const;
     QString activity() const;
