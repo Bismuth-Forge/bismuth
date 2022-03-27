@@ -18,7 +18,7 @@ void WindowsList::remove(PlasmaApi::Client client)
     m_windowMap.erase(client);
 }
 
-std::vector<Window> WindowsList::visibleWindowsOn(const Surface &surface)
+std::vector<Window> WindowsList::visibleWindowsOn(const Surface &surface) const
 {
     auto result = std::vector<Window>();
     for (auto [_, window] : m_windowMap) {

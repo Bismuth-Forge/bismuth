@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <QRect>
 #include <QString>
 
 namespace Bismuth

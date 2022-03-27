@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <functional>
 #include <map>
 #include <memory>
 
@@ -12,7 +13,7 @@
 namespace Bismuth
 {
 struct LayoutList {
-    const Layout &layoutOnSurface(const Surface &) const;
+    const Layout &layoutOnSurface(const Surface &);
 
 private:
     std::map<Surface, std::unique_ptr<Layout>> m_layouts{};
