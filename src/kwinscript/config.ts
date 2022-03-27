@@ -4,6 +4,8 @@
 // SPDX-License-Identifier: MIT
 
 export interface Config {
+  experimentalBackend: boolean;
+
   //#region Layout
   layoutOrder: string[];
   monocleMaximize: boolean;

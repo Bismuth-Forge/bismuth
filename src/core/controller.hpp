@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 
+#include "config.hpp"
 #include "engine/engine.hpp"
 #include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
@@ -33,7 +34,7 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(PlasmaApi::Api &, Engine &);
+    Controller(PlasmaApi::Api &, Engine &, const Bismuth::Config &);
 
     void bindEvents();
     void loadExistingWindows();
@@ -57,6 +58,7 @@ private:
     PlasmaApi::Api &m_plasmaApi;
     TSProxy *m_proxy;
     Engine &m_engine;
+    const Config &m_config;
 };
 
 }
