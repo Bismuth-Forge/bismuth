@@ -121,4 +121,4 @@ TEST_CASE("Workspace Properties Signals")
     }
 }
 
-#include "workspace.moc"
+#include "workspace.test.moc"
