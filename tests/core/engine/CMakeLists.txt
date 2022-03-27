@@ -3,4 +3,4 @@
 
 add_subdirectory(layout)
 
-target_sources(test_runner PRIVATE window.cpp)
+target_sources(test_runner PRIVATE window.test.cpp)
