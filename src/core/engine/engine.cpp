@@ -25,30 +25,33 @@ void Engine::removeWindow(PlasmaApi::Client client)
 
 void Engine::arrange()
 {
-    auto screenSurfaces = [this]() -> std::vector<Surface> {
-        auto result = std::vector<Surface>(1);
-
-        for (auto screen = 0; screen < m_plasmaApi.workspace().numScreens(); screen++) {
-            result.push_back(Surface());
-        }
-
-        return result;
-    };
-
-    for (auto &surface : screenSurfaces()) {
-        arrangeWindowsOnSurface(surface);
-    }
+    // auto screenSurfaces = [this]() -> std::vector<Surface> {
+    //     auto currentDesktop = m_plasmaApi.workspace().currentDesktop();
+    //     auto currentActivity = m_plasmaApi.workspace().currentActivity();
+    //     auto result = std::vector<Surface>(1, Surface(currentDesktop, 0, currentActivity));
+    //
+    //     // Add from additional screens
+    //     for (auto screen = 1; screen < m_plasmaApi.workspace().numScreens(); screen++) {
+    //         result.push_back(Surface(currentDesktop, screen, currentActivity));
+    //     }
+    //
+    //     return result;
+    // };
+    //
+    // for (auto &surface : screenSurfaces()) {
+    //     arrangeWindowsOnSurface(surface);
+    // }
 }
 
 void Engine::arrangeWindowsOnSurface(const Surface &surface)
 {
-    auto layout = "Layout";
+    // auto &layout = m_activeLayouts.layoutOnSurface(surface);
     auto workingArea = QRect();
     auto tilingArea = QRect();
 
-    auto visibleWindows = std::vector<Window>();
+    auto visibleWindows = m_windows.visibleWindowsOn(surface);
 
-    auto windowsThatCanBeTiled = std::vector<Window>();
+    // auto windowsThatCanBeTiled = std::vector<Window>();
 
     // Maximize sole tile if enabled or apply the current layout as expected
     // ...

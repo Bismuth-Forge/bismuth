@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "engine/layout/layout_list.hpp"
 #include "engine/surface.hpp"
 #include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
@@ -27,6 +28,7 @@ private:
     void arrangeWindowsOnSurface(const Surface &);
 
     WindowsList m_windows{};
+    LayoutList m_activeLayouts{};
     PlasmaApi::Api &m_plasmaApi;
 };
 }
