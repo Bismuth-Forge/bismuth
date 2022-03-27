@@ -13,6 +13,7 @@
 
 #include <memory>
 
+#include "config.hpp"
 #include "engine/engine.hpp"
 #include "logger.hpp"
 #include "plasma-api/client.hpp"
@@ -21,17 +22,20 @@
 
 namespace Bismuth
 {
-Controller::Controller(PlasmaApi::Api &api, Engine &engine)
+Controller::Controller(PlasmaApi::Api &api, Engine &engine, const Bismuth::Config &config)
     : m_plasmaApi(api)
     , m_proxy()
     , m_engine(engine)
+    , m_config(config)
 {
     bindEvents();
     // TODO: Bind shortcuts
 
-    loadExistingWindows();
+    if (m_config.experimentalBackend()) {
+        loadExistingWindows();
 
-    m_engine.arrangeWindowsOnVisibleSurfaces();
+        m_engine.arrangeWindowsOnVisibleSurfaces();
+    }
 }
 
 void Controller::bindEvents()
@@ -88,7 +92,7 @@ void Controller::registerAction(const Action &data)
 
 void Controller::onCurrentSurfaceChanged()
 {
-    if (m_proxy) {
+    if (m_proxy && !m_config.experimentalBackend()) {
         auto ctl = m_proxy->jsController();
         auto func = ctl.property("onCurrentSurfaceChanged");
         func.callWithInstance(ctl);
@@ -97,7 +101,7 @@ void Controller::onCurrentSurfaceChanged()
 
 void Controller::onSurfaceUpdate()
 {
-    if (m_proxy) {
+    if (m_proxy && !m_config.experimentalBackend()) {
         auto ctl = m_proxy->jsController();
         auto func = ctl.property("onSurfaceUpdate");
         func.callWithInstance(ctl);
@@ -106,7 +110,9 @@ void Controller::onSurfaceUpdate()
 
 void Controller::onClientAdded(PlasmaApi::Client client)
 {
-    m_engine.addWindow(client);
+    if (m_config.experimentalBackend()) {
+        m_engine.addWindow(client);
+    }
 }
 
 void Controller::onClientRemoved(PlasmaApi::Client)

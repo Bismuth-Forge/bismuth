@@ -15,8 +15,13 @@ export function init(
   qmlObjects: Bismuth.Qml.Main,
   kwinScriptingApi: KWin.Api,
   proxy: TSProxy
-): Controller {
+): Controller | null {
   const config = proxy.jsConfig();
+
+  if (config.experimentalBackend) {
+    return null;
+  }
+
   const logger = new LogImpl(proxy);
 
   const controller = new ControllerImpl(

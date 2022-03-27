@@ -177,6 +177,11 @@
       <label>Put new window as master</label>
       <default>false</default>
     </entry>
+
+    <entry name="experimentalBackend" type="Bool">
+      <label>Enable Experimental Backend</label>
+      <default>false</default>
+    </entry>
   </group>
 
   <group name="Plugins">
