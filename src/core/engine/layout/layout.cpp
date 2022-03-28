@@ -12,6 +12,11 @@ Layout::Layout(const Bismuth::Config &config)
 
 QRect Layout::tilingArea(QRect workingArea) const
 {
-    return workingArea;
+    auto marginLeft = m_config.screenGapLeft();
+    auto marginTop = m_config.screenGapTop();
+    auto marginRight = m_config.screenGapRight();
+    auto marginBottom = m_config.screenGapBottom();
+
+    return workingArea.adjusted(+marginLeft, +marginTop, -marginRight, -marginBottom);
 }
 }
