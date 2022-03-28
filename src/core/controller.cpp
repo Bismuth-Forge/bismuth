@@ -115,8 +115,11 @@ void Controller::onClientAdded(PlasmaApi::Client client)
     }
 }
 
-void Controller::onClientRemoved(PlasmaApi::Client)
+void Controller::onClientRemoved(PlasmaApi::Client client)
 {
+    if (m_config.experimentalBackend()) {
+        m_engine.removeWindow(client);
+    }
 }
 
 void Controller::onClientMaximized(PlasmaApi::Client)

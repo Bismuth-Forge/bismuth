@@ -2,13 +2,17 @@
 // SPDX-License-Identifier: MIT
 
 #include "window.hpp"
+
+#include "engine/surface.hpp"
 #include "logger.hpp"
+#include "plasma-api/workspace.hpp"
 
 namespace Bismuth
 {
 
-Window::Window(PlasmaApi::Client client)
+Window::Window(PlasmaApi::Client client, PlasmaApi::Workspace &workspace)
     : m_client(client)
+    , m_workspace(workspace)
 {
 }
 
@@ -60,6 +64,55 @@ bool Window::visibleOn(const Surface &surface)
     }
 
     return true;
+}
+
+std::vector<Surface> Window::surfaces() const
+{
+    auto desktopsList = desktops();
+    auto screen = m_client.screen();
+
+    auto activitiesList = activities();
+
+    auto result = std::vector<Surface>();
+    result.reserve(1);
+
+    for (auto desktop : desktopsList) {
+        for (auto activity : activitiesList) {
+            result.push_back(Surface(desktop, screen, activity));
+        }
+    }
+
+    return result;
+}
+
+std::vector<int> Window::desktops() const
+{
+    auto result = std::vector<int>();
+    result.reserve(1);
+
+    if (m_client.onAllDesktops()) {
+        for (auto desktop = 1; desktop <= m_workspace.get().desktops(); desktop++) {
+            result.push_back(desktop);
+        }
+    } else {
+        result.push_back(m_client.desktop());
+    }
+
+    return result;
+}
+
+std::vector<QString> Window::activities() const
+{
+    auto result = std::vector<QString>();
+    result.reserve(1);
+
+    auto activitiesList = m_client.activities().empty() ? m_workspace.get().activities() : m_client.activities();
+
+    for (auto activity : activitiesList) {
+        result.push_back(activity);
+    }
+
+    return result;
 }
 
 }

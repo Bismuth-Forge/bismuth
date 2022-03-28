@@ -34,11 +34,13 @@ public:
     };
     Q_ENUM(ClientAreaOption)
 
-    Workspace(QQmlEngine *engine);
+    Workspace(QObject *implPtr);
     Workspace(const Workspace &);
 
     BI_READONLY_PROPERTY(int, numScreens);
     BI_READONLY_PROPERTY(int, activeScreen);
+    BI_READONLY_PROPERTY(QStringList, activities);
+
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
@@ -101,7 +103,6 @@ Q_SIGNALS:
 private:
     void wrapSignals();
 
-    QQmlEngine *m_engine;
     QObject *m_kwinImpl;
 };
 

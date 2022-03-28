@@ -5,19 +5,22 @@
 
 #include "engine/surface.hpp"
 #include "plasma-api/client.hpp"
+#include "plasma-api/workspace.hpp"
 #include "window.hpp"
 
 namespace Bismuth
 {
-class WindowsList
-{
-public:
-    void add(PlasmaApi::Client);
+struct WindowsList {
+    WindowsList(PlasmaApi::Workspace &);
+
+    Window &add(PlasmaApi::Client);
     void remove(PlasmaApi::Client);
 
     std::vector<Window> visibleWindowsOn(const Surface &surface) const;
 
 private:
     std::map<PlasmaApi::Client, Window> m_windowMap{};
+
+    PlasmaApi::Workspace &m_workspace;
 };
 }

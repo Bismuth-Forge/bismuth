@@ -3,14 +3,16 @@
 
 #pragma once
 
+#include <functional>
+#include <vector>
+
 #include "engine/surface.hpp"
 #include "plasma-api/client.hpp"
+#include "plasma-api/workspace.hpp"
 
 namespace Bismuth
 {
-class Window
-{
-public:
+struct Window {
     enum class Mode {
         Ignored,
         Floating,
@@ -19,7 +21,7 @@ public:
         Tiled,
     };
 
-    Window(PlasmaApi::Client client);
+    Window(PlasmaApi::Client, PlasmaApi::Workspace &);
 
     bool operator<(const Window &rhs) const;
 
@@ -30,9 +32,13 @@ public:
     Mode mode() const;
 
     bool visibleOn(const Surface &surface);
+    std::vector<Surface> surfaces() const;
+    std::vector<int> desktops() const;
+    std::vector<QString> activities() const;
 
 private:
     PlasmaApi::Client m_client;
+    std::reference_wrapper<PlasmaApi::Workspace> m_workspace;
 
     Mode m_mode;
 };

@@ -4,13 +4,20 @@
 #include "windows_list.hpp"
 #include "engine/surface.hpp"
 #include "logger.hpp"
+#include "plasma-api/workspace.hpp"
 
 namespace Bismuth
 {
 
-void WindowsList::add(PlasmaApi::Client client)
+WindowsList::WindowsList(PlasmaApi::Workspace &workspace)
+    : m_workspace(workspace)
 {
-    m_windowMap.insert_or_assign(client, Window(client));
+}
+
+Window &WindowsList::add(PlasmaApi::Client client)
+{
+    auto [it, _] = m_windowMap.insert_or_assign(client, Window(client, m_workspace));
+    return it->second;
 }
 
 void WindowsList::remove(PlasmaApi::Client client)
