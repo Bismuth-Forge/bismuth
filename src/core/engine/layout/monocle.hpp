@@ -8,6 +8,8 @@
 namespace Bismuth
 {
 struct Monocle : Layout {
+    using Layout::Layout;
+
     virtual void apply(QRect area, std::vector<Window> &windows) const override;
 };
 }

@@ -3,6 +3,7 @@
 
 #include <doctest/doctest.h>
 
+#include "config.mock.hpp"
 #include "engine/layout/monocle.hpp"
 #include "engine/window.hpp"
 
@@ -11,7 +12,8 @@
 
 TEST_CASE("Monocle Tiling Logic")
 {
-    auto monocleLayout = Bismuth::Monocle();
+    auto config = FakeConfig();
+    auto monocleLayout = Bismuth::Monocle(config);
 
     auto fakeClient1 = FakeKWinClient();
     fakeClient1.m_frameGeometry = QRect(15, 42, 48, 67);

@@ -5,6 +5,11 @@
 
 namespace Bismuth
 {
+Layout::Layout(const Bismuth::Config &config)
+    : m_config(config)
+{
+}
+
 QRect Layout::tilingArea(QRect workingArea) const
 {
     return workingArea;

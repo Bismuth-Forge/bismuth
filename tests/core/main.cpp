@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    // Init core applicaton to be able to use Qt stuff
+    // Init core application to be able to use Qt stuff
     QCoreApplication app(argc, argv);
 
     auto testRunner = [&]() {

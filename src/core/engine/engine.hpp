@@ -14,7 +14,7 @@ namespace Bismuth
 class Engine
 {
 public:
-    Engine(PlasmaApi::Api &);
+    Engine(PlasmaApi::Api &, const Bismuth::Config &);
 
     void addWindow(PlasmaApi::Client);
     void removeWindow(PlasmaApi::Client);
@@ -30,8 +30,9 @@ private:
     void arrangeWindowsOnSurface(const Surface &);
     QRect workingArea(const Surface &surface) const;
 
+    const Bismuth::Config &m_config;
     WindowsList m_windows{};
-    LayoutList m_activeLayouts{};
+    LayoutList m_activeLayouts;
     PlasmaApi::Api &m_plasmaApi;
 };
 }
