@@ -4,12 +4,14 @@
 #include "engine.hpp"
 #include "config.hpp"
 #include "engine/surface.hpp"
+#include "logger.hpp"
 #include "plasma-api/api.hpp"
 
 namespace Bismuth
 {
 Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
     : m_config(config)
+    , m_windows(api.workspace())
     , m_activeLayouts(config)
     , m_plasmaApi(api)
 {
@@ -17,7 +19,12 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 
 void Engine::addWindow(PlasmaApi::Client client)
 {
-    m_windows.add(client);
+    auto &newWindow = m_windows.add(client);
+
+    auto surfaces = newWindow.surfaces();
+
+    qDebug(Bi) << "New Window appears on" << surfaces.size() << "surfaces!";
+
     // Bind events of this window
 }
 

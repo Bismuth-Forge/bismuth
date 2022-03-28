@@ -33,7 +33,7 @@ private:
     QRect workingArea(const Surface &surface) const;
 
     const Bismuth::Config &m_config;
-    WindowsList m_windows{};
+    WindowsList m_windows;
     LayoutList m_activeLayouts;
     PlasmaApi::Api &m_plasmaApi;
 };

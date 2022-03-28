@@ -12,17 +12,15 @@
 namespace PlasmaApi
 {
 
-Workspace::Workspace(QQmlEngine *engine)
+Workspace::Workspace(QObject *implPtr)
     : QObject()
-    , m_engine(engine)
-    , m_kwinImpl(m_engine->rootContext()->contextProperty(QStringLiteral("workspace")).value<QObject *>())
+    , m_kwinImpl(implPtr)
 {
     wrapSignals();
 }
 
 Workspace::Workspace(const Workspace &rhs)
     : QObject()
-    , m_engine(rhs.m_engine)
     , m_kwinImpl(rhs.m_kwinImpl)
 {
     wrapSignals();

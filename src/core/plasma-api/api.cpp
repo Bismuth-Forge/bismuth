@@ -12,7 +12,7 @@ namespace PlasmaApi
 
 Api::Api(QQmlEngine *engine)
     : m_engine(engine)
-    , m_workspace(engine)
+    , m_workspace(engine->rootContext()->contextProperty(QStringLiteral("workspace")).value<QObject *>())
 {
     qRegisterMetaType<Client>();
 };

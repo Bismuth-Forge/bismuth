@@ -10,12 +10,16 @@
 #include "plasma-api/client.hpp"
 
 #include "plasma-api/client.mock.hpp"
+#include "plasma-api/workspace.hpp"
+#include "plasma-api/workspace.mock.hpp"
 
 TEST_CASE("Window Visibility")
 {
     auto fakeKWinClient = FakeKWinClient();
+    auto fakeKwinWorkspace = FakeKWinWorkspace();
     auto client = PlasmaApi::Client(&fakeKWinClient);
-    auto window = Bismuth::Window(client);
+    auto workspace = PlasmaApi::Workspace(&fakeKwinWorkspace);
+    auto window = Bismuth::Window(client, workspace);
 
     SUBCASE("Minimized window")
     {
