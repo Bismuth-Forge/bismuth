@@ -34,7 +34,7 @@ Controller::Controller(PlasmaApi::Api &api, Engine &engine, const Bismuth::Confi
     if (m_config.experimentalBackend()) {
         loadExistingWindows();
 
-        m_engine.arrangeWindowsOnVisibleSurfaces();
+        m_engine.arrangeWindowsOnAllSurfaces();
     }
 }
 
