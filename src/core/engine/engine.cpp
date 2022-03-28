@@ -26,6 +26,25 @@ void Engine::removeWindow(PlasmaApi::Client client)
     m_windows.remove(client);
 }
 
+void Engine::arrangeWindowsOnAllSurfaces()
+{
+    auto allSurfaces = [this]() -> std::vector<Surface> {
+        auto currentActivity = m_plasmaApi.workspace().currentActivity();
+
+        auto result = std::vector<Surface>();
+
+        for (auto desktop = 1; desktop <= m_plasmaApi.workspace().desktops(); desktop++) {
+            for (auto screen = 0; screen < m_plasmaApi.workspace().numScreens(); screen++) {
+                result.push_back(Surface(desktop, screen, currentActivity));
+            }
+        }
+
+        return result;
+    };
+
+    arrangeWindowsOnSurfaces(allSurfaces());
+}
+
 void Engine::arrangeWindowsOnVisibleSurfaces()
 {
     auto screenSurfaces = [this]() -> std::vector<Surface> {

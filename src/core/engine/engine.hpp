@@ -19,6 +19,8 @@ public:
     void addWindow(PlasmaApi::Client);
     void removeWindow(PlasmaApi::Client);
 
+    void arrangeWindowsOnAllSurfaces();
+
     /**
      * Arrange the windows on all visible surfaces
      */
