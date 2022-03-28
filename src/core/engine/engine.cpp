@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 #include "engine.hpp"
+#include "config.hpp"
 #include "engine/surface.hpp"
 #include "plasma-api/api.hpp"
 
 namespace Bismuth
 {
-Engine::Engine(PlasmaApi::Api &api)
-    : m_plasmaApi(api)
+Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
+    : m_config(config)
+    , m_activeLayouts(config)
+    , m_plasmaApi(api)
 {
 }
 
