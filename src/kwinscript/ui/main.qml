@@ -33,7 +33,9 @@ Item {
     }
     Component.onDestruction: {
         core.proxy.log("Calling event hooks destructors... Goodbye.");
-        scriptRoot.controller.drop();
+        if (scriptRoot.controller)
+            scriptRoot.controller.drop();
+
     }
 
     BiCore.Core {
