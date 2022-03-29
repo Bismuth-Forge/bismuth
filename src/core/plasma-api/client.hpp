@@ -101,13 +101,12 @@ public:
     //  */
     // Q_PROPERTY(bool fullScreen READ fullScreen WRITE set_fullScreen)
     // BOOL_PRIMITIVE_SETGET(fullScreen)
-    //
-    // /**
-    //  * Whether the window is set to be above all
-    //  */
-    // Q_PROPERTY(bool keepAbove READ keepAbove WRITE set_keepAbove)
-    // BOOL_PRIMITIVE_SETGET(keepAbove)
-    //
+
+    /**
+     * Whether the window is set to be above all
+     */
+    BI_PROPERTY(bool, keepAbove, setKeepAbove)
+
     // /**
     //  * Whether the window is set to be below all
     //  */

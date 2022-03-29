@@ -20,8 +20,15 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 void Engine::addWindow(PlasmaApi::Client client)
 {
     // Don't manage special windows - docks, panels, etc.
-    // Also don't tile launchers
-    if (client.specialWindow() || client.dialog() || client.resourceClass() == QByteArrayLiteral("krunner")) {
+    if (client.specialWindow() || client.dialog()) {
+        return;
+    }
+
+    // If the window is initially set to be always on top, it means that it
+    // definitely does not want to be tiled. This also might be a signal, that
+    // the window is a launcher: KRunner, ULauncher, etc. This also keeps away
+    // various application pop-ups
+    if (client.keepAbove()) {
         return;
     }
 
