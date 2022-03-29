@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: MIT
 
 #include "windows_list.hpp"
+
+#include <functional>
+
 #include "engine/surface.hpp"
 #include "logger.hpp"
 #include "plasma-api/workspace.hpp"
@@ -23,6 +26,19 @@ Window &WindowsList::add(PlasmaApi::Client client)
 void WindowsList::remove(PlasmaApi::Client client)
 {
     m_windowMap.erase(client);
+}
+
+std::optional<Window> WindowsList::activeWindow() const
+{
+    auto activeClient = m_workspace.activeClient();
+
+    if (activeClient.has_value()) {
+        auto it = m_windowMap.find(activeClient.value());
+        if (it != m_windowMap.end()) {
+            return it->second;
+        }
+    }
+    return {};
 }
 
 std::vector<Window> WindowsList::visibleWindowsOn(const Surface &surface) const

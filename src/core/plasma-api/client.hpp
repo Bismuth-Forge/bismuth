@@ -13,6 +13,8 @@
 
 namespace PlasmaApi
 {
+class Workspace;
+
 class Client : public TopLevel
 {
     Q_OBJECT
@@ -134,6 +136,8 @@ public:
     //  */
     // Q_PROPERTY(bool shade READ shade WRITE set_shade)
     // BOOL_PRIMITIVE_SETGET(shade)
+
+    friend class PlasmaApi::Workspace;
 };
 
 }

@@ -26,6 +26,18 @@ Workspace::Workspace(const Workspace &rhs)
     wrapSignals();
 };
 
+std::optional<PlasmaApi::Client> Workspace::activeClient() const
+{
+    auto kwinClient = m_kwinImpl->property("activeClient").value<QObject *>();
+    return kwinClient ? PlasmaApi::Client(kwinClient) : std::optional<PlasmaApi::Client>();
+}
+
+void Workspace::setActiveClient(std::optional<PlasmaApi::Client> client)
+{
+    auto valueToSet = client.has_value() ? client->m_kwinImpl : nullptr;
+    m_kwinImpl->setProperty("activeClient", QVariant::fromValue(valueToSet));
+}
+
 void Workspace::wrapSignals()
 {
     auto wrapSimpleSignal = [this](const char *signalSignature) {
