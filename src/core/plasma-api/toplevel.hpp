@@ -33,13 +33,12 @@ public:
     //  */
     // // Q_PROPERTY(QRect frameGeometry READ frameGeometry WRITE set_frameGeometry)
     // // QRECT_
-    //
-    // /**
-    //  * Window class name
-    //  */
-    // Q_PROPERTY(QByteArray resourceClass READ resourceClass)
-    // QBYTEARRAY_PRIMITIVE_GET(resourceClass)
-    //
+
+    /**
+     * Window class name
+     */
+    BI_READONLY_PROPERTY(QByteArray, resourceClass)
+
     // /**
     //  * Window title
     //  */

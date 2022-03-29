@@ -20,7 +20,8 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 void Engine::addWindow(PlasmaApi::Client client)
 {
     // Don't manage special windows - docks, panels, etc.
-    if (client.specialWindow()) {
+    // Also don't tile launchers
+    if (client.specialWindow() || client.resourceClass() == QByteArrayLiteral("krunner")) {
         return;
     }
 
