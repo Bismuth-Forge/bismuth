@@ -14,7 +14,15 @@ class FakeKWinWorkspace : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int desktops MEMBER m_numberOfDesktops)
+    Q_PROPERTY(QStringList activities MEMBER m_activities)
+
 public:
+    FakeKWinWorkspace &operator=(const FakeKWinWorkspace &);
+
+    int m_numberOfDesktops{};
+    QStringList m_activities{};
+
 Q_SIGNALS:
     void numberScreensChanged(int count);
     void screenResized(int screen);

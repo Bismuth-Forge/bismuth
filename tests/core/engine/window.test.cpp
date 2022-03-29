@@ -4,6 +4,7 @@
 #include <doctest/doctest.h>
 
 #include <QObject>
+#include <QString>
 
 #include "engine/surface.hpp"
 #include "engine/window.hpp"
@@ -109,5 +110,87 @@ TEST_CASE("Window Visibility")
         auto visible = window.visibleOn(surface);
 
         CHECK(visible == true);
+    }
+}
+
+TEST_CASE("Desktops List")
+{
+    auto fakeKWinClient = FakeKWinClient();
+    auto fakeKWinWorkspace = FakeKWinWorkspace();
+    auto client = PlasmaApi::Client(&fakeKWinClient);
+    auto workspace = PlasmaApi::Workspace(&fakeKWinWorkspace);
+    auto window = Bismuth::Window(client, workspace);
+
+    SUBCASE("Window on one desktop")
+    {
+        fakeKWinClient = FakeKWinClient();
+        fakeKWinClient.m_desktop = 2;
+        fakeKWinClient.m_onAllDesktops = false;
+
+        auto desktops = window.desktops();
+
+        CHECK(desktops.size() == 1);
+        CHECK(desktops.front() == 2);
+    }
+
+    SUBCASE("Window on all desktops")
+    {
+        fakeKWinClient = FakeKWinClient();
+        fakeKWinClient.m_onAllDesktops = true;
+
+        fakeKWinWorkspace = FakeKWinWorkspace();
+        fakeKWinWorkspace.m_numberOfDesktops = 2;
+
+        auto desktops = window.desktops();
+
+        CHECK(desktops.size() == 2);
+        CHECK(desktops.front() == 1);
+        CHECK(desktops.back() == 2);
+    }
+}
+
+TEST_CASE("Activities List")
+{
+    auto fakeKWinClient = FakeKWinClient();
+    auto fakeKWinWorkspace = FakeKWinWorkspace();
+    auto client = PlasmaApi::Client(&fakeKWinClient);
+    auto workspace = PlasmaApi::Workspace(&fakeKWinWorkspace);
+    auto window = Bismuth::Window(client, workspace);
+
+    SUBCASE("Window on one activity")
+    {
+        fakeKWinClient = FakeKWinClient();
+        fakeKWinClient.m_activities = QStringList({"stone-ocean"});
+
+        auto activities = window.activities();
+
+        CHECK(activities.size() == 1);
+        CHECK(activities.front() == QStringLiteral("stone-ocean"));
+    }
+
+    SUBCASE("Window on two activities")
+    {
+        fakeKWinClient = FakeKWinClient();
+        fakeKWinClient.m_activities = QStringList({"stone-ocean", "diamond-is-unbreakable"});
+
+        auto activities = window.activities();
+
+        CHECK(activities.size() == 2);
+        CHECK(activities.front() == QStringLiteral("stone-ocean"));
+        CHECK(activities.back() == QStringLiteral("diamond-is-unbreakable"));
+    }
+
+    SUBCASE("Window on all activities")
+    {
+        fakeKWinClient = FakeKWinClient();
+        fakeKWinClient.m_activities = QStringList();
+
+        fakeKWinWorkspace.m_activities = QStringList({"stone-ocean", "diamond-is-unbreakable"});
+
+        auto activities = window.activities();
+
+        CHECK(activities.size() == 2);
+        CHECK(activities.front() == QStringLiteral("stone-ocean"));
+        CHECK(activities.back() == QStringLiteral("diamond-is-unbreakable"));
     }
 }
