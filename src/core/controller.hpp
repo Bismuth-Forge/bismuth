@@ -37,6 +37,7 @@ public:
     Controller(PlasmaApi::Api &, Engine &, const Bismuth::Config &);
 
     void bindEvents();
+    void registerShortcuts();
     void loadExistingWindows();
     void registerAction(const Action &);
 
