@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include <optional>
+
 #include "plasma-api/client.hpp"
 
 #include "utils.hpp"
@@ -44,6 +46,11 @@ public:
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
+
+    Q_PROPERTY(std::optional<PlasmaApi::Client> activeClient READ activeClient WRITE setActiveClient);
+
+    std::optional<PlasmaApi::Client> activeClient() const;
+    void setActiveClient(std::optional<PlasmaApi::Client> client);
 
     /**
      * Returns the geometry a Client can use with the specified option.

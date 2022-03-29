@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <optional>
+
 #include "engine/surface.hpp"
 #include "plasma-api/client.hpp"
 #include "plasma-api/workspace.hpp"
@@ -15,6 +17,8 @@ struct WindowsList {
 
     Window &add(PlasmaApi::Client);
     void remove(PlasmaApi::Client);
+
+    std::optional<Window> activeWindow() const;
 
     std::vector<Window> visibleWindowsOn(const Surface &surface) const;
 
