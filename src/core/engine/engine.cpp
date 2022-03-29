@@ -21,7 +21,7 @@ void Engine::addWindow(PlasmaApi::Client client)
 {
     // Don't manage special windows - docks, panels, etc.
     // Also don't tile launchers
-    if (client.specialWindow() || client.resourceClass() == QByteArrayLiteral("krunner")) {
+    if (client.specialWindow() || client.dialog() || client.resourceClass() == QByteArrayLiteral("krunner")) {
         return;
     }
 
