@@ -2,3 +2,10 @@
 // SPDX-License-Identifier: MIT
 
 #include "workspace.mock.hpp"
+
+FakeKWinWorkspace &FakeKWinWorkspace::operator=(const FakeKWinWorkspace &rhs)
+{
+    if (this != &rhs) { }
+
+    return *this;
+}
