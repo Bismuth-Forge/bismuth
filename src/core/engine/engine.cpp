@@ -28,6 +28,8 @@ void Engine::addWindow(PlasmaApi::Client client)
 
     auto surfaces = newWindow.surfaces();
 
+    arrangeWindowsOnSurfaces(surfaces);
+
     qDebug(Bi) << "New Window appears on" << surfaces.size() << "surfaces!";
 
     // Bind events of this window
