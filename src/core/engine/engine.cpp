@@ -19,6 +19,11 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 
 void Engine::addWindow(PlasmaApi::Client client)
 {
+    // Don't manage special windows - docks, panels, etc.
+    if (client.specialWindow()) {
+        return;
+    }
+
     auto &newWindow = m_windows.add(client);
 
     auto surfaces = newWindow.surfaces();

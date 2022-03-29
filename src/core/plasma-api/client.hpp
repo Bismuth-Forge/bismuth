@@ -83,14 +83,13 @@ public:
     //  */
     // Q_PROPERTY(bool resizable READ resizable)
     // BOOL_PRIMITIVE_GET(resizable)
-    //
-    // /**
-    //  * Whether the window is any of special windows types (desktop, dock, splash, ...),
-    //  * i.e. window types that usually don't have a window frame and the user does not use window
-    //  * management (moving, raising,...) on them.
-    //  */
-    // Q_PROPERTY(bool specialWindow READ specialWindow)
-    // BOOL_PRIMITIVE_GET(specialWindow)
+
+    /**
+     * Whether the window is any of special windows types (desktop, dock, splash, ...),
+     * i.e. window types that usually don't have a window frame and the user does not use window
+     * management (moving, raising,...) on them.
+     */
+    BI_READONLY_PROPERTY(bool, specialWindow)
 
     /**
      * The desktop this window is on. If the window is on all desktops the property has value -1.
