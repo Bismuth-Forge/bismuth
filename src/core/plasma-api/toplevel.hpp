@@ -25,9 +25,8 @@ public:
     /**
      * Whether the window is a dialog window.
      */
-    // Q_PROPERTY(bool dialog READ dialog)
-    // BOOL_PRIMITIVE_GET(dialog)
-    //
+    BI_READONLY_PROPERTY(bool, dialog)
+
     // /**
     //  * Frame geometry
     //  */
