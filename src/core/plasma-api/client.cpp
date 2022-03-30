@@ -13,6 +13,11 @@ Client::Client(QObject *kwinImpl)
 Client::Client(const Client &rhs)
     : TopLevel(rhs){};
 
+bool Client::operator==(const Client &rhs) const
+{
+    return m_kwinImpl == rhs.m_kwinImpl;
+}
+
 bool Client::operator<(const Client &rhs) const
 {
     return m_kwinImpl < rhs.m_kwinImpl;

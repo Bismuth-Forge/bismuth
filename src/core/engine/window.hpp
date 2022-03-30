@@ -23,7 +23,10 @@ struct Window {
 
     Window(PlasmaApi::Client, PlasmaApi::Workspace &);
 
+    bool operator==(const Window &) const;
     bool operator<(const Window &rhs) const;
+
+    void activate();
 
     QRect geometry() const;
     void setGeometry(QRect);
@@ -35,6 +38,8 @@ struct Window {
     std::vector<Surface> surfaces() const;
     std::vector<int> desktops() const;
     std::vector<QString> activities() const;
+
+    QString caption() const;
 
 private:
     PlasmaApi::Client m_client;
