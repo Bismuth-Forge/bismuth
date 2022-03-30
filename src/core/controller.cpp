@@ -79,9 +79,11 @@ void Controller::registerShortcuts()
 
     addShortcut("focus_next_window", "Focus Next Window", "", [=]() {
         qDebug(Bi) << "Focus Next Window Triggered!";
+        m_engine.focusWindow(Engine::RelDirection::Next);
     });
     addShortcut("focus_prev_window", "Focus Previous Window", "", [=]() {
         qDebug(Bi) << "Focus Previous Window Triggered!";
+        m_engine.focusWindow(Engine::RelDirection::Previous);
     });
 
     addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {

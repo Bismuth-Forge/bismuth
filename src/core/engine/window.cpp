@@ -21,6 +21,16 @@ bool Window::operator<(const Window &rhs) const
     return m_client < m_client;
 }
 
+bool Window::operator==(const Window &rhs) const
+{
+    return m_client == rhs.m_client;
+}
+
+void Window::activate()
+{
+    m_workspace.get().setActiveClient(m_client);
+}
+
 QRect Window::geometry() const
 {
     return m_client.frameGeometry();
@@ -113,6 +123,11 @@ std::vector<QString> Window::activities() const
     }
 
     return result;
+}
+
+QString Window::caption() const
+{
+    return m_client.caption();
 }
 
 }

@@ -25,12 +25,18 @@ public:
     Client(const Client &);
     virtual ~Client() = default;
 
+    bool operator==(const Client &rhs) const;
     bool operator<(const Client &rhs) const;
 
     /**
      * The activities this client is on. If it's on all activities the property is empty.
      */
     BI_READONLY_PROPERTY(QStringList, activities)
+
+    /**
+     * Window caption (The text in the titlebar).
+     */
+    BI_READONLY_PROPERTY(QString, caption)
 
     /**
      * The geometry of this Client. Be aware that depending on resize mode the frameGeometryChanged
@@ -42,49 +48,36 @@ public:
     //  * Whether the window is active.
     //  */
     // Q_PROPERTY(bool active READ active)
-    // BOOL_PRIMITIVE_GET(active)
-    //
-    // /**
-    //  * Window caption (The text in the titlebar).
-    //  */
-    // Q_PROPERTY(QString caption READ caption)
-    // QSTRING_PRIMITIVE_GET(caption)
-    //
+
     // /**
     //  * Maximum allowed size for a window.
     //  */
     // Q_PROPERTY(QSize maxSize READ maxSize)
-    // QSIZE_PRIMITIVE_GET(maxSize)
-    //
+
     // /**
     //  * Minimum allowed size for a window.
     //  */
     // Q_PROPERTY(QSize minSize READ minSize)
-    // QSIZE_PRIMITIVE_GET(minSize)
-    //
+
     // /**
     //  * Whether the window is modal or not.
     //  */
     // Q_PROPERTY(bool modal READ modal)
-    // BOOL_PRIMITIVE_GET(modal)
-    //
+
     // /**
     //  * Whether the window is currently being moved by the user.
     //  */
     // Q_PROPERTY(bool move READ move)
-    // BOOL_PRIMITIVE_GET(move)
-    //
+
     // /**
     //  * Whether the window is currently being resized by the user.
     //  */
     // Q_PROPERTY(bool resize READ resize)
-    // BOOL_PRIMITIVE_GET(resize)
-    //
+
     // /**
     //  * Whether the window is resizable
     //  */
     // Q_PROPERTY(bool resizable READ resizable)
-    // BOOL_PRIMITIVE_GET(resizable)
 
     /**
      * Whether the window is any of special windows types (desktop, dock, splash, ...),
@@ -102,7 +95,6 @@ public:
     //  * Whether the window is fullscreen
     //  */
     // Q_PROPERTY(bool fullScreen READ fullScreen WRITE set_fullScreen)
-    // BOOL_PRIMITIVE_SETGET(fullScreen)
 
     /**
      * Whether the window is set to be above all
@@ -113,7 +105,6 @@ public:
     //  * Whether the window is set to be below all
     //  */
     // Q_PROPERTY(bool keepBelow READ keepBelow WRITE set_keepBelow)
-    // BOOL_PRIMITIVE_SETGET(keepBelow)
 
     /**
      * Whether the window is minimized
@@ -124,7 +115,6 @@ public:
     //  * Whether the window has borders (window decorations)
     //  */
     // Q_PROPERTY(bool noBorder READ noBorder WRITE set_noBorder)
-    // BOOL_PRIMITIVE_SETGET(noBorder)
 
     /**
      * Whether the window is set to be on all desktops
@@ -135,7 +125,6 @@ public:
     //  * Whether the Client is shaded.
     //  */
     // Q_PROPERTY(bool shade READ shade WRITE set_shade)
-    // BOOL_PRIMITIVE_SETGET(shade)
 
     friend class PlasmaApi::Workspace;
 };

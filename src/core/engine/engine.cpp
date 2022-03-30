@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: MIT
 
 #include "engine.hpp"
+
+#include <algorithm>
+
 #include "config.hpp"
 #include "engine/surface.hpp"
 #include "logger.hpp"
@@ -48,6 +51,49 @@ void Engine::removeWindow(PlasmaApi::Client client)
     m_windows.remove(client);
 }
 
+void Engine::focusWindow(RelDirection direction)
+{
+    auto activeWindow = m_windows.activeWindow();
+
+    auto currentSurface = activeSurface();
+
+    auto windowsToChoseFrom = m_windows.visibleWindowsOn(currentSurface);
+
+    if (windowsToChoseFrom.empty()) {
+        return;
+    }
+
+    // If there is no current window, select the first one.
+    if (!activeWindow.has_value()) {
+        activeWindow = windowsToChoseFrom.front();
+    }
+
+    auto it = std::find(windowsToChoseFrom.begin(), windowsToChoseFrom.end(), activeWindow.value());
+
+    // If there is no windows to chose - do nothing
+    if (it == windowsToChoseFrom.end()) {
+        return;
+    }
+
+    // TODO: Direction focus split
+    if (direction == RelDirection::Next) {
+        it++;
+        if (it == windowsToChoseFrom.end()) {
+            it = windowsToChoseFrom.begin();
+        }
+    } else if (direction == RelDirection::Previous) {
+        it--;
+        if (it < windowsToChoseFrom.begin()) {
+            it = --windowsToChoseFrom.end();
+        }
+    }
+
+    auto windowToActivate = *it;
+
+    windowToActivate.activate();
+    qDebug() << "Activated window title:" << windowToActivate.caption();
+}
+
 void Engine::arrangeWindowsOnAllSurfaces()
 {
     auto allSurfaces = [this]() -> std::vector<Surface> {
@@ -92,6 +138,15 @@ void Engine::arrangeWindowsOnSurfaces(const std::vector<Surface> &surfaces)
     }
 }
 
+Surface Engine::activeSurface() const
+{
+    auto activeScreen = m_plasmaApi.workspace().activeScreen();
+    auto currentDesktop = m_plasmaApi.workspace().currentDesktop();
+    auto currentActivity = m_plasmaApi.workspace().currentActivity();
+
+    return Surface(currentDesktop, activeScreen, currentActivity);
+}
+
 void Engine::arrangeWindowsOnSurface(const Surface &surface)
 {
     auto &layout = m_activeLayouts.layoutOnSurface(surface);
@@ -107,5 +162,4 @@ QRect Engine::workingArea(const Surface &surface) const
 {
     return m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, surface.screen(), surface.desktop());
 }
-
 }

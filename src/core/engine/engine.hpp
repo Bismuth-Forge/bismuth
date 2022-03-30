@@ -11,13 +11,15 @@
 
 namespace Bismuth
 {
-class Engine
-{
-public:
+struct Engine {
+    enum class RelDirection { Next, Previous, Up, Down, Right, Left };
+
     Engine(PlasmaApi::Api &, const Bismuth::Config &);
 
     void addWindow(PlasmaApi::Client);
     void removeWindow(PlasmaApi::Client);
+
+    void focusWindow(RelDirection);
 
     void arrangeWindowsOnAllSurfaces();
 
@@ -29,6 +31,8 @@ public:
     void arrangeWindowsOnSurfaces(const std::vector<Surface> &);
 
 private:
+    Surface activeSurface() const;
+
     void arrangeWindowsOnSurface(const Surface &);
     QRect workingArea(const Surface &surface) const;
 
