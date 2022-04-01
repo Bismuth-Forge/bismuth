@@ -12,14 +12,16 @@
 namespace Bismuth
 {
 struct Engine {
-    enum class RelDirection { Next, Previous, Up, Down, Right, Left };
+    enum class FocusOrder { Next, Previous };
+    enum class FocusDirection { Up, Down, Right, Left };
 
     Engine(PlasmaApi::Api &, const Bismuth::Config &);
 
     void addWindow(PlasmaApi::Client);
     void removeWindow(PlasmaApi::Client);
 
-    void focusWindow(RelDirection);
+    void focusWindowByOrder(FocusOrder);
+    void focusWindowByDirection(FocusDirection);
 
     void arrangeWindowsOnAllSurfaces();
 
@@ -31,6 +33,7 @@ struct Engine {
     void arrangeWindowsOnSurfaces(const std::vector<Surface> &);
 
 private:
+    std::optional<Window> windowNeighbor(FocusDirection, const Window &);
     Surface activeSurface() const;
 
     void arrangeWindowsOnSurface(const Surface &);
