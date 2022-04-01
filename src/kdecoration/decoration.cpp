@@ -31,6 +31,10 @@ void Decoration::init()
 
 void Decoration::paint(QPainter *painter, const QRect &repaintRegion)
 {
+    if (!painter) {
+        return;
+    }
+
     paintBorders(*painter);
 }
 
@@ -78,12 +82,12 @@ void Decoration::connectEvents()
     auto settingsPtr = settings().data();
 
     // No idea why regular connection does not work
-    connect(clientPtr, &KDecoration2::DecoratedClient::activeChanged, this, [&](bool value) {
+    connect(clientPtr, &KDecoration2::DecoratedClient::activeChanged, this, [this](bool value) {
         this->update();
     });
     connect(settingsPtr, &KDecoration2::DecorationSettings::borderSizeChanged, this, &Decoration::setBorderSizes);
 
-    connect(m_kdeglobalsWatcher.data(), &KConfigWatcher::configChanged, [&](const KConfigGroup &group, const QByteArrayList &names) {
+    connect(m_kdeglobalsWatcher.data(), &KConfigWatcher::configChanged, [this](const KConfigGroup &group, const QByteArrayList &names) {
         if (group.name() == QStringLiteral("General")) {
             if (names.contains(QByteArrayLiteral("ColorScheme")) || names.contains(QByteArrayLiteral("AccentColor"))) {
                 updateColors();
