@@ -5,6 +5,22 @@
 
 # Changelog
 
+## [3.1.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.0.0...v3.1.0) (2022-04-09)
+
+
+### Features
+
+* add an option to disable "drag out to float" behavior ([bb68131](https://www.github.com/Bismuth-Forge/bismuth/commit/bb68131e1be31b4f920da8c4b7dcb2e42f85b461))
+
+
+### Bug Fixes
+
+* add zoom windows to the default ignore list ([d563c40](https://www.github.com/Bismuth-Forge/bismuth/commit/d563c4045eeb6e8cc30d2e2d29f635888cdbbd79))
+* clientList vector reserve ([0601f99](https://www.github.com/Bismuth-Forge/bismuth/commit/0601f99c5c74a65d4196c7c5514c9d958b4c7418))
+* ignore spaces in comma separated lists configs ([fb78513](https://www.github.com/Bismuth-Forge/bismuth/commit/fb7851386b91f3fb29c9c0f5da840c76cc43c3fd))
+* **kdecoration:** prevent crash when changing color scheme ([3e872ee](https://www.github.com/Bismuth-Forge/bismuth/commit/3e872eed8dad95398f2ceb85272aebe33f689ce3))
+* move old shortcuts to the new component correctly ([748d991](https://www.github.com/Bismuth-Forge/bismuth/commit/748d99174a1b0351966ab962035aad54fee4fb61))
+
 ## [3.0.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v2.3.0...v3.0.0) (2022-03-20)
 
 
