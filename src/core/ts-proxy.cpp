@@ -93,7 +93,7 @@ QJSValue TSProxy::jsConfig()
             if (asNumbers) {
                 arrayProperty.setProperty(i, value.toInt());
             } else {
-                arrayProperty.setProperty(i, value);
+                arrayProperty.setProperty(i, value.trimmed());
             }
         }
     };
