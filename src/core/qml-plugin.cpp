@@ -14,6 +14,7 @@
 #include "config.hpp"
 #include "controller.hpp"
 #include "engine/engine.hpp"
+#include "kconf_update/legacy_shortcuts.hpp"
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 #include "ts-proxy.hpp"
@@ -34,9 +35,8 @@ Core::Core(QQuickItem *parent)
     , m_config()
     , m_plasmaApi()
 {
-    // Force check for the config changes
-    auto kcfg = KSharedConfig::openConfig("kglobalshortcutsrc");
-    kcfg->checkUpdate(QStringLiteral("bismuth-shortcuts-category"), QStringLiteral("bismuth_shortcuts_category.upd"));
+    // Do the necessary migrations, that are not possible from kconf_update
+    Bismuth::KConfUpdate::migrate();
 }
 
 void Core::init()
