@@ -9,7 +9,6 @@
 #include <KConfigGroup>
 #include <KGlobalAccel>
 #include <KSharedConfig>
-#include <qdebug.h>
 
 namespace Bismuth
 {
@@ -30,13 +29,22 @@ void KConfUpdate::moveOldKWinShortcutsToNewBismuthComponent()
         auto action = QAction();
         action.setObjectName(oldEntryName);
         action.setProperty("componentName", QStringLiteral("kwin"));
+
         globAccel->setShortcut(&action, {});
         globAccel->removeAllShortcuts(&action);
 
         auto newAction = QAction();
         action.setObjectName(newEntryName);
         action.setProperty("componentName", QStringLiteral("bismuth"));
-        globAccel->setShortcut(&action, oldKeysequence, KGlobalAccel::NoAutoloading);
+
+        auto existingKeysequence = globAccel->globalShortcut(QStringLiteral("bismuth"), newEntryName);
+
+        // Only override the shortcut if it's empty
+        // For some reason KGlobalAccel leaves the empty entries sometimes
+        // Therefore we cannot rely on Autoloading
+        if (existingKeysequence.empty()) {
+            globAccel->setShortcut(&action, oldKeysequence, KGlobalAccel::NoAutoloading);
+        }
     };
 
     auto shortcutsrc = KSharedConfig::openConfig("kglobalshortcutsrc");
