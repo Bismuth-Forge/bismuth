@@ -5,6 +5,13 @@
 
 # Changelog
 
+### [3.1.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.0...v3.1.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* **shortcuts_migration:** don't override the existing shortcuts ([d2d3cfd](https://www.github.com/Bismuth-Forge/bismuth/commit/d2d3cfd89b2a908bf3eab5ac95899d70520fe012))
+
 ## [3.1.0](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.0.0...v3.1.0) (2022-04-09)
 
 
