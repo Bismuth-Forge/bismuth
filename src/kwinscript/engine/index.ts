@@ -399,7 +399,14 @@ export class EngineImpl implements Engine {
       if (this.config.newWindowAsMaster) {
         this.windows.unshift(window);
       } else {
-        this.windows.push(window);
+        const currentWindow = this.currentWindow();
+        if (currentWindow) {
+          this.windows.insertAfter(currentWindow, window);
+
+          const layout = this.currentLayoutOnCurrentSurface();
+          if (layout.handleNewWindow)
+            layout.handleNewWindow(currentWindow, window);
+        } else this.windows.push(window);
       }
     }
   }

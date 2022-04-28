@@ -38,6 +38,11 @@ export interface WindowStore {
   allWindowsOn(surf: DriverSurface): EngineWindow[];
 
   /**
+   * Insert a window after another one
+   */
+  insertAfter(after: EngineWindow, toInsert: EngineWindow): void;
+
+  /**
    * Inserts the window at the beginning
    */
   unshift(window: EngineWindow): void;
@@ -123,6 +128,10 @@ export class WindowStoreImpl implements WindowStore {
 
   public indexOf(window: EngineWindow): number {
     return this.list.indexOf(window);
+  }
+
+  public insertAfter(after: EngineWindow, toInsert: EngineWindow) {
+    this.list.splice(this.list.indexOf(after) + 1, 0, toInsert);
   }
 
   public push(window: EngineWindow): void {

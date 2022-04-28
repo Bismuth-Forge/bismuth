@@ -37,6 +37,8 @@ export abstract class WindowsLayout {
    */
   readonly capacity?: number;
 
+  handleNewWindow?(currentWindow: EngineWindow, newWindow: EngineWindow): void;
+
   adjust?(
     area: Rect,
     tiles: EngineWindow[],
