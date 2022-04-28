@@ -48,6 +48,11 @@
       <default>false</default>
     </entry>
 
+    <entry name="enableDynamicLayout" type="Bool">
+      <label>Enable/disable Tile layout</label>
+      <default>false</default>
+    </entry>
+
     <entry name="ignoreActivity" type="String">
       <label>Do not apply tiling on some activities(comma-separated list of activity names)</label>
       <default></default>

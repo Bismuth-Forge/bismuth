@@ -14,6 +14,7 @@ import { Config } from "../config";
 import MonocleLayout from "./layout/monocle_layout";
 import TileLayout from "./layout/tile_layout";
 import CascadeLayout from "./layout/cascade_layout";
+import DynamicLayout from "./layout/dynamic_layout";
 import QuarterLayout from "./layout/quarter_layout";
 import SpiralLayout from "./layout/spiral_layout";
 import SpreadLayout from "./layout/spread_layout";
@@ -96,6 +97,8 @@ export class LayoutStoreEntry {
       return new ThreeColumnLayout(this.config);
     } else if (id == TileLayout.id) {
       return new TileLayout(this.config);
+    } else if (id == DynamicLayout.id) {
+      return new DynamicLayout(this.config);
     } else {
       return new FloatingLayout();
     }

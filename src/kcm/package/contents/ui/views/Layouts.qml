@@ -57,6 +57,11 @@ Kirigami.Page {
             settingName: "enableFloatingLayout"
         }
 
+        ListElement {
+            name: "Dynamic"
+            settingName: "enableDynamicLayout"
+        }
+
     }
 
     KCM.ScrollView {
