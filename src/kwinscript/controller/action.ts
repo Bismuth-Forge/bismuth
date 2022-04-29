@@ -599,3 +599,29 @@ export class RotatePart extends ActionImpl implements Action {
     this.engine.showNotification("Rotation Not Applicable");
   }
 }
+
+export class SplitPartHorizontally extends ActionImpl implements Action {
+  constructor(protected engine: Engine, protected log: Log) {
+    super(
+      engine,
+      "split_part_horizontally",
+      "Split Part Horizontally",
+      "",
+      log
+    );
+  }
+
+  public executeWithoutLayoutOverride(): void {
+    this.engine.showNotification("Splitting Not Applicable");
+  }
+}
+
+export class SplitPartVertically extends ActionImpl implements Action {
+  constructor(protected engine: Engine, protected log: Log) {
+    super(engine, "split_part_vertically", "Split Part Vertically", "", log);
+  }
+
+  public executeWithoutLayoutOverride(): void {
+    this.engine.showNotification("Splitting Not Applicable");
+  }
+}

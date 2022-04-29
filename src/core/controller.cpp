@@ -178,6 +178,12 @@ void Controller::registerShortcuts()
     addShortcut("rotate_part", "Rotate Sublayout Clockwise", "Meta+Shift+R", [=]() {
         qDebug(Bi) << "Rotate Sublayout Clockwise Triggered!";
     });
+    addShortcut("split_part_horizontally", "Split Part Horizontally", "", [=]() {
+        qDebug(Bi) << "Split Part Horizontally Triggered!";
+    });
+    addShortcut("split_part_vertically", "Split Part Vertically", "", [=]() {
+        qDebug(Bi) << "Split Part Vertically Triggered!";
+    });
 }
 
 void Controller::loadExistingWindows()

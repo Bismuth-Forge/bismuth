@@ -428,6 +428,9 @@ export class ControllerImpl implements Controller {
       new Action.Rotate(this.engine, this.log),
       new Action.RotateReverse(this.engine, this.log),
       new Action.RotatePart(this.engine, this.log),
+
+      new Action.SplitPartHorizontally(this.engine, this.log),
+      new Action.SplitPartVertically(this.engine, this.log),
     ];
 
     for (const action of allPossibleActions) {
