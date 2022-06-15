@@ -17,7 +17,8 @@ if [ -f /etc/os-release ]; then
         g++ cmake ninja-build extra-cmake-modules kirigami2-dev \
         libkf5config-dev libkf5configwidgets-dev libkf5coreaddons-dev \
         libkf5declarative-dev libkf5i18n-dev libkf5kcmutils-dev \
-        libkdecorations2-dev libqt5svg5-dev qml-module-qtquick* qtbase5-dev \
+        libkf5globalaccel-dev libkdecorations2-dev libqt5svg5-dev \
+        qml-module-qtquick* qtbase5-dev \
         qtdeclarative5-dev qtquickcontrols2-5-dev g++
       ;;
 
@@ -27,14 +28,15 @@ if [ -f /etc/os-release ]; then
         qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel qt5-qtsvg-devel \
         qt5-qtfeedback-devel cmake ninja-build extra-cmake-modules \
         kf5-kcmutils-devel kf5-ki18n-devel kf5-kdeclarative-devel \
-        kdecoration-devel
+        kdecoration-devel kf5-kglobalaccel-devel
       ;;
 
     "opensuse-tumbleweed" | "opensuse-leap")
       sudo zypper --non-interactive install --recommends -t pattern devel_qt5 devel_C_C++
       sudo zypper --non-interactive in -y \
         ninja extra-cmake-modules kconfig-devel kcmutils-devel kdeclarative-devel \
-        ki18n-devel libkdecoration2-devel
+        ki18n-devel libkdecoration2-devel kglobalaccel-devel libkdecoration2-devel \
+
       ;;
 
     "arch" | "manjaro")
