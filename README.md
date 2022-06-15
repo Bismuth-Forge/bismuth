@@ -80,7 +80,7 @@ contact the package maintainer first.
 - [Official Repo](https://launchpad.net/ubuntu/+source/bismuth):
 
   ```bash
-  sudo apt install bismuth
+  sudo apt install kwin-bismuth
   ```
 
 - [Volian Repository](https://volian.org/bismuth/)
