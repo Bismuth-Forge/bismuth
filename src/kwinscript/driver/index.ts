@@ -222,6 +222,14 @@ export class DriverImpl implements Driver {
         "unminimized"
       );
 
+    this.connect(this.kwinApi.workspace.currentActivityChanged, () =>
+      this.controller.onCurrentSurfaceChanged()
+    );
+
+    this.connect(this.kwinApi.workspace.currentDesktopChanged, () =>
+      this.controller.onCurrentSurfaceChanged()
+    );
+
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
     this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);
     this.connect(this.kwinApi.workspace.clientMaximizeSet, onClientMaximizeSet);
