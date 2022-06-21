@@ -78,6 +78,12 @@ export interface Controller {
   onWindowResizeStart(window: EngineWindow): void;
 
   /**
+   * React to window changing screens
+   * @param window the window whose screen has changed
+   */
+  onWindowScreenChanged(window: EngineWindow): void;
+
+  /**
    * React to window resize operation end. The window
    * resize operation ends, when the users drops
    * the window.
@@ -336,7 +342,11 @@ export class ControllerImpl implements Controller {
 
   public onWindowGeometryChanged(window: EngineWindow): void {
     this.log.log(["onWindowGeometryChanged", { window }]);
-    this.engine.enforceSize(window);
+  }
+
+  public onWindowScreenChanged(_window: EngineWindow): void {
+    //TODO only arrange the surface the window came from and went to
+    this.engine.arrange();
   }
 
   // NOTE: accepts `null` to simplify caller. This event is a catch-all hack

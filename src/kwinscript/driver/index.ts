@@ -370,9 +370,9 @@ export class DriverImpl implements Driver {
       }
     });
 
-    this.connect(client.screenChanged, () =>
-      this.controller.onWindowChanged(window, `screen=${client.screen}`)
-    );
+    this.connect(client.screenChanged, () => {
+      this.controller.onWindowScreenChanged(window);
+    });
 
     this.connect(client.activitiesChanged, () =>
       this.controller.onWindowChanged(
