@@ -5,6 +5,14 @@
 
 # Changelog
 
+### [3.1.2](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.1...v3.1.2) (2022-06-23)
+
+
+### Bug Fixes
+
+* don't crash on color config change ([#380](https://www.github.com/Bismuth-Forge/bismuth/issues/380)) ([8d3b5b1](https://www.github.com/Bismuth-Forge/bismuth/commit/8d3b5b1b100b8597432b7d32ef687451a87d0347))
+* **kwinscript:** arrange after an activity/desktop change ([c702857](https://www.github.com/Bismuth-Forge/bismuth/commit/c70285705bf90757b839936211fea00afd788fee))
+
 ### [3.1.1](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.0...v3.1.1) (2022-04-11)
 
 
