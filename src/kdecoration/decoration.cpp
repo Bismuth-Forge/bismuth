@@ -87,7 +87,7 @@ void Decoration::connectEvents()
     });
     connect(settingsPtr, &KDecoration2::DecorationSettings::borderSizeChanged, this, &Decoration::setBorderSizes);
 
-    connect(m_kdeglobalsWatcher.data(), &KConfigWatcher::configChanged, [this](const KConfigGroup &group, const QByteArrayList &names) {
+    connect(m_kdeglobalsWatcher.data(), &KConfigWatcher::configChanged, this, [this](const KConfigGroup &group, const QByteArrayList &names) {
         if (group.name() == QStringLiteral("General")) {
             if (names.contains(QByteArrayLiteral("ColorScheme")) || names.contains(QByteArrayLiteral("AccentColor"))) {
                 updateColors();
