@@ -11,6 +11,9 @@
 #include "controller.hpp"
 #include "plasma-api/api.hpp"
 
+namespace Bismuth
+{
+
 /**
  * Proxy object for the legacy TS backend.
  */
@@ -51,3 +54,5 @@ private:
     PlasmaApi::Api &m_plasmaApi;
     QJSValue m_jsController;
 };
+
+}

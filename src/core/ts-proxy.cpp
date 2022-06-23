@@ -12,6 +12,9 @@
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 
+namespace Bismuth
+{
+
 TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, PlasmaApi::Api &plasmaApi, Bismuth::Config &config)
     : QObject()
     , m_engine(engine)
@@ -146,4 +149,6 @@ void TSProxy::setJsController(const QJSValue &value)
 QJSValue TSProxy::jsController()
 {
     return m_jsController;
+}
+
 }

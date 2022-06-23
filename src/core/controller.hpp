@@ -16,10 +16,9 @@
 #include "plasma-api/api.hpp"
 #include "plasma-api/client.hpp"
 
-class TSProxy;
-
 namespace Bismuth
 {
+class TSProxy;
 
 struct Action {
     Action(const QString &id, const QString &description, const QString &defaultKeybinding, std::function<void()> callback);

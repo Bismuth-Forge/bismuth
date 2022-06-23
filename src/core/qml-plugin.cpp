@@ -24,8 +24,11 @@ void CorePlugin::registerTypes(const char *uri)
     Q_ASSERT(uri == QLatin1String("org.kde.bismuth.core"));
     qmlRegisterModule(uri, 1, 0);
 
-    qmlRegisterType<Core>(uri, 1, 0, "Core");
+    qmlRegisterType<Bismuth::Core>(uri, 1, 0, "Core");
 }
+
+namespace Bismuth
+{
 
 Core::Core(QQuickItem *parent)
     : QQuickItem(parent)
@@ -53,4 +56,6 @@ void Core::init()
 TSProxy *Core::tsProxy() const
 {
     return m_tsProxy.get();
+}
+
 }

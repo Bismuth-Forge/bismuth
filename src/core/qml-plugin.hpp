@@ -26,6 +26,9 @@ public:
     void registerTypes(const char *uri) override;
 };
 
+namespace Bismuth
+{
+
 class Core : public QQuickItem
 {
     Q_OBJECT
@@ -53,3 +56,5 @@ private:
     std::unique_ptr<PlasmaApi::Api> m_plasmaApi;
     std::unique_ptr<Bismuth::Engine> m_engine;
 };
+
+}
