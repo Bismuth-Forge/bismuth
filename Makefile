@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
+MAKEFLAGS += --always-make
+
 all: build
 
 clean:
@@ -33,5 +35,3 @@ test:
 setup-dev-env: sysdep-install
 	pre-commit install
 	npm install # Install development dependencies
-
-.PHONY: clean build sysdep-install install uninstall restart-kwin-x11 restart-plasma docs test setup-dev-env
