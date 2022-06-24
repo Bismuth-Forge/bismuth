@@ -8,14 +8,14 @@
 
 #include <optional>
 
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 
 #include "utils.hpp"
 
 // Forward declare KWin Classes
 namespace KWin
 {
-class AbstractClient;
+class Window;
 }
 
 namespace PlasmaApi
@@ -47,10 +47,10 @@ public:
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
 
-    Q_PROPERTY(std::optional<PlasmaApi::Client> activeClient READ activeClient WRITE setActiveClient);
+    Q_PROPERTY(std::optional<PlasmaApi::Window> activeClient READ activeClient WRITE setActiveClient);
 
-    std::optional<PlasmaApi::Client> activeClient() const;
-    void setActiveClient(std::optional<PlasmaApi::Client> client);
+    std::optional<PlasmaApi::Window> activeClient() const;
+    void setActiveClient(std::optional<PlasmaApi::Window> client);
 
     /**
      * Returns the geometry a Client can use with the specified option.
@@ -64,18 +64,18 @@ public:
      */
     Q_INVOKABLE QRect clientArea(ClientAreaOption, int screen, int desktop);
 
-    Q_INVOKABLE std::vector<PlasmaApi::Client> clientList() const;
+    Q_INVOKABLE std::vector<PlasmaApi::Window> clientList() const;
 
 private Q_SLOTS:
-    void currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient);
-    void clientAddedTransformer(KWin::AbstractClient *);
-    void clientRemovedTransformer(KWin::AbstractClient *);
-    void clientMinimizedTransformer(KWin::AbstractClient *);
-    void clientUnminimizedTransformer(KWin::AbstractClient *);
-    void clientMaximizeSetTransformer(KWin::AbstractClient *, bool h, bool v);
+    void currentDesktopChangedTransformer(int desktop, KWin::Window *kwinClient);
+    void clientAddedTransformer(KWin::Window *);
+    void clientRemovedTransformer(KWin::Window *);
+    void clientMinimizedTransformer(KWin::Window *);
+    void clientUnminimizedTransformer(KWin::Window *);
+    void clientMaximizeSetTransformer(KWin::Window *, bool h, bool v);
 
 Q_SIGNALS:
-    void currentDesktopChanged(int desktop, PlasmaApi::Client kwinClient);
+    void currentDesktopChanged(int desktop, PlasmaApi::Window kwinClient);
 
     /**
      * Signal emitted when the number of screens changes.
@@ -97,15 +97,15 @@ Q_SIGNALS:
      */
     void currentActivityChanged(const QString &id);
 
-    void clientAdded(PlasmaApi::Client client);
+    void clientAdded(PlasmaApi::Window client);
 
-    void clientRemoved(PlasmaApi::Client client);
+    void clientRemoved(PlasmaApi::Window client);
 
-    void clientMinimized(PlasmaApi::Client client);
+    void clientMinimized(PlasmaApi::Window client);
 
-    void clientUnminimized(PlasmaApi::Client client);
+    void clientUnminimized(PlasmaApi::Window client);
 
-    void clientMaximizeSet(PlasmaApi::Client client, bool h, bool v);
+    void clientMaximizeSet(PlasmaApi::Window client, bool h, bool v);
 
 private:
     void wrapSignals();

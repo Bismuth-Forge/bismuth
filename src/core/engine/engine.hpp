@@ -6,7 +6,7 @@
 #include "engine/layout/layout_list.hpp"
 #include "engine/surface.hpp"
 #include "plasma-api/api.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 #include "windows_list.hpp"
 
 namespace Bismuth
@@ -17,8 +17,8 @@ struct Engine {
 
     Engine(PlasmaApi::Api &, const Bismuth::Config &);
 
-    void addWindow(PlasmaApi::Client);
-    void removeWindow(PlasmaApi::Client);
+    void addWindow(PlasmaApi::Window);
+    void removeWindow(PlasmaApi::Window);
 
     void focusWindowByOrder(FocusOrder);
     void focusWindowByDirection(FocusDirection);

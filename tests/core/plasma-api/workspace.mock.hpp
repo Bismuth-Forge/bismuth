@@ -7,7 +7,7 @@
 
 namespace KWin
 {
-class AbstractClient;
+class Window;
 }
 
 class FakeKWinWorkspace : public QObject
@@ -27,10 +27,10 @@ Q_SIGNALS:
     void numberScreensChanged(int count);
     void screenResized(int screen);
     void currentActivityChanged(const QString &id);
-    void clientAdded(KWin::AbstractClient *);
-    void clientMaximizeSet(KWin::AbstractClient *, bool h, bool v);
-    void clientMinimized(KWin::AbstractClient *);
-    void clientRemoved(KWin::AbstractClient *);
-    void clientUnminimized(KWin::AbstractClient *);
-    void currentDesktopChanged(int desktop, KWin::AbstractClient *kwinClient);
+    void clientAdded(KWin::Window *);
+    void clientMaximizeSet(KWin::Window *, bool h, bool v);
+    void clientMinimized(KWin::Window *);
+    void clientRemoved(KWin::Window *);
+    void clientUnminimized(KWin::Window *);
+    void currentDesktopChanged(int desktop, KWin::Window *kwinClient);
 };

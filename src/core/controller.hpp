@@ -14,7 +14,7 @@
 #include "config.hpp"
 #include "engine/engine.hpp"
 #include "plasma-api/api.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 
 namespace Bismuth
 {
@@ -45,12 +45,12 @@ public:
 public Q_SLOTS:
     void onCurrentSurfaceChanged();
     void onSurfaceUpdate();
-    void onClientAdded(PlasmaApi::Client);
-    void onClientRemoved(PlasmaApi::Client);
-    void onClientMaximized(PlasmaApi::Client);
-    void onClientUnmaximized(PlasmaApi::Client);
-    void onClientMinimized(PlasmaApi::Client);
-    void onClientUnminimized(PlasmaApi::Client);
+    void onClientAdded(PlasmaApi::Window);
+    void onClientRemoved(PlasmaApi::Window);
+    void onClientMaximized(PlasmaApi::Window);
+    void onClientUnmaximized(PlasmaApi::Window);
+    void onClientMinimized(PlasmaApi::Window);
+    void onClientUnminimized(PlasmaApi::Window);
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};

@@ -8,9 +8,9 @@
 
 #include "engine/surface.hpp"
 #include "engine/window.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 
-#include "plasma-api/client.mock.hpp"
+#include "plasma-api/window.mock.hpp"
 #include "plasma-api/workspace.hpp"
 #include "plasma-api/workspace.mock.hpp"
 
@@ -18,7 +18,7 @@ TEST_CASE("Window Visibility")
 {
     auto fakeKWinClient = FakeKWinClient();
     auto fakeKwinWorkspace = FakeKWinWorkspace();
-    auto client = PlasmaApi::Client(&fakeKWinClient);
+    auto client = PlasmaApi::Window(&fakeKWinClient);
     auto workspace = PlasmaApi::Workspace(&fakeKwinWorkspace);
     auto window = Bismuth::Window(client, workspace);
 
@@ -117,7 +117,7 @@ TEST_CASE("Desktops List")
 {
     auto fakeKWinClient = FakeKWinClient();
     auto fakeKWinWorkspace = FakeKWinWorkspace();
-    auto client = PlasmaApi::Client(&fakeKWinClient);
+    auto client = PlasmaApi::Window(&fakeKWinClient);
     auto workspace = PlasmaApi::Workspace(&fakeKWinWorkspace);
     auto window = Bismuth::Window(client, workspace);
 
@@ -153,7 +153,7 @@ TEST_CASE("Activities List")
 {
     auto fakeKWinClient = FakeKWinClient();
     auto fakeKWinWorkspace = FakeKWinWorkspace();
-    auto client = PlasmaApi::Client(&fakeKWinClient);
+    auto client = PlasmaApi::Window(&fakeKWinClient);
     auto workspace = PlasmaApi::Workspace(&fakeKWinWorkspace);
     auto window = Bismuth::Window(client, workspace);
 

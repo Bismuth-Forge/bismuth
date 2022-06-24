@@ -7,7 +7,7 @@
 
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 
 namespace PlasmaApi
 {
@@ -26,13 +26,13 @@ Workspace::Workspace(const Workspace &rhs)
     wrapSignals();
 };
 
-std::optional<PlasmaApi::Client> Workspace::activeClient() const
+std::optional<PlasmaApi::Window> Workspace::activeClient() const
 {
     auto kwinClient = m_kwinImpl->property("activeClient").value<QObject *>();
-    return kwinClient ? PlasmaApi::Client(kwinClient) : std::optional<PlasmaApi::Client>();
+    return kwinClient ? PlasmaApi::Window(kwinClient) : std::optional<PlasmaApi::Window>();
 }
 
-void Workspace::setActiveClient(std::optional<PlasmaApi::Client> client)
+void Workspace::setActiveClient(std::optional<PlasmaApi::Window> client)
 {
     auto valueToSet = client.has_value() ? client->m_kwinImpl : nullptr;
     m_kwinImpl->setProperty("activeClient", QVariant::fromValue(valueToSet));
@@ -55,12 +55,12 @@ void Workspace::wrapSignals()
     wrapSimpleSignal(SIGNAL(screenResized(int)));
     wrapSimpleSignal(SIGNAL(currentActivityChanged(const QString &)));
 
-    wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::AbstractClient *)), SLOT(currentDesktopChangedTransformer(int, KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientAdded(KWin::AbstractClient *)), SLOT(clientAddedTransformer(KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientRemoved(KWin::AbstractClient *)), SLOT(clientRemovedTransformer(KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientMinimized(KWin::AbstractClient *)), SLOT(clientMinimizedTransformer(KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientUnminimized(KWin::AbstractClient *)), SLOT(clientUnminimizedTransformer(KWin::AbstractClient *)));
-    wrapComplexSignal(SIGNAL(clientMaximizeSet(KWin::AbstractClient *, bool, bool)), SLOT(clientMaximizeSetTransformer(KWin::AbstractClient *, bool, bool)));
+    wrapComplexSignal(SIGNAL(currentDesktopChanged(int, KWin::Window *)), SLOT(currentDesktopChangedTransformer(int, KWin::Window *)));
+    wrapComplexSignal(SIGNAL(clientAdded(KWin::Window *)), SLOT(clientAddedTransformer(KWin::Window *)));
+    wrapComplexSignal(SIGNAL(clientRemoved(KWin::Window *)), SLOT(clientRemovedTransformer(KWin::Window *)));
+    wrapComplexSignal(SIGNAL(clientMinimized(KWin::Window *)), SLOT(clientMinimizedTransformer(KWin::Window *)));
+    wrapComplexSignal(SIGNAL(clientUnminimized(KWin::Window *)), SLOT(clientUnminimizedTransformer(KWin::Window *)));
+    wrapComplexSignal(SIGNAL(clientMaximizeSet(KWin::Window *, bool, bool)), SLOT(clientMaximizeSetTransformer(KWin::Window *, bool, bool)));
 };
 
 QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
@@ -68,59 +68,59 @@ QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
     BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
 };
 
-std::vector<PlasmaApi::Client> Workspace::clientList() const
+std::vector<PlasmaApi::Window> Workspace::clientList() const
 {
-    auto apiCall = [&]() -> QList<KWin::AbstractClient *> {
-        BI_METHOD_IMPL_WRAP(QList<KWin::AbstractClient *>, "clientList()", QGenericArgument(nullptr));
+    auto apiCall = [&]() -> QList<KWin::Window *> {
+        BI_METHOD_IMPL_WRAP(QList<KWin::Window *>, "clientList()", QGenericArgument(nullptr));
     };
 
     auto apiCallRes = apiCall();
 
-    auto result = std::vector<PlasmaApi::Client>();
+    auto result = std::vector<PlasmaApi::Window>();
     result.reserve(apiCallRes.size());
     for (auto clientPtr : apiCallRes) {
         if (clientPtr) {
-            result.push_back(Client(reinterpret_cast<QObject *>(clientPtr)));
+            result.push_back(Window(reinterpret_cast<QObject *>(clientPtr)));
         }
     }
 
     return result;
 }
 
-void Workspace::currentDesktopChangedTransformer(int desktop, KWin::AbstractClient *kwinClient)
+void Workspace::currentDesktopChangedTransformer(int desktop, KWin::Window *kwinClient)
 {
     // Since we don't know the KWin internal implementation we have to use reinterpret_cast
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT currentDesktopChanged(desktop, clientWrapper);
 };
 
-void Workspace::clientAddedTransformer(KWin::AbstractClient *kwinClient)
+void Workspace::clientAddedTransformer(KWin::Window *kwinClient)
 {
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT clientAdded(clientWrapper);
 }
 
-void Workspace::clientRemovedTransformer(KWin::AbstractClient *kwinClient)
+void Workspace::clientRemovedTransformer(KWin::Window *kwinClient)
 {
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT clientRemoved(clientWrapper);
 }
 
-void Workspace::clientMinimizedTransformer(KWin::AbstractClient *kwinClient)
+void Workspace::clientMinimizedTransformer(KWin::Window *kwinClient)
 {
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT clientMinimized(clientWrapper);
 }
 
-void Workspace::clientUnminimizedTransformer(KWin::AbstractClient *kwinClient)
+void Workspace::clientUnminimizedTransformer(KWin::Window *kwinClient)
 {
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT clientUnminimized(clientWrapper);
 }
 
-void Workspace::clientMaximizeSetTransformer(KWin::AbstractClient *kwinClient, bool h, bool v)
+void Workspace::clientMaximizeSetTransformer(KWin::Window *kwinClient, bool h, bool v)
 {
-    auto clientWrapper = Client(reinterpret_cast<QObject *>(kwinClient));
+    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
     Q_EMIT clientMaximizeSet(clientWrapper, h, v);
 }
 

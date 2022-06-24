@@ -9,18 +9,18 @@
 #include <QSignalSpy>
 
 #include "plasma-api/api.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
 
 // Mock KWin Objects. This is for tests only.
 namespace KWin
 {
-class AbstractClient
+class Window
 {
 };
 }
 
-Q_DECLARE_METATYPE(KWin::AbstractClient *)
+Q_DECLARE_METATYPE(KWin::Window *)
 
 class MockWorkspaceJS : public QObject
 {
@@ -38,16 +38,16 @@ public:
     }
 
 Q_SIGNALS:
-    void currentDesktopChanged(int desktop, KWin::AbstractClient *client);
+    void currentDesktopChanged(int desktop, KWin::Window *client);
     // Not all signals are used, some of them declared to avoid warnings
     void numberScreensChanged(int);
     void screenResized(int);
     void currentActivityChanged(const QString &);
-    void clientAdded(KWin::AbstractClient *);
-    void clientRemoved(KWin::AbstractClient *);
-    void clientMinimized(KWin::AbstractClient *);
-    void clientUnminimized(KWin::AbstractClient *);
-    void clientMaximizeSet(KWin::AbstractClient *, bool, bool);
+    void clientAdded(KWin::Window *);
+    void clientRemoved(KWin::Window *);
+    void clientMinimized(KWin::Window *);
+    void clientUnminimized(KWin::Window *);
+    void clientMaximizeSet(KWin::Window *, bool, bool);
 
 private:
     int m_currentDesktop{};
@@ -102,9 +102,9 @@ TEST_CASE("Workspace Properties Signals")
 
     SUBCASE("currentDesktop")
     {
-        qRegisterMetaType<KWin::AbstractClient *>();
-        auto signalSpy = QSignalSpy(&workspace, SIGNAL(currentDesktopChanged(int, PlasmaApi::Client)));
-        auto mockKWinClient = KWin::AbstractClient();
+        qRegisterMetaType<KWin::Window *>();
+        auto signalSpy = QSignalSpy(&workspace, SIGNAL(currentDesktopChanged(int, PlasmaApi::Window)));
+        auto mockKWinClient = KWin::Window();
 
         // Act
         Q_EMIT mockWorkspace.currentDesktopChanged(69, &mockKWinClient);
@@ -117,7 +117,7 @@ TEST_CASE("Workspace Properties Signals")
         auto clientVariant = signal.at(1);
 
         CHECK(desktopNum == 69);
-        CHECK(clientVariant.canConvert<PlasmaApi::Client>());
+        CHECK(clientVariant.canConvert<PlasmaApi::Window>());
     }
 }
 
