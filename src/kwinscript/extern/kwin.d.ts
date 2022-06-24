@@ -139,7 +139,7 @@ declare namespace KWin {
 
     /**
      * TODO: I could not find anything about signal in the KWin source.
-     * Probably it does not exist here. It exists in KWin::AbstractClient though.
+     * Probably it does not exist here. It exists in KWin::Window though.
      */
     activitiesChanged: QSignal;
 
@@ -161,7 +161,7 @@ declare namespace KWin {
   }
 
   /**
-   * Client, also known as window. Represents KWin::AbstractClient.
+   * Client, also known as window. Represents KWin::Window.
    */
   interface Client extends Toplevel {
     /**

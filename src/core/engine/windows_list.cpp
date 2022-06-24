@@ -17,13 +17,13 @@ WindowsList::WindowsList(PlasmaApi::Workspace &workspace)
 {
 }
 
-Window &WindowsList::add(PlasmaApi::Client client)
+Window &WindowsList::add(PlasmaApi::Window client)
 {
     auto [it, _] = m_windowMap.insert_or_assign(client, Window(client, m_workspace));
     return it->second;
 }
 
-void WindowsList::remove(PlasmaApi::Client client)
+void WindowsList::remove(PlasmaApi::Window client)
 {
     m_windowMap.erase(client);
 }

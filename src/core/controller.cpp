@@ -16,7 +16,7 @@
 #include "config.hpp"
 #include "engine/engine.hpp"
 #include "logger.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
 #include "ts-proxy.hpp"
 
@@ -44,7 +44,7 @@ void Controller::bindEvents()
     connect(&workspace, &PlasmaApi::Workspace::currentActivityChanged, this, &Controller::onCurrentSurfaceChanged);
     connect(&workspace, &PlasmaApi::Workspace::clientAdded, this, &Controller::onClientAdded);
     connect(&workspace, &PlasmaApi::Workspace::clientRemoved, this, &Controller::onClientRemoved);
-    connect(&workspace, &PlasmaApi::Workspace::clientMaximizeSet, this, [this](PlasmaApi::Client client, bool h, bool v) {
+    connect(&workspace, &PlasmaApi::Workspace::clientMaximizeSet, this, [this](PlasmaApi::Window client, bool h, bool v) {
         if (h == true && v == true) {
             onClientMaximized(client);
         } else if (h == false && v == false) {
@@ -230,33 +230,33 @@ void Controller::onSurfaceUpdate()
     }
 }
 
-void Controller::onClientAdded(PlasmaApi::Client client)
+void Controller::onClientAdded(PlasmaApi::Window client)
 {
     if (m_config.experimentalBackend()) {
         m_engine.addWindow(client);
     }
 }
 
-void Controller::onClientRemoved(PlasmaApi::Client client)
+void Controller::onClientRemoved(PlasmaApi::Window client)
 {
     if (m_config.experimentalBackend()) {
         m_engine.removeWindow(client);
     }
 }
 
-void Controller::onClientMaximized(PlasmaApi::Client)
+void Controller::onClientMaximized(PlasmaApi::Window)
 {
 }
 
-void Controller::onClientUnmaximized(PlasmaApi::Client)
+void Controller::onClientUnmaximized(PlasmaApi::Window)
 {
 }
 
-void Controller::onClientMinimized(PlasmaApi::Client)
+void Controller::onClientMinimized(PlasmaApi::Window)
 {
 }
 
-void Controller::onClientUnminimized(PlasmaApi::Client)
+void Controller::onClientUnminimized(PlasmaApi::Window)
 {
 }
 

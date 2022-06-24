@@ -21,7 +21,7 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 {
 }
 
-void Engine::addWindow(PlasmaApi::Client client)
+void Engine::addWindow(PlasmaApi::Window client)
 {
     // Don't manage special windows - docks, panels, etc.
     if (client.specialWindow() || client.dialog()) {
@@ -47,7 +47,7 @@ void Engine::addWindow(PlasmaApi::Client client)
     // Bind events of this window
 }
 
-void Engine::removeWindow(PlasmaApi::Client client)
+void Engine::removeWindow(PlasmaApi::Window client)
 {
     m_windows.remove(client);
 }

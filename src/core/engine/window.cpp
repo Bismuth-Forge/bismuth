@@ -10,7 +10,7 @@
 namespace Bismuth
 {
 
-Window::Window(PlasmaApi::Client client, PlasmaApi::Workspace &workspace)
+Window::Window(PlasmaApi::Window client, PlasmaApi::Workspace &workspace)
     : m_client(client)
     , m_workspace(workspace)
 {

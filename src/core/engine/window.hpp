@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "engine/surface.hpp"
-#include "plasma-api/client.hpp"
+#include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
 
 namespace Bismuth
@@ -21,7 +21,7 @@ struct Window {
         Tiled,
     };
 
-    Window(PlasmaApi::Client, PlasmaApi::Workspace &);
+    Window(PlasmaApi::Window, PlasmaApi::Workspace &);
 
     bool operator==(const Window &) const;
     bool operator<(const Window &rhs) const;
@@ -42,7 +42,7 @@ struct Window {
     QString caption() const;
 
 private:
-    PlasmaApi::Client m_client;
+    PlasmaApi::Window m_client;
     std::reference_wrapper<PlasmaApi::Workspace> m_workspace;
 
     Mode m_mode;
