@@ -109,7 +109,7 @@ export interface Controller {
 
   /**
    * React to window being moved.
-   * @param window the window, which it being moved.
+   * @param window the window, which is being moved.
    */
   onWindowMove(window: EngineWindow): void;
 
@@ -143,9 +143,9 @@ export interface Controller {
 
   /**
    * Ask engine to manage the window
-   * @param win the window which needs to be managed.
+   * @param window the window which needs to be managed.
    */
-  manageWindow(win: EngineWindow): void;
+  manageWindow(window: EngineWindow): void;
 
   /**
    * The function is called when the script is destroyed.
