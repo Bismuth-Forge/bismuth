@@ -33,6 +33,7 @@ struct Engine {
     void arrangeWindowsOnSurfaces(const std::vector<Surface> &);
 
 private:
+    std::vector<Window> getNeighborCandidates(const FocusDirection &, const Window &);
     std::optional<Window> windowNeighbor(FocusDirection, const Window &);
     Surface activeSurface() const;
 
