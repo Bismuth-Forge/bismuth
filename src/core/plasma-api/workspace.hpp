@@ -67,12 +67,12 @@ public:
     Q_INVOKABLE std::vector<PlasmaApi::Window> clientList() const;
 
 private Q_SLOTS:
-    void currentDesktopChangedTransformer(int desktop, KWin::Window *kwinClient);
-    void clientAddedTransformer(KWin::Window *);
-    void clientRemovedTransformer(KWin::Window *);
-    void clientMinimizedTransformer(KWin::Window *);
-    void clientUnminimizedTransformer(KWin::Window *);
-    void clientMaximizeSetTransformer(KWin::Window *, bool h, bool v);
+    void mapper_currentDesktopChanged(int desktop, KWin::Window *kwinClient);
+    void mapper_clientAdded(KWin::Window *);
+    void mapper_clientRemoved(KWin::Window *);
+    void mapper_clientMinimized(KWin::Window *);
+    void mapper_clientUnminimized(KWin::Window *);
+    void mapper_clientMaximizeSet(KWin::Window *, bool h, bool v);
 
 Q_SIGNALS:
     void currentDesktopChanged(int desktop, PlasmaApi::Window kwinClient);
