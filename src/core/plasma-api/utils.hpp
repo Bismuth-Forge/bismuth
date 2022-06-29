@@ -45,3 +45,16 @@
         method.invoke(m_kwinImpl, Qt::DirectConnection, Q_RETURN_ARG(RET_TYPE, result), __VA_ARGS__);                                                          \
         return result;                                                                                                                                         \
     }
+
+/**
+ * Wrap simple signal to forward it from KWin Class
+ * @param SIGNATURE signal signature, that can be put inside SIGNAL Qt macro
+ */
+#define WRAP_SIGNAL(SIGNATURE) connect(m_kwinImpl, SIGNAL(SIGNATURE), this, SIGNAL(SIGNATURE))
+
+/**
+ * Wrap signal with KWin Type in signature. Signal should have a mapper, that
+ * must have the same signature as the signal.
+ * @param SIGNATURE signal signature, that can be put inside SIGNAL/SLOT Qt macro
+ */
+#define WRAP_SIGNAL_WITH_KWIN_TYPE(SIGNATURE) connect(m_kwinImpl, SIGNAL(SIGNATURE), this, SLOT(mapper_##SIGNATURE))
