@@ -3,10 +3,13 @@
 
 #pragma once
 
+#include <QIcon>
 #include <QList>
 #include <QObject>
 #include <QRect>
+#include <QSize>
 #include <QString>
+#include <QUuid>
 
 #include "utils.hpp"
 
@@ -31,7 +34,10 @@ public:
     bool operator==(const Window &rhs) const;
     bool operator<(const Window &rhs) const;
 
+    BI_READONLY_PROPERTY(bool, alpha)
     // Q_PROPERTY(bool alpha READ hasAlpha NOTIFY hasAlphaChanged)
+
+    BI_READONLY_PROPERTY(qulonglong, frameId)
     // Q_PROPERTY(qulonglong frameId READ frameId)
 
     /**
@@ -39,75 +45,101 @@ public:
      * occupies on the screen. This rectangle includes invisible portions of the
      * window, e.g. client-side drop shadows, etc.
      */
+    BI_READONLY_PROPERTY(QRect, bufferGeometry)
     // Q_PROPERTY(QRect bufferGeometry READ bufferGeometry)
 
     /**
      * This property holds the position of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(QPoint, pos)
     // Q_PROPERTY(QPoint pos READ pos)
 
     /**
      * This property holds the size of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(QSize, size)
     // Q_PROPERTY(QSize size READ size)
 
     /**
      * This property holds the x position of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(int, x)
     // Q_PROPERTY(int x READ x NOTIFY frameGeometryChanged)
 
     /**
      * This property holds the y position of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(int, y)
     // Q_PROPERTY(int y READ y NOTIFY frameGeometryChanged)
 
     /**
      * This property holds the width of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(int, width)
     // Q_PROPERTY(int width READ width NOTIFY frameGeometryChanged)
 
     /**
      * This property holds the height of the Window's frame geometry.
      */
+    BI_READONLY_PROPERTY(int, height)
     // Q_PROPERTY(int height READ height NOTIFY frameGeometryChanged)
 
+    BI_READONLY_PROPERTY(QRect, visibleRect)
     // Q_PROPERTY(QRect visibleRect READ visibleGeometry)
+
+    BI_READONLY_PROPERTY(qreal, opacity)
     // Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
 
     BI_READONLY_PROPERTY(int, screen)
     // Q_PROPERTY(int screen READ screen NOTIFY screenChanged)
+
+    BI_READONLY_PROPERTY(qulonglong, windowId)
     // Q_PROPERTY(qulonglong windowId READ window CONSTANT)
 
+    BI_READONLY_PROPERTY(QRect, rect)
     // Q_PROPERTY(QRect rect READ rect)
+
+    BI_READONLY_PROPERTY(QPoint, clientPos)
     // Q_PROPERTY(QPoint clientPos READ clientPos)
+
+    BI_READONLY_PROPERTY(QSize, clientSize)
     // Q_PROPERTY(QSize clientSize READ clientSize)
+
+    BI_READONLY_PROPERTY(QByteArray, resourceName)
     // Q_PROPERTY(QByteArray resourceName READ resourceName NOTIFY windowClassChanged)
+
     BI_READONLY_PROPERTY(QByteArray, resourceClass)
     // Q_PROPERTY(QByteArray resourceClass READ resourceClass NOTIFY windowClassChanged)
+
+    BI_READONLY_PROPERTY(QByteArray, windowRole)
     // Q_PROPERTY(QByteArray windowRole READ windowRole NOTIFY windowRoleChanged)
 
     /**
      * Returns whether the window is a desktop background window (the one with wallpaper).
      * See _NET_WM_WINDOW_TYPE_DESKTOP at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, desktopWindow)
     // Q_PROPERTY(bool desktopWindow READ isDesktop)
 
     /**
      * Returns whether the window is a dock (i.e. a panel).
      * See _NET_WM_WINDOW_TYPE_DOCK at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, dock)
     // Q_PROPERTY(bool dock READ isDock)
 
     /**
      * Returns whether the window is a standalone (detached) toolbar window.
      * See _NET_WM_WINDOW_TYPE_TOOLBAR at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, toolbar)
     // Q_PROPERTY(bool toolbar READ isToolbar)
 
     /**
      * Returns whether the window is a torn-off menu.
      * See _NET_WM_WINDOW_TYPE_MENU at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, menu)
     // Q_PROPERTY(bool menu READ isMenu)
 
     /**
@@ -115,6 +147,7 @@ public:
      * for which none of the specialized window types fit.
      * See _NET_WM_WINDOW_TYPE_NORMAL at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, normalWindow)
     // Q_PROPERTY(bool normalWindow READ isNormalWindow)
 
     /**
@@ -129,12 +162,14 @@ public:
      * do not support marking their splash windows with this type.
      * See _NET_WM_WINDOW_TYPE_SPLASH at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, splash)
     // Q_PROPERTY(bool splash READ isSplash)
 
     /**
      * Returns whether the window is a utility window, such as a tool window.
      * See _NET_WM_WINDOW_TYPE_UTILITY at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, utility)
     // Q_PROPERTY(bool utility READ isUtility)
 
     /**
@@ -142,73 +177,86 @@ public:
      * from the applications menubar).
      * See _NET_WM_WINDOW_TYPE_DROPDOWN_MENU at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, dropdownMenu)
     // Q_PROPERTY(bool dropdownMenu READ isDropdownMenu)
 
     /**
      * Returns whether the window is a popup menu (that is not a torn-off or dropdown menu).
      * See _NET_WM_WINDOW_TYPE_POPUP_MENU at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, popupMenu)
     // Q_PROPERTY(bool popupMenu READ isPopupMenu)
 
     /**
      * Returns whether the window is a tooltip.
      * See _NET_WM_WINDOW_TYPE_TOOLTIP at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, tooltip)
     // Q_PROPERTY(bool tooltip READ isTooltip)
 
     /**
      * Returns whether the window is a window with a notification.
      * See _NET_WM_WINDOW_TYPE_NOTIFICATION at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, notification)
     // Q_PROPERTY(bool notification READ isNotification)
 
     /**
      * Returns whether the window is a window with a critical notification.
      */
+    BI_READONLY_PROPERTY(bool, criticalNotification)
     // Q_PROPERTY(bool criticalNotification READ isCriticalNotification)
 
     /**
      * Returns whether the window is an applet popup.
      */
+    BI_READONLY_PROPERTY(bool, appletPopup)
     // Q_PROPERTY(bool appletPopup READ isAppletPopup)
 
     /**
      * Returns whether the window is an On Screen Display.
      */
+    BI_READONLY_PROPERTY(bool, onScreenDisplay)
     // Q_PROPERTY(bool onScreenDisplay READ isOnScreenDisplay)
 
     /**
      * Returns whether the window is a combobox popup.
      * See _NET_WM_WINDOW_TYPE_COMBO at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, comboBox)
     // Q_PROPERTY(bool comboBox READ isComboBox)
 
     /**
      * Returns whether the window is a Drag&Drop icon.
      * See _NET_WM_WINDOW_TYPE_DND at https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(bool, dndIcon)
     // Q_PROPERTY(bool dndIcon READ isDNDIcon)
 
     /**
      * Returns the NETWM window type
      * See https://standards.freedesktop.org/wm-spec/wm-spec-latest.html .
      */
+    BI_READONLY_PROPERTY(int, windowType)
     // Q_PROPERTY(int windowType READ windowType)
 
     /**
      * Whether this Window is managed by KWin (it has control over its placement and other
      * aspects, as opposed to override-redirect windows that are entirely handled by the application).
      */
+    BI_READONLY_PROPERTY(int, managed)
     // Q_PROPERTY(bool managed READ isClient CONSTANT)
 
     /**
      * Whether this Window represents an already deleted window and only kept for the compositor for animations.
      */
+    BI_READONLY_PROPERTY(int, deleted)
     // Q_PROPERTY(bool deleted READ isDeleted CONSTANT)
 
     /**
      * Whether the window has an own shape
      */
+    BI_READONLY_PROPERTY(bool, shaped)
     // Q_PROPERTY(bool shaped READ shape NOTIFY shapedChanged)
 
     /**
@@ -227,6 +275,7 @@ public:
     /**
      * Whether the window is a popup.
      */
+    BI_READONLY_PROPERTY(bool, popupWindow)
     // Q_PROPERTY(bool popupWindow READ isPopupWindow)
 
     /**
@@ -234,11 +283,13 @@ public:
      *
      * @note It's always @c false if compositing is turned off.
      */
+    BI_READONLY_PROPERTY(bool, outline)
     // Q_PROPERTY(bool outline READ isOutline)
 
     /**
      * This property holds a UUID to uniquely identify this Window.
      */
+    BI_READONLY_PROPERTY(QUuid, internalId)
     // Q_PROPERTY(QUuid internalId READ internalId CONSTANT)
 
     /**
@@ -246,11 +297,13 @@ public:
      *
      * @since 5.20
      */
+    BI_READONLY_PROPERTY(int, pid)
     // Q_PROPERTY(int pid READ pid CONSTANT)
 
     /**
      * The position of this window within Workspace's window stack.
      */
+    BI_READONLY_PROPERTY(int, stackingOrder)
     // Q_PROPERTY(int stackingOrder READ stackingOrder NOTIFY stackingOrderChanged)
 
     /**
@@ -258,18 +311,21 @@ public:
      * or through a legacy support hack. The fullScreen state can only be changed if the Window does not
      * use the legacy hack. To be sure whether the state changed, connect to the notify signal.
      */
+    BI_PROPERTY(bool, fullScreen, setFullScreen)
     // Q_PROPERTY(bool fullScreen READ isFullScreen WRITE setFullScreen NOTIFY fullScreenChanged)
 
     /**
      * Whether the Window can be set to fullScreen. The property is evaluated each time it is invoked.
      * Because of that there is no notify signal.
      */
+    BI_READONLY_PROPERTY(bool, fullScreenable)
     // Q_PROPERTY(bool fullScreenable READ isFullScreenable)
 
     /**
      * Whether this Window is active or not. Use Workspace::activateWindow() to activate a Window.
      * @see Workspace::activateWindow
      */
+    BI_READONLY_PROPERTY(bool, active)
     // Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
 
     /**
@@ -308,23 +364,28 @@ public:
     /**
      * Indicates that the window should not be included on a taskbar.
      */
+    BI_PROPERTY(bool, skipTaskbar, setSkipTaskbar)
     // Q_PROPERTY(bool skipTaskbar READ skipTaskbar WRITE setSkipTaskbar NOTIFY skipTaskbarChanged)
 
     /**
      * Indicates that the window should not be included on a Pager.
      */
+    BI_PROPERTY(bool, skipPager, setSkipPager)
     // Q_PROPERTY(bool skipPager READ skipPager WRITE setSkipPager NOTIFY skipPagerChanged)
 
     /**
      * Whether the Window should be excluded from window switching effects.
      */
+    BI_PROPERTY(bool, skipSwitcher, setSkipSwitcher)
     // Q_PROPERTY(bool skipSwitcher READ skipSwitcher WRITE setSkipSwitcher NOTIFY skipSwitcherChanged)
 
     /**
      * Whether the window can be closed by the user.
      */
+    BI_READONLY_PROPERTY(bool, closeable)
     // Q_PROPERTY(bool closeable READ isCloseable NOTIFY closeableChanged)
 
+    BI_READONLY_PROPERTY(QIcon, icon)
     // Q_PROPERTY(QIcon icon READ icon NOTIFY iconChanged)
 
     /**
@@ -336,23 +397,27 @@ public:
     /**
      * Whether the Window is set to be kept below other windows.
      */
+    BI_PROPERTY(bool, keepBelow, setKeepBelow);
     // Q_PROPERTY(bool keepBelow READ keepBelow WRITE setKeepBelow NOTIFY keepBelowChanged)
 
     /**
      * Whether the Window can be shaded. The property is evaluated each time it is invoked.
      * Because of that there is no notify signal.
      */
+    BI_READONLY_PROPERTY(bool, shadeable)
     // Q_PROPERTY(bool shadeable READ isShadeable)
 
     /**
      * Whether the Window is shaded.
      */
+    BI_PROPERTY(bool, shade, setShade);
     // Q_PROPERTY(bool shade READ isShade WRITE setShade NOTIFY shadeChanged)
 
     /**
      * Whether the Window can be minimized. The property is evaluated each time it is invoked.
      * Because of that there is no notify signal.
      */
+    BI_READONLY_PROPERTY(bool, minimizable)
     // Q_PROPERTY(bool minimizable READ isMinimizable)
 
     /**
@@ -367,6 +432,7 @@ public:
      * The value is evaluated each time the getter is called.
      * Because of that no changed signal is provided.
      */
+    BI_READONLY_PROPERTY(QRect, iconGeometry)
     // Q_PROPERTY(QRect iconGeometry READ iconGeometry)
 
     /**
@@ -387,6 +453,7 @@ public:
      * It should be unset by the Window Manager when it decides the window got the required attention
      * (usually, that it got activated).
      */
+    BI_PROPERTY(bool, demandAttention, setDemandsAttention)
     // Q_PROPERTY(bool demandsAttention READ isDemandingAttention WRITE demandAttention NOTIFY demandsAttentionChanged)
 
     /**
@@ -399,11 +466,13 @@ public:
     /**
      * Minimum size as specified in WM_NORMAL_HINTS
      */
+    BI_READONLY_PROPERTY(QSize, minSize)
     // Q_PROPERTY(QSize minSize READ minSize)
 
     /**
      * Maximum size as specified in WM_NORMAL_HINTS
      */
+    BI_READONLY_PROPERTY(QSize, maxSize)
     // Q_PROPERTY(QSize maxSize READ maxSize)
 
     /**
@@ -411,12 +480,14 @@ public:
      * The value is evaluated each time the getter is called.
      * Because of that no changed signal is provided.
      */
+    BI_READONLY_PROPERTY(bool, wantsInput)
     // Q_PROPERTY(bool wantsInput READ wantsInput)
 
     /**
      * Whether the Window is a transient Window to another Window.
      * @see transientFor
      */
+    BI_READONLY_PROPERTY(bool, transient)
     // Q_PROPERTY(bool transient READ isTransient NOTIFY transientChanged)
 
     /**
@@ -427,6 +498,7 @@ public:
     /**
      * Whether the Window represents a modal window.
      */
+    BI_READONLY_PROPERTY(bool, modal)
     // Q_PROPERTY(bool modal READ isModal NOTIFY modalChanged)
 
     /**
@@ -448,17 +520,20 @@ public:
      * Whether the Window is currently being moved by the user.
      * Notify signal is emitted when the Window starts or ends move/resize mode.
      */
+    BI_READONLY_PROPERTY(bool, move)
     // Q_PROPERTY(bool move READ isInteractiveMove NOTIFY moveResizedChanged)
 
     /**
      * Whether the Window is currently being resized by the user.
      * Notify signal is emitted when the Window starts or ends move/resize mode.
      */
+    BI_READONLY_PROPERTY(bool, resize)
     // Q_PROPERTY(bool resize READ isInteractiveResize NOTIFY moveResizedChanged)
 
     /**
      * Whether the decoration is currently using an alpha channel.
      */
+    BI_READONLY_PROPERTY(bool, decorationHasAlpha)
     // Q_PROPERTY(bool decorationHasAlpha READ decorationHasAlpha)
 
     /**
@@ -473,6 +548,7 @@ public:
      * Whether the Window provides context help. Mostly needed by decorations to decide whether to
      * show the help button or not.
      */
+    BI_READONLY_PROPERTY(bool, providesContextHelp)
     // Q_PROPERTY(bool providesContextHelp READ providesContextHelp CONSTANT)
 
     /**
@@ -480,6 +556,7 @@ public:
      * The property is evaluated each time it is invoked.
      * Because of that there is no notify signal.
      */
+    BI_READONLY_PROPERTY(bool, maximizable)
     // Q_PROPERTY(bool maximizable READ isMaximizable)
 
     /**
@@ -488,6 +565,7 @@ public:
      * Because of that there is no notify signal.
      * @see moveableAcrossScreens
      */
+    BI_READONLY_PROPERTY(bool, moveable)
     // Q_PROPERTY(bool moveable READ isMovable)
 
     /**
@@ -495,12 +573,14 @@ public:
      * Because of that there is no notify signal.
      * @see moveable
      */
+    BI_READONLY_PROPERTY(bool, moveableAcrossScreens)
     // Q_PROPERTY(bool moveableAcrossScreens READ isMovableAcrossScreens)
 
     /**
      * Whether the Window can be resized. The property is evaluated each time it is invoked.
      * Because of that there is no notify signal.
      */
+    BI_READONLY_PROPERTY(bool, resizeable)
     // Q_PROPERTY(bool resizeable READ isResizable)
 
     /**
@@ -512,16 +592,19 @@ public:
      * The application's desktop file name can also be the full path to the desktop file
      * (e.g. "/opt/kde/share/org.kde.foo.desktop") in case it's not in a standard location.
      */
+    BI_READONLY_PROPERTY(QByteArray, desktopFileName)
     // Q_PROPERTY(QByteArray desktopFileName READ desktopFileName NOTIFY desktopFileNameChanged)
 
     /**
      * Whether an application menu is available for this Window
      */
+    BI_READONLY_PROPERTY(bool, hasApplicationMenu)
     // Q_PROPERTY(bool hasApplicationMenu READ hasApplicationMenu NOTIFY hasApplicationMenuChanged)
 
     /**
      * Whether the application menu for this Window is currently opened
      */
+    BI_READONLY_PROPERTY(bool, applicationMenuActive)
     // Q_PROPERTY(bool applicationMenuActive READ applicationMenuActive NOTIFY applicationMenuActiveChanged)
 
     /**
@@ -530,6 +613,7 @@ public:
      * When an application failed to react on a ping request in time, it is
      * considered unresponsive. This usually indicates that the application froze or crashed.
      */
+    BI_READONLY_PROPERTY(bool, unresponsive)
     // Q_PROPERTY(bool unresponsive READ unresponsive NOTIFY unresponsiveChanged)
 
     /**
@@ -538,6 +622,7 @@ public:
      * An empty string indicates the default palette from kdeglobals is used.
      * @note this indicates the colour scheme requested, which might differ from the theme applied if the colorScheme cannot be found
      */
+    BI_READONLY_PROPERTY(QString, colorScheme)
     // Q_PROPERTY(QString colorScheme READ colorScheme NOTIFY colorSchemeChanged)
 
     // Q_PROPERTY(KWin::Layer layer READ layer)
@@ -545,6 +630,7 @@ public:
     /**
      * Whether this window is hidden. It's usually the case with auto-hide panels.
      */
+    BI_READONLY_PROPERTY(bool, hidden)
     // Q_PROPERTY(bool hidden READ isHiddenInternal NOTIFY hiddenChanged)
 
 private:
