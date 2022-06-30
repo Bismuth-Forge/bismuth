@@ -10,12 +10,14 @@
 #include <QSize>
 #include <QString>
 #include <QUuid>
+#include <qvector.h>
 
 #include "utils.hpp"
 
 namespace PlasmaApi
 {
 class Workspace;
+class VirtualDesktop;
 
 class Window : public QObject
 {
@@ -340,6 +342,8 @@ public:
     /**
      * The virtual desktops this client is on. If it's on all desktops, the list is empty.
      */
+    QVector<PlasmaApi::VirtualDesktop> desktops() const;
+    void setDesktops(const QVector<PlasmaApi::VirtualDesktop> &desktops);
     // Q_PROPERTY(QVector<KWin::VirtualDesktop *> desktops READ desktops WRITE setDesktops NOTIFY desktopChanged)
 
     /**
