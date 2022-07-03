@@ -21,6 +21,7 @@ struct WindowsList {
     std::optional<Window> activeWindow() const;
 
     std::vector<Window> visibleWindowsOn(const Surface &surface) const;
+    std::vector<Window> visibleTiledWindowsOn(const Surface &surface) const;
 
 private:
     std::map<PlasmaApi::Client, Window> m_windowMap{};

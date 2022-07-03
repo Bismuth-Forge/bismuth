@@ -88,15 +88,19 @@ void Controller::registerShortcuts()
 
     addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
         qDebug(Bi) << "Focus Upper Window Triggered!";
+        m_engine.focusWindowByDirection(Engine::FocusDirection::Up);
     });
     addShortcut("focus_bottom_window", "Focus Bottom Window", "Meta+J", [=]() {
         qDebug(Bi) << "Focus Bottom Window Triggered!";
+        m_engine.focusWindowByDirection(Engine::FocusDirection::Down);
     });
     addShortcut("focus_left_window", "Focus Left Window", "Meta+H", [=]() {
         qDebug(Bi) << "Focus Left Window Triggered!";
+        m_engine.focusWindowByDirection(Engine::FocusDirection::Left);
     });
     addShortcut("focus_right_window", "Focus Right Window", "Meta+L", [=]() {
         qDebug(Bi) << "Focus Right Window Triggered!";
+        m_engine.focusWindowByDirection(Engine::FocusDirection::Right);
     });
 
     addShortcut("move_window_to_next_pos", "Move Window to the Next Position", "", [=]() {

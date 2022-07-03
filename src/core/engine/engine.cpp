@@ -18,6 +18,7 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
     , m_windows(api.workspace())
     , m_activeLayouts(config)
     , m_plasmaApi(api)
+    , timestamp(0)
 {
 }
 
@@ -154,68 +155,92 @@ void Engine::arrangeWindowsOnSurfaces(const std::vector<Surface> &surfaces)
     }
 }
 
-std::optional<Window> Engine::windowNeighbor(FocusDirection direction, const Window &basisWindow)
+std::vector<Window> Engine::getNeighborCandidates(const FocusDirection &direction, const Window &basisWindow)
 {
-    /**
-     * Tests if two ranges are overlapping
-     * @param min1 Range 1, begin
-     * @param max1 Range 1, end
-     * @param min2 Range 2, begin
-     * @param max2 Range 2, end
-     */
-    // auto overlap = [](int min1, int max1, int min2, int max2) {
-    //     return std::max(0, std::min(max1, max2) - std::max(min1, min2)) > 0;
-    // };
-    //
-    // auto getNeighborCandidates = [&](const Window &basis, FocusDirection direction) {
-    //     auto surfaceWindows = m_windows.visibleWindowsOn(activeSurface());
-    //
-    //     // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
-    //     auto sign = direction == FocusDirection::Down || direction == FocusDirection::Right ? 1 : -1;
-    //
-    //     auto result = std::vector<Window>();
-    //     if (direction == FocusDirection::Up || direction == FocusDirection::Down) {
-    //         std::copy_if(surfaceWindows.cbegin(), surfaceWindows.cend(), result.begin(), [&](const Window &window) {
-    //             return window.geometry().y() * sign > basis.geometry().y() * sign
-    //                 && overlap(basis.geometry().x(), basis.geometry().right(), window.geometry().x(), window.geometry().right());
-    //         });
-    //     } else {
-    //         std::copy_if(surfaceWindows.cbegin(), surfaceWindows.cend(), result.begin(), [&](const Window window) {
-    //             return window.geometry().x() * sign > basis.geometry().x() * sign
-    //                 && overlap(basis.geometry().y(), basis.geometry().bottom(), window.geometry().y(), window.geometry().bottom());
-    //         });
-    //     }
-    //
-    //     return result;
-    // };
-    //
-    // auto neighborCandidates = getNeighborCandidates(basisWindow, direction);
-    //
-    // if (neighborCandidates.empty()) {
-    //     return {};
-    // }
-    //
-    // auto getClosestRelativWindowCorner = [&]() {
-    //     return std::reduce(neighborCandidates.cbegin(), neighborCandidates.cend(), [&](int prevValue, const Window &window) {
-    //         if (direction == FocusDirection::Up) {
-    //             return std::max(window.geometry().bottom(), prevValue);
-    //         } else if (direction == FocusDirection::Down) {
-    //             return std::min(window.geometry().y(), prevValue);
-    //         } else if (direction == FocusDirection::Left) {
-    //             return std::max(window.geometry().right(), prevValue);
-    //         } else {
-    //             return std::min(window.geometry().x(), prevValue);
-    //         }
-    //     });
-    // };
-    // auto closestWindowCorner = getClosestRelativWindowCorner(neighborCandidates, dir);
+    // Confirm/Test if it's the right implementation
+    auto overlap = [](int first_range, int first_maxRange, int second_range, int second_maxRange) {
+        return (second_range > first_range && second_range < first_maxRange);
+    };
 
-    // auto closestWindows = this.getClosestRelativeWindow(neighborCandidates, dir, closestWindowCorner);
+    auto visibleWindowsOnActiveSurface = m_windows.visibleTiledWindowsOn(activeSurface());
 
-    // return closestWindows.front();
+    int sign = (direction == FocusDirection::Down || direction == FocusDirection::Right) ? 1 : -1;
 
-    // TODO Implement
-    return {};
+    std::vector<Window> result;
+
+    int basis_x = basisWindow.geometry().topLeft().x();
+    int basis_y = basisWindow.geometry().topLeft().y();
+    int basis_maxX = basisWindow.geometry().right();
+    int basis_maxY = basisWindow.geometry().bottom();
+
+    if (direction == FocusDirection::Up || direction == FocusDirection::Down) {
+        std::copy_if(visibleWindowsOnActiveSurface.cbegin(), visibleWindowsOnActiveSurface.cend(), result.begin(), [&](const Window &window) {
+            int window_x = window.geometry().topLeft().x();
+            int window_maxX = window.geometry().right();
+            return window.geometry().y() * sign > basis_y * sign && overlap(basis_x, basis_maxX, window_x, window_maxX);
+        });
+    } else {
+        std::copy_if(visibleWindowsOnActiveSurface.cbegin(), visibleWindowsOnActiveSurface.cend(), result.begin(), [&](const Window &window) {
+            int window_y = window.geometry().topLeft().y();
+            int window_maxY = window.geometry().bottom();
+            return window.geometry().x() * sign > basisWindow.geometry().x() * sign && overlap(basis_y, basis_maxY, window_y, window_maxY);
+        });
+    }
+
+    return result;
+}
+
+int Engine::getClosestRelativeWindowCorner(const Engine::FocusDirection &direction, const std::vector<Window> &neighbors)
+{
+    return std::reduce(neighbors.cbegin(),
+                       neighbors.cend(),
+                       /* initial value */ direction == Engine::FocusDirection::Up || direction == Engine::FocusDirection::Left ? 0 : INT_MAX,
+                       [&](int prevValue, const Window &window) {
+                           switch (direction) {
+                           case Engine::FocusDirection::Up:
+                               return std::max(window.geometry().bottom(), prevValue);
+                           case Engine::FocusDirection::Down:
+                               return std::min(window.geometry().y(), prevValue);
+                           case Engine::FocusDirection::Left:
+                               return std::max(window.geometry().right(), prevValue);
+                           case Engine::FocusDirection::Right:
+                               return std::min(window.geometry().x(), prevValue);
+                           }
+                       });
+}
+
+std::vector<Window> getClosestRelativeWindow(const Engine::FocusDirection &direction, const std::vector<Window> &windowArray, const int &closestPoint)
+{
+    std::vector<Window> result;
+    std::copy_if(windowArray.cbegin(), windowArray.cend(), result.begin(), [&](const Window &window) {
+        switch (direction) {
+        case Engine::FocusDirection::Up:
+            return window.geometry().bottom() > closestPoint - 5;
+        case Engine::FocusDirection::Down:
+            return window.geometry().y() < closestPoint + 5;
+        case Engine::FocusDirection::Left:
+            return window.geometry().right() > closestPoint - 5;
+        case Engine::FocusDirection::Right:
+            return window.geometry().x() < closestPoint + 5;
+        }
+    });
+    return result;
+}
+
+/* This function returns the closest window (if any) from the current window for the given direction */
+std::optional<Window> Engine::windowNeighbor(Engine::FocusDirection direction, const Window &basisWindow)
+{
+    auto neighborCandidates = getNeighborCandidates(direction, basisWindow);
+    if (neighborCandidates.empty()) {
+        return {};
+    }
+
+    int closestRelativeWindowCorner = getClosestRelativeWindowCorner(direction, neighborCandidates);
+
+    auto closestWindows = getClosestRelativeWindow(direction, neighborCandidates, closestRelativeWindowCorner);
+
+    // TODO: Implement timestamp
+    return closestWindows.front();
 }
 
 Surface Engine::activeSurface() const

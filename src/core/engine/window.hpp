@@ -21,6 +21,8 @@ struct Window {
         Tiled,
     };
 
+    int timestamp = 0;
+
     Window(PlasmaApi::Client, PlasmaApi::Workspace &);
 
     bool operator==(const Window &) const;

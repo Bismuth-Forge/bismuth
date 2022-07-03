@@ -52,4 +52,15 @@ std::vector<Window> WindowsList::visibleWindowsOn(const Surface &surface) const
     return result;
 }
 
+std::vector<Window> WindowsList::visibleTiledWindowsOn(const Surface &surface) const
+{
+    auto result = std::vector<Window>();
+    for (auto [_, window] : m_windowMap) {
+        if (window.visibleOn(surface) && window.mode() == Window::Mode::Tiled) {
+            result.push_back(window);
+        }
+    }
+    return result;
+}
+
 }
