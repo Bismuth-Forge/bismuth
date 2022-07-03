@@ -13,6 +13,7 @@
 
 namespace Bismuth
 {
+// Sample Edit
 Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
     : m_config(config)
     , m_windows(api.workspace())

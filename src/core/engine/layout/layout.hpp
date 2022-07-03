@@ -15,6 +15,8 @@ namespace Bismuth
 struct Layout {
     Layout(const Bismuth::Config &);
 
+    int masterSize;
+
     /**
      * Apply layout for the @p windows on tiling @p area. Method changes the
      * geometry of the windows to match the particular layout.
