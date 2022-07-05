@@ -214,7 +214,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
   public executeAction(engine: Engine, action: Action): void {
     if (action instanceof IncreaseMasterAreaWindowCount) {
-      this.resizeMaster(engine, +1);
+      this.resizeMaster(engine, +1); // increase masterSize by 1
     } else if (action instanceof DecreaseMasterAreaWindowCount) {
       this.resizeMaster(engine, -1);
     } else if (action instanceof DecreaseLayoutMasterAreaSize) {

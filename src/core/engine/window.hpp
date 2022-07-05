@@ -41,6 +41,9 @@ struct Window {
 
     QString caption() const;
 
+    // TODO: what's the default? -> also it's only for ThreeColumn Layout
+    float weight;
+
 private:
     PlasmaApi::Client m_client;
     std::reference_wrapper<PlasmaApi::Workspace> m_workspace;

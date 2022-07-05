@@ -22,7 +22,12 @@ export default class LayoutUtils {
     gap = gap !== undefined ? gap : 0;
 
     const n = weights.length;
+
     const actualLength = length - (n - 1) * gap;
+    // 0 + weight[0] =>
+    // weight[0] + weight[1]
+    // weight[0] + weight[1] + weight[2]
+    // cumsum
     const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
 
     let weightAcc = 0;
