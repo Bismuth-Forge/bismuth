@@ -33,9 +33,13 @@ public:
     {
     }
     virtual void apply(QRect area, std::vector<Window> &windows) const override;
-    virtual void splitAreaWeighted(QRect area, std::vector<float> &weights, float tileLayoutGap, bool horizontal) const;
+    virtual std::vector<QRect> splitAreaWeighted(QRect area, std::vector<float> &weights, float tileLayoutGap, bool horizontal) const;
     /* tileLayoutGap by default is 0 and horizontal is false */
     virtual std::vector<std::pair<int, int>> splitWeighted(const std::pair<int, int> &line, std::vector<float> &weights, float tileLayoutGap) const;
-    std::string get_hint();
+    virtual std::vector<QRect> splitAreaHalfWeighted(QRect, float, int, bool) const;
+
+    // temporarily here
+    template<typename T>
+    std::vector<std::vector<T>> partitionAreaBySizes(std::vector<T> array, std::vector<int> sizes) const;
 };
 }
