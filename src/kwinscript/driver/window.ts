@@ -246,7 +246,7 @@ export class DriverWindowImpl implements DriverWindow {
     if (noBorder !== undefined) {
       if (!this.noBorderManaged && noBorder) {
         /* Backup border state when transitioning from unmanaged to managed */
-        this.noBorderOriginal = this.client.noBorder;
+        this.noBorderOriginal = true;
       } else if (this.noBorderManaged && !this.client.noBorder) {
         /* If border is enabled while in managed mode, remember it.
          * Note that there's no way to know if border is re-disabled in managed mode. */
@@ -258,7 +258,7 @@ export class DriverWindowImpl implements DriverWindow {
         this.client.noBorder = true;
       } else if (this.noBorderManaged) {
         /* Exiting managed mode: restore original value. */
-        this.client.noBorder = this.noBorderOriginal;
+        this.client.noBorder = false;
       }
 
       /* update mode */
