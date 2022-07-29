@@ -168,6 +168,10 @@ void Controller::registerShortcuts()
     addShortcut("toggle_monocle_layout", "Toggle Monocle Layout", "Meta+M", [=]() {
         qDebug(Bi) << "Toggle Monocle Layout Triggered!";
     });
+    addShortcut("toggle_monocle_layout", "Toggle Monocle Layout", "Meta+C", [=]() {
+        m_config.enableThreeColumnLayout();
+        qDebug(Bi) << "Toggle Three Column Layout Triggered!";
+    });
 
     addShortcut("rotate", "Rotate Layout Clockwise", "Meta+R", [=]() {
         qDebug(Bi) << "Rotate Layout Clockwise Triggered!";

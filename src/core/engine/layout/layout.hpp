@@ -13,7 +13,10 @@
 namespace Bismuth
 {
 struct Layout {
-    Layout(const Bismuth::Config &);
+    Layout(const Bismuth::Config &config);
+
+    /** TODO: What shou ld be it's default value? **/
+    int masterSize;
 
     /**
      * Apply layout for the @p windows on tiling @p area. Method changes the
