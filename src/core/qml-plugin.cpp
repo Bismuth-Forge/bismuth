@@ -17,7 +17,6 @@
 #include "kconf_update/legacy_shortcuts.hpp"
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
-#include "ts-proxy.hpp"
 
 void CorePlugin::registerTypes(const char *uri)
 {
@@ -34,7 +33,6 @@ Core::Core(QQuickItem *parent)
     : QQuickItem(parent)
     , m_qmlEngine() // We cannot get engine from the pointer in the constructor
     , m_controller()
-    , m_tsProxy()
     , m_config()
     , m_plasmaApi()
 {
@@ -49,13 +47,6 @@ void Core::init()
     m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_qmlEngine);
     m_engine = std::make_unique<Bismuth::Engine>(*m_plasmaApi, *m_config);
     m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi, *m_engine, *m_config);
-    m_tsProxy = std::make_unique<TSProxy>(m_qmlEngine, *m_controller, *m_plasmaApi, *m_config);
-    m_controller->setProxy(m_tsProxy.get());
-}
-
-TSProxy *Core::tsProxy() const
-{
-    return m_tsProxy.get();
 }
 
 }

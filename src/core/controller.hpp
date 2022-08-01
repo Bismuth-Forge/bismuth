@@ -56,7 +56,6 @@ private:
     std::vector<QAction *> m_registeredShortcuts{};
 
     PlasmaApi::Api &m_plasmaApi;
-    TSProxy *m_proxy;
     Engine &m_engine;
     const Config &m_config;
 };

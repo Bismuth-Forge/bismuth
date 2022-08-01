@@ -18,21 +18,17 @@
 #include "logger.hpp"
 #include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
-#include "ts-proxy.hpp"
 
 namespace Bismuth
 {
 Controller::Controller(PlasmaApi::Api &api, Engine &engine, const Bismuth::Config &config)
     : m_plasmaApi(api)
-    , m_proxy()
     , m_engine(engine)
     , m_config(config)
 {
     bindEvents();
-    if (m_config.experimentalBackend()) {
-        registerShortcuts();
-        loadExistingWindows();
-    }
+    registerShortcuts();
+    loadExistingWindows();
 }
 
 void Controller::bindEvents()
@@ -214,34 +210,20 @@ void Controller::registerAction(const Action &data)
 
 void Controller::onCurrentSurfaceChanged()
 {
-    if (m_proxy && !m_config.experimentalBackend()) {
-        auto ctl = m_proxy->jsController();
-        auto func = ctl.property("onCurrentSurfaceChanged");
-        func.callWithInstance(ctl);
-    }
 }
 
 void Controller::onSurfaceUpdate()
 {
-    if (m_proxy && !m_config.experimentalBackend()) {
-        auto ctl = m_proxy->jsController();
-        auto func = ctl.property("onSurfaceUpdate");
-        func.callWithInstance(ctl);
-    }
 }
 
 void Controller::onClientAdded(PlasmaApi::Window client)
 {
-    if (m_config.experimentalBackend()) {
-        m_engine.addWindow(client);
-    }
+    m_engine.addWindow(client);
 }
 
 void Controller::onClientRemoved(PlasmaApi::Window client)
 {
-    if (m_config.experimentalBackend()) {
-        m_engine.removeWindow(client);
-    }
+    m_engine.removeWindow(client);
 }
 
 void Controller::onClientMaximized(PlasmaApi::Window)
@@ -258,11 +240,6 @@ void Controller::onClientMinimized(PlasmaApi::Window)
 
 void Controller::onClientUnminimized(PlasmaApi::Window)
 {
-}
-
-void Controller::setProxy(TSProxy *proxy)
-{
-    m_proxy = proxy;
 }
 
 Action::Action(const QString &id, const QString &description, const QString &defaultKeybinding, std::function<void()> callback)
