@@ -27,7 +27,7 @@ jobs:
   publish-artifacts:
     name: Publish Artifacts
     runs-on: ubuntu-latest
-    container: ubuntu:21.10
+    container: ubuntu:22.04
     env:
       DEBIAN_FRONTEND: noninteractive
     needs: release-please
