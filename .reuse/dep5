@@ -9,8 +9,8 @@ Source: https://github.com/gikari/bismuth
 # Copyright: $YEAR $NAME <$CONTACT>
 # License: ...
 
-# Images
-Files: img/*
+# Not Code
+Files: data/*
 Copyright: none
 License: CC-BY-4.0
 

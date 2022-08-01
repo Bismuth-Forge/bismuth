@@ -15,7 +15,7 @@
 [![Matrix](https://img.shields.io/matrix/bi:kde.org?label=Chat&server_fqdn=kde.modular.im&logo=matrix&style=for-the-badge)](https://matrix.to/#/#bi:kde.org)
 [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/bismuth?label=Donators&logo=opencollective&style=for-the-badge)](https://opencollective.com/bismuth)
 
-![demo](img/rice.png)
+![demo](data/rice.png)
 
 Arrange your windows in different grids to minimize the mouse usage.
 
@@ -132,7 +132,7 @@ section](docs/TWEAKS.md).
 
 You can configure Bismuth in the System Settings > Window Management > Window Tiling.
 
-![Bismuth Configuration Module](img/config.png)
+![Bismuth Configuration Module](data/config.png)
 
 ## 🤝 Acknowledgments
 
