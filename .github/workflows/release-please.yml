@@ -21,7 +21,7 @@ jobs:
         uses: GoogleCloudPlatform/release-please-action@v2
         id: release
         with:
-          release-type: node
+          release-type: simple
           package-name: release-please-action
 
   publish-artifacts:
@@ -41,7 +41,6 @@ jobs:
 
       - name: Build 🔧
         run: |
-          npm install
           .github/scripts/sysdep-install.sh
           cmake -S "." -B "build-debug" -G Ninja \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \

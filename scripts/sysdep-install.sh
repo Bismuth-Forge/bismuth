@@ -45,7 +45,7 @@ if [ -f /etc/os-release ]; then
       ;;
 
     "void")
-      sudo xbps-install gcc git nodejs cmake ninja extra-cmake-modules \
+      sudo xbps-install gcc git cmake ninja extra-cmake-modules \
         kconfig-devel kconfigwidgets-devel ki18n-devel kcoreaddons-devel \
         kdeclarative-devel kcmutils-devel qt5-svg-devel qt5-declarative-devel \
         qt5-quickcontrols2-devel gettext-devel knotifications-devel \

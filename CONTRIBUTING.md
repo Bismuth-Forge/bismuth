@@ -16,7 +16,6 @@ please read the following.
 To make sure you can develop the script install all the tools you need:
 
 - [REUSE tool](https://git.fsfe.org/reuse/tool#install)
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [CMake](https://cmake.org/)
 - [Clang-format](https://clang.llvm.org/docs/ClangFormat.html)
 - [Pre Commit](https://pre-commit.com/)

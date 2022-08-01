@@ -18,7 +18,6 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          npm install
           make docs
 
       - name: Deploy 🚀

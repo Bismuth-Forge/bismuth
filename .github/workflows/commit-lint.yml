@@ -18,11 +18,11 @@ jobs:
           fetch-depth: 0
 
       - name: Install Commit Linting Tool 🔧
-        run: npm install --save-dev @commitlint/{cli,config-conventional}
+        run: npm install -g @commitlint/{cli,config-conventional}
 
       - name: Set Linting Config to Conventional Commits spec 🔧
         run: |
           echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
 
       - name: Lint 🚨
-        run: npx commitlint --from HEAD~1 --to HEAD --verbose
+        run: commitlint --from HEAD~1 --to HEAD --verbose
