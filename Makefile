@@ -6,19 +6,19 @@ MAKEFLAGS += --always-make
 all: build
 
 clean:
-	scripts/clean.sh
+	tools/clean.sh
 
 build:
-	scripts/build.sh
+	tools/build.sh
 
 sysdep-install:
-	scripts/sysdep-install.sh
+	tools/sysdep-install.sh
 
 install: build
-	scripts/install.sh
+	tools/install.sh
 
 uninstall:
-	scripts/uninstall.sh
+	tools/uninstall.sh
 
 restart-kwin-x11:
 	kwin_x11 --replace & disown
@@ -26,11 +26,8 @@ restart-kwin-x11:
 restart-plasma:
 	plasmashell --replace & disown
 
-docs:
-	npx typedoc --out build/docs
-
 test:
-	scripts/test.sh
+	tools/test.sh
 
 setup-dev-env: sysdep-install
 	pre-commit install
