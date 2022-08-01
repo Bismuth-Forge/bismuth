@@ -19,7 +19,7 @@ if [ -f /etc/os-release ]; then
         libkf5declarative-dev libkf5i18n-dev libkf5kcmutils-dev \
         libkf5globalaccel-dev libkdecorations2-dev libqt5svg5-dev \
         qml-module-qtquick* qtbase5-dev \
-        qtdeclarative5-dev qtquickcontrols2-5-dev g++
+        qtdeclarative5-dev qtquickcontrols2-5-dev
       ;;
 
     "fedora")

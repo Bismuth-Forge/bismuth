@@ -57,7 +57,7 @@ jobs:
 
   build:
     name: Build
-    container: ubuntu:21.10
+    container: ubuntu:22.04
     env:
       DEBIAN_FRONTEND: noninteractive
     runs-on: ubuntu-latest
@@ -77,7 +77,7 @@ jobs:
 
   test:
     name: Unit Tests
-    container: ubuntu:21.10
+    container: ubuntu:22.04
     env:
       DEBIAN_FRONTEND: noninteractive
     runs-on: ubuntu-latest
