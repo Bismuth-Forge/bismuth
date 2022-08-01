@@ -7,5 +7,3 @@ set -e
 
 # Remove build directory and package-lock
 rm -vrf "build"
-rm -vf package-lock.json
-rm -vrf node_modules/

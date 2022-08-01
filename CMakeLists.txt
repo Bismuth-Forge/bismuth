@@ -3,23 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-project(bismuth)
-
-option(
-  USE_TSC
-  "Use TypeScript Compler to check the code before bundling \
-  using esbuild. This could be useful, if you know, that the \
-  code is correct and you want to speed up building times. \
-  For example - you are a packager."
-  ON)
-
-option(
-  USE_NPM
-  "Use npm installed packages during the build. You might \
-  want to disable this option, if you want to use natively \
-  installed tools. In particular build systems won't use \
-  \"npx\" prefix before commands."
-  ON)
+project(bismuth VERSION 4.0.0)
 
 set(QT_MIN_VERSION "5.15.0")
 set(KF5_MIN_VERSION "5.78.0")

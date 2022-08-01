@@ -34,4 +34,3 @@ test:
 
 setup-dev-env: sysdep-install
 	pre-commit install
-	npm install # Install development dependencies
