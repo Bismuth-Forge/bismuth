@@ -18,7 +18,6 @@
 
 namespace Bismuth
 {
-class TSProxy;
 
 struct Action {
     Action(const QString &id, const QString &description, const QString &defaultKeybinding, std::function<void()> callback);
@@ -39,8 +38,6 @@ public:
     void registerShortcuts();
     void loadExistingWindows();
     void registerAction(const Action &);
-
-    void setProxy(TSProxy *);
 
 public Q_SLOTS:
     void onCurrentSurfaceChanged();
