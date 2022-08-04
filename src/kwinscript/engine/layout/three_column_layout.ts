@@ -14,6 +14,8 @@ import {
   DecreaseMasterAreaWindowCount,
   IncreaseLayoutMasterAreaSize,
   IncreaseMasterAreaWindowCount,
+  Rotate,
+  RotateReverse,
 } from "../../controller/action";
 
 import { partitionArrayBySizes, clip, slide } from "../../util/func";
@@ -36,6 +38,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
 
   private masterRatio: number;
   private masterSize: number;
+  private horizontal: boolean;
 
   private config: Config;
 
@@ -43,6 +46,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
     this.config = config;
     this.masterRatio = 0.6;
     this.masterSize = 1;
+    this.horizontal = true;
   }
 
   public adjust(
@@ -66,7 +70,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
         tiles.map((tile) => tile.weight),
         this.config.tileLayoutGap,
         tiles.indexOf(basis),
-        delta
+        delta,
+        this.horizontal
       ).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
     } else if (tiles.length === this.masterSize + 1) {
       /* two columns */
@@ -78,7 +83,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
         this.config.tileLayoutGap,
         basisIndex < this.masterSize ? 0 : 1,
         delta,
-        true
+        this.horizontal
       );
 
       /* adjust master tile weights */
@@ -89,7 +94,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
           masterTiles.map((tile) => tile.weight),
           this.config.tileLayoutGap,
           basisIndex,
-          delta
+          delta,
+          this.horizontal
         ).forEach(
           (newWeight, i) =>
             (masterTiles[i].weight = newWeight * masterTiles.length)
@@ -118,7 +124,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
         this.config.tileLayoutGap,
         basisGroup,
         delta,
-        true
+        this.horizontal
       );
       const newMasterRatio = newRatios[1];
       const newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
@@ -137,7 +143,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
         groupTiles.map((tile) => tile.weight),
         this.config.tileLayoutGap,
         groupTiles.indexOf(basis),
-        delta
+        delta,
+        this.horizontal
       ).forEach(
         (newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length)
       );
@@ -158,7 +165,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
       LayoutUtils.splitAreaWeighted(
         area,
         tiles.map((tile) => tile.weight),
-        this.config.tileLayoutGap
+        this.config.tileLayoutGap,
+        this.horizontal
       ).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
     } else if (tiles.length === this.masterSize + 1) {
       /* master & R-stack (only 1 window in stack) */
@@ -166,14 +174,15 @@ export default class ThreeColumnLayout implements WindowsLayout {
         area,
         this.masterRatio,
         this.config.tileLayoutGap,
-        true
+        this.horizontal
       );
 
       const masterTiles = tiles.slice(0, this.masterSize);
       LayoutUtils.splitAreaWeighted(
         masterArea,
         masterTiles.map((tile) => tile.weight),
-        this.config.tileLayoutGap
+        this.config.tileLayoutGap,
+        this.horizontal
       ).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
 
       tiles[tiles.length - 1].geometry = stackArea;
@@ -186,7 +195,7 @@ export default class ThreeColumnLayout implements WindowsLayout {
         area,
         [stackRatio, this.masterRatio, stackRatio],
         this.config.tileLayoutGap,
-        true
+        this.horizontal
       );
 
       const rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
@@ -199,7 +208,8 @@ export default class ThreeColumnLayout implements WindowsLayout {
         LayoutUtils.splitAreaWeighted(
           groupAreas[group],
           groupTiles.map((tile) => tile.weight),
-          this.config.tileLayoutGap
+          this.config.tileLayoutGap,
+          this.horizontal
         ).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
       });
     }
@@ -229,13 +239,16 @@ export default class ThreeColumnLayout implements WindowsLayout {
         ThreeColumnLayout.MIN_MASTER_RATIO,
         ThreeColumnLayout.MAX_MASTER_RATIO
       );
+    } else if (action instanceof Rotate || action instanceof RotateReverse) {
+      this.horizontal = !this.horizontal;
+      engine.showLayoutNotification();
     } else {
       action.executeWithoutLayoutOverride();
     }
   }
 
   public toString(): string {
-    return `ThreeColumnLayout(nmaster=${this.masterSize})`;
+    return `ThreeColumnLayout(nmaster=${this.masterSize}, horizontal=${this.horizontal})`;
   }
 
   private resizeMaster(engine: Engine, step: -1 | 1): void {
