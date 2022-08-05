@@ -26,6 +26,7 @@ export interface Config {
   screenGapRight: number;
   screenGapTop: number;
   tileLayoutGap: number;
+  smartGaps: boolean;
   //#endregion
 
   //#region Behavior

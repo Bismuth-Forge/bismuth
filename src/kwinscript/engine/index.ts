@@ -191,13 +191,16 @@ export class EngineImpl implements Engine {
     const srf = basis.surface;
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
-      const area = srf.workingArea.gap(
-        this.config.screenGapLeft,
-        this.config.screenGapRight,
-        this.config.screenGapTop,
-        this.config.screenGapBottom
-      );
       const tiles = this.windows.visibleTiledWindowsOn(srf);
+      const noGaps = tiles.length == 1 && this.config.smartGaps;
+      const area = noGaps
+        ? srf.workingArea
+        : srf.workingArea.gap(
+            this.config.screenGapLeft,
+            this.config.screenGapRight,
+            this.config.screenGapTop,
+            this.config.screenGapBottom
+          );
       layout.adjust(area, tiles, basis, basis.geometryDelta);
     }
   }
@@ -285,18 +288,17 @@ export class EngineImpl implements Engine {
 
     const layout = this.layouts.getCurrentLayout(srf);
     if (layout.adjust) {
-      const area = srf.workingArea.gap(
-        this.config.screenGapLeft,
-        this.config.screenGapRight,
-        this.config.screenGapTop,
-        this.config.screenGapBottom
-      );
-      layout.adjust(
-        area,
-        this.windows.visibleTileableWindowsOn(srf),
-        basis,
-        delta
-      );
+      const tiles = this.windows.visibleTiledWindowsOn(srf);
+      const noGaps = tiles.length == 1 && this.config.smartGaps;
+      const area = noGaps
+        ? srf.workingArea
+        : srf.workingArea.gap(
+            this.config.screenGapLeft,
+            this.config.screenGapRight,
+            this.config.screenGapTop,
+            this.config.screenGapBottom
+          );
+      layout.adjust(area, tiles, basis, delta);
     }
   }
 
@@ -330,9 +332,8 @@ export class EngineImpl implements Engine {
     const layout = this.layouts.getCurrentLayout(screenSurface);
 
     const workingArea = screenSurface.workingArea;
-    const tilingArea = this.getTilingArea(workingArea, layout);
-
     const visibleWindows = this.windows.visibleWindowsOn(screenSurface);
+    const tilingArea = this.getTilingArea(workingArea, layout, visibleWindows);
 
     // Set correct window state for new windows
     visibleWindows.forEach((win: EngineWindow) => {
@@ -740,9 +741,17 @@ export class EngineImpl implements Engine {
    *
    * @param workingArea area in which we are allowed to work. @see DriverSurface#workingArea
    * @param layout windows layout used
+   * @param visibleWindows the windows visible in the working area.
    */
-  private getTilingArea(workingArea: Rect, layout: WindowsLayout): Rect {
-    if (this.config.monocleMaximize && layout instanceof MonocleLayout) {
+  private getTilingArea(
+    workingArea: Rect,
+    layout: WindowsLayout,
+    visibleWindows: EngineWindow[]
+  ): Rect {
+    if (
+      (this.config.monocleMaximize && layout instanceof MonocleLayout) ||
+      (visibleWindows.length == 1 && this.config.smartGaps)
+    ) {
       return workingArea;
     } else {
       return workingArea.gap(

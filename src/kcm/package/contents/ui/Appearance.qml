@@ -41,6 +41,11 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: "Inner Gaps"
     }
 
+    BIC.ConfigCheckBox {
+        text: i18n("Hide gaps if showing a single window")
+        settingName: "smartGaps"
+    }
+
     BIC.PixelsConfigSpinBox {
         Kirigami.FormData.label: i18n("All:")
         settingName: "tileLayoutGap"
