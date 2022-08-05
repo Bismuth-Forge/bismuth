@@ -1,0 +1,5 @@
+<!--
+SPDX-FileCopyrightText: 2022 Ignacy Kajdan <git@verahawk.com>
+SPDX-License-Identifier: CC-BY-4.0
+-->
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" style="color:#eff0f1"><path style="stroke-width:1.51029" d="M4 6h13.686v20H4z" transform="matrix(0 1 -1.0159 0 32.255 0)"/><path style="stroke-width:.819593" d="M24.56 6h4.03v20h-4.03zM19.2 6h4.03v20H19.2z" transform="matrix(0 1 -1.0159 0 32.255 0)"/><path d="M30.223 0H1.777v32h28.446ZM28.19 2v28H3.809V2Z"/></g></svg>

@@ -11,6 +11,7 @@ ecm_install_icons(
   16-status-bismuth-spread.svg
   16-status-bismuth-stair.svg
   16-status-bismuth-tile.svg
+  16-status-bismuth-vertical-tile.svg
   32-status-bismuth-column.svg
   32-status-bismuth-floating.svg
   32-status-bismuth-monocle.svg
@@ -19,5 +20,6 @@ ecm_install_icons(
   32-status-bismuth-spread.svg
   32-status-bismuth-stair.svg
   32-status-bismuth-tile.svg
+  32-status-bismuth-vertical-tile.svg
   DESTINATION
   ${KDE_INSTALL_ICONDIR})

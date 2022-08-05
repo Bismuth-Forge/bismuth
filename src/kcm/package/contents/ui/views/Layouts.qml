@@ -57,6 +57,11 @@ Kirigami.Page {
             settingName: "enableFloatingLayout"
         }
 
+        ListElement {
+            name: "Vertical Tile"
+            settingName: "enableVerticalTileLayout"
+        }
+
     }
 
     KCM.ScrollView {
