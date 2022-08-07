@@ -1,5 +1,4 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
-//
 // SPDX-License-Identifier: MIT
 
 #include "controller.hpp"
@@ -75,11 +74,9 @@ void Controller::registerShortcuts()
 
     addShortcut("focus_next_window", "Focus Next Window", "", [=]() {
         qDebug(Bi) << "Focus Next Window Triggered!";
-        m_engine.focusWindowByOrder(Engine::FocusOrder::Next);
     });
     addShortcut("focus_prev_window", "Focus Previous Window", "", [=]() {
         qDebug(Bi) << "Focus Previous Window Triggered!";
-        m_engine.focusWindowByOrder(Engine::FocusOrder::Previous);
     });
 
     addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
@@ -218,12 +215,12 @@ void Controller::onSurfaceUpdate()
 
 void Controller::onClientAdded(PlasmaApi::Window client)
 {
-    m_engine.addWindow(client);
+    // m_engine.addWindow(client);
 }
 
 void Controller::onClientRemoved(PlasmaApi::Window client)
 {
-    m_engine.removeWindow(client);
+    // m_engine.removeWindow(client);
 }
 
 void Controller::onClientMaximized(PlasmaApi::Window)

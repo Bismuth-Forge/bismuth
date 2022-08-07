@@ -6,44 +6,21 @@
 
 namespace Bismuth
 {
-Surface::Surface(int desktop, int screen, const QString &activity)
-    : m_desktop(desktop)
+Surface::Surface(const QString &virtualDesktopId, int screen)
+    : m_virtualDesktopId(virtualDesktopId)
     , m_screen(screen)
-    , m_activity(activity)
+    , m_windows()
 {
 }
 
-bool Surface::operator<(const Surface &rhs) const
+QString Surface::virtualDesktopId() const
 {
-    if (m_screen < rhs.m_screen) {
-        return true;
-    } else if (m_screen > rhs.m_screen) {
-        return false;
-    }
-
-    if (m_desktop < rhs.m_desktop) {
-        return true;
-    } else if (m_desktop > rhs.m_desktop) {
-        return false;
-    }
-
-    // Same screen, same desktop, different activities
-    return m_activity < rhs.m_activity;
-}
-
-int Surface::desktop() const
-{
-    return m_desktop;
+    return m_virtualDesktopId;
 }
 
 int Surface::screen() const
 {
     return m_screen;
-}
-
-QString Surface::activity() const
-{
-    return m_activity;
 }
 
 }
