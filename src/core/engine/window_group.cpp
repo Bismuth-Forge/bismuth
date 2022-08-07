@@ -2,3 +2,11 @@
 // SPDX-License-Identifier: MIT
 
 #include "window_group.hpp"
+
+namespace Bismuth
+{
+
+void WindowGroup::addWindow(const std::shared_ptr<Bismuth::Window> &window)
+{
+}
+}

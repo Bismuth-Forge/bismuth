@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <unordered_set>
+#include <unordered_map>
 
 #include "config.hpp"
 #include "engine/surface.hpp"
@@ -20,7 +20,7 @@ struct Engine {
 
 private:
     const Bismuth::Config &m_config;
-    std::unordered_set<Bismuth::Surface> m_surfaces;
+    std::unordered_map<QString, Bismuth::Surface> m_surfaces;
     PlasmaApi::Api &m_plasmaApi;
 };
 }

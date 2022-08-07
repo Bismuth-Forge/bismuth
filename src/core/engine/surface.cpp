@@ -13,6 +13,21 @@ Surface::Surface(const QString &virtualDesktopId, int screen)
 {
 }
 
+bool Surface::operator==(const Surface &rhs)
+{
+    return m_virtualDesktopId == rhs.m_virtualDesktopId && m_screen == rhs.m_screen;
+}
+
+QString Surface::key()
+{
+    return key(m_virtualDesktopId, m_screen);
+}
+
+QString Surface::key(const QString &virtualDesktopId, int screen)
+{
+    return QStringLiteral("%1_%2").arg(virtualDesktopId).arg(screen);
+}
+
 QString Surface::virtualDesktopId() const
 {
     return m_virtualDesktopId;
@@ -21,6 +36,15 @@ QString Surface::virtualDesktopId() const
 int Surface::screen() const
 {
     return m_screen;
+}
+
+void Surface::addWindow(const std::shared_ptr<Bismuth::Window> &window)
+{
+    if (!m_windows.has_value()) {
+        m_windows = {};
+    }
+
+    m_windows->addWindow(window);
 }
 
 }

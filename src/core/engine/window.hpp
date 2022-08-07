@@ -6,7 +6,6 @@
 #include <functional>
 #include <vector>
 
-#include "engine/surface.hpp"
 #include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
 
@@ -33,11 +32,6 @@ struct Window {
 
     void setMode(Mode);
     Mode mode() const;
-
-    bool visibleOn(const Surface &surface);
-    std::vector<Surface> surfaces() const;
-    std::vector<int> desktops() const;
-    std::vector<QString> activities() const;
 
     QString caption() const;
 
