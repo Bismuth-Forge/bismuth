@@ -13,6 +13,7 @@ namespace Bismuth
 
 struct WindowGroup {
     void addWindow(const std::shared_ptr<Bismuth::Window> &);
+    void removeWindow(const PlasmaApi::Window &);
 
 private:
     // std::unique_ptr<Layout> m_layout; // Tiling logic of this window group

@@ -215,7 +215,7 @@ void Controller::onSurfaceUpdate()
 
 void Controller::onClientAdded(PlasmaApi::Window client)
 {
-    // m_engine.addWindow(client);
+    m_engine.addWindow(client);
 }
 
 void Controller::onClientRemoved(PlasmaApi::Window client)

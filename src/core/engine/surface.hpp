@@ -22,6 +22,7 @@ struct Surface {
     int screen() const;
 
     void addWindow(const std::shared_ptr<Bismuth::Window> &);
+    void removeWindow(const PlasmaApi::Window &);
 
 private:
     QString m_virtualDesktopId;

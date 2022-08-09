@@ -17,6 +17,7 @@ struct Engine {
     Engine(PlasmaApi::Api &, const Bismuth::Config &);
 
     void addWindow(const PlasmaApi::Window &);
+    void removeWindow(const PlasmaApi::Window &);
 
 private:
     const Bismuth::Config &m_config;

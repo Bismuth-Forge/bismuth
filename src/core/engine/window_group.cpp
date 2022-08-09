@@ -9,4 +9,8 @@ namespace Bismuth
 void WindowGroup::addWindow(const std::shared_ptr<Bismuth::Window> &window)
 {
 }
+
+void WindowGroup::removeWindow(const PlasmaApi::Window &)
+{
+}
 }

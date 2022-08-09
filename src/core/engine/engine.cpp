@@ -34,4 +34,19 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
         it->second.addWindow(window);
     }
 }
+
+void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
+{
+    auto windowSurfaces = std::vector<Surface>();
+    auto windowVDs = windowToRemove.desktops();
+
+    for (auto &desktop : windowVDs) {
+        auto surfaceKey = Surface::key(desktop.id(), windowToRemove.screen());
+
+        auto [it, wasInserted] = m_surfaces.try_emplace(surfaceKey, desktop.id(), windowToRemove.screen());
+
+        it->second.removeWindow(windowToRemove);
+    }
+}
+
 }

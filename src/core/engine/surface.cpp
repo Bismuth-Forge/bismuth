@@ -47,4 +47,13 @@ void Surface::addWindow(const std::shared_ptr<Bismuth::Window> &window)
     m_windows->addWindow(window);
 }
 
+void Surface::removeWindow(const PlasmaApi::Window &window)
+{
+    if (!m_windows.has_value()) {
+        return;
+    }
+
+    m_windows->removeWindow(window);
+}
+
 }
