@@ -9,6 +9,11 @@
 
 #include "plasma-api/window.hpp"
 
+namespace KWin
+{
+class VirtualDesktop;
+}
+
 namespace PlasmaApi
 {
 
@@ -44,3 +49,6 @@ private:
 }
 
 Q_DECLARE_METATYPE(PlasmaApi::VirtualDesktop);
+Q_DECLARE_OPAQUE_POINTER(KWin::VirtualDesktop *)
+Q_DECLARE_METATYPE(KWin::VirtualDesktop *);
+Q_DECLARE_METATYPE(QVector<KWin::VirtualDesktop *>);
