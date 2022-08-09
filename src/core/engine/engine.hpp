@@ -8,8 +8,11 @@
 #include "config.hpp"
 #include "engine/surface.hpp"
 
-#include "plasma-api/api.hpp"
-#include "plasma-api/window.hpp"
+namespace PlasmaApi
+{
+struct Window;
+struct Api;
+}
 
 namespace Bismuth
 {

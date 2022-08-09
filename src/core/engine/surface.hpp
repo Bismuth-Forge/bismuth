@@ -6,11 +6,12 @@
 #include <QString>
 #include <optional>
 
-#include "engine/window.hpp"
 #include "engine/window_group.hpp"
 
 namespace Bismuth
 {
+struct Window;
+
 struct Surface {
     Surface(const QString &virtualDesktopId, int screen);
     bool operator==(const Surface &rhs);

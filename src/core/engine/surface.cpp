@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "surface.hpp"
+
 #include "plasma-api/api.hpp"
 
 namespace Bismuth
