@@ -27,7 +27,12 @@ struct WindowGroup {
     bool isWindowNode();
 
     void addWindow(const PlasmaApi::Window &);
-    void removeWindow(const PlasmaApi::Window &);
+
+    /**
+     * Remove window from the current group
+     * @return whether the window was deleted
+     */
+    bool removeWindow(const PlasmaApi::Window &);
 
     std::vector<WindowGroup *> children();
 

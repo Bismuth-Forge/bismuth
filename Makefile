@@ -19,6 +19,8 @@ sysdep-install:
 install: build
 	tools/install.sh
 
+i: install
+
 uninstall:
 	sudo xargs rm < "build/install_manifest.txt"
 

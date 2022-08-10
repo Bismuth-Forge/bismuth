@@ -213,14 +213,14 @@ void Controller::onSurfaceUpdate()
 {
 }
 
-void Controller::onClientAdded(PlasmaApi::Window client)
+void Controller::onClientAdded(PlasmaApi::Window window)
 {
-    m_engine.addWindow(client);
+    m_engine.addWindow(window);
 }
 
-void Controller::onClientRemoved(PlasmaApi::Window client)
+void Controller::onClientRemoved(PlasmaApi::Window window)
 {
-    // m_engine.removeWindow(client);
+    m_engine.removeWindow(window);
 }
 
 void Controller::onClientMaximized(PlasmaApi::Window)

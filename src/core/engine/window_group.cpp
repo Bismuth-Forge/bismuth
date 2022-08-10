@@ -19,8 +19,8 @@ bool WindowGroup::isWindowNode()
 
 void WindowGroup::addWindow(const PlasmaApi::Window &window)
 {
-    if (m_children.empty()) {
-        qWarning(Bi) << "Attempt to add a window to an empty node";
+    if (isWindowNode()) {
+        qWarning(Bi) << "Attempt to add a window to the window node";
         return;
     }
 
@@ -36,8 +36,24 @@ void WindowGroup::addWindow(const PlasmaApi::Window &window)
     }
 }
 
-void WindowGroup::removeWindow(const PlasmaApi::Window &)
+bool WindowGroup::removeWindow(const PlasmaApi::Window &windowToRemove)
 {
+    if (isWindowNode()) {
+        qWarning(Bi) << "Attempt to remove a window from the window node";
+        return false;
+    }
+
+    for (auto it = m_children.begin(); it != m_children.end(); it++) {
+        auto &child = *it;
+        if (child->isWindowNode() && child->m_window == windowToRemove) {
+            m_children.erase(it);
+            return true;
+        } else if (child->removeWindow(windowToRemove)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 std::vector<WindowGroup *> WindowGroup::children()
