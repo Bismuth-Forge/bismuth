@@ -14,7 +14,7 @@ WindowGroup::WindowGroup(const PlasmaApi::Window &window)
 
 bool WindowGroup::isWindowNode()
 {
-    return m_children.empty();
+    return m_children.empty() && m_window.has_value();
 }
 
 void WindowGroup::addWindow(const PlasmaApi::Window &window)
@@ -68,6 +68,10 @@ std::vector<WindowGroup *> WindowGroup::children()
 void WindowGroup::setGeometry(const QRectF &value)
 {
     m_geometry = value;
+
+    if (isWindowNode()) {
+        m_window->setFrameGeometry(value.toRect());
+    }
 }
 
 QRectF WindowGroup::geometry() const

@@ -22,6 +22,21 @@ Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
 
 void Engine::addWindow(const PlasmaApi::Window &newWindow)
 {
+    // Don't manage special windows - docks, panels, etc.
+    if (newWindow.specialWindow() || newWindow.dialog()) {
+        return;
+    }
+
+    // If the window is initially set to be always on top, it means that it
+    // definitely does not want to be tiled. This also might be a signal, that
+    // the window is a launcher: KRunner, ULauncher, etc. This also keeps away
+    // various application pop-ups
+    if (newWindow.keepAbove()) {
+        return;
+    }
+
+    qDebug(Bi) << "Adding new window" << newWindow.caption();
+
     auto windowSurfaces = std::vector<Surface>();
     auto windowVDs = newWindow.desktops();
 
@@ -34,6 +49,8 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
 
 void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
 {
+    qDebug(Bi) << "Removing window" << windowToRemove.caption();
+
     auto windowSurfaces = std::vector<Surface>();
     auto windowVDs = windowToRemove.desktops();
 
