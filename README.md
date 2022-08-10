@@ -87,7 +87,11 @@ contact the package maintainer first.
 
 #### Fedora
 
-- [Capucho Copr](https://copr.fedorainfracloud.org/coprs/capucho/bismuth)
+- [Official Repo](https://src.fedoraproject.org/rpms/bismuth):
+
+  ```bash
+  sudo dnf install bismuth
+  ```
 
 #### OpenSUSE Tumbleweed
 
