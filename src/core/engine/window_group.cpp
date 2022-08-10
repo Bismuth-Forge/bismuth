@@ -2,12 +2,38 @@
 // SPDX-License-Identifier: MIT
 
 #include "window_group.hpp"
+#include "logger.hpp"
+#include "plasma-api/window.hpp"
 
 namespace Bismuth
 {
-
-void WindowGroup::addWindow(const std::shared_ptr<Bismuth::Window> &window)
+WindowGroup::WindowGroup(const PlasmaApi::Window &window)
+    : m_window(window)
 {
+}
+
+bool WindowGroup::isWindowNode()
+{
+    return m_children.empty();
+}
+
+void WindowGroup::addWindow(const PlasmaApi::Window &window)
+{
+    if (m_children.empty()) {
+        qWarning(Bi) << "Attempt to add a window to an empty node";
+        return;
+    }
+
+    auto &firstChild = m_children.front();
+
+    // Depth-first addition
+    if (firstChild->isWindowNode()) {
+        // Add a neighbor
+        m_children.push_back(std::make_unique<WindowGroup>(window));
+    } else {
+        // Add to the deepest subgroup
+        firstChild->addWindow(window);
+    }
 }
 
 void WindowGroup::removeWindow(const PlasmaApi::Window &)
@@ -32,4 +58,5 @@ QRectF WindowGroup::geometry() const
 {
     return m_geometry;
 }
+
 }

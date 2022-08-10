@@ -39,7 +39,7 @@ int Surface::screen() const
     return m_screen;
 }
 
-void Surface::addWindow(const std::shared_ptr<Bismuth::Window> &window)
+void Surface::addWindow(const PlasmaApi::Window &window)
 {
     if (!m_windows.has_value()) {
         m_windows = {};

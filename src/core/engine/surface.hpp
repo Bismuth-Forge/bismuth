@@ -8,10 +8,13 @@
 
 #include "engine/window_group.hpp"
 
-namespace Bismuth
+namespace PlasmaApi
 {
 struct Window;
+}
 
+namespace Bismuth
+{
 struct Surface {
     Surface(const QString &virtualDesktopId, int screen);
     bool operator==(const Surface &rhs);
@@ -22,7 +25,7 @@ struct Surface {
     QString virtualDesktopId() const;
     int screen() const;
 
-    void addWindow(const std::shared_ptr<Bismuth::Window> &);
+    void addWindow(const PlasmaApi::Window &);
     void removeWindow(const PlasmaApi::Window &);
 
 private:
