@@ -8,7 +8,7 @@ namespace Bismuth
 struct WindowGroup;
 
 struct Layout {
-    virtual void placeGroup(const WindowGroup &) = 0;
+    virtual void placeGroup(WindowGroup &) = 0;
 };
 
 }

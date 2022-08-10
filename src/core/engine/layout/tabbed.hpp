@@ -5,13 +5,18 @@
 
 #include "engine/layout.hpp"
 
+class QRectF;
+
 namespace Bismuth
 {
 
 struct WindowGroup;
 
 struct TabbedLayout : Layout {
-    virtual void placeGroup(const WindowGroup &) override;
+    virtual void placeGroup(WindowGroup &) override;
+
+private:
+    QRectF placeTabline(const QRectF &geometry);
 };
 
 }
