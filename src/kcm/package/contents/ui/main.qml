@@ -33,7 +33,7 @@ KCM.SimpleKCM {
             icon.name: "document-edit"
             text: i18n("Customize Gaps...")
             onClicked: () => {
-                return kcm.push("./views/Gaps.qml");
+                gapsOverlay.open()
             }
         }
 
@@ -151,6 +151,12 @@ KCM.SimpleKCM {
             }
         }
 
+    }
+
+    BIView.GapsOverlay {
+        id: gapsOverlay
+
+        parent: root // Without this, overlay does not work
     }
 
 }

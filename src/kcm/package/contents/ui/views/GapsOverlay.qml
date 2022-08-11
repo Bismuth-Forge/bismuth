@@ -8,14 +8,10 @@ import QtQuick.Layouts 1.15
 import org.kde.kcm 1.5 as KCM
 import org.kde.kirigami 2.7 as Kirigami
 
-Kirigami.Page {
+Kirigami.OverlaySheet {
     id: root
 
-    title: "Window Gaps"
-
     Kirigami.FormLayout {
-        anchors.fill: parent
-
         Item {
             Kirigami.FormData.isSection: true
             Kirigami.FormData.label: i18n("Outer Gaps")
@@ -51,6 +47,10 @@ Kirigami.Page {
             settingName: "tileLayoutGap"
         }
 
+    }
+
+    header: Kirigami.Heading {
+        text: i18nc("@title:window", "Tiling Gaps")
     }
 
 }
