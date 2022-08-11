@@ -21,7 +21,7 @@ QRectF TabbedLayout::placeTabline(const QRectF &geometry)
 {
     // TODO: Implement placing tab line using QML components
     // For now we just reserving the space for the line
-    return geometry.adjusted(0, -20, 0, 0);
+    return geometry.adjusted(0, 20, 0, 0);
 }
 
 }

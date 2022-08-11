@@ -9,10 +9,10 @@
 
 namespace Bismuth
 {
-Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen)
+Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry)
     : m_virtualDesktopId(virtualDesktop.id())
     , m_screen(screen)
-    , m_windows()
+    , m_windows(geometry)
 {
 }
 

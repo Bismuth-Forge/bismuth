@@ -10,6 +10,7 @@
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 #include "plasma-api/virtual_desktop.hpp"
+#include "plasma-api/window.hpp"
 
 namespace Bismuth
 {
@@ -39,7 +40,9 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
     auto windowVDs = newWindow.desktops();
 
     for (auto &desktop : windowVDs) {
-        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop, newWindow.screen());
+        // TODO: Use signature with pointers to screen and virtual desktop
+        auto surfaceGeometry = m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, newWindow.screen(), desktop.x11DesktopNumber());
+        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop, newWindow.screen(), surfaceGeometry);
 
         qDebug(Bi) << "Adding new window" << newWindow.caption() << "to virtual desktop" << desktop.name() << "and screen" << newWindow.screen();
         it->second.addWindow(newWindow);
@@ -56,7 +59,10 @@ void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
     for (auto &desktop : windowVDs) {
         auto surfaceKey = Surface::key(desktop.id(), windowToRemove.screen());
 
-        auto [it, wasInserted] = m_surfaces.try_emplace(surfaceKey, desktop, windowToRemove.screen());
+        auto it = m_surfaces.find(surfaceKey);
+        if (it == m_surfaces.end()) {
+            continue;
+        }
 
         it->second.removeWindow(windowToRemove);
     }
