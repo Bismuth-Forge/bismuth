@@ -29,11 +29,6 @@ Kirigami.FormLayout {
 
     BIC.ConfigCheckBox {
         Kirigami.FormData.label: i18n("Separate layouts for each:")
-        text: i18n("Activity")
-        settingName: "layoutPerActivity"
-    }
-
-    BIC.ConfigCheckBox {
         text: i18n("Virtual Desktop")
         settingName: "layoutPerDesktop"
     }

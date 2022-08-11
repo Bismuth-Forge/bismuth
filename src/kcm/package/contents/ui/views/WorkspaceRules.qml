@@ -22,13 +22,6 @@ Kirigami.Page {
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "On Activities:"
-            placeholderText: "Activities names (comma separated)"
-            settingName: "ignoreActivity"
-            implicitWidth: Kirigami.Units.gridUnit * 20
-        }
-
-        BIC.ConfigTextField {
             // implicitWidth: Kirigami.Units.gridUnit * 20
 
             Kirigami.FormData.label: "On Screens:"

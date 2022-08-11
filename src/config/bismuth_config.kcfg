@@ -48,11 +48,6 @@
       <default>false</default>
     </entry>
 
-    <entry name="ignoreActivity" type="String">
-      <label>Do not apply tiling on some activities(comma-separated list of activity names)</label>
-      <default></default>
-    </entry>
-
     <entry name="ignoreClass" type="String">
       <label>Ignore windows with certain classes(comma-separated list)</label>
       <default>yakuake,spectacle,Conky,zoom</default>
@@ -85,11 +80,6 @@
 
     <entry name="floatUtility" type="Bool">
       <label>Automatically float utility windows (Dialog, Splash, Utility)</label>
-      <default>true</default>
-    </entry>
-
-    <entry name="layoutPerActivity" type="Bool">
-      <label>Use separate layouts per activity.</label>
       <default>true</default>
     </entry>
 
