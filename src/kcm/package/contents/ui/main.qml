@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
+import "./components" as BIC
+import "./views" as BIView
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Layouts 1.15
@@ -11,56 +13,142 @@ KCM.SimpleKCM {
     id: root
 
     KCM.ConfigModule.quickHelp: i18n("This module lets you manage various window tiling options.")
-    implicitWidth: Kirigami.Units.gridUnit * 38
-    implicitHeight: Kirigami.Units.gridUnit * 35
 
-    // TODO: replace this TabBar-plus-Frame-in-a-ColumnLayout with whatever shakes
-    // out of https://bugs.kde.org/show_bug.cgi?id=394296
-    ColumnLayout {
-        id: tabLayout
+    Kirigami.FormLayout {
+        id: behaviorTab
 
-        spacing: 0
+        Item {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("General")
+        }
 
-        QQC2.TabBar {
-            id: tabBar
+        BIC.ConfigCheckBox {
+            settingName: "bismuthEnabled"
+            text: i18n("Enable window tiling")
+        }
 
-            // Tab styles generally assume that they're touching the inner layout,
-            // not the frame, so we need to move the tab bar down a pixel and make
-            // sure it's drawn on top of the frame
-            z: 1
-            Layout.bottomMargin: -1
+        QQC2.Button {
+            id: configureGapsButton
 
-            QQC2.TabButton {
-                text: i18n("Behavior")
+            icon.name: "document-edit"
+            text: i18n("Customize Gaps...")
+            onClicked: () => {
+                return kcm.push("./views/Gaps.qml");
             }
+        }
 
-            QQC2.TabButton {
-                text: i18n("Appearance")
+        Item {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Layouts")
+        }
+
+        QQC2.Button {
+            id: configureLayoutsButton
+
+            icon.name: "document-edit"
+            text: i18n("Customize Layouts...")
+            onClicked: () => {
+                return kcm.push("./views/Layouts.qml");
+            }
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Windows")
+        }
+
+        BIC.ConfigCheckBox {
+            text: i18n("Maximize sole window")
+            settingName: "maximizeSoleTile"
+        }
+
+        BIC.ConfigCheckBox {
+            text: i18n("Untile windows by dragging")
+            settingName: "untileByDragging"
+        }
+
+        QQC2.ButtonGroup {
+            id: windowSpawnPositionGroup
+        }
+
+        QQC2.RadioButton {
+            Kirigami.FormData.label: i18n("Spawn windows at:")
+            text: i18n("Master area")
+            QQC2.ButtonGroup.group: windowSpawnPositionGroup
+            checked: kcm.config.newWindowAsMaster
+            onClicked: kcm.config.newWindowAsMaster = checked
+
+            KCM.SettingStateBinding {
+                configObject: kcm.config
+                settingName: "newWindowAsMaster"
             }
 
         }
 
-        QQC2.Frame {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        QQC2.RadioButton {
+            text: i18n("The layout's end")
+            QQC2.ButtonGroup.group: windowSpawnPositionGroup
+            checked: !kcm.config.newWindowAsMaster
+            onClicked: kcm.config.newWindowAsMaster = !checked
 
-            StackLayout {
-                currentIndex: tabBar.currentIndex
-                anchors.fill: parent
-                // This breaks anything inside, that is not FormLayout
-                // but necessary for adequate padding
-                anchors.topMargin: Kirigami.Units.gridUnit * -0.5
-
-                // For some reason QML is very British and
-                // refuses to load the Behavior.qml (without "u")
-                Behaviour {
-                }
-
-                Appearance {
-                }
-
+            KCM.SettingStateBinding {
+                configObject: kcm.config
+                settingName: "newWindowAsMaster"
             }
 
+        }
+
+        QQC2.Button {
+            id: windowRules
+
+            icon.name: "document-edit"
+            text: i18n("Window Rules...")
+            onClicked: () => {
+                return kcm.push("./views/WindowRules.qml");
+            }
+        }
+
+        Item {
+            Kirigami.FormData.isSection: true
+            Kirigami.FormData.label: i18n("Restrictions")
+        }
+
+        BIC.ConfigCheckBox {
+            id: restrictWidth
+
+            text: i18n("Restrict window width")
+            settingName: "limitTileWidth"
+        }
+
+        BIC.RatioConfigSpinBox {
+            Kirigami.FormData.label: i18n("Window Width/Screen Height ratio:")
+            settingName: "limitTileWidthRatio"
+
+            // For some reason we cannot pass a custom property to
+            // extraEnabledConditions, so we have to define it here.
+            // It is also a reason why RatioConfigSpinBox uses
+            // QQC2.SpinBox instead of ConfigSPinBox component
+            KCM.SettingStateBinding {
+                configObject: kcm.config
+                settingName: "limitTileWidthRatio"
+                extraEnabledConditions: restrictWidth.checked
+            }
+
+        }
+
+        BIC.ConfigCheckBox {
+            text: i18n("Prevent window minimization")
+            settingName: "preventMinimize"
+        }
+
+        QQC2.Button {
+            id: workspaceRules
+
+            icon.name: "document-edit"
+            text: i18n("Workspace Rules...")
+            onClicked: () => {
+                return kcm.push("./views/WorkspaceRules.qml");
+            }
         }
 
     }
