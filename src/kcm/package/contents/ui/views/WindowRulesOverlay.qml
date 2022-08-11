@@ -18,30 +18,6 @@ Kirigami.OverlaySheet {
     Kirigami.FormLayout {
         Item {
             Kirigami.FormData.isSection: true
-            Kirigami.FormData.label: i18n("Ignore Windows")
-        }
-
-        BIC.ConfigTextField {
-            Kirigami.FormData.label: i18n("With classes:")
-            placeholderText: i18n("Classes (comma separated)")
-            settingName: "ignoreClass"
-            implicitWidth: Kirigami.Units.gridUnit * 20
-        }
-
-        BIC.ConfigTextField {
-            Kirigami.FormData.label: i18n("With titles:")
-            placeholderText: i18n("Titles (comma separated)")
-            settingName: "ignoreTitle"
-        }
-
-        BIC.ConfigTextField {
-            Kirigami.FormData.label: i18n("With roles:")
-            placeholderText: i18n("Roles (comma separated)")
-            settingName: "ignoreRole"
-        }
-
-        Item {
-            Kirigami.FormData.isSection: true
             Kirigami.FormData.label: i18n("Float Windows")
         }
 
@@ -58,7 +34,7 @@ Kirigami.OverlaySheet {
         }
 
         BIC.ConfigCheckBox {
-            text: i18n("With utility roles")
+            text: i18n("Dialogs and splashes")
             settingName: "floatUtility"
         }
 
