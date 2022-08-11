@@ -27,12 +27,6 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Layouts")
     }
 
-    BIC.ConfigCheckBox {
-        Kirigami.FormData.label: i18n("Separate layouts for each:")
-        text: i18n("Virtual Desktop")
-        settingName: "layoutPerDesktop"
-    }
-
     QQC2.Button {
         id: configureLayoutsButton
 

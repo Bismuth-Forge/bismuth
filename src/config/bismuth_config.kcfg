@@ -83,11 +83,6 @@
       <default>true</default>
     </entry>
 
-    <entry name="layoutPerDesktop" type="Bool">
-      <label>Use separate layouts per desktop.</label>
-      <default>true</default>
-    </entry>
-
     <entry name="maximizeSoleTile" type="Bool">
       <label>If there is only one tile on the screen, remove screen gap and its borde, making it appear almost fullscreen.</label>
       <default>false</default>
