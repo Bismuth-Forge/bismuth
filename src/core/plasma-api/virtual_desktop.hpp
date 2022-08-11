@@ -37,6 +37,9 @@ public:
     BI_READONLY_PROPERTY(QString, id)
     // Q_PROPERTY(QString id READ id CONSTANT)
 
+    BI_READONLY_PROPERTY(uint, x11DesktopNumber)
+    // Q_PROPERTY(uint x11DesktopNumber READ x11DesktopNumber NOTIFY x11DesktopNumberChanged)
+
     BI_PROPERTY(QString, name, setName)
     // Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 
