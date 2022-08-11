@@ -132,11 +132,6 @@ Kirigami.FormLayout {
         settingName: "preventMinimize"
     }
 
-    BIC.ConfigCheckBox {
-        text: i18n("Prevent window from protruding from its screen")
-        settingName: "preventProtrusion"
-    }
-
     QQC2.Button {
         id: workspaceRules
 
