@@ -21,7 +21,8 @@ namespace Bismuth
 struct WindowGroup;
 
 struct WindowGroup {
-    WindowGroup() = default;
+    WindowGroup() = delete;
+    WindowGroup(const QRectF &geometry);
     WindowGroup(const PlasmaApi::Window &);
 
     bool isWindowNode();

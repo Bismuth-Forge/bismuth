@@ -3,6 +3,7 @@
 
 #include "surface.hpp"
 
+#include "logger.hpp"
 #include "plasma-api/api.hpp"
 
 namespace Bismuth
@@ -42,7 +43,7 @@ int Surface::screen() const
 void Surface::addWindow(const PlasmaApi::Window &window)
 {
     if (!m_windows.has_value()) {
-        m_windows = {};
+        m_windows.emplace(QRectF());
     }
 
     m_windows->addWindow(window);

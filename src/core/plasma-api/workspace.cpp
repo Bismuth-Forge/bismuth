@@ -57,6 +57,15 @@ QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
     BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
 };
 
+QRect Workspace::clientArea(ClientAreaOption option, KWin::Output *output, KWin::VirtualDesktop *desktop)
+{
+    BI_METHOD_IMPL_WRAP(QRect,
+                        "clientArea(ClientAreaOption, KWin::Output*, KWin::VirtualDesktop*)",
+                        Q_ARG(ClientAreaOption, option),
+                        Q_ARG(KWin::Output *, output),
+                        Q_ARG(KWin::VirtualDesktop *, desktop));
+}
+
 std::vector<PlasmaApi::Window> Workspace::clientList() const
 {
     auto apiCall = [&]() -> QList<KWin::Window *> {

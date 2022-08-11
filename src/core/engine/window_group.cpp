@@ -7,14 +7,19 @@
 
 namespace Bismuth
 {
+WindowGroup::WindowGroup(const QRectF &geometry)
+    : m_geometry(geometry)
+{
+}
 WindowGroup::WindowGroup(const PlasmaApi::Window &window)
     : m_window(window)
+    , m_geometry(window.frameGeometry())
 {
 }
 
 bool WindowGroup::isWindowNode()
 {
-    return m_children.empty() && m_window.has_value();
+    return m_window.has_value();
 }
 
 void WindowGroup::addWindow(const PlasmaApi::Window &window)
@@ -24,22 +29,19 @@ void WindowGroup::addWindow(const PlasmaApi::Window &window)
         return;
     }
 
-    auto &firstChild = m_children.front();
-
-    // Depth-first addition
-    if (firstChild->isWindowNode()) {
-        // Add a neighbor
+    if (m_children.empty() || m_children.front()->isWindowNode()) {
         m_children.push_back(std::make_unique<WindowGroup>(window));
+        return;
     } else {
         // Add to the deepest subgroup
-        firstChild->addWindow(window);
+        m_children.front()->addWindow(window);
     }
 }
 
 bool WindowGroup::removeWindow(const PlasmaApi::Window &windowToRemove)
 {
     if (isWindowNode()) {
-        qWarning(Bi) << "Attempt to remove a window from the window node";
+        qWarning(Bi) << "Attempt to remove a window from inside the window node";
         return false;
     }
 

@@ -16,6 +16,8 @@
 namespace KWin
 {
 class Window;
+class VirtualDesktop;
+class Output;
 }
 
 namespace PlasmaApi
@@ -44,6 +46,7 @@ public:
     BI_READONLY_PROPERTY(QStringList, activities);
 
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
+
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
 
@@ -63,6 +66,7 @@ public:
      * @returns The specified screen geometry
      */
     Q_INVOKABLE QRect clientArea(ClientAreaOption, int screen, int desktop);
+    Q_INVOKABLE QRect clientArea(ClientAreaOption option, KWin::Output *output, KWin::VirtualDesktop *desktop);
 
     Q_INVOKABLE std::vector<PlasmaApi::Window> clientList() const;
 

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "window.hpp"
+#include "logger.hpp"
 #include "plasma-api/virtual_desktop.hpp"
 
 namespace PlasmaApi
@@ -46,13 +47,13 @@ bool Window::operator<(const Window &rhs) const
 
 QVector<PlasmaApi::VirtualDesktop> Window::desktops() const
 {
-    auto desktops = m_kwinImpl->property("desktops").value<QVector<QObject *>>();
+    auto desktops = m_kwinImpl->property("desktops").value<QVector<KWin::VirtualDesktop *>>();
 
     auto result = QVector<PlasmaApi::VirtualDesktop>();
     result.reserve(desktops.size());
 
-    for (auto &vd : desktops) {
-        result.push_back(PlasmaApi::VirtualDesktop(vd));
+    for (auto vd : desktops) {
+        result.push_back(PlasmaApi::VirtualDesktop(reinterpret_cast<QObject *>(vd)));
     }
 
     return result;

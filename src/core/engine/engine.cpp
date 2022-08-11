@@ -35,14 +35,13 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
         return;
     }
 
-    qDebug(Bi) << "Adding new window" << newWindow.caption();
-
     auto windowSurfaces = std::vector<Surface>();
     auto windowVDs = newWindow.desktops();
 
     for (auto &desktop : windowVDs) {
         auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop.id(), newWindow.screen());
 
+        qDebug(Bi) << "Adding new window" << newWindow.caption() << "to virtual desktop" << desktop.name() << "and screen" << newWindow.screen();
         it->second.addWindow(newWindow);
     }
 }
