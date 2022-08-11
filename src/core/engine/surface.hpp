@@ -16,8 +16,10 @@ class Api;
 
 namespace Bismuth
 {
+class Config;
+
 struct Surface {
-    Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry);
+    Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry, const Config &);
     bool operator==(const Surface &rhs);
 
     QString key();

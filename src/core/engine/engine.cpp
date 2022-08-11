@@ -42,7 +42,7 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
     for (auto &desktop : windowVDs) {
         // TODO: Use signature with pointers to screen and virtual desktop
         auto surfaceGeometry = m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, newWindow.screen(), desktop.x11DesktopNumber());
-        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop, newWindow.screen(), surfaceGeometry);
+        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop, newWindow.screen(), surfaceGeometry, m_config);
 
         qDebug(Bi) << "Adding new window" << newWindow.caption() << "to virtual desktop" << desktop.name() << "and screen" << newWindow.screen();
         it->second.addWindow(newWindow);

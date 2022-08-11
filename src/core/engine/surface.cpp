@@ -7,13 +7,20 @@
 #include "plasma-api/api.hpp"
 #include "plasma-api/virtual_desktop.hpp"
 
+#include "config.hpp"
+
 namespace Bismuth
 {
-Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry)
+Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry, const Config &config)
     : m_virtualDesktopId(virtualDesktop.id())
     , m_screen(screen)
     , m_windows(geometry)
 {
+    auto leftGap = config.screenGapLeft();
+    auto topGap = config.screenGapTop();
+    auto rightGap = config.screenGapRight();
+    auto bottomGap = config.screenGapBottom();
+    m_windows->setGeometry(geometry.adjusted(leftGap, topGap, -rightGap, -bottomGap));
 }
 
 bool Surface::operator==(const Surface &rhs)
