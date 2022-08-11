@@ -57,8 +57,8 @@
       <default>true</default>
     </entry>
 
-    <entry name="maximizeSoleTile" type="Bool">
-      <label>If there is only one tile on the screen, remove screen gap and its borde, making it appear almost fullscreen.</label>
+    <entry name="noGapsForSingleWindow" type="Bool">
+      <label>Hide outer gaps for a single window on the screen</label>
       <default>false</default>
     </entry>
 

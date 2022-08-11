@@ -58,11 +58,6 @@ KCM.SimpleKCM {
         }
 
         BIC.ConfigCheckBox {
-            text: i18n("Maximize sole window")
-            settingName: "maximizeSoleTile"
-        }
-
-        BIC.ConfigCheckBox {
             text: i18n("Untile windows by dragging")
             settingName: "untileByDragging"
         }

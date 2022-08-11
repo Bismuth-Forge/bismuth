@@ -37,6 +37,11 @@ Kirigami.OverlaySheet {
             settingName: "screenGapBottom"
         }
 
+        BIC.ConfigCheckBox {
+            text: i18n("No gaps for single window:")
+            settingName: "noGapsForSingleWindow"
+        }
+
         Item {
             Kirigami.FormData.isSection: true
             Kirigami.FormData.label: "Inner Gaps"
