@@ -22,6 +22,9 @@ class Output;
 
 namespace PlasmaApi
 {
+class VirtualDesktop;
+class Output;
+
 class Workspace : public QObject
 {
     Q_OBJECT
@@ -66,7 +69,7 @@ public:
      * @returns The specified screen geometry
      */
     Q_INVOKABLE QRect clientArea(ClientAreaOption, int screen, int desktop);
-    // Q_INVOKABLE QRect clientArea(ClientAreaOption option, KWin::Output *output, KWin::VirtualDesktop *desktop);
+    Q_INVOKABLE QRect clientArea(ClientAreaOption option, PlasmaApi::Output output, PlasmaApi::VirtualDesktop desktop);
 
     Q_INVOKABLE std::vector<PlasmaApi::Window> clientList() const;
 

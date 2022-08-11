@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: MIT
 
 target_sources(bismuth_core PRIVATE api.cpp window.cpp workspace.cpp
-                                    virtual_desktop.cpp utils.hpp)
+                                    virtual_desktop.cpp utils.hpp output.cpp)

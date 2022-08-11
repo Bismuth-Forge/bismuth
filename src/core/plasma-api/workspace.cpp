@@ -7,6 +7,8 @@
 
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
+#include "plasma-api/output.hpp"
+#include "plasma-api/virtual_desktop.hpp"
 #include "plasma-api/window.hpp"
 
 namespace PlasmaApi
@@ -57,14 +59,14 @@ QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
     BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
 };
 
-// QRect Workspace::clientArea(ClientAreaOption option, KWin::Output *output, KWin::VirtualDesktop *desktop)
-// {
-//     BI_METHOD_IMPL_WRAP(QRect,
-//                         "clientArea(ClientAreaOption, KWin::Output*, KWin::VirtualDesktop*)",
-//                         Q_ARG(ClientAreaOption, option),
-//                         Q_ARG(KWin::Output*, output),
-//                         Q_ARG(KWin::VirtualDesktop*, desktop));
-// }
+QRect Workspace::clientArea(ClientAreaOption option, PlasmaApi::Output output, PlasmaApi::VirtualDesktop desktop)
+{
+    BI_METHOD_IMPL_WRAP(QRect,
+                        "clientArea(ClientAreaOption, KWin::Output*, KWin::VirtualDesktop*)",
+                        Q_ARG(ClientAreaOption, option),
+                        Q_ARG(KWin::Output *, reinterpret_cast<KWin::Output *>(output.m_kwinImpl)),
+                        Q_ARG(KWin::VirtualDesktop *, reinterpret_cast<KWin::VirtualDesktop *>(desktop.m_kwinImpl)));
+}
 
 std::vector<PlasmaApi::Window> Workspace::clientList() const
 {
