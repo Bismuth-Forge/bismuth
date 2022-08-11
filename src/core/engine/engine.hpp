@@ -22,6 +22,8 @@ struct Engine {
     void addWindow(const PlasmaApi::Window &);
     void removeWindow(const PlasmaApi::Window &);
 
+    void arrangeWindowsOnAllSurfaces();
+
 private:
     const Bismuth::Config &m_config;
     std::unordered_map<QString, Bismuth::Surface> m_surfaces;

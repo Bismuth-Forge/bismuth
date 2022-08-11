@@ -39,7 +39,7 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
     auto windowVDs = newWindow.desktops();
 
     for (auto &desktop : windowVDs) {
-        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop.id(), newWindow.screen());
+        auto [it, wasInserted] = m_surfaces.try_emplace(Surface::key(desktop.id(), newWindow.screen()), desktop, newWindow.screen());
 
         qDebug(Bi) << "Adding new window" << newWindow.caption() << "to virtual desktop" << desktop.name() << "and screen" << newWindow.screen();
         it->second.addWindow(newWindow);
@@ -56,9 +56,17 @@ void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
     for (auto &desktop : windowVDs) {
         auto surfaceKey = Surface::key(desktop.id(), windowToRemove.screen());
 
-        auto [it, wasInserted] = m_surfaces.try_emplace(surfaceKey, desktop.id(), windowToRemove.screen());
+        auto [it, wasInserted] = m_surfaces.try_emplace(surfaceKey, desktop, windowToRemove.screen());
 
         it->second.removeWindow(windowToRemove);
+    }
+}
+
+void Engine::arrangeWindowsOnAllSurfaces()
+{
+    for (auto &[id, surface] : m_surfaces) {
+        qDebug(Bi) << "Arranging Windows on surface" << id;
+        surface.arrangeWindows();
     }
 }
 

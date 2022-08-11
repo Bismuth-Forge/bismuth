@@ -11,12 +11,13 @@
 namespace PlasmaApi
 {
 struct Window;
+class Api;
 }
 
 namespace Bismuth
 {
 struct Surface {
-    Surface(const QString &virtualDesktopId, int screen);
+    Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen);
     bool operator==(const Surface &rhs);
 
     QString key();
@@ -27,6 +28,8 @@ struct Surface {
 
     void addWindow(const PlasmaApi::Window &);
     void removeWindow(const PlasmaApi::Window &);
+
+    void arrangeWindows();
 
 private:
     QString m_virtualDesktopId;

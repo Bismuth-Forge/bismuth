@@ -5,11 +5,12 @@
 
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
+#include "plasma-api/virtual_desktop.hpp"
 
 namespace Bismuth
 {
-Surface::Surface(const QString &virtualDesktopId, int screen)
-    : m_virtualDesktopId(virtualDesktopId)
+Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen)
+    : m_virtualDesktopId(virtualDesktop.id())
     , m_screen(screen)
     , m_windows()
 {
@@ -42,11 +43,9 @@ int Surface::screen() const
 
 void Surface::addWindow(const PlasmaApi::Window &window)
 {
-    if (!m_windows.has_value()) {
-        m_windows.emplace(QRectF());
+    if (m_windows.has_value()) {
+        m_windows->addWindow(window);
     }
-
-    m_windows->addWindow(window);
 }
 
 void Surface::removeWindow(const PlasmaApi::Window &window)
@@ -56,6 +55,13 @@ void Surface::removeWindow(const PlasmaApi::Window &window)
     }
 
     m_windows->removeWindow(window);
+}
+
+void Surface::arrangeWindows()
+{
+    if (m_windows.has_value()) {
+        m_windows->arrange();
+    }
 }
 
 }

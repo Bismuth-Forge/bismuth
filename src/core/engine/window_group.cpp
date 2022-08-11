@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "window_group.hpp"
+#include "engine/layout/tabbed.hpp"
 #include "logger.hpp"
 #include "plasma-api/window.hpp"
 
@@ -56,6 +57,16 @@ bool WindowGroup::removeWindow(const PlasmaApi::Window &windowToRemove)
     }
 
     return false;
+}
+
+void WindowGroup::arrange()
+{
+    // TEMP:
+    m_layout = std::make_unique<TabbedLayout>();
+    if (m_layout != nullptr) {
+        m_layout->placeGroup(*this);
+    }
+    qDebug(Bi) << "Arranging window group to geometry" << m_geometry;
 }
 
 std::vector<WindowGroup *> WindowGroup::children()

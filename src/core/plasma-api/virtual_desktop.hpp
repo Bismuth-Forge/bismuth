@@ -44,6 +44,7 @@ private:
     QObject *m_kwinImpl;
 
     friend class PlasmaApi::Window;
+    friend class PlasmaApi::Workspace;
 };
 
 }

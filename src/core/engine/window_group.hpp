@@ -35,6 +35,8 @@ struct WindowGroup {
      */
     bool removeWindow(const PlasmaApi::Window &);
 
+    void arrange();
+
     std::vector<WindowGroup *> children();
 
     void setGeometry(const QRectF &);

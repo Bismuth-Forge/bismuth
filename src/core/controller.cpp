@@ -77,6 +77,7 @@ void Controller::registerShortcuts()
     });
     addShortcut("focus_prev_window", "Focus Previous Window", "", [=]() {
         qDebug(Bi) << "Focus Previous Window Triggered!";
+        m_engine.arrangeWindowsOnAllSurfaces();
     });
 
     addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
@@ -180,6 +181,11 @@ void Controller::loadExistingWindows()
     for (auto client : clients) {
         m_engine.addWindow(client);
     }
+}
+
+void Controller::arrangeWindowsOnAllSurfaces()
+{
+    m_engine.arrangeWindowsOnAllSurfaces();
 }
 
 void Controller::registerAction(const Action &data)

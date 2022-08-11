@@ -37,6 +37,7 @@ public:
     void bindEvents();
     void registerShortcuts();
     void loadExistingWindows();
+    void arrangeWindowsOnAllSurfaces();
     void registerAction(const Action &);
 
 public Q_SLOTS:
