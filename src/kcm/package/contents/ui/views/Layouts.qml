@@ -17,39 +17,14 @@ Kirigami.Page {
         id: layoutsModel
 
         ListElement {
-            name: "Tile"
-            settingName: "enableTileLayout"
+            name: "Master-Stack"
+            settingName: "enableMasterStackLayout"
         }
 
         ListElement {
-            name: "Monocle"
-            settingName: "enableMonocleLayout"
+            name: "Tabbed"
+            settingName: "enableTabbedLayout"
             editable: true
-        }
-
-        ListElement {
-            name: "Three Column"
-            settingName: "enableThreeColumnLayout"
-        }
-
-        ListElement {
-            name: "Spiral"
-            settingName: "enableSpiralLayout"
-        }
-
-        ListElement {
-            name: "Spread"
-            settingName: "enableSpreadLayout"
-        }
-
-        ListElement {
-            name: "Stair"
-            settingName: "enableStairLayout"
-        }
-
-        ListElement {
-            name: "Quarter"
-            settingName: "enableQuarterLayout"
         }
 
         ListElement {
@@ -102,7 +77,7 @@ Kirigami.Page {
 
     }
 
-    MonocleOverlay {
+    TabbedLayoutOverlay {
         id: monocleSheet
 
         parent: root // Without this, overlay does not work

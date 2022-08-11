@@ -14,13 +14,13 @@ Kirigami.OverlaySheet {
     Kirigami.FormLayout {
         BIC.ConfigCheckBox {
             text: i18n("Minimize unfocused windows")
-            settingName: "monocleMinimizeRest"
+            settingName: "tabbedMinimizeRest"
         }
 
     }
 
     header: Kirigami.Heading {
-        text: i18nc("@title:window", "Monocle Layout Settings")
+        text: i18nc("@title:window", "Tabbed Layout Settings")
     }
 
 }

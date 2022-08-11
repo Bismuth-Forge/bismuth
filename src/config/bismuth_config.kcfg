@@ -7,40 +7,14 @@
   <kcfgfile name="kwinrc" />
   <!-- Use group name provided by the KWin Scripting -->
   <group name="Script-bismuth">
-    <!-- This is basically copy-paste from the old configuration file -->
-    <entry name="enableTileLayout" type="Bool">
-      <label>Enable/disable Tile layout</label>
+    <entry name="enableMasterStackLayout" type="Bool">
+      <label>Enable/disable Master-Stack layout</label>
       <default>true</default>
     </entry>
 
-    <entry name="enableMonocleLayout" type="Bool">
-      <label>Enable/disable Monocle layout</label>
+    <entry name="enableTabbedLayout" type="Bool">
+      <label>Enable/disable Tabbed layout</label>
       <default>true</default>
-    </entry>
-
-    <entry name="enableThreeColumnLayout" type="Bool">
-      <label>Enable/disable Three Column layout</label>
-      <default>true</default>
-    </entry>
-
-    <entry name="enableSpiralLayout" type="Bool">
-      <label>Enable/disable Spiral layout</label>
-      <default>true</default>
-    </entry>
-
-    <entry name="enableSpreadLayout" type="Bool">
-      <label>Enable/disable Spread layout</label>
-      <default>true</default>
-    </entry>
-
-    <entry name="enableStairLayout" type="Bool">
-      <label>Enable/disable Stair layout</label>
-      <default>true</default>
-    </entry>
-
-    <entry name="enableQuarterLayout" type="Bool">
-      <label>Enable/disable Quarter layout</label>
-      <default>false</default>
     </entry>
 
     <entry name="enableFloatingLayout" type="Bool">
@@ -93,8 +67,8 @@
       <default>true</default>
     </entry>
 
-    <entry name="monocleMinimizeRest" type="Bool">
-      <label>Minimize other tiles than the current one in Monocle layout</label>
+    <entry name="tabbedMinimizeRest" type="Bool">
+      <label>Minimize unfocused windows in the Tabbed layout</label>
       <default>false</default>
     </entry>
 
