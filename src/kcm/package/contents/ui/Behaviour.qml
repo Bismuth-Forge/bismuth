@@ -58,11 +58,6 @@ Kirigami.FormLayout {
         settingName: "untileByDragging"
     }
 
-    BIC.ConfigCheckBox {
-        text: i18n("Floating windows always on top")
-        settingName: "keepFloatAbove"
-    }
-
     QQC2.ButtonGroup {
         id: windowSpawnPositionGroup
     }

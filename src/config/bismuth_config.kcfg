@@ -108,11 +108,6 @@
       <default>false</default>
     </entry>
 
-    <entry name="keepFloatAbove" type="Bool">
-      <label>Keep tiled windows below floating windows</label>
-      <default>true</default>
-    </entry>
-
     <entry name="preventMinimize" type="Bool">
       <label>Prevent windows from minimizing</label>
       <default>false</default>
