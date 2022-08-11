@@ -46,13 +46,4 @@ Kirigami.FormLayout {
         settingName: "tileLayoutGap"
     }
 
-    Kirigami.Separator {
-        Kirigami.FormData.isSection: true
-    }
-
-    BIC.ConfigCheckBox {
-        text: i18n("No borders around tiled windows")
-        settingName: "noTileBorder"
-    }
-
 }

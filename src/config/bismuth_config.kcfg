@@ -113,11 +113,6 @@
       <default>true</default>
     </entry>
 
-    <entry name="noTileBorder" type="Bool">
-      <label>Remove borders of tiled windows</label>
-      <default>false</default>
-    </entry>
-
     <entry name="preventMinimize" type="Bool">
       <label>Prevent windows from minimizing</label>
       <default>false</default>
