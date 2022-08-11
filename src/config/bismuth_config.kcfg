@@ -93,11 +93,6 @@
       <default>true</default>
     </entry>
 
-    <entry name="monocleMaximize" type="Bool">
-      <label>Always maximize windows in Monocle layout</label>
-      <default>true</default>
-    </entry>
-
     <entry name="monocleMinimizeRest" type="Bool">
       <label>Minimize other tiles than the current one in Monocle layout</label>
       <default>false</default>

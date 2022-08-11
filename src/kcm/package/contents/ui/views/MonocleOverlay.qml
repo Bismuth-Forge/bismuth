@@ -13,11 +13,6 @@ Kirigami.OverlaySheet {
 
     Kirigami.FormLayout {
         BIC.ConfigCheckBox {
-            text: i18n("Fully maximize windows (no borders, no gaps)")
-            settingName: "monocleMaximize"
-        }
-
-        BIC.ConfigCheckBox {
             text: i18n("Minimize unfocused windows")
             settingName: "monocleMinimizeRest"
         }
