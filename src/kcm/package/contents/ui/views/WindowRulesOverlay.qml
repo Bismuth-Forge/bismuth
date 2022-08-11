@@ -8,35 +8,35 @@ import QtQuick.Layouts 1.15
 import org.kde.kcm 1.5 as KCM
 import org.kde.kirigami 2.7 as Kirigami
 
-Kirigami.Page {
+Kirigami.OverlaySheet {
     id: root
 
-    title: "Window Rules"
+    header: Kirigami.Heading {
+        text: i18nc("@title:window", "Window Rules")
+    }
 
     Kirigami.FormLayout {
-        anchors.fill: parent
-
         Item {
             Kirigami.FormData.isSection: true
             Kirigami.FormData.label: i18n("Ignore Windows")
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "With classes:"
-            placeholderText: "Classes (comma separated)"
+            Kirigami.FormData.label: i18n("With classes:")
+            placeholderText: i18n("Classes (comma separated)")
             settingName: "ignoreClass"
             implicitWidth: Kirigami.Units.gridUnit * 20
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "With titles:"
-            placeholderText: "Titles (comma separated)"
+            Kirigami.FormData.label: i18n("With titles:")
+            placeholderText: i18n("Titles (comma separated)")
             settingName: "ignoreTitle"
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "With roles:"
-            placeholderText: "Roles (comma separated)"
+            Kirigami.FormData.label: i18n("With roles:")
+            placeholderText: i18n("Roles (comma separated)")
             settingName: "ignoreRole"
         }
 
@@ -46,19 +46,19 @@ Kirigami.Page {
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "With classes:"
-            placeholderText: "Classes (comma separated)"
+            Kirigami.FormData.label: i18n("With classes:")
+            placeholderText: i18n("Classes (comma separated)")
             settingName: "floatingClass"
         }
 
         BIC.ConfigTextField {
-            Kirigami.FormData.label: "With titles:"
-            placeholderText: "Titles (comma separated)"
+            Kirigami.FormData.label: i18n("With titles:")
+            placeholderText: i18n("Titles (comma separated)")
             settingName: "floatingTitle"
         }
 
         BIC.ConfigCheckBox {
-            text: "With utility roles"
+            text: i18n("With utility roles")
             settingName: "floatUtility"
         }
 

@@ -33,7 +33,7 @@ KCM.SimpleKCM {
             icon.name: "document-edit"
             text: i18n("Customize Gaps...")
             onClicked: () => {
-                gapsOverlay.open()
+                gapsOverlay.open();
             }
         }
 
@@ -104,7 +104,7 @@ KCM.SimpleKCM {
             icon.name: "document-edit"
             text: i18n("Window Rules...")
             onClicked: () => {
-                return kcm.push("./views/WindowRules.qml");
+                windowRulesOverlay.open();
             }
         }
 
@@ -147,7 +147,7 @@ KCM.SimpleKCM {
             icon.name: "document-edit"
             text: i18n("Workspace Rules...")
             onClicked: () => {
-                return kcm.push("./views/WorkspaceRules.qml");
+                workspaceRulesOverlay.open();
             }
         }
 
@@ -155,6 +155,18 @@ KCM.SimpleKCM {
 
     BIView.GapsOverlay {
         id: gapsOverlay
+
+        parent: root // Without this, overlay does not work
+    }
+
+    BIView.WindowRulesOverlay {
+        id: windowRulesOverlay
+
+        parent: root // Without this, overlay does not work
+    }
+
+    BIView.WorkspaceRulesOverlay {
+        id: workspaceRulesOverlay
 
         parent: root // Without this, overlay does not work
     }

@@ -8,14 +8,14 @@ import QtQuick.Layouts 1.15
 import org.kde.kcm 1.5 as KCM
 import org.kde.kirigami 2.7 as Kirigami
 
-Kirigami.Page {
+Kirigami.OverlaySheet {
     id: root
 
-    title: "Workspace Rules"
+    header: Kirigami.Heading {
+        text: i18nc("@title:window", "Workspace Rules")
+    }
 
     Kirigami.FormLayout {
-        anchors.fill: parent
-
         Item {
             Kirigami.FormData.isSection: true
             Kirigami.FormData.label: i18n("Disable Tiling")
@@ -24,9 +24,9 @@ Kirigami.Page {
         BIC.ConfigTextField {
             // implicitWidth: Kirigami.Units.gridUnit * 20
 
-            Kirigami.FormData.label: "On Screens:"
-            placeholderText: "Screen numbers (comma separated)"
-            settingName: "ignoreScreen"
+            Kirigami.FormData.label: i18n("On Screens:")
+            placeholderText: i18n("Screen numbers (comma separated)")
+            settingName: i18n("ignoreScreen")
         }
 
     }
