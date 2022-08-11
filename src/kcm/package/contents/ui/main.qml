@@ -114,29 +114,6 @@ KCM.SimpleKCM {
         }
 
         BIC.ConfigCheckBox {
-            id: restrictWidth
-
-            text: i18n("Restrict window width")
-            settingName: "limitTileWidth"
-        }
-
-        BIC.RatioConfigSpinBox {
-            Kirigami.FormData.label: i18n("Window Width/Screen Height ratio:")
-            settingName: "limitTileWidthRatio"
-
-            // For some reason we cannot pass a custom property to
-            // extraEnabledConditions, so we have to define it here.
-            // It is also a reason why RatioConfigSpinBox uses
-            // QQC2.SpinBox instead of ConfigSPinBox component
-            KCM.SettingStateBinding {
-                configObject: kcm.config
-                settingName: "limitTileWidthRatio"
-                extraEnabledConditions: restrictWidth.checked
-            }
-
-        }
-
-        BIC.ConfigCheckBox {
             text: i18n("Prevent window minimization")
             settingName: "preventMinimize"
         }

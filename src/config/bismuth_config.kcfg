@@ -102,16 +102,6 @@
       <default>0</default>
     </entry>
 
-    <entry name="limitTileWidth" type="Bool">
-      <label>Limit the width of tiles</label>
-      <default>false</default>
-    </entry>
-
-    <entry name="limitTileWidthRatio" type="Double">
-      <label>Ratio of maximum tile width to the height of screen</label>
-      <default>1.6</default>
-    </entry>
-
     <entry name="newWindowAsMaster" type="Bool">
       <label>Put new window as master</label>
       <default>false</default>
