@@ -157,10 +157,16 @@ void Controller::registerShortcuts()
     });
 
     addShortcut("toggle_tile_layout", "Toggle Tile Layout", "Meta+T", [=]() {
-        qDebug(Bi) << "Toggle Tile Layout Triggered!";
+        qDebug(Bi) << "Toggle Master-Stack Layout Triggered!";
+        m_engine.setLayoutOnActiveSurface("master-stack");
     });
     addShortcut("toggle_monocle_layout", "Toggle Monocle Layout", "Meta+M", [=]() {
-        qDebug(Bi) << "Toggle Monocle Layout Triggered!";
+        qDebug(Bi) << "Toggle Tabbed Layout Triggered!";
+        m_engine.setLayoutOnActiveSurface("tabbed");
+    });
+    addShortcut("toggle_monocle_layout", "Toggle Floating Layout", "", [=]() {
+        qDebug(Bi) << "Toggle Floating Layout Triggered!";
+        m_engine.setLayoutOnActiveSurface("floating");
     });
 
     addShortcut("rotate", "Rotate Layout Clockwise", "Meta+R", [=]() {

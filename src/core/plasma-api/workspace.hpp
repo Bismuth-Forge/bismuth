@@ -50,6 +50,9 @@ public:
 
     BI_PROPERTY(int, currentDesktop, setCurrentDesktop);
 
+    Q_PROPERTY(PlasmaApi::VirtualDesktop currentVirtualDesktop READ currentVirtualDesktop);
+    VirtualDesktop currentVirtualDesktop() const;
+
     BI_PROPERTY(QString, currentActivity, setCurrentActivity);
     BI_PROPERTY(int, desktops, setDesktops);
 

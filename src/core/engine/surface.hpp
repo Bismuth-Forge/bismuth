@@ -33,6 +33,8 @@ struct Surface {
 
     void arrangeWindows();
 
+    void setMainLayout(std::string_view id);
+
 private:
     QString m_virtualDesktopId;
     int m_screen;

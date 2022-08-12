@@ -76,6 +76,12 @@ std::vector<WindowGroup *> WindowGroup::children()
     return result;
 }
 
+void WindowGroup::setLayout(std::string_view id)
+{
+    qDebug(Bi) << "Setting surface layout to" << id.data();
+    m_layout = Layout::fromId(id);
+}
+
 void WindowGroup::setGeometry(const QRectF &value)
 {
     m_geometry = value;

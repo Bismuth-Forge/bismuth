@@ -37,7 +37,7 @@ struct WindowGroup {
 
     void arrange();
 
-    void setLayout(const char *id);
+    void setLayout(std::string_view id);
 
     std::vector<WindowGroup *> children();
 

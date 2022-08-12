@@ -32,6 +32,12 @@ Workspace::Workspace(const Workspace &rhs)
     wrapSignals();
 };
 
+PlasmaApi::VirtualDesktop Workspace::currentVirtualDesktop() const
+{
+    auto implPtr = m_kwinImpl->property("currentVirtualDesktop").value<QObject *>();
+    return VirtualDesktop(implPtr);
+}
+
 std::optional<PlasmaApi::Window> Workspace::activeClient() const
 {
     auto kwinClient = m_kwinImpl->property("activeClient").value<QObject *>();

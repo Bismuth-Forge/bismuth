@@ -22,9 +22,13 @@ struct Engine {
     void addWindow(const PlasmaApi::Window &);
     void removeWindow(const PlasmaApi::Window &);
 
+    void setLayoutOnActiveSurface(std::string_view id);
+
     void arrangeWindowsOnAllSurfaces();
 
 private:
+    std::optional<Surface *> activeSurface();
+
     const Bismuth::Config &m_config;
     std::unordered_map<QString, Bismuth::Surface> m_surfaces;
     PlasmaApi::Api &m_plasmaApi;

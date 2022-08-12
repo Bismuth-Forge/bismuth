@@ -70,12 +70,38 @@ void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
     }
 }
 
+void Engine::setLayoutOnActiveSurface(std::string_view id)
+{
+    auto activeSurfaceOpt = activeSurface();
+
+    if (!activeSurfaceOpt.has_value()) {
+        return;
+    }
+
+    activeSurfaceOpt.value()->setMainLayout(id);
+
+    // Show notification
+    // TODO
+}
+
 void Engine::arrangeWindowsOnAllSurfaces()
 {
     for (auto &[id, surface] : m_surfaces) {
         qDebug(Bi) << "Arranging Windows on surface" << id;
         surface.arrangeWindows();
     }
+}
+
+std::optional<Surface *> Engine::activeSurface()
+{
+    auto key = Surface::key(m_plasmaApi.workspace().currentVirtualDesktop().id(), m_plasmaApi.workspace().activeScreen());
+    auto it = m_surfaces.find(key);
+
+    if (it == m_surfaces.end()) {
+        return {};
+    }
+
+    return &it->second;
 }
 
 }

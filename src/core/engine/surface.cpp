@@ -72,4 +72,9 @@ void Surface::arrangeWindows()
     }
 }
 
+void Surface::setMainLayout(std::string_view id)
+{
+    m_windows->setLayout(id);
+}
+
 }
