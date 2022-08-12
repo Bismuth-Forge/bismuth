@@ -636,7 +636,7 @@ public:
 
 private Q_SLOTS:
     void mapper_windowShown(KWin::Window *window);
-    void mapper_frameGeometryChanged(KWin::Window *window, const QRectF &oldGeometry);
+    void mapper_frameGeometryChanged(KWin::Window *window, const QRect &oldGeometry);
 
 Q_SIGNALS:
     void windowShown(PlasmaApi::Window window);
@@ -644,7 +644,7 @@ Q_SIGNALS:
     /**
      * This signal is emitted when the Window's frame geometry changes.
      */
-    void frameGeometryChanged(PlasmaApi::Window window, const QRectF &oldGeometry);
+    void frameGeometryChanged(PlasmaApi::Window window, const QRect &oldGeometry);
 
 private:
     void wrapSignals();

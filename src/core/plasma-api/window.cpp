@@ -89,7 +89,7 @@ void Window::mapper_windowShown(KWin::Window *window)
     Q_EMIT windowShown(Window(reinterpret_cast<QObject *>(window)));
 };
 
-void Window::mapper_frameGeometryChanged(KWin::Window *window, const QRectF &oldGeometry)
+void Window::mapper_frameGeometryChanged(KWin::Window *window, const QRect &oldGeometry)
 {
     Q_EMIT frameGeometryChanged(Window(reinterpret_cast<QObject *>(window)), oldGeometry);
 }
@@ -97,7 +97,7 @@ void Window::mapper_frameGeometryChanged(KWin::Window *window, const QRectF &old
 void Window::wrapSignals()
 {
     WRAP_SIGNAL_WITH_KWIN_TYPE(windowShown(KWin::Window *));
-    WRAP_SIGNAL_WITH_KWIN_TYPE(frameGeometryChanged(KWin::Window *, const QRectF &));
+    WRAP_SIGNAL_WITH_KWIN_TYPE(frameGeometryChanged(KWin::Window *, const QRect &));
 };
 
 }
