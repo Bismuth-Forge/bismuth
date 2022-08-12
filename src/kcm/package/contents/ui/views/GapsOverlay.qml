@@ -38,7 +38,7 @@ Kirigami.OverlaySheet {
         }
 
         BIC.ConfigCheckBox {
-            text: i18n("No gaps for single window:")
+            text: i18n("No gaps for single windows")
             settingName: "noGapsForSingleWindow"
         }
 

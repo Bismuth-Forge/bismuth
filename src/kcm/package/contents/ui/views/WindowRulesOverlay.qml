@@ -14,6 +14,7 @@ Kirigami.OverlaySheet {
     header: Kirigami.Heading {
         text: i18nc("@title:window", "Window Rules")
     }
+    // TODO: Replace comma separated values with lists as in Virtual Desktops KCM
 
     Kirigami.FormLayout {
         Item {
