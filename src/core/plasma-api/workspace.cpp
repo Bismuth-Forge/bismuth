@@ -8,7 +8,7 @@
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 #include "plasma-api/output.hpp"
-#include "plasma-api/virtual_desktop.hpp"
+#include "plasma-api/virtual-desktop.hpp"
 #include "plasma-api/window.hpp"
 
 namespace PlasmaApi

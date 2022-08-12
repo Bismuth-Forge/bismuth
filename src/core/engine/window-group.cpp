@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
-#include "window_group.hpp"
+#include "window-group.hpp"
 #include "engine/layout/tabbed.hpp"
 #include "logger.hpp"
 #include "plasma-api/window.hpp"

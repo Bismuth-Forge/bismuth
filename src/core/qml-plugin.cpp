@@ -14,7 +14,7 @@
 #include "config.hpp"
 #include "controller.hpp"
 #include "engine/engine.hpp"
-#include "kconf_update/legacy_shortcuts.hpp"
+#include "kconf_update/legacy-shortcuts.hpp"
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
 

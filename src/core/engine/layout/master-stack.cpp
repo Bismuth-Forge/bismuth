@@ -3,7 +3,7 @@
 
 #include "master-stack.hpp"
 
-#include "engine/window_group.hpp"
+#include "engine/window-group.hpp"
 
 namespace Bismuth
 {

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
-#include "legacy_shortcuts.hpp"
+#include "legacy-shortcuts.hpp"
 
 #include <QAction>
 #include <QKeySequence>

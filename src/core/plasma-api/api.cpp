@@ -5,7 +5,7 @@
 
 #include <QQmlContext>
 
-#include "plasma-api/virtual_desktop.hpp"
+#include "plasma-api/virtual-desktop.hpp"
 #include "plasma-api/workspace.hpp"
 
 namespace PlasmaApi

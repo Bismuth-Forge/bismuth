@@ -9,7 +9,7 @@
 #include "engine/surface.hpp"
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
-#include "plasma-api/virtual_desktop.hpp"
+#include "plasma-api/virtual-desktop.hpp"
 #include "plasma-api/window.hpp"
 
 namespace Bismuth

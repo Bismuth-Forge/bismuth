@@ -3,7 +3,7 @@
 
 #include "window.hpp"
 #include "logger.hpp"
-#include "plasma-api/virtual_desktop.hpp"
+#include "plasma-api/virtual-desktop.hpp"
 
 namespace PlasmaApi
 {
