@@ -11,6 +11,10 @@ namespace PlasmaApi
 Window::Window(QObject *kwinImpl)
     : m_kwinImpl(kwinImpl)
 {
+    if (kwinImpl == nullptr) {
+        qCritical(Bi) << "Attempt to create a window with a nullptr pointer";
+    }
+
     wrapSignals();
 };
 
@@ -96,6 +100,7 @@ void Window::mapper_frameGeometryChanged(KWin::Window *window, const QRect &oldG
 
 void Window::wrapSignals()
 {
+    qDebug(Bi) << "Wrapping signals for" << caption();
     WRAP_SIGNAL_WITH_KWIN_TYPE(windowShown(KWin::Window *));
     WRAP_SIGNAL_WITH_KWIN_TYPE(frameGeometryChanged(KWin::Window *, const QRect &));
 };

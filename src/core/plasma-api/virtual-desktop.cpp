@@ -2,12 +2,18 @@
 // SPDX-License-Identifier: MIT
 
 #include "virtual-desktop.hpp"
+#include "logger.hpp"
 
 namespace PlasmaApi
 {
 
 VirtualDesktop::VirtualDesktop(QObject *kwinImpl)
-    : m_kwinImpl(kwinImpl){};
+    : m_kwinImpl(kwinImpl)
+{
+    if (kwinImpl == nullptr) {
+        qCritical(Bi) << "Attempt to create a virtual desktop with a nullptr pointer";
+    }
+};
 
 VirtualDesktop::VirtualDesktop(const VirtualDesktop &rhs)
     : m_kwinImpl(rhs.m_kwinImpl){};

@@ -18,6 +18,10 @@ Workspace::Workspace(QObject *implPtr)
     : QObject()
     , m_kwinImpl(implPtr)
 {
+    if (implPtr == nullptr) {
+        qCritical(Bi) << "Attempt to create a workspace with a nullptr pointer";
+    }
+
     wrapSignals();
 }
 

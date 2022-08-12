@@ -2,12 +2,18 @@
 // SPDX-License-Identifier: MIT
 
 #include "output.hpp"
+#include "logger.hpp"
 
 namespace PlasmaApi
 {
 
 Output::Output(QObject *kwinImpl)
-    : m_kwinImpl(kwinImpl){};
+    : m_kwinImpl(kwinImpl)
+{
+    if (kwinImpl == nullptr) {
+        qCritical(Bi) << "Attempt to create an output with a nullptr pointer";
+    }
+};
 
 Output::Output(const Output &rhs)
     : m_kwinImpl(rhs.m_kwinImpl){};
