@@ -9,19 +9,30 @@ namespace PlasmaApi
 {
 
 Window::Window(QObject *kwinImpl)
-    : m_kwinImpl(kwinImpl){};
+    : m_kwinImpl(kwinImpl)
+{
+    wrapSignals();
+};
 
 Window::Window(const Window &rhs)
-    : m_kwinImpl(rhs.m_kwinImpl){};
+    : m_kwinImpl(rhs.m_kwinImpl)
+{
+    wrapSignals();
+};
 
 Window::Window(Window &&rhs)
-    : m_kwinImpl(std::move(rhs.m_kwinImpl)){};
+    : m_kwinImpl(std::move(rhs.m_kwinImpl))
+{
+    wrapSignals();
+};
 
 Window &Window::operator=(const Window &rhs)
 {
     if (&rhs != this) {
         m_kwinImpl = rhs.m_kwinImpl;
     }
+
+    wrapSignals();
 
     return *this;
 }
@@ -31,6 +42,8 @@ Window &Window::operator=(Window &&rhs)
     if (&rhs != this) {
         m_kwinImpl = std::move(rhs.m_kwinImpl);
     }
+
+    wrapSignals();
 
     return *this;
 }
@@ -70,5 +83,21 @@ void Window::setDesktops(const QVector<PlasmaApi::VirtualDesktop> &desktops)
 
     m_kwinImpl->setProperty("desktops", QVariant::fromValue(arrayToSet));
 }
+
+void Window::mapper_windowShown(KWin::Window *window)
+{
+    Q_EMIT windowShown(Window(reinterpret_cast<QObject *>(window)));
+};
+
+void Window::mapper_frameGeometryChanged(KWin::Window *window, const QRectF &oldGeometry)
+{
+    Q_EMIT frameGeometryChanged(Window(reinterpret_cast<QObject *>(window)), oldGeometry);
+}
+
+void Window::wrapSignals()
+{
+    WRAP_SIGNAL_WITH_KWIN_TYPE(windowShown(KWin::Window *));
+    WRAP_SIGNAL_WITH_KWIN_TYPE(frameGeometryChanged(KWin::Window *, const QRectF &));
+};
 
 }

@@ -14,6 +14,11 @@
 
 #include "utils.hpp"
 
+namespace KWin
+{
+class Window;
+}
+
 namespace PlasmaApi
 {
 class Workspace;
@@ -508,14 +513,6 @@ public:
     /**
      * The geometry of this Window. Be aware that depending on resize mode the frameGeometryChanged
      * signal might be emitted at each resize step or only at the end of the resize operation.
-     *
-     * @deprecated Use frameGeometry
-     */
-    // Q_PROPERTY(QRect geometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
-
-    /**
-     * The geometry of this Window. Be aware that depending on resize mode the frameGeometryChanged
-     * signal might be emitted at each resize step or only at the end of the resize operation.
      */
     BI_PROPERTY(QRect, frameGeometry, setFrameGeometry)
     // Q_PROPERTY(QRect frameGeometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
@@ -637,7 +634,21 @@ public:
     BI_READONLY_PROPERTY(bool, hidden)
     // Q_PROPERTY(bool hidden READ isHiddenInternal NOTIFY hiddenChanged)
 
+private Q_SLOTS:
+    void mapper_windowShown(KWin::Window *window);
+    void mapper_frameGeometryChanged(KWin::Window *window, const QRectF &oldGeometry);
+
+Q_SIGNALS:
+    void windowShown(PlasmaApi::Window window);
+
+    /**
+     * This signal is emitted when the Window's frame geometry changes.
+     */
+    void frameGeometryChanged(PlasmaApi::Window window, const QRectF &oldGeometry);
+
 private:
+    void wrapSignals();
+
     QObject *m_kwinImpl;
 
     friend class PlasmaApi::Workspace;
