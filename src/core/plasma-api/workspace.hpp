@@ -82,7 +82,7 @@ private Q_SLOTS:
     void mapper_clientMaximizeSet(KWin::Window *, bool h, bool v);
 
 Q_SIGNALS:
-    void currentDesktopChanged(int desktop, PlasmaApi::Window kwinClient);
+    void currentDesktopChanged(int desktop, std::optional<PlasmaApi::Window> kwinClient);
 
     /**
      * Signal emitted when the number of screens changes.

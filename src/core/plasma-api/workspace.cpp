@@ -90,8 +90,11 @@ std::vector<PlasmaApi::Window> Workspace::clientList() const
 void Workspace::mapper_currentDesktopChanged(int desktop, KWin::Window *kwinClient)
 {
     // Since we don't know the KWin internal implementation we have to use reinterpret_cast
-    auto clientWrapper = Window(reinterpret_cast<QObject *>(kwinClient));
-    Q_EMIT currentDesktopChanged(desktop, clientWrapper);
+    auto possibleWindow = std::optional<PlasmaApi::Window>();
+    if (kwinClient != nullptr) {
+        possibleWindow = Window(reinterpret_cast<QObject *>(kwinClient));
+    }
+    Q_EMIT currentDesktopChanged(desktop, possibleWindow);
 };
 
 void Workspace::mapper_clientAdded(KWin::Window *kwinClient)
