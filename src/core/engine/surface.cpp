@@ -21,6 +21,7 @@ Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, co
     auto rightGap = config.screenGapRight();
     auto bottomGap = config.screenGapBottom();
     m_windows->setGeometry(geometry.adjusted(leftGap, topGap, -rightGap, -bottomGap));
+    // m_windows->setLayout("master-stack");
 }
 
 bool Surface::operator==(const Surface &rhs)

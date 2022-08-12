@@ -3,7 +3,24 @@
 
 #include "layout.hpp"
 
+#include "engine/layout/floating.hpp"
+#include "engine/layout/master-stack.hpp"
+#include "engine/layout/tabbed.hpp"
+
 namespace Bismuth
 {
+
+std::unique_ptr<Layout> Layout::fromId(std::string_view id)
+{
+    if (id == "tabbed") {
+        return std::make_unique<TabbedLayout>();
+    } else if (id == "master-stack") {
+        return std::make_unique<MasterStackLayout>();
+    } else if (id == "floating") {
+        return std::make_unique<FloatingLayout>();
+    } else {
+        return {};
+    }
+}
 
 }

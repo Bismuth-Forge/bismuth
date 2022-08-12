@@ -61,12 +61,10 @@ bool WindowGroup::removeWindow(const PlasmaApi::Window &windowToRemove)
 
 void WindowGroup::arrange()
 {
-    // TEMP:
-    m_layout = std::make_unique<TabbedLayout>();
     if (m_layout != nullptr) {
         m_layout->placeGroup(*this);
+        qDebug(Bi) << "Arranging window group to geometry" << m_geometry;
     }
-    qDebug(Bi) << "Arranging window group to geometry" << m_geometry;
 }
 
 std::vector<WindowGroup *> WindowGroup::children()
@@ -83,6 +81,7 @@ void WindowGroup::setGeometry(const QRectF &value)
     m_geometry = value;
 
     if (isWindowNode()) {
+        qDebug(Bi) << "Setting" << m_window->caption() << "geometry to" << value.toRect();
         m_window->setFrameGeometry(value.toRect());
     }
 }

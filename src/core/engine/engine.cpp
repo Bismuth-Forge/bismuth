@@ -46,6 +46,7 @@ void Engine::addWindow(const PlasmaApi::Window &newWindow)
 
         qDebug(Bi) << "Adding new window" << newWindow.caption() << "to virtual desktop" << desktop.name() << "and screen" << newWindow.screen();
         it->second.addWindow(newWindow);
+        it->second.arrangeWindows();
     }
 }
 
@@ -65,6 +66,7 @@ void Engine::removeWindow(const PlasmaApi::Window &windowToRemove)
         }
 
         it->second.removeWindow(windowToRemove);
+        it->second.arrangeWindows();
     }
 }
 
