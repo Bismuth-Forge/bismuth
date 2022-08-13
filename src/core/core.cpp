@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
-#include "qml-plugin.hpp"
+#include "core.hpp"
 
 #include <KSharedConfig>
 

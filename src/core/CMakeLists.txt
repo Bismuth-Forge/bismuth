@@ -25,8 +25,8 @@ add_subdirectory(plasma-api)
 add_subdirectory(engine)
 add_subdirectory(kconf_update)
 
-target_sources(bismuth_core PRIVATE qml-plugin.cpp controller.cpp view.cpp
-                                    qmldir core.qrc ${BISMUTH_LOG})
+target_sources(bismuth_core PRIVATE core.cpp controller.cpp view.cpp qmldir
+                                    core.qrc ${BISMUTH_LOG})
 
 target_link_libraries(
   bismuth_core
