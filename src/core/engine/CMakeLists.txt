@@ -3,5 +3,4 @@
 
 add_subdirectory(layout)
 
-target_sources(bismuth_core PRIVATE engine.cpp window-group.cpp surface.cpp
-                                    layout.cpp)
+target_sources(bismuth_core PRIVATE engine.cpp window-group.cpp surface.cpp)

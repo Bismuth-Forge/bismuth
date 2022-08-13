@@ -8,7 +8,7 @@
 #include <optional>
 #include <vector>
 
-#include "layout.hpp"
+#include "layout/layout.hpp"
 #include "plasma-api/window.hpp"
 
 namespace PlasmaApi
