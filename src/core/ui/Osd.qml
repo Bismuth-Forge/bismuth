@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2018-2019 Eon S. Jeon <esjeon@hyunmu.am>
-// SPDX-FileCopyrightText: 2021 Mikhail Zolotukhin <mail@gikari.com>
+// SPDX-FileCopyrightText: 2021-2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
 import QtQuick 2.15
@@ -9,21 +9,25 @@ import org.kde.plasma.components 3.0 as PC3
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 PlasmaCore.Dialog {
-    id: popupDialog
+    id: root
 
     property rect screenGeometry
 
-    function show(text, icon, hint) {
+    function show(text: string, icon: string, hint: string) {
         // Abort any previous timers
         hideTimer.stop();
+
         // Update current screen information
-        this.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
+        root.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
+
         // Set the icon and text
         messageText.text = text;
         messageIcon.source = icon || "bismuth"; // Fallback to the default icon when undefined
         messageHint.text = hint || ""; // Fallback to the empty string when undefined
+
         // Show the popup
-        this.visible = true;
+        root.visible = true;
+
         // Start popup hide timer
         hideTimer.interval = 3000;
         hideTimer.start();
@@ -93,7 +97,7 @@ PlasmaCore.Dialog {
 
             repeat: false
             onTriggered: {
-                popupDialog.visible = false;
+                root.visible = false;
             }
         }
 

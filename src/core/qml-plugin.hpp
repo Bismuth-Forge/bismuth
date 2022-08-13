@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <QJSValue>
 #include <QObject>
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>
@@ -12,9 +11,6 @@
 #include <memory>
 
 #include "config.hpp"
-#include "controller.hpp"
-#include "engine/engine.hpp"
-#include "plasma-api/api.hpp"
 
 class CorePlugin : public QQmlExtensionPlugin
 {
@@ -25,8 +21,17 @@ public:
     void registerTypes(const char *uri) override;
 };
 
+namespace PlasmaApi
+{
+class Api;
+}
+
 namespace Bismuth
 {
+
+class View;
+class Engine;
+class Controller;
 
 class Core : public QQuickItem
 {
@@ -49,6 +54,7 @@ private:
     std::unique_ptr<Bismuth::Config> m_config;
     std::unique_ptr<PlasmaApi::Api> m_plasmaApi;
     std::unique_ptr<Bismuth::Engine> m_engine;
+    std::unique_ptr<Bismuth::View> m_view;
 };
 
 }

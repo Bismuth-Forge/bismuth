@@ -16,8 +16,11 @@ struct Api;
 
 namespace Bismuth
 {
+class Controller;
+class View;
+
 struct Engine {
-    Engine(PlasmaApi::Api &, const Bismuth::Config &);
+    Engine(PlasmaApi::Api &, View &, const Bismuth::Config &);
 
     void addWindow(const PlasmaApi::Window &);
     void removeWindow(const PlasmaApi::Window &);
@@ -26,11 +29,15 @@ struct Engine {
 
     void arrangeWindowsOnAllSurfaces();
 
+    void showOSD(const QString &text, const QString &icon = {}, const QString &hint = {});
+
 private:
     std::optional<Surface *> activeSurface();
 
     const Bismuth::Config &m_config;
-    std::unordered_map<QString, Bismuth::Surface> m_surfaces;
     PlasmaApi::Api &m_plasmaApi;
+    Bismuth::View &m_view;
+
+    std::unordered_map<QString, Bismuth::Surface> m_surfaces{};
 };
 }

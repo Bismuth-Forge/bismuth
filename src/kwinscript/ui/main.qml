@@ -17,14 +17,4 @@ Item {
         id: core
     }
 
-    Loader {
-        id: popupDialog
-
-        function show(text, icon, hint) {
-            this.item.show(text, icon, hint);
-        }
-
-        source: "popup.qml"
-    }
-
 }

@@ -3,6 +3,7 @@
 
 #include "engine.hpp"
 
+#include <QQmlContext>
 #include <QString>
 
 #include "config.hpp"
@@ -11,13 +12,14 @@
 #include "plasma-api/api.hpp"
 #include "plasma-api/virtual-desktop.hpp"
 #include "plasma-api/window.hpp"
+#include "view.hpp"
 
 namespace Bismuth
 {
-Engine::Engine(PlasmaApi::Api &api, const Bismuth::Config &config)
+Engine::Engine(PlasmaApi::Api &api, Bismuth::View &view, const Bismuth::Config &config)
     : m_config(config)
-    , m_surfaces()
     , m_plasmaApi(api)
+    , m_view(view)
 {
 }
 
@@ -80,8 +82,7 @@ void Engine::setLayoutOnActiveSurface(std::string_view id)
 
     activeSurfaceOpt.value()->setMainLayout(id);
 
-    // Show notification
-    // TODO
+    m_view.showOSD(QStringLiteral("%1 Layout").arg(id.data()), "bismuth");
 }
 
 void Engine::arrangeWindowsOnAllSurfaces()

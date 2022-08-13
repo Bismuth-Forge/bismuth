@@ -12,11 +12,15 @@
 #include <memory>
 
 #include "config.hpp"
-#include "controller.hpp"
-#include "engine/engine.hpp"
-#include "kconf_update/legacy-shortcuts.hpp"
+
 #include "logger.hpp"
 #include "plasma-api/api.hpp"
+
+#include "controller.hpp"
+#include "engine/engine.hpp"
+#include "view.hpp"
+
+#include "kconf_update/legacy-shortcuts.hpp"
 
 void CorePlugin::registerTypes(const char *uri)
 {
@@ -45,7 +49,8 @@ void Core::init()
     m_config = std::make_unique<Bismuth::Config>();
     m_qmlEngine = qmlEngine(this);
     m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_qmlEngine);
-    m_engine = std::make_unique<Bismuth::Engine>(*m_plasmaApi, *m_config);
+    m_view = std::make_unique<Bismuth::View>(m_qmlEngine, qmlContext(this));
+    m_engine = std::make_unique<Bismuth::Engine>(*m_plasmaApi, *m_view, *m_config);
     m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi, *m_engine, *m_config);
 }
 
