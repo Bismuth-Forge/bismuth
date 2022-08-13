@@ -7,6 +7,15 @@
 
 namespace Bismuth
 {
+QString TabbedLayout::id() const
+{
+    return QStringLiteral("tabbed");
+}
+
+QString TabbedLayout::name() const
+{
+    return QStringLiteral("Tabbed");
+}
 
 void TabbedLayout::placeGroup(WindowGroup &group)
 {

@@ -16,18 +16,14 @@ PlasmaCore.Dialog {
     function show(text: string, icon: string, hint: string) {
         // Abort any previous timers
         hideTimer.stop();
-
         // Update current screen information
         root.screenGeometry = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
-
         // Set the icon and text
         messageText.text = text;
         messageIcon.source = icon || "bismuth"; // Fallback to the default icon when undefined
         messageHint.text = hint || ""; // Fallback to the empty string when undefined
-
         // Show the popup
         root.visible = true;
-
         // Start popup hide timer
         hideTimer.interval = 3000;
         hideTimer.start();

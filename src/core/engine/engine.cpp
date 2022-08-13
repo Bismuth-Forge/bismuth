@@ -80,9 +80,17 @@ void Engine::setLayoutOnActiveSurface(std::string_view id)
         return;
     }
 
-    activeSurfaceOpt.value()->setMainLayout(id);
+    auto activeSurf = activeSurfaceOpt.value();
 
-    m_view.showOSD(QStringLiteral("%1 Layout").arg(id.data()), "bismuth");
+    activeSurf->setMainLayout(id);
+
+    auto layout = activeSurf->mainLayout();
+
+    if (layout == nullptr) {
+        return;
+    }
+
+    m_view.showOSD(QStringLiteral("%1 Layout").arg(layout->name()), QStringLiteral("bismuth-%1").arg(layout->id()));
 }
 
 void Engine::arrangeWindowsOnAllSurfaces()

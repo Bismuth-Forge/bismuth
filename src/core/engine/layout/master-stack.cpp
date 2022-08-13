@@ -8,6 +8,16 @@
 namespace Bismuth
 {
 
+QString MasterStackLayout::id() const
+{
+    return QStringLiteral("master-stack");
+}
+
+QString MasterStackLayout::name() const
+{
+    return QStringLiteral("Master-Stack");
+}
+
 void MasterStackLayout::placeGroup(WindowGroup &group){
     // TODO
 };

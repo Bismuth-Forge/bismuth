@@ -18,6 +18,7 @@ View::View(QQmlEngine *qmlEng, QQmlContext *qmlCont)
 
 void View::showOSD(const QString &text, const QString &icon, const QString &hint)
 {
+    qDebug(Bi) << "Showing osd with icon" << icon;
     if (m_osd == nullptr) {
         return;
     }

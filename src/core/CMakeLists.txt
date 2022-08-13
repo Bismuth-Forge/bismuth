@@ -24,6 +24,7 @@ ecm_qt_declare_logging_category(
 add_subdirectory(plasma-api)
 add_subdirectory(engine)
 add_subdirectory(kconf_update)
+add_subdirectory(icons)
 
 target_sources(bismuth_core PRIVATE core.cpp controller.cpp view.cpp qmldir
                                     core.qrc ${BISMUTH_LOG})

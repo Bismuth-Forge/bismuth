@@ -22,5 +22,3 @@ configure_file("metadata.desktop" "bismuth/metadata.desktop" @ONLY)
 
 install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bismuth"
         DESTINATION "${KDE_INSTALL_DATAROOTDIR}/kwin/scripts")
-
-add_subdirectory(icons)

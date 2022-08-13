@@ -13,6 +13,9 @@ namespace Bismuth
 struct WindowGroup;
 
 struct TabbedLayout : Layout {
+    virtual QString id() const override;
+    virtual QString name() const override;
+
     virtual void placeGroup(WindowGroup &) override;
 
 private:

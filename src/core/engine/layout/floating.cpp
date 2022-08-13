@@ -7,6 +7,15 @@
 
 namespace Bismuth
 {
+QString FloatingLayout::id() const
+{
+    return QStringLiteral("floating");
+}
+
+QString FloatingLayout::name() const
+{
+    return QStringLiteral("Floating");
+}
 
 void FloatingLayout::placeGroup(WindowGroup &group){
     // TODO

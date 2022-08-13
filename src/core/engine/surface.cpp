@@ -77,4 +77,13 @@ void Surface::setMainLayout(std::string_view id)
     m_windows->setLayout(id);
 }
 
+Layout *Surface::mainLayout()
+{
+    if (!m_windows.has_value()) {
+        return nullptr;
+    }
+
+    return m_windows->layout();
+}
+
 }

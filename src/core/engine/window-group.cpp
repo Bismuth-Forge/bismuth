@@ -82,6 +82,11 @@ void WindowGroup::setLayout(std::string_view id)
     m_layout = Layout::fromId(id);
 }
 
+Layout *WindowGroup::layout()
+{
+    return m_layout.get();
+}
+
 void WindowGroup::setGeometry(const QRectF &value)
 {
     m_geometry = value;
