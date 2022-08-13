@@ -29,9 +29,9 @@ struct Engine {
 
     void arrangeWindowsOnAllSurfaces();
 
-    void showOSD(const QString &text, const QString &icon = {}, const QString &hint = {});
-
 private:
+    void showOSDForLayout(const Layout &);
+
     std::optional<Surface *> activeSurface();
 
     const Bismuth::Config &m_config;

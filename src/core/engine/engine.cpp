@@ -90,7 +90,7 @@ void Engine::setLayoutOnActiveSurface(std::string_view id)
         return;
     }
 
-    m_view.showOSD(QStringLiteral("%1 Layout").arg(layout->name()), QStringLiteral("bismuth-%1").arg(layout->id()));
+    showOSDForLayout(*layout);
 }
 
 void Engine::arrangeWindowsOnAllSurfaces()
@@ -99,6 +99,11 @@ void Engine::arrangeWindowsOnAllSurfaces()
         qDebug(Bi) << "Arranging Windows on surface" << id;
         surface.arrangeWindows();
     }
+}
+
+void Engine::showOSDForLayout(const Layout &layout)
+{
+    m_view.showOSD(QStringLiteral("%1 Layout").arg(layout.name()), QStringLiteral("bismuth-%1").arg(layout.id()));
 }
 
 std::optional<Surface *> Engine::activeSurface()
