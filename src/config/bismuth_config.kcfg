@@ -43,6 +43,11 @@
       <default>false</default>
     </entry>
 
+    <entry name="enableSlabsLayout" type="Bool">
+      <label>Enable/disable Slabs layout</label>
+      <default>true</default>
+    </entry>
+
     <entry name="enableFloatingLayout" type="Bool">
       <label>Enable/disable Floating layout</label>
       <default>false</default>

@@ -570,6 +570,19 @@ export class ToggleSpiralLayout extends ToggleCurrentLayout {
   }
 }
 
+export class ToggleSlabsLayout extends ToggleCurrentLayout {
+  constructor(protected engine: Engine, protected log: Log) {
+    super(
+      engine,
+      "SlabsLayout",
+      "toggle_slabs_layout",
+      "Toggle Slabs Layout",
+      "",
+      log
+    );
+  }
+}
+
 export class Rotate extends ActionImpl implements Action {
   constructor(protected engine: Engine, protected log: Log) {
     super(engine, "rotate", "Rotate", "Meta+R", log);

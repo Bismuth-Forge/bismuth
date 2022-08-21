@@ -53,6 +53,11 @@ Kirigami.Page {
         }
 
         ListElement {
+            name: "Slabs"
+            settingName: "enableSlabsLayout"
+        }
+
+        ListElement {
             name: "Floating"
             settingName: "enableFloatingLayout"
         }
