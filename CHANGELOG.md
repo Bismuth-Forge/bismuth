@@ -5,6 +5,13 @@
 
 # Changelog
 
+### [3.1.3](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.2...v3.1.3) (2022-09-02)
+
+
+### Bug Fixes
+
+* **kwinscript:** arrange after kwin moves a window between screens ([3c6b367](https://www.github.com/Bismuth-Forge/bismuth/commit/3c6b367a3acdc7726d65b10bfc0706eec23d191a))
+
 ### [3.1.2](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.1...v3.1.2) (2022-06-23)
 
 
