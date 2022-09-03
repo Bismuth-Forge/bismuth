@@ -10,8 +10,12 @@ Layout::Layout(const Bismuth::Config &config)
 {
 }
 
-QRect Layout::tilingArea(QRect workingArea) const
+QRect Layout::tilingArea(QRect workingArea, std::vector<Window> &windows) const
 {
+    if (windows.size() == 1 && m_config.smartGaps()) {
+        return workingArea;
+    }
+
     auto marginLeft = m_config.screenGapLeft();
     auto marginTop = m_config.screenGapTop();
     auto marginRight = m_config.screenGapRight();

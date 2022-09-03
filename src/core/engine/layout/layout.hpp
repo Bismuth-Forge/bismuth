@@ -24,7 +24,7 @@ struct Layout {
     /**
      * Get the area on which tiled windows could be placed given the general @p workingArea
      */
-    virtual QRect tilingArea(QRect workingArea) const;
+    virtual QRect tilingArea(QRect workingArea, std::vector<Window> &windows) const;
 
 protected:
     const Bismuth::Config &m_config;

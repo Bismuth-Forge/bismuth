@@ -75,6 +75,7 @@ QJSValue TSProxy::jsConfig()
     setProp("screenGapRight", m_config.screenGapRight());
     setProp("screenGapTop", m_config.screenGapTop());
     setProp("tileLayoutGap", m_config.tileLayoutGap());
+    setProp("smartGaps", m_config.smartGaps());
 
     setProp("newWindowAsMaster", m_config.newWindowAsMaster());
     setProp("layoutPerActivity", m_config.layoutPerActivity());

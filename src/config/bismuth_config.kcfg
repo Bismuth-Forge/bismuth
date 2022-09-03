@@ -163,6 +163,11 @@
       <default>0</default>
     </entry>
 
+    <entry name="smartGaps" type="Bool">
+      <label>Hide gaps if showing a single window</label>
+      <default>false</default>
+    </entry>
+
     <entry name="limitTileWidth" type="Bool">
       <label>Limit the width of tiles</label>
       <default>false</default>

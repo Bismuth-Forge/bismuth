@@ -230,11 +230,11 @@ Surface Engine::activeSurface() const
 void Engine::arrangeWindowsOnSurface(const Surface &surface)
 {
     auto &layout = m_activeLayouts.layoutOnSurface(surface);
-    auto tilingArea = layout.tilingArea(workingArea(surface));
 
     auto visibleWindows = m_windows.visibleWindowsOn(surface);
     auto windowsThatCanBeTiled = visibleWindows; // TODO: Filter windows
 
+    auto tilingArea = layout.tilingArea(workingArea(surface), windowsThatCanBeTiled);
     layout.apply(tilingArea, windowsThatCanBeTiled);
 }
 
