@@ -92,6 +92,14 @@ contact the package maintainer first.
   ```bash
   sudo dnf install bismuth
   ```
+  
+#### Solus
+
+- [Official Repo](https://dev.getsol.us/source/bismuth)
+
+  ```bash
+  sudo eopkg install bismuth
+  ```
 
 #### OpenSUSE Tumbleweed
 
@@ -100,10 +108,6 @@ contact the package maintainer first.
 #### Gentoo
 
 - [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
-
-#### Solus
-
-- [Solus](https://dev.getsol.us/source/bismuth)
 
 #### From Source
 
