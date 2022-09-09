@@ -37,3 +37,6 @@ test:
 
 setup-dev-env: sysdep-install
 	pre-commit install
+
+gdb:
+	tools/debug.sh
