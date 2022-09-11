@@ -3,9 +3,13 @@
 
 #include "workspace.mock.hpp"
 
-FakeKWinWorkspace &FakeKWinWorkspace::operator=(const FakeKWinWorkspace &rhs)
+namespace KWin
+{
+Workspace &Workspace::operator=(const Workspace &rhs)
 {
     if (this != &rhs) { }
 
     return *this;
+}
+
 }

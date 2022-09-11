@@ -3,7 +3,10 @@
 
 #include "window.mock.hpp"
 
-FakeKWinClient &FakeKWinClient::operator=(const FakeKWinClient &rhs)
+namespace KWin
+{
+
+Window &Window::operator=(const Window &rhs)
 {
     if (&rhs != this) {
         m_minimized = rhs.m_minimized;
@@ -14,4 +17,6 @@ FakeKWinClient &FakeKWinClient::operator=(const FakeKWinClient &rhs)
     }
 
     return *this;
+}
+
 }

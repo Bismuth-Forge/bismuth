@@ -124,3 +124,5 @@ private:
 };
 
 }
+
+Q_DECLARE_METATYPE(std::optional<PlasmaApi::Window>)

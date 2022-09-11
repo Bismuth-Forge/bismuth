@@ -12,51 +12,13 @@
 #include "plasma-api/window.hpp"
 #include "plasma-api/workspace.hpp"
 
-// Mock KWin Objects. This is for tests only.
-namespace KWin
-{
-class Window
-{
-};
-}
-
-Q_DECLARE_METATYPE(KWin::Window *)
-
-class MockWorkspaceJS : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(int currentDesktop READ currentDesktop WRITE setCurrentDesktop)
-public:
-    int currentDesktop()
-    {
-        return m_currentDesktop;
-    }
-
-    void setCurrentDesktop(int desktop)
-    {
-        m_currentDesktop = desktop;
-    }
-
-Q_SIGNALS:
-    void currentDesktopChanged(int desktop, KWin::Window *client);
-    // Not all signals are used, some of them declared to avoid warnings
-    void numberScreensChanged(int);
-    void screenResized(int);
-    void currentActivityChanged(const QString &);
-    void clientAdded(KWin::Window *);
-    void clientRemoved(KWin::Window *);
-    void clientMinimized(KWin::Window *);
-    void clientUnminimized(KWin::Window *);
-    void clientMaximizeSet(KWin::Window *, bool, bool);
-
-private:
-    int m_currentDesktop{};
-};
+#include "window.mock.hpp"
+#include "workspace.mock.hpp"
 
 TEST_CASE("Workspace Properties Read")
 {
     auto engine = QQmlEngine();
-    auto mockWorkspace = MockWorkspaceJS();
+    auto mockWorkspace = KWin::Workspace();
     mockWorkspace.setCurrentDesktop(42);
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
@@ -74,7 +36,7 @@ TEST_CASE("Workspace Properties Read")
 TEST_CASE("Workspace Properties Write")
 {
     auto engine = QQmlEngine();
-    auto mockWorkspace = MockWorkspaceJS();
+    auto mockWorkspace = KWin::Workspace();
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
@@ -93,7 +55,7 @@ TEST_CASE("Workspace Properties Write")
 TEST_CASE("Workspace Properties Signals")
 {
     auto engine = QQmlEngine();
-    auto mockWorkspace = MockWorkspaceJS();
+    auto mockWorkspace = KWin::Workspace();
 
     engine.rootContext()->setContextProperty(QStringLiteral("workspace"), &mockWorkspace);
 
@@ -103,7 +65,7 @@ TEST_CASE("Workspace Properties Signals")
     SUBCASE("currentDesktop")
     {
         qRegisterMetaType<KWin::Window *>();
-        auto signalSpy = QSignalSpy(&workspace, SIGNAL(currentDesktopChanged(int, PlasmaApi::Window)));
+        auto signalSpy = QSignalSpy(&workspace, SIGNAL(currentDesktopChanged(int, std::optional<PlasmaApi::Window>)));
         auto mockKWinClient = KWin::Window();
 
         // Act
@@ -117,8 +79,6 @@ TEST_CASE("Workspace Properties Signals")
         auto clientVariant = signal.at(1);
 
         CHECK(desktopNum == 69);
-        CHECK(clientVariant.canConvert<PlasmaApi::Window>());
+        CHECK(clientVariant.canConvert<std::optional<PlasmaApi::Window>>());
     }
 }
-
-#include "workspace.test.moc"

@@ -7,7 +7,10 @@
 #include <QRect>
 #include <QStringList>
 
-class FakeKWinClient : public QObject
+namespace KWin
+{
+
+class Window : public QObject
 {
     Q_OBJECT
 
@@ -19,7 +22,7 @@ class FakeKWinClient : public QObject
     Q_PROPERTY(QRect frameGeometry MEMBER m_frameGeometry)
 
 public:
-    FakeKWinClient &operator=(const FakeKWinClient &);
+    Window &operator=(const Window &);
 
     bool m_minimized{};
     bool m_onAllDesktops{};
@@ -27,4 +30,10 @@ public:
     int m_screen{};
     QStringList m_activities{};
     QRect m_frameGeometry{};
+
+Q_SIGNALS:
+    void windowShown(KWin::Window *window);
+    void frameGeometryChanged(KWin::Window *window, const QRect &oldGeometry);
 };
+
+}

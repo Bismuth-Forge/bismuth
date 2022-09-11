@@ -8,17 +8,27 @@
 namespace KWin
 {
 class Window;
-}
 
-class FakeKWinWorkspace : public QObject
+class Workspace : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int currentDesktop READ currentDesktop WRITE setCurrentDesktop)
     Q_PROPERTY(int desktops MEMBER m_numberOfDesktops)
     Q_PROPERTY(QStringList activities MEMBER m_activities)
 
 public:
-    FakeKWinWorkspace &operator=(const FakeKWinWorkspace &);
+    Workspace &operator=(const Workspace &);
+
+    int currentDesktop()
+    {
+        return m_currentDesktop;
+    }
+
+    void setCurrentDesktop(int desktop)
+    {
+        m_currentDesktop = desktop;
+    }
 
     int m_numberOfDesktops{};
     QStringList m_activities{};
@@ -33,4 +43,8 @@ Q_SIGNALS:
     void clientRemoved(KWin::Window *);
     void clientUnminimized(KWin::Window *);
     void currentDesktopChanged(int desktop, KWin::Window *kwinClient);
+
+private:
+    int m_currentDesktop{};
 };
+}
