@@ -1,14 +1,14 @@
 // SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 // SPDX-License-Identifier: MIT
 
-#include "engine/layout/piece/fill.hpp"
+#include <doctest/doctest.h>
+#include <vector>
+
 #include "config.hpp"
+#include "engine/layout/piece/fill.hpp"
 #include "engine/window-group.hpp"
 #include "plasma-api/window.hpp"
 #include "plasma-api/window.mock.hpp"
-
-#include <doctest/doctest.h>
-#include <vector>
 
 TEST_CASE("Fill Piece")
 {
@@ -31,8 +31,9 @@ TEST_CASE("Fill Piece")
     SUBCASE("Tiles the single window across the whole area")
     {
         // Arrange
-        auto groups = std::vector<Bismuth::WindowGroup *>();
         auto windowGroup = Bismuth::WindowGroup(QRectF(), fakeConfig);
+
+        auto groups = std::vector<Bismuth::WindowGroup *>({&windowGroup});
 
         groups.push_back(&windowGroup);
 
@@ -47,10 +48,14 @@ TEST_CASE("Fill Piece")
     SUBCASE("Tiles multiple windows across the area")
     {
         // Arrange
+        auto group1 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+        auto group2 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+        auto group3 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+
         auto groups = std::vector<Bismuth::WindowGroup *>({
-            new Bismuth::WindowGroup(QRectF(), fakeConfig),
-            new Bismuth::WindowGroup(QRectF(), fakeConfig),
-            new Bismuth::WindowGroup(QRectF(), fakeConfig),
+            &group1,
+            &group2,
+            &group3,
         });
 
         // Act
@@ -61,10 +66,5 @@ TEST_CASE("Fill Piece")
         for (auto &pair : result) {
             CHECK(pair.second == area);
         }
-
-        for (auto i : groups) {
-            delete i;
-        }
-        groups.clear();
     }
 }
