@@ -3,10 +3,20 @@
 
 #include "master-stack.hpp"
 
+#include "engine/layout/piece/half-split.hpp"
+#include "engine/layout/piece/stack.hpp"
 #include "engine/window-group.hpp"
+#include "logger.hpp"
 
 namespace Bismuth
 {
+MasterStackLayout::MasterStackLayout(const Bismuth::Config &config)
+    : m_basePiece(std::make_unique<RotatablePiece>( //
+        std::make_unique<HalfSplitPiece>( //
+            std::make_unique<StackPiece>(config),
+            std::make_unique<StackPiece>(config))))
+{
+}
 
 QString MasterStackLayout::id() const
 {
@@ -18,8 +28,23 @@ QString MasterStackLayout::name() const
     return QStringLiteral("Master-Stack");
 }
 
-void MasterStackLayout::placeGroup(WindowGroup &group){
-    // TODO
+void MasterStackLayout::placeGroup(WindowGroup &group)
+{
+    if (m_basePiece == nullptr) {
+        qWarning(Bi) << "Master Stack Layout does not have a base!";
+        return;
+    }
+
+    qDebug(Bi) << "Main Master Stack Group" << &group;
+
+    for (auto child : group.children()) {
+        qDebug(Bi) << "Main Master Stack Group Child:" << child << "with title";
+    }
+
+    auto groupGeometryMap = m_basePiece->apply(group.geometry(), group.children());
+    for (auto &[group, geometry] : groupGeometryMap) {
+        group->setGeometry(geometry);
+    }
 };
 
 }

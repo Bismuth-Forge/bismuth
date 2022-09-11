@@ -2,18 +2,23 @@
 // SPDX-License-Identifier: MIT
 
 #include "window-group.hpp"
+#include "config.hpp"
 #include "engine/layout/tabbed.hpp"
 #include "logger.hpp"
 #include "plasma-api/window.hpp"
 
 namespace Bismuth
 {
-WindowGroup::WindowGroup(const QRectF &geometry)
-    : m_geometry(geometry)
+WindowGroup::WindowGroup(const QRectF &geometry, const Bismuth::Config &config)
+    : m_config(config)
+    , m_layout(Layout::fromId("tabbed", config))
+    , m_geometry(geometry)
 {
 }
-WindowGroup::WindowGroup(const PlasmaApi::Window &window)
-    : m_window(window)
+WindowGroup::WindowGroup(const PlasmaApi::Window &window, const Bismuth::Config &config)
+    : m_config(config)
+    , m_layout(Layout::fromId("tabbed", config))
+    , m_window(window)
     , m_geometry(window.frameGeometry())
 {
 }
@@ -31,7 +36,7 @@ void WindowGroup::addWindow(const PlasmaApi::Window &window)
     }
 
     if (m_children.empty() || m_children.front()->isWindowNode()) {
-        m_children.push_back(std::make_unique<WindowGroup>(window));
+        m_children.push_back(std::make_unique<WindowGroup>(window, m_config));
         return;
     } else {
         // Add to the deepest subgroup
@@ -76,15 +81,25 @@ std::vector<WindowGroup *> WindowGroup::children()
     return result;
 }
 
+size_t WindowGroup::size() const
+{
+    return m_children.size();
+}
+
 void WindowGroup::setLayout(std::string_view id)
 {
     qDebug(Bi) << "Setting surface layout to" << id.data();
-    m_layout = Layout::fromId(id);
+    m_layout = Layout::fromId(id, m_config);
 }
 
 Layout *WindowGroup::layout()
 {
     return m_layout.get();
+}
+
+qreal WindowGroup::weight() const
+{
+    return m_weight;
 }
 
 void WindowGroup::setGeometry(const QRectF &value)

@@ -1,4 +1,4 @@
 # SPDX-FileCopyrightText: 2022 Mikhail Zolotukhin <mail@gikari.com>
 # SPDX-License-Identifier: MIT
 
-add_subdirectory(layout)
+add_subdirectory(piece)

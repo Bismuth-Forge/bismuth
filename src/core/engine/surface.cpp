@@ -14,7 +14,7 @@ namespace Bismuth
 Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry, const Config &config)
     : m_virtualDesktopId(virtualDesktop.id())
     , m_screen(screen)
-    , m_windows(geometry)
+    , m_windows({geometry, config})
 {
     auto leftGap = config.screenGapLeft();
     auto topGap = config.screenGapTop();

@@ -11,13 +11,14 @@
 namespace Bismuth
 {
 struct WindowGroup;
+class Config;
 
 struct Layout {
     virtual QString id() const = 0;
     virtual QString name() const = 0;
     virtual void placeGroup(WindowGroup &) = 0;
 
-    static std::unique_ptr<Layout> fromId(std::string_view id);
+    static std::unique_ptr<Layout> fromId(std::string_view id, const Bismuth::Config &config);
 };
 
 }
