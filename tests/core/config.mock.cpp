@@ -5,4 +5,5 @@
 
 FakeConfig::FakeConfig()
 {
+    mTileLayoutGap = 0;
 }

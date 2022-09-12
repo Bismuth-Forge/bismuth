@@ -78,8 +78,15 @@ template<typename T>
 std::vector<T> slice(const std::vector<T> &vec, size_t begin, int16_t end = -1)
 {
     auto result = std::vector<T>();
-    result.reserve(vec.size());
-    std::copy(vec.begin() + begin, vec.end() - end + 1, std::back_inserter(result));
+
+    if (end < begin && end != -1) {
+        return result;
+    }
+
+    auto start = vec.begin() + begin;
+    auto finish = end == -1 ? vec.end() : vec.begin() + end;
+
+    std::copy(start, finish, std::back_inserter(result));
     return result;
 }
 

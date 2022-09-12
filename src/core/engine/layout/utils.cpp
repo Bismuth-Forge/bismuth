@@ -13,25 +13,28 @@
 namespace Bismuth
 {
 
-AreaSplitter::AreaSplitter(qreal gap, Qt::Orientation splitDireciton)
+AreaSplitter::AreaSplitter(qreal gap, Qt::Orientation splitDirection)
     : m_gap(gap)
-    , m_splitDirection(splitDireciton)
+    , m_splitDirection(splitDirection)
 {
 }
 
 std::vector<LineSegment> AreaSplitter::splitSegmentWeighted(const LineSegment &segment, const std::vector<qreal> &weights)
 {
     auto segmentLengthWithoutGaps = segment.length - (weights.size() - 1) * m_gap;
-    auto weightsSum = std::accumulate(weights.begin(), weights.end(), 0);
+    auto weightsSum = std::accumulate(weights.begin(), weights.end(), qreal(0));
 
     auto result = std::vector<LineSegment>();
     result.reserve(weights.size());
 
-    for (auto i = 0, weightAcc = 0; i < weights.size(); i++, weightAcc += weights[i]) {
+    qreal weightAcc = 0;
+    for (auto i = 0; i < weights.size(); i++) {
         auto partBegin = (segmentLengthWithoutGaps * weightAcc) / weightsSum + i * m_gap;
         auto partLength = (segmentLengthWithoutGaps * weights[i]) / weightsSum;
 
         result.push_back({segment.begin + std::floor(partBegin), std::floor(partLength)});
+
+        weightAcc += weights[i];
     }
 
     return result;

@@ -19,11 +19,6 @@ HalfSplitPiece::HalfSplitPiece(std::unique_ptr<LayoutPiece> &&primary, std::uniq
 
 std::unordered_map<WindowGroup *, QRectF> HalfSplitPiece::apply(const QRectF &area, const std::vector<WindowGroup *> &groups)
 {
-    qDebug(Bi) << "Half-Split (area" << area << ") part groups";
-    for (auto group : groups) {
-        qDebug(Bi) << "HSG" << group;
-    }
-
     if (groups.size() <= m_primarySize) {
         // Primary only
         return m_primary->apply(area, groups);

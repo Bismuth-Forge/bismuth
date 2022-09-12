@@ -4,7 +4,8 @@
 #include <doctest/doctest.h>
 #include <vector>
 
-#include "config.hpp"
+#include "config.mock.hpp"
+
 #include "engine/layout/piece/fill.hpp"
 #include "engine/window-group.hpp"
 #include "plasma-api/window.hpp"
@@ -12,7 +13,7 @@
 
 TEST_CASE("Fill Piece")
 {
-    auto fakeConfig = Bismuth::Config();
+    auto fakeConfig = FakeConfig();
     auto fillPiece = Bismuth::FillPiece(fakeConfig);
     auto area = QRectF(0, 0, 100, 100);
 
