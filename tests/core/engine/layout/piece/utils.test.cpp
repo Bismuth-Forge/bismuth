@@ -32,4 +32,11 @@ TEST_CASE("Layout utils: Slice")
 
         CHECK(result == std::vector<int>{3, 4});
     }
+
+    SUBCASE("No result when range is invalid")
+    {
+        auto result = Bismuth::slice(vec, 2, 1);
+
+        CHECK(result.empty());
+    }
 }
