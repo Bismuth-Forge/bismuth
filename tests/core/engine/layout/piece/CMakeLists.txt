@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: MIT
 
 target_sources(test_runner PRIVATE fill.test.cpp half-split.test.cpp
-                                   utils.test.cpp)
+                                   utils.test.cpp stack.test.cpp)
