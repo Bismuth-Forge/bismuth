@@ -68,9 +68,9 @@ std::vector<QRectF> AreaSplitter::splitAreaWeighted(const QRectF &area, const st
     return result;
 }
 
-std::pair<QRectF, QRectF> AreaSplitter::splitAreaHalfWeighted(const QRectF &area, qreal weight)
+std::pair<QRectF, QRectF> AreaSplitter::splitAreaInTwoWithPrimaryWeight(const QRectF &area, qreal primaryWeight)
 {
-    auto weights = std::vector<qreal>{weight, 1 - weight};
+    auto weights = std::vector<qreal>{primaryWeight, 1 - primaryWeight};
     auto result = splitAreaWeighted(area, weights);
 
     return {result.front(), result.back()};

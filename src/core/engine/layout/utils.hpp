@@ -54,7 +54,7 @@ struct AreaSplitter {
      * @param area The area to be split
      * @param weight The weight of the primary area.
      */
-    std::pair<QRectF, QRectF> splitAreaHalfWeighted(const QRectF &area, qreal weight);
+    std::pair<QRectF, QRectF> splitAreaInTwoWithPrimaryWeight(const QRectF &area, qreal weight);
 
 private:
     qreal m_gap; ///< Gaps between split areas

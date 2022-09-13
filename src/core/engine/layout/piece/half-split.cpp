@@ -28,7 +28,7 @@ std::unordered_map<WindowGroup *, QRectF> HalfSplitPiece::apply(const QRectF &ar
     } else {
         // Both parts
         auto ratio = reversed() ? 1 - m_ratio : m_ratio;
-        auto [area1, area2] = AreaSplitter(m_config.tileLayoutGap(), orientation()).splitAreaHalfWeighted(area, ratio);
+        auto [area1, area2] = AreaSplitter(m_config.tileLayoutGap(), orientation()).splitAreaInTwoWithPrimaryWeight(area, ratio);
 
         auto result1 = m_primary->apply(reversed() ? area2 : area1, slice(groups, 0, m_primarySize));
         auto result2 = m_secondary->apply(reversed() ? area1 : area2, slice(groups, m_primarySize));

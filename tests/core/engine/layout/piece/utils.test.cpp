@@ -54,7 +54,7 @@ TEST_CASE("Area Splitter")
 
             auto result = splitter.splitSegmentWeighted(lineSegment, weights);
 
-            REQUIRE(result.size() == 3);
+            CHECK_EQ(result.size(), 3);
             CHECK_EQ(result[0], Bismuth::LineSegment{0, 25});
             CHECK_EQ(result[1], Bismuth::LineSegment{25, 25});
             CHECK_EQ(result[2], Bismuth::LineSegment{50, 50});
@@ -63,17 +63,26 @@ TEST_CASE("Area Splitter")
         SUBCASE("Vertical Split")
         {
             auto splitter = Bismuth::AreaSplitter();
+            auto area = QRectF(0, 0, 100, 100);
 
-            SUBCASE("Split Area Horizontally")
+            SUBCASE("Split Area Weighted")
             {
-            }
+                auto weights = std::vector<qreal>{0.25, 0.25, 0.5};
 
-            SUBCASE("Split Area Vertically")
-            {
+                auto result = splitter.splitAreaWeighted(area, weights);
+
+                CHECK_EQ(result.size(), 3);
+                CHECK_EQ(result[0], QRectF(0, 0, 100, 25));
+                CHECK_EQ(result[1], QRectF(0, 25, 100, 25));
+                CHECK_EQ(result[2], QRectF(0, 50, 100, 50));
             }
 
             SUBCASE("Split Area Half Weighted")
             {
+                auto result = splitter.splitAreaInTwoWithPrimaryWeight(area, 0.25);
+
+                CHECK_EQ(result.first, QRectF(0, 0, 100, 25));
+                CHECK_EQ(result.second, QRectF(0, 25, 100, 75));
             }
         }
 
@@ -81,15 +90,7 @@ TEST_CASE("Area Splitter")
         {
             auto splitter = Bismuth::AreaSplitter(0, Qt::Horizontal);
 
-            SUBCASE("Split Line Segment Weighted")
-            {
-            }
-
-            SUBCASE("Split Area Horizontally")
-            {
-            }
-
-            SUBCASE("Split Area Vertically")
+            SUBCASE("Split Area Weighted")
             {
             }
 
