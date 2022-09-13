@@ -45,7 +45,7 @@ TEST_CASE("Half-Split Piece")
 
             // Assert
             REQUIRE_FALSE(result.empty());
-            CHECK(result[&windowGroup] == area);
+            CHECK_EQ(result[&windowGroup], area);
         }
 
         SUBCASE("Places two window groups nearby")
@@ -53,19 +53,30 @@ TEST_CASE("Half-Split Piece")
             // Arrange
             auto group1 = Bismuth::WindowGroup(QRectF(), fakeConfig);
             auto group2 = Bismuth::WindowGroup(QRectF(), fakeConfig);
-            auto groups = std::vector<Bismuth::WindowGroup *>({&group1, &group2});
+            auto groups = std::vector<Bismuth::WindowGroup *>{&group1, &group2};
 
             // Act
             auto result = halfSplitPiece.apply(area, groups);
 
             // Assert
             REQUIRE_FALSE(result.empty());
-            CHECK(result[&group1] == area.adjusted(0, 0, -area.width() / 2, 0));
-            CHECK(result[&group2] == area.adjusted(area.width() / 2, 0, 0, 0));
+            CHECK_EQ(result[&group1], area.adjusted(0, 0, -area.width() / 2, 0));
+            CHECK_EQ(result[&group2], area.adjusted(area.width() / 2, 0, 0, 0));
         }
 
         SUBCASE("Places 1 window group into master area, 2 window groups into secondary area")
         {
+            auto group1 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+            auto group2 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+            auto group3 = Bismuth::WindowGroup(QRectF(), fakeConfig);
+            auto groups = std::vector<Bismuth::WindowGroup *>{&group1, &group2, &group3};
+
+            auto result = halfSplitPiece.apply(area, groups);
+
+            REQUIRE_FALSE(result.empty());
+            CHECK_EQ(result[&group1], QRectF(0, 0, 50, 100));
+            CHECK_EQ(result[&group2], QRectF(50, 0, 50, 100));
+            CHECK_EQ(result[&group3], QRectF(50, 0, 50, 100));
         }
     }
 }
