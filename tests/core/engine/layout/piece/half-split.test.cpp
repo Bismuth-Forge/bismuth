@@ -44,7 +44,7 @@ TEST_CASE("Half-Split Piece")
             auto result = halfSplitPiece.apply(area, groups);
 
             // Assert
-            CHECK(!result.empty());
+            REQUIRE_FALSE(result.empty());
             CHECK(result[&windowGroup] == area);
         }
 
@@ -59,7 +59,7 @@ TEST_CASE("Half-Split Piece")
             auto result = halfSplitPiece.apply(area, groups);
 
             // Assert
-            CHECK(!result.empty());
+            REQUIRE_FALSE(result.empty());
             CHECK(result[&group1] == area.adjusted(0, 0, -area.width() / 2, 0));
             CHECK(result[&group2] == area.adjusted(area.width() / 2, 0, 0, 0));
         }

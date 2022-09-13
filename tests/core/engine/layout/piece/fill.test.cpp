@@ -42,7 +42,7 @@ TEST_CASE("Fill Piece")
         auto result = fillPiece.apply(area, groups);
 
         // Assert
-        CHECK(!result.empty());
+        REQUIRE_FALSE(result.empty());
         CHECK(result.begin()->second == area);
     }
 
@@ -63,7 +63,7 @@ TEST_CASE("Fill Piece")
         auto result = fillPiece.apply(area, groups);
 
         // Assert
-        CHECK(!result.empty());
+        REQUIRE_FALSE(result.empty());
         for (auto &pair : result) {
             CHECK(pair.second == area);
         }

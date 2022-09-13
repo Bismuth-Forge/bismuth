@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <ostream>
 #include <vector>
 
 namespace Bismuth
@@ -21,13 +22,17 @@ struct WindowGroup;
 struct LineSegment {
     qreal begin; ///< Starting point of the segment in 1D space
     qreal length; ///< Length of the segment
+
+    bool operator==(const LineSegment &) const;
 };
+
+std::ostream &operator<<(std::ostream &os, const LineSegment &value);
 
 /**
  * Helper class, that splits the areas in different fashion
  */
 struct AreaSplitter {
-    AreaSplitter(qreal gap = 0, Qt::Orientation splitDireciton = Qt::Vertical);
+    AreaSplitter(qreal gap = 0, Qt::Orientation splitDirection = Qt::Vertical);
 
     /**
      * Split a line segment into weighted segments.

@@ -13,6 +13,17 @@
 namespace Bismuth
 {
 
+bool LineSegment::operator==(const LineSegment &rhs) const
+{
+    return begin == rhs.begin && length == rhs.length;
+};
+
+std::ostream &operator<<(std::ostream &os, const LineSegment &value)
+{
+    os << "LineSegment(Begin: " << value.begin << ", Length: " << value.length << ")";
+    return os;
+}
+
 AreaSplitter::AreaSplitter(qreal gap, Qt::Orientation splitDirection)
     : m_gap(gap)
     , m_splitDirection(splitDirection)
@@ -45,32 +56,24 @@ std::vector<QRectF> AreaSplitter::splitAreaWeighted(const QRectF &area, const st
     auto areaLineSegment = m_splitDirection == Qt::Horizontal ? LineSegment{area.x(), area.width()} : LineSegment{area.y(), area.height()};
     auto parts = splitSegmentWeighted(areaLineSegment, weights);
 
-    qDebug(Bi) << "Split into parts:";
-    for (auto part : parts) {
-        qDebug(Bi) << "Line. Begin:" << part.begin << "Length" << part.length;
-    }
-
     auto result = std::vector<QRectF>();
     result.reserve(parts.size());
     std::transform(parts.begin(), parts.end(), std::back_inserter(result), [&](const LineSegment &segment) {
-        return m_splitDirection == Qt::Horizontal ? QRectF(segment.begin, area.y(), segment.length, area.height())
-                                                  : QRectF(area.x(), segment.begin, area.width(), segment.length);
+        if (m_splitDirection == Qt::Horizontal) {
+            return QRectF(segment.begin, area.y(), segment.length, area.height());
+        } else {
+            return QRectF(area.x(), segment.begin, area.width(), segment.length);
+        }
     });
     return result;
 }
 
 std::pair<QRectF, QRectF> AreaSplitter::splitAreaHalfWeighted(const QRectF &area, qreal weight)
 {
-    qDebug(Bi) << "Splitting in half. Area" << area;
     auto weights = std::vector<qreal>{weight, 1 - weight};
-    qDebug(Bi) << "Left weight:" << weights[0] << "Right weight:" << weights[1];
     auto result = splitAreaWeighted(area, weights);
 
-    for (auto resElement : result) {
-        qDebug(Bi) << "Res element:" << resElement;
-    }
-
-    return {result[0], result[1]};
+    return {result.front(), result.back()};
 }
 
 std::vector<qreal> groupsWeights(const std::vector<WindowGroup *> &groups)
