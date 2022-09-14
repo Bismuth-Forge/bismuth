@@ -72,12 +72,16 @@ void Controller::registerShortcuts()
         QObject::connect(action, &QAction::triggered, callback);
     };
 
+    addShortcut("rearrange_windows", "Rearrange Windows Manually", "", [=]() {
+        qDebug(Bi) << "Rearrange Windows Manually Triggered!";
+        m_engine.arrangeWindowsOnAllSurfaces();
+    });
+
     addShortcut("focus_next_window", "Focus Next Window", "", [=]() {
         qDebug(Bi) << "Focus Next Window Triggered!";
     });
     addShortcut("focus_prev_window", "Focus Previous Window", "", [=]() {
         qDebug(Bi) << "Focus Previous Window Triggered!";
-        m_engine.arrangeWindowsOnAllSurfaces();
     });
 
     addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
@@ -93,91 +97,91 @@ void Controller::registerShortcuts()
         qDebug(Bi) << "Focus Right Window Triggered!";
     });
 
-    addShortcut("move_window_to_next_pos", "Move Window to the Next Position", "", [=]() {
-        qDebug(Bi) << "Move Window to the Next Position Triggered!";
-    });
-    addShortcut("move_window_to_prev_pos", "Move Window to the Previous Position", "", [=]() {
-        qDebug(Bi) << "Move Window to the Previous Position Triggered!";
-    });
+    // addShortcut("move_window_to_next_pos", "Move Window to the Next Position", "", [=]() {
+    //     qDebug(Bi) << "Move Window to the Next Position Triggered!";
+    // });
+    // addShortcut("move_window_to_prev_pos", "Move Window to the Previous Position", "", [=]() {
+    //     qDebug(Bi) << "Move Window to the Previous Position Triggered!";
+    // });
 
-    addShortcut("move_window_to_upper_pos", "Move Window Up", "Meta+Shift+K", [=]() {
-        qDebug(Bi) << "Move Window Up Triggered!";
-    });
-    addShortcut("move_window_to_bottom_pos", "Move Window Down", "Meta+Shift+J", [=]() {
-        qDebug(Bi) << "Move Window Down Triggered!";
-    });
-    addShortcut("move_window_to_left_pos", "Move Window Left", "Meta+Shift+H", [=]() {
-        qDebug(Bi) << "Move Window Left Triggered!";
-    });
-    addShortcut("move_window_to_right_pos", "Move Window Right", "Meta+Shift+L", [=]() {
-        qDebug(Bi) << "Move Window Right Triggered!";
-    });
+    // addShortcut("move_window_to_upper_pos", "Move Window Up", "Meta+Shift+K", [=]() {
+    //     qDebug(Bi) << "Move Window Up Triggered!";
+    // });
+    // addShortcut("move_window_to_bottom_pos", "Move Window Down", "Meta+Shift+J", [=]() {
+    //     qDebug(Bi) << "Move Window Down Triggered!";
+    // });
+    // addShortcut("move_window_to_left_pos", "Move Window Left", "Meta+Shift+H", [=]() {
+    //     qDebug(Bi) << "Move Window Left Triggered!";
+    // });
+    // addShortcut("move_window_to_right_pos", "Move Window Right", "Meta+Shift+L", [=]() {
+    //     qDebug(Bi) << "Move Window Right Triggered!";
+    // });
 
-    addShortcut("increase_window_width", "Increase Window Width", "Meta+Ctrl+L", [=]() {
-        qDebug(Bi) << "Increase Window Width Triggered!";
-    });
-    addShortcut("increase_window_height", "Increase Window Height", "Meta+Ctrl+J", [=]() {
-        qDebug(Bi) << "Increase Window Height Triggered!";
-    });
+    // addShortcut("increase_window_width", "Increase Window Width", "Meta+Ctrl+L", [=]() {
+    //     qDebug(Bi) << "Increase Window Width Triggered!";
+    // });
+    // addShortcut("increase_window_height", "Increase Window Height", "Meta+Ctrl+J", [=]() {
+    //     qDebug(Bi) << "Increase Window Height Triggered!";
+    // });
 
-    addShortcut("decrease_window_width", "Decrease Window Width", "Meta+Ctrl+H", [=]() {
-        qDebug(Bi) << "Decrease Window Width Triggered!";
-    });
-    addShortcut("decrease_window_height", "Decrease Window Height", "Meta+Ctrl+K", [=]() {
-        qDebug(Bi) << "Decrease Window Height Triggered!";
-    });
+    // addShortcut("decrease_window_width", "Decrease Window Width", "Meta+Ctrl+H", [=]() {
+    //     qDebug(Bi) << "Decrease Window Width Triggered!";
+    // });
+    // addShortcut("decrease_window_height", "Decrease Window Height", "Meta+Ctrl+K", [=]() {
+    //     qDebug(Bi) << "Decrease Window Height Triggered!";
+    // });
 
-    addShortcut("increase_master_win_count", "Increase Master Area Window Count", "Meta+]", [=]() {
-        qDebug(Bi) << "Increase Master Area Window Count Triggered!";
-    });
-    addShortcut("decrease_master_win_count", "Decrease Master Area Window Count", "Meta+[", [=]() {
-        qDebug(Bi) << "Decrease Master Area Window Count Triggered!";
-    });
+    // addShortcut("increase_master_win_count", "Increase Master Area Window Count", "Meta+]", [=]() {
+    //     qDebug(Bi) << "Increase Master Area Window Count Triggered!";
+    // });
+    // addShortcut("decrease_master_win_count", "Decrease Master Area Window Count", "Meta+[", [=]() {
+    //     qDebug(Bi) << "Decrease Master Area Window Count Triggered!";
+    // });
 
-    addShortcut("increase_master_size", "Increase Master Area Size", "", [=]() {
-        qDebug(Bi) << "Increase Master Area Size Triggered!";
-    });
-    addShortcut("decrease_master_size", "Decrease Master Area Size", "", [=]() {
-        qDebug(Bi) << "Decrease Master Area Size Triggered!";
-    });
+    // addShortcut("increase_master_size", "Increase Master Area Size", "", [=]() {
+    //     qDebug(Bi) << "Increase Master Area Size Triggered!";
+    // });
+    // addShortcut("decrease_master_size", "Decrease Master Area Size", "", [=]() {
+    //     qDebug(Bi) << "Decrease Master Area Size Triggered!";
+    // });
 
-    addShortcut("toggle_window_floating", "Toggle Active Window Floating", "Meta+F", [=]() {
-        qDebug(Bi) << "Toggle Active Window Floating Triggered!";
-    });
+    // addShortcut("toggle_window_floating", "Toggle Active Window Floating", "", [=]() {
+    //     qDebug(Bi) << "Toggle Active Window Floating Triggered!";
+    // });
 
-    addShortcut("push_window_to_master", "Push Active Window to Master Area", "Meta+Return", [=]() {
-        qDebug(Bi) << "Push Active Window to Master Area Triggered!";
-    });
+    // addShortcut("push_window_to_master", "Push Active Window to Master Area", "Meta+Return", [=]() {
+    //     qDebug(Bi) << "Push Active Window to Master Area Triggered!";
+    // });
 
-    addShortcut("next_layout", "Switch to the Next Layout", "Meta+\\", [=]() {
-        qDebug(Bi) << "Switch to the Next Layout Triggered!";
-    });
-    addShortcut("prev_layout", "Switch to the Previous Layout", "Meta+|", [=]() {
-        qDebug(Bi) << "Switch to the Previous Layout Triggered!";
-    });
+    // addShortcut("next_layout", "Switch to the Next Layout", "Meta+\\", [=]() {
+    //     qDebug(Bi) << "Switch to the Next Layout Triggered!";
+    // });
+    // addShortcut("prev_layout", "Switch to the Previous Layout", "Meta+|", [=]() {
+    //     qDebug(Bi) << "Switch to the Previous Layout Triggered!";
+    // });
 
-    addShortcut("toggle_tile_layout", "Toggle Tile Layout", "Meta+T", [=]() {
+    addShortcut("toggle_master_stack_layout", "Toggle Master-Stack Layout", "Meta+M", [=]() {
         qDebug(Bi) << "Toggle Master-Stack Layout Triggered!";
         m_engine.setLayoutOnActiveSurface("master-stack");
     });
-    addShortcut("toggle_monocle_layout", "Toggle Monocle Layout", "Meta+M", [=]() {
+    addShortcut("toggle_tabbed_layout", "Toggle Tabbed Layout", "Meta+T", [=]() {
         qDebug(Bi) << "Toggle Tabbed Layout Triggered!";
         m_engine.setLayoutOnActiveSurface("tabbed");
     });
-    addShortcut("toggle_monocle_layout", "Toggle Floating Layout", "", [=]() {
+    addShortcut("toggle_floating_layout", "Toggle Floating Layout", "Meta+F", [=]() {
         qDebug(Bi) << "Toggle Floating Layout Triggered!";
         m_engine.setLayoutOnActiveSurface("floating");
     });
 
-    addShortcut("rotate", "Rotate Layout Clockwise", "Meta+R", [=]() {
-        qDebug(Bi) << "Rotate Layout Clockwise Triggered!";
-    });
-    addShortcut("rotate_reverse", "Rotate Layout Counterclockwise", "", [=]() {
-        qDebug(Bi) << "Rotate Layout Counterclockwise Triggered!";
-    });
-    addShortcut("rotate_part", "Rotate Sublayout Clockwise", "Meta+Shift+R", [=]() {
-        qDebug(Bi) << "Rotate Sublayout Clockwise Triggered!";
-    });
+    // addShortcut("rotate", "Rotate Layout Clockwise", "Meta+R", [=]() {
+    //     qDebug(Bi) << "Rotate Layout Clockwise Triggered!";
+    // });
+    // addShortcut("rotate_reverse", "Rotate Layout Counterclockwise", "", [=]() {
+    //     qDebug(Bi) << "Rotate Layout Counterclockwise Triggered!";
+    // });
+    // addShortcut("rotate_part", "Rotate Sublayout Clockwise", "Meta+Shift+R", [=]() {
+    //     qDebug(Bi) << "Rotate Sublayout Clockwise Triggered!";
+    // });
 }
 
 void Controller::loadExistingWindows()

@@ -17,8 +17,10 @@ QString FloatingLayout::name() const
     return QStringLiteral("Floating");
 }
 
-void FloatingLayout::placeGroup(WindowGroup &group){
-    // TODO
+void FloatingLayout::placeGroup(WindowGroup &group)
+{
+    Q_UNUSED(group)
+    // Do nothing
 };
 
 }
