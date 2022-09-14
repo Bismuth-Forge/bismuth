@@ -35,15 +35,9 @@ void MasterStackLayout::placeGroup(WindowGroup &group)
         return;
     }
 
-    qDebug(Bi) << "Main Master Stack Group" << &group;
-
-    for (auto child : group.children()) {
-        qDebug(Bi) << "Main Master Stack Group Child:" << child << "with title";
-    }
-
     auto groupGeometryMap = m_basePiece->apply(group.geometry(), group.children());
-    for (auto &[group, geometry] : groupGeometryMap) {
-        group->setGeometry(geometry);
+    for (auto &[subgroup, geometry] : groupGeometryMap) {
+        subgroup->setGeometry(geometry);
     }
 };
 

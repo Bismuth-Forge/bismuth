@@ -16,11 +16,6 @@ RotatablePiece::RotatablePiece(std::unique_ptr<LayoutPiece> &&inner)
 
 std::unordered_map<WindowGroup *, QRectF> RotatablePiece::apply(const QRectF &area, const std::vector<WindowGroup *> &groups)
 {
-    qDebug(Bi) << "Rotatable (area" << area << ") part groups";
-    for (auto group : groups) {
-        qDebug(Bi) << "RPG" << group;
-    }
-
     auto rotatedArea = area;
     switch (m_angle) {
     case 0:

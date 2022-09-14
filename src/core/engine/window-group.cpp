@@ -109,6 +109,8 @@ void WindowGroup::setGeometry(const QRectF &value)
     if (isWindowNode()) {
         qDebug(Bi) << "Setting" << m_window->caption() << "geometry to" << value.toRect();
         m_window->setFrameGeometry(value.toRect());
+    } else {
+        arrange();
     }
 }
 
