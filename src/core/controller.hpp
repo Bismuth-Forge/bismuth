@@ -38,7 +38,6 @@ public:
     void registerShortcuts();
     void loadExistingWindows();
     void arrangeWindowsOnAllSurfaces();
-    void registerAction(const Action &);
 
 public Q_SLOTS:
     void onCurrentSurfaceChanged();
@@ -51,8 +50,6 @@ public Q_SLOTS:
     void onClientUnminimized(PlasmaApi::Window);
 
 private:
-    std::vector<QAction *> m_registeredShortcuts{};
-
     PlasmaApi::Api &m_plasmaApi;
     Engine &m_engine;
     const Config &m_config;

@@ -75,6 +75,7 @@ void Surface::arrangeWindows()
 void Surface::setMainLayout(std::string_view id)
 {
     m_windows->setLayout(id);
+    arrangeWindows();
 }
 
 Layout *Surface::mainLayout()

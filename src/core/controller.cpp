@@ -84,18 +84,18 @@ void Controller::registerShortcuts()
         qDebug(Bi) << "Focus Previous Window Triggered!";
     });
 
-    addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
-        qDebug(Bi) << "Focus Upper Window Triggered!";
-    });
-    addShortcut("focus_bottom_window", "Focus Bottom Window", "Meta+J", [=]() {
-        qDebug(Bi) << "Focus Bottom Window Triggered!";
-    });
-    addShortcut("focus_left_window", "Focus Left Window", "Meta+H", [=]() {
-        qDebug(Bi) << "Focus Left Window Triggered!";
-    });
-    addShortcut("focus_right_window", "Focus Right Window", "Meta+L", [=]() {
-        qDebug(Bi) << "Focus Right Window Triggered!";
-    });
+    // addShortcut("focus_upper_window", "Focus Upper Window", "Meta+K", [=]() {
+    //     qDebug(Bi) << "Focus Upper Window Triggered!";
+    // });
+    // addShortcut("focus_bottom_window", "Focus Bottom Window", "Meta+J", [=]() {
+    //     qDebug(Bi) << "Focus Bottom Window Triggered!";
+    // });
+    // addShortcut("focus_left_window", "Focus Left Window", "Meta+H", [=]() {
+    //     qDebug(Bi) << "Focus Left Window Triggered!";
+    // });
+    // addShortcut("focus_right_window", "Focus Right Window", "Meta+L", [=]() {
+    //     qDebug(Bi) << "Focus Right Window Triggered!";
+    // });
 
     // addShortcut("move_window_to_next_pos", "Move Window to the Next Position", "", [=]() {
     //     qDebug(Bi) << "Move Window to the Next Position Triggered!";
@@ -197,29 +197,6 @@ void Controller::arrangeWindowsOnAllSurfaces()
 {
     m_engine.arrangeWindowsOnAllSurfaces();
 }
-
-void Controller::registerAction(const Action &data)
-{
-    auto action = new QAction(this);
-    action->setProperty("componentName", QStringLiteral("bismuth"));
-    action->setProperty("componentDisplayName", i18n("Window Tiling"));
-    action->setObjectName(data.id);
-    action->setText(data.description);
-
-    // Register the keybinding as the default. This is needed for KCM to
-    // recognize it as such, so that it can properly show whether it is changed
-    // from the default.
-    KGlobalAccel::self()->setDefaultShortcut(action, data.defaultKeybinding);
-
-    // How this function works:
-    // Set the shortcut from the global shortcuts configuration, or set it to
-    // the provided value if it is not found in the config
-    KGlobalAccel::self()->setShortcut(action, data.defaultKeybinding);
-
-    QObject::connect(action, &QAction::triggered, data.callback);
-
-    m_registeredShortcuts.push_back(action);
-};
 
 void Controller::onCurrentSurfaceChanged()
 {
