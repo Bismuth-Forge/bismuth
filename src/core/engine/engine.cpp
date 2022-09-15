@@ -5,6 +5,7 @@
 
 #include <QQmlContext>
 #include <QString>
+#include <QTimer>
 
 #include "config.hpp"
 #include "engine/surface.hpp"
@@ -117,5 +118,47 @@ std::optional<Surface *> Engine::activeSurface()
 
     return &it->second;
 }
+
+void Engine::adjustWorkingAreas()
+{
+    // HACK:
+    // We don't have a reliable signal, that indicates that the working area was
+    // changed, other than that window with type "dock" was added.
+    //
+    // However, when windowAdded workspace signal is emitted, there is no
+    // guarantee, that the working area is updated at that moment. But, when the
+    // panel is added, it means, that the working area will be changed after
+    // some time. Therefore the following hack is applicable.
+
+    static const int startTime = 200;
+    static const int timeout = 2000;
+    static int waitTime = startTime;
+
+    static std::function<void(Surface &)> adjustAreaWithTimeout = [this](Surface &surface) {
+        auto oldWorkingArea = surface.workingArea();
+        // TODO: Use signature with pointers to screen and virtual desktop
+        auto newWorkingArea = m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, surface.screen(), surface.x11DesktopNumber());
+
+        if (oldWorkingArea != newWorkingArea) { // Area is updated
+            surface.adjustWorkingArea(newWorkingArea);
+            waitTime = startTime;
+        } else { // Area is not updated yet
+            waitTime *= 2;
+
+            if (waitTime >= timeout) {
+                waitTime = startTime;
+                return;
+            }
+
+            QTimer::singleShot(waitTime, [&surface]() {
+                adjustAreaWithTimeout(surface);
+            });
+        }
+    };
+
+    for (auto &[key, surface] : m_surfaces) {
+        adjustAreaWithTimeout(surface);
+    }
+};
 
 }

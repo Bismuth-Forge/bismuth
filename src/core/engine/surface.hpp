@@ -7,6 +7,7 @@
 #include <optional>
 
 #include "engine/window-group.hpp"
+#include "plasma-api/virtual-desktop.hpp"
 
 namespace PlasmaApi
 {
@@ -26,6 +27,7 @@ struct Surface {
     static QString key(const QString &virtualDesktopId, int screen);
 
     QString virtualDesktopId() const;
+    int x11DesktopNumber() const;
     int screen() const;
 
     void addWindow(const PlasmaApi::Window &);
@@ -36,10 +38,14 @@ struct Surface {
     void setMainLayout(std::string_view id);
     Layout *mainLayout();
 
+    void adjustWorkingArea(const QRectF &);
+    QRectF workingArea() const;
+
 private:
-    QString m_virtualDesktopId;
+    PlasmaApi::VirtualDesktop m_virtualDesktop;
     int m_screen;
 
     std::optional<WindowGroup> m_windows;
+    const Config &m_config;
 };
 }

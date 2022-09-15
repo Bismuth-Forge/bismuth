@@ -15,11 +15,6 @@ StackPiece::StackPiece(const Bismuth::Config &config)
 
 std::unordered_map<WindowGroup *, QRectF> StackPiece::apply(const QRectF &area, const std::vector<WindowGroup *> &groups)
 {
-    qDebug(Bi) << "Stack (area" << area << ") part groups";
-    for (auto group : groups) {
-        qDebug(Bi) << "SG" << group;
-    }
-
     auto splittedAreas = AreaSplitter(m_config.tileLayoutGap()).splitAreaWeighted(area, groupsWeights(groups));
 
     auto result = std::unordered_map<WindowGroup *, QRectF>();

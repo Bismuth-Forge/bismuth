@@ -208,12 +208,20 @@ void Controller::onSurfaceUpdate()
 
 void Controller::onClientAdded(PlasmaApi::Window window)
 {
-    m_engine.addWindow(window);
+    if (window.dock()) {
+        m_engine.adjustWorkingAreas();
+    } else {
+        m_engine.addWindow(window);
+    }
 }
 
 void Controller::onClientRemoved(PlasmaApi::Window window)
 {
-    m_engine.removeWindow(window);
+    if (window.dock()) {
+        m_engine.adjustWorkingAreas();
+    } else {
+        m_engine.removeWindow(window);
+    }
 }
 
 void Controller::onClientMaximized(PlasmaApi::Window)

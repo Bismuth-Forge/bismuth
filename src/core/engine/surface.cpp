@@ -12,26 +12,23 @@
 namespace Bismuth
 {
 Surface::Surface(const PlasmaApi::VirtualDesktop &virtualDesktop, int screen, const QRectF &geometry, const Config &config)
-    : m_virtualDesktopId(virtualDesktop.id())
+    : m_virtualDesktop(virtualDesktop)
     , m_screen(screen)
     , m_windows({geometry, config})
+    , m_config(config)
 {
-    auto leftGap = config.screenGapLeft();
-    auto topGap = config.screenGapTop();
-    auto rightGap = config.screenGapRight();
-    auto bottomGap = config.screenGapBottom();
-    m_windows->setGeometry(geometry.adjusted(leftGap, topGap, -rightGap, -bottomGap));
+    adjustWorkingArea(geometry);
     // m_windows->setLayout("master-stack");
 }
 
 bool Surface::operator==(const Surface &rhs)
 {
-    return m_virtualDesktopId == rhs.m_virtualDesktopId && m_screen == rhs.m_screen;
+    return m_virtualDesktop == rhs.m_virtualDesktop && m_screen == rhs.m_screen;
 }
 
 QString Surface::key()
 {
-    return key(m_virtualDesktopId, m_screen);
+    return key(m_virtualDesktop.id(), m_screen);
 }
 
 QString Surface::key(const QString &virtualDesktopId, int screen)
@@ -41,8 +38,13 @@ QString Surface::key(const QString &virtualDesktopId, int screen)
 
 QString Surface::virtualDesktopId() const
 {
-    return m_virtualDesktopId;
+    return m_virtualDesktop.id();
 }
+
+int Surface::x11DesktopNumber() const
+{
+    return m_virtualDesktop.x11DesktopNumber();
+};
 
 int Surface::screen() const
 {
@@ -87,4 +89,19 @@ Layout *Surface::mainLayout()
     return m_windows->layout();
 }
 
+void Surface::adjustWorkingArea(const QRectF &newAreaWithoutGaps)
+{
+    if (m_windows.has_value()) {
+        auto leftGap = m_config.screenGapLeft();
+        auto topGap = m_config.screenGapTop();
+        auto rightGap = m_config.screenGapRight();
+        auto bottomGap = m_config.screenGapBottom();
+        m_windows->setGeometry(newAreaWithoutGaps.adjusted(leftGap, topGap, -rightGap, -bottomGap));
+    }
+};
+
+QRectF Surface::workingArea() const
+{
+    return m_windows->geometry();
+};
 }

@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <QTimer>
+
 #include <unordered_map>
 
 #include "config.hpp"
@@ -28,6 +30,7 @@ struct Engine {
     void setLayoutOnActiveSurface(std::string_view id);
 
     void arrangeWindowsOnAllSurfaces();
+    void adjustWorkingAreas();
 
 private:
     void showOSDForLayout(const Layout &);
