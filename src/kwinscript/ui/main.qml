@@ -27,9 +27,8 @@ Item {
             "options": options,
             "KWin": KWin
         };
-        // Init legacy JS backend
+        // Init JS backend
         scriptRoot.controller = Bismuth.init(qmlObjects, kwinScriptingAPI, core.proxy);
-        core.proxy.setJsController(scriptRoot.controller);
     }
     Component.onDestruction: {
         core.proxy.log("Calling event hooks destructors... Goodbye.");

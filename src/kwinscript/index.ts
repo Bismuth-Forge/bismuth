@@ -18,10 +18,6 @@ export function init(
 ): Controller | null {
   const config = proxy.jsConfig();
 
-  if (config.experimentalBackend) {
-    return null;
-  }
-
   const logger = new LogImpl(proxy);
 
   const controller = new ControllerImpl(
