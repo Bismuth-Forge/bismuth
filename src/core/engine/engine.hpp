@@ -37,7 +37,7 @@ private:
     Surface activeSurface() const;
 
     void arrangeWindowsOnSurface(const Surface &);
-    QRect workingArea(const Surface &surface) const;
+    QRectF workingArea(const Surface &surface) const;
 
     const Bismuth::Config &m_config;
     WindowsList m_windows;

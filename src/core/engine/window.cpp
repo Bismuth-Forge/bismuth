@@ -31,12 +31,12 @@ void Window::activate()
     m_workspace.get().setActiveClient(m_client);
 }
 
-QRect Window::geometry() const
+QRectF Window::geometry() const
 {
     return m_client.frameGeometry();
 }
 
-void Window::setGeometry(QRect newGeometry)
+void Window::setGeometry(QRectF newGeometry)
 {
     m_client.setFrameGeometry(newGeometry);
 }

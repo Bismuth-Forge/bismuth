@@ -10,7 +10,7 @@ Layout::Layout(const Bismuth::Config &config)
 {
 }
 
-QRect Layout::tilingArea(QRect workingArea) const
+QRectF Layout::tilingArea(QRectF workingArea) const
 {
     auto marginLeft = m_config.screenGapLeft();
     auto marginTop = m_config.screenGapTop();

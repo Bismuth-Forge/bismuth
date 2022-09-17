@@ -68,7 +68,7 @@ declare namespace KWin {
 
     /* functions */
     clientList(): Client[];
-    clientArea(option: number, screen: number, desktop: number): QRect;
+    clientArea(option: number, screen: number, desktop: number): QRectF;
   }
 
   interface Options {
@@ -231,7 +231,7 @@ declare namespace KWin {
      * This property holds the geometry of the Toplevel, excluding invisible
      * portions, e.g. server-side and client-side drop-shadows, etc.
      */
-    frameGeometry: QRect;
+    frameGeometry: QRectF;
 
     /**
      * Whether the window is set to be above all

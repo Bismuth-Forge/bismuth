@@ -5,7 +5,7 @@
 
 namespace Bismuth
 {
-void Monocle::apply(QRect area, std::vector<Window> &windows) const
+void Monocle::apply(QRectF area, std::vector<Window> &windows) const
 {
     for (auto &window : windows) {
         // Place the window on the all available area
