@@ -10,7 +10,7 @@ interface QByteArray {
   /* keep it empty for now */
 }
 
-interface QRect {
+interface QRectF {
   height: number;
   width: number;
   x: number;
@@ -49,5 +49,5 @@ interface QQmlTimer {
 declare namespace Qt {
   function createQmlObject(qml: string, parent: object, filepath?: string): any;
 
-  function rect(x: number, y: number, width: number, height: number): QRect;
+  function rect(x: number, y: number, width: number, height: number): QRectF;
 }

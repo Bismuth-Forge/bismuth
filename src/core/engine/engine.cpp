@@ -238,7 +238,7 @@ void Engine::arrangeWindowsOnSurface(const Surface &surface)
     layout.apply(tilingArea, windowsThatCanBeTiled);
 }
 
-QRect Engine::workingArea(const Surface &surface) const
+QRectF Engine::workingArea(const Surface &surface) const
 {
     return m_plasmaApi.workspace().clientArea(PlasmaApi::Workspace::PlacementArea, surface.screen(), surface.desktop());
 }

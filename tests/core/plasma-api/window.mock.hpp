@@ -16,7 +16,7 @@ class FakeKWinClient : public QObject
     Q_PROPERTY(int desktop MEMBER m_desktop)
     Q_PROPERTY(int screen MEMBER m_screen)
     Q_PROPERTY(QStringList activities MEMBER m_activities)
-    Q_PROPERTY(QRect frameGeometry MEMBER m_frameGeometry)
+    Q_PROPERTY(QRectF frameGeometry MEMBER m_frameGeometry)
 
 public:
     FakeKWinClient &operator=(const FakeKWinClient &);
@@ -26,5 +26,5 @@ public:
     int m_desktop{};
     int m_screen{};
     QStringList m_activities{};
-    QRect m_frameGeometry{};
+    QRectF m_frameGeometry{};
 };

@@ -28,8 +28,8 @@ struct Window {
 
     void activate();
 
-    QRect geometry() const;
-    void setGeometry(QRect);
+    QRectF geometry() const;
+    void setGeometry(QRectF);
 
     void setMode(Mode);
     Mode mode() const;

@@ -52,9 +52,9 @@ void Workspace::wrapSignals()
     WRAP_SIGNAL_WITH_KWIN_TYPE(clientMaximizeSet(KWin::Window *, bool, bool));
 };
 
-QRect Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
+QRectF Workspace::clientArea(ClientAreaOption option, int screen, int desktop)
 {
-    BI_METHOD_IMPL_WRAP(QRect, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
+    BI_METHOD_IMPL_WRAP(QRectF, "clientArea(ClientAreaOption, int, int)", Q_ARG(ClientAreaOption, option), Q_ARG(int, screen), Q_ARG(int, desktop));
 };
 
 std::vector<PlasmaApi::Window> Workspace::clientList() const

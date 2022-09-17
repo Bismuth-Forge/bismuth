@@ -45,8 +45,8 @@ public:
      * occupies on the screen. This rectangle includes invisible portions of the
      * window, e.g. client-side drop shadows, etc.
      */
-    BI_READONLY_PROPERTY(QRect, bufferGeometry)
-    // Q_PROPERTY(QRect bufferGeometry READ bufferGeometry)
+    BI_READONLY_PROPERTY(QRectF, bufferGeometry)
+    // Q_PROPERTY(QRectF bufferGeometry READ bufferGeometry)
 
     /**
      * This property holds the position of the Window's frame geometry.
@@ -84,8 +84,8 @@ public:
     BI_READONLY_PROPERTY(int, height)
     // Q_PROPERTY(int height READ height NOTIFY frameGeometryChanged)
 
-    BI_READONLY_PROPERTY(QRect, visibleRect)
-    // Q_PROPERTY(QRect visibleRect READ visibleGeometry)
+    BI_READONLY_PROPERTY(QRectF, visibleRect)
+    // Q_PROPERTY(QRectF visibleRect READ visibleGeometry)
 
     BI_READONLY_PROPERTY(qreal, opacity)
     // Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
@@ -96,8 +96,8 @@ public:
     BI_READONLY_PROPERTY(qulonglong, windowId)
     // Q_PROPERTY(qulonglong windowId READ window CONSTANT)
 
-    BI_READONLY_PROPERTY(QRect, rect)
-    // Q_PROPERTY(QRect rect READ rect)
+    BI_READONLY_PROPERTY(QRectF, rect)
+    // Q_PROPERTY(QRectF rect READ rect)
 
     BI_READONLY_PROPERTY(QPoint, clientPos)
     // Q_PROPERTY(QPoint clientPos READ clientPos)
@@ -432,8 +432,8 @@ public:
      * The value is evaluated each time the getter is called.
      * Because of that no changed signal is provided.
      */
-    BI_READONLY_PROPERTY(QRect, iconGeometry)
-    // Q_PROPERTY(QRect iconGeometry READ iconGeometry)
+    BI_READONLY_PROPERTY(QRectF, iconGeometry)
+    // Q_PROPERTY(QRectF iconGeometry READ iconGeometry)
 
     /**
      * Returns whether the window is any of special windows types (desktop, dock, splash, ...),
@@ -507,14 +507,14 @@ public:
      *
      * @deprecated Use frameGeometry
      */
-    // Q_PROPERTY(QRect geometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
+    // Q_PROPERTY(QRectF geometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
 
     /**
      * The geometry of this Window. Be aware that depending on resize mode the frameGeometryChanged
      * signal might be emitted at each resize step or only at the end of the resize operation.
      */
-    BI_PROPERTY(QRect, frameGeometry, setFrameGeometry)
-    // Q_PROPERTY(QRect frameGeometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
+    BI_PROPERTY(QRectF, frameGeometry, setFrameGeometry)
+    // Q_PROPERTY(QRectF frameGeometry READ frameGeometry WRITE moveResize NOTIFY frameGeometryChanged)
 
     /**
      * Whether the Window is currently being moved by the user.

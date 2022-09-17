@@ -62,7 +62,7 @@ public:
      * @param desktop The desktop for which the area should be considered, in general there should not be a difference
      * @returns The specified screen geometry
      */
-    Q_INVOKABLE QRect clientArea(ClientAreaOption, int screen, int desktop);
+    Q_INVOKABLE QRectF clientArea(ClientAreaOption, int screen, int desktop);
 
     Q_INVOKABLE std::vector<PlasmaApi::Window> clientList() const;
 

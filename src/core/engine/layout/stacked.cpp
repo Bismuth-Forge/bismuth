@@ -5,7 +5,7 @@
 
 namespace Bismuth
 {
-void Stacked::apply(QRect area, std::vector<Window> &windows) const
+void Stacked::apply(QRectF area, std::vector<Window> &windows) const
 {
 }
 }
