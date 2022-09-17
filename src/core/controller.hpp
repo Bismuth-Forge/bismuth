@@ -12,13 +12,9 @@
 #include <vector>
 
 #include "config.hpp"
-#include "engine/engine.hpp"
-#include "plasma-api/api.hpp"
-#include "plasma-api/window.hpp"
 
 namespace Bismuth
 {
-class TSProxy;
 
 struct Action {
     Action(const QString &id, const QString &description, const QString &defaultKeybinding, std::function<void()> callback);
@@ -33,31 +29,13 @@ class Controller : public QObject
 {
     Q_OBJECT
 public:
-    Controller(PlasmaApi::Api &, Engine &, const Bismuth::Config &);
+    Controller(const Bismuth::Config &);
 
-    void bindEvents();
-    void registerShortcuts();
-    void loadExistingWindows();
     void registerAction(const Action &);
-
-    void setProxy(TSProxy *);
-
-public Q_SLOTS:
-    void onCurrentSurfaceChanged();
-    void onSurfaceUpdate();
-    void onClientAdded(PlasmaApi::Window);
-    void onClientRemoved(PlasmaApi::Window);
-    void onClientMaximized(PlasmaApi::Window);
-    void onClientUnmaximized(PlasmaApi::Window);
-    void onClientMinimized(PlasmaApi::Window);
-    void onClientUnminimized(PlasmaApi::Window);
 
 private:
     std::vector<QAction *> m_registeredShortcuts{};
 
-    PlasmaApi::Api &m_plasmaApi;
-    TSProxy *m_proxy;
-    Engine &m_engine;
     const Config &m_config;
 };
 

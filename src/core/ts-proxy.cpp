@@ -10,17 +10,15 @@
 
 #include "controller.hpp"
 #include "logger.hpp"
-#include "plasma-api/api.hpp"
 
 namespace Bismuth
 {
 
-TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, PlasmaApi::Api &plasmaApi, Bismuth::Config &config)
+TSProxy::TSProxy(QQmlEngine *engine, Bismuth::Controller &controller, Bismuth::Config &config)
     : QObject()
     , m_engine(engine)
     , m_config(config)
     , m_controller(controller)
-    , m_plasmaApi(plasmaApi)
 {
 }
 
@@ -59,7 +57,6 @@ QJSValue TSProxy::jsConfig()
     setProp("maximizeSoleTile", m_config.maximizeSoleTile());
     setProp("monocleMinimizeRest", m_config.monocleMinimizeRest());
     setProp("untileByDragging", m_config.untileByDragging());
-    setProp("experimentalBackend", m_config.experimentalBackend());
 
     setProp("keepFloatAbove", m_config.keepFloatAbove());
     setProp("noTileBorder", m_config.noTileBorder());
@@ -113,14 +110,6 @@ QJSValue TSProxy::jsConfig()
     return configJSObject;
 }
 
-QJSValue TSProxy::workspace()
-{
-    auto &workspace = m_plasmaApi.workspace();
-    auto jsValue = m_engine->newQObject(&workspace);
-    QQmlEngine::setObjectOwnership(&workspace, QQmlEngine::CppOwnership);
-    return jsValue;
-}
-
 void TSProxy::registerShortcut(const QJSValue &tsAction)
 {
     auto id = tsAction.property("key").toString();
@@ -140,15 +129,5 @@ void TSProxy::log(const QJSValue &value)
     auto valAsString = value.toString();
     qDebug(Bi).noquote() << valAsString;
 };
-
-void TSProxy::setJsController(const QJSValue &value)
-{
-    m_jsController = value;
-}
-
-QJSValue TSProxy::jsController()
-{
-    return m_jsController;
-}
 
 }

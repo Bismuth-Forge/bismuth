@@ -3,10 +3,7 @@
 
 add_executable(test_runner)
 
-target_sources(test_runner PRIVATE config.mock.cpp main.cpp)
-
-add_subdirectory(plasma-api)
-add_subdirectory(engine)
+target_sources(test_runner PRIVATE main.cpp)
 
 target_link_libraries(
   test_runner

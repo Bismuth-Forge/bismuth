@@ -13,10 +13,8 @@
 
 #include "config.hpp"
 #include "controller.hpp"
-#include "engine/engine.hpp"
 #include "kconf_update/legacy_shortcuts.hpp"
 #include "logger.hpp"
-#include "plasma-api/api.hpp"
 #include "ts-proxy.hpp"
 
 void CorePlugin::registerTypes(const char *uri)
@@ -36,7 +34,6 @@ Core::Core(QQuickItem *parent)
     , m_controller()
     , m_tsProxy()
     , m_config()
-    , m_plasmaApi()
 {
     // Do the necessary migrations, that are not possible from kconf_update
     Bismuth::KConfUpdate::migrate();
@@ -46,11 +43,8 @@ void Core::init()
 {
     m_config = std::make_unique<Bismuth::Config>();
     m_qmlEngine = qmlEngine(this);
-    m_plasmaApi = std::make_unique<PlasmaApi::Api>(m_qmlEngine);
-    m_engine = std::make_unique<Bismuth::Engine>(*m_plasmaApi, *m_config);
-    m_controller = std::make_unique<Bismuth::Controller>(*m_plasmaApi, *m_engine, *m_config);
-    m_tsProxy = std::make_unique<TSProxy>(m_qmlEngine, *m_controller, *m_plasmaApi, *m_config);
-    m_controller->setProxy(m_tsProxy.get());
+    m_controller = std::make_unique<Bismuth::Controller>(*m_config);
+    m_tsProxy = std::make_unique<TSProxy>(m_qmlEngine, *m_controller, *m_config);
 }
 
 TSProxy *Core::tsProxy() const
