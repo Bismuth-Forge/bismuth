@@ -161,12 +161,12 @@ export class DriverWindowImpl implements DriverWindow {
   public get surface(): DriverSurface {
     let activity;
     if (this.client.activities.length === 0) {
-      activity = this.proxy.workspace().currentActivity;
+      activity = this.kwinApi.workspace.currentActivity;
     } else if (
-      this.client.activities.indexOf(this.proxy.workspace().currentActivity) >=
+      this.client.activities.indexOf(this.kwinApi.workspace.currentActivity) >=
       0
     ) {
-      activity = this.proxy.workspace().currentActivity;
+      activity = this.kwinApi.workspace.currentActivity;
     } else {
       activity = this.client.activities[0];
     }
@@ -174,7 +174,7 @@ export class DriverWindowImpl implements DriverWindow {
     const desktop =
       this.client.desktop >= 0
         ? this.client.desktop
-        : this.proxy.workspace().currentDesktop;
+        : this.kwinApi.workspace.currentDesktop;
 
     return new DriverSurfaceImpl(
       this.client.screen,
@@ -182,7 +182,7 @@ export class DriverWindowImpl implements DriverWindow {
       desktop,
       this.qml.activityInfo,
       this.config,
-      this.proxy
+      this.kwinApi
     );
   }
 
@@ -211,8 +211,7 @@ export class DriverWindowImpl implements DriverWindow {
     public readonly client: KWin.Client,
     private qml: Bismuth.Qml.Main,
     private config: Config,
-    private log: Log,
-    private proxy: TSProxy
+    private kwinApi: KWin.Api
   ) {
     this.id = DriverWindowImpl.generateID(client);
     this.maximized = false;
@@ -273,10 +272,10 @@ export class DriverWindowImpl implements DriverWindow {
       geometry = this.adjustGeometry(geometry);
       if (this.config.preventProtrusion) {
         const area = Rect.fromQRect(
-          this.proxy.workspace().clientArea(
+          this.kwinApi.workspace.clientArea(
             0, // This is placement area
             this.client.screen,
-            this.proxy.workspace().currentDesktop
+            this.kwinApi.workspace.currentDesktop
           )
         );
         if (!area.includes(geometry)) {

@@ -64,12 +64,12 @@ export interface Driver {
 export class DriverImpl implements Driver {
   public get currentSurface(): DriverSurface {
     return new DriverSurfaceImpl(
-      this.proxy.workspace().activeScreen,
-      this.proxy.workspace().currentActivity,
-      this.proxy.workspace().currentDesktop,
+      this.kwinApi.workspace.activeScreen,
+      this.kwinApi.workspace.currentActivity,
+      this.kwinApi.workspace.currentDesktop,
       this.qml.activityInfo,
       this.config,
-      this.proxy
+      this.kwinApi
     );
   }
 
@@ -80,8 +80,8 @@ export class DriverImpl implements Driver {
     // TODO: focusing window on other screen?
     // TODO: find a way to change activity
 
-    if (this.proxy.workspace().currentDesktop !== kwinSurface.desktop) {
-      this.proxy.workspace().currentDesktop = kwinSurface.desktop;
+    if (this.kwinApi.workspace.currentDesktop !== kwinSurface.desktop) {
+      this.kwinApi.workspace.currentDesktop = kwinSurface.desktop;
     }
   }
 
@@ -100,15 +100,15 @@ export class DriverImpl implements Driver {
 
   public get screens(): DriverSurface[] {
     const screensArr = [];
-    for (let screen = 0; screen < this.proxy.workspace().numScreens; screen++) {
+    for (let screen = 0; screen < this.kwinApi.workspace.numScreens; screen++) {
       screensArr.push(
         new DriverSurfaceImpl(
           screen,
-          this.proxy.workspace().currentActivity,
-          this.proxy.workspace().currentDesktop,
+          this.kwinApi.workspace.currentActivity,
+          this.kwinApi.workspace.currentDesktop,
           this.qml.activityInfo,
           this.config,
-          this.proxy
+          this.kwinApi
         )
       );
     }
@@ -150,13 +150,7 @@ export class DriverImpl implements Driver {
       (client: KWin.Client) => DriverWindowImpl.generateID(client),
       (client: KWin.Client) =>
         new EngineWindowImpl(
-          new DriverWindowImpl(
-            client,
-            this.qml,
-            this.config,
-            this.log,
-            this.proxy
-          ),
+          new DriverWindowImpl(client, this.qml, this.config, this.kwinApi),
           this.config,
           this.log
         )
