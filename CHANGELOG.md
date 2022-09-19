@@ -5,6 +5,13 @@
 
 # Changelog
 
+### [3.1.4](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.3...v3.1.4) (2022-09-19)
+
+
+### Bug Fixes
+
+* use floating geometry to be compatible with KWin 5.26 ([8fd8a0f](https://www.github.com/Bismuth-Forge/bismuth/commit/8fd8a0f95eb3101136b4d530f67d40df9d23f35f))
+
 ### [3.1.3](https://www.github.com/Bismuth-Forge/bismuth/compare/v3.1.2...v3.1.3) (2022-09-02)
 
 
