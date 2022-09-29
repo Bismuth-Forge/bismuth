@@ -95,7 +95,7 @@ contact the package maintainer first.
 
 #### OpenSUSE Tumbleweed
 
-- [home:rxmd OBS Repository](https://build.opensuse.org/package/show/home:rxmd/kwin-script-tiling-bismuth)
+- [home:rxmd OBS Repository](https://build.opensuse.org/package/show/home:rxmd/bismuth)
 
 #### Gentoo
 
