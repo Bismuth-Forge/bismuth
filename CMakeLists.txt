@@ -7,7 +7,7 @@ project(bismuth)
 
 option(
   USE_TSC
-  "Use TypeScript Compler to check the code before bundling \
+  "Use TypeScript Compiler to check the code before bundling \
   using esbuild. This could be useful, if you know, that the \
   code is correct and you want to speed up building times. \
   For example - you are a packager."
