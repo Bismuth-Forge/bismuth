@@ -542,6 +542,17 @@ export class EngineImpl implements Engine {
   }
 
   public setMaster(window: EngineWindow): void {
+    // const window = this.controller.currentWindow;
+    // let windows;
+
+    const windows = this.windows.allWindowsOn(this.controller.currentSurface);
+    if (windows && windows.length > 1) {
+      if (window === windows[0]) {
+        this.windows.putWindowToMaster(windows[1]);
+        this.controller.currentWindow = windows[1];
+        return;
+      }
+    }
     this.windows.putWindowToMaster(window);
   }
 
