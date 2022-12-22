@@ -103,7 +103,7 @@ contact the package maintainer first.
 
 #### OpenSUSE Tumbleweed
 
-- [home:rxmd OBS Repository](https://build.opensuse.org/package/show/home:rxmd/kwin-script-tiling-bismuth)
+- [KDE Extra Repository](https://build.opensuse.org/package/show/KDE:Extra/bismuth)
 
 #### Gentoo
 
