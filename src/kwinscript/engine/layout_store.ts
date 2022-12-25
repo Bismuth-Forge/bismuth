@@ -19,6 +19,7 @@ import SpiralLayout from "./layout/spiral_layout";
 import SpreadLayout from "./layout/spread_layout";
 import StairLayout from "./layout/stair_layout";
 import ThreeColumnLayout from "./layout/three_column_layout";
+import VerticalTileLayout from "./layout/vertical_layout";
 
 export class LayoutStoreEntry {
   public get currentLayout(): WindowsLayout {
@@ -96,6 +97,8 @@ export class LayoutStoreEntry {
       return new ThreeColumnLayout(this.config);
     } else if (id == TileLayout.id) {
       return new TileLayout(this.config);
+    } else if (id == VerticalTileLayout.id) {
+      return new VerticalTileLayout(this.config);
     } else {
       return new FloatingLayout();
     }
