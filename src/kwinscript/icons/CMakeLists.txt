@@ -7,6 +7,7 @@ ecm_install_icons(
   16-status-bismuth-floating.svg
   16-status-bismuth-monocle.svg
   16-status-bismuth-quarter.svg
+  16-status-bismuth-slabs.svg
   16-status-bismuth-spiral.svg
   16-status-bismuth-spread.svg
   16-status-bismuth-stair.svg
@@ -15,6 +16,7 @@ ecm_install_icons(
   32-status-bismuth-floating.svg
   32-status-bismuth-monocle.svg
   32-status-bismuth-quarter.svg
+  32-status-bismuth-slabs.svg
   32-status-bismuth-spiral.svg
   32-status-bismuth-spread.svg
   32-status-bismuth-stair.svg

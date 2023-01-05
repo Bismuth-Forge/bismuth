@@ -52,6 +52,7 @@ QJSValue TSProxy::jsConfig()
     addLayout("enableQuarterLayout", "QuarterLayout");
     addLayout("enableFloatingLayout", "FloatingLayout");
     addLayout("enableCascadeLayout", "CascadeLayout");
+    addLayout("enableSlabsLayout", "SlabsLayout");
 
     setProp("monocleMaximize", m_config.monocleMaximize());
     setProp("maximizeSoleTile", m_config.maximizeSoleTile());
