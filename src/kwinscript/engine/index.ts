@@ -602,40 +602,116 @@ export class EngineImpl implements Engine {
     );
   }
 
+  private narrowDownCandidates(
+    basis: EngineWindow,
+    dir: Direction,
+    candidates: EngineWindow[]
+  ): EngineWindow[] {
+    let selection: EngineWindow[] = candidates.filter((window): boolean => {
+      // use smaller target area for floating windows to improve navigation around them
+      // 2: full window width/height
+      // 3: 2/3 of window size
+      const basisSizeFactor = basis.floating ? 3 : 2;
+      const windowSizeFactor = window.floating ? 3 : 2;
+      if (dir === "up" || dir === "down") {
+        return overlap(
+          basis.actualGeometry.center[0] -
+            Math.floor(basis.actualGeometry.width / basisSizeFactor),
+          basis.actualGeometry.center[0] +
+            Math.floor(basis.actualGeometry.width / basisSizeFactor),
+          window.actualGeometry.center[0] -
+            Math.floor(window.actualGeometry.width / windowSizeFactor),
+          window.actualGeometry.center[0] +
+            Math.floor(window.actualGeometry.width / windowSizeFactor)
+        );
+      } else {
+        return overlap(
+          basis.actualGeometry.center[1] -
+            Math.floor(basis.actualGeometry.height / basisSizeFactor),
+          basis.actualGeometry.center[1] +
+            Math.floor(basis.actualGeometry.height / basisSizeFactor),
+          window.actualGeometry.center[1] -
+            Math.floor(window.actualGeometry.height / windowSizeFactor),
+          window.actualGeometry.center[1] +
+            Math.floor(window.actualGeometry.height / windowSizeFactor)
+        );
+      }
+    });
+
+    if (basis.floating) {
+      if (selection.length === 0) {
+        // randomly floating windows, pick any candidate
+        return candidates;
+      }
+
+      // find windows that additionally overlap with the last focused tiled window
+      // this will avoid switching sides of the screen when walking through floating windows
+      // and should prevent getting locked out from certain windows in some layouts
+      const lastFocusedWindow = this.windows
+        .visibleWindowsOn(this.controller.currentSurface)
+        .filter((window) => window.tiled)
+        .sort((a, b) => b.timestamp - a.timestamp)[0];
+
+      let narrowSelection: EngineWindow[] = [];
+      if (lastFocusedWindow !== undefined) {
+        narrowSelection = selection.filter((window): boolean => {
+          if (dir === "up" || dir === "down") {
+            return overlap(
+              lastFocusedWindow.actualGeometry.x,
+              lastFocusedWindow.actualGeometry.maxX,
+              window.actualGeometry.x,
+              window.actualGeometry.maxX
+            );
+          } else {
+            return overlap(
+              lastFocusedWindow.actualGeometry.y,
+              lastFocusedWindow.actualGeometry.maxY,
+              window.actualGeometry.y,
+              window.actualGeometry.maxY
+            );
+          }
+        });
+      }
+
+      if (narrowSelection.length !== 0) {
+        selection = narrowSelection;
+      }
+    }
+    return selection;
+  }
+
   private getNeighborCandidates(
     basis: EngineWindow,
     dir: Direction
   ): EngineWindow[] {
-    const visibleWindowsOnCurrentSurface = this.windows.visibleTiledWindowsOn(
+    const visibleWindowsOnCurrentSurface = this.windows.visibleWindowsOn(
       this.controller.currentSurface
     );
 
     // Flipping all inputs' signs allows for the same logic to find closest windows in either direction
     const sign = dir === "down" || dir === "right" ? 1 : -1;
 
-    if (dir === "up" || dir === "down") {
-      return visibleWindowsOnCurrentSurface.filter(
-        (window): boolean =>
-          window.geometry.y * sign > basis.geometry.y * sign &&
-          overlap(
-            basis.geometry.x,
-            basis.geometry.maxX,
-            window.geometry.x,
-            window.geometry.maxX
-          )
-      );
-    } else {
-      return visibleWindowsOnCurrentSurface.filter(
-        (window): boolean =>
-          window.geometry.x * sign > basis.geometry.x * sign &&
-          overlap(
-            basis.geometry.y,
-            basis.geometry.maxY,
-            window.geometry.y,
-            window.geometry.maxY
-          )
-      );
+    const candidates = visibleWindowsOnCurrentSurface.filter(
+      (window): boolean => {
+        if (dir === "up" || dir === "down") {
+          return (
+            window.actualGeometry.center[1] * sign >
+            basis.actualGeometry.center[1] * sign
+          );
+        } else {
+          return (
+            window.actualGeometry.center[0] * sign >
+            basis.actualGeometry.center[0] * sign
+          );
+        }
+      }
+    );
+
+    if (candidates.length === 0) {
+      return candidates;
     }
+
+    return this.narrowDownCandidates(basis, dir, candidates);
   }
 
   private getClosestRelativWindowCorner(
@@ -646,13 +722,13 @@ export class EngineImpl implements Engine {
       (prevValue, window): number => {
         switch (dir) {
           case "up":
-            return Math.max(window.geometry.maxY, prevValue);
+            return Math.max(window.actualGeometry.maxY, prevValue);
           case "down":
-            return Math.min(window.geometry.y, prevValue);
+            return Math.min(window.actualGeometry.y, prevValue);
           case "left":
-            return Math.max(window.geometry.maxX, prevValue);
+            return Math.max(window.actualGeometry.maxX, prevValue);
           case "right":
-            return Math.min(window.geometry.x, prevValue);
+            return Math.min(window.actualGeometry.x, prevValue);
         }
       },
       dir === "up" || dir === "left" ? 0 : Infinity
@@ -668,13 +744,13 @@ export class EngineImpl implements Engine {
       // adjust closestPoint for potential misalignment of tiled windows
       switch (dir) {
         case "up":
-          return window.geometry.maxY > closestPoint - 5;
+          return window.actualGeometry.maxY > closestPoint - 5;
         case "down":
-          return window.geometry.y < closestPoint + 5;
+          return window.actualGeometry.y < closestPoint + 5;
         case "left":
-          return window.geometry.maxX > closestPoint - 5;
+          return window.actualGeometry.maxX > closestPoint - 5;
         case "right":
-          return window.geometry.x < closestPoint + 5;
+          return window.actualGeometry.x < closestPoint + 5;
       }
     });
   }
