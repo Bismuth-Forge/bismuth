@@ -342,6 +342,8 @@ export class ControllerImpl implements Controller {
 
   public onWindowGeometryChanged(window: EngineWindow): void {
     this.log.log(["onWindowGeometryChanged", { window }]);
+
+    this.engine.arrange();
   }
 
   public onWindowScreenChanged(_window: EngineWindow): void {

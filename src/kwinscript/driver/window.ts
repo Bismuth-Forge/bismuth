@@ -111,6 +111,7 @@ export class DriverWindowImpl implements DriverWindow {
     const windowRole = String(this.client.windowRole);
     return (
       this.client.specialWindow ||
+      this.client.dialog ||
       resourceClass === "plasmashell" ||
       resourceClass === "ksmserver" ||
       resourceClass === "org.kde.plasmashell" ||
