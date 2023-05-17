@@ -107,7 +107,11 @@ contact the package maintainer first.
 
 #### Gentoo
 
-- [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
+- [Official Repo](https://packages.gentoo.org/packages/kde-misc/bismuth)
+
+  ```bash
+  sudo emerge kde-misc/bismuth
+  ```
 
 #### From Source
 
