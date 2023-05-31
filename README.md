@@ -109,6 +109,14 @@ contact the package maintainer first.
 
 - [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
 
+#### Void Linux
+
+- [Official Repo](https://voidlinux.pkgs.org/current/voidlinux-main-x86_64/bismuth-3.1.4_1.x86_64.xbps.html)
+
+  ```sh
+  sudo xbps-install -S bismuth
+  ```
+
 #### From Source
 
 - [See Dev Docs](CONTRIBUTING.md)
