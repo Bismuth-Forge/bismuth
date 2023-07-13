@@ -292,7 +292,7 @@ export class DriverWindowImpl implements DriverWindow {
 
   public toString(): string {
     // Using a shorthand name to keep debug message tidy
-    return `KWin(${this.client.windowId.toString(16)}.${
+    return `KWin(${this.client.windowId?.toString(16)}.${
       this.client.resourceClass
     })`;
   }
