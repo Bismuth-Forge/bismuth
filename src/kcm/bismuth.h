@@ -16,8 +16,7 @@ class BismuthSettings : public KQuickAddons::ManagedConfigModule
     Q_PROPERTY(Bismuth::Config *config READ config CONSTANT)
 
 public:
-    BismuthSettings(QObject *parent, const QVariantList &args);
-    virtual ~BismuthSettings() override = default;
+    BismuthSettings(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
 
     Bismuth::Config *config() const;
 
