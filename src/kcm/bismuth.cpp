@@ -16,7 +16,7 @@
 #include <KPluginFactory>
 #include <qstringliteral.h>
 
-K_PLUGIN_CLASS_WITH_JSON(BismuthSettings, "metadata.json")
+K_PLUGIN_CLASS_WITH_JSON(BismuthSettings, "kcm_bismuth.json")
 
 BismuthSettings::BismuthSettings(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : KQuickAddons::ManagedConfigModule(parent, data, args)

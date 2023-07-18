@@ -14,7 +14,6 @@ X-Plasma-MainScript=ui/main.qml
 
 X-KDE-ServiceTypes=KWin/Script
 X-KDE-PluginKeyword=bismuth
-X-KDE-ParentComponents=bismuth
 
 X-KDE-PluginInfo-Name=bismuth
 X-KDE-PluginInfo-Version=@CMAKE_PROJECT_VERSION@
@@ -22,5 +21,3 @@ X-KDE-PluginInfo-Author=Mikhail Zolotukhin
 X-KDE-PluginInfo-Email=mail@genda.life
 X-KDE-PluginInfo-Website=github.com/Bismuth-Forge/bismuth
 X-KDE-PluginInfo-License=MIT
-
-X-KWin-Exclude-Listing=true
