@@ -1,0 +1,21 @@
+{
+    "KPlugin": {
+        "Description": "Configure window tiling appearance and behavior",
+        "FormFactors": [
+            "desktop",
+            "handset",
+            "tablet",
+            "mediacenter"
+        ],
+        "Icon": "bismuth-kcm",
+        "Id": "kcm_bismuth",
+        "Name": "Window Tiling",
+        "ServiceTypes": [
+            "KCModule"
+        ]
+    },
+    "X-KDE-Keywords": "KWin,Script,Tiling,Bismuth,Window,WM,Layout,Gaps,Borders,Rules,Minimization,Float",
+    "X-KDE-ParentApp": "kcontrol",
+    "X-KDE-System-Settings-Parent-Category": "windowmanagement",
+    "X-Plasma-MainScript": "ui/main.qml"
+}
