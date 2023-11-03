@@ -73,6 +73,13 @@ contact the package maintainer first.
 
 #### Debian
 
+
+- [Official Repo](https://packages.debian.org/source/bookworm/bismuth):
+
+  ```bash
+  sudo apt install kwin-bismuth
+  ```
+
 - [Volian Repository](https://volian.org/bismuth/)
 
 #### Ubuntu
