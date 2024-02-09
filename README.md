@@ -109,6 +109,14 @@ contact the package maintainer first.
 
 - [VipreML Overlay](https://github.com/viperML/viperML-overlay/)
 
+#### Nix
+
+- [nix packages](https://search.nixos.org/packages?channel=23.11&show=libsForQt5.bismuth&from=0&size=50&sort=relevance&type=packages&query=bismuth)
+
+  ```bash
+  nix-shell -p libsForQt5.bismuth
+  ```
+
 #### From Source
 
 - [See Dev Docs](CONTRIBUTING.md)
