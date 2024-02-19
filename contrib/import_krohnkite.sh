@@ -41,7 +41,7 @@ main ()
   bis_to_kro["toggle_window_floating"]="Krohnkite: Float"
   bis_to_kro["toggle_floating_layout"]="Krohnkite: Float All"
 
-  config_file_path=${1:-"~/.config/kglobalshortcutsrc"}
+  config_file_path=$(realpath ${1:-~/.config/kglobalshortcutsrc})
 
   echo "Config file path: ${config_file_path}"
   echo "Importing Krohnkite shortcuts..."
